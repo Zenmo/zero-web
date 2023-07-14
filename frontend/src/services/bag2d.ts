@@ -1,23 +1,23 @@
 import {LatLngBounds} from "leaflet";
+import {Polygon} from "geojson";
 import proj4 from "proj4";
 
-interface Response {
+export const BAG_MAX_PANDEN = 1000
+
+interface ResponseBody {
     type: "FeatureCollection",
     numberMatched: number,
     name: "pand",
-    features: Bag2DFeature[],
+    features: Bag2DPand[],
     bbox: BoundingBox,
 }
 
-export interface Bag2DFeature {
+export interface Bag2DPand {
     type: "Feature",
     id: string // e.g. pand.97faabcf-a317-4c15-ae42-d1b8d04beb7d
     properties: FeatureProperties,
     bbox: BoundingBox,
-    geometry: {
-        type: "Polygon",
-        coordinates: number[][]
-    }
+    geometry: Polygon,
 }
 
 interface FeatureProperties {
@@ -27,22 +27,28 @@ interface FeatureProperties {
     status: string,
     gebruiksdoel: string,
     aantal_verblijfsobjecten: number,
+    // incomplete
 }
 
-type BoundingBox = [number, number, number, number]
+export type BoundingBox = [number, number, number, number]
 
-export async function getBag2dFeatures(boundingBox: LatLngBounds): Promise<Response> {
+export async function getBag2dPanden(boundingBox: LatLngBounds): Promise<Bag2DPand[]> {
     const params = new URLSearchParams({
         request: "GetFeature",
         service: "WFS",
         typeName: "bag:pand",
-        count: "100",
-        crs: "EPSG:3857", // web mercator projection
+        count: BAG_MAX_PANDEN.toString(),
+        srsName: "EPSG:4326", // output coordinate system
         outputFormat: "json",
-        srsName: "EPSG:4326", // GPS
-        bbox: boundingBoxToBAG(boundingBox),
+        bbox: [
+            boundingBox.getWest(),
+            boundingBox.getSouth(),
+            boundingBox.getEast(),
+            boundingBox.getNorth(),
+            "urn:ogc:def:rs:EPSG::4326", // input coordinate system
+        ].join(","),
         version: "2.0.0"
-    });
+    })
 
     const url = 'https://service.pdok.nl/lv/bag/wfs/v2_0?' + params.toString();
 
@@ -51,7 +57,12 @@ export async function getBag2dFeatures(boundingBox: LatLngBounds): Promise<Respo
         throw Error("Failure getting BAG 2D data")
     }
 
-    return await response.json()
+    const json = await response.json() as ResponseBody
+    if (json.numberMatched > BAG_MAX_PANDEN) {
+        throw new Error("Maximum aantal panden overschreden")
+    }
+
+    return json.features
 }
 
 // definitie van de Nederlandse coördinatenstelsel

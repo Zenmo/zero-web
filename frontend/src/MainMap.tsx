@@ -7,8 +7,8 @@ import proj4 from "proj4";
 import markerIconPng from 'leaflet/dist/images/marker-icon.png';
 import markerIcon2xPng from 'leaflet/dist/images/marker-icon-2x.png';
 import markerShadowPng from 'leaflet/dist/images/marker-shadow.png';
-import {Bag2DFeature, getBag2dFeatures} from "./services/bag2d";
-import {useAppState} from "./services/appState";
+import {Bag2DPand, getBag2dPanden} from "./services/bag2d";
+import {PandData, useAppState} from "./services/appState";
 import {Simulate} from "react-dom/test-utils";
 import click = Simulate.click;
 
@@ -23,7 +23,7 @@ Icon.Default.mergeOptions({
 })
 
 // Add pand_id to geometry so we can look up data after an onclick event
-function bagGeoWithPandId(features: Bag2DFeature[]) {
+function bagGeoWithPandId(features: Bag2DPand[]) {
     return features.map(feature => ({
         ...feature.geometry,
         pand_id: feature.properties.identificatie,
@@ -32,14 +32,13 @@ function bagGeoWithPandId(features: Bag2DFeature[]) {
 
 export const MainMap = () => {
     const mapRef = useRef(null)
-    const {appState, setBoundingBox} = useAppState()
-    const geoJsons = bagGeoWithPandId(appState.bag2dData)
+    const {appState, setBoundingBox, getPandData} = useAppState()
+    const geoJsons = bagGeoWithPandId(appState.bag2dPanden)
     useEffect(() => {
         setBoundingBox(disruptorBuildingLocation.toBounds(500))
     }, [])
 
-    const [currentPandData, setCurrentPandData] = useState({})
-    console.log(currentPandData)
+    const [currentPandId, setCurrentPandId] = useState("")
 
     return (
         <div>
@@ -51,20 +50,20 @@ export const MainMap = () => {
                 />
                 <Marker position={disruptorBuildingLocation}>
                 </Marker>
-                {appState.bag2dData.map(feature => (
+                {appState.bag2dPanden.map(feature => (
                     <GeoJSON key={feature.id} data={feature.geometry} eventHandlers={{
                         click: () => {
-                            setCurrentPandData(feature)
+                            setCurrentPandId(feature.properties.identificatie)
                         }
                     }}/>
                 ))}
             </MapContainer>
-            <PandDataDisplay pandData={currentPandData} />
+            {currentPandId && <PandDataDisplay pandData={getPandData(currentPandId)} />}
         </div>
     )
 }
 
-const PandDataDisplay = ({pandData}: any) => (
+const PandDataDisplay = ({pandData}: {pandData: PandData}) => (
     <div>
         <pre>
             {JSON.stringify(pandData, undefined, 4)}
