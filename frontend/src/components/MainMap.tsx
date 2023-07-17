@@ -1,16 +1,17 @@
 import {GeoJSON, LayerGroup, LayersControl, MapContainer, Marker, Popup, TileLayer, useMap} from "react-leaflet";
 import {LatLng, Icon, LeafletEvent, Layer, PM, featureGroup} from "leaflet";
 import "leaflet/dist/leaflet.css";
-import {useEffect, useRef, useState} from "react";
+import {Component, FunctionComponent, PropsWithChildren, useEffect, useRef, useState} from "react";
 import '@geoman-io/leaflet-geoman-free';
 import '@geoman-io/leaflet-geoman-free/dist/leaflet-geoman.css';
 
 import markerIconPng from 'leaflet/dist/images/marker-icon.png';
 import markerIcon2xPng from 'leaflet/dist/images/marker-icon-2x.png';
 import markerShadowPng from 'leaflet/dist/images/marker-shadow.png';
-import {Bag2DPand} from "./services/bag2d";
-import {PandData, SetBoundingBoxFn, useAppState} from "./services/appState";
-import {useOnce} from "./services/use-once";
+import {Bag2DPand, Bag2DPandProperties} from "../services/bag2d";
+import {PandData, SetBoundingBoxFn, useAppState} from "../services/appState";
+import {useOnce} from "../services/use-once";
+import {PandDataDisplay} from "./pand-display";
 
 const disruptorBuildingLocation = new LatLng(51.44971831403754, 5.4947035381928035)
 
@@ -25,10 +26,6 @@ Icon.Default.mergeOptions({
 export const MainMap = () => {
     const mapRef = useRef(null)
     const {appState, setBoundingBox, getPandData} = useAppState()
-    // const geoJsons = bagGeoWithPandId(appState.bag2dPanden)
-    // useEffect(() => {
-    //     setBoundingBox(disruptorBuildingLocation.toBounds(500))
-    // }, [])
 
     const [currentPandId, setCurrentPandId] = useState("")
 
@@ -104,11 +101,3 @@ const Geoman = ({setBoundingBox}: {setBoundingBox: SetBoundingBoxFn}) => {
 
     return <LayerGroup ref={layerGroupRef} />
 }
-
-const PandDataDisplay = ({pandData}: {pandData: PandData}) => (
-    <div>
-        <pre>
-            {JSON.stringify(pandData, undefined, 4)}
-        </pre>
-    </div>
-)

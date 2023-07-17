@@ -4,7 +4,7 @@ import {Point} from "geojson";
 
 export const BAG_MAX_VERBLIJFSOBJECTEN = 10 * BAG_MAX_PANDEN
 
-export interface Bag2DVerblijfsobject {
+export type Bag2DVerblijfsobject = {
     type: "Feature",
     id: string // e.g. "verblijfsobject.144b58ad-1e01-4025-b275-db34fc19ebf7"
     properties: VerblijfsobjectProperties,
@@ -12,7 +12,7 @@ export interface Bag2DVerblijfsobject {
     geometry: Point,
 }
 
-type VerblijfsobjectProperties = {
+export type VerblijfsobjectProperties = {
     identificatie: string, // example: "0772010000726364"
     pandidentificatie: string, // example: "0772100000306503"
     rdf_seealso: string, // url

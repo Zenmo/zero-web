@@ -22,10 +22,10 @@ export type Bag3DFeature = {
     id: string, // example: lod12.7552479
     geometry: Polygon,
     geometry_name: "geometrie",
-    properties: FeatureProperties
+    properties: Bag3dProperties
 }
 
-type FeatureProperties = {
+export type Bag3dProperties = {
     gid: number
     fid: number
     h_dak_min: number

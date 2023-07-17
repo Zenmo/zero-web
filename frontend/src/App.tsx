@@ -1,6 +1,6 @@
 import React, {useEffect} from 'react';
 import './App.css';
-import {MainMap} from "./MainMap";
+import {MainMap} from "./components/MainMap";
 import L from 'leaflet'
 import "leaflet/dist/leaflet.css";
 

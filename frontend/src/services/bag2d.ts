@@ -15,12 +15,12 @@ interface ResponseBody {
 export interface Bag2DPand {
     type: "Feature",
     id: string // e.g. pand.97faabcf-a317-4c15-ae42-d1b8d04beb7d
-    properties: FeatureProperties,
+    properties: Bag2DPandProperties,
     bbox: BoundingBox,
     geometry: Polygon,
 }
 
-interface FeatureProperties {
+export interface Bag2DPandProperties {
     identificatie: string, // numeric
     rdf_seealso: string, // url
     bouwjaar: number,
