@@ -1,16 +1,16 @@
-import {GeoJSON, MapContainer, Marker, Popup, TileLayer} from "react-leaflet";
-import {geoJson, LatLng, LatLngBounds, Icon, polygon} from "leaflet";
+import {GeoJSON, MapContainer, Marker, Popup, TileLayer, useMap} from "react-leaflet";
+import {LatLng, Icon, LeafletEvent} from "leaflet";
 import "leaflet/dist/leaflet.css";
-import {useEffect, useLayoutEffect, useRef, useState} from "react";
-import proj4 from "proj4";
+import {useEffect, useRef, useState} from "react";
+import '@geoman-io/leaflet-geoman-free';
+import '@geoman-io/leaflet-geoman-free/dist/leaflet-geoman.css';
 
 import markerIconPng from 'leaflet/dist/images/marker-icon.png';
 import markerIcon2xPng from 'leaflet/dist/images/marker-icon-2x.png';
 import markerShadowPng from 'leaflet/dist/images/marker-shadow.png';
-import {Bag2DPand, getBag2dPanden} from "./services/bag2d";
+import {Bag2DPand} from "./services/bag2d";
 import {PandData, useAppState} from "./services/appState";
-import {Simulate} from "react-dom/test-utils";
-import click = Simulate.click;
+import {useOnce} from "./services/use-once";
 
 const disruptorBuildingLocation = new LatLng(51.44971831403754, 5.4947035381928035)
 
@@ -43,6 +43,7 @@ export const MainMap = () => {
     return (
         <div>
             <MapContainer ref={mapRef} center={disruptorBuildingLocation} zoom={13} scrollWheelZoom={true} style={{width: "800px", height: "800px"}}>
+                <Geoman/>
                 <TileLayer
                     attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
                     // TODO: option to use BAG WMS tiles
@@ -50,17 +51,46 @@ export const MainMap = () => {
                 />
                 <Marker position={disruptorBuildingLocation}>
                 </Marker>
-                {appState.bag2dPanden.map(feature => (
-                    <GeoJSON key={feature.id} data={feature.geometry} eventHandlers={{
-                        click: () => {
-                            setCurrentPandId(feature.properties.identificatie)
-                        }
-                    }}/>
-                ))}
+                <Panden bag2dPanden={appState.bag2dPanden} setCurrentPandId={setCurrentPandId} />
             </MapContainer>
             {currentPandId && <PandDataDisplay pandData={getPandData(currentPandId)} />}
         </div>
     )
+}
+
+const Panden = (
+    {bag2dPanden, setCurrentPandId}:
+        {bag2dPanden: Bag2DPand[], setCurrentPandId: (pandId: string) => void}
+) => {
+    const geoJsons = bag2dPanden.map(feature => (
+        <GeoJSON key={feature.id} data={feature.geometry} eventHandlers={{
+            click: () => {
+                setCurrentPandId(feature.properties.identificatie)
+            }
+        }}/>
+    ))
+
+    return <>{geoJsons}</>
+}
+
+// add paint controls
+const Geoman = () => {
+    const map = useMap()
+    useOnce(() => {
+        //@ts-ignore
+        map.pm.addControls({
+            position: 'topleft',
+            drawMarker: false,
+            drawCircleMarker: false,
+            drawPolyline: false,
+        });
+
+        map.on("pm:create", (event: LeafletEvent) => {
+            console.log(event)
+        })
+    })
+
+    return null
 }
 
 const PandDataDisplay = ({pandData}: {pandData: PandData}) => (

@@ -35,6 +35,7 @@ type FeatureProperties = {
     b3_h_70p: number
     b3_h_max: number
     b3_h_min: number
+    // TODO: why is volume and maaiveld hoogte missing?
 }
 
 export async function getBag3dFeatures(boundingBox: LatLngBounds): Promise<Bag3DFeature[]> {
@@ -53,6 +54,9 @@ export async function getBag3dFeatures(boundingBox: LatLngBounds): Promise<Bag3D
         ].join(","),
     })
 
+    // This is the new endpoint.
+    // Unfortunately it isn't working entirely yet.
+    // See https://geoforum.nl/t/missing-properties-in-getfeatures/8482
     const url = 'https://data.3dbag.nl/api/BAG3D/wfs?' + params.toString();
 
     const response = await fetch(url)

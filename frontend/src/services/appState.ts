@@ -1,7 +1,7 @@
 import {Bag2DPand, getBag2dPanden} from "./bag2d";
 import {useState} from "react";
 import {LatLngBounds} from "leaflet";
-import {Bag3DFeature, getBag3dFeatures} from "./bag3d";
+import {Bag3DFeature, getBag3dFeatures} from "./3dbag_old";
 import {Bag2DVerblijfsobject, getBagVerblijfsobjecten} from "./bag-verblijfsobject";
 
 export interface AppState {
