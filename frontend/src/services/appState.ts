@@ -22,6 +22,8 @@ export type PandData = {
     verblijfsobjecten: Bag2DVerblijfsobject[],
 }
 
+export type SetBoundingBoxFn = (boundingBox: LatLngBounds) => void
+
 function validatePandId(pandId: string): void {
     if (!/^\d{16}$/.test(pandId)) {
         throw Error(`Not a pand id: ${pandId}`)
@@ -31,7 +33,7 @@ function validatePandId(pandId: string): void {
 export const useAppState = () => {
     const [appState, setAppState] = useState(initialState)
 
-    const setBoundingBox = async (boundingBox: LatLngBounds) => {
+    const setBoundingBox: SetBoundingBoxFn = async (boundingBox: LatLngBounds) => {
         const bag2dPanden = await getBag2dPanden(boundingBox)
         setAppState(appState => ({
             ...appState,
