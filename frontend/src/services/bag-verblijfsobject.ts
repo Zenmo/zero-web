@@ -2,8 +2,6 @@ import {LatLngBounds} from "leaflet";
 import {BAG_MAX_PANDEN, BoundingBox, boundingBoxToBAG} from "./bag2d";
 import {Point} from "geojson";
 
-export const BAG_MAX_VERBLIJFSOBJECTEN = 10 * BAG_MAX_PANDEN
-
 export type Bag2DVerblijfsobject = {
     type: "Feature",
     id: string // e.g. "verblijfsobject.144b58ad-1e01-4025-b275-db34fc19ebf7"
@@ -35,7 +33,8 @@ export async function getBagVerblijfsobjecten(boundingBox: LatLngBounds): Promis
         request: "GetFeature",
         service: "WFS",
         typeName: "bag:verblijfsobject",
-        count: BAG_MAX_VERBLIJFSOBJECTEN.toString(),
+        // TODO: verify pagination cut-off
+        count: BAG_MAX_PANDEN.toString(),
         outputFormat: "json",
         srsName: "EPSG:4326", // GPS
         bbox: [
@@ -56,7 +55,7 @@ export async function getBagVerblijfsobjecten(boundingBox: LatLngBounds): Promis
     }
 
     const body = await response.json() as any
-    if (body.numberMatched > BAG_MAX_VERBLIJFSOBJECTEN) {
+    if (body.numberMatched > BAG_MAX_PANDEN) {
         throw new Error("Maximum aantal verblijfsobjecten overschreden")
     }
 

@@ -23,33 +23,32 @@ Icon.Default.mergeOptions({
     shadowUrl: markerShadowPng,
 })
 
-export const MainMap = () => {
-    const mapRef = useRef(null)
-    const {appState, setBoundingBox, getPandData} = useAppState()
-
-    const [currentPandId, setCurrentPandId] = useState("")
-
+export const MainMap = ({setCurrentPandId, bag2dPanden, setBoundingBox}: {
+    setCurrentPandId: (pandId: string) => void,
+    bag2dPanden: Bag2DPand[],
+    setBoundingBox: SetBoundingBoxFn,
+}) => {
     return (
-        <div>
-            <MapContainer ref={mapRef} center={disruptorBuildingLocation} zoom={13} scrollWheelZoom={true} style={{width: "800px", height: "800px"}}>
-                <TileLayer
-                    attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-                    // TODO: option to use BAG WMS tiles
-                    url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-                />
-                {/*<LayersControl position="topright">*/}
-                {/*    <LayersControl.Overlay name="Panden">*/}
-                        <LayerGroup>
-                            <Panden bag2dPanden={appState.bag2dPanden} setCurrentPandId={setCurrentPandId} />
-                        </LayerGroup>
-                    {/*</LayersControl.Overlay>*/}
-                    {/*<LayersControl.Overlay name="Tekenen">*/}
-                        <Geoman setBoundingBox={setBoundingBox} />
-                    {/*</LayersControl.Overlay>*/}
-                {/*</LayersControl>*/}
-            </MapContainer>
-            {currentPandId && <PandDataDisplay pandData={getPandData(currentPandId)} />}
-        </div>
+        <MapContainer center={disruptorBuildingLocation}
+                      zoom={13}
+                      scrollWheelZoom={true}
+                      style={{height: "100vh", flexGrow: 1}}>
+            <TileLayer
+                attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+                // TODO: option to use BAG WMS tiles
+                url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+            />
+            {/*<LayersControl position="topright">*/}
+            {/*    <LayersControl.Overlay name="Panden">*/}
+                    <LayerGroup>
+                        <Panden bag2dPanden={bag2dPanden} setCurrentPandId={setCurrentPandId} />
+                    </LayerGroup>
+                {/*</LayersControl.Overlay>*/}
+                {/*<LayersControl.Overlay name="Tekenen">*/}
+                    <Geoman setBoundingBox={setBoundingBox} />
+                {/*</LayersControl.Overlay>*/}
+            {/*</LayersControl>*/}
+        </MapContainer>
     )
 }
 

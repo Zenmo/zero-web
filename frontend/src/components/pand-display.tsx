@@ -7,7 +7,7 @@ import {Bag2DVerblijfsobject, VerblijfsobjectProperties} from "../services/bag-v
 
 export const PandDataDisplay = ({pandData}: {pandData: PandData}) => (
     <div>
-        <h2>Pand data</h2>
+        <h2>Pand</h2>
         {pandData.bag2dPand && <PropertyList props={pandData.bag2dPand.properties} specs={bag2dDisplaySpec} defaultSpec={bagDefaultDisplaySpec}/>}
         {pandData.bag3dPand && <PropertyList props={pandData.bag3dPand.properties} specs={bag3dDisplaySpec} defaultSpec={bag3dDefaultDisplaySpec}/>}
         <h2>{pandData.bag2dPand?.properties.aantal_verblijfsobjecten} Verblijfsobjecten</h2>
@@ -18,9 +18,9 @@ export const PandDataDisplay = ({pandData}: {pandData: PandData}) => (
             </>
         ))}
 
-        <pre>
-            {JSON.stringify(pandData, undefined, 4)}
-        </pre>
+        {/*<pre>*/}
+        {/*    {JSON.stringify(pandData, undefined, 4)}*/}
+        {/*</pre>*/}
     </div>
 )
 
@@ -161,7 +161,7 @@ const bag3dDisplaySpec: Partial<{[key in keyof Bag3dProperties]: Partial<Display
 }
 
 
-const DtBold: FunctionComponent<PropsWithChildren> = ({children}) => <dt style={{fontWeight: "bold"}}>{children}</dt>
+export const DtBold: FunctionComponent<PropsWithChildren> = ({children}) => <dt style={{fontWeight: "bold"}}>{children}</dt>
 
 const toLabel = (key: string): string =>
     uppercaseFirst(key).replaceAll("_", " ")

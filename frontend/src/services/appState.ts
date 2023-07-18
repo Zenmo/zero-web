@@ -67,6 +67,10 @@ export const useAppState = () => {
         }
     }
 
+    const getAggregateData = (): void => {
+
+    }
+
     return {
         appState,
         setBoundingBox,
