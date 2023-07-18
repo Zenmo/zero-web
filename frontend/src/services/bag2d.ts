@@ -27,6 +27,8 @@ export interface Bag2DPandProperties {
     status: string,
     gebruiksdoel: string,
     aantal_verblijfsobjecten: number,
+    oppervlakte_min: number,
+    oppervlakte_max: number,
     // incomplete
 }
 

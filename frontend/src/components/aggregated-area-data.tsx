@@ -14,10 +14,11 @@ export const AggregatedAreaData = ({appState}: {appState: AppState}) => (
         h(DtBold, {}, "Aantal verblijfsobjecten"),
         h('dd', {}, appState.verblijfsobjecten.length),
         h(DtBold, {}, "Vloeroppervlak"),
-        h('dd', {}, sumVloeroppervlak(appState.verblijfsobjecten) + " m²"),
+        // TODO: does not include panden with no verblijfsobject, like factory floors
+        h('dd', {}, sumVloeroppervlak(appState.verblijfsobjecten).toLocaleString('nl-NL') + " m²"),
         h(DtBold, {}, "Gebruiksdoelen"),
         h('dd', {}, Object.entries(gebruiksdoelen(appState.verblijfsobjecten))
-                .map(([gebruiksdoel, aantal]) => h('div', {}, `${gebruiksdoel} (${aantal}x)`))
+                .map(([gebruiksdoel, aantal]) => h('div', {key: gebruiksdoel}, `${gebruiksdoel} (${aantal}x)`))
         )
     ])
 )
@@ -28,12 +29,17 @@ const sumVloeroppervlak = (verblijfsobjecten: Bag2DVerblijfsobject[]): number =>
         .reduce((acc, val) => acc + val, 0)
 
 const averageBouwjaar = (panden: Bag2DPand[]) => {
-    const sum = panden
+    const bouwjaren = panden
         .map(pand => pand.properties.bouwjaar)
         .filter(bouwjaar => bouwjaar)
-        .reduce((sum, bouwjaar) => sum + bouwjaar, 0)
 
-    const average = sum / panden.length
+    if (bouwjaren.length === 0) {
+        return 1995
+    }
+
+    const sum = bouwjaren.reduce((sum, bouwjaar) => sum + bouwjaar, 0)
+
+    const average = sum / bouwjaren.length
 
     return Math.round(average)
 }

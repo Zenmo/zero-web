@@ -21,7 +21,7 @@ export type VerblijfsobjectProperties = {
     huisnummer: number,
     huisletter: string,
     toevoeging: string,
-    postcode: string,
+    postcode: string, // 1111AA
     woonplaats: string,
     bouwjaar: string,
     pandstatus: string,

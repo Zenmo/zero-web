@@ -1,16 +1,19 @@
-import {PandData} from "../services/appState";
+import {KleinVerbruikPerPostcode, PandData} from "../services/appState";
 import {Bag2DPandProperties} from "../services/bag2d";
-import {FunctionComponent, PropsWithChildren} from "react";
+import React, {createElement, Fragment, FunctionComponent, PropsWithChildren, ReactElement} from "react";
 import {Bag3dProperties} from "../services/3dbag_old";
-import {Bag2DVerblijfsobject, VerblijfsobjectProperties} from "../services/bag-verblijfsobject";
+import {VerblijfsobjectProperties} from "../services/bag-verblijfsobject";
+import {PostcodeKleinverbruikProperties} from "../services/enexis";
 
 
 export const PandDataDisplay = ({pandData}: {pandData: PandData}) => (
     <div>
         <h2>Pand</h2>
-        {pandData.bag2dPand && <PropertyList props={pandData.bag2dPand.properties} specs={bag2dDisplaySpec} defaultSpec={bagDefaultDisplaySpec}/>}
-        {pandData.bag3dPand && <PropertyList props={pandData.bag3dPand.properties} specs={bag3dDisplaySpec} defaultSpec={bag3dDefaultDisplaySpec}/>}
-        <h2>{pandData.bag2dPand?.properties.aantal_verblijfsobjecten} Verblijfsobjecten</h2>
+        {pandData.bag2dPand && <PropertyList key="2d" props={pandData.bag2dPand.properties} specs={bag2dDisplaySpec} defaultSpec={bagDefaultDisplaySpec}/>}
+        {pandData.bag3dPand && <PropertyList key="3d" props={pandData.bag3dPand.properties} specs={bag3dDisplaySpec} defaultSpec={bag3dDefaultDisplaySpec}/>}
+        {createElement(Fragment, {}, ...KleinverbruikDisplay({kleinverbruik: pandData.kleinverbruik}))}
+
+        <h2>Verblijfsobjecten ({pandData.bag2dPand?.properties.aantal_verblijfsobjecten})</h2>
         {pandData.verblijfsobjecten.map((verblijfsobject, index) => (
             <>
                 <h3>Verblijfsobject {verblijfsobjectLabel(verblijfsobject.properties)}</h3>
@@ -18,11 +21,59 @@ export const PandDataDisplay = ({pandData}: {pandData: PandData}) => (
             </>
         ))}
 
+
         {/*<pre>*/}
         {/*    {JSON.stringify(pandData, undefined, 4)}*/}
         {/*</pre>*/}
     </div>
 )
+
+const KleinverbruikDisplay = ({kleinverbruik}: {kleinverbruik: {[postcode: string]: KleinVerbruikPerPostcode}}): ReactElement[] => {
+    let result: ReactElement[] = [
+        <h2>Gemiddeld jaarverbruik per aansluiting</h2>
+    ]
+
+    const values = Object.values(kleinverbruik)
+    if (values.length === 0) {
+        return [
+            ...result,
+            <>onbekend</>
+        ]
+    }
+
+    if (values.length === 1) {
+        const gas = values[0].gas
+        if (gas) {
+            result = [
+                ...result,
+                <DtBold>Gasverbruik</DtBold>,
+                <dd>{gas.gemiddeldeStandaardjaarafname} m3</dd>,
+                // <DtBold>Aansluiting</DtBold>,
+                // <dd>{gas.soortAansluiting} ({gas.soortAansluitingPercentage}%)</dd>,
+            ]
+        }
+
+        const elektriciteit = values[0].elektriciteit
+        if (elektriciteit) {
+            result = [
+                ...result,
+                <DtBold>Electriciteitsverbruik</DtBold>,
+                <dd>{elektriciteit.gemiddeldeStandaardjaarafname} kWh</dd>,
+                <DtBold>Aansluiting</DtBold>,
+                <dd>{elektriciteit.soortAansluiting} ({elektriciteit.soortAansluitingPercentage}%)</dd>,
+                <DtBold>Percentage met netto teruglevering</DtBold>,
+                <dd>{100 - elektriciteit.leveringsRichtingPercentage}%</dd>,
+            ]
+        }
+    } else {
+        return [
+            ...result,
+            <>TODO: meerdere postcodes in 1 pand</>
+        ]
+    }
+
+    return result
+}
 
 const verblijfsobjectLabel = (verblijfsObject: VerblijfsobjectProperties): string => {
     let result = `${verblijfsObject.openbare_ruimte} ${verblijfsObject.huisnummer}`
@@ -136,6 +187,12 @@ const bag2dDisplaySpec: Partial<{[key in keyof Bag2DPandProperties]: Partial<Dis
     rdf_seealso: {
         is_url: true,
     },
+    oppervlakte_min: {
+        is_m2: true,
+    },
+    oppervlakte_max: {
+        is_m2: true,
+    }
 }
 
 const verblijfsobjectDisplaySpec: Partial<{[key in keyof VerblijfsobjectProperties]: Partial<DisplaySpec>}> = {
@@ -157,7 +214,21 @@ const verblijfsobjectDisplaySpec: Partial<{[key in keyof VerblijfsobjectProperti
 }
 
 const bag3dDisplaySpec: Partial<{[key in keyof Bag3dProperties]: Partial<DisplaySpec>}> = {
-
+    h_maaiveld: {
+        visible: true,
+        label: "Hoogte maaiveld",
+        is_meters: true,
+    },
+    h_dak_50p: {
+        visible: true,
+        label: "Mediaan dakhoogte",
+        is_meters: true,
+    },
+    h_dak_max: {
+        visible: true,
+        label: "Hoogte nok",
+        is_meters: true,
+    },
 }
 
 
