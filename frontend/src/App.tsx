@@ -5,6 +5,7 @@ import "leaflet/dist/leaflet.css";
 import {useAppState} from "./services/appState";
 import {PandDataDisplay} from "./components/pand-display";
 import {AggregatedAreaData} from "./components/aggregated-area-data";
+import {AnyLogic} from "./components/any-logic";
 
 function App() {
     const {appState, setBoundingBox, getPandData} = useAppState()
@@ -23,7 +24,10 @@ function App() {
             <div style={{width: "20rem", padding: "1rem", paddingTop: "5rem"}}>
                 {h(AggregatedAreaData, {appState})}
             </div>
-            <MainMap bag2dPanden={appState.bag2dPanden} setBoundingBox={setBoundingBox} setCurrentPandId={setCurrentPandId}/>
+            <div style={{height: "100vh", flexGrow: 1, display: 'flex', flexDirection: 'column'}}>
+                <MainMap bag2dPanden={appState.bag2dPanden} setBoundingBox={setBoundingBox} setCurrentPandId={setCurrentPandId}/>
+                <AnyLogic />
+            </div>
             <div style={{width: "20rem", padding: "1rem"}}>
                 {currentPandId && <PandDataDisplay pandData={getPandData(currentPandId)} />}
             </div>

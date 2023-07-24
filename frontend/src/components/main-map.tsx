@@ -32,7 +32,7 @@ export const MainMap = ({setCurrentPandId, bag2dPanden, setBoundingBox}: {
         <MapContainer center={disruptorBuildingLocation}
                       zoom={13}
                       scrollWheelZoom={true}
-                      style={{height: "100vh", flexGrow: 1}}>
+                      style={{flexGrow: 1}}>
             <TileLayer
                 attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
                 // TODO: option to use BAG WMS tiles

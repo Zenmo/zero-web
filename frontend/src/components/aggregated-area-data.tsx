@@ -6,7 +6,7 @@ import {Bag2DPand} from "../services/bag2d";
 
 
 export const AggregatedAreaData = ({appState}: {appState: AppState}) => (
-    h('dl', {}, [
+    h('dl', {},
         h(DtBold, {}, "Aantal panden"),
         h('dd', {}, appState.bag2dPanden.length),
         h(DtBold, {}, "Gemiddeld bouwjaar"),
@@ -20,7 +20,7 @@ export const AggregatedAreaData = ({appState}: {appState: AppState}) => (
         h('dd', {}, Object.entries(gebruiksdoelen(appState.verblijfsobjecten))
                 .map(([gebruiksdoel, aantal]) => h('div', {key: gebruiksdoel}, `${gebruiksdoel} (${aantal}x)`))
         )
-    ])
+    )
 )
 
 const sumVloeroppervlak = (verblijfsobjecten: Bag2DVerblijfsobject[]): number =>
