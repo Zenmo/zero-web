@@ -1,0 +1,17 @@
+[ {
+  "timeStep_h" : "0.25",
+  "timeStepsElapsed" : "35041",
+  "modelHoursElapsed_h" : "8760.0",
+  "modelStartUpDuration_s" : "0.574",
+  "modelRunDuration_s" : "5.981",
+  "nGridNodes" : "11",
+  "nGridConnections" : "36",
+  "nEnergyAssets" : "193",
+  "nConnectionOwners" : "36",
+  "nEnergySuppliers" : "1",
+  "nEnergyHolons" : "9",
+  "nAdministrativeHolons" : "0",
+  "nGridOperators" : "3",
+  "nNationalEnergyMarket" : "1",
+  "shareElectricvehiclesInHouseholds" : 0.17857142857142858
+} ]
