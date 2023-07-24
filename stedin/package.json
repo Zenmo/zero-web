@@ -1,0 +1,6 @@
+{
+  "dependencies": {
+    "csvjson-csv2json": "^5.0.6",
+    "lodash": "^4.17.21"
+  }
+}
