@@ -9,9 +9,11 @@
 /coverage
 
 # production
-/build
+build
+dist
 
 # misc
+.parcel-cache
 .DS_Store
 .env.local
 .env.development.local

@@ -1,7 +1,7 @@
 
-import 'https://engine.holontool.nl/assets/js-client-8.5.0/cloud-client.js'
 import {useRef, useState} from "react";
 
+// this is imported old-school via <script> tag
 declare var CloudClient: any
 
 export const AnyLogic = () => {
