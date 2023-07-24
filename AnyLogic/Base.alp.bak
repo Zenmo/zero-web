@@ -1899,7 +1899,7 @@ traceln(" ");
 						<UnitType><![CDATA[NONE]]></UnitType>
 						<SdArray>false</SdArray>
 						<DefaultValue Class="CodeValue">
-							<Code><![CDATA[true]]></Code>
+							<Code><![CDATA[false]]></Code>
 						</DefaultValue>
 						<ParameterEditor>
 							<Id>1658752734131</Id>
@@ -2295,7 +2295,7 @@ traceln(" ");
 				<Variable Class="Parameter">
 					<Id>1681376013855</Id>
 					<Name><![CDATA[p_testHolontoolResponse]]></Name>
-					<X>-390</X><Y>370</Y>
+					<X>-390</X><Y>340</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -2319,7 +2319,7 @@ traceln(" ");
 				<Variable Class="Parameter">
 					<Id>1681379106589</Id>
 					<Name><![CDATA[p_printHolontoolInputJsons]]></Name>
-					<X>-390</X><Y>390</Y>
+					<X>-390</X><Y>360</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -2392,34 +2392,13 @@ traceln(" ");
 						</ParameterEditor>
 					</Properties>                 
 				</Variable>
-				<Variable Class="Parameter">
-					<Id>1690206809214</Id>
-					<Name><![CDATA[p_templateAssetsConfigJSON]]></Name>
-					<X>-390</X><Y>300</Y>
-					<Label><X>10</X><Y>0</Y></Label>
-					<PublicFlag>false</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
-					<ShowLabel>true</ShowLabel>
-					<Properties SaveInSnapshot="true" ModificatorType="STATIC">
-						<Type><![CDATA[String]]></Type>
-						<UnitType><![CDATA[NONE]]></UnitType>
-						<SdArray>false</SdArray>
-						<ParameterEditor>
-							<Id>1690206809212</Id>
-							<EditorContolType>TEXT_BOX</EditorContolType>
-							<MinSliderValue><![CDATA[0]]></MinSliderValue>
-							<MaxSliderValue><![CDATA[100]]></MaxSliderValue>
-							<DelimeterType>NO_DELIMETER</DelimeterType>
-						</ParameterEditor>
-					</Properties>                 
-				</Variable>
 				<Variable Class="CollectionVariable">
 					<Id>1661504944109</Id>
 					<Name><![CDATA[parsedJSONGridNodes]]></Name>
 					<X>-380</X><Y>-120</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
+					<PresentationFlag>false</PresentationFlag>
 					<ShowLabel>true</ShowLabel>
 					<Properties SaveInSnapshot="true" AccessType="public" StaticVariable="false">
 						<CollectionClass><![CDATA[ArrayList]]></CollectionClass>
@@ -2434,7 +2413,7 @@ traceln(" ");
 					<X>-380</X><Y>-100</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
+					<PresentationFlag>false</PresentationFlag>
 					<ShowLabel>true</ShowLabel>
 					<Properties SaveInSnapshot="true" AccessType="public" StaticVariable="false">
 						<CollectionClass><![CDATA[ArrayList]]></CollectionClass>
@@ -2449,7 +2428,7 @@ traceln(" ");
 					<X>-380</X><Y>-80</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
+					<PresentationFlag>false</PresentationFlag>
 					<ShowLabel>true</ShowLabel>
 					<Properties SaveInSnapshot="true" AccessType="public" StaticVariable="false">
 						<CollectionClass><![CDATA[ArrayList]]></CollectionClass>
@@ -2460,11 +2439,11 @@ traceln(" ");
 				</Variable>
 				<Variable Class="CollectionVariable">
 					<Id>1661510460035</Id>
-					<Name><![CDATA[parsedJSONTemplateEnergyAssets]]></Name>
+					<Name><![CDATA[parsedJSONEnergyAssets]]></Name>
 					<X>-380</X><Y>-60</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
+					<PresentationFlag>false</PresentationFlag>
 					<ShowLabel>true</ShowLabel>
 					<Properties SaveInSnapshot="true" AccessType="public" StaticVariable="false">
 						<CollectionClass><![CDATA[ArrayList]]></CollectionClass>
@@ -2600,7 +2579,7 @@ traceln(" ");
 					<X>-380</X><Y>-40</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
+					<PresentationFlag>false</PresentationFlag>
 					<ShowLabel>true</ShowLabel>
 					<Properties SaveInSnapshot="true" AccessType="public" StaticVariable="false">
 						<CollectionClass><![CDATA[ArrayList]]></CollectionClass>
@@ -2911,8 +2890,7 @@ f_createGridNodes();
 f_createGridConnections();
 f_setActorPolicies();
 f_createAgentLinks();
-f_initializeForecasts();
-//f_instantiateTemplateEnergyAssets();]]></Body>
+f_initializeForecasts();]]></Body>
 				</Function>
 				<Function AccessType="default" StaticFunction="false">
 					<ReturnModificator>VOID</ReturnModificator>
@@ -2969,17 +2947,6 @@ update_o_outputExceptions(e.getMessage());
 try {
 parsedJSONPolicies = mapper.readValue(
 		p_policiesConfigJSON,    // <--- THIS PART CHANGED!
-		ArrayList.class);
-
-} catch (IOException e) {
-e.printStackTrace();
-update_o_outputExceptions(e.getMessage());
-}
-
-// Template assets config
-try {
-parsedJSONTemplateEnergyAssets = mapper.readValue(
-		p_templateAssetsConfigJSON,    // <--- THIS PART CHANGED!
 		ArrayList.class);
 
 } catch (IOException e) {
@@ -3868,8 +3835,8 @@ return 1;
 					<ShowLabel>true</ShowLabel>
 					<Body><![CDATA[if( p_testHolontoolResponse ){
 	String jsonString = t_holontoolResponse.readString();
-    String[] fields = {"actors", "gridconnections", "gridnodes", "policies", "templateAssets"};
-    String actorsString = "", gridconnectionsString = "", gridnodesString = "", policiesString = "", templateAssetsString = "";
+    String[] fields = {"actors", "gridconnections", "gridnodes", "policies"};
+    String actorsString = "", gridconnectionsString = "", gridnodesString = "", policiesString = "";
 
     for (String field : fields) {
     	int fieldIndex = jsonString.indexOf("\"" + field + "\"");
@@ -3892,9 +3859,6 @@ return 1;
                         case "policies":
                             policiesString = extractedData;
                             break;
-                        case "templateAssets":
-                        	templateAssetsString = extractedData;
-                        	break;
                     }
                 } else {
                     System.err.println("Could not find the content for the field: " + field);
@@ -3926,17 +3890,12 @@ return 1;
 		traceln("------------------- ACTORS -----------------------------------------------------------------------");
 		traceln("--------------------------------------------------------------------------------------------------");
 		traceln(actorsString);
-		traceln("--------------------------------------------------------------------------------------------------");
-		traceln("------------------- TEMPLATEASSETS -----------------------------------------------------------------------");
-		traceln("--------------------------------------------------------------------------------------------------");
-		traceln(actorsString);
 	}
 
    	p_gridNodeConfigJSON = gridnodesString.replaceAll("^\"|\"$", "");
 	p_gridConnectionConfigJSON = gridconnectionsString.replaceAll("^\"|\"$", "");
 	p_actorsConfigJSON = actorsString.replaceAll("^\"|\"$", "");
 	p_policiesConfigJSON = policiesString.replaceAll("^\"|\"$", "");
-	p_templateAssetsConfigJSON = templateAssetsString.replaceAll("^\"|\"$", "");
 	
 
 }
@@ -5208,213 +5167,6 @@ if( Houses.size() > 0 ){
 
 return value;]]></Body>
 				</Function>
-				<Function AccessType="default" StaticFunction="false">
-					<ReturnModificator>VOID</ReturnModificator>
-					<ReturnType><![CDATA[double]]></ReturnType>
-					<Id>1690207969988</Id>
-					<Name><![CDATA[f_instantiateTemplateEnergyAssets]]></Name>
-					<ExcludeFromBuild>true</ExcludeFromBuild>
-					<X>-700</X><Y>250</Y>
-					<Label><X>10</X><Y>0</Y></Label>
-					<PublicFlag>false</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
-					<ShowLabel>true</ShowLabel>
-					<Body><![CDATA[for( HashMap l : parsedJSONTemplateEnergyAssets ) {
-		OL_EACategories assetCategory = OL_EACategories.valueOf((String)l.get( "category" ));
-		switch( assetCategory )  {
-			case CONSUMPTION:
-				EnergyAsset consumerAsset = add_pop_templateEnergyAssets();
-				//consumerAsset.set_p_parentAgentID( this.p_agentID );
-				consumerAsset.set_p_parentAgentID( null );
-				String assetType = (String)l.get( "type" ); 
-				consumerAsset.set_p_energyAssetType( OL_EnergyAssetType.valueOf(assetType) );
-				
-				//Carefull, this fix was needed for the TVW casus. It assumes that the other cases do not have 'Building' gridconnections.
-				//As the building gridconnections will get the store_other_electricity profiles.
-				//It also assumes that hot water is ONLY for households (that was always the case in the option lists anyway, but in fact not very robust)
-
-				//if ( assetType.equals("DIESEL_VEHICLE")){
-				//	consumerAsset.set_p_defaultEnergyAssetPresetName( (String)l.get( "name" ));
-				//}
-				/*if( assetType.equals("ELECTRICITY_DEMAND") & ((String)l.get( "name" )).contains("TEMPLATE") ){
-					//traceln("Adding template assets!");
-					if ( p_gridConnectionCategory == OL_GridConnectionCategory.HOUSE) {
-						consumerAsset.set_p_defaultEnergyAssetPresetName( "House_other_electricity"); 
-					} else if ( p_gridConnectionCategory == OL_GridConnectionCategory.BUILDING) {
-						consumerAsset.set_p_defaultEnergyAssetPresetName( "Store_other_electricity");
-					} else {
-						consumerAsset.set_p_defaultEnergyAssetPresetName( (String)l.get( "name" ));
-					}
-				}
-				else if (assetType.equals("HOT_WATER_CONSUMPTION")){
-					if ( p_gridConnectionCategory == OL_GridConnectionCategory.HOUSE) {
-						consumerAsset.set_p_defaultEnergyAssetPresetName( "House_hot_water");
-					} else {
-						consumerAsset.set_p_defaultEnergyAssetPresetName( (String)l.get( "name" ));
-					}
-				}
-				else {
-					consumerAsset.set_p_defaultEnergyAssetPresetName( (String)l.get( "name" ));
-					//traceln("Consumption asset type should not occur or is not processed correctly for assetName:" + (String)l.get( "name" ));
-				}*/
-
-				double yearlyDemandElectricity_kWh = l.get( "yearlyDemandElectricity_kWh") == null? 0.0: Double.valueOf( l.get( "yearlyDemandElectricity_kWh").toString()).doubleValue();
-				double yearlyDemandHeat_kWh = l.get( "yearlyDemandHeat_kWh") == null? 0.0: Double.valueOf( l.get( "yearlyDemandHeat_kWh").toString()).doubleValue();
-				double yearlyDemandHydrogen_kWh = l.get( "yearlyDemandHydrogen_kWh") == null? 0.0: Double.valueOf( l.get( "yearlyDemandHydrogen_kWh").toString()).doubleValue();
-				double yearlyDemandMethane_kWh = l.get( "yearlyDemandMethane_kWh") == null? 0.0: Double.valueOf( l.get( "yearlyDemandMethane_kWh").toString()).doubleValue();
-				double yearlyDemandDiesel_kWh = l.get( "yearlyDemandDiesel_kWh") == null? 0.0: Double.valueOf( l.get( "yearlyDemandDiesel_kWh").toString()).doubleValue();
-				double energyConsumption_kWhpkm = l.get( "energyConsumption_kWhpkm" ) == null? 0.0: Double.valueOf( l.get( "energyConsumption_kWhpkm" ).toString()).doubleValue();
-				double vehicleScaling = l.get("vehicleScaling") == null? 1.0: Double.valueOf( l.get( "vehicleScaling" ).toString()).doubleValue();
-	
-				consumerAsset.f_instantiateConsumerAsset( consumerAsset.p_energyAssetType, yearlyDemandElectricity_kWh , yearlyDemandHeat_kWh , yearlyDemandHydrogen_kWh , yearlyDemandMethane_kWh, yearlyDemandDiesel_kWh, energyConsumption_kWhpkm, vehicleScaling);
-				consumerAsset.f_connectToParentNode( this );
-			break;
-			
-			case PRODUCTION:
-				EnergyAsset producerAsset = add_pop_templateEnergyAssets();
-//				producerAsset.set_p_parentAgentID( this.p_agentID );
-				producerAsset.set_p_parentAgentID( null );
-				producerAsset.set_p_energyAssetType( OL_EnergyAssetType.valueOf((String)l.get( "type" ) ));
-				producerAsset.set_p_defaultEnergyAssetPresetName( (String)l.get( "name" ));
-
-				double capacityElectricity_kW = l.get( "capacityElectricity_kW")== null? 0.0: Double.valueOf( l.get( "capacityElectricity_kW").toString()).doubleValue();
-				double capacityHeat_kW = l.get( "capacityHeat_kW")== null? 0.0: Double.valueOf( l.get( "capacityHeat_kW").toString()).doubleValue();
-				double yearlyProductionHydrogen_kWh = l.get( "yearlyProductionHydrogen_kWh")== null? 0.0: Double.valueOf( l.get( "yearlyProductionHydrogen_kWh").toString()).doubleValue();
-				double yearlyProductionMethane_kWh = l.get( "yearlyProductionMethane_kWh")== null? 0.0: Double.valueOf( l.get( "yearlyProductionMethane_kWh").toString()).doubleValue();
-				double outputTemperature_degC = l.get( "deliveryTemp_degC")== null? 0.0: Double.valueOf( l.get( "deliveryTemp_degC").toString()).doubleValue();
-				
-				// Determine residual heat delivery temperature from coldest connected asset
-				/*if(this instanceof GCResidualHeat) {
-					//double deliveryTemp_degC = l.get( "deliveryTemp_degC")== null? 0.0: Double.valueOf( l.get( "deliveryTemp_degC").toString()).doubleValue();
-					traceln("Residual heat delivery temperature = "+outputTemperature_degC);
-					((GCResidualHeat)this).p_deliveryTemp_degC = outputTemperature_degC < ((GCResidualHeat)this).p_deliveryTemp_degC? outputTemperature_degC : ((GCResidualHeat)this).p_deliveryTemp_degC;
-				}*/
-				
-							
-				producerAsset.f_instantiateProducerAsset( producerAsset.p_energyAssetType, capacityElectricity_kW, capacityHeat_kW, yearlyProductionHydrogen_kWh, yearlyProductionMethane_kWh, outputTemperature_degC);
-				producerAsset.f_connectToParentNode( this );
-				//main.c_productionAssets.add(producerAsset);
-				/*if ( l.get( "type" ).equals("WINDMILL") ) {
-					main.v_totalInstalledWindPower_kW += capacityElectricity_kW;
-				} else if ( l.get( "type" ).equals("PHOTOVOLTAIC") ) {
-					main.v_totalInstalledPVPower_kW += capacityElectricity_kW;
-				}*/
-			break;
-			
-			case CONVERSION:
-				EnergyAsset converterAsset = add_pop_templateEnergyAssets();
-				//converterAsset.set_p_parentAgentID( this.p_agentID );
-				converterAsset.set_p_parentAgentID( null );
-				converterAsset.set_p_energyAssetType( OL_EnergyAssetType.valueOf((String)l.get( "type" ) ));
-				converterAsset.set_p_defaultEnergyAssetPresetName( (String)l.get( "name" ));
-				//traceln( "l contents"+l.toString() );
-				
-				double capacityElectric_kW = l.get( "capacityElectricity_kW")== null? 0.0: Double.valueOf(l.get( "capacityElectricity_kW").toString()).doubleValue();
-				double capacityHeat_kW1 = l.get( "capacityHeat_kW")== null? 0: Double.valueOf(l.get( "capacityHeat_kW").toString()).doubleValue();
-				double capacityMethane_kW = l.get( "capacityMethane_kW")== null? 0: Double.valueOf(l.get( "capacityMethane_kW").toString()).doubleValue();
-				double eta_r = (Double)l.get( "eta_r" ) == null? 0.0 : Double.valueOf(l.get( "eta_r" ).toString()).doubleValue();
-				double deliveryTemp_degC1 = l.get( "deliveryTemp_degC" ) == null? 0.0: Double.valueOf( l.get( "deliveryTemp_degC" ).toString()).doubleValue();
-				String ambientTempType = (String)l.get( "ambientTempType" ) == null? "": (String)l.get( "ambientTempType" );
-				double belowZeroHeatpumpEtaReductionFactor = (Double)l.get( "etaReduction_r" ) == null? 1 : Double.valueOf(l.get( "etaReduction_r" ).toString()).doubleValue();
-
-				
-				converterAsset.f_instantiateConverterAsset( converterAsset.p_energyAssetType,
-														capacityElectric_kW,
-														capacityHeat_kW1,
-														capacityMethane_kW,
-														eta_r,
-														deliveryTemp_degC1,
-														ambientTempType,
-														belowZeroHeatpumpEtaReductionFactor
-														);														
-				converterAsset.f_connectToParentNode( this );
-				//traceln("ambientTempType = "+ambientTempType);
-				//converterAsset.f_setLinkedVariable( ambientTempType, null );
-			break;
-		
-				
-			case STORAGE:
-				EnergyAsset storageAsset = add_pop_templateEnergyAssets();
-				//storageAsset.set_p_parentAgentID( this.p_agentID );
-				storageAsset.set_p_parentAgentID( null );
-				storageAsset.set_p_energyAssetType( OL_EnergyAssetType.valueOf((String)l.get( "type" ) ));
-				storageAsset.set_p_defaultEnergyAssetPresetName( (String)l.get( "name" ));
-				if( storageAsset.p_energyAssetType == OL_EnergyAssetType.STORAGE_HEAT){
-				    double capacityHeat_kW2 = l.get( "capacityHeat_kW") == null? 0.0: Double.valueOf( l.get( "capacityHeat_kW").toString()).doubleValue();
-					double lossFactor_WpK = l.get( "lossFactor_WpK" ) == null? 0.0: Double.valueOf( l.get( "lossFactor_WpK" ).toString()).doubleValue() * uniform(0.7, 1.3);
-					double heatCapacity_JpK = l.get( "heatCapacity_JpK" ) == null? 0.0: Double.valueOf( l.get( "heatCapacity_JpK" ).toString()).doubleValue();
-					double minTemperature_degC = l.get( "minTemp_degC" ) == null? 44.0: Double.valueOf( l.get( "minTemp_degC" ).toString()).doubleValue(); // provide default values
-					double maxTemperature_degC = l.get( "maxTemp_degC" ) == null? 99.0: Double.valueOf( l.get( "maxTemp_degC" ).toString()).doubleValue();
-					double setTemperature_degC = l.get( "setTemp_degC" ) == null? 66.0: Double.valueOf( l.get( "setTemp_degC" ).toString()).doubleValue();
-					double initialTemperature_degC = l.get( "initialTemperature_degC" ) == null? 0.0 : Double.valueOf( l.get( "initialTemperature_degC" ).toString()).doubleValue();		
-					String ambientTempType2 = (String)l.get( "ambientTempType" ) == null ? "": (String)l.get( "ambientTempType" );					
-					
-					/*if (this instanceof GCHouse ){
-						heatCapacity_JpK = heatCapacity_JpK * uniform(0.7, 1.3);
-						initialTemperature_degC = initialTemperature_degC * uniform(0.7, 1.3);
-					}*/
-					
-					//traceln("gridconnection heatstorage asset initialisation check! minTemp = "+minTemperature_degC+", maxTemperature_degC = "+maxTemperature_degC+", setTemp_degC = "+ setTemperature_degC+", initialTemperature_degC = "+initialTemperature_degC);
-					storageAsset.p_energyAssetInstance = new J_EAStorageHeat(storageAsset, OL_EAStorageTypes.HEATBUFFER, capacityHeat_kW2, lossFactor_WpK, p_timeStep_h, initialTemperature_degC, minTemperature_degC, maxTemperature_degC, setTemperature_degC, heatCapacity_JpK, ambientTempType2);	
-					
-				}
-				else if (storageAsset.p_energyAssetType == OL_EnergyAssetType.ELECTRIC_VEHICLE){
-					double capacityElectric_kW1 = l.get( "capacityElectricity_kW") == null? 0.0: Double.valueOf( l.get( "capacityElectricity_kW" ).toString()).doubleValue();
-					double storageCapacity_kWh = l.get( "storageCapacity_kWh" ) == null? 0.0: Double.valueOf( l.get( "storageCapacity_kWh").toString()).doubleValue();
-					double initialStateOfCharge_r = l.get( "stateOfCharge_r" ) == null? 0.0: Double.valueOf( l.get( "stateOfCharge_r" ).toString()).doubleValue();
-					double energyConsumption_kWhpkm2 = l.get( "energyConsumption_kWhpkm" ) == null? 0.0: Double.valueOf( l.get( "energyConsumption_kWhpkm" ).toString()).doubleValue();
-					double vehicleScalingElectric = l.get("vehicleScaling") == null? 1.0: Double.valueOf( l.get( "vehicleScaling" ).toString()).doubleValue();
-					storageAsset.p_energyAssetInstance = new J_EAEV(storageAsset, capacityElectric_kW1, storageCapacity_kWh, initialStateOfCharge_r, p_timeStep_h, energyConsumption_kWhpkm2, vehicleScalingElectric );  
-				}
-				else if (storageAsset.p_energyAssetType == OL_EnergyAssetType.STORAGE_ELECTRIC){
-					double capacityElectric_kW1 = l.get( "capacityElectricity_kW") == null? 0.0: Double.valueOf( l.get( "capacityElectricity_kW" ).toString()).doubleValue();
-					double storageCapacity_kWh = l.get( "storageCapacity_kWh" ) == null? 0.0: Double.valueOf( l.get( "storageCapacity_kWh").toString()).doubleValue();
-					double initialStateOfCharge_r = l.get( "stateOfCharge_r" ) == null? 0.0: Double.valueOf( l.get( "stateOfCharge_r" ).toString()).doubleValue();
-					storageAsset.p_energyAssetInstance = new J_EAStorageElectric(storageAsset, capacityElectric_kW1, storageCapacity_kWh, initialStateOfCharge_r, p_timeStep_h);
-				}
-				else if (storageAsset.p_energyAssetType == OL_EnergyAssetType.HEATMODEL ){
-				
-					double capacityHeat_kW3 = l.get( "capacityHeat_kW") == null? 0.0: Double.valueOf( l.get( "capacityHeat_kW").toString()).doubleValue();
-					double lossFactor_WpK2 = l.get( "lossFactor_WpK" ) == null? 0.0: Double.valueOf( l.get( "lossFactor_WpK" ).toString()).doubleValue() * uniform(0.8, 1.2);
-					double heatCapacity_JpK2 = l.get( "heatCapacity_JpK" ) == null? 0.0: Double.valueOf( l.get( "heatCapacity_JpK" ).toString()).doubleValue() * uniform(0.7, 1.3);
-					double minTemperature_degC2 = l.get( "minTemp_degC" ) == null? 1.0: Double.valueOf( l.get( "minTemp_degC" ).toString()).doubleValue(); 
-					double maxTemperature_degC2 = l.get( "maxTemp_degC" ) == null? 90.0: Double.valueOf( l.get( "maxTemp_degC" ).toString()).doubleValue();
-					double initialTemperature_degC2 = l.get( "initialTemperature_degC" ) == null? 0.0 : Double.valueOf( l.get( "initialTemperature_degC" ).toString()).doubleValue();		
-					String ambientTempType3 = (String)l.get( "ambientTempType" ) == null? "AIR": (String)l.get( "ambientTempType" ); //ALWAYS AIR!
-					double setTemperature_degC2 = 10.0; // this value does nothing for a heatmodel. But it is required to initialize the J_instance
-
-					//p_ThermalStorageAsset = storageAsset;
-					//p_ThermalStorageAsset.p_energyAssetInstance = new J_EAStorageHeat(p_ThermalStorageAsset, OL_EAStorageTypes.HEATMODEL_BUILDING, capacityHeat_kW3, lossFactor_WpK2, main.p_timeStep_h, initialTemperature_degC2 , minTemperature_degC2, maxTemperature_degC2, setTemperature_degC2, heatCapacity_JpK2, ambientTempType3);
-					//p_ThermalStorageAsset.f_connectToParentNode( this );
-					//main.c_storageAssets.add( p_ThermalStorageAsset );
-					//main.c_ambientAirDependentAssets.add( p_ThermalStorageAsset );
-					
-					//initialise temp, only option is AIR ambient temp type
-					//p_ThermalStorageAsset.p_energyAssetInstance.updateAmbientTemperature( main.v_currentAmbientTemperature_degC );
-			
-				}
-				else if (storageAsset.p_energyAssetType == OL_EnergyAssetType.STORAGE_GAS){
-					double capacityGas_kW = l.get( "capacityGas_kW") == null? 0.0: Double.valueOf( l.get( "capacityGas_kW" ).toString()).doubleValue();
-					double storageCapacity_kWh = l.get( "storageCapacity_kWh" ) == null? 0.0: Double.valueOf( l.get( "storageCapacity_kWh").toString()).doubleValue();
-					double initialStateOfCharge_r = l.get( "stateOfCharge_r" ) == null? 0.0: Double.valueOf( l.get( "stateOfCharge_r" ).toString()).doubleValue();
-					//storageAsset.p_energyAssetInstance = new J_EAStorageGas(storageAsset, capacityGas_kW, storageCapacity_kWh, initialStateOfCharge_r, main.p_timeStep_h);
-					//p_gasBuffer = storageAsset;
-					//traceln("gasBuffer gasCapacity_kW: " + p_gasBuffer.p_energyAssetInstance.getGasCapacity_kW() + " kW");
-				}
-				else {
-					traceln("F_instantiateEnergyAssets: ERROR, storage asset type not available");
-				}
-				//storageAsset.f_connectToParentNode( this );
-				//main.c_storageAssets.add(storageAsset);
-			break;
-			default:
-				traceln("not a valid energy asset category." + assetCategory);
-			break;
-		}
-	}
-//traceln("GridConnection "+this.p_agentID+" has finished initializing its energyAssets!");
-]]></Body>
-				</Function>
 			</Functions>
 			<TableFunctions>
 				<TableFunction AccessType="public" StaticFunction="false">
@@ -5911,7 +5663,7 @@ return value;]]></Body>
 				<TextFile>
 					<Id>1681375993119</Id>
 					<Name><![CDATA[t_holontoolResponse]]></Name>
-					<X>-390</X><Y>340</Y>
+					<X>-390</X><Y>310</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -6253,86 +6005,6 @@ return value;]]></Body>
 					<Id>1658499722957</Id>
 					<Name><![CDATA[pop_energyAssets]]></Name>
 					<X>283</X><Y>878</Y>
-					<Label><X>15</X><Y>0</Y></Label>
-					<PublicFlag>false</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
-					<ShowLabel>true</ShowLabel>
-					<ActiveObjectClass>
-						<PackageName><![CDATA[base]]></PackageName>
-						<ClassName><![CDATA[EnergyAsset]]></ClassName>
-					</ActiveObjectClass>
-					<GenericParameterSubstitute>
-						<GenericParameterSubstituteReference>
-							<PackageName><![CDATA[base]]></PackageName>
-							<ClassName><![CDATA[EnergyAsset]]></ClassName>
-							<ItemName><![CDATA[1658499506318]]></ItemName>
-						</GenericParameterSubstituteReference>
-					</GenericParameterSubstitute>
-					<Parameters>
-						<Parameter>
-							<Name><![CDATA[p_energyAssetInstance]]></Name>
-						</Parameter>
-						<Parameter>
-							<Name><![CDATA[p_parentAgentID]]></Name>
-						</Parameter>
-						<Parameter>
-							<Name><![CDATA[p_energyAssetType]]></Name>
-						</Parameter>
-						<Parameter>
-							<Name><![CDATA[p_defaultEnergyAssetPresetName]]></Name>
-						</Parameter>
-						<Parameter>
-							<Name><![CDATA[p_linkedSourceEnergyAsset]]></Name>
-						</Parameter>
-						<Parameter>
-							<Name><![CDATA[p_baseTemperatureReference]]></Name>
-						</Parameter>
-					</Parameters>
-					<ReplicationFlag>true</ReplicationFlag>
-					<Replication Class="CodeValue">
-						<Code><![CDATA[100]]></Code>
-					</Replication>
-					<CollectionType>ARRAY_LIST_BASED</CollectionType>
-					<InEnvironment>true</InEnvironment>	
-					<InitialLocationType>AT_ANIMATION_POSITION</InitialLocationType>
-					<XCode Class="CodeValue">
-						<Code><![CDATA[0]]></Code>
-					</XCode>
-					<YCode Class="CodeValue">
-						<Code><![CDATA[0]]></Code>
-					</YCode>
-					<ZCode Class="CodeValue">
-						<Code><![CDATA[0]]></Code>
-					</ZCode>
-					<ColumnCode Class="CodeValue">
-						<Code><![CDATA[0]]></Code>
-					</ColumnCode>
-					<RowCode Class="CodeValue">
-						<Code><![CDATA[0]]></Code>
-					</RowCode>
-					<LatitudeCode Class="CodeValue">
-						<Code><![CDATA[0]]></Code>
-					</LatitudeCode>
-					<LongitudeCode Class="CodeValue">
-						<Code><![CDATA[0]]></Code>
-					</LongitudeCode>
-					<LocationNameCode Class="CodeValue">
-						<Code><![CDATA[""]]></Code>
-					</LocationNameCode>
-					<InitializationType>EMPTY</InitializationType>
-					<InitializationDatabaseTableQuery>
-						<TableReference>
-						</TableReference>
-					</InitializationDatabaseTableQuery>
-					<InitializationDatabaseType>ONE_AGENT_PER_DATABASE_RECORD</InitializationDatabaseType>
-					<QuantityColumn>
-					</QuantityColumn>
-				</EmbeddedObject>
-				<EmbeddedObject>
-					<Id>1658499722958</Id>
-					<Name><![CDATA[pop_templateEnergyAssets]]></Name>
-					<ExcludeFromBuild>true</ExcludeFromBuild>
-					<X>280</X><Y>940</Y>
 					<Label><X>15</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -8946,7 +8618,7 @@ return value;]]></Body>
 				<GISMap>
 					<Id>1690204202071</Id>
 					<Name><![CDATA[map]]></Name>
-					<X>550</X><Y>130</Y>
+					<X>390</X><Y>140</Y>
 					<Label><X>0</X><Y>-10</Y></Label>
 					<PublicFlag>true</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -9027,559 +8699,6 @@ return value;]]></Body>
 					</Font>
 					<Alignment>CENTER</Alignment>
 				</Text>
-				<Group>
-					<Id>1690209586017</Id>
-					<Name><![CDATA[gr_electricitySettings]]></Name>
-					<X>210</X><Y>240</Y>
-					<Label><X>10</X><Y>0</Y></Label>
-					<PublicFlag>true</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
-					<ShowLabel>false</ShowLabel>
-					<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
-					<EmbeddedIcon>false</EmbeddedIcon>
-					<Z>0</Z>
-					<Rotation>0.0</Rotation>
-
-			<Presentation>
-				<Rectangle>
-					<Id>1690209586019</Id>
-					<Name><![CDATA[rectangle_electricitySettings]]></Name>
-					<X>-160</X><Y>-180</Y>
-					<Label><X>10</X><Y>10</Y></Label>
-					<PublicFlag>true</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
-					<ShowLabel>false</ShowLabel>
-					<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
-					<EmbeddedIcon>false</EmbeddedIcon>
-					<Z>0</Z>
-					<ZHeight>10</ZHeight>
-					<LineWidth>1</LineWidth>
-					<LineColor>-16777216</LineColor>
-					<LineMaterial>null</LineMaterial>
-					<LineStyle>SOLID</LineStyle>
-					<Width>240</Width>
-					<Height>175</Height>
-					<Rotation>0.0</Rotation>
-					<FillColor>-1</FillColor>
-					<FillMaterial>null</FillMaterial>
-				</Rectangle>
-				<Control Type="RadioButtons">
-				 	<EmbeddedIcon>false</EmbeddedIcon>				
-					<Id>1690209586021</Id>
-					<Name><![CDATA[ra_chargingStrategy]]></Name>
-					<X>-145</X><Y>35</Y>
-					<Label><X>0</X><Y>-10</Y></Label>
-					<PublicFlag>true</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
-					<ShowLabel>false</ShowLabel>
-					<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
-					<BasicProperties Width="225" Height="133">
-                        <EmbeddedIcon>false</EmbeddedIcon>	
-						<TextColor/>
-						<Enabled>true</Enabled>
-						<ActionCode><![CDATA[/*
-switch (ra_chargingStrategy.getValue()){
-	case 0:
-		p_EVChargingType = "conventional";
-	break;
-	case 1:
-		p_EVChargingType = "smart";
-	break;
-}
-
-f_resetSettings();
-*/]]></ActionCode>
-					</BasicProperties>
-					<ExtendedProperties>
-						<Font Name="Dialog" Size="16" Style="0"/>
-						<DefaultValueCode><![CDATA[0]]></DefaultValueCode>
-						<Orientation>VERTICAL</Orientation>
-						<Button><![CDATA[Gewoon laden]]></Button>
-						<Button><![CDATA[Slim laden]]></Button>
-						<LinkTo>false</LinkTo>
-					</ExtendedProperties>
-				</Control>
-				<Group>
-					<Id>1690209586023</Id>
-					<Name><![CDATA[gr_electricAppliancesSliders]]></Name>
-					<X>25</X><Y>-85</Y>
-					<Label><X>10</X><Y>0</Y></Label>
-					<PublicFlag>true</PublicFlag>
-					<PresentationFlag>false</PresentationFlag>
-					<ShowLabel>false</ShowLabel>
-					<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
-					<EmbeddedIcon>false</EmbeddedIcon>
-					<Z>0</Z>
-					<Rotation>0.0</Rotation>
-
-			<Presentation>
-				<Rectangle>
-					<Id>1690209586025</Id>
-					<Name><![CDATA[rectangle23]]></Name>
-					<X>-185</X><Y>-95</Y>
-					<Label><X>10</X><Y>10</Y></Label>
-					<PublicFlag>true</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
-					<ShowLabel>false</ShowLabel>
-					<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
-					<EmbeddedIcon>false</EmbeddedIcon>
-					<Z>0</Z>
-					<ZHeight>10</ZHeight>
-					<LineWidth>1</LineWidth>
-					<LineColor>-16777216</LineColor>
-					<LineMaterial>null</LineMaterial>
-					<LineStyle>SOLID</LineStyle>
-					<Width>395</Width>
-					<Height>175</Height>
-					<Rotation>0.0</Rotation>
-					<FillColor>-1</FillColor>
-					<FillMaterial>null</FillMaterial>
-				</Rectangle>
-				<Image>
-					<Id>1690209586027</Id>
-					<Name><![CDATA[image40]]></Name>
-					<X>200</X><Y>-79</Y>
-					<Label><X>0</X><Y>-10</Y></Label>
-					<PublicFlag>true</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
-					<ShowLabel>false</ShowLabel>
-					<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
-					<OnClickCode><![CDATA[gr_electricAppliancesSliders.setVisible(false);
-rectangle_electricitySettings.setVisible(true);
-i_electricAppliancesPopOut.setVisible(true);]]></OnClickCode>
-					<EmbeddedIcon>false</EmbeddedIcon>
-					<Z>0</Z>
-					<Width>20</Width>
-					<Height>20</Height>
-					<Rotation>90.0</Rotation>
-					<ImageFiles>
-						<ImageResourceReference>
-							<PackageName><![CDATA[base]]></PackageName>
-							<ClassName><![CDATA[icon_arrow.png]]></ClassName>
-						</ImageResourceReference>
-					</ImageFiles>
-					<OriginalSize>false</OriginalSize>
-				</Image>
-				<Control Type="Slider">
-				 	<EmbeddedIcon>false</EmbeddedIcon>				
-					<Id>1690209586029</Id>
-					<Name><![CDATA[sl_rooftopPV]]></Name>
-					<X>70</X><Y>-55</Y>
-					<Label><X>0</X><Y>-10</Y></Label>
-					<PublicFlag>true</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
-					<ShowLabel>false</ShowLabel>
-					<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
-					<BasicProperties Width="100" Height="30">
-                        <EmbeddedIcon>false</EmbeddedIcon>	
-						<Enabled>true</Enabled>
-						<ActionCode><![CDATA[//Setting PV Systems
-double HouseholdPVsystems = count(Houses, x->x.v_hasPV == true);
-t_numberOfRooftopPV.setText(HouseholdPVsystems);
-
-if( sl_rooftopPV.getValue()/100.0*Houses.size() < HouseholdPVsystems){
-	while ( sl_rooftopPV.getValue()/100.0*Houses.size() < HouseholdPVsystems) { // remove excess PV systems
-		GCHouse h = findFirst(Houses, x->x.v_hasPV==true);
-		
-		EnergyAsset EA = findFirst(h.c_productionAssets, p -> p.p_energyAssetType == OL_EnergyAssetType.PHOTOVOLTAIC );
-		traceln("Found household PV system: " + EA);
-		if (EA!=null) {
-			v_totalInstalledPVPower_kW -= EA.p_energyAssetInstance.getElectricCapacity_kW();
-			h.c_productionAssets.remove(EA);
-			remove_pop_energyAssets(EA);
-			traceln("Removing household PV!");
-			h.v_hasPV = false;
-		}
-		HouseholdPVsystems=count(Houses, x->x.v_hasPV == true);		
-	}
- 
-} else { 
-	while ( sl_rooftopPV.getValue()/100.0 * Houses.size() > HouseholdPVsystems) {
-		GCHouse h = findFirst(Houses, x->x.v_hasPV==false);
-		traceln("Check presence of solarpanels: " + h.v_hasPV);
-			//HashMap l = findFirst(parsedJSONTemplateEnergyAssets, l-> l.get("type") == OL_EnergyAssetType.PHOTOVOLTAIC);
-		HashMap l = parsedJSONTemplateEnergyAssets.get(1);
-		EnergyAsset producerAsset = add_pop_energyAssets();
-	//				producerAsset.set_p_parentAgentID( this.p_agentID );
-		producerAsset.set_p_parentAgentID( h.p_agentID );
-		producerAsset.set_p_energyAssetType( OL_EnergyAssetType.valueOf((String)l.get( "type" ) ));
-		producerAsset.set_p_defaultEnergyAssetPresetName( (String)l.get( "name" ));
-	
-		double capacityElectricity_kW = l.get( "capacityElectricity_kW")== null? 0.0: Double.valueOf( l.get( "capacityElectricity_kW").toString()).doubleValue();
-		double capacityHeat_kW = l.get( "capacityHeat_kW")== null? 0.0: Double.valueOf( l.get( "capacityHeat_kW").toString()).doubleValue();
-		double yearlyProductionHydrogen_kWh = l.get( "yearlyProductionHydrogen_kWh")== null? 0.0: Double.valueOf( l.get( "yearlyProductionHydrogen_kWh").toString()).doubleValue();
-		double yearlyProductionMethane_kWh = l.get( "yearlyProductionMethane_kWh")== null? 0.0: Double.valueOf( l.get( "yearlyProductionMethane_kWh").toString()).doubleValue();
-		double outputTemperature_degC = l.get( "deliveryTemp_degC")== null? 0.0: Double.valueOf( l.get( "deliveryTemp_degC").toString()).doubleValue();
-								
-		producerAsset.f_instantiateProducerAsset( producerAsset.p_energyAssetType, capacityElectricity_kW, capacityHeat_kW, yearlyProductionHydrogen_kWh, yearlyProductionMethane_kWh, outputTemperature_degC);
-		producerAsset.f_connectToParentNode( h );
-		
-		c_productionAssets.add(producerAsset);
-		v_totalInstalledPVPower_kW += capacityElectricity_kW;
-	
-		HouseholdPVsystems=count(Houses, x->x.v_hasPV == true);	
-		traceln("Added household PV to household: " + h.p_agentID);
-	}
-	
-}	
-
-v_totalInstalledPVPower_kW = sumWhere(pop_energyAssets,p->p.p_energyAssetInstance.getElectricCapacity_kW(),p -> p.p_energyAssetType == OL_EnergyAssetType.PHOTOVOLTAIC);
-t_numberOfRooftopPV.setText(count(Houses, x->x.v_hasPV == true));
-]]></ActionCode>
-					</BasicProperties>
-					<ExtendedProperties>
-						<DefaultValueCode><![CDATA[0]]></DefaultValueCode>
-						<Orientation>HORIZONTAL</Orientation>
-						<MinValue><![CDATA[0]]></MinValue>
-						<MaxValue><![CDATA[100]]></MaxValue>
-						<Step><![CDATA[1]]></Step>
-						<LinkTo>false</LinkTo>
-					</ExtendedProperties>
-				</Control>
-				<Control Type="Slider">
-				 	<EmbeddedIcon>false</EmbeddedIcon>				
-					<Id>1690209586031</Id>
-					<Name><![CDATA[sl_electricCooking]]></Name>
-					<X>70</X><Y>-25</Y>
-					<Label><X>0</X><Y>-10</Y></Label>
-					<PublicFlag>true</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
-					<ShowLabel>false</ShowLabel>
-					<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
-					<BasicProperties Width="100" Height="30">
-                        <EmbeddedIcon>false</EmbeddedIcon>	
-						<Enabled>true</Enabled>
-						<ActionCode><![CDATA[/*f_setInductionStove();
-
-//traceln(count(pop_EA_Households, x->x.v_hasInductionStove == true) + " households with electric cooking");
-t_numberOfElectricStoves.setText(count(pop_EA_Households, x->x.v_hasInductionStove == true));
-f_resetSettings();
-*/]]></ActionCode>
-					</BasicProperties>
-					<ExtendedProperties>
-						<DefaultValueCode><![CDATA[0]]></DefaultValueCode>
-						<Orientation>HORIZONTAL</Orientation>
-						<MinValue><![CDATA[0]]></MinValue>
-						<MaxValue><![CDATA[100]]></MaxValue>
-						<Step><![CDATA[1]]></Step>
-						<LinkTo>false</LinkTo>
-					</ExtendedProperties>
-				</Control>
-				<Control Type="Slider">
-				 	<EmbeddedIcon>false</EmbeddedIcon>				
-					<Id>1690209586033</Id>
-					<Name><![CDATA[sl_EV]]></Name>
-					<X>70</X><Y>5</Y>
-					<Label><X>0</X><Y>-10</Y></Label>
-					<PublicFlag>true</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
-					<ShowLabel>false</ShowLabel>
-					<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
-					<BasicProperties Width="100" Height="30">
-                        <EmbeddedIcon>false</EmbeddedIcon>	
-						<Enabled>true</Enabled>
-						<ActionCode><![CDATA[/*f_setElectricCars(sl_EV.getValue()/100);
-
-t_numberOfElectricVehicles.setText(sum(pop_EA_Households, x->x.v_EVs));
-f_resetSettings();
-sl_careAreaEV.setValue(sl_EV.getValue());
-*/]]></ActionCode>
-					</BasicProperties>
-					<ExtendedProperties>
-						<DefaultValueCode><![CDATA[0]]></DefaultValueCode>
-						<Orientation>HORIZONTAL</Orientation>
-						<MinValue><![CDATA[0]]></MinValue>
-						<MaxValue><![CDATA[100]]></MaxValue>
-						<Step><![CDATA[1]]></Step>
-						<LinkTo>false</LinkTo>
-					</ExtendedProperties>
-				</Control>
-				<Control Type="Slider">
-				 	<EmbeddedIcon>false</EmbeddedIcon>				
-					<Id>1690209586035</Id>
-					<Name><![CDATA[sl_homeBattery]]></Name>
-					<X>70</X><Y>35</Y>
-					<Label><X>0</X><Y>-10</Y></Label>
-					<PublicFlag>true</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
-					<ShowLabel>false</ShowLabel>
-					<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
-					<BasicProperties Width="100" Height="30">
-                        <EmbeddedIcon>false</EmbeddedIcon>	
-						<Enabled>true</Enabled>
-						<ActionCode><![CDATA[/*f_setHomeBatteries(sl_homeBattery.getValue() / 100);
-
-t_numberOfHomeBatteries.setText(count(pop_EA_Households, x->x.v_hasHomeBattery));
-f_resetSettings();
-*/]]></ActionCode>
-					</BasicProperties>
-					<ExtendedProperties>
-						<DefaultValueCode><![CDATA[0]]></DefaultValueCode>
-						<Orientation>HORIZONTAL</Orientation>
-						<MinValue><![CDATA[0]]></MinValue>
-						<MaxValue><![CDATA[100]]></MaxValue>
-						<Step><![CDATA[1]]></Step>
-						<LinkTo>false</LinkTo>
-					</ExtendedProperties>
-				</Control>
-			</Presentation>
-
-				</Group>
-				<Group>
-					<Id>1690209586037</Id>
-					<Name><![CDATA[gr_electricAppliances]]></Name>
-					<X>-45</X><Y>-155</Y>
-					<Label><X>10</X><Y>0</Y></Label>
-					<PublicFlag>true</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
-					<ShowLabel>false</ShowLabel>
-					<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
-					<OnClickCode><![CDATA[gr_electricAppliancesSliders.setVisible(true);
-rectangle_electricitySettings.setVisible(false);]]></OnClickCode>
-					<EmbeddedIcon>false</EmbeddedIcon>
-					<Z>0</Z>
-					<Rotation>0.0</Rotation>
-
-			<Presentation>
-				<Text>
-					<Id>1690209586039</Id>
-					<Name><![CDATA[text138]]></Name>
-					<X>-105</X><Y>-9</Y>
-					<Label><X>0</X><Y>-10</Y></Label>
-					<PublicFlag>true</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
-					<ShowLabel>false</ShowLabel>
-					<DrawMode>SHAPE_DRAW_2D</DrawMode>
-					<EmbeddedIcon>false</EmbeddedIcon>
-					<Z>0</Z>
-					<Rotation>0.0</Rotation>
-					<Color>-16777216</Color>
-					<Text><![CDATA[Elektrische apparaten (#)]]></Text>
-					<Font>
-						<Name>SansSerif</Name>
-						<Size>16</Size>
-						<Style>1</Style>
-					</Font>
-					<Alignment>LEFT</Alignment>
-				</Text>
-				<Image>
-					<Id>1690209586041</Id>
-					<Name><![CDATA[i_electricAppliancesPopOut]]></Name>
-					<X>86</X><Y>12</Y>
-					<Label><X>0</X><Y>-10</Y></Label>
-					<PublicFlag>true</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
-					<ShowLabel>false</ShowLabel>
-					<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
-					<OnClickCode><![CDATA[i_electricAppliancesPopOut.setVisible(false);]]></OnClickCode>
-					<EmbeddedIcon>false</EmbeddedIcon>
-					<Z>0</Z>
-					<Width>20</Width>
-					<Height>20</Height>
-					<Rotation>270.0</Rotation>
-					<ImageFiles>
-						<ImageResourceReference>
-							<PackageName><![CDATA[base]]></PackageName>
-							<ClassName><![CDATA[icon_arrow.png]]></ClassName>
-						</ImageResourceReference>
-					</ImageFiles>
-					<OriginalSize>false</OriginalSize>
-				</Image>
-			</Presentation>
-
-				</Group>
-				<Text>
-					<Id>1690209586043</Id>
-					<Name><![CDATA[t_numberOfElectricVehicles]]></Name>
-					<X>55</X><Y>-74</Y>
-					<Label><X>0</X><Y>-10</Y></Label>
-					<PublicFlag>true</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
-					<ShowLabel>false</ShowLabel>
-					<DrawMode>SHAPE_DRAW_2D</DrawMode>
-					<EmbeddedIcon>false</EmbeddedIcon>
-					<Z>0</Z>
-					<Rotation>0.0</Rotation>
-					<Color>-16777216</Color>
-					<Text><![CDATA[0]]></Text>
-					<Font>
-						<Name>Dialog</Name>
-						<Size>16</Size>
-						<Style>0</Style>
-					</Font>
-					<Alignment>RIGHT</Alignment>
-				</Text>
-				<Text>
-					<Id>1690209586045</Id>
-					<Name><![CDATA[text133]]></Name>
-					<X>-145</X><Y>-104</Y>
-					<Label><X>0</X><Y>-10</Y></Label>
-					<PublicFlag>true</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
-					<ShowLabel>false</ShowLabel>
-					<DrawMode>SHAPE_DRAW_2D</DrawMode>
-					<EmbeddedIcon>false</EmbeddedIcon>
-					<Z>0</Z>
-					<Rotation>0.0</Rotation>
-					<Color>-16777216</Color>
-					<Text><![CDATA[Elektrisch koken]]></Text>
-					<Font>
-						<Name>Dialog</Name>
-						<Size>16</Size>
-						<Style>0</Style>
-					</Font>
-					<Alignment>LEFT</Alignment>
-				</Text>
-				<Text>
-					<Id>1690209586047</Id>
-					<Name><![CDATA[text135]]></Name>
-					<X>-145</X><Y>-74</Y>
-					<Label><X>0</X><Y>-10</Y></Label>
-					<PublicFlag>true</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
-					<ShowLabel>false</ShowLabel>
-					<DrawMode>SHAPE_DRAW_2D</DrawMode>
-					<EmbeddedIcon>false</EmbeddedIcon>
-					<Z>0</Z>
-					<Rotation>0.0</Rotation>
-					<Color>-16777216</Color>
-					<Text><![CDATA[Elektrische auto]]></Text>
-					<Font>
-						<Name>Dialog</Name>
-						<Size>16</Size>
-						<Style>0</Style>
-					</Font>
-					<Alignment>LEFT</Alignment>
-				</Text>
-				<Text>
-					<Id>1690209586049</Id>
-					<Name><![CDATA[t_numberOfRooftopPV]]></Name>
-					<X>55</X><Y>-134</Y>
-					<Label><X>0</X><Y>-10</Y></Label>
-					<PublicFlag>true</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
-					<ShowLabel>false</ShowLabel>
-					<DrawMode>SHAPE_DRAW_2D</DrawMode>
-					<EmbeddedIcon>false</EmbeddedIcon>
-					<Z>0</Z>
-					<Rotation>0.0</Rotation>
-					<Color>-16777216</Color>
-					<Text><![CDATA[0]]></Text>
-					<Font>
-						<Name>Dialog</Name>
-						<Size>16</Size>
-						<Style>0</Style>
-					</Font>
-					<Alignment>RIGHT</Alignment>
-				</Text>
-				<Text>
-					<Id>1690209586051</Id>
-					<Name><![CDATA[text139]]></Name>
-					<X>-145</X><Y>-134</Y>
-					<Label><X>0</X><Y>-10</Y></Label>
-					<PublicFlag>true</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
-					<ShowLabel>false</ShowLabel>
-					<DrawMode>SHAPE_DRAW_2D</DrawMode>
-					<EmbeddedIcon>false</EmbeddedIcon>
-					<Z>0</Z>
-					<Rotation>0.0</Rotation>
-					<Color>-16777216</Color>
-					<Text><![CDATA[PV op dak]]></Text>
-					<Font>
-						<Name>Dialog</Name>
-						<Size>16</Size>
-						<Style>0</Style>
-					</Font>
-					<Alignment>LEFT</Alignment>
-				</Text>
-				<Text>
-					<Id>1690209586053</Id>
-					<Name><![CDATA[t_numberOfElectricStoves]]></Name>
-					<X>55</X><Y>-104</Y>
-					<Label><X>0</X><Y>-10</Y></Label>
-					<PublicFlag>true</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
-					<ShowLabel>false</ShowLabel>
-					<DrawMode>SHAPE_DRAW_2D</DrawMode>
-					<EmbeddedIcon>false</EmbeddedIcon>
-					<Z>0</Z>
-					<Rotation>0.0</Rotation>
-					<Color>-16777216</Color>
-					<Text><![CDATA[0]]></Text>
-					<Font>
-						<Name>Dialog</Name>
-						<Size>16</Size>
-						<Style>0</Style>
-					</Font>
-					<Alignment>RIGHT</Alignment>
-				</Text>
-				<Text>
-					<Id>1690209586055</Id>
-					<Name><![CDATA[text140]]></Name>
-					<X>-150</X><Y>10</Y>
-					<Label><X>0</X><Y>-10</Y></Label>
-					<PublicFlag>true</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
-					<ShowLabel>false</ShowLabel>
-					<DrawMode>SHAPE_DRAW_2D</DrawMode>
-					<EmbeddedIcon>false</EmbeddedIcon>
-					<Z>0</Z>
-					<Rotation>0.0</Rotation>
-					<Color>-16777216</Color>
-					<Text><![CDATA[Laadstrategie]]></Text>
-					<Font>
-						<Name>SansSerif</Name>
-						<Size>16</Size>
-						<Style>1</Style>
-					</Font>
-					<Alignment>LEFT</Alignment>
-				</Text>
-				<Text>
-					<Id>1690209586057</Id>
-					<Name><![CDATA[text142]]></Name>
-					<X>-145</X><Y>-44</Y>
-					<Label><X>0</X><Y>-10</Y></Label>
-					<PublicFlag>true</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
-					<ShowLabel>false</ShowLabel>
-					<DrawMode>SHAPE_DRAW_2D</DrawMode>
-					<EmbeddedIcon>false</EmbeddedIcon>
-					<Z>0</Z>
-					<Rotation>0.0</Rotation>
-					<Color>-16777216</Color>
-					<Text><![CDATA[Thuisbatterij]]></Text>
-					<Font>
-						<Name>Dialog</Name>
-						<Size>16</Size>
-						<Style>0</Style>
-					</Font>
-					<Alignment>LEFT</Alignment>
-				</Text>
-				<Text>
-					<Id>1690209586059</Id>
-					<Name><![CDATA[t_numberOfHomeBatteries]]></Name>
-					<X>55</X><Y>-44</Y>
-					<Label><X>0</X><Y>-10</Y></Label>
-					<PublicFlag>true</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
-					<ShowLabel>false</ShowLabel>
-					<DrawMode>SHAPE_DRAW_2D</DrawMode>
-					<EmbeddedIcon>false</EmbeddedIcon>
-					<Z>0</Z>
-					<Rotation>0.0</Rotation>
-					<Color>-16777216</Color>
-					<Text><![CDATA[0]]></Text>
-					<Font>
-						<Name>Dialog</Name>
-						<Size>16</Size>
-						<Style>0</Style>
-					</Font>
-					<Alignment>RIGHT</Alignment>
-				</Text>
-			</Presentation>
-
-				</Group>
 			</Presentation>
 
 				</Level>
@@ -30803,18 +29922,6 @@ void f_heatWithHybridHeatpump() {
 						<Type><![CDATA[double]]></Type>        
 					</Properties>
 				</Variable>
-				<Variable Class="PlainVariable">
-					<Id>1690210838499</Id>
-					<Name><![CDATA[v_hasPV]]></Name>
-					<X>250</X><Y>460</Y>
-					<Label><X>10</X><Y>0</Y></Label>
-					<PublicFlag>false</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
-					<ShowLabel>true</ShowLabel>
-					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
-						<Type><![CDATA[boolean]]></Type>        
-					</Properties>
-				</Variable>
 				<Variable Class="Parameter">
 					<Id>1665487269767</Id>
 					<Name><![CDATA[p_isolationLabel]]></Name>
@@ -31171,10 +30278,6 @@ if (j_instance instanceof J_EAConsumption) {
  } 
 else if (j_instance instanceof J_EAProduction ) {
 	c_productionAssets.add(EA);
-	if (EA.p_energyAssetType == OL_EnergyAssetType.PHOTOVOLTAIC) {
-		v_hasPV = true;
-		traceln("PV system connected to House!");
-	}
 } 
 else if (j_instance instanceof J_EAStorage ) {
 	if (j_instance instanceof J_EAStorageHeat) {
@@ -38195,9 +37298,6 @@ if (p_batteryAsset != null){
 				<Parameter>
 					<ParameterName><![CDATA[p_hybridHeatPumpCOPThreshold]]></ParameterName>
 				</Parameter>
-				<Parameter>
-					<ParameterName><![CDATA[p_templateAssetsConfigJSON]]></ParameterName>
-				</Parameter>
 			</Parameters>			
 			<PresentationProperties>
 				<EnableZoomAndPanning>true</EnableZoomAndPanning>
@@ -40826,10 +39926,6 @@ public class J_EAConversionCurtailerHeat extends J_EAConversion implements Seria
 		</Resource>
 		<Resource>
 			<Path><![CDATA[ZEnMoZeroInputJSON.txt]]></Path>
-			<ReferencedFromUserCode>false</ReferencedFromUserCode>
-		</Resource>
-		<Resource>
-			<Path><![CDATA[icon_arrow.png]]></Path>
 			<ReferencedFromUserCode>false</ReferencedFromUserCode>
 		</Resource>
 	</ModelResources>
