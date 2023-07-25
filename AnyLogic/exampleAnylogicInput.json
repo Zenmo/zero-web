@@ -9163,9 +9163,18 @@
 						"category": "PRODUCTION",
 						"type": "PHOTOVOLTAIC",
 						"capacityElectricity_kW": 4,
-						"resourcetype": "ElectricProductionAsset",
 						"name": "TEMPLATE: Household PV"
-					}
+					},
+					{
+                        "capacityElectricity_kW": 7.0,
+                        "category": "STORAGE",
+                        "energyConsumption_kWhpkm": 0.2,
+                        "name": "TEMPLATE: Private Electric Vehicle",
+                        "stateOfCharge_r": 0.8,
+                        "storageCapacity_kWh": 60.0,
+                        "type": "ELECTRIC_VEHICLE",
+                        "vehicleScaling": 1
+                    }
 		]
     }
 }

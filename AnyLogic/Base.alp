@@ -1270,7 +1270,7 @@ traceln(" ");
 					<Id>1659356181110</Id>
 					<Name><![CDATA[v_currentHouseHoldOtherElectricityDemand_fr]]></Name>
 					<Description><![CDATA[Fraction of yearly demand in MWh per hour, multiplied by demand in MWh per year = MW for that hour]]></Description>
-					<X>640</X><Y>870</Y>
+					<X>610</X><Y>870</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -1282,7 +1282,7 @@ traceln(" ");
 				<Variable Class="PlainVariable">
 					<Id>1659356201846</Id>
 					<Name><![CDATA[v_currentWindPowerNormalized_r]]></Name>
-					<X>640</X><Y>950</Y>
+					<X>610</X><Y>950</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -1294,7 +1294,7 @@ traceln(" ");
 				<Variable Class="PlainVariable">
 					<Id>1659356216131</Id>
 					<Name><![CDATA[v_currentSolarPowerNormalized_r]]></Name>
-					<X>640</X><Y>970</Y>
+					<X>610</X><Y>970</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -1306,7 +1306,7 @@ traceln(" ");
 				<Variable Class="PlainVariable">
 					<Id>1659364131698</Id>
 					<Name><![CDATA[v_currentAmbientTemperature_degC]]></Name>
-					<X>640</X><Y>990</Y>
+					<X>610</X><Y>990</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -1318,7 +1318,7 @@ traceln(" ");
 				<Variable Class="PlainVariable">
 					<Id>1663238634515</Id>
 					<Name><![CDATA[v_timeStepsElapsed]]></Name>
-					<X>930</X><Y>870</Y>
+					<X>950</X><Y>870</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -1333,7 +1333,7 @@ traceln(" ");
 				<Variable Class="PlainVariable">
 					<Id>1663243393136</Id>
 					<Name><![CDATA[v_timeOfModelStart_ms]]></Name>
-					<X>930</X><Y>890</Y>
+					<X>950</X><Y>890</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -1345,7 +1345,7 @@ traceln(" ");
 				<Variable Class="PlainVariable">
 					<Id>1663246198254</Id>
 					<Name><![CDATA[v_modelStartUpDuration_s]]></Name>
-					<X>930</X><Y>910</Y>
+					<X>950</X><Y>910</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -1361,7 +1361,7 @@ traceln(" ");
 					<Id>1664530118871</Id>
 					<Name><![CDATA[v_currentBuildingOtherElectricityDemand_fr]]></Name>
 					<Description><![CDATA[Fraction of yearly demand in MWh per hour, multiplied by demand in MWh per year = MW for that hour]]></Description>
-					<X>640</X><Y>890</Y>
+					<X>610</X><Y>890</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -1373,7 +1373,7 @@ traceln(" ");
 				<Variable Class="PlainVariable">
 					<Id>1664533236896</Id>
 					<Name><![CDATA[v_currentHouseHoldHotWaterDemand_fr]]></Name>
-					<X>640</X><Y>930</Y>
+					<X>610</X><Y>930</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -1385,7 +1385,7 @@ traceln(" ");
 				<Variable Class="PlainVariable">
 					<Id>1665499321012</Id>
 					<Name><![CDATA[v_currentIndustrySteelElectricityDemand_fr]]></Name>
-					<X>640</X><Y>1010</Y>
+					<X>610</X><Y>1010</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -1397,7 +1397,7 @@ traceln(" ");
 				<Variable Class="PlainVariable">
 					<Id>1665499340739</Id>
 					<Name><![CDATA[v_currentIndustrySteelHeatDemand_fr]]></Name>
-					<X>640</X><Y>1030</Y>
+					<X>610</X><Y>1030</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -1409,7 +1409,7 @@ traceln(" ");
 				<Variable Class="PlainVariable">
 					<Id>1665499362356</Id>
 					<Name><![CDATA[v_currentIndustryOtherElectricityDemand_fr]]></Name>
-					<X>640</X><Y>1050</Y>
+					<X>610</X><Y>1050</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -1421,7 +1421,7 @@ traceln(" ");
 				<Variable Class="PlainVariable">
 					<Id>1665499375110</Id>
 					<Name><![CDATA[v_currentIndustryOtherHeatDemand_fr]]></Name>
-					<X>640</X><Y>1070</Y>
+					<X>610</X><Y>1070</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -1597,7 +1597,7 @@ traceln(" ");
 				<Variable Class="PlainVariable">
 					<Id>1667397284001</Id>
 					<Name><![CDATA[v_currentLogisticsFleetEDemand_fr]]></Name>
-					<X>640</X><Y>1090</Y>
+					<X>610</X><Y>1090</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -1669,7 +1669,7 @@ traceln(" ");
 				<Variable Class="PlainVariable">
 					<Id>1672229241505</Id>
 					<Name><![CDATA[v_totalInstalledWindPower_kW]]></Name>
-					<X>930</X><Y>950</Y>
+					<X>950</X><Y>950</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -1684,7 +1684,7 @@ traceln(" ");
 				<Variable Class="PlainVariable">
 					<Id>1672229257384</Id>
 					<Name><![CDATA[v_totalInstalledPVPower_kW]]></Name>
-					<X>930</X><Y>970</Y>
+					<X>950</X><Y>970</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -1746,7 +1746,7 @@ traceln(" ");
 				<Variable Class="PlainVariable">
 					<Id>1677070829387</Id>
 					<Name><![CDATA[v_cumulativeHouseholdDemand_fr]]></Name>
-					<X>930</X><Y>930</Y>
+					<X>950</X><Y>930</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -1795,7 +1795,7 @@ traceln(" ");
 					<Id>1678367724979</Id>
 					<Name><![CDATA[v_currentBuildingHeatDemand_fr]]></Name>
 					<Description><![CDATA[Fraction of yearly demand in MWh per hour, multiplied by demand in MWh per year = MW for that hour]]></Description>
-					<X>640</X><Y>910</Y>
+					<X>610</X><Y>910</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -2175,7 +2175,7 @@ traceln(" ");
 						<UnitType><![CDATA[NONE]]></UnitType>
 						<SdArray>false</SdArray>
 						<DefaultValue Class="CodeValue">
-							<Code><![CDATA[true]]></Code>
+							<Code><![CDATA[false]]></Code>
 						</DefaultValue>
 						<ParameterEditor>
 							<Id>1663577621791</Id>
@@ -5566,17 +5566,6 @@ return value;]]></Body>
 					</Parameter>
 					<Body><![CDATA[sl_rooftopPV.setValue(APIsliderValue);
 t_numberOfRooftopPV.setText(count(Houses, x->x.v_hasPV == true));]]></Body>
-				</Function>
-				<Function AccessType="default" StaticFunction="false">
-					<ReturnModificator>VOID</ReturnModificator>
-					<ReturnType><![CDATA[double]]></ReturnType>
-					<Id>1690270073719</Id>
-					<Name><![CDATA[function1]]></Name>
-					<X>1480</X><Y>160</Y>
-					<Label><X>10</X><Y>0</Y></Label>
-					<PublicFlag>false</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
-					<ShowLabel>true</ShowLabel>
 				</Function>
 			</Functions>
 			<TableFunctions>
@@ -9305,6 +9294,15 @@ i_electricAppliancesPopOut.setVisible(true);]]></OnClickCode>
 double HouseholdPVsystems = count(Houses, x->x.v_hasPV == true);
 t_numberOfRooftopPV.setText(HouseholdPVsystems);
 
+HashMap t=new HashMap();
+//Get template asset "TEMPLATE: Household PV"
+for (HashMap l:parsedJSONTemplateEnergyAssets) {
+	if (((String)l.get( "name" )).equals("TEMPLATE: Household PV")) {
+		t = l;
+	}
+}
+//HashMap l = findFirst(parsedJSONTemplateEnergyAssets, l-> l.get("type") == OL_EnergyAssetType.PHOTOVOLTAIC);
+
 if( sl_rooftopPV.getValue()/100.0*Houses.size() < HouseholdPVsystems){
 	while ( sl_rooftopPV.getValue()/100.0*Houses.size() < HouseholdPVsystems) { // remove excess PV systems
 		GCHouse h = findFirst(Houses, x->x.v_hasPV==true);
@@ -9315,7 +9313,7 @@ if( sl_rooftopPV.getValue()/100.0*Houses.size() < HouseholdPVsystems){
 			v_totalInstalledPVPower_kW -= EA.p_energyAssetInstance.getElectricCapacity_kW();
 			h.c_productionAssets.remove(EA);
 			remove_pop_energyAssets(EA);
-			traceln("Removing household PV!");
+			traceln("Removing household PV from household:" + h.p_agentID);
 			h.v_hasPV = false;
 		}
 		HouseholdPVsystems=count(Houses, x->x.v_hasPV == true);		
@@ -9324,22 +9322,19 @@ if( sl_rooftopPV.getValue()/100.0*Houses.size() < HouseholdPVsystems){
 } else { 
 	while ( sl_rooftopPV.getValue()/100.0 * Houses.size() > HouseholdPVsystems) {
 		GCHouse h = findFirst(Houses, x->x.v_hasPV==false);
-		traceln("Check presence of solarpanels: " + h.v_hasPV);
-			//HashMap l = findFirst(parsedJSONTemplateEnergyAssets, l-> l.get("type") == OL_EnergyAssetType.PHOTOVOLTAIC);
+		//traceln("Check presence of solarpanels: " + h.v_hasPV);	
 		
-		
-		HashMap l = parsedJSONTemplateEnergyAssets.get(1);
 		EnergyAsset producerAsset = add_pop_energyAssets();
 	//				producerAsset.set_p_parentAgentID( this.p_agentID );
 		producerAsset.set_p_parentAgentID( h.p_agentID );
-		producerAsset.set_p_energyAssetType( OL_EnergyAssetType.valueOf((String)l.get( "type" ) ));
-		producerAsset.set_p_defaultEnergyAssetPresetName( (String)l.get( "name" ));
+		producerAsset.set_p_energyAssetType( OL_EnergyAssetType.valueOf((String)t.get( "type" ) ));
+		producerAsset.set_p_defaultEnergyAssetPresetName( (String)t.get( "name" ));
 	
-		double capacityElectricity_kW = l.get( "capacityElectricity_kW")== null? 0.0: Double.valueOf( l.get( "capacityElectricity_kW").toString()).doubleValue();
-		double capacityHeat_kW = l.get( "capacityHeat_kW")== null? 0.0: Double.valueOf( l.get( "capacityHeat_kW").toString()).doubleValue();
-		double yearlyProductionHydrogen_kWh = l.get( "yearlyProductionHydrogen_kWh")== null? 0.0: Double.valueOf( l.get( "yearlyProductionHydrogen_kWh").toString()).doubleValue();
-		double yearlyProductionMethane_kWh = l.get( "yearlyProductionMethane_kWh")== null? 0.0: Double.valueOf( l.get( "yearlyProductionMethane_kWh").toString()).doubleValue();
-		double outputTemperature_degC = l.get( "deliveryTemp_degC")== null? 0.0: Double.valueOf( l.get( "deliveryTemp_degC").toString()).doubleValue();
+		double capacityElectricity_kW = t.get( "capacityElectricity_kW")== null? 0.0: Double.valueOf( t.get( "capacityElectricity_kW").toString()).doubleValue();
+		double capacityHeat_kW = t.get( "capacityHeat_kW")== null? 0.0: Double.valueOf( t.get( "capacityHeat_kW").toString()).doubleValue();
+		double yearlyProductionHydrogen_kWh = t.get( "yearlyProductionHydrogen_kWh")== null? 0.0: Double.valueOf( t.get( "yearlyProductionHydrogen_kWh").toString()).doubleValue();
+		double yearlyProductionMethane_kWh = t.get( "yearlyProductionMethane_kWh")== null? 0.0: Double.valueOf( t.get( "yearlyProductionMethane_kWh").toString()).doubleValue();
+		double outputTemperature_degC = t.get( "deliveryTemp_degC")== null? 0.0: Double.valueOf( t.get( "deliveryTemp_degC").toString()).doubleValue();
 								
 		producerAsset.f_instantiateProducerAsset( producerAsset.p_energyAssetType, capacityElectricity_kW, capacityHeat_kW, yearlyProductionHydrogen_kWh, yearlyProductionMethane_kWh, outputTemperature_degC);
 		producerAsset.f_connectToParentNode( h );
@@ -9408,12 +9403,63 @@ f_resetSettings();
 					<BasicProperties Width="100" Height="30">
                         <EmbeddedIcon>false</EmbeddedIcon>	
 						<Enabled>true</Enabled>
-						<ActionCode><![CDATA[/*f_setElectricCars(sl_EV.getValue()/100);
+						<ActionCode><![CDATA[//Setting PV Systems
+double HouseholdEVs = count(Houses, x->x.p_householdEV != null);
+//t_numberOfElectricVehicles.setText(HouseholdEVs);
 
-t_numberOfElectricVehicles.setText(sum(pop_EA_Households, x->x.v_EVs));
-f_resetSettings();
-sl_careAreaEV.setValue(sl_EV.getValue());
-*/]]></ActionCode>
+HashMap t=new HashMap();
+//Get template asset "TEMPLATE: Household PV"
+for (HashMap l:parsedJSONTemplateEnergyAssets) {
+	if (((String)l.get( "name" )).equals("TEMPLATE: Private Electric Vehicle")) {
+		t = l;
+	}
+}
+
+if( sl_EV.getValue()/100.0*Houses.size() < HouseholdEVs){
+	while ( sl_EV.getValue()/100.0*Houses.size() < HouseholdEVs & HouseholdEVs > 0) { // remove excess PV systems
+		GCHouse h = findFirst(Houses, x->x.p_householdEV != null);
+		
+		EnergyAsset EA = findFirst(h.c_storageAssets, p -> p.p_energyAssetType == OL_EnergyAssetType.ELECTRIC_VEHICLE );
+		traceln("Found household EV system: " + EA);
+		if (EA!=null) {			
+			h.c_storageAssets.remove(EA);
+			h.c_vehicleAssets.remove(EA);
+			h.p_householdEV = null;
+			remove_pop_energyAssets(EA);
+			traceln("Removing household ÉV from household:" + h.p_agentID);
+		}
+		HouseholdEVs=count(Houses, x->x.p_householdEV != null);		
+	}
+ 
+} else { 
+	while ( sl_EV.getValue()/100.0 * Houses.size() > HouseholdEVs) {
+		GCHouse h = findFirst(Houses, x->x.p_householdEV == null);
+		//traceln("Check presence of solarpanels: " + h.v_hasPV);	
+		
+		EnergyAsset storageAsset = add_pop_energyAssets();
+		storageAsset.set_p_parentAgentID( h.p_agentID );
+		storageAsset.set_p_energyAssetType( OL_EnergyAssetType.valueOf((String)t.get( "type" ) ));
+		storageAsset.set_p_defaultEnergyAssetPresetName( (String)t.get( "name" ));
+
+		double capacityElectric_kW1 = t.get( "capacityElectricity_kW") == null? 0.0: Double.valueOf( t.get( "capacityElectricity_kW" ).toString()).doubleValue();
+		double storageCapacity_kWh = t.get( "storageCapacity_kWh" ) == null? 0.0: Double.valueOf( t.get( "storageCapacity_kWh").toString()).doubleValue();
+		double initialStateOfCharge_r = t.get( "stateOfCharge_r" ) == null? 0.0: Double.valueOf( t.get( "stateOfCharge_r" ).toString()).doubleValue();
+		double energyConsumption_kWhpkm2 = t.get( "energyConsumption_kWhpkm" ) == null? 0.0: Double.valueOf( t.get( "energyConsumption_kWhpkm" ).toString()).doubleValue();
+		double vehicleScalingElectric = t.get("vehicleScaling") == null? 1.0: Double.valueOf( t.get( "vehicleScaling" ).toString()).doubleValue();
+		storageAsset.p_energyAssetInstance = new J_EAEV(storageAsset, capacityElectric_kW1, storageCapacity_kWh, initialStateOfCharge_r, p_timeStep_h, energyConsumption_kWhpkm2, vehicleScalingElectric );  
+
+		storageAsset.f_connectToParentNode( this );
+		c_storageAssets.add(storageAsset);
+		
+		HouseholdEVs=count(Houses, x->x.p_householdEV != null);	
+		traceln("Added household EV to household: " + h.p_agentID);
+	}
+	
+}	
+
+//v_totalInstalledPVPower_kW = sumWhere(pop_energyAssets,p->p.p_energyAssetInstance.getElectricCapacity_kW(),p -> p.p_energyAssetType == OL_EnergyAssetType.ELECTRIC_VEHICLE);
+t_numberOfElectricVehicles.setText(count(Houses, x->x.p_householdEV != null));
+]]></ActionCode>
 					</BasicProperties>
 					<ExtendedProperties>
 						<DefaultValueCode><![CDATA[0]]></DefaultValueCode>
@@ -9714,7 +9760,7 @@ rectangle_electricitySettings.setVisible(false);]]></OnClickCode>
 				 	<EmbeddedIcon>false</EmbeddedIcon>				
 					<Id>1690270244609</Id>
 					<Name><![CDATA[testAPIfunction]]></Name>
-					<X>1480</X><Y>240</Y>
+					<X>1460</X><Y>110</Y>
 					<Label><X>0</X><Y>-10</Y></Label>
 					<PublicFlag>true</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -31455,8 +31501,8 @@ else if (j_instance instanceof J_EAStorage ) {
 		}
 	} 
 	else if (j_instance instanceof J_EAEV) {
-		//c_storageAssets.add(EA);
-		//c_vehicleAssets.add( EA );
+		c_storageAssets.add(EA);
+		c_vehicleAssets.add( EA );
 		//EA.v_powerFraction_fr = 1;
 		MobilityTracker m = main.add_mobilityTrackers();
 		c_mobilityTrackers.add( m );
@@ -36060,10 +36106,18 @@ for (int i = 0; i < nbTrips; i++){
 	distances.add(main.inputTruckTrips.getCellNumericValue("sheet1", rowIndex, 5 + i * 3));
 }
 
-v_tripDist_km = distances.get(0);
-nextActivityStartTimer.restart( starttimes.get(0) - time( MINUTE ), MINUTE);
-nextActivityEndTimer.restart( endtimes.get(0) - time( MINUTE ), MINUTE);
+while ( starttimes.get(v_tripIndex) - time( MINUTE ) < 0) {
+	starttimes.set( v_tripIndex, starttimes.get(v_tripIndex) + 10080 );
+	endtimes.set( v_tripIndex, endtimes.get(v_tripIndex) + 10080 );
+	v_tripIndex++;
+	if ( v_tripIndex > starttimes.size() - 1 ) {
+		v_tripIndex = 0;
+	}
+}
 
+nextActivityStartTimer.restart( starttimes.get(v_tripIndex) - time( MINUTE ), MINUTE);
+nextActivityEndTimer.restart( endtimes.get(v_tripIndex) - time( MINUTE ), MINUTE);
+v_tripDist_km = distances.get(v_tripIndex);
 ]]></Body>
 				</Function>
 				<Function AccessType="default" StaticFunction="false">
@@ -36112,9 +36166,18 @@ for (int i = 0; i < nbTrips; i++){
 	distances.add(p_gridConnection.main.inputHouseholdTrips.getCellNumericValue("sheet1", rowIndex + 2, 5 + i * 3));
 }
 
-v_tripDist_km = distances.get(0);
-nextActivityStartTimer.restart( starttimes.get(0), MINUTE);
-nextActivityEndTimer.restart( endtimes.get(0), MINUTE);
+while ( starttimes.get(v_tripIndex) - time( MINUTE ) < 0) {
+	starttimes.set( v_tripIndex, starttimes.get(v_tripIndex) + 10080 );
+	endtimes.set( v_tripIndex, endtimes.get(v_tripIndex) + 10080 );
+	v_tripIndex++;
+	if ( v_tripIndex > starttimes.size() - 1 ) {
+		v_tripIndex = 0;
+	}
+}
+
+nextActivityStartTimer.restart( starttimes.get(v_tripIndex) - time( MINUTE ), MINUTE);
+nextActivityEndTimer.restart( endtimes.get(v_tripIndex) - time( MINUTE ), MINUTE);
+v_tripDist_km = distances.get(v_tripIndex);
 // IS DE - starttimes.get(0) in deze initialisatie correct?? ! Bij trukcs niet, Later nog checken.
 ]]></Body>
 				</Function>
