@@ -2,7 +2,7 @@ import {Bag2DPand, getBag2dPanden} from "./bag2d";
 import {useState} from "react";
 import {LatLngBounds} from "leaflet";
 import {Bag3DFeature, getBag3dFeatures} from "./3dbag_old";
-import {Bag2DVerblijfsobject, getBagVerblijfsobjecten} from "./bag-verblijfsobject";
+import {getBagVerblijfsobjecten, Verblijfsobject} from "./bag-verblijfsobject";
 import {
     getPostcodeKleinverbruik,
     PostcodeKleinverbruikFeature,
@@ -13,7 +13,7 @@ import {
 export interface AppState {
     bag2dPanden: Bag2DPand[]
     bag3dFeatures: Bag3DFeature[]
-    verblijfsobjecten: Bag2DVerblijfsobject[]
+    verblijfsobjecten: Verblijfsobject[]
     postcodeKleinverbruik: {
         elektricity: PostcodeKleinverbruikFeature[]
         gas: PostcodeKleinverbruikFeature[]
@@ -33,7 +33,7 @@ const initialState: AppState = {
 export type PandData = {
     bag2dPand?: Bag2DPand,
     bag3dPand?: Bag3DFeature,
-    verblijfsobjecten: Bag2DVerblijfsobject[],
+    verblijfsobjecten: Verblijfsobject[],
     kleinverbruik: {
         [postcode: string]: KleinVerbruikPerPostcode
     }
@@ -124,10 +124,10 @@ export const useAppState = () => {
         const bag3dPand = appState.bag3dFeatures
             .find(bag3dPand => bag3dPand.properties.identificatie === `NL.IMBAG.Pand.${pandId}`)
         const verblijfsobjecten = appState.verblijfsobjecten
-            .filter(bagVerblijfsobject => bagVerblijfsobject.properties.pandidentificatie === pandId)
+            .filter(verblijfsobject => verblijfsobject.pandidentificatie === pandId)
 
         const postcodes = new Set(
-            verblijfsobjecten.map(verblijfsobject => verblijfsobject.properties.postcode)
+            verblijfsobjecten.map(verblijfsobject => verblijfsobject.postcode)
         )
 
         const kleinverbruik: {[postcode: string]: KleinVerbruikPerPostcode} = {}

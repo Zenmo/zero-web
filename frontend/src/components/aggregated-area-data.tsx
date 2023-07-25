@@ -1,7 +1,7 @@
 import {AppState} from "../services/appState";
 import {createElement as h} from "react";
 import {DtBold} from "./pand-display";
-import {Bag2DVerblijfsobject} from "../services/bag-verblijfsobject";
+import {Verblijfsobject} from "../services/bag-verblijfsobject";
 import {Bag2DPand} from "../services/bag2d";
 
 
@@ -17,15 +17,15 @@ export const AggregatedAreaData = ({appState}: {appState: AppState}) => (
         // TODO: does not include panden with no verblijfsobject, like factory floors
         h('dd', {}, sumVloeroppervlak(appState.verblijfsobjecten).toLocaleString('nl-NL') + " m²"),
         h(DtBold, {}, "Gebruiksdoelen"),
-        h('dd', {}, Object.entries(gebruiksdoelen(appState.verblijfsobjecten))
+        h('dd', {}, Object.entries(gebruiksdoelenOverzicht(appState.verblijfsobjecten))
                 .map(([gebruiksdoel, aantal]) => h('div', {key: gebruiksdoel}, `${gebruiksdoel} (${aantal}x)`))
         )
     )
 )
 
-const sumVloeroppervlak = (verblijfsobjecten: Bag2DVerblijfsobject[]): number =>
+const sumVloeroppervlak = (verblijfsobjecten: Verblijfsobject[]): number =>
     verblijfsobjecten
-        .map(verblijfsobject => verblijfsobject.properties.oppervlakte)
+        .map(verblijfsobject => verblijfsobject.oppervlakte)
         .reduce((acc, val) => acc + val, 0)
 
 const averageBouwjaar = (panden: Bag2DPand[]) => {
@@ -44,10 +44,9 @@ const averageBouwjaar = (panden: Bag2DPand[]) => {
     return Math.round(average)
 }
 
-const gebruiksdoelen = (verblijfsobjecten: Bag2DVerblijfsobject[]): {[gebruiksdoel: string]: number} =>
+const gebruiksdoelenOverzicht = (verblijfsobjecten: Verblijfsobject[]): {[gebruiksdoel: string]: number} =>
     verblijfsobjecten
-        // TODO: split comma-separated values
-        .map(verblijfsobject => verblijfsobject.properties.gebruiksdoel)
+        .flatMap(verblijfsobject => verblijfsobject.gebruiksdoelen)
         .reduce((acc, gebruiksdoel) => ({
             ...acc,
             // @ts-ignore
