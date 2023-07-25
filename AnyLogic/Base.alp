@@ -2854,7 +2854,8 @@ if (b_addKpiVisuals) {
 }
 v_cumulativeHouseholdDemand_fr += v_currentHouseHoldHotWaterDemand_fr;
 v_timeStepsElapsed ++;
-]]></Action>
+
+pl_mainPlot.updateData();]]></Action>
 				</Event>
 				<Event>
 					<Id>1674058522977</Id>
@@ -5414,6 +5415,34 @@ return value;]]></Body>
 	}
 //traceln("GridConnection "+this.p_agentID+" has finished initializing its energyAssets!");
 ]]></Body>
+				</Function>
+				<Function AccessType="default" StaticFunction="false">
+					<ReturnModificator>VOID</ReturnModificator>
+					<ReturnType><![CDATA[double]]></ReturnType>
+					<Id>1690270067995</Id>
+					<Name><![CDATA[API_function_setPVslider]]></Name>
+					<X>1480</X><Y>80</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Parameter>
+						<Name><![CDATA[APIsliderValue]]></Name>
+						<Type><![CDATA[int]]></Type>
+					</Parameter>
+					<Body><![CDATA[sl_rooftopPV.setValue(APIsliderValue);
+t_numberOfRooftopPV.setText(count(Houses, x->x.v_hasPV == true));]]></Body>
+				</Function>
+				<Function AccessType="default" StaticFunction="false">
+					<ReturnModificator>VOID</ReturnModificator>
+					<ReturnType><![CDATA[double]]></ReturnType>
+					<Id>1690270073719</Id>
+					<Name><![CDATA[function1]]></Name>
+					<X>1480</X><Y>160</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
 				</Function>
 			</Functions>
 			<TableFunctions>
@@ -8943,45 +8972,6 @@ return value;]]></Body>
 					<Latitude>0.0</Latitude>
 					<Longitude>0.0</Longitude>
 				</EmbeddedObjectPresentation>
-				<GISMap>
-					<Id>1690204202071</Id>
-					<Name><![CDATA[map]]></Name>
-					<X>550</X><Y>130</Y>
-					<Label><X>0</X><Y>-10</Y></Label>
-					<PublicFlag>true</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
-					<ShowLabel>false</ShowLabel>
-					<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
-					<EmbeddedIcon>false</EmbeddedIcon>
-					<Width>600</Width>
-					<Height>400</Height>
-					<GISShapes>
-					</GISShapes>
-					<Latitude>51.44083</Latitude>
-					<Longitude>5.47778</Longitude>
-					<Scale>500000</Scale>
-					<BorderColor>-4144960</BorderColor>
-					<FillColor>-1</FillColor>
-					<ShowTiles>true</ShowTiles>
-					<TileURLProvider>GERMANSTYLE</TileURLProvider>
-					<CustomTileURL>false</CustomTileURL>
-					<TileURL><![CDATA[https://a.tile.openstreetmap.org/[zoom]/[x]/[y].png]]></TileURL>				
-					<RouteProviderType>WEB_SERVICE</RouteProviderType>
-					<RouteNotFound>CREATE_STRAIGHT_LINE</RouteNotFound>
-					<OnlineRouteProvider>ANYLOGIC</OnlineRouteProvider>
-					<TransportType>CAR</TransportType>
-					<RoutingMethod>FASTEST</RoutingMethod>
-					<PathfindingAlgorithm>DIJKSTRABI</PathfindingAlgorithm>
-					<CustomRouteProvider>false</CustomRouteProvider>
-					<RouteSourceResourceReference>
-					</RouteSourceResourceReference>
-					<RouteGraphResourceReference>
-					</RouteGraphResourceReference>	
-					<MapScaleBasedGeneralization>true</MapScaleBasedGeneralization>
-					<AbsolutePrecisionGeneralization>1000</AbsolutePrecisionGeneralization>
-
-
-				</GISMap>
 				<Line>
 					<Id>1690205003572</Id>
 					<Name><![CDATA[line8]]></Name>
@@ -9105,7 +9095,7 @@ f_resetSettings();
 					<X>25</X><Y>-85</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>true</PublicFlag>
-					<PresentationFlag>false</PresentationFlag>
+					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>false</ShowLabel>
 					<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
 					<EmbeddedIcon>false</EmbeddedIcon>
@@ -9580,6 +9570,94 @@ rectangle_electricitySettings.setVisible(false);]]></OnClickCode>
 			</Presentation>
 
 				</Group>
+				<Control Type="Button">
+				 	<EmbeddedIcon>false</EmbeddedIcon>				
+					<Id>1690270244609</Id>
+					<Name><![CDATA[testAPIfunction]]></Name>
+					<X>1480</X><Y>240</Y>
+					<Label><X>0</X><Y>-10</Y></Label>
+					<PublicFlag>true</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>false</ShowLabel>
+					<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+					<BasicProperties Width="100" Height="30">
+                        <EmbeddedIcon>false</EmbeddedIcon>	
+						<TextColor/>
+						<Enabled>true</Enabled>
+						<ActionCode><![CDATA[API_function_setPVslider(50);]]></ActionCode>
+					</BasicProperties>
+					<ExtendedProperties>
+						<Font Name="Dialog" Size="11" Style="0"/>
+						<LabelText><![CDATA[button]]></LabelText>
+					</ExtendedProperties>
+				</Control>
+    			<TimePlot>
+					<Id>1690271885086</Id>
+					<Name><![CDATA[pl_mainPlot]]></Name>
+					<X>240</X><Y>280</Y>
+					<Label><X>0</X><Y>-10</Y></Label>
+					<PublicFlag>true</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>false</ShowLabel>
+					<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+					<AutoUpdate>false</AutoUpdate>
+					<OccurrenceAtTime>true</OccurrenceAtTime>
+					<OccurrenceDate>1690272000000</OccurrenceDate>
+					<OccurrenceTime Class="CodeUnitValue">
+						<Code><![CDATA[0]]></Code>
+						<Unit Class="TimeUnits"><![CDATA[HOUR]]></Unit>
+					</OccurrenceTime>
+					<RecurrenceCode Class="CodeUnitValue">
+						<Code><![CDATA[1]]></Code>
+						<Unit Class="TimeUnits"><![CDATA[HOUR]]></Unit>
+					</RecurrenceCode>
+					<EmbeddedIcon>false</EmbeddedIcon>
+					<Width>700</Width>
+					<Height>380</Height>
+					<BackgroundColor/>
+					<BorderColor/>
+					<ChartArea>
+						<XOffset>50</XOffset>
+						<YOffset>30</YOffset>
+						<Width>620</Width>
+						<Height>290</Height>
+						<BackgroundColor>-1</BackgroundColor>
+						<BorderColor>-16777216</BorderColor>
+						<GridColor>-12566464</GridColor>
+					</ChartArea>
+					<Legend>
+						<Place>SOUTH</Place>
+						<TextColor>-16777216</TextColor>
+						<Size>30</Size>
+					</Legend>
+					<Labels>
+						<HorLabelsPosition>DEFAULT</HorLabelsPosition>
+						<VerLabelsPosition>DEFAULT</VerLabelsPosition>
+						<TextColor>-12566464</TextColor>
+					</Labels>
+					<ShowLegend>true</ShowLegend>
+					<TimeWindowsMovementType>MOVEMENT_WITH_TIME</TimeWindowsMovementType>		
+					<TimeWindowUnits>MODEL_TIME_UNIT</TimeWindowUnits>
+					<VerScaleFromExpression><![CDATA[0]]></VerScaleFromExpression>
+					<VerScaleToExpression><![CDATA[1]]></VerScaleToExpression>
+					<VerScaleType>AUTO</VerScaleType>
+					<DrawLine>true</DrawLine>
+					<Interpolation>LINEAR</Interpolation>
+					<DatasetExpression>  
+						<Title><![CDATA[Dataset Title]]></Title>
+					<Id>0</Id>
+					<Expression><![CDATA[my_dataset]]></Expression>
+					<Color>-29696</Color>
+					<Expression2><![CDATA[c_gridNodesHSMS.get(0).v_currentLoadElectricity_kW]]></Expression2>
+					<Expression2Flag>true</Expression2Flag>
+						<PointStyle>NONE</PointStyle>
+						<LineWidth>1.0</LineWidth>
+					</DatasetExpression>
+					<SamplesToKeep>100</SamplesToKeep>
+					<TimeWindowExpression><![CDATA[48]]></TimeWindowExpression>
+					<FillAreaUnderLine>false</FillAreaUnderLine>
+					<LabelFormat>MODEL_TIME_UNITS</LabelFormat>
+    			</TimePlot>
 			</Presentation>
 
 				</Level>
@@ -40845,6 +40923,6 @@ public class J_EAConversionCurtailerHeat extends J_EAConversion implements Seria
 		<VersionMinor>0</VersionMinor>
 		<VersionBuild>5</VersionBuild>
     </RequiredLibraryReference>
-	<CloudModelUuid><![CDATA[d5048a0b-55df-4ee4-9938-b3cf9046b43e]]></CloudModelUuid>
+	<CloudModelUuid><![CDATA[f5586290-2a06-4a7c-8c59-bd77840932c3]]></CloudModelUuid>
 </Model>
 </AnyLogicWorkspace>

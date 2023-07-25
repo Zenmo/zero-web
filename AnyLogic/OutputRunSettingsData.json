@@ -1,9 +1,9 @@
 [ {
   "timeStep_h" : "0.25",
-  "timeStepsElapsed" : "3472",
-  "modelHoursElapsed_h" : "868.0",
-  "modelStartUpDuration_s" : "0.406",
-  "modelRunDuration_s" : "85.415",
+  "timeStepsElapsed" : "1056",
+  "modelHoursElapsed_h" : "264.0",
+  "modelStartUpDuration_s" : "0.435",
+  "modelRunDuration_s" : "26.774",
   "nGridNodes" : "11",
   "nGridConnections" : "36",
   "nEnergyAssets" : "188",
