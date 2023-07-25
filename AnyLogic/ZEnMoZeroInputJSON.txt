@@ -8801,7 +8801,7 @@
 					{
 						"category": "PRODUCTION",
 						"type": "PHOTOVOLTAIC",
-						"capacityElectricity_kW": 40,
+						"capacityElectricity_kW": 4,
 						"resourcetype": "ElectricProductionAsset",
 						"name": "TEMPLATE: Household PV"
 					}

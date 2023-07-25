@@ -1017,7 +1017,6 @@ traceln("---------------------------");
 traceln("");
 
 // Get input
-if( p_importLocalConfigJsons ) { f_importConfigs() ;}
 f_readConfig();
 f_loadParameters();
 
@@ -1194,7 +1193,7 @@ traceln(" ");
 					<Type><![CDATA[double]]></Type>
 					<UnitType><![CDATA[NONE]]></UnitType>
 					<Value Class="CodeValue">
-						<Code><![CDATA[f_returnKPIData(true)]]></Code>
+						<Code><![CDATA[f_returnKPIData(false)]]></Code>
 					</Value>
 					<ComputationMoment>ON_SIMULATION_END</ComputationMoment>
 					<ComputationTimeCode Class="CodeUnitValue">
@@ -1938,7 +1937,7 @@ traceln(" ");
 				<Variable Class="Parameter">
 					<Id>1661500135010</Id>
 					<Name><![CDATA[p_gridNodeConfigJSON]]></Name>
-					<X>-390</X><Y>220</Y>
+					<X>-390</X><Y>230</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -1959,7 +1958,7 @@ traceln(" ");
 				<Variable Class="Parameter">
 					<Id>1661509540475</Id>
 					<Name><![CDATA[p_gridConnectionConfigJSON]]></Name>
-					<X>-390</X><Y>240</Y>
+					<X>-390</X><Y>250</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>false</PresentationFlag>
@@ -1980,7 +1979,7 @@ traceln(" ");
 				<Variable Class="Parameter">
 					<Id>1661510358303</Id>
 					<Name><![CDATA[p_actorsConfigJSON]]></Name>
-					<X>-390</X><Y>260</Y>
+					<X>-390</X><Y>270</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -2152,7 +2151,7 @@ traceln(" ");
 				<Variable Class="Parameter">
 					<Id>1665505197939</Id>
 					<Name><![CDATA[p_policiesConfigJSON]]></Name>
-					<X>-390</X><Y>280</Y>
+					<X>-390</X><Y>290</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -2295,7 +2294,8 @@ traceln(" ");
 				<Variable Class="Parameter">
 					<Id>1681376013855</Id>
 					<Name><![CDATA[p_testHolontoolResponse]]></Name>
-					<X>-390</X><Y>370</Y>
+					<ExcludeFromBuild>true</ExcludeFromBuild>
+					<X>-810</X><Y>-40</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -2318,8 +2318,8 @@ traceln(" ");
 				</Variable>
 				<Variable Class="Parameter">
 					<Id>1681379106589</Id>
-					<Name><![CDATA[p_printHolontoolInputJsons]]></Name>
-					<X>-390</X><Y>390</Y>
+					<Name><![CDATA[p_printInputJsons]]></Name>
+					<X>-390</X><Y>190</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -2371,7 +2371,7 @@ traceln(" ");
 				<Variable Class="Parameter">
 					<Id>1687945257520</Id>
 					<Name><![CDATA[p_hybridHeatPumpCOPThreshold]]></Name>
-					<X>-820</X><Y>420</Y>
+					<X>-770</X><Y>420</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -2395,7 +2395,7 @@ traceln(" ");
 				<Variable Class="Parameter">
 					<Id>1690206809214</Id>
 					<Name><![CDATA[p_templateAssetsConfigJSON]]></Name>
-					<X>-390</X><Y>300</Y>
+					<X>-390</X><Y>310</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -2413,10 +2413,31 @@ traceln(" ");
 						</ParameterEditor>
 					</Properties>                 
 				</Variable>
+				<Variable Class="Parameter">
+					<Id>1690277980748</Id>
+					<Name><![CDATA[p_scenarioJSON]]></Name>
+					<X>-390</X><Y>150</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" ModificatorType="STATIC">
+						<Type><![CDATA[String]]></Type>
+						<UnitType><![CDATA[NONE]]></UnitType>
+						<SdArray>false</SdArray>
+						<ParameterEditor>
+							<Id>1690277980746</Id>
+							<EditorContolType>TEXT_BOX</EditorContolType>
+							<MinSliderValue><![CDATA[0]]></MinSliderValue>
+							<MaxSliderValue><![CDATA[100]]></MaxSliderValue>
+							<DelimeterType>NO_DELIMETER</DelimeterType>
+						</ParameterEditor>
+					</Properties>                 
+				</Variable>
 				<Variable Class="CollectionVariable">
 					<Id>1661504944109</Id>
 					<Name><![CDATA[parsedJSONGridNodes]]></Name>
-					<X>-380</X><Y>-120</Y>
+					<X>-390</X><Y>350</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -2431,7 +2452,7 @@ traceln(" ");
 				<Variable Class="CollectionVariable">
 					<Id>1661510454747</Id>
 					<Name><![CDATA[parsedJSONGridConnections]]></Name>
-					<X>-380</X><Y>-100</Y>
+					<X>-390</X><Y>370</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -2446,7 +2467,7 @@ traceln(" ");
 				<Variable Class="CollectionVariable">
 					<Id>1661510457715</Id>
 					<Name><![CDATA[parsedJSONActors]]></Name>
-					<X>-380</X><Y>-80</Y>
+					<X>-390</X><Y>390</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -2461,7 +2482,7 @@ traceln(" ");
 				<Variable Class="CollectionVariable">
 					<Id>1661510460035</Id>
 					<Name><![CDATA[parsedJSONTemplateEnergyAssets]]></Name>
-					<X>-380</X><Y>-60</Y>
+					<X>-390</X><Y>410</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -2597,7 +2618,7 @@ traceln(" ");
 				<Variable Class="CollectionVariable">
 					<Id>1665505167864</Id>
 					<Name><![CDATA[parsedJSONPolicies]]></Name>
-					<X>-380</X><Y>-40</Y>
+					<X>-390</X><Y>430</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -2855,7 +2876,10 @@ if (b_addKpiVisuals) {
 v_cumulativeHouseholdDemand_fr += v_currentHouseHoldHotWaterDemand_fr;
 v_timeStepsElapsed ++;
 
-pl_mainPlot.updateData();]]></Action>
+if ( b_addKpiVisuals ) {
+	pl_gasVerbruik.updateData();
+	pl_netBelasting.updateData();
+}]]></Action>
 				</Event>
 				<Event>
 					<Id>1674058522977</Id>
@@ -2924,12 +2948,85 @@ f_initializeForecasts();
 
 @since: Sprint 6
 @author: Jorrit]]></Description>
-					<X>-720</X><Y>90</Y>
+					<X>-720</X><Y>70</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>true</ShowLabel>
-					<Body><![CDATA[// create a mapper to parse the JSON file
+					<Body><![CDATA[if( p_importLocalConfigJsons ) { p_scenarioJSON = t_holontoolResponse.readString(); }
+
+String[] fields = {"actors", "gridconnections", "gridnodes", "policies", "templateAssets"};
+String actorsString = "", gridconnectionsString = "", gridnodesString = "", policiesString = "", templateAssetsString = "";
+
+for (String field : fields) {
+	int fieldIndex = p_scenarioJSON.indexOf("\"" + field + "\"");
+    if (fieldIndex != -1) {
+    	int startArray = p_scenarioJSON.indexOf('[', fieldIndex);
+        if (startArray != -1) {
+            int endArray = f_findClosingBracket(p_scenarioJSON, startArray);
+            if (endArray != -1) {
+                String extractedData = p_scenarioJSON.substring(startArray, endArray + 1);
+                switch (field) {
+                    case "actors":
+                        actorsString = extractedData;
+                        break;
+                    case "gridconnections":
+                        gridconnectionsString = extractedData;
+                        break;
+                    case "gridnodes":
+                        gridnodesString = extractedData;
+                        break;
+                    case "policies":
+                        policiesString = extractedData;
+                        break;
+                    case "templateAssets":
+                    	templateAssetsString = extractedData;
+                    	break;
+                }
+            } else {
+                System.err.println("Could not find the content for the field: " + field);
+            }
+        } else {
+            System.err.println("Could not find the field: " + field);
+        }
+    } else {
+        System.err.println("Could not find the field: " + field);
+    }
+}
+
+//PRINTING HERE LEADS TO AN OUTOFBOUND EXCEPTION WHEN USING REPLACE ALL BELOW. BUT IT DOESNT IMPACT TEH MODEL
+//Seems like a very weird issue that its trying to read the string to the end, and then read it again but starting at the end, causing the error.
+if( p_printInputJsons) {
+	traceln("---------------------------------------------------------------------------------------------------");
+	traceln("------------------- GRIDNODES ---------------------------------------------------------------------");
+	traceln("---------------------------------------------------------------------------------------------------");
+	traceln(gridnodesString);
+	traceln("--------------------------------------------------------------------------------------------------");
+	traceln("------------------- POLICIES ---------------------------------------------------------------------");
+	traceln("--------------------------------------------------------------------------------------------------");
+	traceln(policiesString);
+	traceln("----------------------------------------------------------------------------------------------------");
+	traceln("------------------- GRIDCONNECTIONS ----------------------------------------------------------------");
+	traceln("----------------------------------------------------------------------------------------------------");
+	traceln(gridconnectionsString);
+	traceln("--------------------------------------------------------------------------------------------------");
+	traceln("------------------- ACTORS -----------------------------------------------------------------------");
+	traceln("--------------------------------------------------------------------------------------------------");
+	traceln(actorsString);
+	traceln("--------------------------------------------------------------------------------------------------");
+	traceln("------------------- TEMPLATEASSETS -----------------------------------------------------------------------");
+	traceln("--------------------------------------------------------------------------------------------------");
+	traceln(actorsString);
+}
+
+p_gridNodeConfigJSON = gridnodesString.replaceAll("^\"|\"$", "");
+p_gridConnectionConfigJSON = gridconnectionsString.replaceAll("^\"|\"$", "");
+p_actorsConfigJSON = actorsString.replaceAll("^\"|\"$", "");
+p_policiesConfigJSON = policiesString.replaceAll("^\"|\"$", "");
+p_templateAssetsConfigJSON = templateAssetsString.replaceAll("^\"|\"$", "");
+
+
+// create a mapper to parse the JSON file
 ObjectMapper mapper = new ObjectMapper();
 
 // open the json file using java.io.File and cast it to an ArrayList
@@ -3671,7 +3768,7 @@ for (EnergyAsset e : pop_energyAssets) {
 		totalDistanceTrucks_km += ((J_EAEV)e.p_energyAssetInstance).mileage;
 	}
 	if (e.p_energyAssetInstance instanceof J_EADieselVehicle) {
-		traceln("dieseltrucks has traveled: " + ((J_EADieselVehicle)e.p_energyAssetInstance).mileage_km + " km");
+		//traceln("dieseltrucks has traveled: " + ((J_EADieselVehicle)e.p_energyAssetInstance).mileage_km + " km");
 		totalDistanceTrucks_km+=((J_EADieselVehicle)e.p_energyAssetInstance).mileage_km;
 	}
 }
@@ -3831,7 +3928,7 @@ traceln("");
 traceln("");
 try {
     if(writeToDisk) {
-    	traceln("Succes.... YES!");
+    	//traceln("Succes.... YES!");
     	mapper.writerWithDefaultPrettyPrinter().writeValue(
 		new File(".\\OutputAgentData.json"), j_dataOut.actorData );
 
@@ -3862,7 +3959,8 @@ return 1;
 					<ReturnType><![CDATA[double]]></ReturnType>
 					<Id>1661530837893</Id>
 					<Name><![CDATA[f_importConfigs]]></Name>
-					<X>-720</X><Y>70</Y>
+					<ExcludeFromBuild>true</ExcludeFromBuild>
+					<X>-810</X><Y>-160</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -3941,14 +4039,14 @@ return 1;
 	
 
 }
-else{ 
+/*else{ 
 	//traceln("gridnode string: " + t_configGridNodes.readString());
 	p_gridNodeConfigJSON = t_configGridNodes.readString().replaceAll("^\"|\"$", "");
 	p_gridConnectionConfigJSON = t_configGridConnections.readString().replaceAll("^\"|\"$", "");
 	//p_energyAssetsConfigJSON = t_configEnergyAssets.readString().replaceAll("^\"|\"$", "");
 	p_actorsConfigJSON = t_configActors.readString().replaceAll("^\"|\"$", "");
 	p_policiesConfigJSON = t_configPolicies.readString().replaceAll("^\"|\"$", "");
-}]]></Body>
+}*/]]></Body>
 				</Function>
 				<Function AccessType="default" StaticFunction="false">
 					<ReturnModificator>VOID</ReturnModificator>
@@ -4709,7 +4807,7 @@ v_epexForecast_eurpkWh += 0.17;]]></Body>
 					<ReturnType><![CDATA[int]]></ReturnType>
 					<Id>1681376280006</Id>
 					<Name><![CDATA[f_findClosingBracket]]></Name>
-					<X>-580</X><Y>70</Y>
+					<X>-700</X><Y>90</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -5215,7 +5313,7 @@ return value;]]></Body>
 					<Id>1690207969988</Id>
 					<Name><![CDATA[f_instantiateTemplateEnergyAssets]]></Name>
 					<ExcludeFromBuild>true</ExcludeFromBuild>
-					<X>-700</X><Y>250</Y>
+					<X>-810</X><Y>-180</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -5865,7 +5963,8 @@ t_numberOfRooftopPV.setText(count(Houses, x->x.v_hasPV == true));]]></Body>
 				<TextFile>
 					<Id>1661530848985</Id>
 					<Name><![CDATA[t_configActors]]></Name>
-					<X>-389</X><Y>129</Y>
+					<ExcludeFromBuild>true</ExcludeFromBuild>
+					<X>-808.5</X><Y>-131.5</Y>
 					<Label><X>9.5</X><Y>0.5</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -5879,7 +5978,8 @@ t_numberOfRooftopPV.setText(count(Houses, x->x.v_hasPV == true));]]></Body>
 				<TextFile>
 					<Id>1661787440318</Id>
 					<Name><![CDATA[t_configGridNodes]]></Name>
-					<X>-389</X><Y>169</Y>
+					<ExcludeFromBuild>true</ExcludeFromBuild>
+					<X>-808.5</X><Y>-91.5</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -5893,7 +5993,8 @@ t_numberOfRooftopPV.setText(count(Houses, x->x.v_hasPV == true));]]></Body>
 				<TextFile>
 					<Id>1661787454498</Id>
 					<Name><![CDATA[t_configGridConnections]]></Name>
-					<X>-389</X><Y>149</Y>
+					<ExcludeFromBuild>true</ExcludeFromBuild>
+					<X>-808.5</X><Y>-111.5</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -5926,7 +6027,8 @@ t_numberOfRooftopPV.setText(count(Houses, x->x.v_hasPV == true));]]></Body>
 				<TextFile>
 					<Id>1665504172690</Id>
 					<Name><![CDATA[t_configPolicies]]></Name>
-					<X>-389.5</X><Y>189.5</Y>
+					<ExcludeFromBuild>true</ExcludeFromBuild>
+					<X>-809</X><Y>-71</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -5940,7 +6042,7 @@ t_numberOfRooftopPV.setText(count(Houses, x->x.v_hasPV == true));]]></Body>
 				<TextFile>
 					<Id>1681375993119</Id>
 					<Name><![CDATA[t_holontoolResponse]]></Name>
-					<X>-390</X><Y>340</Y>
+					<X>-390</X><Y>130</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -5949,7 +6051,7 @@ t_numberOfRooftopPV.setText(count(Houses, x->x.v_hasPV == true));]]></Body>
 					<Url><![CDATA[]]></Url>
 					<ResourceReference>
 						<PackageName><![CDATA[base]]></PackageName>
-						<ClassName><![CDATA[ZEnMoZeroInputJSON.txt]]></ClassName>
+						<ClassName><![CDATA[exampleAnylogicInput.json]]></ClassName>
 					</ResourceReference>
 					<FileMode>READ</FileMode>
 					<CharsetName>null</CharsetName>
@@ -9188,6 +9290,8 @@ if( sl_rooftopPV.getValue()/100.0*Houses.size() < HouseholdPVsystems){
 		GCHouse h = findFirst(Houses, x->x.v_hasPV==false);
 		traceln("Check presence of solarpanels: " + h.v_hasPV);
 			//HashMap l = findFirst(parsedJSONTemplateEnergyAssets, l-> l.get("type") == OL_EnergyAssetType.PHOTOVOLTAIC);
+		
+		
 		HashMap l = parsedJSONTemplateEnergyAssets.get(1);
 		EnergyAsset producerAsset = add_pop_energyAssets();
 	//				producerAsset.set_p_parentAgentID( this.p_agentID );
@@ -9593,8 +9697,8 @@ rectangle_electricitySettings.setVisible(false);]]></OnClickCode>
 				</Control>
     			<TimePlot>
 					<Id>1690271885086</Id>
-					<Name><![CDATA[pl_mainPlot]]></Name>
-					<X>240</X><Y>280</Y>
+					<Name><![CDATA[pl_netBelasting]]></Name>
+					<X>20</X><Y>340</Y>
 					<Label><X>0</X><Y>-10</Y></Label>
 					<PublicFlag>true</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -9612,14 +9716,14 @@ rectangle_electricitySettings.setVisible(false);]]></OnClickCode>
 						<Unit Class="TimeUnits"><![CDATA[HOUR]]></Unit>
 					</RecurrenceCode>
 					<EmbeddedIcon>false</EmbeddedIcon>
-					<Width>700</Width>
+					<Width>580</Width>
 					<Height>380</Height>
 					<BackgroundColor/>
 					<BorderColor/>
 					<ChartArea>
 						<XOffset>50</XOffset>
 						<YOffset>30</YOffset>
-						<Width>620</Width>
+						<Width>500</Width>
 						<Height>290</Height>
 						<BackgroundColor>-1</BackgroundColor>
 						<BorderColor>-16777216</BorderColor>
@@ -9644,7 +9748,7 @@ rectangle_electricitySettings.setVisible(false);]]></OnClickCode>
 					<DrawLine>true</DrawLine>
 					<Interpolation>LINEAR</Interpolation>
 					<DatasetExpression>  
-						<Title><![CDATA[Dataset Title]]></Title>
+						<Title><![CDATA[Netbelasting [kW]]]></Title>
 					<Id>0</Id>
 					<Expression><![CDATA[my_dataset]]></Expression>
 					<Color>-29696</Color>
@@ -9653,7 +9757,74 @@ rectangle_electricitySettings.setVisible(false);]]></OnClickCode>
 						<PointStyle>NONE</PointStyle>
 						<LineWidth>1.0</LineWidth>
 					</DatasetExpression>
-					<SamplesToKeep>100</SamplesToKeep>
+					<SamplesToKeep>192</SamplesToKeep>
+					<TimeWindowExpression><![CDATA[48]]></TimeWindowExpression>
+					<FillAreaUnderLine>false</FillAreaUnderLine>
+					<LabelFormat>MODEL_TIME_UNITS</LabelFormat>
+    			</TimePlot>
+    			<TimePlot>
+					<Id>1690280530087</Id>
+					<Name><![CDATA[pl_gasVerbruik]]></Name>
+					<X>640</X><Y>340</Y>
+					<Label><X>0</X><Y>-10</Y></Label>
+					<PublicFlag>true</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>false</ShowLabel>
+					<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+					<AutoUpdate>false</AutoUpdate>
+					<OccurrenceAtTime>true</OccurrenceAtTime>
+					<OccurrenceDate>1690272000000</OccurrenceDate>
+					<OccurrenceTime Class="CodeUnitValue">
+						<Code><![CDATA[0]]></Code>
+						<Unit Class="TimeUnits"><![CDATA[HOUR]]></Unit>
+					</OccurrenceTime>
+					<RecurrenceCode Class="CodeUnitValue">
+						<Code><![CDATA[1]]></Code>
+						<Unit Class="TimeUnits"><![CDATA[HOUR]]></Unit>
+					</RecurrenceCode>
+					<EmbeddedIcon>false</EmbeddedIcon>
+					<Width>580</Width>
+					<Height>380</Height>
+					<BackgroundColor/>
+					<BorderColor/>
+					<ChartArea>
+						<XOffset>50</XOffset>
+						<YOffset>30</YOffset>
+						<Width>500</Width>
+						<Height>290</Height>
+						<BackgroundColor>-1</BackgroundColor>
+						<BorderColor>-16777216</BorderColor>
+						<GridColor>-12566464</GridColor>
+					</ChartArea>
+					<Legend>
+						<Place>SOUTH</Place>
+						<TextColor>-16777216</TextColor>
+						<Size>30</Size>
+					</Legend>
+					<Labels>
+						<HorLabelsPosition>DEFAULT</HorLabelsPosition>
+						<VerLabelsPosition>DEFAULT</VerLabelsPosition>
+						<TextColor>-12566464</TextColor>
+					</Labels>
+					<ShowLegend>true</ShowLegend>
+					<TimeWindowsMovementType>MOVEMENT_WITH_TIME</TimeWindowsMovementType>		
+					<TimeWindowUnits>MODEL_TIME_UNIT</TimeWindowUnits>
+					<VerScaleFromExpression><![CDATA[0]]></VerScaleFromExpression>
+					<VerScaleToExpression><![CDATA[1]]></VerScaleToExpression>
+					<VerScaleType>AUTO</VerScaleType>
+					<DrawLine>true</DrawLine>
+					<Interpolation>LINEAR</Interpolation>
+					<DatasetExpression>  
+						<Title><![CDATA[Gasverbruik [kW]]]></Title>
+					<Id>1690280530084</Id>
+					<Expression><![CDATA[my_dataset]]></Expression>
+					<Color>-29696</Color>
+					<Expression2><![CDATA[sum(c_gridConnections, g->g.v_currentPowerMethane_kW)]]></Expression2>
+					<Expression2Flag>true</Expression2Flag>
+						<PointStyle>NONE</PointStyle>
+						<LineWidth>1.0</LineWidth>
+					</DatasetExpression>
+					<SamplesToKeep>192</SamplesToKeep>
 					<TimeWindowExpression><![CDATA[48]]></TimeWindowExpression>
 					<FillAreaUnderLine>false</FillAreaUnderLine>
 					<LabelFormat>MODEL_TIME_UNITS</LabelFormat>
@@ -11448,13 +11619,14 @@ subConnections.sendToAllConnected(msg);]]></OnReceive>
     			<TimePlot>
 					<Id>1670317113685</Id>
 					<Name><![CDATA[plot]]></Name>
+					<ExcludeFromBuild>true</ExcludeFromBuild>
 					<X>270</X><Y>180</Y>
 					<Label><X>0</X><Y>-10</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>false</ShowLabel>
 					<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
-					<AutoUpdate>true</AutoUpdate>
+					<AutoUpdate>false</AutoUpdate>
 					<OccurrenceAtTime>true</OccurrenceAtTime>
 					<OccurrenceDate>1670400000000</OccurrenceDate>
 					<OccurrenceTime Class="CodeUnitValue">
@@ -11886,7 +12058,7 @@ import java.io.*;]]></Import>
 				<Variable Class="PlainVariable">
 					<Id>1667902447354</Id>
 					<Name><![CDATA[v_evChargingPowerElectric_kW]]></Name>
-					<X>150</X><Y>1070</Y>
+					<X>150</X><Y>1080</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -11950,7 +12122,7 @@ import java.io.*;]]></Import>
 				<Variable Class="PlainVariable">
 					<Id>1668610757391</Id>
 					<Name><![CDATA[v_batteryPowerElectric_kW]]></Name>
-					<X>150</X><Y>1090</Y>
+					<X>150</X><Y>1100</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -11962,7 +12134,7 @@ import java.io.*;]]></Import>
 				<Variable Class="PlainVariable">
 					<Id>1668611038479</Id>
 					<Name><![CDATA[v_conversionPowerElectric_kW]]></Name>
-					<X>150</X><Y>1050</Y>
+					<X>150</X><Y>1040</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -12228,7 +12400,7 @@ import java.io.*;]]></Import>
 					<Id>1673870786520</Id>
 					<Name><![CDATA[v_electricHobConsumption_kW]]></Name>
 					<Description><![CDATA[This is part of the v_fixedConsumptionElectric_kW, thus variable only exists for additional information]]></Description>
-					<X>180</X><Y>1010</Y>
+					<X>180</X><Y>1060</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -13476,7 +13648,7 @@ import java.io.*;]]></Import>
 						<OccurrenceAtTime>true</OccurrenceAtTime>
 						<OccurrenceDate>1675065600000</OccurrenceDate>
 						<OccurrenceTime Class="CodeUnitValue">
-							<Code><![CDATA[16]]></Code>
+							<Code><![CDATA[main.p_forecastTime_h/60+1]]></Code>
 							<Unit Class="TimeUnits"><![CDATA[MINUTE]]></Unit>
 						</OccurrenceTime>
 						<RecurrenceCode Class="CodeUnitValue">
@@ -15310,13 +15482,14 @@ return level;]]></Body>
     			<TimePlot>
 					<Id>1668439095469</Id>
 					<Name><![CDATA[pl_powerFlows]]></Name>
+					<ExcludeFromBuild>true</ExcludeFromBuild>
 					<X>0</X><Y>520</Y>
 					<Label><X>0</X><Y>-10</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>false</ShowLabel>
 					<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
-					<AutoUpdate>true</AutoUpdate>
+					<AutoUpdate>false</AutoUpdate>
 					<OccurrenceAtTime>true</OccurrenceAtTime>
 					<OccurrenceDate>1668499200000</OccurrenceDate>
 					<OccurrenceTime Class="CodeUnitValue">
@@ -15597,7 +15770,7 @@ return level;]]></Body>
 				<Text>
 					<Id>1671027582352</Id>
 					<Name><![CDATA[text12]]></Name>
-					<X>170</X><Y>1020</Y>
+					<X>170</X><Y>1010</Y>
 					<Label><X>0</X><Y>-10</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -37942,43 +38115,7 @@ if (p_batteryAsset != null){
 				</InputReference>
     		</RunConfigurationInput>
     		<RunConfigurationInput>
-				<Id>1661517224234</Id>
-				<Name><![CDATA[P grid node config JSON]]></Name>
-				<InputReference>
-					<PackageName><![CDATA[base]]></PackageName>
-					<ClassName><![CDATA[Main]]></ClassName>
-					<ItemName><![CDATA[p_gridNodeConfigJSON]]></ItemName>
-				</InputReference>
-    		</RunConfigurationInput>
-    		<RunConfigurationInput>
-				<Id>1667300243073</Id>
-				<Name><![CDATA[P grid connection config JSON]]></Name>
-				<InputReference>
-					<PackageName><![CDATA[base]]></PackageName>
-					<ClassName><![CDATA[Main]]></ClassName>
-					<ItemName><![CDATA[p_gridConnectionConfigJSON]]></ItemName>
-				</InputReference>
-    		</RunConfigurationInput>
-    		<RunConfigurationInput>
-				<Id>1661517226959</Id>
-				<Name><![CDATA[P actors config JSON]]></Name>
-				<InputReference>
-					<PackageName><![CDATA[base]]></PackageName>
-					<ClassName><![CDATA[Main]]></ClassName>
-					<ItemName><![CDATA[p_actorsConfigJSON]]></ItemName>
-				</InputReference>
-    		</RunConfigurationInput>
-    		<RunConfigurationInput>
-				<Id>1661517228035</Id>
-				<Name><![CDATA[P energy assets config JSON]]></Name>
-				<InputReference>
-					<PackageName><![CDATA[base]]></PackageName>
-					<ClassName><![CDATA[Main]]></ClassName>
-					<ItemName><![CDATA[p_energyAssetsConfigJSON]]></ItemName>
-				</InputReference>
-    		</RunConfigurationInput>
-    		<RunConfigurationInput>
-				<Id>1663579418347</Id>
+				<Id>1690278258422</Id>
 				<Name><![CDATA[P import local config jsons]]></Name>
 				<InputReference>
 					<PackageName><![CDATA[base]]></PackageName>
@@ -38005,30 +38142,12 @@ if (p_batteryAsset != null){
 				</InputReference>
     		</RunConfigurationInput>
     		<RunConfigurationInput>
-				<Id>1667300244750</Id>
-				<Name><![CDATA[P policies config JSON]]></Name>
+				<Id>1690278236892</Id>
+				<Name><![CDATA[P scenario JSON]]></Name>
 				<InputReference>
 					<PackageName><![CDATA[base]]></PackageName>
 					<ClassName><![CDATA[Main]]></ClassName>
-					<ItemName><![CDATA[p_policiesConfigJSON]]></ItemName>
-				</InputReference>
-    		</RunConfigurationInput>
-    		<RunConfigurationInput>
-				<Id>1682593211315</Id>
-				<Name><![CDATA[P force brown field netload]]></Name>
-				<InputReference>
-					<PackageName><![CDATA[base]]></PackageName>
-					<ClassName><![CDATA[Main]]></ClassName>
-					<ItemName><![CDATA[p_forceBrownFieldNetload]]></ItemName>
-				</InputReference>
-    		</RunConfigurationInput>
-    		<RunConfigurationInput>
-				<Id>1682949398674</Id>
-				<Name><![CDATA[B anylogic costs for all contracts]]></Name>
-				<InputReference>
-					<PackageName><![CDATA[base]]></PackageName>
-					<ClassName><![CDATA[Main]]></ClassName>
-					<ItemName><![CDATA[b_anylogicCostsForAllContracts]]></ItemName>
+					<ItemName><![CDATA[p_scenarioJSON]]></ItemName>
 				</InputReference>
     		</RunConfigurationInput>		
 		</Inputs>
@@ -38265,7 +38384,7 @@ if (p_batteryAsset != null){
 					<ParameterName><![CDATA[p_testHolontoolResponse]]></ParameterName>
 				</Parameter>
 				<Parameter>
-					<ParameterName><![CDATA[p_printHolontoolInputJsons]]></ParameterName>
+					<ParameterName><![CDATA[p_printInputJsons]]></ParameterName>
 				</Parameter>
 				<Parameter>
 					<ParameterName><![CDATA[b_anylogicCostsForAllContracts]]></ParameterName>
@@ -38275,6 +38394,9 @@ if (p_batteryAsset != null){
 				</Parameter>
 				<Parameter>
 					<ParameterName><![CDATA[p_templateAssetsConfigJSON]]></ParameterName>
+				</Parameter>
+				<Parameter>
+					<ParameterName><![CDATA[p_scenarioJSON]]></ParameterName>
 				</Parameter>
 			</Parameters>			
 			<PresentationProperties>
@@ -40903,11 +41025,11 @@ public class J_EAConversionCurtailerHeat extends J_EAConversion implements Seria
 			<ReferencedFromUserCode>false</ReferencedFromUserCode>
 		</Resource>
 		<Resource>
-			<Path><![CDATA[ZEnMoZeroInputJSON.txt]]></Path>
+			<Path><![CDATA[icon_arrow.png]]></Path>
 			<ReferencedFromUserCode>false</ReferencedFromUserCode>
 		</Resource>
 		<Resource>
-			<Path><![CDATA[icon_arrow.png]]></Path>
+			<Path><![CDATA[exampleAnylogicInput.json]]></Path>
 			<ReferencedFromUserCode>false</ReferencedFromUserCode>
 		</Resource>
 	</ModelResources>
