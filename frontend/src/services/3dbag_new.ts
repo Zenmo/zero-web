@@ -36,6 +36,7 @@ type FeatureProperties = {
     b3_h_max: number
     b3_h_min: number
     // TODO: why is volume and maaiveld hoogte missing?
+    // https://geoforum.nl/t/missing-properties-in-getfeatures/8482
 }
 
 export async function getBag3dFeatures(boundingBox: LatLngBounds): Promise<Bag3DFeature[]> {

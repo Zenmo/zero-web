@@ -211,7 +211,6 @@ const verblijfsobjectDisplaySpec: Partial<{[key in keyof Verblijfsobject]: Parti
     pandstatus: {
         visible: false
     },
-    // is this always the same as pand?
     bouwjaar: {
         visible: false
     }
