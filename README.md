@@ -2,3 +2,15 @@
 ==========
 
 Web-based application to model and simulate local energy systems.
+
+Components
+----------
+
+### Frontend
+
+Graphical user interface.
+
+### Kleinverbruik
+
+Stedin, Liander and Enexis publish usage data of natural gas and electricity anually.
+This is a small webservice which wraps this data so the frontend can request small parts of the data.
