@@ -26,7 +26,7 @@ function App() {
             </div>
             <div style={{height: "100vh", flexGrow: 1, display: 'flex', flexDirection: 'column'}}>
                 <MainMap bag2dPanden={appState.bag2dPanden} setBoundingBox={setBoundingBox} setCurrentPandId={setCurrentPandId}/>
-                <AnyLogic />
+                <AnyLogic appState={appState} />
             </div>
             <div style={{width: "20rem", padding: "1rem"}}>
                 {currentPandId && <PandDataDisplay pandData={getPandData(currentPandId)} />}

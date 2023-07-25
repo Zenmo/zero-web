@@ -1,4 +1,4 @@
-import {LatLngBounds} from "leaflet";
+import {LatLng, LatLngBounds} from "leaflet";
 import {BAG_MAX_PANDEN, BoundingBox, boundingBoxToBAG} from "./bag2d";
 import {Point, Position} from "geojson";
 
@@ -43,6 +43,7 @@ export type Verblijfsobject = {
     toevoeging: string,
     postcode: string, // 1111AA
     woonplaats: string,
+    // is this always the same as pand?
     bouwjaar: string,
     pandstatus: string,
 }
