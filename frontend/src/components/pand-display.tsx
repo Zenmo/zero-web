@@ -2,7 +2,7 @@ import {KleinVerbruikPerPostcode, PandData} from "../services/appState";
 import {Bag2DPandProperties} from "../services/bag2d";
 import React, {createElement, Fragment, FunctionComponent, PropsWithChildren, ReactElement} from "react";
 import {Bag3dProperties} from "../services/3dbag_old";
-import {VerblijfsobjectProperties} from "../services/bag-verblijfsobject";
+import {Verblijfsobject} from "../services/bag-verblijfsobject";
 import {PostcodeKleinverbruikProperties} from "../services/enexis";
 
 
@@ -16,8 +16,8 @@ export const PandDataDisplay = ({pandData}: {pandData: PandData}) => (
         <h2>Verblijfsobjecten ({pandData.bag2dPand?.properties.aantal_verblijfsobjecten})</h2>
         {pandData.verblijfsobjecten.map((verblijfsobject, index) => (
             <>
-                <h3>Verblijfsobject {verblijfsobjectLabel(verblijfsobject.properties)}</h3>
-                <PropertyList props={verblijfsobject.properties} specs={verblijfsobjectDisplaySpec} defaultSpec={bagDefaultDisplaySpec}/>
+                <h3>Verblijfsobject {verblijfsobjectLabel(verblijfsobject)}</h3>
+                <PropertyList props={verblijfsobject} specs={verblijfsobjectDisplaySpec} defaultSpec={bagDefaultDisplaySpec}/>
             </>
         ))}
 
@@ -75,7 +75,7 @@ const KleinverbruikDisplay = ({kleinverbruik}: {kleinverbruik: {[postcode: strin
     return result
 }
 
-const verblijfsobjectLabel = (verblijfsObject: VerblijfsobjectProperties): string => {
+const verblijfsobjectLabel = (verblijfsObject: Verblijfsobject): string => {
     let result = `${verblijfsObject.openbare_ruimte} ${verblijfsObject.huisnummer}`
 
     if (verblijfsObject.toevoeging) {
@@ -137,6 +137,7 @@ const Property = ({objectKey, value, spec}: { objectKey: string, value: any, spe
     }
 
     if (spec.is_url) {
+        value = value.replace('http://', 'https://')
         value = <a href={value}>{value}</a>
     }
 
@@ -149,10 +150,12 @@ const Property = ({objectKey, value, spec}: { objectKey: string, value: any, spe
         label = spec.label
     }
 
+    const values: any[] =  Array.isArray(value) ? value : [value]
+
     return (
         <>
             <DtBold>{label}</DtBold>
-            <dd>{value}</dd>
+            {values.map((v: any, i: number) => <dd key={i}>{v}</dd>)}
         </>
     )
 }
@@ -195,7 +198,7 @@ const bag2dDisplaySpec: Partial<{[key in keyof Bag2DPandProperties]: Partial<Dis
     }
 }
 
-const verblijfsobjectDisplaySpec: Partial<{[key in keyof VerblijfsobjectProperties]: Partial<DisplaySpec>}> = {
+const verblijfsobjectDisplaySpec: Partial<{[key in keyof Verblijfsobject]: Partial<DisplaySpec>}> = {
     rdf_seealso: {
         is_url: true,
     },
@@ -208,6 +211,7 @@ const verblijfsobjectDisplaySpec: Partial<{[key in keyof VerblijfsobjectProperti
     pandstatus: {
         visible: false
     },
+    // is this always the same as pand?
     bouwjaar: {
         visible: false
     }
