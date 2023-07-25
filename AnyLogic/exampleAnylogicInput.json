@@ -9160,6 +9160,14 @@
                         "type": "GAS_PIT"
                     },
 					{
+                        "capacityElectricity_kW": 5.0,
+                        "capacityHeat_kW": null,
+                        "category": "CONVERSION",
+                        "eta_r": 0.95,
+                        "name": "TEMPLATE: Electric hob",
+                        "type": "ELECTRIC_HOB"
+                    },
+					{
 						"category": "PRODUCTION",
 						"type": "PHOTOVOLTAIC",
 						"capacityElectricity_kW": 4,

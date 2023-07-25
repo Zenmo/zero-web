@@ -9174,7 +9174,7 @@
                         "storageCapacity_kWh": 60.0,
                         "type": "ELECTRIC_VEHICLE",
                         "vehicleScaling": 1
-                    },
+                    }
 		]
     }
 }
