@@ -1018,8 +1018,8 @@ traceln("");
 f_readConfig();
 f_loadParameters();
 
-//var simpledate = new SimpleDateFormat("yyyy-MM-dd").parse("2023-12-11");
-Date date = new Date();
+//Adjust startdate
+/*Date date = new Date();
 date.setMonth(5); // january is 0
 date.setYear(123); // Year starts at 1900
 date.setDate(3);
@@ -1029,7 +1029,7 @@ v_hourOfYearStart=hourOfYearPerMonth[getMonth()] + (getDayOfMonth()-1)*24;
 
 traceln("Startdate is: " + date);
 traceln("Starthour is: " + v_hourOfYearStart);
-
+*/
 
 // Populate the model
 f_configureBackBone();
@@ -1889,6 +1889,9 @@ traceln(" ");
 					<ShowLabel>true</ShowLabel>
 					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
 						<Type><![CDATA[int]]></Type>        
+						<InitialValue Class="CodeValue">
+							<Code><![CDATA[0]]></Code>
+						</InitialValue>
 					</Properties>
 				</Variable>
 				<Variable Class="Parameter">
@@ -9194,18 +9197,19 @@ t_numberOfRooftopPV.setText(count(Houses, x->x.v_hasPV == true));]]></Body>
                         <EmbeddedIcon>false</EmbeddedIcon>	
 						<TextColor/>
 						<Enabled>true</Enabled>
-						<ActionCode><![CDATA[/*
-switch (ra_chargingStrategy.getValue()){
+						<ActionCode><![CDATA[switch (ra_chargingStrategy.getValue()){
 	case 0:
-		p_EVChargingType = "conventional";
+		for (GCHouse h: Houses) {
+			h.p_chargingAttitudeVehicles = OL_ChargingAttitude.SIMPLE;
+		}
 	break;
 	case 1:
-		p_EVChargingType = "smart";
+		for (GCHouse h: Houses) {
+			h.p_chargingAttitudeVehicles = OL_ChargingAttitude.CHEAP;
+		}
 	break;
 }
-
-f_resetSettings();
-*/]]></ActionCode>
+]]></ActionCode>
 					</BasicProperties>
 					<ExtendedProperties>
 						<Font Name="Dialog" Size="16" Style="0"/>
@@ -9379,33 +9383,75 @@ double numberOfElectricStoves = count(Houses, x->x.p_hasElectricHob == true);
 t_numberOfElectricStoves.setText(numberOfElectricStoves);
 
 HashMap t=new HashMap();
+HashMap g=new HashMap();
 //Get template asset "TEMPLATE: Household PV"
 for (HashMap l:parsedJSONTemplateEnergyAssets) {
 	if (((String)l.get( "name" )).equals("TEMPLATE: Electric hob")) {
 		t = l;
 	}
+	if (((String)l.get( "name" )).equals("TEMPLATE: gas-pit")) {
+		g = l;
+	}
 }
 //HashMap l = findFirst(parsedJSONTemplateEnergyAssets, l-> l.get("type") == OL_EnergyAssetType.PHOTOVOLTAIC);
 
 if( sl_electricCooking.getValue()/100.0*Houses.size() < numberOfElectricStoves){
-	while ( sl_electricCooking.getValue()/100.0*Houses.size() < numberOfElectricStoves) { // remove excess PV systems
+	while ( numberOfElectricStoves > sl_electricCooking.getValue()/100.0*Houses.size()) { // remove excess EHOBs systems
 		GCHouse h = findFirst(Houses, x->x.p_hasElectricHob==true);
 		
 		EnergyAsset EA = findFirst(h.c_conversionAssets, p -> p.p_energyAssetType == OL_EnergyAssetType.ELECTRIC_HOB );
 		traceln("Found electric HOB: " + EA);
-		if (EA!=null) {			
+		if (EA!=null) {
+			traceln("Removing electric HOB from household:" + h.p_agentID);
 			h.c_conversionAssets.remove(EA);
 			remove_pop_energyAssets(EA);
-			traceln("Removing electric HOB from household:" + h.p_agentID);
-			h.p_hasElectricHob = false;
+			//h.p_hasElectricHob = false;
 		}
-		numberOfElectricStoves=count(Houses, x->x.p_hasElectricHob == true);		
+		
+		traceln("Adding Gas-pit in place of electric HOB");
+		EnergyAsset converterAsset = add_pop_energyAssets();
+		converterAsset.set_p_parentAgentID( h.p_agentID );
+		converterAsset.set_p_energyAssetType( OL_EnergyAssetType.valueOf((String)g.get( "type" ) ));
+		converterAsset.set_p_defaultEnergyAssetPresetName( (String)g.get( "name" ));
+		//traceln( "l contents"+l.toString() );
+		
+		double capacityElectric_kW = g.get( "capacityElectricity_kW")== null? 0.0: Double.valueOf(g.get( "capacityElectricity_kW").toString()).doubleValue();
+		double capacityHeat_kW1 = g.get( "capacityHeat_kW")== null? 0: Double.valueOf(g.get( "capacityHeat_kW").toString()).doubleValue();
+		double capacityMethane_kW = g.get( "capacityMethane_kW")== null? 0: Double.valueOf(g.get( "capacityMethane_kW").toString()).doubleValue();
+		double eta_r = (Double)g.get( "eta_r" ) == null? 0.0 : Double.valueOf(g.get( "eta_r" ).toString()).doubleValue();
+		double deliveryTemp_degC1 = g.get( "deliveryTemp_degC" ) == null? 0.0: Double.valueOf( g.get( "deliveryTemp_degC" ).toString()).doubleValue();
+		String ambientTempType = (String)g.get( "ambientTempType" ) == null? "": (String)g.get( "ambientTempType" );
+		double belowZeroHeatpumpEtaReductionFactor = (Double)g.get( "etaReduction_r" ) == null? 1 : Double.valueOf(g.get( "etaReduction_r" ).toString()).doubleValue();
+		
+		converterAsset.f_instantiateConverterAsset( converterAsset.p_energyAssetType,
+												capacityElectric_kW,
+												capacityHeat_kW1,
+												capacityMethane_kW,
+												eta_r,
+												deliveryTemp_degC1,
+												ambientTempType,
+												belowZeroHeatpumpEtaReductionFactor
+												);														
+		converterAsset.f_connectToParentNode( h );
+		//h.c_conversionAssets.add(converterAsset); // This is already taken care of when the connectToChild of the house is called!
+					
+		numberOfElectricStoves=count(Houses, x->x.p_hasElectricHob == true);	
+		traceln("Added Gas-pit to household: " + h.p_agentID);
+		
 	}
  
 } else { 
-	while ( sl_electricCooking.getValue()/100.0 * Houses.size() > numberOfElectricStoves) {
+	while ( numberOfElectricStoves < sl_electricCooking.getValue()/100.0 * Houses.size()) {
 		GCHouse h = findFirst(Houses, x->x.p_hasElectricHob==false);
 		//traceln("Check presence of solarpanels: " + h.v_hasPV);	
+		
+		EnergyAsset EA = findFirst(h.c_conversionAssets, p -> p.p_energyAssetType == OL_EnergyAssetType.GAS_PIT );
+		traceln("Found Gas-pit: " + EA);
+		if (EA!=null) {
+			traceln("Removing gas-pit from household:" + h.p_agentID);
+			h.c_conversionAssets.remove(EA);
+			remove_pop_energyAssets(EA);
+		}
 			
 		EnergyAsset converterAsset = add_pop_energyAssets();
 		converterAsset.set_p_parentAgentID( h.p_agentID );
@@ -9431,7 +9477,7 @@ if( sl_electricCooking.getValue()/100.0*Houses.size() < numberOfElectricStoves){
 												belowZeroHeatpumpEtaReductionFactor
 												);														
 		converterAsset.f_connectToParentNode( h );
-		h.c_conversionAssets.add(converterAsset);
+		//h.c_conversionAssets.add(converterAsset); // This is already taken care of when the connectToChild of the house is called!
 					
 		numberOfElectricStoves=count(Houses, x->x.p_hasElectricHob == true);	
 		traceln("Added electric HOB to household: " + h.p_agentID);
@@ -9469,15 +9515,20 @@ double HouseholdEVs = count(Houses, x->x.p_householdEV != null);
 //t_numberOfElectricVehicles.setText(HouseholdEVs);
 
 HashMap t=new HashMap();
+HashMap g=new HashMap();
 //Get template asset "TEMPLATE: Household PV"
 for (HashMap l:parsedJSONTemplateEnergyAssets) {
 	if (((String)l.get( "name" )).equals("TEMPLATE: Private Electric Vehicle")) {
 		t = l;
 	}
+
+	if (((String)l.get( "name" )).equals("TEMPLATE: Private Diesel Vehicle")) {
+		g = l;
+	}
 }
 
 if( sl_EV.getValue()/100.0*Houses.size() < HouseholdEVs){
-	while ( sl_EV.getValue()/100.0*Houses.size() < HouseholdEVs & HouseholdEVs > 0) { // remove excess PV systems
+	while ( sl_EV.getValue()/100.0*Houses.size() < HouseholdEVs & HouseholdEVs > 0) { // remove excess EVs systems !!!! Should also add diesel vehicle again!
 		GCHouse h = findFirst(Houses, x->x.p_householdEV != null);
 		
 		EnergyAsset EA = findFirst(h.c_storageAssets, p -> p.p_energyAssetType == OL_EnergyAssetType.ELECTRIC_VEHICLE );
@@ -9485,17 +9536,48 @@ if( sl_EV.getValue()/100.0*Houses.size() < HouseholdEVs){
 		if (EA!=null) {			
 			h.c_storageAssets.remove(EA);
 			h.c_vehicleAssets.remove(EA);
+			h.v_vehicleIndex--;
 			h.p_householdEV = null;
 			remove_pop_energyAssets(EA);
 			traceln("Removing household ÉV from household:" + h.p_agentID);
 		}
+		
+		// Re-add diesel vehicle
+		EnergyAsset consumerAsset = add_pop_energyAssets();
+		consumerAsset.set_p_parentAgentID( h.p_agentID );
+		String assetType = (String)g.get( "type" ); 
+		consumerAsset.set_p_energyAssetType( OL_EnergyAssetType.valueOf(assetType) );
+		
+		consumerAsset.set_p_defaultEnergyAssetPresetName( (String)g.get( "name" ));
+		double yearlyDemandElectricity_kWh = g.get( "yearlyDemandElectricity_kWh") == null? 0.0: Double.valueOf( g.get( "yearlyDemandElectricity_kWh").toString()).doubleValue();
+		double yearlyDemandHeat_kWh = g.get( "yearlyDemandHeat_kWh") == null? 0.0: Double.valueOf( g.get( "yearlyDemandHeat_kWh").toString()).doubleValue();
+		double yearlyDemandHydrogen_kWh = g.get( "yearlyDemandHydrogen_kWh") == null? 0.0: Double.valueOf( g.get( "yearlyDemandHydrogen_kWh").toString()).doubleValue();
+		double yearlyDemandMethane_kWh = g.get( "yearlyDemandMethane_kWh") == null? 0.0: Double.valueOf( g.get( "yearlyDemandMethane_kWh").toString()).doubleValue();
+		double yearlyDemandDiesel_kWh = g.get( "yearlyDemandDiesel_kWh") == null? 0.0: Double.valueOf( g.get( "yearlyDemandDiesel_kWh").toString()).doubleValue();
+		double energyConsumption_kWhpkm = g.get( "energyConsumption_kWhpkm" ) == null? 0.0: Double.valueOf( g.get( "energyConsumption_kWhpkm" ).toString()).doubleValue();
+		double vehicleScaling = g.get("vehicleScaling") == null? 1.0: Double.valueOf( g.get( "vehicleScaling" ).toString()).doubleValue();
+
+		consumerAsset.f_instantiateConsumerAsset( consumerAsset.p_energyAssetType, yearlyDemandElectricity_kWh , yearlyDemandHeat_kWh , yearlyDemandHydrogen_kWh , yearlyDemandMethane_kWh, yearlyDemandDiesel_kWh, energyConsumption_kWhpkm, vehicleScaling);
+		consumerAsset.f_connectToParentNode( this );
+
 		HouseholdEVs=count(Houses, x->x.p_householdEV != null);		
 	}
  
 } else { 
-	while ( sl_EV.getValue()/100.0 * Houses.size() > HouseholdEVs) {
+	while ( sl_EV.getValue()/100.0 * Houses.size() > HouseholdEVs) { // !!!! Should also remove diesel vehicle!
 		GCHouse h = findFirst(Houses, x->x.p_householdEV == null);
 		//traceln("Check presence of solarpanels: " + h.v_hasPV);	
+		
+		// Remove diesel vehicle
+		EnergyAsset EA = findFirst(h.c_vehicleAssets, p -> p.p_energyAssetType == OL_EnergyAssetType.DIESEL_VEHICLE );
+		traceln("Found household diesel vehicle: " + EA);
+		if (EA!=null) {			
+			h.c_consumptionAssets.remove(EA);
+			h.c_vehicleAssets.remove(EA);
+			h.v_vehicleIndex--;
+			remove_pop_energyAssets(EA);
+			traceln("Removing household DIESEL VEHICLE from household:" + h.p_agentID);
+		}
 		
 		EnergyAsset storageAsset = add_pop_energyAssets();
 		storageAsset.set_p_parentAgentID( h.p_agentID );
@@ -9518,7 +9600,6 @@ if( sl_EV.getValue()/100.0*Houses.size() < HouseholdEVs){
 	
 }	
 
-//v_totalInstalledPVPower_kW = sumWhere(pop_energyAssets,p->p.p_energyAssetInstance.getElectricCapacity_kW(),p -> p.p_energyAssetType == OL_EnergyAssetType.ELECTRIC_VEHICLE);
 t_numberOfElectricVehicles.setText(count(Houses, x->x.p_householdEV != null));
 ]]></ActionCode>
 					</BasicProperties>
@@ -16810,10 +16891,6 @@ switch(assetType) {
 		p_energyAssetInstance = (J_EAConversionGasBurner)p_energyAssetInstance;
 		p_energyAssetInstance = new J_EAConversionGasBurner( this, capacityHeat_kW, eta_r, main.p_timeStep_h, deliveryTemp_degC );
 	break;
-	case GAS_PIT:
-		p_energyAssetInstance = (J_EAConversionGasBurner)p_energyAssetInstance;
-		p_energyAssetInstance = new J_EAConversionGasBurner( this, capacityHeat_kW, eta_r, main.p_timeStep_h, deliveryTemp_degC );
-	break;
 	case HEAT_PUMP_AIR: //EnergyAsset ownerAssetAgent, double capacityElectricity_kW, double eta_r, double baseTemperature_degC, double outputTemperature_degC
 		p_energyAssetInstance = (J_EAConversionHeatPump)p_energyAssetInstance;
 		p_energyAssetInstance = new J_EAConversionHeatPump( this, main.p_timeStep_h, capacityElectric_kW, eta_r, main.v_currentAmbientTemperature_degC, deliveryTemp_degC, ambientTempType, 0, belowZeroHeatpumpEtaReductionFactor );
@@ -16862,10 +16939,13 @@ switch(assetType) {
 		p_energyAssetInstance = (J_EAConversionGasCHP)p_energyAssetInstance;
 		p_energyAssetInstance = new J_EAConversionGasCHP(this, capacityElectric_kW, capacityHeat_kW, eta_r, main.p_timeStep_h, deliveryTemp_degC);
 	break;
-	
+	case GAS_PIT:
+		p_energyAssetInstance = (J_EAConversionGasBurner)p_energyAssetInstance;
+		p_energyAssetInstance = new J_EAConversionGasBurner( this, capacityHeat_kW, eta_r, main.p_timeStep_h, deliveryTemp_degC );
+	break;
 	case ELECTRIC_HOB:
 		p_energyAssetInstance = (J_EAElectricHob)p_energyAssetInstance;
-		p_energyAssetInstance = new J_EAElectricHob(this, capacityElectric_kW, main.p_timeStep_h);
+		p_energyAssetInstance = new J_EAElectricHob(this, capacityHeat_kW, eta_r, main.p_timeStep_h, deliveryTemp_degC );
 	break;
 	case BIOGAS_METHANE_CONVERTER:
 		p_energyAssetInstance = (J_EAConversionBiogasMethane)p_energyAssetInstance;
@@ -31189,6 +31269,22 @@ void f_heatWithHybridHeatpump() {
 						<Type><![CDATA[boolean]]></Type>        
 					</Properties>
 				</Variable>
+				<Variable Class="PlainVariable">
+					<Id>1690363061408</Id>
+					<Name><![CDATA[v_electricHobConsumption_kWh]]></Name>
+					<Description><![CDATA[This is part of the v_fixedConsumptionElectric_kW, thus variable only exists for additional information]]></Description>
+					<X>150</X><Y>1490</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
+						<Type><![CDATA[double]]></Type>        
+						<InitialValue Class="CodeValue">
+							<Code><![CDATA[0]]></Code>
+						</InitialValue>
+					</Properties>
+				</Variable>
 				<Variable Class="Parameter">
 					<Id>1665487269767</Id>
 					<Name><![CDATA[p_isolationLabel]]></Name>
@@ -31415,18 +31511,17 @@ else {
 	f_heatWithHybridHeatpump();
 }
 
-for (EnergyAsset e: c_conversionAssets) {
-	if ( e.p_energyAssetType == OL_EnergyAssetType.GAS_PIT){
-		e.f_updateAllFlows( p_cookingTracker.v_ratio );
-		double heatIntoHouse_kW = e.v_currentProductionHeat_kW;
-		p_ThermalStorageAsset.v_powerFraction_fr += heatIntoHouse_kW / p_ThermalStorageAsset.p_energyAssetInstance.getHeatCapacity_kW();
-	}
-	else if( e.p_energyAssetType == OL_EnergyAssetType.ELECTRIC_HOB){
-		e.f_updateAllFlows( p_cookingTracker.v_ratio );
-		v_electricHobConsumption_kW += e.v_currentConsumptionElectricity_kW; // PowerFlows van consumption assets worden in f_calculateEnergyBalance opgeteld, dus ken dit niet toe aan totale consumptie!
-		double heatIntoHouse_kW = e.v_currentProductionHeat_kW;
-		p_ThermalStorageAsset.v_powerFraction_fr += heatIntoHouse_kW / p_ThermalStorageAsset.p_energyAssetInstance.getHeatCapacity_kW();
-	}
+// Add heat from cooking assets to house
+if (p_cookingTracker != null) { // check for presence of cooking asset
+	EnergyAsset e = p_cookingTracker.p_energyAsset;
+	e.f_updateAllFlows( p_cookingTracker.v_ratio );
+	v_electricHobConsumption_kW += e.v_currentConsumptionElectricity_kW; // PowerFlows van consumption assets worden in f_calculateEnergyBalance opgeteld, dus ken dit niet toe aan totale consumptie!
+	v_electricHobConsumption_kWh += e.v_currentConsumptionElectricity_kW * main.p_timeStep_h;
+	double heatIntoHouse_kW = e.v_currentProductionHeat_kW;
+	p_ThermalStorageAsset.v_powerFraction_fr += heatIntoHouse_kW / p_ThermalStorageAsset.p_energyAssetInstance.getHeatCapacity_kW();
+	//if ( p_cookingTracker.v_ratio > 0 ) {
+	//	traceln("Cooking session in House " + p_agentID + " with power fraction: " + p_cookingTracker.v_ratio );
+	//}
 }
 
 //add heating from sunrays to heatmodel power
@@ -31447,8 +31542,7 @@ v_currentIndoorTemp_degC = p_ThermalStorageAsset.p_energyAssetInstance.getCurren
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>true</ShowLabel>
-					<Body><![CDATA[//f_manageTanking();
-
+					<Body><![CDATA[
 v_currentElectricityPriceConsumption_eurpkWh = ((ConnectionOwner)l_ownerActor.getConnectedAgent()).f_getElectricityPrice( v_currentPowerElectricity_kW );
 v_currentAveraged7kWElectricityPrice_eurpkWh = ((ConnectionOwner)l_ownerActor.getConnectedAgent()).f_getAveragedElectricityPrice(v_currentPowerElectricity_kW, 7.0 );
 v_electricityPriceLowPassed_eurpkWh += v_lowPassFactor_fr * ( v_currentAveraged7kWElectricityPrice_eurpkWh - v_electricityPriceLowPassed_eurpkWh );
@@ -31529,17 +31623,25 @@ if (j_instance instanceof J_EAConsumption) {
  	else if (EA.p_energyAssetInstance instanceof J_EADieselVehicle) {
 		c_vehicleAssets.add( EA );
 		c_dieselVehicles.add( EA );
-		c_vehicleAssets.get( v_vehicleIndex ).v_powerFraction_fr = 1;
-		MobilityTracker m = main.add_mobilityTrackers();
-		c_mobilityTrackers.add( m );
-		m.p_vehicleIndex = v_vehicleIndex;
-		m.p_gridConnection = this;
-		m.p_energyAsset = c_vehicleAssets.get( v_vehicleIndex );
-		m.p_vehicleInstance = (J_EADieselVehicle)m.p_energyAsset.p_energyAssetInstance;
-		m.p_vehicleInstance = (J_EADieselVehicle)m.p_vehicleInstance;
-		m.p_mobilityPatternType = OL_MobilityPatternType.PRIVATE_VEHICLE;
-		((J_EADieselVehicle)m.p_vehicleInstance).setMobilityTracker( m );
-		m.f_getData();
+		//c_vehicleAssets.get( v_vehicleIndex ).v_powerFraction_fr = 1; // what's this??
+		if (c_mobilityTrackers.size() == 0) {
+			MobilityTracker m = main.add_mobilityTrackers();
+			c_mobilityTrackers.add( m );
+			m.p_gridConnection = this;
+			m.p_mobilityPatternType = OL_MobilityPatternType.PRIVATE_VEHICLE;
+			m.p_vehicleIndex = v_vehicleIndex;
+			m.p_energyAsset = c_vehicleAssets.get( v_vehicleIndex );
+			m.p_vehicleInstance = (J_EADieselVehicle)EA.p_energyAssetInstance;
+			//m.p_vehicleInstance = (J_EADieselVehicle)m.p_vehicleInstance;
+			
+			m.f_getData();
+		} else {
+			c_mobilityTrackers.get(v_vehicleIndex).p_vehicleIndex = v_vehicleIndex;
+			c_mobilityTrackers.get(v_vehicleIndex).p_energyAsset = c_vehicleAssets.get( v_vehicleIndex );
+			c_mobilityTrackers.get(v_vehicleIndex).p_vehicleInstance = (J_EADieselVehicle)EA.p_energyAssetInstance;
+		}
+		((J_EADieselVehicle)EA.p_energyAssetInstance).setMobilityTracker( c_mobilityTrackers.get(v_vehicleIndex) );
+	
 		v_vehicleIndex ++;
 	}
  } 
@@ -31566,17 +31668,25 @@ else if (j_instance instanceof J_EAStorage ) {
 		c_storageAssets.add(EA);
 		c_vehicleAssets.add( EA );
 		//EA.v_powerFraction_fr = 1;
-		MobilityTracker m = main.add_mobilityTrackers();
-		c_mobilityTrackers.add( m );
-		m.p_vehicleIndex = v_vehicleIndex;
-		m.p_gridConnection = this;
-		m.p_mobilityPatternType = PRIVATE_VEHICLE;
-		m.p_energyAsset = EA;
-		m.p_vehicleInstance = (J_EAEV)EA.p_energyAssetInstance;
-		((J_EAEV)m.p_vehicleInstance).setMobilityTracker( m );
-		m.f_getData();
+		if (c_mobilityTrackers.size() == 0) {
+			MobilityTracker m = main.add_mobilityTrackers();
+			c_mobilityTrackers.add( m );
+			m.p_vehicleIndex = v_vehicleIndex;
+			m.p_gridConnection = this;
+			m.p_energyAsset = EA;
+			m.p_vehicleInstance = (J_EAEV)EA.p_energyAssetInstance;
+
+			m.p_mobilityPatternType = PRIVATE_VEHICLE;
+			m.f_getData();
+		} else {
+			traceln("Vehicle index in House " + p_agentID + " is: " + v_vehicleIndex);
+			c_mobilityTrackers.get(v_vehicleIndex).p_vehicleIndex = v_vehicleIndex;
+			c_mobilityTrackers.get(v_vehicleIndex).p_energyAsset = c_vehicleAssets.get( v_vehicleIndex );
+			c_mobilityTrackers.get(v_vehicleIndex).p_vehicleInstance = EA.p_energyAssetInstance;
+		}	
+		((J_EAEV)EA.p_energyAssetInstance).setMobilityTracker( c_mobilityTrackers.get(v_vehicleIndex) );
 		p_householdEV = (J_EAEV)j_instance;
-		//v_vehicleIndex ++;
+		v_vehicleIndex ++;
 	}
 	else if(j_instance instanceof J_EAStorageElectric && ((J_EAStorageElectric)j_instance).getStorageCapacity_kWh() !=0) {
 		p_batteryAsset = EA;
@@ -31625,22 +31735,33 @@ else if (j_instance instanceof J_EAConversion) {
       	}
     }
 	else if ( EA.p_energyAssetType == OL_EnergyAssetType.GAS_PIT){
-		CookingTracker c = main.add_cookingTrackers();
-		p_cookingTracker = c;
-		c.p_gridConnection = this;
-		c.p_energyInstance = EA.p_energyAssetInstance;
-		c.p_energyAsset = EA;
-		c.f_getData();
+		if (p_cookingTracker == null) {
+			//CookingTracker c = main.add_cookingTrackers();
+			p_cookingTracker = main.add_cookingTrackers();
+			p_cookingTracker.p_gridConnection = this;
+			p_cookingTracker.p_energyInstance = EA.p_energyAssetInstance;
+			p_cookingTracker.p_energyAsset = EA;
+			p_cookingTracker.f_getData();
+		} else {
+			p_cookingTracker.p_energyInstance = EA.p_energyAssetInstance;
+			p_cookingTracker.p_energyAsset = EA;
+		}
+		p_hasElectricHob = false;
 	}
 	else if (EA.p_energyAssetType == OL_EnergyAssetType.ELECTRIC_HOB) {
-		CookingTracker c = main.add_cookingTrackers();
-		p_cookingTracker = c;
+		if (p_cookingTracker == null) {
+			//CookingTracker c = main.add_cookingTrackers();
+			p_cookingTracker = main.add_cookingTrackers();
+			p_cookingTracker.p_gridConnection = this;
+			p_cookingTracker.p_energyInstance = EA.p_energyAssetInstance;
+			p_cookingTracker.p_energyAsset = EA;
+			p_cookingTracker.f_getData();
+		} else {
+			p_cookingTracker.p_energyInstance = EA.p_energyAssetInstance;
+			p_cookingTracker.p_energyAsset = EA;
+		}
 		p_hasElectricHob = true;
-		c.p_gridConnection = this;
-		c.p_energyInstance = EA.p_energyAssetInstance;
-		c.p_energyAsset = EA;
-		c.f_getData();
-	}	  
+	}
 }
 
 else {
@@ -36647,11 +36768,11 @@ if ( v_sessionIndex > starttimes.size() - 1 ) {
 
 v_idleTimeToNextActivity_min = starttimes.get(v_sessionIndex) - time( MINUTE );
 v_nextActivityStartTime_min = starttimes.get(v_sessionIndex);
+//traceln("Current model time in minutes: " + time(MINUTE));
 nextActivityStartTimer.restart( v_idleTimeToNextActivity_min, MINUTE);
 nextActivityEndTimer.restart( endtimes.get(v_sessionIndex) - time( MINUTE ), MINUTE);
 
-v_ratio = 0;
-]]></Action>
+v_ratio = 0;]]></Action>
 				</Event>
 			</Events>
 			<Functions>
@@ -36673,26 +36794,20 @@ for (int i = 0; i < nbOfCookingSessions; i++){
 	starttimes.add(main.inputCookingActivities.getCellNumericValue("sheet1", rowIndex, 3 + i * 3));
 	endtimes.add(main.inputCookingActivities.getCellNumericValue("sheet1", rowIndex, 4 + i * 3));
 	
-	double ratio = 0;
-	if( p_energyAsset.p_energyAssetType == OL_EnergyAssetType.GAS_PIT ){ 
-		ratio = main.inputCookingActivities.getCellNumericValue("sheet1", rowIndex, 5 + i * 3) / p_energyInstance.getHeatCapacity_kW();
-	}
-	else { 
-		ratio =  main.inputCookingActivities.getCellNumericValue("sheet1", rowIndex, 5 + i * 3) / p_energyInstance.getElectricCapacity_kW();
-	}	
+	double ratio = main.inputCookingActivities.getCellNumericValue("sheet1", rowIndex, 5 + i * 3) / p_energyInstance.getHeatCapacity_kW();
 	ratios.add(ratio);
 }
 
-
 while ( starttimes.get(v_sessionIndex) - time( MINUTE ) < 0) {
-	starttimes.set( v_sessionIndex, starttimes.get(v_sessionIndex) + 10080 );
-	endtimes.set( v_sessionIndex, endtimes.get(v_sessionIndex) + 10080 );
+	starttimes.set( v_sessionIndex, starttimes.get(v_sessionIndex) + 1440 );
+	endtimes.set( v_sessionIndex, endtimes.get(v_sessionIndex) + 1440 );
 	v_sessionIndex++;
 	if ( v_sessionIndex > starttimes.size() - 1 ) {
 		v_sessionIndex = 0;
 	}
 }
 
+//traceln("Current model time in minutes: " + time(MINUTE) + ", nb sessions: " + nbOfCookingSessions);
 nextActivityStartTimer.restart( starttimes.get(v_sessionIndex) - time( MINUTE ), MINUTE);
 nextActivityEndTimer.restart( endtimes.get(v_sessionIndex) - time( MINUTE ), MINUTE);
 v_ratio = ratios.get(v_sessionIndex);
@@ -38120,11 +38235,11 @@ public class J_EA {
 
     public void resetFlows() {
     	//traceln("parent energyAsset reset ");
-    	double electricityProduction_kW = 0;
+    	electricityProduction_kW = 0;
     	heatProduction_kW = 0;
     	methaneProduction_kW = 0;
     	hydrogenProduction_kW = 0;
-    	double electricityConsumption_kW = 0;
+    	electricityConsumption_kW = 0;
     	methaneConsumption_kW = 0;
     	hydrogenConsumption_kW = 0;
     	heatConsumption_kW = 0;
@@ -40082,28 +40197,51 @@ public class J_EAConversionGasCHP extends base.J_EAConversion implements Seriali
  */	
 public class J_EAElectricHob extends J_EAConversion implements Serializable {
 
+	private OL_EnergyCarrierType energyCarrierProduced = OL_EnergyCarrierType.HEAT;
+	private OL_EnergyCarrierType energyCarrierConsumed = OL_EnergyCarrierType.ELECTRICITY;
+	protected double outputTemperature_degC;
+
     /**
      * Default constructor
      */
-    public J_EAElectricHob(EnergyAsset ownerAsset, double capacityElectric_kW, double timestep_h) {
-		this.ownerAsset = ownerAsset;
-		this.capacityElectric_kW = capacityElectric_kW;
-		this.timestep_h = timestep_h;
-		//traceln("create EHoB");
+    public J_EAElectricHob(EnergyAsset ownerAssetAgent, double capacityThermal_kW, double efficiency, double timestep_h, double outputTemperature_degC) {
+	    this.ownerAsset = ownerAssetAgent;
+	    this.capacityHeat_kW = capacityThermal_kW;
+	    this.eta_r = efficiency;
+	    //this.capacityElectric_kW = capacityThermal_kW / eta_r;
+	    this.timestep_h = timestep_h;
+	    this.outputTemperature_degC = outputTemperature_degC;
     }
 
     @Override 
     public double[] operate( double ratioOfCapacity ) {
-      	electricityConsumption_kW = capacityElectric_kW * ratioOfCapacity;
-    	energyUsed_kWh += (electricityConsumption_kW) * timestep_h;
-    	return returnEnergyFlows();
+    	//traceln("I convert now! GasBurner @ " + (ratioOfCapacity * 100) + " %");
+    	this.heatProduction_kW = capacityHeat_kW * ratioOfCapacity;
+		this.electricityConsumption_kW = heatProduction_kW / eta_r;
+
+		this.energyUsed_kWh += timestep_h * (electricityConsumption_kW - heatProduction_kW); // This represents losses!
+		//double[] arr = {this.electricityProduction_kW, this.methaneProduction_kW, this.hydrogenProduction_kW, this.heatProduction_kW, this.electricityConsumption_kW, this.methaneConsumption_kW, this.hydrogenConsumption_kW, this.heatConsumption_kW };
+    	//return arr;
+		this.heatProduced_kWh += heatProduction_kW * timestep_h;
+		return returnEnergyFlows();
     }
     
 	@Override
 	public String toString() {
-		return super.toString();
+		return
+			"ownerAsset = " + ownerAsset +", Energy consumed = " + this.energyUsed_kWh +
+			" capacityElectric_kW = " + this.capacityElectric_kW +" "+
+			"capacityHeat_kW = " + this.capacityHeat_kW +" "+
+			"eta_r = " + this.eta_r+" " +
+			"outputTemperature_degC = " + this.outputTemperature_degC + " "+
+			"energyUsed_kWh (losses) = " + this.energyUsed_kWh + " "+
+			"heatProducted_kWh = " +this.heatProduced_kWh + " ";
 	}
-
+	
+	@Override
+	public double getCurrentTemperature() {
+		return outputTemperature_degC;
+	}
 	/**
 	 * This number is here for model snapshot storing purpose<br>
 	 * It needs to be changed when this class gets changed

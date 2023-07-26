@@ -9152,18 +9152,17 @@
         ],
 		"templateAssets": [
                     {
-                        "capacityElectricity_kW": null,
-                        "capacityHeat_kW": 8.0,
-                        "category": "CONVERSION",
-                        "eta_r": 0.95,
                         "name": "TEMPLATE: gas-pit",
-                        "type": "GAS_PIT"
+                        "type": "GAS_PIT",
+                        "capacityHeat_kW": 5.0,
+                        "category": "CONVERSION",
+                        "eta_r": 0.4
                     },
 					{
-                        "capacityElectricity_kW": 5.0,
-                        "capacityHeat_kW": null,
+                        
+                        "capacityHeat_kW": 5.0,
                         "category": "CONVERSION",
-                        "eta_r": 0.95,
+                        "eta_r": 0.8,
                         "name": "TEMPLATE: Electric hob",
                         "type": "ELECTRIC_HOB"
                     },
@@ -9181,6 +9180,13 @@
                         "stateOfCharge_r": 0.8,
                         "storageCapacity_kWh": 60.0,
                         "type": "ELECTRIC_VEHICLE",
+                        "vehicleScaling": 1
+                    },
+					{
+                        "category": "CONSUMPTION",
+                        "energyConsumption_kWhpkm": 0.6,
+                        "name": "TEMPLATE: Private Diesel Vehicle",
+                        "type": "DIESEL_VEHICLE",
                         "vehicleScaling": 1
                     }
 		]
