@@ -6488,86 +6488,6 @@ t_numberOfRooftopPV.setText(count(Houses, x->x.v_hasPV == true));]]></Body>
 					</QuantityColumn>
 				</EmbeddedObject>
 				<EmbeddedObject>
-					<Id>1658499722958</Id>
-					<Name><![CDATA[pop_templateEnergyAssets]]></Name>
-					<ExcludeFromBuild>true</ExcludeFromBuild>
-					<X>280</X><Y>940</Y>
-					<Label><X>15</X><Y>0</Y></Label>
-					<PublicFlag>false</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
-					<ShowLabel>true</ShowLabel>
-					<ActiveObjectClass>
-						<PackageName><![CDATA[base]]></PackageName>
-						<ClassName><![CDATA[EnergyAsset]]></ClassName>
-					</ActiveObjectClass>
-					<GenericParameterSubstitute>
-						<GenericParameterSubstituteReference>
-							<PackageName><![CDATA[base]]></PackageName>
-							<ClassName><![CDATA[EnergyAsset]]></ClassName>
-							<ItemName><![CDATA[1658499506318]]></ItemName>
-						</GenericParameterSubstituteReference>
-					</GenericParameterSubstitute>
-					<Parameters>
-						<Parameter>
-							<Name><![CDATA[p_energyAssetInstance]]></Name>
-						</Parameter>
-						<Parameter>
-							<Name><![CDATA[p_parentAgentID]]></Name>
-						</Parameter>
-						<Parameter>
-							<Name><![CDATA[p_energyAssetType]]></Name>
-						</Parameter>
-						<Parameter>
-							<Name><![CDATA[p_defaultEnergyAssetPresetName]]></Name>
-						</Parameter>
-						<Parameter>
-							<Name><![CDATA[p_linkedSourceEnergyAsset]]></Name>
-						</Parameter>
-						<Parameter>
-							<Name><![CDATA[p_baseTemperatureReference]]></Name>
-						</Parameter>
-					</Parameters>
-					<ReplicationFlag>true</ReplicationFlag>
-					<Replication Class="CodeValue">
-						<Code><![CDATA[100]]></Code>
-					</Replication>
-					<CollectionType>ARRAY_LIST_BASED</CollectionType>
-					<InEnvironment>true</InEnvironment>	
-					<InitialLocationType>AT_ANIMATION_POSITION</InitialLocationType>
-					<XCode Class="CodeValue">
-						<Code><![CDATA[0]]></Code>
-					</XCode>
-					<YCode Class="CodeValue">
-						<Code><![CDATA[0]]></Code>
-					</YCode>
-					<ZCode Class="CodeValue">
-						<Code><![CDATA[0]]></Code>
-					</ZCode>
-					<ColumnCode Class="CodeValue">
-						<Code><![CDATA[0]]></Code>
-					</ColumnCode>
-					<RowCode Class="CodeValue">
-						<Code><![CDATA[0]]></Code>
-					</RowCode>
-					<LatitudeCode Class="CodeValue">
-						<Code><![CDATA[0]]></Code>
-					</LatitudeCode>
-					<LongitudeCode Class="CodeValue">
-						<Code><![CDATA[0]]></Code>
-					</LongitudeCode>
-					<LocationNameCode Class="CodeValue">
-						<Code><![CDATA[""]]></Code>
-					</LocationNameCode>
-					<InitializationType>EMPTY</InitializationType>
-					<InitializationDatabaseTableQuery>
-						<TableReference>
-						</TableReference>
-					</InitializationDatabaseTableQuery>
-					<InitializationDatabaseType>ONE_AGENT_PER_DATABASE_RECORD</InitializationDatabaseType>
-					<QuantityColumn>
-					</QuantityColumn>
-				</EmbeddedObject>
-				<EmbeddedObject>
 					<Id>1658752704931</Id>
 					<Name><![CDATA[kpiVisuals]]></Name>
 					<Description><![CDATA[Optionele visualisatie-agent met eenvoudige visuals voor model inspectie, monitoring en debugging. Kan aangezet worden met de parameter b_addKpiVisuals, maar model draait ook zonder.
@@ -7344,7 +7264,7 @@ t_numberOfRooftopPV.setText(count(Houses, x->x.v_hasPV == true));]]></Body>
 				</EmbeddedObject>
 				<EmbeddedObject>
 					<Id>1663773716929</Id>
-					<Name><![CDATA[Buildings]]></Name>
+					<Name><![CDATA[Businesses]]></Name>
 					<X>73</X><Y>878</Y>
 					<Label><X>15</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
@@ -9616,7 +9536,6 @@ t_numberOfElectricVehicles.setText(count(Houses, x->x.p_householdEV != null));
 				 	<EmbeddedIcon>false</EmbeddedIcon>				
 					<Id>1690209586035</Id>
 					<Name><![CDATA[sl_homeBattery]]></Name>
-					<ExcludeFromBuild>true</ExcludeFromBuild>
 					<X>70</X><Y>35</Y>
 					<Label><X>0</X><Y>-10</Y></Label>
 					<PublicFlag>true</PublicFlag>
@@ -9626,11 +9545,57 @@ t_numberOfElectricVehicles.setText(count(Houses, x->x.p_householdEV != null));
 					<BasicProperties Width="100" Height="30">
                         <EmbeddedIcon>false</EmbeddedIcon>	
 						<Enabled>true</Enabled>
-						<ActionCode><![CDATA[/*f_setHomeBatteries(sl_homeBattery.getValue() / 100);
+						<ActionCode><![CDATA[//Setting PV Systems
+double HouseholdBatteries = count(Houses, x->x.p_batteryAsset != null);
+t_numberOfHomeBatteries.setText(HouseholdBatteries);
 
-t_numberOfHomeBatteries.setText(count(pop_EA_Households, x->x.v_hasHomeBattery));
-f_resetSettings();
-*/]]></ActionCode>
+HashMap l=new HashMap();
+//Get template asset "TEMPLATE: Household PV"
+for (HashMap t:parsedJSONTemplateEnergyAssets) {
+	if (((String)t.get( "name" )).equals("TEMPLATE: Private battery")) {
+		l = t;
+	}
+}
+//HashMap l = findFirst(parsedJSONTemplateEnergyAssets, l-> l.get("type") == OL_EnergyAssetType.PHOTOVOLTAIC);
+
+if( sl_homeBattery.getValue()/100.0*Houses.size() < HouseholdBatteries){
+	while ( sl_homeBattery.getValue()/100.0*Houses.size() < HouseholdBatteries) { // remove excess PV systems
+		GCHouse h = findFirst(Houses, x->x.p_batteryAsset!=null);
+		
+		EnergyAsset EA = h.p_batteryAsset;
+		traceln("Found household battery: " + EA);
+		if (EA!=null) {
+			h.c_storageAssets.remove(EA);
+			h.p_batteryAsset = null;
+			remove_pop_energyAssets(EA);
+			traceln("Removing battery from household:" + h.p_agentID);
+		}
+		HouseholdBatteries = count(Houses, x->x.p_batteryAsset != null);
+	}
+ 
+} else { 
+	while ( sl_homeBattery.getValue()/100.0 * Houses.size() > HouseholdBatteries) {
+		GCHouse h = findFirst(Houses, x->x.p_batteryAsset==null);
+		//traceln("Check presence of solarpanels: " + h.v_hasPV);	
+		EnergyAsset storageAsset = add_pop_energyAssets();
+		storageAsset.set_p_parentAgentID( h.p_agentID );
+		storageAsset.set_p_energyAssetType( OL_EnergyAssetType.valueOf((String)l.get( "type" ) ));
+		storageAsset.set_p_defaultEnergyAssetPresetName( (String)l.get( "name" ));
+		double capacityElectric_kW1 = l.get( "capacityElectricity_kW") == null? 0.0: Double.valueOf( l.get( "capacityElectricity_kW" ).toString()).doubleValue();
+		double storageCapacity_kWh = l.get( "storageCapacity_kWh" ) == null? 0.0: Double.valueOf( l.get( "storageCapacity_kWh").toString()).doubleValue();
+		double initialStateOfCharge_r = l.get( "stateOfCharge_r" ) == null? 0.0: Double.valueOf( l.get( "stateOfCharge_r" ).toString()).doubleValue();
+		storageAsset.p_energyAssetInstance = new J_EAStorageElectric(storageAsset, capacityElectric_kW1, storageCapacity_kWh, initialStateOfCharge_r, p_timeStep_h);
+		storageAsset.f_connectToParentNode( this );
+		c_storageAssets.add(storageAsset);	
+
+		HouseholdBatteries = count(Houses, x->x.p_batteryAsset != null);
+		traceln("Added battery to household: " + h.p_agentID);
+	}
+	
+}	
+
+t_numberOfHomeBatteries.setText(HouseholdBatteries);
+]]></ActionCode>
 					</BasicProperties>
 					<ExtendedProperties>
 						<DefaultValueCode><![CDATA[0]]></DefaultValueCode>

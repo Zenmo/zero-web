@@ -5226,7 +5226,7 @@
                     },
                     {
                         "category": "CONSUMPTION",
-                        "energyConsumption_kWhpkm": 0.8,
+                        "energyConsumption_kWhpkm": 0.6,
                         "id": 321001,
                         "is_rule_action_template": false,
                         "name": "diesel vehicel",
@@ -5324,7 +5324,7 @@
                     },
                     {
                         "category": "CONSUMPTION",
-                        "energyConsumption_kWhpkm": 0.8,
+                        "energyConsumption_kWhpkm": 0.6,
                         "id": 321007,
                         "is_rule_action_template": false,
                         "name": "diesel vehicel",
@@ -5422,7 +5422,7 @@
                     },
                     {
                         "category": "CONSUMPTION",
-                        "energyConsumption_kWhpkm": 0.8,
+                        "energyConsumption_kWhpkm": 0.6,
                         "id": 321013,
                         "is_rule_action_template": false,
                         "name": "diesel vehicel",
@@ -5520,7 +5520,7 @@
                     },
                     {
                         "category": "CONSUMPTION",
-                        "energyConsumption_kWhpkm": 0.8,
+                        "energyConsumption_kWhpkm": 0.6,
                         "id": 321019,
                         "is_rule_action_template": false,
                         "name": "diesel vehicel",
@@ -5618,7 +5618,7 @@
                     },
                     {
                         "category": "CONSUMPTION",
-                        "energyConsumption_kWhpkm": 0.8,
+                        "energyConsumption_kWhpkm": 0.6,
                         "id": 321025,
                         "is_rule_action_template": false,
                         "name": "diesel vehicel",
@@ -5716,7 +5716,7 @@
                     },
                     {
                         "category": "CONSUMPTION",
-                        "energyConsumption_kWhpkm": 0.8,
+                        "energyConsumption_kWhpkm": 0.6,
                         "id": 321031,
                         "is_rule_action_template": false,
                         "name": "diesel vehicel",
@@ -5814,7 +5814,7 @@
                     },
                     {
                         "category": "CONSUMPTION",
-                        "energyConsumption_kWhpkm": 0.8,
+                        "energyConsumption_kWhpkm": 0.6,
                         "id": 321037,
                         "is_rule_action_template": false,
                         "name": "diesel vehicel",
@@ -5912,7 +5912,7 @@
                     },
                     {
                         "category": "CONSUMPTION",
-                        "energyConsumption_kWhpkm": 0.8,
+                        "energyConsumption_kWhpkm": 0.6,
                         "id": 321043,
                         "is_rule_action_template": false,
                         "name": "diesel vehicel",
@@ -6010,7 +6010,7 @@
                     },
                     {
                         "category": "CONSUMPTION",
-                        "energyConsumption_kWhpkm": 0.8,
+                        "energyConsumption_kWhpkm": 0.6,
                         "id": 321049,
                         "is_rule_action_template": false,
                         "name": "diesel vehicel",
@@ -6108,7 +6108,7 @@
                     },
                     {
                         "category": "CONSUMPTION",
-                        "energyConsumption_kWhpkm": 0.8,
+                        "energyConsumption_kWhpkm": 0.6,
                         "id": 321055,
                         "is_rule_action_template": false,
                         "name": "diesel vehicel",
@@ -6206,7 +6206,7 @@
                     },
                     {
                         "category": "CONSUMPTION",
-                        "energyConsumption_kWhpkm": 0.8,
+                        "energyConsumption_kWhpkm": 0.6,
                         "id": 321061,
                         "is_rule_action_template": false,
                         "name": "diesel vehicel",
@@ -6282,7 +6282,7 @@
                     },
                     {
                         "category": "CONSUMPTION",
-                        "energyConsumption_kWhpkm": 0.8,
+                        "energyConsumption_kWhpkm": 0.6,
                         "id": 321067,
                         "is_rule_action_template": false,
                         "name": "diesel vehicel",
@@ -6402,7 +6402,7 @@
                     },
                     {
                         "category": "CONSUMPTION",
-                        "energyConsumption_kWhpkm": 0.8,
+                        "energyConsumption_kWhpkm": 0.6,
                         "id": 321073,
                         "is_rule_action_template": false,
                         "name": "diesel vehicel",
@@ -6500,7 +6500,7 @@
                     },
                     {
                         "category": "CONSUMPTION",
-                        "energyConsumption_kWhpkm": 0.8,
+                        "energyConsumption_kWhpkm": 0.6,
                         "id": 321079,
                         "is_rule_action_template": false,
                         "name": "diesel vehicel",
@@ -6598,7 +6598,7 @@
                     },
                     {
                         "category": "CONSUMPTION",
-                        "energyConsumption_kWhpkm": 0.8,
+                        "energyConsumption_kWhpkm": 0.6,
                         "id": 321085,
                         "is_rule_action_template": false,
                         "name": "diesel vehicel",
@@ -6696,7 +6696,7 @@
                     },
                     {
                         "category": "CONSUMPTION",
-                        "energyConsumption_kWhpkm": 0.8,
+                        "energyConsumption_kWhpkm": 0.6,
                         "id": 321091,
                         "is_rule_action_template": false,
                         "name": "diesel vehicel",
@@ -6794,7 +6794,7 @@
                     },
                     {
                         "category": "CONSUMPTION",
-                        "energyConsumption_kWhpkm": 0.8,
+                        "energyConsumption_kWhpkm": 0.6,
                         "id": 321097,
                         "is_rule_action_template": false,
                         "name": "diesel vehicel",
@@ -6892,7 +6892,7 @@
                     },
                     {
                         "category": "CONSUMPTION",
-                        "energyConsumption_kWhpkm": 0.8,
+                        "energyConsumption_kWhpkm": 0.6,
                         "id": 321103,
                         "is_rule_action_template": false,
                         "name": "diesel vehicel",
@@ -6990,7 +6990,7 @@
                     },
                     {
                         "category": "CONSUMPTION",
-                        "energyConsumption_kWhpkm": 0.8,
+                        "energyConsumption_kWhpkm": 0.6,
                         "id": 321109,
                         "is_rule_action_template": false,
                         "name": "diesel vehicel",
@@ -7088,7 +7088,7 @@
                     },
                     {
                         "category": "CONSUMPTION",
-                        "energyConsumption_kWhpkm": 0.8,
+                        "energyConsumption_kWhpkm": 0.6,
                         "id": 321115,
                         "is_rule_action_template": false,
                         "name": "diesel vehicel",
@@ -7186,7 +7186,7 @@
                     },
                     {
                         "category": "CONSUMPTION",
-                        "energyConsumption_kWhpkm": 0.8,
+                        "energyConsumption_kWhpkm": 0.6,
                         "id": 321121,
                         "is_rule_action_template": false,
                         "name": "diesel vehicel",
@@ -7284,7 +7284,7 @@
                     },
                     {
                         "category": "CONSUMPTION",
-                        "energyConsumption_kWhpkm": 0.8,
+                        "energyConsumption_kWhpkm": 0.6,
                         "id": 321127,
                         "is_rule_action_template": false,
                         "name": "diesel vehicel",
@@ -7382,7 +7382,7 @@
                     },
                     {
                         "category": "CONSUMPTION",
-                        "energyConsumption_kWhpkm": 0.8,
+                        "energyConsumption_kWhpkm": 0.6,
                         "id": 321133,
                         "is_rule_action_template": false,
                         "name": "diesel vehicel",
@@ -7480,7 +7480,7 @@
                     },
                     {
                         "category": "CONSUMPTION",
-                        "energyConsumption_kWhpkm": 0.8,
+                        "energyConsumption_kWhpkm": 0.6,
                         "id": 321139,
                         "is_rule_action_template": false,
                         "name": "diesel vehicel",
@@ -7578,7 +7578,7 @@
                     },
                     {
                         "category": "CONSUMPTION",
-                        "energyConsumption_kWhpkm": 0.8,
+                        "energyConsumption_kWhpkm": 0.6,
                         "id": 321145,
                         "is_rule_action_template": false,
                         "name": "diesel vehicel",
@@ -7676,7 +7676,7 @@
                     },
                     {
                         "category": "CONSUMPTION",
-                        "energyConsumption_kWhpkm": 0.8,
+                        "energyConsumption_kWhpkm": 0.6,
                         "id": 321151,
                         "is_rule_action_template": false,
                         "name": "diesel vehicel",
@@ -7774,7 +7774,7 @@
                     },
                     {
                         "category": "CONSUMPTION",
-                        "energyConsumption_kWhpkm": 0.8,
+                        "energyConsumption_kWhpkm": 0.6,
                         "id": 321157,
                         "is_rule_action_template": false,
                         "name": "diesel vehicel",
@@ -7872,7 +7872,7 @@
                     },
                     {
                         "category": "CONSUMPTION",
-                        "energyConsumption_kWhpkm": 0.8,
+                        "energyConsumption_kWhpkm": 0.6,
                         "id": 321163,
                         "is_rule_action_template": false,
                         "name": "diesel vehicel",
@@ -7970,7 +7970,7 @@
                     },
                     {
                         "category": "CONSUMPTION",
-                        "energyConsumption_kWhpkm": 0.8,
+                        "energyConsumption_kWhpkm": 0.6,
                         "id": 321169,
                         "is_rule_action_template": false,
                         "name": "diesel vehicel",
@@ -8068,7 +8068,7 @@
                     },
                     {
                         "category": "CONSUMPTION",
-                        "energyConsumption_kWhpkm": 0.8,
+                        "energyConsumption_kWhpkm": 0.6,
                         "id": 321175,
                         "is_rule_action_template": false,
                         "name": "diesel vehicel",
@@ -8117,7 +8117,7 @@
                     },
                     {
                         "category": "CONSUMPTION",
-                        "energyConsumption_kWhpkm": 0.8,
+                        "energyConsumption_kWhpkm": 0.6,
                         "id": 321181,
                         "is_rule_action_template": false,
                         "name": "diesel vehicel",
@@ -8264,7 +8264,7 @@
                     },
                     {
                         "category": "CONSUMPTION",
-                        "energyConsumption_kWhpkm": 0.8,
+                        "energyConsumption_kWhpkm": 0.6,
                         "id": 321187,
                         "is_rule_action_template": false,
                         "name": "diesel vehicel",
@@ -8362,7 +8362,7 @@
                     },
                     {
                         "category": "CONSUMPTION",
-                        "energyConsumption_kWhpkm": 0.8,
+                        "energyConsumption_kWhpkm": 0.6,
                         "id": 321193,
                         "is_rule_action_template": false,
                         "name": "diesel vehicel",
@@ -8460,7 +8460,7 @@
                     },
                     {
                         "category": "CONSUMPTION",
-                        "energyConsumption_kWhpkm": 0.8,
+                        "energyConsumption_kWhpkm": 0.6,
                         "id": 321199,
                         "is_rule_action_template": false,
                         "name": "diesel vehicel",
@@ -8558,7 +8558,7 @@
                     },
                     {
                         "category": "CONSUMPTION",
-                        "energyConsumption_kWhpkm": 0.8,
+                        "energyConsumption_kWhpkm": 0.6,
                         "id": 321205,
                         "is_rule_action_template": false,
                         "name": "diesel vehicel",
@@ -8656,7 +8656,7 @@
                     },
                     {
                         "category": "CONSUMPTION",
-                        "energyConsumption_kWhpkm": 0.8,
+                        "energyConsumption_kWhpkm": 0.6,
                         "id": 321211,
                         "is_rule_action_template": false,
                         "name": "diesel vehicel",
@@ -8754,7 +8754,7 @@
                     },
                     {
                         "category": "CONSUMPTION",
-                        "energyConsumption_kWhpkm": 0.8,
+                        "energyConsumption_kWhpkm": 0.6,
                         "id": 321217,
                         "is_rule_action_template": false,
                         "name": "diesel vehicel",
@@ -8852,7 +8852,7 @@
                     },
                     {
                         "category": "CONSUMPTION",
-                        "energyConsumption_kWhpkm": 0.8,
+                        "energyConsumption_kWhpkm": 0.6,
                         "id": 321223,
                         "is_rule_action_template": false,
                         "name": "diesel vehicel",
@@ -8950,7 +8950,7 @@
                     },
                     {
                         "category": "CONSUMPTION",
-                        "energyConsumption_kWhpkm": 0.8,
+                        "energyConsumption_kWhpkm": 0.6,
                         "id": 321229,
                         "is_rule_action_template": false,
                         "name": "diesel vehicel",
@@ -9048,7 +9048,7 @@
                     },
                     {
                         "category": "CONSUMPTION",
-                        "energyConsumption_kWhpkm": 0.8,
+                        "energyConsumption_kWhpkm": 0.6,
                         "id": 321235,
                         "is_rule_action_template": false,
                         "name": "diesel vehicel",
@@ -9188,6 +9188,14 @@
                         "name": "TEMPLATE: Private Diesel Vehicle",
                         "type": "DIESEL_VEHICLE",
                         "vehicleScaling": 1
+                    },
+					{
+                        "capacityElectricity_kW": 3.0,
+                        "category": "STORAGE",
+                        "name": "TEMPLATE: Private battery",
+                        "stateOfCharge_r": 0.7,
+                        "storageCapacity_kWh": 15.0,
+                        "type": "STORAGE_ELECTRIC"
                     }
 		]
     }
