@@ -24498,8 +24498,15 @@ if (v_contractConnection.connectionContractType.equals(OL_ConnectionContractType
 					<ShowLabel>true</ShowLabel>
 					<Body><![CDATA[// Connect to energy supplier (can be a holon!)
 //traceln(p_actorID + " is looking for its supplier");
-Actor mySupplier = null;
-mySupplier = findFirst(main.pop_energySuppliers, p->p.p_actorID.equals(v_contractDelivery.contractScope)) ;
+if (v_contractDelivery == null) {
+	throw new RuntimeException(
+		String.format(
+			"Actor %s has no delivery contract",
+			p_actorID
+		)
+	);
+}
+Actor mySupplier = findFirst(main.pop_energySuppliers, p->p.p_actorID.equals(v_contractDelivery.contractScope)) ;
 if (mySupplier != null) {
 	((EnergySupplier)mySupplier).f_connectToChild(this);	
 } else {
@@ -24515,12 +24522,23 @@ if (mySupplier != null) {
 	p_electricitySupplier = mySupplier;
 	//energySupplier.f_connectToChild(this);	
 } else { 
-	traceln("Connection owner --> f_connectToParentActor --> no parent actor found, this should not be happening");
+	traceln(
+		"Connection owner --> f_connectToParentActor --> no parent actor found, this should not be happening. contract holder: %s, parent: %s",
+		v_contractDelivery.contractHolder,
+		v_contractDelivery.contractScope
+	);
 }
 
 // Connect to grid operator (can be a holon!)
-Actor myGridoperator = null;
-myGridoperator = findFirst(main.pop_gridOperators, p->p.p_actorID.equals(v_contractTransport.contractScope)) ;
+if (v_contractTransport == null) {
+	throw new RuntimeException(
+		String.format(
+			"Actor %s has no transport contract",
+			p_actorID
+		)
+	);
+}
+Actor myGridoperator = findFirst(main.pop_gridOperators, p->p.p_actorID.equals(v_contractTransport.contractScope)) ;
 if (myGridoperator == null) {
 	myGridoperator = findFirst(main.pop_energyHolons, p->p.p_actorID.equals(v_contractTransport.contractScope)) ;
 }
@@ -24528,7 +24546,11 @@ if (myGridoperator == null) {
 if (myGridoperator != null) {
 	p_gridOperator = myGridoperator;	
 } else { 
-	traceln("Connection owner --> f_connectToParentActor --> no grid operator found, this should not be happening");
+	traceln(
+	    "Connection owner --> f_connectToParentActor --> no grid operator found, this should not be happening. contract holder: %s, operator: %s",
+	    v_contractTransport.contractHolder,
+	    v_contractTransport.contractScope
+	);
 }
 
 //traceln(p_actorID + " finished looking for supplier");
