@@ -1023,13 +1023,14 @@ f_loadParameters();
 date.setMonth(5); // january is 0
 date.setYear(123); // Year starts at 1900
 date.setDate(3);
-///date.setDate(200);
-getEngine().setStartDate(dropTime(date));
+*/
+
+//traceln("Starting month is %s",getEngine().getMonth());
 v_hourOfYearStart=hourOfYearPerMonth[getMonth()] + (getDayOfMonth()-1)*24;
 
-traceln("Startdate is: " + date);
-traceln("Starthour is: " + v_hourOfYearStart);
-*/
+//traceln("Startdate is: " + date);
+//traceln("Starthour is: " + v_hourOfYearStart);
+
 
 // Populate the model
 f_configureBackBone();
@@ -31539,7 +31540,12 @@ double electricityPrice_eurpkWh = v_currentElectricityPriceConsumption_eurpkWh; 
 double availablePowerAtPrice_kW = ((ConnectionOwner)l_ownerActor.getConnectedAgent()).f_getAvailablePowerAtPrice( v_currentPowerElectricity_kW );
 
 f_determineChargingDemandOfEV(); //we do this here because with smart assets the heatpumps will need information of the SOC of the EV
-f_manageHeatingAssets();
+
+// Heating, only when there is a thermal model and at least one heating asset.
+if (p_ThermalStorageAsset != null & p_primaryHeatingAsset != null) {
+	f_manageHeatingAssets();
+	v_currentPowerHeat_kW += p_ThermalStorageAsset.v_currentConsumptionHeat_kW - p_ThermalStorageAsset.v_currentProductionHeat_kW;
+}
 
 for( EnergyAsset EA : c_conversionAssets ){
 	v_currentPowerElectricity_kW += EA.v_currentConsumptionElectricity_kW - EA.v_currentProductionElectricity_kW;
@@ -31550,7 +31556,6 @@ for( EnergyAsset EA : c_conversionAssets ){
 	v_currentPowerDiesel_kW += EA.v_currentConsumptionDiesel_kW;
 }
 
-v_currentPowerHeat_kW += p_ThermalStorageAsset.v_currentConsumptionHeat_kW - p_ThermalStorageAsset.v_currentProductionHeat_kW;
 for ( EnergyAsset EA : c_storageAssets ) {
 	v_currentPowerHeat_kW += EA.v_currentConsumptionHeat_kW - EA.v_currentProductionHeat_kW; //peter 13-3-23: ik snap niet waarom dit hier staat. dit komt in de knoop met andere storage assets (zoals batterij)
 }
@@ -37886,9 +37891,9 @@ if (p_batteryAsset != null){
 			</PresentationProperties>
 			<ModelTimeProperties>
 				<StopOption><![CDATA[Stop at specified time]]></StopOption>
-				<InitialDate><![CDATA[1640995200000]]></InitialDate>	
+				<InitialDate><![CDATA[1656633600000]]></InitialDate>	
 				<InitialTime><![CDATA[0.0]]></InitialTime>	
-				<FinalDate><![CDATA[1672531200000]]></FinalDate>	
+				<FinalDate><![CDATA[1688169600000]]></FinalDate>	
 				<FinalTime><![CDATA[8760.0]]></FinalTime>	
 			</ModelTimeProperties>
 			<BypassInitialScreen>true</BypassInitialScreen>
