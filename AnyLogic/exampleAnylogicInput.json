@@ -5190,7 +5190,7 @@
                         "original_id": 321003,
                         "resourcetype": "HeatStorageAsset",
                         "setTemp_degC": null,
-                        "type": "HEATMODEL"
+                        "type": "BUILDINGTHERMALS"
                     },
                     {
                         "category": "CONSUMPTION",
@@ -5288,7 +5288,7 @@
                         "original_id": 321009,
                         "resourcetype": "HeatStorageAsset",
                         "setTemp_degC": null,
-                        "type": "HEATMODEL"
+                        "type": "BUILDINGTHERMALS"
                     },
                     {
                         "category": "CONSUMPTION",
@@ -5386,7 +5386,7 @@
                         "original_id": 321015,
                         "resourcetype": "HeatStorageAsset",
                         "setTemp_degC": null,
-                        "type": "HEATMODEL"
+                        "type": "BUILDINGTHERMALS"
                     },
                     {
                         "category": "CONSUMPTION",
@@ -5484,7 +5484,7 @@
                         "original_id": 321021,
                         "resourcetype": "HeatStorageAsset",
                         "setTemp_degC": null,
-                        "type": "HEATMODEL"
+                        "type": "BUILDINGTHERMALS"
                     },
                     {
                         "category": "CONSUMPTION",
@@ -5582,7 +5582,7 @@
                         "original_id": 321027,
                         "resourcetype": "HeatStorageAsset",
                         "setTemp_degC": null,
-                        "type": "HEATMODEL"
+                        "type": "BUILDINGTHERMALS"
                     },
                     {
                         "category": "CONSUMPTION",
@@ -5680,7 +5680,7 @@
                         "original_id": 321033,
                         "resourcetype": "HeatStorageAsset",
                         "setTemp_degC": null,
-                        "type": "HEATMODEL"
+                        "type": "BUILDINGTHERMALS"
                     },
                     {
                         "category": "CONSUMPTION",
@@ -5778,7 +5778,7 @@
                         "original_id": 321039,
                         "resourcetype": "HeatStorageAsset",
                         "setTemp_degC": null,
-                        "type": "HEATMODEL"
+                        "type": "BUILDINGTHERMALS"
                     },
                     {
                         "category": "CONSUMPTION",
@@ -5876,7 +5876,7 @@
                         "original_id": 321045,
                         "resourcetype": "HeatStorageAsset",
                         "setTemp_degC": null,
-                        "type": "HEATMODEL"
+                        "type": "BUILDINGTHERMALS"
                     },
                     {
                         "category": "CONSUMPTION",
@@ -5974,7 +5974,7 @@
                         "original_id": 321051,
                         "resourcetype": "HeatStorageAsset",
                         "setTemp_degC": null,
-                        "type": "HEATMODEL"
+                        "type": "BUILDINGTHERMALS"
                     },
                     {
                         "category": "CONSUMPTION",
@@ -6072,7 +6072,7 @@
                         "original_id": 321057,
                         "resourcetype": "HeatStorageAsset",
                         "setTemp_degC": null,
-                        "type": "HEATMODEL"
+                        "type": "BUILDINGTHERMALS"
                     },
                     {
                         "category": "CONSUMPTION",
@@ -6170,7 +6170,7 @@
                         "original_id": 321063,
                         "resourcetype": "HeatStorageAsset",
                         "setTemp_degC": null,
-                        "type": "HEATMODEL"
+                        "type": "BUILDINGTHERMALS"
                     },
                     {
                         "category": "CONSUMPTION",
@@ -6268,7 +6268,7 @@
                         "original_id": 321069,
                         "resourcetype": "HeatStorageAsset",
                         "setTemp_degC": null,
-                        "type": "HEATMODEL"
+                        "type": "BUILDINGTHERMALS"
                     },
                     {
                         "category": "CONSUMPTION",
@@ -6366,7 +6366,7 @@
                         "original_id": 321075,
                         "resourcetype": "HeatStorageAsset",
                         "setTemp_degC": null,
-                        "type": "HEATMODEL"
+                        "type": "BUILDINGTHERMALS"
                     },
                     {
                         "category": "CONSUMPTION",
@@ -6464,7 +6464,7 @@
                         "original_id": 321081,
                         "resourcetype": "HeatStorageAsset",
                         "setTemp_degC": null,
-                        "type": "HEATMODEL"
+                        "type": "BUILDINGTHERMALS"
                     },
                     {
                         "category": "CONSUMPTION",
@@ -6562,7 +6562,7 @@
                         "original_id": 321087,
                         "resourcetype": "HeatStorageAsset",
                         "setTemp_degC": null,
-                        "type": "HEATMODEL"
+                        "type": "BUILDINGTHERMALS"
                     },
                     {
                         "category": "CONSUMPTION",
@@ -6660,7 +6660,7 @@
                         "original_id": 321093,
                         "resourcetype": "HeatStorageAsset",
                         "setTemp_degC": null,
-                        "type": "HEATMODEL"
+                        "type": "BUILDINGTHERMALS"
                     },
                     {
                         "category": "CONSUMPTION",
@@ -6758,7 +6758,7 @@
                         "original_id": 321099,
                         "resourcetype": "HeatStorageAsset",
                         "setTemp_degC": null,
-                        "type": "HEATMODEL"
+                        "type": "BUILDINGTHERMALS"
                     },
                     {
                         "category": "CONSUMPTION",
@@ -6856,7 +6856,7 @@
                         "original_id": 321105,
                         "resourcetype": "HeatStorageAsset",
                         "setTemp_degC": null,
-                        "type": "HEATMODEL"
+                        "type": "BUILDINGTHERMALS"
                     },
                     {
                         "category": "CONSUMPTION",
@@ -6954,7 +6954,7 @@
                         "original_id": 321111,
                         "resourcetype": "HeatStorageAsset",
                         "setTemp_degC": null,
-                        "type": "HEATMODEL"
+                        "type": "BUILDINGTHERMALS"
                     },
                     {
                         "category": "CONSUMPTION",
@@ -7052,7 +7052,7 @@
                         "original_id": 321117,
                         "resourcetype": "HeatStorageAsset",
                         "setTemp_degC": null,
-                        "type": "HEATMODEL"
+                        "type": "BUILDINGTHERMALS"
                     },
                     {
                         "category": "CONSUMPTION",
@@ -7150,7 +7150,7 @@
                         "original_id": 321123,
                         "resourcetype": "HeatStorageAsset",
                         "setTemp_degC": null,
-                        "type": "HEATMODEL"
+                        "type": "BUILDINGTHERMALS"
                     },
                     {
                         "category": "CONSUMPTION",
@@ -7248,7 +7248,7 @@
                         "original_id": 321129,
                         "resourcetype": "HeatStorageAsset",
                         "setTemp_degC": null,
-                        "type": "HEATMODEL"
+                        "type": "BUILDINGTHERMALS"
                     },
                     {
                         "category": "CONSUMPTION",
@@ -7346,7 +7346,7 @@
                         "original_id": 321135,
                         "resourcetype": "HeatStorageAsset",
                         "setTemp_degC": null,
-                        "type": "HEATMODEL"
+                        "type": "BUILDINGTHERMALS"
                     },
                     {
                         "category": "CONSUMPTION",
@@ -7444,7 +7444,7 @@
                         "original_id": 321141,
                         "resourcetype": "HeatStorageAsset",
                         "setTemp_degC": null,
-                        "type": "HEATMODEL"
+                        "type": "BUILDINGTHERMALS"
                     },
                     {
                         "category": "CONSUMPTION",
@@ -7542,7 +7542,7 @@
                         "original_id": 321147,
                         "resourcetype": "HeatStorageAsset",
                         "setTemp_degC": null,
-                        "type": "HEATMODEL"
+                        "type": "BUILDINGTHERMALS"
                     },
                     {
                         "category": "CONSUMPTION",
@@ -7640,7 +7640,7 @@
                         "original_id": 321153,
                         "resourcetype": "HeatStorageAsset",
                         "setTemp_degC": null,
-                        "type": "HEATMODEL"
+                        "type": "BUILDINGTHERMALS"
                     },
                     {
                         "category": "CONSUMPTION",
@@ -7738,7 +7738,7 @@
                         "original_id": 321159,
                         "resourcetype": "HeatStorageAsset",
                         "setTemp_degC": null,
-                        "type": "HEATMODEL"
+                        "type": "BUILDINGTHERMALS"
                     },
                     {
                         "category": "CONSUMPTION",
@@ -7836,7 +7836,7 @@
                         "original_id": 321165,
                         "resourcetype": "HeatStorageAsset",
                         "setTemp_degC": null,
-                        "type": "HEATMODEL"
+                        "type": "BUILDINGTHERMALS"
                     },
                     {
                         "category": "CONSUMPTION",
@@ -7934,7 +7934,7 @@
                         "original_id": 321171,
                         "resourcetype": "HeatStorageAsset",
                         "setTemp_degC": null,
-                        "type": "HEATMODEL"
+                        "type": "BUILDINGTHERMALS"
                     },
                     {
                         "category": "CONSUMPTION",
@@ -8032,7 +8032,7 @@
                         "original_id": 321177,
                         "resourcetype": "HeatStorageAsset",
                         "setTemp_degC": null,
-                        "type": "HEATMODEL"
+                        "type": "BUILDINGTHERMALS"
                     },
                     {
                         "category": "CONSUMPTION",
@@ -8141,7 +8141,7 @@
                         "original_id": 321183,
                         "resourcetype": "HeatStorageAsset",
                         "setTemp_degC": null,
-                        "type": "HEATMODEL"
+                        "type": "BUILDINGTHERMALS"
                     },
                     {
                         "category": "CONSUMPTION",
@@ -8228,7 +8228,7 @@
                         "original_id": 321189,
                         "resourcetype": "HeatStorageAsset",
                         "setTemp_degC": null,
-                        "type": "HEATMODEL"
+                        "type": "BUILDINGTHERMALS"
                     },
                     {
                         "category": "CONSUMPTION",
@@ -8326,7 +8326,7 @@
                         "original_id": 321195,
                         "resourcetype": "HeatStorageAsset",
                         "setTemp_degC": null,
-                        "type": "HEATMODEL"
+                        "type": "BUILDINGTHERMALS"
                     },
                     {
                         "category": "CONSUMPTION",
@@ -8424,7 +8424,7 @@
                         "original_id": 321201,
                         "resourcetype": "HeatStorageAsset",
                         "setTemp_degC": null,
-                        "type": "HEATMODEL"
+                        "type": "BUILDINGTHERMALS"
                     },
                     {
                         "category": "CONSUMPTION",
@@ -8522,7 +8522,7 @@
                         "original_id": 321207,
                         "resourcetype": "HeatStorageAsset",
                         "setTemp_degC": null,
-                        "type": "HEATMODEL"
+                        "type": "BUILDINGTHERMALS"
                     },
                     {
                         "category": "CONSUMPTION",
@@ -8620,7 +8620,7 @@
                         "original_id": 321213,
                         "resourcetype": "HeatStorageAsset",
                         "setTemp_degC": null,
-                        "type": "HEATMODEL"
+                        "type": "BUILDINGTHERMALS"
                     },
                     {
                         "category": "CONSUMPTION",
@@ -8718,7 +8718,7 @@
                         "original_id": 321219,
                         "resourcetype": "HeatStorageAsset",
                         "setTemp_degC": null,
-                        "type": "HEATMODEL"
+                        "type": "BUILDINGTHERMALS"
                     },
                     {
                         "category": "CONSUMPTION",
@@ -8816,7 +8816,7 @@
                         "original_id": 321225,
                         "resourcetype": "HeatStorageAsset",
                         "setTemp_degC": null,
-                        "type": "HEATMODEL"
+                        "type": "BUILDINGTHERMALS"
                     },
                     {
                         "category": "CONSUMPTION",
@@ -8914,7 +8914,7 @@
                         "original_id": 321231,
                         "resourcetype": "HeatStorageAsset",
                         "setTemp_degC": null,
-                        "type": "HEATMODEL"
+                        "type": "BUILDINGTHERMALS"
                     },
                     {
                         "category": "CONSUMPTION",
@@ -9012,7 +9012,7 @@
                         "original_id": 321237,
                         "resourcetype": "HeatStorageAsset",
                         "setTemp_degC": null,
-                        "type": "HEATMODEL"
+                        "type": "BUILDINGTHERMALS"
                     },
                     {
                         "category": "CONSUMPTION",
@@ -9150,53 +9150,6 @@
                 "value": "0.3"
             }
         ],
-		"templateAssets": [
-                    {
-                        "name": "TEMPLATE: gas-pit",
-                        "type": "GAS_PIT",
-                        "capacityHeat_kW": 5.0,
-                        "category": "CONVERSION",
-                        "eta_r": 0.4
-                    },
-					{
-                        
-                        "capacityHeat_kW": 5.0,
-                        "category": "CONVERSION",
-                        "eta_r": 0.8,
-                        "name": "TEMPLATE: Electric hob",
-                        "type": "ELECTRIC_HOB"
-                    },
-					{
-						"category": "PRODUCTION",
-						"type": "PHOTOVOLTAIC",
-						"capacityElectricity_kW": 4,
-						"name": "TEMPLATE: Household PV"
-					},
-					{
-                        "capacityElectricity_kW": 7.0,
-                        "category": "STORAGE",
-                        "energyConsumption_kWhpkm": 0.2,
-                        "name": "TEMPLATE: Private Electric Vehicle",
-                        "stateOfCharge_r": 0.8,
-                        "storageCapacity_kWh": 60.0,
-                        "type": "ELECTRIC_VEHICLE",
-                        "vehicleScaling": 1
-                    },
-					{
-                        "category": "CONSUMPTION",
-                        "energyConsumption_kWhpkm": 0.6,
-                        "name": "TEMPLATE: Private Diesel Vehicle",
-                        "type": "DIESEL_VEHICLE",
-                        "vehicleScaling": 1
-                    },
-					{
-                        "capacityElectricity_kW": 3.0,
-                        "category": "STORAGE",
-                        "name": "TEMPLATE: Private battery",
-                        "stateOfCharge_r": 0.7,
-                        "storageCapacity_kWh": 15.0,
-                        "type": "STORAGE_ELECTRIC"
-                    }
-		]
+		
     }
 }
