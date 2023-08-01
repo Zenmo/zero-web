@@ -988,9 +988,11 @@
 			<Name><![CDATA[Main]]></Name>
 			<Import><![CDATA[import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.node.ArrayNode;
+import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.fasterxml.jackson.databind.node.TextNode;
 import com.fasterxml.jackson.databind.node.NumericNode;
 import com.fasterxml.jackson.core.type.TypeReference;
@@ -1893,6 +1895,42 @@ traceln(" ");
 						</InitialValue>
 					</Properties>
 				</Variable>
+				<Variable Class="PlainVariable">
+					<Id>1690880921824</Id>
+					<Name><![CDATA[v_gridNodesJson]]></Name>
+					<X>-390</X><Y>270</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
+						<Type><![CDATA[com.fasterxml.jackson.databind.node.ArrayNode]]></Type>        
+					</Properties>
+				</Variable>
+				<Variable Class="PlainVariable">
+					<Id>1690881118425</Id>
+					<Name><![CDATA[v_gridConnectionsJson]]></Name>
+					<X>-390</X><Y>290</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
+						<Type><![CDATA[com.fasterxml.jackson.databind.node.ArrayNode]]></Type>        
+					</Properties>
+				</Variable>
+				<Variable Class="PlainVariable">
+					<Id>1690881147758</Id>
+					<Name><![CDATA[v_actorsJson]]></Name>
+					<X>-390</X><Y>310</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
+						<Type><![CDATA[com.fasterxml.jackson.databind.node.ArrayNode]]></Type>        
+					</Properties>
+				</Variable>
 				<Variable Class="Parameter">
 					<Id>1658496701675</Id>
 					<Name><![CDATA[p_timeStep_h]]></Name>
@@ -1967,94 +2005,6 @@ traceln(" ");
 						<SdArray>false</SdArray>
 						<ParameterEditor>
 							<Id>1659521098543</Id>
-							<EditorContolType>TEXT_BOX</EditorContolType>
-							<MinSliderValue><![CDATA[0]]></MinSliderValue>
-							<MaxSliderValue><![CDATA[100]]></MaxSliderValue>
-							<DelimeterType>NO_DELIMETER</DelimeterType>
-						</ParameterEditor>
-					</Properties>                 
-				</Variable>
-				<Variable Class="Parameter">
-					<Id>1661500135010</Id>
-					<Name><![CDATA[p_gridNodeConfigJSON]]></Name>
-					<X>-390</X><Y>260</Y>
-					<Label><X>10</X><Y>0</Y></Label>
-					<PublicFlag>false</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
-					<ShowLabel>true</ShowLabel>
-					<Properties SaveInSnapshot="true" ModificatorType="STATIC">
-						<Type><![CDATA[String]]></Type>
-						<UnitType><![CDATA[NONE]]></UnitType>
-						<SdArray>false</SdArray>
-						<ParameterEditor>
-							<Id>1661500135008</Id>
-							<EditorContolType>TEXT_BOX</EditorContolType>
-							<MinSliderValue><![CDATA[0]]></MinSliderValue>
-							<MaxSliderValue><![CDATA[100]]></MaxSliderValue>
-							<DelimeterType>NO_DELIMETER</DelimeterType>
-						</ParameterEditor>
-					</Properties>                 
-				</Variable>
-				<Variable Class="Parameter">
-					<Id>1661509540475</Id>
-					<Name><![CDATA[p_gridConnectionConfigJSON]]></Name>
-					<X>-390</X><Y>280</Y>
-					<Label><X>10</X><Y>0</Y></Label>
-					<PublicFlag>false</PublicFlag>
-					<PresentationFlag>false</PresentationFlag>
-					<ShowLabel>true</ShowLabel>
-					<Properties SaveInSnapshot="true" ModificatorType="STATIC">
-						<Type><![CDATA[String]]></Type>
-						<UnitType><![CDATA[NONE]]></UnitType>
-						<SdArray>false</SdArray>
-						<ParameterEditor>
-							<Id>1661509540473</Id>
-							<EditorContolType>TEXT_BOX</EditorContolType>
-							<MinSliderValue><![CDATA[0]]></MinSliderValue>
-							<MaxSliderValue><![CDATA[100]]></MaxSliderValue>
-							<DelimeterType>NO_DELIMETER</DelimeterType>
-						</ParameterEditor>
-					</Properties>                 
-				</Variable>
-				<Variable Class="Parameter">
-					<Id>1661510358303</Id>
-					<Name><![CDATA[p_actorsConfigJSON]]></Name>
-					<X>-390</X><Y>300</Y>
-					<Label><X>10</X><Y>0</Y></Label>
-					<PublicFlag>false</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
-					<ShowLabel>true</ShowLabel>
-					<Properties SaveInSnapshot="true" ModificatorType="STATIC">
-						<Type><![CDATA[String]]></Type>
-						<UnitType><![CDATA[NONE]]></UnitType>
-						<SdArray>false</SdArray>
-						<ParameterEditor>
-							<Id>1661510358301</Id>
-							<EditorContolType>TEXT_BOX</EditorContolType>
-							<MinSliderValue><![CDATA[0]]></MinSliderValue>
-							<MaxSliderValue><![CDATA[100]]></MaxSliderValue>
-							<DelimeterType>NO_DELIMETER</DelimeterType>
-						</ParameterEditor>
-					</Properties>                 
-				</Variable>
-				<Variable Class="Parameter">
-					<Id>1661510407466</Id>
-					<Name><![CDATA[p_energyAssetsConfigJSON]]></Name>
-					<ExcludeFromBuild>true</ExcludeFromBuild>
-					<X>-1270</X><Y>90</Y>
-					<Label><X>10</X><Y>0</Y></Label>
-					<PublicFlag>false</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
-					<ShowLabel>true</ShowLabel>
-					<Properties SaveInSnapshot="true" ModificatorType="STATIC">
-						<Type><![CDATA[String]]></Type>
-						<UnitType><![CDATA[NONE]]></UnitType>
-						<SdArray>false</SdArray>
-						<DefaultValue Class="CodeValue">
-							<Code><![CDATA["[{\"index\":0,\"agenttype\":\"energyAsset\",\"id\":\"a1\",\"type\":\"PRODUCTION\",\"type2\":\"WINDMILL\",\"parent\":\"b25\",\"capacity_electric_kw\":3000,\"capacity_heat_kw\":0},{\"index\":1,\"agenttype\":\"energyAsset\",\"id\":\"a2\",\"type\":\"PRODUCTION\",\"type2\":\"WINDMILL\",\"parent\":\"b25\",\"capacity_electric_kw\":5000,\"capacity_heat_kw\":0},{\"index\":2,\"agenttype\":\"energyAsset\",\"id\":\"a3\",\"type\":\"PRODUCTION\",\"type2\":\"WINDMILL\",\"parent\":\"b26\",\"capacity_electric_kw\":5000,\"capacity_heat_kw\":0},{\"index\":3,\"agenttype\":\"energyAsset\",\"id\":\"a4\",\"type\":\"PRODUCTION\",\"type2\":\"WINDMILL\",\"parent\":\"b26\",\"capacity_electric_kw\":3000,\"capacity_heat_kw\":0},{\"index\":4,\"agenttype\":\"energyAsset\",\"id\":\"a5\",\"type\":\"PRODUCTION\",\"type2\":\"PHOTOVOLTAIC\",\"parent\":\"b27\",\"capacity_electric_kw\":1000,\"capacity_heat_kw\":0},{\"index\":5,\"agenttype\":\"energyAsset\",\"id\":\"a6\",\"type\":\"PRODUCTION\",\"type2\":\"PHOTOVOLTAIC\",\"parent\":\"b27\",\"capacity_electric_kw\":1000,\"capacity_heat_kw\":0}]"]]></Code>
-						</DefaultValue>
-						<ParameterEditor>
-							<Id>1661510407464</Id>
 							<EditorContolType>TEXT_BOX</EditorContolType>
 							<MinSliderValue><![CDATA[0]]></MinSliderValue>
 							<MaxSliderValue><![CDATA[100]]></MaxSliderValue>
@@ -2182,27 +2132,6 @@ traceln(" ");
 						<ParameterEditor>
 							<Id>1663577621791</Id>
 							<EditorContolType>CHECK_BOX</EditorContolType>
-							<MinSliderValue><![CDATA[0]]></MinSliderValue>
-							<MaxSliderValue><![CDATA[100]]></MaxSliderValue>
-							<DelimeterType>NO_DELIMETER</DelimeterType>
-						</ParameterEditor>
-					</Properties>                 
-				</Variable>
-				<Variable Class="Parameter">
-					<Id>1665505197939</Id>
-					<Name><![CDATA[p_policiesConfigJSON]]></Name>
-					<X>-390</X><Y>320</Y>
-					<Label><X>10</X><Y>0</Y></Label>
-					<PublicFlag>false</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
-					<ShowLabel>true</ShowLabel>
-					<Properties SaveInSnapshot="true" ModificatorType="STATIC">
-						<Type><![CDATA[String]]></Type>
-						<UnitType><![CDATA[NONE]]></UnitType>
-						<SdArray>false</SdArray>
-						<ParameterEditor>
-							<Id>1665505197937</Id>
-							<EditorContolType>TEXT_BOX</EditorContolType>
 							<MinSliderValue><![CDATA[0]]></MinSliderValue>
 							<MaxSliderValue><![CDATA[100]]></MaxSliderValue>
 							<DelimeterType>NO_DELIMETER</DelimeterType>
@@ -2434,27 +2363,6 @@ traceln(" ");
 					</Properties>                 
 				</Variable>
 				<Variable Class="Parameter">
-					<Id>1690206809214</Id>
-					<Name><![CDATA[p_templateAssetsConfigJSON]]></Name>
-					<X>-390</X><Y>340</Y>
-					<Label><X>10</X><Y>0</Y></Label>
-					<PublicFlag>false</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
-					<ShowLabel>true</ShowLabel>
-					<Properties SaveInSnapshot="true" ModificatorType="STATIC">
-						<Type><![CDATA[String]]></Type>
-						<UnitType><![CDATA[NONE]]></UnitType>
-						<SdArray>false</SdArray>
-						<ParameterEditor>
-							<Id>1690206809212</Id>
-							<EditorContolType>TEXT_BOX</EditorContolType>
-							<MinSliderValue><![CDATA[0]]></MinSliderValue>
-							<MaxSliderValue><![CDATA[100]]></MaxSliderValue>
-							<DelimeterType>NO_DELIMETER</DelimeterType>
-						</ParameterEditor>
-					</Properties>                 
-				</Variable>
-				<Variable Class="Parameter">
 					<Id>1690277980748</Id>
 					<Name><![CDATA[p_scenarioJSON]]></Name>
 					<X>-390</X><Y>130</Y>
@@ -2497,54 +2405,9 @@ traceln(" ");
 					</Properties>                 
 				</Variable>
 				<Variable Class="CollectionVariable">
-					<Id>1661504944109</Id>
-					<Name><![CDATA[parsedJSONGridNodes]]></Name>
-					<X>-390</X><Y>380</Y>
-					<Label><X>10</X><Y>0</Y></Label>
-					<PublicFlag>false</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
-					<ShowLabel>true</ShowLabel>
-					<Properties SaveInSnapshot="true" AccessType="public" StaticVariable="false">
-						<CollectionClass><![CDATA[ArrayList]]></CollectionClass>
-						<ElementClass><![CDATA[HashMap]]></ElementClass>
-						<ValueElementClass><![CDATA[String]]></ValueElementClass>
-					</Properties>
-
-				</Variable>
-				<Variable Class="CollectionVariable">
-					<Id>1661510454747</Id>
-					<Name><![CDATA[parsedJSONGridConnections]]></Name>
-					<X>-390</X><Y>400</Y>
-					<Label><X>10</X><Y>0</Y></Label>
-					<PublicFlag>false</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
-					<ShowLabel>true</ShowLabel>
-					<Properties SaveInSnapshot="true" AccessType="public" StaticVariable="false">
-						<CollectionClass><![CDATA[ArrayList]]></CollectionClass>
-						<ElementClass><![CDATA[HashMap]]></ElementClass>
-						<ValueElementClass><![CDATA[String]]></ValueElementClass>
-					</Properties>
-
-				</Variable>
-				<Variable Class="CollectionVariable">
-					<Id>1661510457715</Id>
-					<Name><![CDATA[parsedJSONActors]]></Name>
-					<X>-390</X><Y>420</Y>
-					<Label><X>10</X><Y>0</Y></Label>
-					<PublicFlag>false</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
-					<ShowLabel>true</ShowLabel>
-					<Properties SaveInSnapshot="true" AccessType="public" StaticVariable="false">
-						<CollectionClass><![CDATA[ArrayList]]></CollectionClass>
-						<ElementClass><![CDATA[HashMap]]></ElementClass>
-						<ValueElementClass><![CDATA[String]]></ValueElementClass>
-					</Properties>
-
-				</Variable>
-				<Variable Class="CollectionVariable">
 					<Id>1661510460035</Id>
 					<Name><![CDATA[parsedJSONTemplateEnergyAssets]]></Name>
-					<X>-390</X><Y>440</Y>
+					<X>-390</X><Y>350</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -2680,7 +2543,7 @@ traceln(" ");
 				<Variable Class="CollectionVariable">
 					<Id>1665505167864</Id>
 					<Name><![CDATA[parsedJSONPolicies]]></Name>
-					<X>-390</X><Y>460</Y>
+					<X>-390</X><Y>370</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -3015,67 +2878,17 @@ f_initializeForecasts();
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>true</ShowLabel>
-					<Body><![CDATA[p_templateAssetsJSON = t_templateAssets.readString();
+					<Body><![CDATA[
 if( p_importLocalConfigJsons ) { p_scenarioJSON = t_scenarioInput.readString(); }
 
-String[] fields = {"actors", "gridconnections", "gridnodes", "policies"};
-String actorsString = "", gridconnectionsString = "", gridnodesString = "", policiesString = "", templateAssetsString = "";
-
-for (String field : fields) {
-	int fieldIndex = p_scenarioJSON.indexOf("\"" + field + "\"");
-    if (fieldIndex != -1) {
-    	int startArray = p_scenarioJSON.indexOf('[', fieldIndex);
-        if (startArray != -1) {
-            int endArray = f_findClosingBracket(p_scenarioJSON, startArray);
-            if (endArray != -1) {
-                String extractedData = p_scenarioJSON.substring(startArray, endArray + 1);
-                switch (field) {
-                    case "actors":
-                        actorsString = extractedData;
-                        break;
-                    case "gridconnections":
-                        gridconnectionsString = extractedData;
-                        break;
-                    case "gridnodes":
-                        gridnodesString = extractedData;
-                        break;
-                    case "policies":
-                        policiesString = extractedData;
-                        break;
-                    case "templateAssets":
-                    	templateAssetsString = extractedData;
-                    	break;
-                }
-            } else {
-                System.err.println("Could not find the content for the field: " + field);
-            }
-        } else {
-            System.err.println("Could not find the field: " + field);
-        }
-    } else {
-        System.err.println("Could not find the field: " + field);
-    }
+// Parse the Scenario JSON
+ObjectMapper mapper = new ObjectMapper();
+JsonNode root;
+try {
+	root = mapper.readTree(p_scenarioJSON);
+} catch (JsonProcessingException e) {
+	throw new RuntimeException(e);
 }
-
-	int fieldIndex = p_templateAssetsJSON.indexOf("\"templateAssets\"");
-    if (fieldIndex != -1) {
-    	int startArray = p_templateAssetsJSON.indexOf('[', fieldIndex);
-        if (startArray != -1) {
-            int endArray = f_findClosingBracket(p_templateAssetsJSON, startArray);
-            if (endArray != -1) {
-                String extractedData = p_templateAssetsJSON.substring(startArray, endArray + 1);
-                    	templateAssetsString = extractedData;
-            } else {
-                System.err.println("Could not find the content for the field: templateAssets");
-            }
-        } else {
-            System.err.println("Could not find the content for the field: templateAssets");
-        }
-    } else {
-        System.err.println("Could not find the content for the field: templateAssets");
-    }
-
-
 
 //PRINTING HERE LEADS TO AN OUTOFBOUND EXCEPTION WHEN USING REPLACE ALL BELOW. BUT IT DOESNT IMPACT TEH MODEL
 //Seems like a very weird issue that its trying to read the string to the end, and then read it again but starting at the end, causing the error.
@@ -3083,73 +2896,29 @@ if( p_printInputJsons) {
 	traceln("---------------------------------------------------------------------------------------------------");
 	traceln("------------------- GRIDNODES ---------------------------------------------------------------------");
 	traceln("---------------------------------------------------------------------------------------------------");
-	traceln(gridnodesString);
+	traceln(root.required("gridnodes").toPrettyString());
 	traceln("--------------------------------------------------------------------------------------------------");
 	traceln("------------------- POLICIES ---------------------------------------------------------------------");
 	traceln("--------------------------------------------------------------------------------------------------");
-	traceln(policiesString);
+	traceln(root.required("policies").toPrettyString());
 	traceln("----------------------------------------------------------------------------------------------------");
 	traceln("------------------- GRIDCONNECTIONS ----------------------------------------------------------------");
 	traceln("----------------------------------------------------------------------------------------------------");
-	traceln(gridconnectionsString);
+	traceln(root.required("gridconnections").toPrettyString());
 	traceln("--------------------------------------------------------------------------------------------------");
 	traceln("------------------- ACTORS -----------------------------------------------------------------------");
 	traceln("--------------------------------------------------------------------------------------------------");
-	traceln(actorsString);
-	traceln("--------------------------------------------------------------------------------------------------");
-	traceln("------------------- TEMPLATEASSETS -----------------------------------------------------------------------");
-	traceln("--------------------------------------------------------------------------------------------------");
-	traceln(templateAssetsString);
+	traceln(root.required("actors").toPrettyString());
 }
 
-p_gridNodeConfigJSON = gridnodesString.replaceAll("^\"|\"$", "");
-p_gridConnectionConfigJSON = gridconnectionsString.replaceAll("^\"|\"$", "");
-p_actorsConfigJSON = actorsString.replaceAll("^\"|\"$", "");
-p_policiesConfigJSON = policiesString.replaceAll("^\"|\"$", "");
-p_templateAssetsConfigJSON = templateAssetsString.replaceAll("^\"|\"$", "");
-
-
-// create a mapper to parse the JSON file
-ObjectMapper mapper = new ObjectMapper();
-
-// open the json file using java.io.File and cast it to an ArrayList
-//GridNode config
-try {
-parsedJSONGridNodes = mapper.readValue(
-		p_gridNodeConfigJSON,    // <--- THIS PART CHANGED!
-		ArrayList.class);
-
-} catch (IOException e) {
-e.printStackTrace();
-update_o_outputExceptions(e.getMessage());
-}
-
-//GridConnection config
-try {
-parsedJSONGridConnections = mapper.readValue(
-		p_gridConnectionConfigJSON,    // <--- THIS PART CHANGED!
-		ArrayList.class);
-
-} catch (IOException e) {
-e.printStackTrace();
-update_o_outputExceptions(e.getMessage());
-}
-
-//Actor config
-try {
-parsedJSONActors = mapper.readValue(
-		p_actorsConfigJSON,    // <--- THIS PART CHANGED!
-		ArrayList.class);
-
-} catch (IOException e) {
-e.printStackTrace();
-update_o_outputExceptions(e.getMessage());
-}
+v_gridNodesJson = (ArrayNode) root.required("gridnodes");
+v_gridConnectionsJson = (ArrayNode) root.required("gridconnections");
+v_actorsJson = (ArrayNode) root.required("actors");
 
 // Policies config
 try {
 parsedJSONPolicies = mapper.readValue(
-		p_policiesConfigJSON,    // <--- THIS PART CHANGED!
+		root.required("policies").toString(),
 		ArrayList.class);
 
 } catch (IOException e) {
@@ -3158,9 +2927,10 @@ update_o_outputExceptions(e.getMessage());
 }
 
 // Template assets config
+p_templateAssetsJSON = t_templateAssets.readString();
 try {
 parsedJSONTemplateEnergyAssets = mapper.readValue(
-		p_templateAssetsConfigJSON,    // <--- THIS PART CHANGED!
+		p_templateAssetsJSON,
 		ArrayList.class);
 
 } catch (IOException e) {
@@ -3841,7 +3611,7 @@ for (EnergyAsset e : pop_energyAssets) {
 		if ( e.p_energyAssetInstance instanceof J_EABuilding ) {
 			energyProduced_MWh += ((J_EABuilding)e.p_energyAssetInstance).energyAbsorbed_kWh/1000;
 			deltaThermalEnergySinceStart_MWh += (((J_EABuilding)e.p_energyAssetInstance).getCurrentTemperature()-20)*((J_EABuilding)e.p_energyAssetInstance).getHeatCapacity_JpK()/3.6e9;
-		}		
+		}
 	} else {
 		if( e.p_energyAssetType == OL_EnergyAssetType.PHOTOVOLTAIC ||  e.p_energyAssetType == OL_EnergyAssetType.WINDMILL){
 			electricityProduced_MWh -= EnergyUsed_kWh/1000;
@@ -4616,53 +4386,56 @@ else {
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>true</ShowLabel>
-					<Body><![CDATA[ArrayList actorContracts = new ArrayList();
-
-for(HashMap data : parsedJSONActors)
+					<Body><![CDATA[for(JsonNode actorJson : v_actorsJson)
 {
-    String actorID = data.get( "id" ).toString();
-    OL_ActorType actorcategory = OL_ActorType.valueOf((String)data.get( "category" ));
-    String type = data.get( "group" ) == null? null : String.valueOf(data.get( "group" )); //traceln(actortype.toString());
-    //String parentActorID = String.valueOf(data.get( "parent_actor" ));
-    actorContracts = data.get( "contracts") == null? null : (ArrayList)data.get( "contracts");
-	//double NonFirmATOCapacity = data.get( "nfATO_capacity_kw" ) == null? 0.0 : (Double)data.get( "nfATO_capacity_kw" );
-    //double NonFirmATOStarttime = data.get( "nfATO_starttime" ) == null? 0.0 : (Double)data.get( "nfATO_starttime" );
-	//double NonFirmATOEndtime = data.get( "nfATO_endtime" ) == null? 0.0 : (Double)data.get( "nfATO_endtime" );
-	double ConnectionCapacity_kW = data.get( "connectionCapacity_kW") == null? 0.0 : (Double)data.get( "connectionCapacity_kW" );
-	String node =  data.get( "node" ) == null? null : String.valueOf(data.get( "node" )); //traceln(actortype.toString());
+	OL_ActorType actorcategory = OL_ActorType.valueOf(actorJson.required("category").textValue());
 	
-	if (actorcategory.equals(OL_ActorType.CONNECTIONOWNER) ) {
-	    ConnectionOwner Actor = add_pop_connectionOwners();
-	    Actor.set_p_actorID( actorID );
-	    Actor.set_p_actorType( type );
-	    //Actor.set_p_parentActorID( parentActorID );
-	    Actor.set_p_actorContractList( actorContracts );
-   		//Actor.f_setContractValues();
-	    Actor.j_ActorData = new J_ActorData(actorID, type);
-	    c_connectionOwners.add(Actor);	    
-    } else if (actorcategory.equals(OL_ActorType.SUPPLIERENERGY) ) {
-		EnergySupplier Actor = add_pop_energySuppliers();
-		Actor.set_p_actorID( actorID );
-		Actor.set_p_actorType( type );
-		//Actor.set_p_parentActorID( parentActorID );
-		Actor.j_ActorData = new J_ActorData(actorID, type);
-    } else if (actorcategory.equals(OL_ActorType.HOLONENERGY) ) {
-	    EnergyHolon Actor = add_pop_energyHolons();
-	    Actor.set_p_actorID( actorID );
-	    //Actor.set_p_actorType( "EnergyHolon" );
-	    Actor.set_p_actorType( type );
-	    //Actor.set_p_parentActorID( parentActorID );
-	    Actor.set_p_actorContractList( actorContracts );
-   		//Actor.f_setContractValues();
-  		Actor.j_ActorData = new J_ActorData(actorID, type);
-  		Actor.set_p_gridNodeUnderResponsibility( node );
-    } else if (actorcategory.equals(OL_ActorType.OPERATORGRID) ) {
-	    GridOperator Actor = add_pop_gridOperators();
-	    Actor.set_p_actorID( actorID );
-	    Actor.set_p_actorType( type );
-	    //Actor.set_p_parentActorID( parentActorID );
-	    Actor.j_ActorData = new J_ActorData(actorID, type);
-    }
+	ArrayNode contractsJson = (ArrayNode) actorJson.get("contracts");
+	String actorId = actorJson.required("id").textValue();
+	String type = actorJson.path("group").textValue();
+
+	J_ActorData j_ActorData = new J_ActorData(actorId, type);
+
+	Actor actor;
+	switch (actorcategory) {
+		case CONNECTIONOWNER:
+			var connectionOwner = add_pop_connectionOwners();
+			connectionOwner.set_p_actorContractList(contractsJson);
+			connectionOwner.j_ActorData = j_ActorData;
+
+			c_connectionOwners.add(connectionOwner);
+
+			actor = connectionOwner;
+			break;
+		case SUPPLIERENERGY:
+			var energySupplier = add_pop_energySuppliers();
+			energySupplier.j_ActorData = j_ActorData;
+			actor = energySupplier;
+			break;
+		case HOLONENERGY:
+			var energyHolon = add_pop_energyHolons();
+			energyHolon.set_p_actorContractList(contractsJson);
+			energyHolon.j_ActorData = j_ActorData;
+
+			String gridNodeId = actorJson.path("node").textValue();
+			energyHolon.set_p_gridNodeUnderResponsibility(gridNodeId);
+
+			actor = energyHolon;
+			break;
+		case OPERATORGRID:
+			var gridOperator = add_pop_gridOperators();
+			gridOperator.j_ActorData = j_ActorData;
+			actor = gridOperator;
+			break;
+		case GOVHOLON:
+			// This maps to actor type AdministrativeHolon but this currently doesn't have any behavior.
+			continue;
+		default:
+			throw new RuntimeException("Not implemented actor type " + actorcategory);
+	}
+
+	actor.set_p_actorID(actorId);
+	actor.set_p_actorType(type);
 }
 
 for (EnergyHolon a : pop_energyHolons) {
@@ -4670,6 +4443,7 @@ for (EnergyHolon a : pop_energyHolons) {
 	a.f_connectToParentActor();
 	//a.f_initialize(); // This one is called in f_setActorPoliciers instead! Because at this point gridNodes have not been created yet.
 }
+
 for (ConnectionOwner a : pop_connectionOwners) {
 	a.f_setContractValues();
 	a.f_connectToParentActor();
@@ -4693,17 +4467,17 @@ OL_EnergyCarrierType energytype;
 String nodeparent;
 int nodecapacity;
 String nodeoperator;
-ArrayList gridNodeEnergyAssets = new ArrayList();
+ArrayNode gridNodeEnergyAssets;
 
-for(HashMap data : parsedJSONGridNodes)
+for(JsonNode g : v_gridNodesJson)
 {
-   	nodeID = data.get("id").toString();
-	nodetype = OL_GridNodeType.valueOf((String)data.get("type"));
-	energytype = OL_EnergyCarrierType.valueOf((String)data.get("category"));
-	nodeparent = (String) data.get("parent");
-	nodecapacity =((Double)data.get("capacity_kw")).intValue();
-	nodeoperator = String.valueOf(data.get("owner_actor"));
-	gridNodeEnergyAssets = (ArrayList)data.get( "assets");
+   	nodeID = g.required("id").textValue();
+	nodetype = OL_GridNodeType.valueOf(g.required("type").textValue());
+	energytype = OL_EnergyCarrierType.valueOf(g.required("category").textValue());
+	nodeparent = g.path("parent").textValue();
+	nodecapacity = g.required("capacity_kw").intValue();
+	nodeoperator = g.required("owner_actor").textValue();
+	gridNodeEnergyAssets = (ArrayNode) g.required("assets");
 	//traceln("data "+"id= "+nodeID +", nodetype = "+nodetype +", energytype = "+ energytype+", nodeparent = "+ nodeparent+", capacity = "+ nodecapacity+ ", ownerOperator = "+ nodeoperator);
 	//traceln(data.toString());
 
@@ -4718,7 +4492,7 @@ for(HashMap data : parsedJSONGridNodes)
 	GN.set_p_parentNodeID( nodeparent );
 	GN.set_p_capacity_kW( nodecapacity );
 	GN.set_p_gridNodeOwnerID( nodeoperator );
-	GN.set_p_energyAssetList( (ArrayList)gridNodeEnergyAssets );   //
+	GN.set_p_energyAssetList( gridNodeEnergyAssets );   //
 	
 	//traceln("agent "+nodeID+" added by JSON!");
 	switch( GN.p_nodeType ) {
@@ -4762,32 +4536,42 @@ for( GridNode g : pop_gridNodes ) {
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>true</ShowLabel>
-					<Body><![CDATA[ArrayList gridConnectionEnergyAssets = new ArrayList();
+					<Body><![CDATA[ArrayNode gridConnectionEnergyAssets;
 GridConnection GC;
 
-for(HashMap data : parsedJSONGridConnections) {
-    String gridConnectionID = data.get( "id" ).toString();
-	String ownerActorID = data.get ( "owner_actor" ).toString();
-	OL_GridConnectionCategory gridConnectionCategory = OL_GridConnectionCategory.valueOf((String)data.get( "category" ));
-	gridConnectionEnergyAssets = (ArrayList)data.get( "assets");
+for(JsonNode data : v_gridConnectionsJson) {
+    String gridConnectionID = data.required( "id" ).textValue();
+	String ownerActorID = data.required( "owner_actor" ).textValue();
+	OL_GridConnectionCategory gridConnectionCategory = OL_GridConnectionCategory.valueOf(data.required( "category" ).textValue());
+	gridConnectionEnergyAssets = (ArrayNode) data.required( "assets");
     
-    OL_GridConnectionType gridConnectionType = data.get( "type" ) == null? null : OL_GridConnectionType.valueOf((String)data.get( "type" ));
-    String gridConnectionParentElectric = data.get( "parent_electric" ) == null ? null : data.get( "parent_electric" ).toString(); //
-    String gridConnectionParentHeat = data.get( "parent_heat" ) == null ? null : (String)data.get( "parent_heat" ); //
-    Double gridConnectionCapacity = data.get( "capacity_kw" ) == null ? null : (Double)data.get( "capacity_kw" ); //
-    OL_ChargingAttitude gridConnectionChargingAttitude = data.get( "charging_mode" ) == null ? OL_ChargingAttitude.SIMPLE : OL_ChargingAttitude.valueOf((String)data.get("charging_mode"));
-    OL_BatteryOperationMode gridConnectionBatteryMode = data.get( "battery_mode" ) == null? OL_BatteryOperationMode.BALANCE : OL_BatteryOperationMode.valueOf((String)data.get("battery_mode"));
-    OL_ElektrolyserOperationMode gridConnectionElektrolyserMode = data.get( "electrolyser_mode" ) == null? OL_ElektrolyserOperationMode.BALANCE : OL_ElektrolyserOperationMode.valueOf((String)data.get("electrolyser_mode"));    
-	OL_GridConnectionIsolationLabel gridConnectionIsolationLabel = data.get( "insulation_label" ) == null? null : OL_GridConnectionIsolationLabel.valueOf((String)data.get( "insulation_label" ));
-	OL_GridConnectionHeatingType gridConnectionHeatingType = data.get( "heating_type" ) == null? null : OL_GridConnectionHeatingType.valueOf((String)data.get( "heating_type" ));
-	boolean smartAssets = data.get("smart_assets") == null ? false : Boolean.parseBoolean( data.get( "smart_assets" ).toString() ) ;
-	double tempSetpointNight_degC = data.get( "tempSetpointNight_degC") == null ? 0.0 : (Double)data.get( "tempSetpointNight_degC");
-	double tempSetpointNight_start_hr = data.get( "tempSetpointNight_start_hr") == null ? 0.0 : (Double)data.get( "tempSetpointNight_start_hr");
-	double tempSetpointDay_degC = data.get( "tempSetpointDay_degC") == null ? 0.0 : (Double)data.get( "tempSetpointDay_degC");
-	double tempSetpointDay_start_hr = data.get( "tempSetpointDay_start_hr") == null ? 0.0 : (Double)data.get( "tempSetpointDay_start_hr");
-	double pricelevel_low_dif_from_avg_eurpkWh = data.get("pricelevel_low_dif_from_avg_eurpkWh") == null ? 0.0 : (Double)data.get("pricelevel_low_dif_from_avg_eurpkWh");
-	double pricelevel_high_dif_from_avg_eurpkWh = data.get("pricelevel_high_dif_from_avg_eurpkWh") == null ? 0.0 : (Double)data.get("pricelevel_high_dif_from_avg_eurpkWh");
-	double irradianceRecievingSurface_m2 = data.get("irradiance_recieving_surface") == null ? 0.0 : (Double)data.get("irradiance_recieving_surface");
+    OL_GridConnectionType gridConnectionType = data.hasNonNull( "type" ) ? OL_GridConnectionType.valueOf(data.required( "type" ).textValue()) : null;
+    String gridConnectionParentElectric = data.path( "parent_electric" ).textValue(); //
+    String gridConnectionParentHeat = data.path( "parent_heat" ).textValue(); //
+    Double gridConnectionCapacity = data.hasNonNull( "capacity_kw" ) ? data.required( "capacity_kw" ).doubleValue() : null; //
+    OL_ChargingAttitude gridConnectionChargingAttitude = data.hasNonNull( "charging_mode" )
+    	? OL_ChargingAttitude.valueOf(data.required("charging_mode").textValue())
+    	: OL_ChargingAttitude.SIMPLE;
+    OL_BatteryOperationMode gridConnectionBatteryMode = data.hasNonNull( "battery_mode" )
+    	? OL_BatteryOperationMode.valueOf(data.required("battery_mode").textValue())
+    	: OL_BatteryOperationMode.BALANCE ;
+    OL_ElektrolyserOperationMode gridConnectionElektrolyserMode = data.hasNonNull( "electrolyser_mode" )
+    	? OL_ElektrolyserOperationMode.valueOf(data.required("electrolyser_mode").textValue())
+    	: OL_ElektrolyserOperationMode.BALANCE;
+	OL_GridConnectionIsolationLabel gridConnectionIsolationLabel = data.hasNonNull( "insulation_label" )
+		? OL_GridConnectionIsolationLabel.valueOf(data.required( "insulation_label" ).textValue())
+		: null;
+	OL_GridConnectionHeatingType gridConnectionHeatingType = data.hasNonNull( "heating_type" )
+		? OL_GridConnectionHeatingType.valueOf(data.required( "heating_type" ).textValue())
+		: null;
+	boolean smartAssets = data.path("smart_assets").asBoolean();
+	double tempSetpointNight_degC = data.path( "tempSetpointNight_degC").doubleValue();
+	double tempSetpointNight_start_hr = data.path( "tempSetpointNight_start_hr").doubleValue();
+	double tempSetpointDay_degC = data.path( "tempSetpointDay_degC").doubleValue();
+	double tempSetpointDay_start_hr = data.path( "tempSetpointDay_start_hr").doubleValue();
+	double pricelevel_low_dif_from_avg_eurpkWh = data.path("pricelevel_low_dif_from_avg_eurpkWh").doubleValue();
+	double pricelevel_high_dif_from_avg_eurpkWh = data.path("pricelevel_high_dif_from_avg_eurpkWh").doubleValue();
+	double irradianceRecievingSurface_m2 = data.path("irradiance_recieving_surface").doubleValue();
 	
 	//traceln("data: " + "id = " + gridConnectionID + ", category = " + gridConnectionCategory + ", connectionType = " + gridConnectionType + ", parentElectric" + gridConnectionParentElectric + ", parentHeat = " + gridConnectionParentHeat + ", capacity = " + gridConnectionCapacity + "owner_actor = "+ ownerActorID);
 	switch(gridConnectionCategory) {
@@ -4805,7 +4589,7 @@ for(HashMap data : parsedJSONGridConnections) {
 			((GCHouse)GC).set_p_isolationLabel( gridConnectionIsolationLabel );
 
 			//double deltaStartTemp_degC = uniform_discr(-5, 5);			
-			//((J_EAStorageHeat)GC.p_BuildingThermalAsset.p_energyAssetInstance).updateStateOfCharge(deltaStartTemp_degC);			
+			//((J_EAStorageHeat)GC.p_BuildingThermalAsset.p_energyAssetInstance).updateStateOfCharge(deltaStartTemp_degC);
 			//THESE VALUES ARE HARDCODED TO CREATE HETEROGENEOUS BEHAVIOR AND BECAUSE THE DATAMODEL DOES NOT ALLOW THIS YET
 			
 			
@@ -4844,7 +4628,7 @@ for(HashMap data : parsedJSONGridConnections) {
 	GC.set_p_parentNodeHeatID( gridConnectionParentHeat );
 	GC.set_p_ownerID( ownerActorID );
 	GC.set_p_heatingType( gridConnectionHeatingType );
-	GC.set_p_energyAssetList( (ArrayList)gridConnectionEnergyAssets );
+	GC.set_p_energyAssetList( gridConnectionEnergyAssets );
 	GC.set_p_batteryOperationMode( gridConnectionBatteryMode );
 	GC.set_p_elektrolyserOperationMode( gridConnectionElektrolyserMode );
 	GC.set_p_chargingAttitudeVehicles( gridConnectionChargingAttitude );
@@ -4891,39 +4675,6 @@ for (double ts_h = v_hourOfYearStart; ts_h<v_hourOfYearStart+p_forecastTime_h; t
 	//v_epexForecast_eurpkWh += nationalEnergyMarket.tf_dayAheadElectricityPricing_eurpMWh(ts_h)/(p_forecastTime_h/p_timeStep_h)/1000;
 }
 //v_epexForecast_eurpkWh += 0.17;]]></Body>
-				</Function>
-				<Function AccessType="default" StaticFunction="false">
-					<ReturnModificator>RETURNS_VALUE</ReturnModificator>
-					<ReturnType><![CDATA[int]]></ReturnType>
-					<Id>1681376280006</Id>
-					<Name><![CDATA[f_findClosingBracket]]></Name>
-					<X>-700</X><Y>90</Y>
-					<Label><X>10</X><Y>0</Y></Label>
-					<PublicFlag>false</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
-					<ShowLabel>true</ShowLabel>
-					<Parameter>
-						<Name><![CDATA[jsonString]]></Name>
-						<Type><![CDATA[String]]></Type>
-					</Parameter>
-					<Parameter>
-						<Name><![CDATA[startArray]]></Name>
-						<Type><![CDATA[int]]></Type>
-					</Parameter>
-					<Body><![CDATA[int openBrackets = 0;
-for (int i = startArray; i < jsonString.length(); i++) {
-	char currentChar = jsonString.charAt(i);
-    if (currentChar == '[') {
-		openBrackets++;
-	} 
-	else if (currentChar == ']') {
-       	openBrackets--;
-    }
-    if (openBrackets == 0) {
-        return i;
-    }
-}
-return -1;]]></Body>
 				</Function>
 				<Function AccessType="default" StaticFunction="false">
 					<ReturnModificator>VOID</ReturnModificator>
@@ -10117,6 +9868,7 @@ rectangle_electricitySettings.setVisible(false);]]></OnClickCode>
 		<ActiveObjectClass>
 			<Id>1658477288308</Id>
 			<Name><![CDATA[GridNode]]></Name>
+			<Import><![CDATA[import com.fasterxml.jackson.databind.JsonNode;]]></Import>
 			<StartupCode><![CDATA[/*
 if (p_energyType.equals(OL_EnergyCarrierType.HEAT)) {
 	double capacityHeat_kW = 1000;
@@ -10826,7 +10578,7 @@ geupdate vanuit
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>true</ShowLabel>
 					<Properties SaveInSnapshot="true" ModificatorType="STATIC">
-						<Type><![CDATA[ArrayList]]></Type>
+						<Type><![CDATA[com.fasterxml.jackson.databind.node.ArrayNode]]></Type>
 						<UnitType><![CDATA[NONE]]></UnitType>
 						<SdArray>false</SdArray>
 						<ParameterEditor>
@@ -11028,21 +10780,6 @@ geupdate vanuit
 						<CollectionClass><![CDATA[ArrayList]]></CollectionClass>
 						<ElementClass><![CDATA[EnergyHolon]]></ElementClass>
 						<ValueElementClass><![CDATA[String]]></ValueElementClass>
-					</Properties>
-
-				</Variable>
-				<Variable Class="CollectionVariable">
-					<Id>1676387442080</Id>
-					<Name><![CDATA[c_energyAssetsData]]></Name>
-					<X>50</X><Y>270</Y>
-					<Label><X>10</X><Y>0</Y></Label>
-					<PublicFlag>false</PublicFlag>
-					<PresentationFlag>false</PresentationFlag>
-					<ShowLabel>true</ShowLabel>
-					<Properties SaveInSnapshot="true" AccessType="public" StaticVariable="false">
-						<CollectionClass><![CDATA[ArrayList]]></CollectionClass>
-						<ElementClass><![CDATA[LinkedHashMap]]></ElementClass>
-						<ValueElementClass><![CDATA[ArrayList]]></ValueElementClass>
 					</Properties>
 
 				</Variable>
@@ -11343,24 +11080,23 @@ for (EnergyHolon e: c_energyHolons){
 					<Body><![CDATA[//traceln("asset " + p_energyAssetList);
 
 if( p_energyAssetList != null) {
-	c_energyAssetsData = p_energyAssetList;
-	for( HashMap l : c_energyAssetsData ) {
-		OL_EACategories assetCategory = OL_EACategories.valueOf((String)l.get( "category" ));
+	for( JsonNode l : p_energyAssetList ) {
+		OL_EACategories assetCategory = OL_EACategories.valueOf(l.required( "category" ).textValue());
 		switch( assetCategory )  {		
 			case STORAGE:
 				EnergyAsset storageAsset = main.add_pop_energyAssets();
 				storageAsset.set_p_parentAgentID( this.p_agentID );
-				storageAsset.set_p_energyAssetType( OL_EnergyAssetType.valueOf((String)l.get( "type" ) ));
-				storageAsset.set_p_defaultEnergyAssetPresetName( (String)l.get( "name" ));
+				storageAsset.set_p_energyAssetType( OL_EnergyAssetType.valueOf(l.required( "type" ).textValue()));
+				storageAsset.set_p_defaultEnergyAssetPresetName(l.required( "name" ).textValue());
 				if( storageAsset.p_energyAssetType == OL_EnergyAssetType.STORAGE_HEAT){
-				    double capacityHeat_kW = l.get( "capacityHeat_kW") == null? 0.0: Double.valueOf( l.get( "capacityHeat_kW").toString()).doubleValue();
-					double lossFactor_WpK = l.get( "lossFactor_WpK" ) == null? 0.0: Double.valueOf( l.get( "lossFactor_WpK" ).toString()).doubleValue();
-					double heatCapacity_JpK = l.get( "heatCapacity_JpK" ) == null? 0.0: Double.valueOf( l.get( "heatCapacity_JpK" ).toString()).doubleValue();
-					double minTemperature_degC = l.get( "minTemp_degC" ) == null? 40.0: Double.valueOf( l.get( "minTemp_degC" ).toString()).doubleValue(); // provide default values
-					double maxTemperature_degC = l.get( "maxTemp_degC" ) == null? 90.0: Double.valueOf( l.get( "maxTemp_degC" ).toString()).doubleValue();
-					double setTemperature_degC = l.get( "setTemp_degC" ) == null? 60.0: Double.valueOf( l.get( "setTemp_degC" ).toString()).doubleValue();
-					double initialTemperature_degC = l.get( "initialTemperature_degC" ) == null? 0.0 : Double.valueOf( l.get( "initialTemperature_degC" ).toString()).doubleValue();		
-					String ambientTempType2 = (String)l.get( "ambientTempType" ) == null? "": (String)l.get( "ambientTempType" );
+				    double capacityHeat_kW = l.path( "capacityHeat_kW").doubleValue();
+					double lossFactor_WpK = l.path( "lossFactor_WpK" ).doubleValue();
+					double heatCapacity_JpK = l.path( "heatCapacity_JpK" ).doubleValue();
+					double minTemperature_degC = l.path( "minTemp_degC" ).asDouble(40.0); // provide default values
+					double maxTemperature_degC = l.path( "maxTemp_degC" ).asDouble(90.0);
+					double setTemperature_degC = l.path( "setTemp_degC" ).asDouble(60.0);
+					double initialTemperature_degC = l.path( "initialTemperature_degC" ).doubleValue();
+					String ambientTempType2 = l.path( "ambientTempType" ).textValue();
 					
 					// minTemperature_degC = 35; // TO DELETE TEMP FIX
 					// setTemperature_degC = uniform_discr(38, 45); // TO DELETE TEMP FIX
@@ -13219,7 +12955,7 @@ import java.io.*;]]></Import>
 					<PresentationFlag>false</PresentationFlag>
 					<ShowLabel>true</ShowLabel>
 					<Properties SaveInSnapshot="true" ModificatorType="STATIC">
-						<Type><![CDATA[ArrayList]]></Type>
+						<Type><![CDATA[com.fasterxml.jackson.databind.node.ArrayNode]]></Type>
 						<UnitType><![CDATA[NONE]]></UnitType>
 						<SdArray>false</SdArray>
 						<ParameterEditor>
@@ -14146,14 +13882,13 @@ v_electricityDischargedByBattery_kWh += max(-v_batteryPowerElectric_kW,0) * main
 					<Body><![CDATA[//traceln("asset " + p_energyAssetList);
 
 if( p_energyAssetList != null) {
-	c_energyAssetsData = p_energyAssetList;
-	for( HashMap l : c_energyAssetsData ) {
-		OL_EACategories assetCategory = OL_EACategories.valueOf((String)l.get( "category" ));
+	for( JsonNode l : p_energyAssetList ) {
+		OL_EACategories assetCategory = OL_EACategories.valueOf(l.required( "category" ).textValue());
 		switch( assetCategory )  {
 			case CONSUMPTION:
 				EnergyAsset consumerAsset = main.add_pop_energyAssets();
 				consumerAsset.set_p_parentAgentID( this.p_agentID );
-				String assetType = (String)l.get( "type" ); 
+				String assetType = l.required( "type" ).textValue();
 				consumerAsset.set_p_energyAssetType( OL_EnergyAssetType.valueOf(assetType) );
 				
 				//Carefull, this fix was needed for the TVW casus. It assumes that the other cases do not have 'Building' gridconnections.
@@ -14163,33 +13898,33 @@ if( p_energyAssetList != null) {
 				//if ( assetType.equals("DIESEL_VEHICLE")){
 				//	consumerAsset.set_p_defaultEnergyAssetPresetName( (String)l.get( "name" ));
 				//}
-				if( assetType.equals("ELECTRICITY_DEMAND") & ((String)l.get( "name" )).contains("TEMPLATE") ){
+				if( assetType.equals("ELECTRICITY_DEMAND") && l.required( "name" ).textValue().contains("TEMPLATE") ){
 					//traceln("Adding template assets!");
 					if ( p_gridConnectionCategory == OL_GridConnectionCategory.HOUSE) {
 						consumerAsset.set_p_defaultEnergyAssetPresetName( "House_other_electricity"); 
 					} else {
-						consumerAsset.set_p_defaultEnergyAssetPresetName( (String)l.get( "name" ));
+						consumerAsset.set_p_defaultEnergyAssetPresetName(l.required( "name" ).textValue());
 					}
 				}
 				else if (assetType.equals("HOT_WATER_CONSUMPTION")){
 					if ( p_gridConnectionCategory == OL_GridConnectionCategory.HOUSE) {
 						consumerAsset.set_p_defaultEnergyAssetPresetName( "House_hot_water");
 					} else {
-						consumerAsset.set_p_defaultEnergyAssetPresetName( (String)l.get( "name" ));
+						consumerAsset.set_p_defaultEnergyAssetPresetName(l.required( "name" ).textValue());
 					}
 				}
 				else {
-					consumerAsset.set_p_defaultEnergyAssetPresetName( (String)l.get( "name" ));
+					consumerAsset.set_p_defaultEnergyAssetPresetName(l.required( "name" ).textValue());
 					//traceln("Consumption asset type should not occur or is not processed correctly for assetName:" + (String)l.get( "name" ));
 				}
 
-				double yearlyDemandElectricity_kWh = l.get( "yearlyDemandElectricity_kWh") == null? 0.0: Double.valueOf( l.get( "yearlyDemandElectricity_kWh").toString()).doubleValue();
-				double yearlyDemandHeat_kWh = l.get( "yearlyDemandHeat_kWh") == null? 0.0: Double.valueOf( l.get( "yearlyDemandHeat_kWh").toString()).doubleValue();
-				double yearlyDemandHydrogen_kWh = l.get( "yearlyDemandHydrogen_kWh") == null? 0.0: Double.valueOf( l.get( "yearlyDemandHydrogen_kWh").toString()).doubleValue();
-				double yearlyDemandMethane_kWh = l.get( "yearlyDemandMethane_kWh") == null? 0.0: Double.valueOf( l.get( "yearlyDemandMethane_kWh").toString()).doubleValue();
-				double yearlyDemandDiesel_kWh = l.get( "yearlyDemandDiesel_kWh") == null? 0.0: Double.valueOf( l.get( "yearlyDemandDiesel_kWh").toString()).doubleValue();
-				double energyConsumption_kWhpkm = l.get( "energyConsumption_kWhpkm" ) == null? 0.0: Double.valueOf( l.get( "energyConsumption_kWhpkm" ).toString()).doubleValue();
-				double vehicleScaling = l.get("vehicleScaling") == null? 1.0: Double.valueOf( l.get( "vehicleScaling" ).toString()).doubleValue();
+				double yearlyDemandElectricity_kWh = l.path( "yearlyDemandElectricity_kWh").doubleValue();
+				double yearlyDemandHeat_kWh = l.path( "yearlyDemandHeat_kWh").doubleValue();
+				double yearlyDemandHydrogen_kWh = l.path( "yearlyDemandHydrogen_kWh").doubleValue();
+				double yearlyDemandMethane_kWh = l.path( "yearlyDemandMethane_kWh").doubleValue();
+				double yearlyDemandDiesel_kWh = l.path( "yearlyDemandDiesel_kWh").doubleValue();
+				double energyConsumption_kWhpkm = l.path( "energyConsumption_kWhpkm" ).doubleValue();
+				double vehicleScaling = l.path("vehicleScaling").asDouble(1.0);
 	
 				consumerAsset.f_instantiateConsumerAsset( consumerAsset.p_energyAssetType, yearlyDemandElectricity_kWh , yearlyDemandHeat_kWh , yearlyDemandHydrogen_kWh , yearlyDemandMethane_kWh, yearlyDemandDiesel_kWh, energyConsumption_kWhpkm, vehicleScaling);
 				consumerAsset.f_connectToParentNode( this );
@@ -14198,14 +13933,14 @@ if( p_energyAssetList != null) {
 			case PRODUCTION:
 				EnergyAsset producerAsset = main.add_pop_energyAssets();
 				producerAsset.set_p_parentAgentID( this.p_agentID );
-				producerAsset.set_p_energyAssetType( OL_EnergyAssetType.valueOf((String)l.get( "type" ) ));
-				producerAsset.set_p_defaultEnergyAssetPresetName( (String)l.get( "name" ));
+				producerAsset.set_p_energyAssetType( OL_EnergyAssetType.valueOf(l.required( "type" ).textValue() ));
+				producerAsset.set_p_defaultEnergyAssetPresetName(l.required("name").textValue());
 
-				double capacityElectricity_kW = l.get( "capacityElectricity_kW")== null? 0.0: Double.valueOf( l.get( "capacityElectricity_kW").toString()).doubleValue();
-				double capacityHeat_kW = l.get( "capacityHeat_kW")== null? 0.0: Double.valueOf( l.get( "capacityHeat_kW").toString()).doubleValue();
-				double yearlyProductionHydrogen_kWh = l.get( "yearlyProductionHydrogen_kWh")== null? 0.0: Double.valueOf( l.get( "yearlyProductionHydrogen_kWh").toString()).doubleValue();
-				double yearlyProductionMethane_kWh = l.get( "yearlyProductionMethane_kWh")== null? 0.0: Double.valueOf( l.get( "yearlyProductionMethane_kWh").toString()).doubleValue();
-				double outputTemperature_degC = l.get( "deliveryTemp_degC")== null? 0.0: Double.valueOf( l.get( "deliveryTemp_degC").toString()).doubleValue();
+				double capacityElectricity_kW = l.path( "capacityElectricity_kW").doubleValue();
+				double capacityHeat_kW = l.path( "capacityHeat_kW").doubleValue();
+				double yearlyProductionHydrogen_kWh = l.path( "yearlyProductionHydrogen_kWh").doubleValue();
+				double yearlyProductionMethane_kWh = l.path( "yearlyProductionMethane_kWh").doubleValue();
+				double outputTemperature_degC = l.path( "deliveryTemp_degC").doubleValue();
 				
 				// Determine residual heat delivery temperature from coldest connected asset
 				if(this instanceof GCResidualHeat) {
@@ -14218,9 +13953,9 @@ if( p_energyAssetList != null) {
 				producerAsset.f_instantiateProducerAsset( producerAsset.p_energyAssetType, capacityElectricity_kW, capacityHeat_kW, yearlyProductionHydrogen_kWh, yearlyProductionMethane_kWh, outputTemperature_degC);
 				producerAsset.f_connectToParentNode( this );
 				main.c_productionAssets.add(producerAsset);
-				if ( l.get( "type" ).equals("WINDMILL") ) {
+				if ( l.required( "type" ).textValue().equals("WINDMILL") ) {
 					main.v_totalInstalledWindPower_kW += capacityElectricity_kW;
-				} else if ( l.get( "type" ).equals("PHOTOVOLTAIC") ) {
+				} else if ( l.required( "type" ).textValue().equals("PHOTOVOLTAIC") ) {
 					main.v_totalInstalledPVPower_kW += capacityElectricity_kW;
 				}
 			break;
@@ -14228,17 +13963,17 @@ if( p_energyAssetList != null) {
 			case CONVERSION:
 				EnergyAsset converterAsset = main.add_pop_energyAssets();
 				converterAsset.set_p_parentAgentID( this.p_agentID );
-				converterAsset.set_p_energyAssetType( OL_EnergyAssetType.valueOf((String)l.get( "type" ) ));
-				converterAsset.set_p_defaultEnergyAssetPresetName( (String)l.get( "name" ));
+				converterAsset.set_p_energyAssetType( OL_EnergyAssetType.valueOf(l.required( "type" ).textValue() ));
+				converterAsset.set_p_defaultEnergyAssetPresetName(l.required( "name" ).textValue());
 				//traceln( "l contents"+l.toString() );
 				
-				double capacityElectric_kW = l.get( "capacityElectricity_kW")== null? 0.0: Double.valueOf(l.get( "capacityElectricity_kW").toString()).doubleValue();
-				double capacityHeat_kW1 = l.get( "capacityHeat_kW")== null? 0: Double.valueOf(l.get( "capacityHeat_kW").toString()).doubleValue();
-				double capacityMethane_kW = l.get( "capacityMethane_kW")== null? 0: Double.valueOf(l.get( "capacityMethane_kW").toString()).doubleValue();
-				double eta_r = (Double)l.get( "eta_r" ) == null? 0.0 : Double.valueOf(l.get( "eta_r" ).toString()).doubleValue();
-				double deliveryTemp_degC1 = l.get( "deliveryTemp_degC" ) == null? 0.0: Double.valueOf( l.get( "deliveryTemp_degC" ).toString()).doubleValue();
-				String ambientTempType = (String)l.get( "ambientTempType" ) == null? "": (String)l.get( "ambientTempType" );
-				double belowZeroHeatpumpEtaReductionFactor = (Double)l.get( "etaReduction_r" ) == null? 1 : Double.valueOf(l.get( "etaReduction_r" ).toString()).doubleValue();
+				double capacityElectric_kW = l.path( "capacityElectricity_kW").doubleValue();
+				double capacityHeat_kW1 = l.path( "capacityHeat_kW").doubleValue();
+				double capacityMethane_kW = l.path( "capacityMethane_kW").doubleValue();
+				double eta_r = l.path( "eta_r" ).doubleValue();
+				double deliveryTemp_degC1 = l.path( "deliveryTemp_degC" ).doubleValue();
+				String ambientTempType = l.path( "ambientTempType" ).asText();
+				double belowZeroHeatpumpEtaReductionFactor = l.path( "etaReduction_r" ).asDouble(1.0);
 
 				
 				converterAsset.f_instantiateConverterAsset( converterAsset.p_energyAssetType,
@@ -14259,17 +13994,17 @@ if( p_energyAssetList != null) {
 			case STORAGE:
 				EnergyAsset storageAsset = main.add_pop_energyAssets();
 				storageAsset.set_p_parentAgentID( this.p_agentID );
-				storageAsset.set_p_energyAssetType( OL_EnergyAssetType.valueOf((String)l.get( "type" ) ));
-				storageAsset.set_p_defaultEnergyAssetPresetName( (String)l.get( "name" ));
+				storageAsset.set_p_energyAssetType( OL_EnergyAssetType.valueOf(l.required( "type" ).textValue() ));
+				storageAsset.set_p_defaultEnergyAssetPresetName( l.required( "name" ).textValue());
 				if( storageAsset.p_energyAssetType == OL_EnergyAssetType.STORAGE_HEAT){
-				    double capacityHeat_kW2 = l.get( "capacityHeat_kW") == null? 0.0: Double.valueOf( l.get( "capacityHeat_kW").toString()).doubleValue();
-					double lossFactor_WpK = l.get( "lossFactor_WpK" ) == null? 0.0: Double.valueOf( l.get( "lossFactor_WpK" ).toString()).doubleValue() * uniform(0.7, 1.3);
-					double heatCapacity_JpK = l.get( "heatCapacity_JpK" ) == null? 0.0: Double.valueOf( l.get( "heatCapacity_JpK" ).toString()).doubleValue();
-					double minTemperature_degC = l.get( "minTemp_degC" ) == null? 44.0: Double.valueOf( l.get( "minTemp_degC" ).toString()).doubleValue(); // provide default values
-					double maxTemperature_degC = l.get( "maxTemp_degC" ) == null? 99.0: Double.valueOf( l.get( "maxTemp_degC" ).toString()).doubleValue();
-					double setTemperature_degC = l.get( "setTemp_degC" ) == null? 66.0: Double.valueOf( l.get( "setTemp_degC" ).toString()).doubleValue();
-					double initialTemperature_degC = l.get( "initialTemperature_degC" ) == null? 0.0 : Double.valueOf( l.get( "initialTemperature_degC" ).toString()).doubleValue();		
-					String ambientTempType2 = (String)l.get( "ambientTempType" ) == null ? "": (String)l.get( "ambientTempType" );					
+				    double capacityHeat_kW2 = l.path( "capacityHeat_kW").doubleValue();
+					double lossFactor_WpK = l.path( "lossFactor_WpK" ).doubleValue() * uniform(0.7, 1.3);
+					double heatCapacity_JpK = l.path( "heatCapacity_JpK" ).doubleValue();
+					double minTemperature_degC = l.path( "minTemp_degC" ).asDouble(44.0); // provide default values
+					double maxTemperature_degC = l.path( "maxTemp_degC" ).asDouble(99.0);
+					double setTemperature_degC = l.path( "setTemp_degC" ).asDouble(66.0);
+					double initialTemperature_degC = l.path( "initialTemperature_degC" ).doubleValue();
+					String ambientTempType2 = l.path( "ambientTempType" ).asText();
 					
 					if (this instanceof GCHouse ){
 						heatCapacity_JpK = heatCapacity_JpK * uniform(0.7, 1.3);
@@ -14281,30 +14016,30 @@ if( p_energyAssetList != null) {
 					
 				}
 				else if (storageAsset.p_energyAssetType == OL_EnergyAssetType.ELECTRIC_VEHICLE){
-					double capacityElectric_kW1 = l.get( "capacityElectricity_kW") == null? 0.0: Double.valueOf( l.get( "capacityElectricity_kW" ).toString()).doubleValue();
-					double storageCapacity_kWh = l.get( "storageCapacity_kWh" ) == null? 0.0: Double.valueOf( l.get( "storageCapacity_kWh").toString()).doubleValue();
-					double initialStateOfCharge_r = l.get( "stateOfCharge_r" ) == null? 0.0: Double.valueOf( l.get( "stateOfCharge_r" ).toString()).doubleValue();
-					double energyConsumption_kWhpkm2 = l.get( "energyConsumption_kWhpkm" ) == null? 0.0: Double.valueOf( l.get( "energyConsumption_kWhpkm" ).toString()).doubleValue();
-					double vehicleScalingElectric = l.get("vehicleScaling") == null? 1.0: Double.valueOf( l.get( "vehicleScaling" ).toString()).doubleValue();
+					double capacityElectric_kW1 = l.path( "capacityElectricity_kW").doubleValue();
+					double storageCapacity_kWh = l.path( "storageCapacity_kWh" ).doubleValue();
+					double initialStateOfCharge_r = l.path( "stateOfCharge_r" ).doubleValue();
+					double energyConsumption_kWhpkm2 = l.path( "energyConsumption_kWhpkm" ).doubleValue();
+					double vehicleScalingElectric = l.path("vehicleScaling").asDouble(1.0);
 					storageAsset.p_energyAssetInstance = new J_EAEV(storageAsset, capacityElectric_kW1, storageCapacity_kWh, initialStateOfCharge_r, main.p_timeStep_h, energyConsumption_kWhpkm2, vehicleScalingElectric );  
 				}
 				else if (storageAsset.p_energyAssetType == OL_EnergyAssetType.STORAGE_ELECTRIC){
-					double capacityElectric_kW1 = l.get( "capacityElectricity_kW") == null? 0.0: Double.valueOf( l.get( "capacityElectricity_kW" ).toString()).doubleValue();
-					double storageCapacity_kWh = l.get( "storageCapacity_kWh" ) == null? 0.0: Double.valueOf( l.get( "storageCapacity_kWh").toString()).doubleValue();
-					double initialStateOfCharge_r = l.get( "stateOfCharge_r" ) == null? 0.0: Double.valueOf( l.get( "stateOfCharge_r" ).toString()).doubleValue();
+					double capacityElectric_kW1 = l.path( "capacityElectricity_kW").doubleValue();
+					double storageCapacity_kWh = l.path( "storageCapacity_kWh" ).doubleValue();
+					double initialStateOfCharge_r = l.path( "stateOfCharge_r" ).doubleValue();
 					storageAsset.p_energyAssetInstance = new J_EAStorageElectric(storageAsset, capacityElectric_kW1, storageCapacity_kWh, initialStateOfCharge_r, main.p_timeStep_h);
 				}
 				else if (storageAsset.p_energyAssetType == OL_EnergyAssetType.BUILDINGTHERMALS ){
 				
-					double capacityHeat_kW3 = l.get( "capacityHeat_kW") == null? 0.0: Double.valueOf( l.get( "capacityHeat_kW").toString()).doubleValue();
-					double lossFactor_WpK2 = l.get( "lossFactor_WpK" ) == null? 0.0: Double.valueOf( l.get( "lossFactor_WpK" ).toString()).doubleValue() * uniform(0.8, 1.2);
-					double heatCapacity_JpK2 = l.get( "heatCapacity_JpK" ) == null? 0.0: Double.valueOf( l.get( "heatCapacity_JpK" ).toString()).doubleValue() * uniform(0.7, 1.3);
-					double minTemperature_degC2 = l.get( "minTemp_degC" ) == null? 1.0: Double.valueOf( l.get( "minTemp_degC" ).toString()).doubleValue(); 
-					double maxTemperature_degC2 = l.get( "maxTemp_degC" ) == null? 90.0: Double.valueOf( l.get( "maxTemp_degC" ).toString()).doubleValue();
-					double initialTemperature_degC2 = l.get( "initialTemperature_degC" ) == null? 0.0 : Double.valueOf( l.get( "initialTemperature_degC" ).toString()).doubleValue();		
-					String ambientTempType3 = (String)l.get( "ambientTempType" ) == null? "AIR": (String)l.get( "ambientTempType" ); //ALWAYS AIR!
+					double capacityHeat_kW3 = l.path( "capacityHeat_kW").doubleValue();
+					double lossFactor_WpK2 = l.path( "lossFactor_WpK" ).doubleValue() * uniform(0.8, 1.2);
+					double heatCapacity_JpK2 = l.path( "heatCapacity_JpK" ).doubleValue() * uniform(0.7, 1.3);
+					double minTemperature_degC2 = l.path( "minTemp_degC" ).asDouble(1.0);
+					double maxTemperature_degC2 = l.path( "maxTemp_degC" ).asDouble(90.0);
+					double initialTemperature_degC2 = l.path( "initialTemperature_degC" ).doubleValue();
+					String ambientTempType3 = l.path( "ambientTempType" ).asText("AIR"); //ALWAYS AIR!
 					double setTemperature_degC2 = 10.0; // this value does nothing for a heatmodel. But it is required to initialize the J_instance
-					double solarAbsorptionFactor_m2 = l.get("solarAbsorptionFactor_m2") == null? 1.0: Double.valueOf( l.get( "solarAbsorptionFactor_m2" ).toString()).doubleValue();		
+					double solarAbsorptionFactor_m2 = l.path("solarAbsorptionFactor_m2").asDouble(1.0);
 
 					p_BuildingThermalAsset = storageAsset;
 					p_BuildingThermalAsset.p_energyAssetInstance = new J_EABuilding(p_BuildingThermalAsset, OL_EAStorageTypes.HEATMODEL_BUILDING, capacityHeat_kW3, lossFactor_WpK2, main.p_timeStep_h, initialTemperature_degC2 , minTemperature_degC2, maxTemperature_degC2, setTemperature_degC2, heatCapacity_JpK2, ambientTempType3, solarAbsorptionFactor_m2);
@@ -14317,9 +14052,9 @@ if( p_energyAssetList != null) {
 			
 				}
 				else if (storageAsset.p_energyAssetType == OL_EnergyAssetType.STORAGE_GAS){
-					double capacityGas_kW = l.get( "capacityGas_kW") == null? 0.0: Double.valueOf( l.get( "capacityGas_kW" ).toString()).doubleValue();
-					double storageCapacity_kWh = l.get( "storageCapacity_kWh" ) == null? 0.0: Double.valueOf( l.get( "storageCapacity_kWh").toString()).doubleValue();
-					double initialStateOfCharge_r = l.get( "stateOfCharge_r" ) == null? 0.0: Double.valueOf( l.get( "stateOfCharge_r" ).toString()).doubleValue();
+					double capacityGas_kW = l.path( "capacityGas_kW").doubleValue();
+					double storageCapacity_kWh = l.path( "storageCapacity_kWh" ).doubleValue();
+					double initialStateOfCharge_r = l.path( "stateOfCharge_r" ).doubleValue();
 					storageAsset.p_energyAssetInstance = new J_EAStorageGas(storageAsset, capacityGas_kW, storageCapacity_kWh, initialStateOfCharge_r, main.p_timeStep_h);
 					p_gasBuffer = storageAsset;
 					//traceln("gasBuffer gasCapacity_kW: " + p_gasBuffer.p_energyAssetInstance.getGasCapacity_kW() + " kW");
@@ -23335,6 +23070,7 @@ ea 2
 		<ActiveObjectClass>
 			<Id>1660224852394</Id>
 			<Name><![CDATA[ConnectionOwner]]></Name>
+			<Import><![CDATA[import com.fasterxml.jackson.databind.JsonNode;]]></Import>
 			<ExtendsReference>
 				<PackageName><![CDATA[base]]></PackageName>
 				<ClassName><![CDATA[Actor]]></ClassName>
@@ -24105,7 +23841,7 @@ ea 2
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>true</ShowLabel>
 					<Properties SaveInSnapshot="true" ModificatorType="STATIC">
-						<Type><![CDATA[ArrayList]]></Type>
+						<Type><![CDATA[com.fasterxml.jackson.databind.node.ArrayNode]]></Type>
 						<UnitType><![CDATA[NONE]]></UnitType>
 						<SdArray>false</SdArray>
 						<ParameterEditor>
@@ -24481,21 +24217,6 @@ ea 2
 					</Properties>                 
 				</Variable>
 				<Variable Class="CollectionVariable">
-					<Id>1669036806038</Id>
-					<Name><![CDATA[c_actorContractList]]></Name>
-					<X>940</X><Y>100</Y>
-					<Label><X>10</X><Y>0</Y></Label>
-					<PublicFlag>false</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
-					<ShowLabel>true</ShowLabel>
-					<Properties SaveInSnapshot="true" AccessType="public" StaticVariable="false">
-						<CollectionClass><![CDATA[ArrayList]]></CollectionClass>
-						<ElementClass><![CDATA[LinkedHashMap]]></ElementClass>
-						<ValueElementClass><![CDATA[String]]></ValueElementClass>
-					</Properties>
-
-				</Variable>
-				<Variable Class="CollectionVariable">
 					<Id>1679502158516</Id>
 					<Name><![CDATA[c_actorContracts]]></Name>
 					<X>940</X><Y>120</Y>
@@ -24844,45 +24565,44 @@ double heatDeliveryPrice_eurpkWh = 0.0;
 double heatDeliveryTax_eurpkWh = 0.0;
 double heatVAT_pct = 0.0;
 
-c_actorContractList = p_actorContractList;
-for( HashMap l : c_actorContractList) {
+for( JsonNode contractJson : p_actorContractList) {
 	//traceln("Contract hashmap l: " + l);
-	OL_ContractType contractService = OL_ContractType.valueOf((String)l.get( "contractType" ));
-	String contractScope = (String)l.get( "contractScope" );
-	OL_EnergyCarrierType energyCarrier = OL_EnergyCarrierType.valueOf((String)l.get("energyCarrier"));
-	double annualFee_eur = (double)l.get("annualFee_eur");
+	OL_ContractType contractService = OL_ContractType.valueOf(contractJson.required("contractType").textValue());
+	String contractScope = contractJson.required( "contractScope" ).textValue();
+	OL_EnergyCarrierType energyCarrier = OL_EnergyCarrierType.valueOf(contractJson.required("energyCarrier").textValue());
+	double annualFee_eur = contractJson.required("annualFee_eur").doubleValue();
 	Actor mySupplier = null;
 	if (energyCarrier.equals(OL_EnergyCarrierType.ELECTRICITY)){
 		switch( contractService ) {
 			case DELIVERY:
 				//String contractScope = (String)l.get( "contract_scope" );
-				OL_DeliveryContractType deliveryContractType = OL_DeliveryContractType.valueOf((String)l.get("deliveryContractType"));
-				double deliveryPrice_eurpkWh = (double)l.get("deliveryPrice_eurpkWh");
-				double feedinPrice_eurpkWh = (double)l.get("feedinPrice_eurpkWh");
+				OL_DeliveryContractType deliveryContractType = OL_DeliveryContractType.valueOf(contractJson.get("deliveryContractType").textValue());
+				double deliveryPrice_eurpkWh = contractJson.required("deliveryPrice_eurpkWh").doubleValue();
+				double feedinPrice_eurpkWh = contractJson.required("feedinPrice_eurpkWh").doubleValue();
 				v_contractDelivery = new J_DeliveryContract(contractScope, deliveryContractType, OL_EnergyCarrierType.ELECTRICITY, deliveryPrice_eurpkWh, feedinPrice_eurpkWh, annualFee_eur);
 				//traceln("Delivery contract: " + v_contractDelivery);
 				c_actorContracts.add(v_contractDelivery);
 			break;
 			case TRANSPORT:
-				OL_TransportContractType transportContractType = OL_TransportContractType.valueOf((String)l.get("transportContractType"));
-				double bandwidthTreshold_kW = l.get("bandwidthTreshold_kW") == null ? 0.0 : (double)l.get("bandwidthTreshold_kW");
-				double bandwidthTariff_eurpkWh = l.get("bandwidthTariff_eurpkWh") == null ? 0.0 : (double)l.get("bandwidthTariff_eurpkWh");
+				OL_TransportContractType transportContractType = OL_TransportContractType.valueOf(contractJson.get("transportContractType").textValue());
+				double bandwidthTreshold_kW = contractJson.path("bandwidthTreshold_kW").doubleValue();
+				double bandwidthTariff_eurpkWh = contractJson.path("bandwidthTariff_eurpkWh").doubleValue();
 				v_contractTransport = new J_TransportContract(contractScope, transportContractType, energyCarrier, bandwidthTreshold_kW, bandwidthTariff_eurpkWh, annualFee_eur);			
 				c_actorContracts.add(v_contractTransport);
 			break;
 			case CONNECTION:
-				OL_ConnectionContractType connectionContractType = OL_ConnectionContractType.valueOf((String)l.get("connectionContractType"));
+				OL_ConnectionContractType connectionContractType = OL_ConnectionContractType.valueOf(contractJson.required("connectionContractType").textValue());
 				//traceln("Initializing connection contract with ConnectionContractType: " + connectionContractType);
-				double nfATOstart_h = l.get("nfATO_starttime_h") == null ? 0.0 : (double)l.get("nfATO_starttime_h");
-				double nfATOend_h = l.get("nfATO_endtime_h") == null ? 0.0 : (double)l.get("nfATO_endtime_h");
-				double nfATOcapacity_kW = l.get("nfATO_capacity_kW") ==  null ? 0.0 : (double)l.get("nfATO_capacity_kW");
+				double nfATOstart_h = contractJson.path("nfATO_starttime_h").doubleValue();
+				double nfATOend_h = contractJson.path("nfATO_endtime_h").doubleValue();
+				double nfATOcapacity_kW = contractJson.path("nfATO_capacity_kW").doubleValue();
 				v_contractConnection = new J_ConnectionContract(contractScope, connectionContractType, energyCarrier, nfATOstart_h, nfATOend_h, nfATOcapacity_kW, annualFee_eur);
 				c_actorContracts.add(v_contractConnection);
 			break;
 			case TAX:
-				double taxDelivery_eurpkWh = (double)l.get("taxDelivery_eurpkWh");
-				double taxFeedin_eurpkWh = (double)l.get("taxFeedin_eurpkWh");
-				double proportionalTax_pct = (double)l.get("proportionalTax_pct");
+				double taxDelivery_eurpkWh = contractJson.required("taxDelivery_eurpkWh").doubleValue();
+				double taxFeedin_eurpkWh = contractJson.required("taxFeedin_eurpkWh").doubleValue();
+				double proportionalTax_pct = contractJson.required("proportionalTax_pct").doubleValue();
 				v_contractTax = new J_TaxContract(contractScope, OL_EnergyCarrierType.ELECTRICITY, taxDelivery_eurpkWh, taxFeedin_eurpkWh, proportionalTax_pct, annualFee_eur);
 				c_actorContracts.add(v_contractTax);
 			break;
@@ -24894,9 +24614,9 @@ for( HashMap l : c_actorContractList) {
 	} else {
 		switch( contractService ) {
 			case DELIVERY:					
-				OL_DeliveryContractType deliveryContractType = OL_DeliveryContractType.valueOf((String)l.get("deliveryContractType"));
-				double deliveryPrice_eurpkWh = (double)l.get("deliveryPrice_eurpkWh");
-				double feedinPrice_eurpkWh = (double)l.get("feedinPrice_eurpkWh");
+				OL_DeliveryContractType deliveryContractType = OL_DeliveryContractType.valueOf(contractJson.required("deliveryContractType").textValue());
+				double deliveryPrice_eurpkWh = contractJson.required("deliveryPrice_eurpkWh").doubleValue();
+				double feedinPrice_eurpkWh = contractJson.required("feedinPrice_eurpkWh").doubleValue();
 				J_DeliveryContract contractDelivery = new J_DeliveryContract(contractScope, deliveryContractType, energyCarrier, deliveryPrice_eurpkWh, feedinPrice_eurpkWh, annualFee_eur);
 				//traceln("Delivery contract: " + v_contractDelivery);
 				c_actorContracts.add(contractDelivery);
@@ -24931,9 +24651,9 @@ for( HashMap l : c_actorContractList) {
 				}
 			break;
 			case TAX:
-				double DeliveryTax_eurpkWh = (double)l.get("taxDelivery_eurpkWh");
-				double taxFeedin_eurpkWh = (double)l.get("taxFeedin_eurpkWh");
-				double VAT_pct = (double)l.get("proportionalTax_pct");
+				double DeliveryTax_eurpkWh = contractJson.required("taxDelivery_eurpkWh").doubleValue();
+				double taxFeedin_eurpkWh = contractJson.required("taxFeedin_eurpkWh").doubleValue();
+				double VAT_pct = contractJson.required("proportionalTax_pct").doubleValue();
 				J_TaxContract contractTax = new J_TaxContract(contractScope, energyCarrier, DeliveryTax_eurpkWh, taxFeedin_eurpkWh, VAT_pct, annualFee_eur);
 				c_actorContracts.add(contractTax);
 				if (energyCarrier==OL_EnergyCarrierType.METHANE) {						
@@ -24947,7 +24667,7 @@ for( HashMap l : c_actorContractList) {
 					}
 			break;
 			case CONNECTION:
-				OL_ConnectionContractType connectionContractType = OL_ConnectionContractType.valueOf((String)l.get("connectionContractType"));
+				OL_ConnectionContractType connectionContractType = OL_ConnectionContractType.valueOf(contractJson.required("connectionContractType").textValue());
 				J_ConnectionContract contractConnection = new J_ConnectionContract(contractScope, connectionContractType, energyCarrier, 0.0, 0.0, 0.0, annualFee_eur);
 				c_actorContracts.add(contractConnection);
 				
@@ -24955,9 +24675,9 @@ for( HashMap l : c_actorContractList) {
 					
 			break;
 			case TRANSPORT:
-				OL_TransportContractType transportContractType = OL_TransportContractType.valueOf((String)l.get("transportContractType"));
-				double bandwidthTreshold_kW = l.get("bandwidthTreshold_kW") == null ? 0.0 : (double)l.get("bandwidthTreshold_kW");
-				double bandwidthTariff_eurpkWh = l.get("bandwidthTariff_eurpkWh") == null ? 0.0 : (double)l.get("bandwidthTariff_eurpkWh");
+				OL_TransportContractType transportContractType = OL_TransportContractType.valueOf(contractJson.required("transportContractType").textValue());
+				double bandwidthTreshold_kW = contractJson.path("bandwidthTreshold_kW").doubleValue();
+				double bandwidthTariff_eurpkWh = contractJson.path("bandwidthTariff_eurpkWh").doubleValue();
 				J_TransportContract contractTransport = new J_TransportContract(contractScope, transportContractType, energyCarrier, bandwidthTreshold_kW, bandwidthTariff_eurpkWh, annualFee_eur);			
 				c_actorContracts.add(contractTransport);
 			break;
@@ -26966,6 +26686,7 @@ Supplier]]></Text>
 		<ActiveObjectClass>
 			<Id>1660731375016</Id>
 			<Name><![CDATA[EnergyHolon]]></Name>
+			<Import><![CDATA[import com.fasterxml.jackson.databind.JsonNode;]]></Import>
 			<ExtendsReference>
 				<PackageName><![CDATA[base]]></PackageName>
 				<ClassName><![CDATA[Actor]]></ClassName>
@@ -27733,7 +27454,7 @@ Supplier]]></Text>
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>true</ShowLabel>
 					<Properties SaveInSnapshot="true" ModificatorType="STATIC">
-						<Type><![CDATA[ArrayList]]></Type>
+						<Type><![CDATA[com.fasterxml.jackson.databind.node.ArrayNode]]></Type>
 						<UnitType><![CDATA[NONE]]></UnitType>
 						<SdArray>false</SdArray>
 						<ParameterEditor>
@@ -28014,21 +27735,6 @@ Supplier]]></Text>
 							<DelimeterType>NO_DELIMETER</DelimeterType>
 						</ParameterEditor>
 					</Properties>                 
-				</Variable>
-				<Variable Class="CollectionVariable">
-					<Id>1669042483034</Id>
-					<Name><![CDATA[c_actorContractList]]></Name>
-					<X>390</X><Y>70</Y>
-					<Label><X>10</X><Y>0</Y></Label>
-					<PublicFlag>false</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
-					<ShowLabel>true</ShowLabel>
-					<Properties SaveInSnapshot="true" AccessType="public" StaticVariable="false">
-						<CollectionClass><![CDATA[ArrayList]]></CollectionClass>
-						<ElementClass><![CDATA[LinkedHashMap]]></ElementClass>
-						<ValueElementClass><![CDATA[String]]></ValueElementClass>
-					</Properties>
-
 				</Variable>
 				<Variable Class="CollectionVariable">
 					<Id>1679563561816</Id>
@@ -28519,9 +28225,9 @@ traceln("Holon selfsufficiency: " + totalSelfSufficiency_fr + "%, doublecheck " 
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>true</ShowLabel>
 					<Body><![CDATA[if( p_actorContractList != null) {
-	traceln("Contract list: " + this.getName() + " with ID: " + p_actorID + ": " + p_actorContractList.toString());
+	//traceln("Contract list connectionOwner " + p_actorID + ": " + p_actorContractList.toString());
 } else {
-	traceln( "No contract data for energy holon "+p_actorID );
+	traceln( "No contract data for connectionOwner " + p_actorID );
 }
 
 double methaneDeliveryPrice_eurpkWh = 0.0;
@@ -28534,44 +28240,44 @@ double heatDeliveryPrice_eurpkWh = 0.0;
 double heatDeliveryTax_eurpkWh = 0.0;
 double heatVAT_pct = 0.0;
 
-c_actorContractList = p_actorContractList;
-for( HashMap l : c_actorContractList) {
+for( JsonNode contractJson : p_actorContractList) {
 	//traceln("Contract hashmap l: " + l);
-	OL_ContractType contractService = OL_ContractType.valueOf((String)l.get( "contractType" ));
-	String contractScope = (String)l.get( "contractScope" );
-	OL_EnergyCarrierType energyCarrier = OL_EnergyCarrierType.valueOf((String)l.get("energyCarrier"));
+	OL_ContractType contractService = OL_ContractType.valueOf(contractJson.required("contractType").textValue());
+	String contractScope = contractJson.required( "contractScope" ).textValue();
+	OL_EnergyCarrierType energyCarrier = OL_EnergyCarrierType.valueOf(contractJson.required("energyCarrier").textValue());
+	double annualFee_eur = contractJson.required("annualFee_eur").doubleValue();
 	Actor mySupplier = null;
-	double annualFee_eur = (double)l.get("annualFee_eur");
 	if (energyCarrier.equals(OL_EnergyCarrierType.ELECTRICITY)){
 		switch( contractService ) {
 			case DELIVERY:
 				//String contractScope = (String)l.get( "contract_scope" );
-				OL_DeliveryContractType deliveryContractType = OL_DeliveryContractType.valueOf((String)l.get("deliveryContractType"));
-				double deliveryPrice_eurpkWh = (double)l.get("deliveryPrice_eurpkWh");
-				double feedinPrice_eurpkWh = (double)l.get("feedinPrice_eurpkWh");
+				OL_DeliveryContractType deliveryContractType = OL_DeliveryContractType.valueOf(contractJson.get("deliveryContractType").textValue());
+				double deliveryPrice_eurpkWh = contractJson.required("deliveryPrice_eurpkWh").doubleValue();
+				double feedinPrice_eurpkWh = contractJson.required("feedinPrice_eurpkWh").doubleValue();
 				v_contractDelivery = new J_DeliveryContract(contractScope, deliveryContractType, OL_EnergyCarrierType.ELECTRICITY, deliveryPrice_eurpkWh, feedinPrice_eurpkWh, annualFee_eur);
 				//traceln("Delivery contract: " + v_contractDelivery);
 				c_actorContracts.add(v_contractDelivery);
 			break;
 			case TRANSPORT:
-				OL_TransportContractType transportContractType = OL_TransportContractType.valueOf((String)l.get("transportContractType"));
-				double bandwidthTreshold_kW = l.get("bandwidthTreshold_kW") == null ? 0.0 : (double)l.get("bandwidthTreshold_kW");
-				double bandwidthTariff_eurpkWh = l.get("bandwidthTariff_eurpkWh") == null ? 0.0 : (double)l.get("bandwidthTariff_eurpkWh");
+				OL_TransportContractType transportContractType = OL_TransportContractType.valueOf(contractJson.get("transportContractType").textValue());
+				double bandwidthTreshold_kW = contractJson.path("bandwidthTreshold_kW").doubleValue();
+				double bandwidthTariff_eurpkWh = contractJson.path("bandwidthTariff_eurpkWh").doubleValue();
 				v_contractTransport = new J_TransportContract(contractScope, transportContractType, energyCarrier, bandwidthTreshold_kW, bandwidthTariff_eurpkWh, annualFee_eur);			
 				c_actorContracts.add(v_contractTransport);
 			break;
 			case CONNECTION:
-				OL_ConnectionContractType connectionContractType = OL_ConnectionContractType.valueOf((String)l.get("connectionContractType"));
-				double nfATOstart_h = l.get("nfATO_starttime_h") == null ? 0.0 : (double)l.get("nfATO_starttime_h");
-				double nfATOend_h = l.get("nfATO_endtime_h") == null ? 0.0 : (double)l.get("nfATO_endtime_h");
-				double nfATOcapacity_kW = l.get("nfATO_capacity_kW") ==  null ? 0.0 : (double)l.get("nfATO_capacity_kW");
+				OL_ConnectionContractType connectionContractType = OL_ConnectionContractType.valueOf(contractJson.required("connectionContractType").textValue());
+				//traceln("Initializing connection contract with ConnectionContractType: " + connectionContractType);
+				double nfATOstart_h = contractJson.path("nfATO_starttime_h").doubleValue();
+				double nfATOend_h = contractJson.path("nfATO_endtime_h").doubleValue();
+				double nfATOcapacity_kW = contractJson.path("nfATO_capacity_kW").doubleValue();
 				v_contractConnection = new J_ConnectionContract(contractScope, connectionContractType, energyCarrier, nfATOstart_h, nfATOend_h, nfATOcapacity_kW, annualFee_eur);
 				c_actorContracts.add(v_contractConnection);
 			break;
 			case TAX:
-				double taxDelivery_eurpkWh = (double)l.get("taxDelivery_eurpkWh");
-				double taxFeedin_eurpkWh = (double)l.get("taxFeedin_eurpkWh");
-				double proportionalTax_pct = (double)l.get("proportionalTax_pct");
+				double taxDelivery_eurpkWh = contractJson.required("taxDelivery_eurpkWh").doubleValue();
+				double taxFeedin_eurpkWh = contractJson.required("taxFeedin_eurpkWh").doubleValue();
+				double proportionalTax_pct = contractJson.required("proportionalTax_pct").doubleValue();
 				v_contractTax = new J_TaxContract(contractScope, OL_EnergyCarrierType.ELECTRICITY, taxDelivery_eurpkWh, taxFeedin_eurpkWh, proportionalTax_pct, annualFee_eur);
 				c_actorContracts.add(v_contractTax);
 			break;
@@ -28583,9 +28289,9 @@ for( HashMap l : c_actorContractList) {
 	} else {
 		switch( contractService ) {
 			case DELIVERY:					
-				OL_DeliveryContractType deliveryContractType = OL_DeliveryContractType.valueOf((String)l.get("deliveryContractType"));
-				double deliveryPrice_eurpkWh = (double)l.get("deliveryPrice_eurpkWh");
-				double feedinPrice_eurpkWh = (double)l.get("feedinPrice_eurpkWh");
+				OL_DeliveryContractType deliveryContractType = OL_DeliveryContractType.valueOf(contractJson.required("deliveryContractType").textValue());
+				double deliveryPrice_eurpkWh = contractJson.required("deliveryPrice_eurpkWh").doubleValue();
+				double feedinPrice_eurpkWh = contractJson.required("feedinPrice_eurpkWh").doubleValue();
 				J_DeliveryContract contractDelivery = new J_DeliveryContract(contractScope, deliveryContractType, energyCarrier, deliveryPrice_eurpkWh, feedinPrice_eurpkWh, annualFee_eur);
 				//traceln("Delivery contract: " + v_contractDelivery);
 				c_actorContracts.add(contractDelivery);
@@ -28620,9 +28326,9 @@ for( HashMap l : c_actorContractList) {
 				}
 			break;
 			case TAX:
-				double DeliveryTax_eurpkWh = (double)l.get("taxDelivery_eurpkWh");
-				double taxFeedin_eurpkWh = (double)l.get("taxFeedin_eurpkWh");
-				double VAT_pct = (double)l.get("proportionalTax_pct");
+				double DeliveryTax_eurpkWh = contractJson.required("taxDelivery_eurpkWh").doubleValue();
+				double taxFeedin_eurpkWh = contractJson.required("taxFeedin_eurpkWh").doubleValue();
+				double VAT_pct = contractJson.required("proportionalTax_pct").doubleValue();
 				J_TaxContract contractTax = new J_TaxContract(contractScope, energyCarrier, DeliveryTax_eurpkWh, taxFeedin_eurpkWh, VAT_pct, annualFee_eur);
 				c_actorContracts.add(contractTax);
 				if (energyCarrier==OL_EnergyCarrierType.METHANE) {						
@@ -28636,14 +28342,17 @@ for( HashMap l : c_actorContractList) {
 					}
 			break;
 			case CONNECTION:
-				OL_ConnectionContractType connectionContractType = OL_ConnectionContractType.valueOf((String)l.get("connectionContractType"));
+				OL_ConnectionContractType connectionContractType = OL_ConnectionContractType.valueOf(contractJson.required("connectionContractType").textValue());
 				J_ConnectionContract contractConnection = new J_ConnectionContract(contractScope, connectionContractType, energyCarrier, 0.0, 0.0, 0.0, annualFee_eur);
 				c_actorContracts.add(contractConnection);
+
+
+
 			break;
 			case TRANSPORT:
-				OL_TransportContractType transportContractType = OL_TransportContractType.valueOf((String)l.get("transportContractType"));
-				double bandwidthTreshold_kW = l.get("bandwidthTreshold_kW") == null ? 0.0 : (double)l.get("bandwidthTreshold_kW");
-				double bandwidthTariff_eurpkWh = l.get("bandwidthTariff_eurpkWh") == null ? 0.0 : (double)l.get("bandwidthTariff_eurpkWh");
+				OL_TransportContractType transportContractType = OL_TransportContractType.valueOf(contractJson.required("transportContractType").textValue());
+				double bandwidthTreshold_kW = contractJson.path("bandwidthTreshold_kW").doubleValue();
+				double bandwidthTariff_eurpkWh = contractJson.path("bandwidthTariff_eurpkWh").doubleValue();
 				J_TransportContract contractTransport = new J_TransportContract(contractScope, transportContractType, energyCarrier, bandwidthTreshold_kW, bandwidthTariff_eurpkWh, annualFee_eur);			
 				c_actorContracts.add(contractTransport);
 			break;
@@ -28658,72 +28367,78 @@ for( HashMap l : c_actorContractList) {
 v_methanePrice_eurpkWh = (methaneDeliveryPrice_eurpkWh + methaneDeliveryTax_eurpkWh) * (1 + methaneVAT_pct);
 v_hydrogenPrice_eurpkWh = (hydrogenDeliveryPrice_eurpkWh + hydrogenDeliveryTax_eurpkWh) * (1 + hydrogenVAT_pct);
 v_heatPrice_eurpkWh = (heatDeliveryPrice_eurpkWh + heatDeliveryTax_eurpkWh) * (1 + heatVAT_pct);
-
-/* if( p_actorContractList != null) {
-	traceln("Contract list energyHolon "+p_actorID+": " + p_actorContractList.toString());
-} else {
-	traceln( "No contract data for energyHolon "+p_actorID );
-}
-
-c_actorContractList = p_actorContractList;
-for( HashMap l : c_actorContractList) {
-		OL_ContractType contractService = OL_ContractType.valueOf((String)l.get( "contractType" ));
-		String contractScope = (String)l.get( "contractScope" );
-		OL_EnergyCarrierType energyCarrier = OL_EnergyCarrierType.valueOf((String)l.get("energyCarrier"));
-		if (energyCarrier.equals(OL_EnergyCarrierType.ELECTRICITY)){
-		switch( contractService ) {
+		/*} else if (energyCarrier.equals(OL_EnergyCarrierType.HYDROGEN)){
+			switch( contractService ) {
 				case DELIVERY:
-					//String contractScope = (String)l.get( "contract_scope" );
 					OL_DeliveryContractType deliveryContractType = OL_DeliveryContractType.valueOf((String)l.get("deliveryContractType"));
 					double deliveryPrice_eurpkWh = (double)l.get("deliveryPrice_eurpkWh");
 					double feedinPrice_eurpkWh = (double)l.get("feedinPrice_eurpkWh");
-					v_contractDelivery = new J_DeliveryContract(contractScope, deliveryContractType, OL_EnergyCarrierType.ELECTRICITY, deliveryPrice_eurpkWh, feedinPrice_eurpkWh);
+					v_contractDelivery = new J_DeliveryContract(contractScope, deliveryContractType, OL_EnergyCarrierType.HYDROGEN, deliveryPrice_eurpkWh, feedinPrice_eurpkWh);
 					//traceln("Delivery contract: " + v_contractDelivery);
-				break;
-				case TRANSPORT:
-					OL_TransportContractType transportContractType = OL_TransportContractType.valueOf((String)l.get("transportContractType"));
-					double bandwidthTreshold_kW = l.get("bandwidthTreshold_kW") == null ? 0.0 : (double)l.get("bandwidthTreshold_kW");
-					double bandwidthTariff_eurpkWh = l.get("bandwidthTariff_eurpkWh") == null ? 0.0 : (double)l.get("bandwidthTariff_eurpkWh");
-					v_contractTransport = new J_TransportContract(contractScope, transportContractType, energyCarrier, bandwidthTreshold_kW, bandwidthTariff_eurpkWh);			
-				break;
-				case CONNECTION:
-					OL_ConnectionContractType connectionContractType = OL_ConnectionContractType.valueOf((String)l.get("connectionContractType"));
-					double nfATOstart_h = l.get("nfATO_starttime_h") == null ? 0.0 : (double)l.get("nfATO_starttime_h");
-					double nfATOend_h = l.get("nfATO_endtime_h") == null ? 0.0 : (double)l.get("nfATO_endtime_h");
-					double nfATOcapacity_kW = l.get("nfATO_capacity_kW") ==  null ? 0.0 : (double)l.get("nfATO_capacity_kW");
-					if (connectionContractType.equals(OL_ConnectionContractType.NFATO)) {
-						v_enable_nfATO_b = true;
+					c_actorContracts.add(v_contractDelivery);
+					mySupplier = findFirst(main.pop_energySuppliers, p->p.p_actorID.equals(contractScope)) ;
+					if (mySupplier != null) {
+						((EnergySupplier)mySupplier).f_connectToChild(this);
+					} else {
+						mySupplier = findFirst(main.pop_energyHolons, p->p.p_actorID.equals(contractScope)) ;
+						if (mySupplier != null) {
+							((EnergyHolon)mySupplier).f_connectToChild(this,OL_EnergyCarrierType.HYDROGEN);
+							//p_holonParent = (EnergyHolon)mySupplier;
+						}
 					}
-					v_contractConnection = new J_ConnectionContract(contractScope, connectionContractType, energyCarrier, nfATOstart_h, nfATOend_h, nfATOcapacity_kW );
+					if (mySupplier != null) {
+						//energySupplier.connectTo(mySupplier);
+						p_hydrogenSupplier = mySupplier;
+						//energySupplier.f_connectToChild(this);
+					} else {
+						traceln("Connection owner --> f_connectToParentActor --> hydrogen supplier not found, this should not be happening");
+					}
 				break;
 				case TAX:
-					double taxDelivery_eurpkWh = (double)l.get("taxDelivery_eurpkWh");
-					double taxFeedin_eurpkWh = (double)l.get("taxFeedin_eurpkWh");
-					double proportionalTax_pct = (double)l.get("proportionalTax_pct");
-					v_contractTax = new J_TaxContract(contractScope, OL_EnergyCarrierType.ELECTRICITY, taxDelivery_eurpkWh, taxFeedin_eurpkWh, proportionalTax_pct);
+					hydrogenDeliveryTax_eurpkWh = (double)l.get("taxDelivery_eurpkWh");
+					//double taxFeedin_eurpkWh = (double)l.get("taxFeedin_eurpkWh");
+					hydrogenVAT_pct = (double)l.get("proportionalTax_pct");
+					v_contractTax = new J_TaxContract(contractScope, OL_EnergyCarrierType.HYDROGEN, hydrogenDeliveryTax_eurpkWh, 0, hydrogenVAT_pct);
+					c_actorContracts.add(v_contractTax);
+				break;
+				default:
+
+				break;
+			}
+		} else if (energyCarrier.equals(OL_EnergyCarrierType.HEAT)){
+			switch( contractService ) {
+				case DELIVERY:
+					heatDeliveryPrice_eurpkWh = (double)l.get("deliveryPrice_eurpkWh");
+					mySupplier = findFirst(main.pop_energySuppliers, p->p.p_actorID.equals(contractScope)) ;
+					if (mySupplier != null) {
+						((EnergySupplier)mySupplier).f_connectToChild(this);
+					} else {
+						mySupplier = findFirst(main.pop_energyHolons, p->p.p_actorID.equals(contractScope)) ;
+						if (mySupplier != null) {
+							((EnergyHolon)mySupplier).f_connectToChild(this,OL_EnergyCarrierType.HYDROGEN);
+							//p_holonParent = (EnergyHolon)mySupplier;
+						}
+					}
+					if (mySupplier != null) {
+						//energySupplier.connectTo(mySupplier);
+						p_hydrogenSupplier = mySupplier;
+						//energySupplier.f_connectToChild(this);
+					} else {
+						traceln("Connection owner --> f_connectToParentActor --> heat supplier not found, this should not be happening");
+					}
+				break;
+				case TAX:
+					hydrogenDeliveryTax_eurpkWh = (double)l.get("taxDelivery_eurpkWh");
+					//double taxFeedin_eurpkWh = (double)l.get("taxFeedin_eurpkWh");
+					hydrogenVAT_pct = (double)l.get("proportionalTax_pct");
 				break;
 				default:
 				
-				break;		
+				break;
 			}
-		} else {
-			traceln("Contract for energycarrier other than Electricity!");
-		}
-}*/
+		}*/
 
-//If the energy holon exists but does not have contracts: add random contracts (THIS WAS A TEMP FIX, can be deleted)
-/*
-if ( v_contractTax == null){
-	 v_contractTax = new J_TaxContract("gove4", OL_EnergyCarrierType.ELECTRICITY, 0.15, 0.15, 0.21);
-	 v_contractDelivery = new J_DeliveryContract("sup2", OL_DeliveryContractType.ELECTRICITY_FIXED, OL_EnergyCarrierType.ELECTRICITY, 0.08, 0.08);
-	 v_contractConnection = new J_ConnectionContract("ope1", OL_ConnectionContractType.DEFAULT, OL_EnergyCarrierType.ELECTRICITY, 0.0, 0.0, 0.0 );
-	 v_contractTransport = new J_TransportContract("ope1", OL_TransportContractType.DEFAULT, OL_EnergyCarrierType.ELECTRICITY, 0.0, 0.0);	
-	 c_actorContracts.add(v_contractTax);
-	 c_actorContracts.add(v_contractDelivery);
-	 c_actorContracts.add(v_contractConnection);
-	 c_actorContracts.add(v_contractTransport);
-}
-*/]]></Body>
+]]></Body>
 				</Function>
 				<Function AccessType="default" StaticFunction="false">
 					<ReturnModificator>VOID</ReturnModificator>
@@ -32238,12 +31953,12 @@ p_primaryHeatingAsset.v_powerFraction_fr = powerFraction_heatPump_fr;
 	//p_secondaryHeatingAsset.v_powerFraction_fr = secondaryDemand_kW / p_secondaryHeatingAsset.p_energyAssetInstance.getHeatCapacity_kW(); 
 	
 	
-	//p_BuildingThermalAsset.v_powerFraction_fr = p_primaryHeatingAsset.p_energyAssetInstance.capacityHeat_kW * p_primaryHeatingAsset.v_powerFraction_fr;			
+	//p_BuildingThermalAsset.v_powerFraction_fr = p_primaryHeatingAsset.p_energyAssetInstance.capacityHeat_kW * p_primaryHeatingAsset.v_powerFraction_fr;
 
 	//traceln("GCHouse f_heatwithhybrid... -> p_primaryHeatingAsset.v_powerFraction_fr = " + p_primaryHeatingAsset.v_powerFraction_fr + ", p_secondaryHeatingAsset.v_powerFraction_fr = " + p_secondaryHeatingAsset.v_powerFraction_fr + ", p_BuildingThermalAsset.v_powerFraction_fr" + p_BuildingThermalAsset.v_powerFraction_fr);
 	//p_secondaryHeatingAsset.f_updateAllFlows(p_secondaryHeatingAsset.v_powerFraction_fr);
 	//p_primaryHeatingAsset.f_updateAllFlows(p_primaryHeatingAsset.v_powerFraction_fr);
-	//p_BuildingThermalAsset.f_updateAllFlows(p_BuildingThermalAsset.v_powerFraction_fr);		
+	//p_BuildingThermalAsset.f_updateAllFlows(p_BuildingThermalAsset.v_powerFraction_fr);
 	
 } else {
 	traceln("**** EXCEPTION ****: Unsupported combination of heatings systems in house " + p_agentID);
@@ -32993,7 +32708,7 @@ if (l_ownerActor.getConnectedAgent() instanceof EnergyHolon){
 tempSetpoint_degC = p_BuildingThermalAsset.p_energyAssetInstance.getSetTemperature_degC();
 minBufferTemp_degC = p_BuildingThermalAsset.p_energyAssetInstance.getMinTemperature_degC();
 maxTempBuffer_degC = p_BuildingThermalAsset.p_energyAssetInstance.getMaxTemperature_degC();
-storageTemp_degC = p_BuildingThermalAsset.p_energyAssetInstance.getCurrentTemperature();	
+storageTemp_degC = p_BuildingThermalAsset.p_energyAssetInstance.getCurrentTemperature();
 
 b_storageBelowSetpoint = storageTemp_degC < tempSetpoint_degC;
 b_storageBelowMinimum = storageTemp_degC < minBufferTemp_degC;
@@ -37839,18 +37554,6 @@ if (p_batteryAsset != null){
 					</ParameterValue>
 				</Parameter>
 				<Parameter>
-					<ParameterName><![CDATA[p_gridNodeConfigJSON]]></ParameterName>
-				</Parameter>
-				<Parameter>
-					<ParameterName><![CDATA[p_gridConnectionConfigJSON]]></ParameterName>
-				</Parameter>
-				<Parameter>
-					<ParameterName><![CDATA[p_actorsConfigJSON]]></ParameterName>
-				</Parameter>
-				<Parameter>
-					<ParameterName><![CDATA[p_energyAssetsConfigJSON]]></ParameterName>
-				</Parameter>
-				<Parameter>
 					<ParameterName><![CDATA[j_dataOut]]></ParameterName>
 				</Parameter>
 				<Parameter>
@@ -37864,9 +37567,6 @@ if (p_batteryAsset != null){
 				</Parameter>
 				<Parameter>
 					<ParameterName><![CDATA[p_parallelize]]></ParameterName>
-				</Parameter>
-				<Parameter>
-					<ParameterName><![CDATA[p_policiesConfigJSON]]></ParameterName>
 				</Parameter>
 				<Parameter>
 					<ParameterName><![CDATA[j_simulationResults]]></ParameterName>
@@ -37894,9 +37594,6 @@ if (p_batteryAsset != null){
 				</Parameter>
 				<Parameter>
 					<ParameterName><![CDATA[p_hybridHeatPumpCOPThreshold]]></ParameterName>
-				</Parameter>
-				<Parameter>
-					<ParameterName><![CDATA[p_templateAssetsConfigJSON]]></ParameterName>
 				</Parameter>
 				<Parameter>
 					<ParameterName><![CDATA[p_scenarioJSON]]></ParameterName>
@@ -38956,7 +38653,7 @@ public class J_EABuilding extends base.J_EAStorageHeat implements Serializable {
 		//traceln("lossfacter: " + lossFactor_WpK);
 		updateStateOfCharge( tempDelta );
 	}
-	
+
 	public void solarHeating() {
 		double solarHeating_W = solarAbsorptionFactor_m2 * solarRadiation_Wpm2;
 		double energyGain_kWh = ( solarHeating_W / 1000 ) * timestep_h;
@@ -38972,7 +38669,7 @@ public class J_EABuilding extends base.J_EAStorageHeat implements Serializable {
 		//traceln("StorageAsset Heat Operatefunctie: ambienttemperature = "+ambientTemperature_degC);
 		//traceln("StorageAsset Heat Operatefunctie: ambienttemperature = "+ambientTemperature_degC+" | powerFraction_fr = " + ratioOfChargeCapacity_r + ".");
 		//traceln("<><><><> heatstorage reset heatproduction = "+heatProduction_kW+", heatconsumption_kW = "+heatConsumption_kW+" heatProduced_kWh = "+heatProduced_kWh + "heatConsumed = "+heatConsumed_kWh + ", losses= "+energyUsed_kWh );
-		
+
 		calculateLoss(); // Heat exchange with environment through convection
 		solarHeating(); // Heat influx from sunlight
 
@@ -38998,7 +38695,7 @@ public class J_EABuilding extends base.J_EAStorageHeat implements Serializable {
 		heatConsumed_kWh += heatConsumption_kW * timestep_h;
 		//traceln("tempdelta charge: "+deltaTemp_degC);
 		//traceln(">> Heat storage heatproduction = "+ heatProduced_kWh + ", heatconsumption_kW = "+ heatConsumption_kW +" heatConsumed_kWh = "+ heatConsumed_kWh +", heatProduced_kWh = "+ heatProduced_kWh );
-		
+
 		updateStateOfCharge( deltaTemp_degC );
 		//traceln("<><><><> heatstorage <"+ownerAsset.getId()+"> calculated heatproduction = "+heatProduction_kW+", heatconsumption_kW = "+heatConsumption_kW+", heatProduced_kWh = "+heatProduced_kWh + ", heatConsumed = "+heatConsumed_kWh + ", losses= "+energyUsed_kWh );
 
@@ -39019,7 +38716,7 @@ public class J_EABuilding extends base.J_EAStorageHeat implements Serializable {
 			"stateOfCharge_r = " + this.stateOfCharge_r+" "+
 			"minTemperature_degC = " + this.minTemperature_degC+" "+
 			"maxTemperature_degC = " + this.maxTemperature_degC+" "+
-			"setTemperature_degC = " + this.setTemperature_degC+" "+			
+			"setTemperature_degC = " + this.setTemperature_degC+" "+
 			"ambientTemperature_degC = "+this.ambientTemperature_degC+" "+
 			"energyUsed_kWh (losses) = " + this.energyUsed_kWh + " "+
 			"heatProduced_kWh = "+ this.heatProduced_kWh + " "+
@@ -39052,12 +38749,12 @@ public class J_EABuilding extends base.J_EAStorageHeat implements Serializable {
 	public double getSetTemperature_degC() {
 		return setTemperature_degC;
 	}
-	
+
 	@Override
 	public double getMinTemperature_degC() {
 		return minTemperature_degC;
 	}
-	
+
 	@Override
 	public double getMaxTemperature_degC() {
 		return maxTemperature_degC;
@@ -39077,7 +38774,7 @@ public class J_EABuilding extends base.J_EAStorageHeat implements Serializable {
     	return capacityHeat_kW;
     }
 	*/
-	
+
 	@Override //Storage assets limiteren de opname van warmte niet met 1. Dat is nodig voor de buffer. Die kan wel maximaal zijn capaciteit leverern, maar kan meer opnemen. @Gillis is dat logisch of willen we andere oplossing?
     public double[] operateBounded(double ratioOfCapacity) {
     	double limitedRatioOfCapacity = max(-1, ratioOfCapacity);
@@ -39089,7 +38786,7 @@ public class J_EABuilding extends base.J_EAStorageHeat implements Serializable {
 	public void updateAmbientTemperature(double currentAmbientTemperature_degC) { // TODO: Hoe zorgen we dat we deze niet vergeten aan te roepen??
 		this.ambientTemperature_degC = currentAmbientTemperature_degC;
 	}
-	
+
 	public void updateSolarRadiation(double solarRadiation_Wpm2) { // TODO: Hoe zorgen we dat we deze niet vergeten aan te roepen??
 		this.solarRadiation_Wpm2 = solarRadiation_Wpm2;
 		//traceln("Updating solarRadiation of building to %s Wpm2!", solarRadiation_Wpm2);
@@ -40772,11 +40469,11 @@ public class J_EAConversionCurtailerHeat extends J_EAConversion implements Seria
 			<ReferencedFromUserCode>false</ReferencedFromUserCode>
 		</Resource>
 		<Resource>
-			<Path><![CDATA[exampleAnylogicInput.json]]></Path>
+			<Path><![CDATA[TemplateAssets.json]]></Path>
 			<ReferencedFromUserCode>false</ReferencedFromUserCode>
 		</Resource>
 		<Resource>
-			<Path><![CDATA[TemplateAssets.json]]></Path>
+			<Path><![CDATA[exampleAnylogicInput.json]]></Path>
 			<ReferencedFromUserCode>false</ReferencedFromUserCode>
 		</Resource>
 	</ModelResources>
