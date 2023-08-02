@@ -94,8 +94,8 @@ jobs:
             --registry-username erikvv
             --registry-password ${{ secrets.ERIKVV_GHCR_PULL_PASSWORD }}
             --registry-server ghcr.io
-            --cpu 0.25 
-            --memory 0.5 
+            --cpu 0.5
+            --memory 1 
             --min-replicas 0
 
   deploy-main:

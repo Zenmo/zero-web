@@ -3,6 +3,7 @@ import {Bag3dProperties} from '../services/3dbag_old'
 import {KleinVerbruikPerPostcode, PandData} from '../services/appState'
 import {Verblijfsobject} from '../services/bag-verblijfsobject'
 import {Bag2DPandProperties} from '../services/bag2d'
+import {printPostalCodeRange} from '../services/postalcode'
 
 export const PandDataDisplay = ({pandData}: { pandData: PandData }) => (
     <div>
@@ -55,8 +56,13 @@ const KleinverbruikDisplay = ({kleinverbruik}: {
         if (gas) {
             result = [
                 ...result,
-                <DtBold>Gasverbruik</DtBold>,
-                <dd>{gas.gemiddeldeStandaardjaarafname} m3</dd>,
+                <h3>Gas</h3>,
+                <DtBold>Verbruik</DtBold>,
+                <dd>{gas.sjvGemiddeld} m3</dd>,
+                <DtBold>Postcode</DtBold>,
+                <dd>{printPostalCodeRange(gas.postcodeVan, gas.postcodeTot)}</dd>,
+                <DtBold>Aantal aansluitingen</DtBold>,
+                <dd>{gas.aansluitingenAantal}</dd>,
                 // <DtBold>Aansluiting</DtBold>,
                 // <dd>{gas.soortAansluiting} ({gas.soortAansluitingPercentage}%)</dd>,
             ]
@@ -66,12 +72,17 @@ const KleinverbruikDisplay = ({kleinverbruik}: {
         if (elektriciteit) {
             result = [
                 ...result,
-                <DtBold>Electriciteitsverbruik</DtBold>,
-                <dd>{elektriciteit.gemiddeldeStandaardjaarafname} kWh</dd>,
+                <h3>Elektra</h3>,
+                <DtBold>Verbruik</DtBold>,
+                <dd>{elektriciteit.sjvGemiddeld} kWh</dd>,
                 <DtBold>Aansluiting</DtBold>,
-                <dd>{elektriciteit.soortAansluiting} ({elektriciteit.soortAansluitingPercentage}%)</dd>,
+                <dd>{elektriciteit.soortAansluiting} ({elektriciteit.soortAansluitingPerc}%)</dd>,
                 <DtBold>Percentage met netto teruglevering</DtBold>,
-                <dd>{100 - elektriciteit.leveringsRichtingPercentage}%</dd>,
+                <dd>{100 - elektriciteit.leveringsrichtingPerc}%</dd>,
+                <DtBold>Postcode</DtBold>,
+                <dd>{printPostalCodeRange(elektriciteit.postcodeVan, elektriciteit.postcodeTot)}</dd>,
+                <DtBold>Aantal aansluitingen</DtBold>,
+                <dd>{elektriciteit.aansluitingenAantal}</dd>,
             ]
         }
     } else {

@@ -1,7 +1,9 @@
 import {AppState} from '../appState'
 import {Verblijfsobject} from '../bag-verblijfsobject'
+import {getElectricityUsage} from '../kleinverbruik/kleinverbruik'
+import {PostcodeKleinverbruik} from '../kleinverbruik/types'
 import {Actor, defaultElectrictySupplier, defaultGovernment, defaultGridOperator} from './actor'
-import {defaultEnergyAssets, EnergyAsset} from './energy-asset'
+import {EnergyAsset, createHouseHoldEnergyAssets} from './energy-asset'
 import {GridConnection} from './grid-connection'
 import {defaultHsMsTransformer, defaultMsLsTransformer, GridNode} from './grid-node'
 import {defaultPolicies, Policy} from './policy'
@@ -16,7 +18,9 @@ export type ScenarioInput = {
 }
 
 export const appStateToScenarioInput = (appState: AppState): ScenarioInput => {
-    const tuples = appState.verblijfsobjecten.map(verblijfsObjectToGridConnection)
+    const tuples = appState.verblijfsobjecten.map(
+        verblijfsObject => verblijfsObjectToGridConnection(verblijfsObject, appState.postcodeKleinverbruik)
+    )
 
     // this is a silly way to do it
     const {actors, gridConnections} = tuples.reduce<{
@@ -68,9 +72,14 @@ const defaultHouseCapacityKw = (() => {
     return amps * phases * voltage * toKw
 })()
 
-const verblijfsObjectToGridConnection = (verblijfsObject: Verblijfsobject): [Actor, GridConnection] => {
+const verblijfsObjectToGridConnection = (verblijfsObject: Verblijfsobject, allKleinverbruik: PostcodeKleinverbruik[]): [Actor, GridConnection] => {
     const gridConnectionId = `verblijfsObject.${verblijfsObject.identificatie}`
     const actorId = `actor.${gridConnectionId}`
+
+    let electricityConsumption = 2500
+    if (verblijfsObject.postcode) {
+        electricityConsumption = getElectricityUsage(verblijfsObject.postcode, allKleinverbruik)?.sjvGemiddeld ?? electricityConsumption
+    }
 
     return [
         {
@@ -117,7 +126,7 @@ const verblijfsObjectToGridConnection = (verblijfsObject: Verblijfsobject): [Act
             owner_actor: actorId,
             category: 'HOUSE',
             heating_type: 'GASBURNER',
-            assets: defaultEnergyAssets,
+            assets: createHouseHoldEnergyAssets(electricityConsumption),
             capacity_kw: defaultHouseCapacityKw,
             parent_electric: defaultMsLsTransformer.id,
         },

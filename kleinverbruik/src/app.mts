@@ -6,6 +6,7 @@ try {
 
     const server = http.createServer((req, res) => {
         res.setHeader('Content-Type', 'application/json')
+        res.setHeader('Access-Control-Allow-Origin', '*')
 
         const url = new URL(req.url, 'https://example.com')
         const postalCodes = url.searchParams.get('postalcodes')
@@ -43,7 +44,7 @@ try {
     })
 
     const hostname = '0.0.0.0'
-    const port = process.env.PORT ?? 3000
+    const port = Number(process.env.PORT ?? 3000)
 
     server.listen(port, hostname, () => {
         console.log(`Server running at http://${hostname}:${port}/`)
