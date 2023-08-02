@@ -3,26 +3,30 @@ import {useState} from 'react'
 import {Bag3DFeature, getBag3dFeatures} from './3dbag_old'
 import {getBagVerblijfsobjecten, Verblijfsobject} from './bag-verblijfsobject'
 import {Bag2DPand, getBag2dPanden} from './bag2d'
-import {getPostcodeKleinverbruik, PostcodeKleinverbruikFeature, Verbruiktype} from './enexis'
+import {filter, uniq} from 'lodash'
+import {
+    fetchEnexisKleinverbruik,
+} from './kleinverbruik/enexis'
+import {getElectricityUsage, getGasUsage} from './kleinverbruik/kleinverbruik'
+import {fetchLianderAndStedinKleinverbruik} from './kleinverbruik/liander-stedin'
+import {
+    PostcodeElektriciteitKleinverbruik, PostcodeGasKleinverbruik,
+    PostcodeKleinverbruik,
+} from './kleinverbruik/types'
+import {postalCodeRangeDistance} from './postalcode'
 
 export interface AppState {
     bag2dPanden: Bag2DPand[]
     bag3dFeatures: Bag3DFeature[]
     verblijfsobjecten: Verblijfsobject[]
-    postcodeKleinverbruik: {
-        elektricity: PostcodeKleinverbruikFeature[]
-        gas: PostcodeKleinverbruikFeature[]
-    }
+    postcodeKleinverbruik: PostcodeKleinverbruik[]
 }
 
 const initialState: AppState = {
     bag2dPanden: [],
     bag3dFeatures: [],
     verblijfsobjecten: [],
-    postcodeKleinverbruik: {
-        elektricity: [],
-        gas: [],
-    },
+    postcodeKleinverbruik: [],
 }
 
 export type PandData = {
@@ -35,17 +39,8 @@ export type PandData = {
 }
 
 export type KleinVerbruikPerPostcode = {
-    gas?: {
-        gemiddeldeStandaardjaarafname: number // m3
-        soortAansluiting: string
-        soortAansluitingPercentage: number
-    },
-    elektriciteit?: {
-        gemiddeldeStandaardjaarafname: number // kWh
-        soortAansluiting: string
-        soortAansluitingPercentage: number
-        leveringsRichtingPercentage: number // percentage aansluitingen met netto verbruik
-    }
+    gas?: PostcodeGasKleinverbruik
+    elektriciteit?: PostcodeElektriciteitKleinverbruik
 }
 
 export type SetBoundingBoxFn = (boundingBox: LatLngBounds) => void
@@ -59,7 +54,7 @@ function validatePandId(pandId: string): void {
 export const useAppState = () => {
     const [appState, setAppState] = useState(initialState)
 
-    const setBoundingBox: SetBoundingBoxFn = async (boundingBox: LatLngBounds) => {
+    const setBoundingBox: SetBoundingBoxFn = (boundingBox: LatLngBounds) => {
         getBag2dPanden(boundingBox)
             .then(bag2dPanden => {
                 setAppState(appState => ({
@@ -78,35 +73,44 @@ export const useAppState = () => {
             })
             .catch(alert)
 
+        setAppState(appState => ({
+            ...appState,
+            // reset value so it can be populated from two sources
+            postcodeKleinverbruik: [],
+        }))
+
         getBagVerblijfsobjecten(boundingBox)
             .then(verblijfsobjecten => {
                 setAppState(appState => ({
                     ...appState,
                     verblijfsobjecten,
                 }))
-            })
-            .catch(alert)
+                const postalCodes = uniq(
+                    verblijfsobjecten.map(verblijfsobject => verblijfsobject.postcode)
+                        .filter(postcode => postcode)
+                )
 
-        getPostcodeKleinverbruik(boundingBox, Verbruiktype.ELEKTRICITEIT)
+                return fetchLianderAndStedinKleinverbruik(postalCodes)
+            })
             .then(data => {
                 setAppState(appState => ({
                     ...appState,
-                    postcodeKleinverbruik: {
+                    postcodeKleinverbruik: [
                         ...appState.postcodeKleinverbruik,
-                        elektricity: data,
-                    },
+                        ...data,
+                    ]
                 }))
             })
             .catch(alert)
 
-        getPostcodeKleinverbruik(boundingBox, Verbruiktype.GAS)
+        fetchEnexisKleinverbruik(boundingBox)
             .then(data => {
                 setAppState(appState => ({
                     ...appState,
-                    postcodeKleinverbruik: {
+                    postcodeKleinverbruik: [
                         ...appState.postcodeKleinverbruik,
-                        gas: data,
-                    },
+                        ...data,
+                    ]
                 }))
             })
             .catch(alert)
@@ -122,7 +126,9 @@ export const useAppState = () => {
             .filter(verblijfsobject => verblijfsobject.pandidentificatie === pandId)
 
         const postcodes = new Set(
-            verblijfsobjecten.map(verblijfsobject => verblijfsobject.postcode),
+            verblijfsobjecten.map(verblijfsobject => verblijfsobject.postcode)
+                // in rare cases a verblijfsobject has no postal code
+                .filter(postalCode => postalCode),
         )
 
         const kleinverbruik: {
@@ -130,39 +136,9 @@ export const useAppState = () => {
         } = {}
 
         for (const postcode of postcodes) {
-            const electriciteitProperties = appState.postcodeKleinverbruik.elektricity
-                .map(feature => feature.properties)
-                .find(postcodeKleinverbruik =>
-                    postcodeKleinverbruik.postcodevan.replace(' ', '') >= postcode
-                    &&
-                    postcodeKleinverbruik.postcodetot.replace(' ', '') <= postcode,
-                )
-
-            kleinverbruik[postcode] = {}
-
-            if (electriciteitProperties) {
-                kleinverbruik[postcode].elektriciteit = {
-                    gemiddeldeStandaardjaarafname: electriciteitProperties.sjvgemiddeld,
-                    soortAansluiting: electriciteitProperties.soortaansluiting,
-                    soortAansluitingPercentage: electriciteitProperties.soortaansluitingperc,
-                    leveringsRichtingPercentage: electriciteitProperties.leveringsrichtingperc,
-                }
-            }
-
-            const gasProperties = appState.postcodeKleinverbruik.gas
-                .map(feature => feature.properties)
-                .find(postcodeKleinverbruik =>
-                    postcodeKleinverbruik.postcodevan.replace(' ', '') >= postcode
-                    &&
-                    postcodeKleinverbruik.postcodetot.replace(' ', '') <= postcode,
-                )
-
-            if (gasProperties) {
-                kleinverbruik[postcode].gas = {
-                    gemiddeldeStandaardjaarafname: gasProperties.sjvgemiddeld,
-                    soortAansluiting: gasProperties.soortaansluiting,
-                    soortAansluitingPercentage: gasProperties.soortaansluitingperc,
-                }
+            kleinverbruik[postcode] = {
+                gas: getGasUsage(postcode, appState.postcodeKleinverbruik),
+                elektriciteit: getElectricityUsage(postcode, appState.postcodeKleinverbruik),
             }
         }
 

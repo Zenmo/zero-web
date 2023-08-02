@@ -14,3 +14,4 @@ Graphical user interface.
 
 Stedin, Liander and Enexis publish usage data of natural gas and electricity anually.
 This is a small webservice which wraps this data so the frontend can request small parts of the data.
+
