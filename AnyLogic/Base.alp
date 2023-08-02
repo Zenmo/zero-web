@@ -1898,7 +1898,7 @@ traceln(" ");
 				<Variable Class="PlainVariable">
 					<Id>1690880921824</Id>
 					<Name><![CDATA[v_gridNodesJson]]></Name>
-					<X>-390</X><Y>270</Y>
+					<X>-700</X><Y>270</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -1910,7 +1910,7 @@ traceln(" ");
 				<Variable Class="PlainVariable">
 					<Id>1690881118425</Id>
 					<Name><![CDATA[v_gridConnectionsJson]]></Name>
-					<X>-390</X><Y>290</Y>
+					<X>-700</X><Y>290</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -1922,7 +1922,19 @@ traceln(" ");
 				<Variable Class="PlainVariable">
 					<Id>1690881147758</Id>
 					<Name><![CDATA[v_actorsJson]]></Name>
-					<X>-390</X><Y>310</Y>
+					<X>-700</X><Y>250</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
+						<Type><![CDATA[com.fasterxml.jackson.databind.node.ArrayNode]]></Type>        
+					</Properties>
+				</Variable>
+				<Variable Class="PlainVariable">
+					<Id>1690964449063</Id>
+					<Name><![CDATA[v_templateAssetsJson]]></Name>
+					<X>-700</X><Y>310</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -2237,31 +2249,6 @@ traceln(" ");
 					</Properties>                 
 				</Variable>
 				<Variable Class="Parameter">
-					<Id>1680705282311</Id>
-					<Name><![CDATA[p_solarAbsorptionCoefficient]]></Name>
-					<ExcludeFromBuild>true</ExcludeFromBuild>
-					<X>-770</X><Y>460</Y>
-					<Label><X>10</X><Y>0</Y></Label>
-					<PublicFlag>false</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
-					<ShowLabel>true</ShowLabel>
-					<Properties SaveInSnapshot="true" ModificatorType="STATIC">
-						<Type><![CDATA[double]]></Type>
-						<UnitType><![CDATA[NONE]]></UnitType>
-						<SdArray>false</SdArray>
-						<DefaultValue Class="CodeValue">
-							<Code><![CDATA[0.0 //Dit niet op nul verstoort de warmtebalans van huishoudens en de energiebalans van model. Implementatie zoninstraling moet op de schop als we het willen gebruiken. ]]></Code>
-						</DefaultValue>
-						<ParameterEditor>
-							<Id>1680705282309</Id>
-							<EditorContolType>TEXT_BOX</EditorContolType>
-							<MinSliderValue><![CDATA[0]]></MinSliderValue>
-							<MaxSliderValue><![CDATA[100]]></MaxSliderValue>
-							<DelimeterType>NO_DELIMETER</DelimeterType>
-						</ParameterEditor>
-					</Properties>                 
-				</Variable>
-				<Variable Class="Parameter">
 					<Id>1681376013855</Id>
 					<Name><![CDATA[p_testHolontoolResponse]]></Name>
 					<ExcludeFromBuild>true</ExcludeFromBuild>
@@ -2289,7 +2276,7 @@ traceln(" ");
 				<Variable Class="Parameter">
 					<Id>1681379106589</Id>
 					<Name><![CDATA[p_printInputJsons]]></Name>
-					<X>-390</X><Y>220</Y>
+					<X>-390</X><Y>270</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -2339,33 +2326,9 @@ traceln(" ");
 					</Properties>                 
 				</Variable>
 				<Variable Class="Parameter">
-					<Id>1687945257520</Id>
-					<Name><![CDATA[p_hybridHeatPumpCOPThreshold]]></Name>
-					<X>-770</X><Y>420</Y>
-					<Label><X>10</X><Y>0</Y></Label>
-					<PublicFlag>false</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
-					<ShowLabel>true</ShowLabel>
-					<Properties SaveInSnapshot="true" ModificatorType="STATIC">
-						<Type><![CDATA[double]]></Type>
-						<UnitType><![CDATA[NONE]]></UnitType>
-						<SdArray>false</SdArray>
-						<DefaultValue Class="CodeValue">
-							<Code><![CDATA[2.6]]></Code>
-						</DefaultValue>
-						<ParameterEditor>
-							<Id>1687945257518</Id>
-							<EditorContolType>TEXT_BOX</EditorContolType>
-							<MinSliderValue><![CDATA[0]]></MinSliderValue>
-							<MaxSliderValue><![CDATA[100]]></MaxSliderValue>
-							<DelimeterType>NO_DELIMETER</DelimeterType>
-						</ParameterEditor>
-					</Properties>                 
-				</Variable>
-				<Variable Class="Parameter">
 					<Id>1690277980748</Id>
 					<Name><![CDATA[p_scenarioJSON]]></Name>
-					<X>-390</X><Y>130</Y>
+					<X>-390</X><Y>180</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -2386,7 +2349,7 @@ traceln(" ");
 				<Variable Class="Parameter">
 					<Id>1690809204162</Id>
 					<Name><![CDATA[p_templateAssetsJSON]]></Name>
-					<X>-390</X><Y>185</Y>
+					<X>-390</X><Y>235</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -2403,21 +2366,6 @@ traceln(" ");
 							<DelimeterType>NO_DELIMETER</DelimeterType>
 						</ParameterEditor>
 					</Properties>                 
-				</Variable>
-				<Variable Class="CollectionVariable">
-					<Id>1661510460035</Id>
-					<Name><![CDATA[parsedJSONTemplateEnergyAssets]]></Name>
-					<X>-390</X><Y>350</Y>
-					<Label><X>10</X><Y>0</Y></Label>
-					<PublicFlag>false</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
-					<ShowLabel>true</ShowLabel>
-					<Properties SaveInSnapshot="true" AccessType="public" StaticVariable="false">
-						<CollectionClass><![CDATA[ArrayList]]></CollectionClass>
-						<ElementClass><![CDATA[HashMap]]></ElementClass>
-						<ValueElementClass><![CDATA[String]]></ValueElementClass>
-					</Properties>
-
 				</Variable>
 				<Variable Class="CollectionVariable">
 					<Id>1663238323139</Id>
@@ -2543,7 +2491,8 @@ traceln(" ");
 				<Variable Class="CollectionVariable">
 					<Id>1665505167864</Id>
 					<Name><![CDATA[parsedJSONPolicies]]></Name>
-					<X>-390</X><Y>370</Y>
+					<ExcludeFromBuild>true</ExcludeFromBuild>
+					<X>-500</X><Y>-160</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -2557,7 +2506,7 @@ traceln(" ");
 				</Variable>
 				<Variable Class="CollectionVariable">
 					<Id>1666884023719</Id>
-					<Name><![CDATA[c_globalElectricityImportProfile_MWhph]]></Name>
+					<Name><![CDATA[c_globalElectricityImportProfile_MW]]></Name>
 					<X>-910</X><Y>860</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
@@ -2572,7 +2521,7 @@ traceln(" ");
 				</Variable>
 				<Variable Class="CollectionVariable">
 					<Id>1666884311850</Id>
-					<Name><![CDATA[c_globalElectricityExportProfile_MWhph]]></Name>
+					<Name><![CDATA[c_globalElectricityExportProfile_MW]]></Name>
 					<X>-910</X><Y>880</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
@@ -2677,7 +2626,7 @@ traceln(" ");
 				</Variable>
 				<Variable Class="CollectionVariable">
 					<Id>1668007771830</Id>
-					<Name><![CDATA[c_globalEVChargingProfile_kWhph]]></Name>
+					<Name><![CDATA[c_globalEVChargingProfile_kW]]></Name>
 					<X>-910</X><Y>900</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
@@ -2692,7 +2641,7 @@ traceln(" ");
 				</Variable>
 				<Variable Class="CollectionVariable">
 					<Id>1668007790848</Id>
-					<Name><![CDATA[c_globalEHGVChargingProfile_kWhph]]></Name>
+					<Name><![CDATA[c_globalEHGVChargingProfile_kW]]></Name>
 					<X>-910</X><Y>920</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
@@ -2707,7 +2656,7 @@ traceln(" ");
 				</Variable>
 				<Variable Class="CollectionVariable">
 					<Id>1668007805687</Id>
-					<Name><![CDATA[c_globalBatteryChargingProfile_kWhph]]></Name>
+					<Name><![CDATA[c_globalBatteryChargingProfile_kW]]></Name>
 					<X>-910</X><Y>940</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
@@ -2859,7 +2808,7 @@ if ( b_addKpiVisuals ) {
 					<Body><![CDATA[f_createActors();
 f_createGridNodes();
 f_createGridConnections();
-f_setActorPolicies();
+//f_setActorPolicies(); // Everything in here should be an attribute of the agents themselves, not a model-wide thing.
 f_createAgentLinks();
 f_initializeForecasts();
 //f_instantiateTemplateEnergyAssets();]]></Body>
@@ -2873,7 +2822,7 @@ f_initializeForecasts();
 
 @since: Sprint 6
 @author: Jorrit]]></Description>
-					<X>-720</X><Y>70</Y>
+					<X>-720</X><Y>80</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -2915,7 +2864,21 @@ v_gridNodesJson = (ArrayNode) root.required("gridnodes");
 v_gridConnectionsJson = (ArrayNode) root.required("gridconnections");
 v_actorsJson = (ArrayNode) root.required("actors");
 
-// Policies config
+p_templateAssetsJSON = t_templateAssets.readString();
+try {
+	root = mapper.readTree(p_templateAssetsJSON);
+} catch (JsonProcessingException e) {
+	throw new RuntimeException(e);
+}
+v_templateAssetsJson = (ArrayNode) root;
+if( p_printInputJsons) {
+	traceln("--------------------------------------------------------------------------------------------------");
+	traceln("------------------- TEMPLATEASSETS----------------------------------------------------------------");
+	traceln("--------------------------------------------------------------------------------------------------");
+	traceln(root.toPrettyString());
+}
+
+/* // Policies config
 try {
 parsedJSONPolicies = mapper.readValue(
 		root.required("policies").toString(),
@@ -2924,19 +2887,10 @@ parsedJSONPolicies = mapper.readValue(
 } catch (IOException e) {
 e.printStackTrace();
 update_o_outputExceptions(e.getMessage());
-}
+} */
 
 // Template assets config
-p_templateAssetsJSON = t_templateAssets.readString();
-try {
-parsedJSONTemplateEnergyAssets = mapper.readValue(
-		p_templateAssetsJSON,
-		ArrayList.class);
-
-} catch (IOException e) {
-e.printStackTrace();
-update_o_outputExceptions(e.getMessage());
-}]]></Body>
+]]></Body>
 				</Function>
 				<Function AccessType="default" StaticFunction="false">
 					<ReturnModificator>VOID</ReturnModificator>
@@ -3730,11 +3684,11 @@ j_simulationResults.updateData( roundToDecimal( v_gridNodePeakLoadElectricityHSM
 
 j_dataOut.simulationResults.add(j_simulationResults);
 
-j_hourlyCurvesData.updateData( c_globalElectricityImportProfile_MWhph,
-							c_globalElectricityExportProfile_MWhph,
-							c_globalEVChargingProfile_kWhph,
-							c_globalEHGVChargingProfile_kWhph,
-							c_globalBatteryChargingProfile_kWhph);
+j_hourlyCurvesData.updateData( c_globalElectricityImportProfile_MW,
+							c_globalElectricityExportProfile_MW,
+							c_globalEVChargingProfile_kW,
+							c_globalEHGVChargingProfile_kW,
+							c_globalBatteryChargingProfile_kW);
 							
 j_dataOut.hourlyCurvesData.add(j_hourlyCurvesData);
 
@@ -4051,46 +4005,52 @@ for(GridNode n : c_gridNodesHSMS) {
 	currentElectricityExport_kW += - min(0, n.v_currentLoadElectricity_kW );
 }
 
-final double currentImport_MWh = currentElectricityImport_kW * p_timeStep_h / 1000;
-final double currentExport_MWh = currentElectricityExport_kW * p_timeStep_h / 1000;
+// Write data to 'signal' objects
+double p_signalResolution_h = 1.0; // For consistency of units, make signal resolution explicit!
+
+final double currentImport_MW = currentElectricityImport_kW / 1000;
+final double currentExport_MW = currentElectricityExport_kW / 1000;
 int timeIndex = (int)floor( time(HOUR) );
 
-c_globalElectricityImportProfile_MWhph.computeIfPresent( timeIndex, (key, val) -> roundToDecimal( val + currentImport_MWh, 4 ));
-c_globalElectricityImportProfile_MWhph.computeIfAbsent( timeIndex, k -> currentImport_MWh );
-c_globalElectricityExportProfile_MWhph.computeIfPresent( timeIndex, (key, val) -> roundToDecimal( val + currentExport_MWh, 4 ));
-c_globalElectricityExportProfile_MWhph.computeIfAbsent( timeIndex, k -> currentExport_MWh );
+c_globalElectricityImportProfile_MW.computeIfPresent( timeIndex, (key, val) -> val + currentImport_MW * p_timeStep_h / p_signalResolution_h);
+c_globalElectricityImportProfile_MW.computeIfAbsent( timeIndex, k -> currentImport_MW * p_timeStep_h / p_signalResolution_h );
+c_globalElectricityExportProfile_MW.computeIfPresent( timeIndex, (key, val) -> val + currentExport_MW * p_timeStep_h / p_signalResolution_h);
+c_globalElectricityExportProfile_MW.computeIfAbsent( timeIndex, k -> currentExport_MW * p_timeStep_h / p_signalResolution_h );
 
-double currentEVLoad_kWhph = 0;
-double currentEHGVLoad_kWhph = 0;
+// Average EV load over one hour
+
+double currentEVLoad_kW = 0;
+double currentEHGVLoad_kW = 0;
 for(EnergyAsset e : pop_energyAssets) {
 	if( e.p_energyAssetType == OL_EnergyAssetType.ELECTRIC_VEHICLE && ! e.p_defaultEnergyAssetPresetName.equals("EHGV") ) {
 		//traceln("EV power queried!!!");
-		currentEVLoad_kWhph += (e.v_currentProductionElectricity_kW - e.v_currentConsumptionElectricity_kW) * p_timeStep_h;
+		currentEVLoad_kW += (e.v_currentProductionElectricity_kW - e.v_currentConsumptionElectricity_kW);
 	}
 	if( e.p_defaultEnergyAssetPresetName.equals("EHGV") ) {
 		//traceln("EHGV power queried!!!");
-		currentEHGVLoad_kWhph += (e.v_currentProductionElectricity_kW - e.v_currentConsumptionElectricity_kW) * p_timeStep_h;
+		currentEHGVLoad_kW += (e.v_currentProductionElectricity_kW - e.v_currentConsumptionElectricity_kW);
 	}
 }
-final double totalEVLoad_kWhph = currentEVLoad_kWhph;
-final double totalEHGVLoad_kWhph = currentEHGVLoad_kWhph;
+final double totalEVLoad_kW = currentEVLoad_kW;
+final double totalEHGVLoad_kW = currentEHGVLoad_kW;
 //traceln("f_calculateGridNodeFlows check: totalEVLoad_kWhph "+totalEVLoad_kWhph);
-c_globalEVChargingProfile_kWhph.computeIfPresent( timeIndex, (key, val) -> roundToDecimal( val + totalEVLoad_kWhph, 2 ));
-c_globalEVChargingProfile_kWhph.computeIfAbsent( timeIndex, k -> totalEVLoad_kWhph );
+c_globalEVChargingProfile_kW.computeIfPresent( timeIndex, (key, val) -> val + totalEVLoad_kW * p_timeStep_h / p_signalResolution_h );
+c_globalEVChargingProfile_kW.computeIfAbsent( timeIndex, k -> totalEVLoad_kW * p_timeStep_h / p_signalResolution_h );
 
-c_globalEHGVChargingProfile_kWhph.computeIfPresent( timeIndex, (key, val) -> roundToDecimal( val + totalEHGVLoad_kWhph, 2 ));
-c_globalEHGVChargingProfile_kWhph.computeIfAbsent( timeIndex, k -> totalEHGVLoad_kWhph );
+c_globalEHGVChargingProfile_kW.computeIfPresent( timeIndex, (key, val) -> val + totalEHGVLoad_kW * p_timeStep_h / p_signalResolution_h );
+c_globalEHGVChargingProfile_kW.computeIfAbsent( timeIndex, k -> totalEHGVLoad_kW * p_timeStep_h / p_signalResolution_h);
 
-double currentBatteryLoad_kWhph = 0;
+// Average battery load over one hour
+double currentBatteryLoad_kW = 0;
 for( EnergyAsset e : c_storageAssets ) {
 	if(e.p_energyAssetInstance.getClass().equals(J_EAStorageElectric.class)) {
-		currentBatteryLoad_kWhph += (e.v_currentProductionElectricity_kW - e.v_currentConsumptionElectricity_kW) * p_timeStep_h;
+		currentBatteryLoad_kW += (e.v_currentProductionElectricity_kW - e.v_currentConsumptionElectricity_kW);
 	}
 }
 
-final double totalBatteryLoad_kWhph = currentBatteryLoad_kWhph;
-c_globalBatteryChargingProfile_kWhph.computeIfPresent( timeIndex, (key, val) -> roundToDecimal( val + totalBatteryLoad_kWhph, 2 ));
-c_globalBatteryChargingProfile_kWhph.computeIfAbsent( timeIndex, k -> totalBatteryLoad_kWhph );
+final double totalBatteryLoad_kW = currentBatteryLoad_kW;
+c_globalBatteryChargingProfile_kW.computeIfPresent( timeIndex, (key, val) -> val + totalBatteryLoad_kW * p_timeStep_h / p_signalResolution_h );
+c_globalBatteryChargingProfile_kW.computeIfAbsent( timeIndex, k -> totalBatteryLoad_kW * p_timeStep_h / p_signalResolution_h );
 ]]></Body>
 				</Function>
 				<Function AccessType="default" StaticFunction="false">
@@ -4124,7 +4084,8 @@ for (EnergySupplier e : pop_energySuppliers) {
 					<ReturnType><![CDATA[double]]></ReturnType>
 					<Id>1665505562898</Id>
 					<Name><![CDATA[f_setActorPolicies]]></Name>
-					<X>-700</X><Y>210</Y>
+					<ExcludeFromBuild>true</ExcludeFromBuild>
+					<X>-500</X><Y>-180</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -4571,7 +4532,7 @@ for(JsonNode data : v_gridConnectionsJson) {
 	double tempSetpointDay_start_hr = data.path( "tempSetpointDay_start_hr").doubleValue();
 	double pricelevel_low_dif_from_avg_eurpkWh = data.path("pricelevel_low_dif_from_avg_eurpkWh").doubleValue();
 	double pricelevel_high_dif_from_avg_eurpkWh = data.path("pricelevel_high_dif_from_avg_eurpkWh").doubleValue();
-	double irradianceRecievingSurface_m2 = data.path("irradiance_recieving_surface").doubleValue();
+	//double irradianceRecievingSurface_m2 = data.path("irradiance_recieving_surface").doubleValue();
 	
 	//traceln("data: " + "id = " + gridConnectionID + ", category = " + gridConnectionCategory + ", connectionType = " + gridConnectionType + ", parentElectric" + gridConnectionParentElectric + ", parentHeat = " + gridConnectionParentHeat + ", capacity = " + gridConnectionCapacity + "owner_actor = "+ ownerActorID);
 	switch(gridConnectionCategory) {
@@ -4584,16 +4545,13 @@ for(JsonNode data : v_gridConnectionsJson) {
 
 			gridConnectionBatteryMode = OL_BatteryOperationMode.HOUSEHOLD_LOAD;
 			double lowPassFilterHousehold = 0.03; // -->> deze moet uiteindelijk naar datamodel. Moet configureerbaar zijn.
-			irradianceRecievingSurface_m2 = 10.0;
+			//irradianceRecievingSurface_m2 = 10.0;
 			GC.v_lowPassFactor_fr = lowPassFilterHousehold;			
 			((GCHouse)GC).set_p_isolationLabel( gridConnectionIsolationLabel );
 
 			//double deltaStartTemp_degC = uniform_discr(-5, 5);			
 			//((J_EAStorageHeat)GC.p_BuildingThermalAsset.p_energyAssetInstance).updateStateOfCharge(deltaStartTemp_degC);
-			//THESE VALUES ARE HARDCODED TO CREATE HETEROGENEOUS BEHAVIOR AND BECAUSE THE DATAMODEL DOES NOT ALLOW THIS YET
-			
-			
-			
+			//THESE VALUES ARE HARDCODED TO CREATE HETEROGENEOUS BEHAVIOR AND BECAUSE THE DATAMODEL DOES NOT ALLOW THIS YET				
 	 	break;
  		case INDUSTRY:
 	 		GC = add_Industries();
@@ -4635,7 +4593,7 @@ for(JsonNode data : v_gridConnectionsJson) {
 	GC.set_p_hasSmartFlexAssets( smartAssets );
 	GC.set_p_pricelevelHighDifFromAvg_eurpkWh( pricelevel_high_dif_from_avg_eurpkWh );
 	GC.set_p_pricelevelLowDifFromAvg_eurpkWh( pricelevel_low_dif_from_avg_eurpkWh );
-	GC.set_p_irradianceRecievingSurface_m2( irradianceRecievingSurface_m2 );
+	//GC.set_p_irradianceRecievingSurface_m2( irradianceRecievingSurface_m2 );
 	GC.v_nightTempSetpoint_degC = tempSetpointNight_degC;
 	GC.v_heatingOff_time = tempSetpointNight_start_hr;
 	GC.v_dayTempSetpoint_degC = tempSetpointDay_degC;
@@ -4681,7 +4639,7 @@ for (double ts_h = v_hourOfYearStart; ts_h<v_hourOfYearStart+p_forecastTime_h; t
 					<ReturnType><![CDATA[double]]></ReturnType>
 					<Id>1681918405543</Id>
 					<Name><![CDATA[f_createAgentLinks]]></Name>
-					<X>-700</X><Y>230</Y>
+					<X>-700</X><Y>210</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -4715,8 +4673,9 @@ for (double ts_h = v_hourOfYearStart; ts_h<v_hourOfYearStart+p_forecastTime_h; t
 		  }	
           //System.out.println(contract);
       });
-   
+   owner.f_setInitPriceBands();
 }
+
 
 // Energy holons determine their relevant gridnodes based on their established members
 for( EnergyHolon EH : pop_energyHolons ) {
@@ -5872,7 +5831,7 @@ t_numberOfRooftopPV.setText(count(Houses, x->x.v_hasPV == true));]]></Body>
 				<TextFile>
 					<Id>1681375993119</Id>
 					<Name><![CDATA[t_scenarioInput]]></Name>
-					<X>-390</X><Y>110</Y>
+					<X>-390</X><Y>160</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -5890,7 +5849,7 @@ t_numberOfRooftopPV.setText(count(Houses, x->x.v_hasPV == true));]]></Body>
 				<TextFile>
 					<Id>1690809204143</Id>
 					<Name><![CDATA[t_templateAssets]]></Name>
-					<X>-390</X><Y>165</Y>
+					<X>-390</X><Y>215</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -5908,7 +5867,7 @@ t_numberOfRooftopPV.setText(count(Houses, x->x.v_hasPV == true));]]></Body>
 				<ExcelFile>
 					<Id>1660141188744</Id>
 					<Name><![CDATA[inputHouseholdTrips]]></Name>
-					<X>-389.5</X><Y>69</Y>
+					<X>-389.5</X><Y>119</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -5924,7 +5883,7 @@ t_numberOfRooftopPV.setText(count(Houses, x->x.v_hasPV == true));]]></Body>
 				<ExcelFile>
 					<Id>1667758923284</Id>
 					<Name><![CDATA[inputTruckTrips]]></Name>
-					<X>-389.5</X><Y>49</Y>
+					<X>-389.5</X><Y>99</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -5940,7 +5899,7 @@ t_numberOfRooftopPV.setText(count(Houses, x->x.v_hasPV == true));]]></Body>
 				<ExcelFile>
 					<Id>1673445394784</Id>
 					<Name><![CDATA[inputCookingActivities]]></Name>
-					<X>-390</X><Y>30</Y>
+					<X>-390</X><Y>80</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -6847,12 +6806,12 @@ t_numberOfRooftopPV.setText(count(Houses, x->x.v_hasPV == true));]]></Body>
 					<ShowLabel>true</ShowLabel>
 					<ActiveObjectClass>
 						<PackageName><![CDATA[base]]></PackageName>
-						<ClassName><![CDATA[AdministrativeHolon]]></ClassName>
+						<ClassName><![CDATA[GovernmentLayer]]></ClassName>
 					</ActiveObjectClass>
 					<GenericParameterSubstitute>
 						<GenericParameterSubstituteReference>
 							<PackageName><![CDATA[base]]></PackageName>
-							<ClassName><![CDATA[AdministrativeHolon]]></ClassName>
+							<ClassName><![CDATA[GovernmentLayer]]></ClassName>
 							<ItemName><![CDATA[1660731364523]]></ItemName>
 						</GenericParameterSubstituteReference>
 					</GenericParameterSubstitute>
@@ -9038,14 +8997,12 @@ i_electricAppliancesPopOut.setVisible(true);]]></OnClickCode>
 double HouseholdPVsystems = count(Houses, x->x.v_hasPV == true);
 t_numberOfRooftopPV.setText(HouseholdPVsystems);
 
-HashMap t=new HashMap();
-//Get template asset "TEMPLATE: Household PV"
-for (HashMap l:parsedJSONTemplateEnergyAssets) {
-	if (((String)l.get( "name" )).equals("TEMPLATE: Household PV")) {
-		t = l;
+JsonNode t=null;
+for(JsonNode assetJson : v_templateAssetsJson) {
+	if (assetJson.required( "name" ).textValue().equals("TEMPLATE: Household PV")) {
+		t = assetJson;
 	}
 }
-//HashMap l = findFirst(parsedJSONTemplateEnergyAssets, l-> l.get("type") == OL_EnergyAssetType.PHOTOVOLTAIC);
 
 if( sl_rooftopPV.getValue()/100.0*Houses.size() < HouseholdPVsystems){
 	while ( sl_rooftopPV.getValue()/100.0*Houses.size() < HouseholdPVsystems) { // remove excess PV systems
@@ -9069,16 +9026,15 @@ if( sl_rooftopPV.getValue()/100.0*Houses.size() < HouseholdPVsystems){
 		//traceln("Check presence of solarpanels: " + h.v_hasPV);	
 		
 		EnergyAsset producerAsset = add_pop_energyAssets();
-	//				producerAsset.set_p_parentAgentID( this.p_agentID );
 		producerAsset.set_p_parentAgentID( h.p_agentID );
-		producerAsset.set_p_energyAssetType( OL_EnergyAssetType.valueOf((String)t.get( "type" ) ));
-		producerAsset.set_p_defaultEnergyAssetPresetName( (String)t.get( "name" ));
+		producerAsset.set_p_energyAssetType( OL_EnergyAssetType.valueOf(t.required( "type" ).textValue() ));
+		producerAsset.set_p_defaultEnergyAssetPresetName( t.required( "name" ).textValue() );
 	
-		double capacityElectricity_kW = t.get( "capacityElectricity_kW")== null? 0.0: Double.valueOf( t.get( "capacityElectricity_kW").toString()).doubleValue();
-		double capacityHeat_kW = t.get( "capacityHeat_kW")== null? 0.0: Double.valueOf( t.get( "capacityHeat_kW").toString()).doubleValue();
-		double yearlyProductionHydrogen_kWh = t.get( "yearlyProductionHydrogen_kWh")== null? 0.0: Double.valueOf( t.get( "yearlyProductionHydrogen_kWh").toString()).doubleValue();
-		double yearlyProductionMethane_kWh = t.get( "yearlyProductionMethane_kWh")== null? 0.0: Double.valueOf( t.get( "yearlyProductionMethane_kWh").toString()).doubleValue();
-		double outputTemperature_degC = t.get( "deliveryTemp_degC")== null? 0.0: Double.valueOf( t.get( "deliveryTemp_degC").toString()).doubleValue();
+		double capacityElectricity_kW = t.required( "capacityElectricity_kW").doubleValue() ;
+		double capacityHeat_kW = 0.0;
+		double yearlyProductionHydrogen_kWh = 0.0;
+		double yearlyProductionMethane_kWh = 0.0;
+		double outputTemperature_degC = 0.0;
 								
 		producerAsset.f_instantiateProducerAsset( producerAsset.p_energyAssetType, capacityElectricity_kW, capacityHeat_kW, yearlyProductionHydrogen_kWh, yearlyProductionMethane_kWh, outputTemperature_degC);
 		producerAsset.f_connectToParentNode( h );
@@ -9122,18 +9078,19 @@ t_numberOfRooftopPV.setText(count(Houses, x->x.v_hasPV == true));
 double numberOfElectricStoves = count(Houses, x->x.p_hasElectricHob == true);
 t_numberOfElectricStoves.setText(numberOfElectricStoves);
 
-HashMap t=new HashMap();
-HashMap g=new HashMap();
-//Get template asset "TEMPLATE: Household PV"
-for (HashMap l:parsedJSONTemplateEnergyAssets) {
-	if (((String)l.get( "name" )).equals("TEMPLATE: Electric hob")) {
-		t = l;
+JsonNode t=null;
+JsonNode g=null;
+
+for(JsonNode assetJson : v_templateAssetsJson) {
+
+	if (assetJson.required( "name" ).textValue().equals("TEMPLATE: Electric hob")) {
+		t = assetJson;
 	}
-	if (((String)l.get( "name" )).equals("TEMPLATE: gas-pit")) {
-		g = l;
+	if (assetJson.required( "name" ).textValue().equals("TEMPLATE: gas-pit")) {
+		g = assetJson;
 	}
 }
-//HashMap l = findFirst(parsedJSONTemplateEnergyAssets, l-> l.get("type") == OL_EnergyAssetType.PHOTOVOLTAIC);
+
 
 if( sl_electricCooking.getValue()/100.0*Houses.size() < numberOfElectricStoves){
 	while ( numberOfElectricStoves > sl_electricCooking.getValue()/100.0*Houses.size()) { // remove excess EHOBs systems
@@ -9151,21 +9108,21 @@ if( sl_electricCooking.getValue()/100.0*Houses.size() < numberOfElectricStoves){
 		traceln("Adding Gas-pit in place of electric HOB");
 		EnergyAsset converterAsset = add_pop_energyAssets();
 		converterAsset.set_p_parentAgentID( h.p_agentID );
-		converterAsset.set_p_energyAssetType( OL_EnergyAssetType.valueOf((String)g.get( "type" ) ));
-		converterAsset.set_p_defaultEnergyAssetPresetName( (String)g.get( "name" ));
+		converterAsset.set_p_energyAssetType( OL_EnergyAssetType.valueOf(g.required( "type" ).textValue() ));
+		converterAsset.set_p_defaultEnergyAssetPresetName( g.required( "name" ).textValue() );
 		//traceln( "l contents"+l.toString() );
 		
-		double capacityElectric_kW = g.get( "capacityElectricity_kW")== null? 0.0: Double.valueOf(g.get( "capacityElectricity_kW").toString()).doubleValue();
-		double capacityHeat_kW1 = g.get( "capacityHeat_kW")== null? 0: Double.valueOf(g.get( "capacityHeat_kW").toString()).doubleValue();
-		double capacityMethane_kW = g.get( "capacityMethane_kW")== null? 0: Double.valueOf(g.get( "capacityMethane_kW").toString()).doubleValue();
-		double eta_r = (Double)g.get( "eta_r" ) == null? 0.0 : Double.valueOf(g.get( "eta_r" ).toString()).doubleValue();
-		double deliveryTemp_degC1 = g.get( "deliveryTemp_degC" ) == null? 0.0: Double.valueOf( g.get( "deliveryTemp_degC" ).toString()).doubleValue();
-		String ambientTempType = (String)g.get( "ambientTempType" ) == null? "": (String)g.get( "ambientTempType" );
-		double belowZeroHeatpumpEtaReductionFactor = (Double)g.get( "etaReduction_r" ) == null? 1 : Double.valueOf(g.get( "etaReduction_r" ).toString()).doubleValue();
+		double capacityElectric_kW = 0.0;
+		double capacityHeat_kW = g.required( "capacityHeat_kW").doubleValue();
+		double capacityMethane_kW = g.path( "capacityMethane_kW").doubleValue();
+		double eta_r = g.required( "eta_r").doubleValue();
+		double deliveryTemp_degC1 = 0.0;
+		String ambientTempType = "";
+		double belowZeroHeatpumpEtaReductionFactor = 1;
 		
 		converterAsset.f_instantiateConverterAsset( converterAsset.p_energyAssetType,
 												capacityElectric_kW,
-												capacityHeat_kW1,
+												capacityHeat_kW,
 												capacityMethane_kW,
 												eta_r,
 												deliveryTemp_degC1,
@@ -9195,21 +9152,21 @@ if( sl_electricCooking.getValue()/100.0*Houses.size() < numberOfElectricStoves){
 			
 		EnergyAsset converterAsset = add_pop_energyAssets();
 		converterAsset.set_p_parentAgentID( h.p_agentID );
-		converterAsset.set_p_energyAssetType( OL_EnergyAssetType.valueOf((String)t.get( "type" ) ));
-		converterAsset.set_p_defaultEnergyAssetPresetName( (String)t.get( "name" ));
+		converterAsset.set_p_energyAssetType( OL_EnergyAssetType.valueOf(t.required( "type" ).textValue() ));
+		converterAsset.set_p_defaultEnergyAssetPresetName( t.required( "name" ).textValue() );
 		//traceln( "l contents"+l.toString() );
 		
-		double capacityElectric_kW = t.get( "capacityElectricity_kW")== null? 0.0: Double.valueOf(t.get( "capacityElectricity_kW").toString()).doubleValue();
-		double capacityHeat_kW1 = t.get( "capacityHeat_kW")== null? 0: Double.valueOf(t.get( "capacityHeat_kW").toString()).doubleValue();
-		double capacityMethane_kW = t.get( "capacityMethane_kW")== null? 0: Double.valueOf(t.get( "capacityMethane_kW").toString()).doubleValue();
-		double eta_r = (Double)t.get( "eta_r" ) == null? 0.0 : Double.valueOf(t.get( "eta_r" ).toString()).doubleValue();
-		double deliveryTemp_degC1 = t.get( "deliveryTemp_degC" ) == null? 0.0: Double.valueOf( t.get( "deliveryTemp_degC" ).toString()).doubleValue();
-		String ambientTempType = (String)t.get( "ambientTempType" ) == null? "": (String)t.get( "ambientTempType" );
-		double belowZeroHeatpumpEtaReductionFactor = (Double)t.get( "etaReduction_r" ) == null? 1 : Double.valueOf(t.get( "etaReduction_r" ).toString()).doubleValue();
+		double capacityElectric_kW = 0.0;
+		double capacityHeat_kW = g.required( "capacityHeat_kW").doubleValue();
+		double capacityMethane_kW = 0.0;
+		double eta_r = g.required( "eta_r").doubleValue();
+		double deliveryTemp_degC1 = 0.0;
+		String ambientTempType = "";
+		double belowZeroHeatpumpEtaReductionFactor = 1;
 		
 		converterAsset.f_instantiateConverterAsset( converterAsset.p_energyAssetType,
 												capacityElectric_kW,
-												capacityHeat_kW1,
+												capacityHeat_kW,
 												capacityMethane_kW,
 												eta_r,
 												deliveryTemp_degC1,
@@ -9250,20 +9207,19 @@ t_numberOfElectricStoves.setText(numberOfElectricStoves);
 					<BasicProperties Width="100" Height="30">
                         <EmbeddedIcon>false</EmbeddedIcon>	
 						<Enabled>true</Enabled>
-						<ActionCode><![CDATA[//Setting PV Systems
-double HouseholdEVs = count(Houses, x->x.p_householdEV != null);
+						<ActionCode><![CDATA[double HouseholdEVs = count(Houses, x->x.p_householdEV != null);
 //t_numberOfElectricVehicles.setText(HouseholdEVs);
 
-HashMap t=new HashMap();
-HashMap g=new HashMap();
-//Get template asset "TEMPLATE: Household PV"
-for (HashMap l:parsedJSONTemplateEnergyAssets) {
-	if (((String)l.get( "name" )).equals("TEMPLATE: Private Electric Vehicle")) {
-		t = l;
-	}
+JsonNode t=null;
+JsonNode g=null;
 
-	if (((String)l.get( "name" )).equals("TEMPLATE: Private Diesel Vehicle")) {
-		g = l;
+for(JsonNode assetJson : v_templateAssetsJson) {
+
+	if (assetJson.required( "name" ).textValue().equals("TEMPLATE: Private Electric Vehicle")) {
+		t = assetJson;
+	}
+	if (assetJson.required( "name" ).textValue().equals("TEMPLATE: Private Diesel Vehicle")) {
+		g = assetJson;
 	}
 }
 
@@ -9285,17 +9241,18 @@ if( sl_EV.getValue()/100.0*Houses.size() < HouseholdEVs){
 		// Re-add diesel vehicle
 		EnergyAsset consumerAsset = add_pop_energyAssets();
 		consumerAsset.set_p_parentAgentID( h.p_agentID );
-		String assetType = (String)g.get( "type" ); 
+		String assetType = g.required( "type" ).textValue(); 
 		consumerAsset.set_p_energyAssetType( OL_EnergyAssetType.valueOf(assetType) );
 		
-		consumerAsset.set_p_defaultEnergyAssetPresetName( (String)g.get( "name" ));
-		double yearlyDemandElectricity_kWh = g.get( "yearlyDemandElectricity_kWh") == null? 0.0: Double.valueOf( g.get( "yearlyDemandElectricity_kWh").toString()).doubleValue();
-		double yearlyDemandHeat_kWh = g.get( "yearlyDemandHeat_kWh") == null? 0.0: Double.valueOf( g.get( "yearlyDemandHeat_kWh").toString()).doubleValue();
-		double yearlyDemandHydrogen_kWh = g.get( "yearlyDemandHydrogen_kWh") == null? 0.0: Double.valueOf( g.get( "yearlyDemandHydrogen_kWh").toString()).doubleValue();
-		double yearlyDemandMethane_kWh = g.get( "yearlyDemandMethane_kWh") == null? 0.0: Double.valueOf( g.get( "yearlyDemandMethane_kWh").toString()).doubleValue();
-		double yearlyDemandDiesel_kWh = g.get( "yearlyDemandDiesel_kWh") == null? 0.0: Double.valueOf( g.get( "yearlyDemandDiesel_kWh").toString()).doubleValue();
-		double energyConsumption_kWhpkm = g.get( "energyConsumption_kWhpkm" ) == null? 0.0: Double.valueOf( g.get( "energyConsumption_kWhpkm" ).toString()).doubleValue();
-		double vehicleScaling = g.get("vehicleScaling") == null? 1.0: Double.valueOf( g.get( "vehicleScaling" ).toString()).doubleValue();
+		consumerAsset.set_p_defaultEnergyAssetPresetName( g.required( "name" ).textValue());
+		double yearlyDemandElectricity_kWh = 0.0;
+		double yearlyDemandHeat_kWh = 0.0;
+		double yearlyDemandHydrogen_kWh = 0.0;
+		double yearlyDemandMethane_kWh = 0.0;
+		double yearlyDemandDiesel_kWh = 0.0;
+		double energyConsumption_kWhpkm = g.required( "energyConsumption_kWhpkm" ).doubleValue();
+		double vehicleScaling = g.hasNonNull("vehicleScaling")? g.required("vehicleScaling").doubleValue() : 1.0;
+		//Double gridConnectionCapacity = data.hasNonNull( "capacity_kw" ) ? data.required( "capacity_kw" ).doubleValue() : null; //
 
 		consumerAsset.f_instantiateConsumerAsset( consumerAsset.p_energyAssetType, yearlyDemandElectricity_kWh , yearlyDemandHeat_kWh , yearlyDemandHydrogen_kWh , yearlyDemandMethane_kWh, yearlyDemandDiesel_kWh, energyConsumption_kWhpkm, vehicleScaling);
 		consumerAsset.f_connectToParentNode( this );
@@ -9321,15 +9278,15 @@ if( sl_EV.getValue()/100.0*Houses.size() < HouseholdEVs){
 		
 		EnergyAsset storageAsset = add_pop_energyAssets();
 		storageAsset.set_p_parentAgentID( h.p_agentID );
-		storageAsset.set_p_energyAssetType( OL_EnergyAssetType.valueOf((String)t.get( "type" ) ));
-		storageAsset.set_p_defaultEnergyAssetPresetName( (String)t.get( "name" ));
+		storageAsset.set_p_energyAssetType( OL_EnergyAssetType.valueOf(t.required( "type" ).textValue() ));
+		storageAsset.set_p_defaultEnergyAssetPresetName( t.required( "name" ).textValue());
 
-		double capacityElectric_kW1 = t.get( "capacityElectricity_kW") == null? 0.0: Double.valueOf( t.get( "capacityElectricity_kW" ).toString()).doubleValue();
-		double storageCapacity_kWh = t.get( "storageCapacity_kWh" ) == null? 0.0: Double.valueOf( t.get( "storageCapacity_kWh").toString()).doubleValue();
-		double initialStateOfCharge_r = t.get( "stateOfCharge_r" ) == null? 0.0: Double.valueOf( t.get( "stateOfCharge_r" ).toString()).doubleValue();
-		double energyConsumption_kWhpkm2 = t.get( "energyConsumption_kWhpkm" ) == null? 0.0: Double.valueOf( t.get( "energyConsumption_kWhpkm" ).toString()).doubleValue();
-		double vehicleScalingElectric = t.get("vehicleScaling") == null? 1.0: Double.valueOf( t.get( "vehicleScaling" ).toString()).doubleValue();
-		storageAsset.p_energyAssetInstance = new J_EAEV(storageAsset, capacityElectric_kW1, storageCapacity_kWh, initialStateOfCharge_r, p_timeStep_h, energyConsumption_kWhpkm2, vehicleScalingElectric );  
+		double capacityElectric_kW = t.required( "capacityElectricity_kW").doubleValue();
+		double storageCapacity_kWh = t.required( "storageCapacity_kWh" ).doubleValue();
+		double initialStateOfCharge_r = t.required( "stateOfCharge_r" ).doubleValue();
+		double energyConsumption_kWhpkm = t.required( "energyConsumption_kWhpkm" ).doubleValue();
+		double vehicleScalingElectric = t.hasNonNull("vehicleScaling")? t.required("vehicleScaling").doubleValue() : 1.0;
+		storageAsset.p_energyAssetInstance = new J_EAEV(storageAsset, capacityElectric_kW, storageCapacity_kWh, initialStateOfCharge_r, p_timeStep_h, energyConsumption_kWhpkm, vehicleScalingElectric );  
 
 		storageAsset.f_connectToParentNode( this );
 		c_storageAssets.add(storageAsset);
@@ -9369,14 +9326,13 @@ t_numberOfElectricVehicles.setText(count(Houses, x->x.p_householdEV != null));
 double HouseholdBatteries = count(Houses, x->x.p_batteryAsset != null);
 t_numberOfHomeBatteries.setText(HouseholdBatteries);
 
-HashMap l=new HashMap();
-//Get template asset "TEMPLATE: Household PV"
-for (HashMap t:parsedJSONTemplateEnergyAssets) {
-	if (((String)t.get( "name" )).equals("TEMPLATE: Private battery")) {
-		l = t;
+JsonNode l=null;
+
+for(JsonNode assetJson : v_templateAssetsJson) {
+	if (assetJson.required( "name" ).textValue().equals("TEMPLATE: Private battery")) {
+		l = assetJson;
 	}
 }
-//HashMap l = findFirst(parsedJSONTemplateEnergyAssets, l-> l.get("type") == OL_EnergyAssetType.PHOTOVOLTAIC);
 
 if( sl_homeBattery.getValue()/100.0*Houses.size() < HouseholdBatteries){
 	while ( sl_homeBattery.getValue()/100.0*Houses.size() < HouseholdBatteries) { // remove excess PV systems
@@ -9399,12 +9355,12 @@ if( sl_homeBattery.getValue()/100.0*Houses.size() < HouseholdBatteries){
 		//traceln("Check presence of solarpanels: " + h.v_hasPV);	
 		EnergyAsset storageAsset = add_pop_energyAssets();
 		storageAsset.set_p_parentAgentID( h.p_agentID );
-		storageAsset.set_p_energyAssetType( OL_EnergyAssetType.valueOf((String)l.get( "type" ) ));
-		storageAsset.set_p_defaultEnergyAssetPresetName( (String)l.get( "name" ));
-		double capacityElectric_kW1 = l.get( "capacityElectricity_kW") == null? 0.0: Double.valueOf( l.get( "capacityElectricity_kW" ).toString()).doubleValue();
-		double storageCapacity_kWh = l.get( "storageCapacity_kWh" ) == null? 0.0: Double.valueOf( l.get( "storageCapacity_kWh").toString()).doubleValue();
-		double initialStateOfCharge_r = l.get( "stateOfCharge_r" ) == null? 0.0: Double.valueOf( l.get( "stateOfCharge_r" ).toString()).doubleValue();
-		storageAsset.p_energyAssetInstance = new J_EAStorageElectric(storageAsset, capacityElectric_kW1, storageCapacity_kWh, initialStateOfCharge_r, p_timeStep_h);
+		storageAsset.set_p_energyAssetType( OL_EnergyAssetType.valueOf(l.required( "type" ).textValue() ));
+		storageAsset.set_p_defaultEnergyAssetPresetName( l.get( "name" ).textValue());
+		double capacityElectric_kW = l.required( "capacityElectricity_kW").doubleValue();
+		double storageCapacity_kWh = l.required( "storageCapacity_kWh" ).doubleValue();
+		double initialStateOfCharge_r = l.required( "stateOfCharge_r" ).doubleValue();
+		storageAsset.p_energyAssetInstance = new J_EAStorageElectric(storageAsset, capacityElectric_kW, storageCapacity_kWh, initialStateOfCharge_r, p_timeStep_h);
 		storageAsset.f_connectToParentNode( this );
 		c_storageAssets.add(storageAsset);	
 
@@ -13303,6 +13259,7 @@ import java.io.*;]]></Import>
 				<Variable Class="Parameter">
 					<Id>1680703865828</Id>
 					<Name><![CDATA[p_irradianceRecievingSurface_m2]]></Name>
+					<ExcludeFromBuild>true</ExcludeFromBuild>
 					<X>250</X><Y>380</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
@@ -14044,7 +14001,7 @@ if( p_energyAssetList != null) {
 					p_BuildingThermalAsset = storageAsset;
 					p_BuildingThermalAsset.p_energyAssetInstance = new J_EABuilding(p_BuildingThermalAsset, OL_EAStorageTypes.HEATMODEL_BUILDING, capacityHeat_kW3, lossFactor_WpK2, main.p_timeStep_h, initialTemperature_degC2 , minTemperature_degC2, maxTemperature_degC2, setTemperature_degC2, heatCapacity_JpK2, ambientTempType3, solarAbsorptionFactor_m2);
 					p_BuildingThermalAsset.f_connectToParentNode( this );
-					main.c_storageAssets.add( p_BuildingThermalAsset );
+					//main.c_storageAssets.add( p_BuildingThermalAsset );
 					main.c_ambientAirDependentAssets.add( p_BuildingThermalAsset );
 					
 					//initialise temp, only option is AIR ambient temp type
@@ -14737,41 +14694,11 @@ for ( int i = 0; i < copiedVehicleList.size(); i++ ){
 					<Body><![CDATA[double HP_COP = ((J_EAConversionHeatPump)p_primaryHeatingAsset.p_energyAssetInstance).getCOP();
 boolean isGasCheaper = false;
 
-if( p_hasSmartFlexAssets ) {
-
-	if(l_ownerActor.getConnectedAgent() instanceof ConnectionOwner) {
-		v_gasHeatingCost_eurpkWh_TEMPORARY = ((ConnectionOwner)l_ownerActor.getConnectedAgent()).f_getMethanePrice();
-		v_eHeatingCost_eurpkWh_TEMPORARY = ((ConnectionOwner)l_ownerActor.getConnectedAgent()).f_getAveragedElectricityPrice( v_currentPowerElectricity_kW, p_primaryHeatingAsset.p_energyAssetInstance.getElectricCapacity_kW() ) / HP_COP;
-		//v_gasHeatingCost_eurpkWh_TEMPORARY = 6;
-		//v_eHeatingCost_eurpkWh_TEMPORARY = 5;
-		isGasCheaper = v_gasHeatingCost_eurpkWh_TEMPORARY < v_eHeatingCost_eurpkWh_TEMPORARY ? true:false;
-		
-/*	if( ((ConnectionOwner)l_ownerActor.getConnectedAgent()).p_electricitySupplier instanceof EnergySupplier){
-		//v_gasHeatingCost_eurpkWh_TEMPORARY = ((EnergySupplier)((ConnectionOwner)l_ownerActor.getConnectedAgent()).p_electricitySupplier).p_fixedMethanePrice_eurpkWh;
-		v_eHeatingCost_eurpkWh_TEMPORARY = ((ConnectionOwner)l_ownerActor.getConnectedAgent()).f_getAveragedElectricityPrice( v_currentPowerElectricity_kW, p_primaryHeatingAsset.p_energyAssetInstance.getElectricCapacity_kW() ) / HP_COP;
-		isGasCheaper = v_gasHeatingCost_eurpkWh_TEMPORARY < v_eHeatingCost_eurpkWh_TEMPORARY ? true:false;
-	}
-	else  { // in case supplier is a holon
-	//	EnergySupplier es = (EnergySupplier)((EnergyHolon)((ConnectionOwner)l_ownerActor.getConnectedAgent()).p_electricitySupplier).p_electricitySupplier;
-	//	EnergySupplier es = new EnergySupplier();
-		if( ((EnergyHolon)((ConnectionOwner)l_ownerActor.getConnectedAgent()).p_energySupplier).p_energySupplier instanceof EnergySupplier ) {
-		///	es = (EnergySupplier)((EnergyHolon)((ConnectionOwner)l_ownerActor.getConnectedAgent()).p_energySupplier).p_energySupplier;
-		}
-		// in case of nested holons!
-		else if( ((EnergyHolon)((ConnectionOwner)l_ownerActor.getConnectedAgent()).p_energySupplier).p_energySupplier instanceof EnergyHolon ) {
-		//	es = (EnergySupplier)((EnergyHolon)((EnergyHolon)((ConnectionOwner)l_ownerActor.getConnectedAgent()).p_energySupplier).p_energySupplier).p_energySupplier;
-		}	
-		//v_gasHeatingCost_eurpkWh_TEMPORARY = es.p_fixedMethanePrice_eurpkWh;
-		v_eHeatingCost_eurpkWh_TEMPORARY = ((ConnectionOwner)l_ownerActor.getConnectedAgent()).f_getAveragedElectricityPrice( v_currentPowerElectricity_kW, p_primaryHeatingAsset.p_energyAssetInstance.getElectricCapacity_kW() ) / HP_COP;
-		
-	}
-*/
-	}
-}
-else {
-	traceln("HP_COP: "+HP_COP+", threshold: "+main.p_hybridHeatPumpCOPThreshold);
-	isGasCheaper = HP_COP < main.p_hybridHeatPumpCOPThreshold? true:false;
-}
+if(l_ownerActor.getConnectedAgent() instanceof ConnectionOwner) {
+	v_gasHeatingCost_eurpkWh_TEMPORARY = ((ConnectionOwner)l_ownerActor.getConnectedAgent()).f_getMethanePrice();
+	v_eHeatingCost_eurpkWh_TEMPORARY = ((ConnectionOwner)l_ownerActor.getConnectedAgent()).f_getAveragedElectricityPrice( v_currentPowerElectricity_kW, p_primaryHeatingAsset.p_energyAssetInstance.getElectricCapacity_kW() ) / HP_COP;
+	isGasCheaper = v_gasHeatingCost_eurpkWh_TEMPORARY < v_eHeatingCost_eurpkWh_TEMPORARY ? true:false;
+}	
 
 return isGasCheaper;]]></Body>
 				</Function>
@@ -26522,7 +26449,7 @@ Supplier]]></Text>
 		<!--   =========   Active Object Class   ========  -->
 		<ActiveObjectClass>
 			<Id>1660731364525</Id>
-			<Name><![CDATA[AdministrativeHolon]]></Name>
+			<Name><![CDATA[GovernmentLayer]]></Name>
 			<ExtendsReference>
 				<PackageName><![CDATA[base]]></PackageName>
 				<ClassName><![CDATA[Actor]]></ClassName>
@@ -29896,7 +29823,7 @@ v_currentBalanceNat_eur -= v_currentNettElectricityVolume_kWh * v_currentVariabl
 				<Variable Class="PlainVariable">
 					<Id>1665060534142</Id>
 					<Name><![CDATA[v_congestionAllowanceLevel_kW]]></Name>
-					<X>60</X><Y>320</Y>
+					<X>60</X><Y>180</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -29912,7 +29839,8 @@ v_currentBalanceNat_eur -= v_currentNettElectricityVolume_kWh * v_currentVariabl
 					<Id>1665060582840</Id>
 					<Name><![CDATA[v_congestionPriceConsumption_eurpkWh]]></Name>
 					<Description><![CDATA[Euro per kW]]></Description>
-					<X>60</X><Y>340</Y>
+					<ExcludeFromBuild>true</ExcludeFromBuild>
+					<X>60</X><Y>580</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -29924,7 +29852,7 @@ v_currentBalanceNat_eur -= v_currentNettElectricityVolume_kWh * v_currentVariabl
 				<Variable Class="PlainVariable">
 					<Id>1665508504346</Id>
 					<Name><![CDATA[v_congestionThreshold_fr]]></Name>
-					<X>60</X><Y>380</Y>
+					<X>60</X><Y>220</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -29939,7 +29867,8 @@ v_currentBalanceNat_eur -= v_currentNettElectricityVolume_kWh * v_currentVariabl
 				<Variable Class="PlainVariable">
 					<Id>1665508939525</Id>
 					<Name><![CDATA[b_applyCongestionPriceWithConsumption]]></Name>
-					<X>80</X><Y>160</Y>
+					<ExcludeFromBuild>true</ExcludeFromBuild>
+					<X>60</X><Y>540</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -29954,7 +29883,8 @@ v_currentBalanceNat_eur -= v_currentNettElectricityVolume_kWh * v_currentVariabl
 				<Variable Class="PlainVariable">
 					<Id>1665508951785</Id>
 					<Name><![CDATA[b_applyCongestionPriceWithProduction]]></Name>
-					<X>80</X><Y>180</Y>
+					<ExcludeFromBuild>true</ExcludeFromBuild>
+					<X>60</X><Y>560</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -29970,7 +29900,8 @@ v_currentBalanceNat_eur -= v_currentNettElectricityVolume_kWh * v_currentVariabl
 					<Id>1666560746828</Id>
 					<Name><![CDATA[v_congestionPriceProduction_eurpkWh]]></Name>
 					<Description><![CDATA[Euro per kW]]></Description>
-					<X>60</X><Y>360</Y>
+					<ExcludeFromBuild>true</ExcludeFromBuild>
+					<X>60</X><Y>600</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -29982,13 +29913,26 @@ v_currentBalanceNat_eur -= v_currentNettElectricityVolume_kWh * v_currentVariabl
 				<Variable Class="PlainVariable">
 					<Id>1675355743791</Id>
 					<Name><![CDATA[j_ActorData]]></Name>
-					<X>60</X><Y>500</Y>
+					<X>60</X><Y>270</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>true</ShowLabel>
 					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
 						<Type><![CDATA[J_ActorData]]></Type>        
+					</Properties>
+				</Variable>
+				<Variable Class="PlainVariable">
+					<Id>1690962985581</Id>
+					<Name><![CDATA[v_congestionPrice_eurpkWh]]></Name>
+					<Description><![CDATA[Euro per kW]]></Description>
+					<X>60</X><Y>200</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
+						<Type><![CDATA[double]]></Type>        
 					</Properties>
 				</Variable>
 				<Variable Class="Parameter">
@@ -30099,7 +30043,7 @@ v_currentBalanceNat_eur -= v_currentNettElectricityVolume_kWh * v_currentVariabl
 					<Id>1674907095514</Id>
 					<Name><![CDATA[p_capacitypricing_households_kW]]></Name>
 					<ExcludeFromBuild>true</ExcludeFromBuild>
-					<X>60</X><Y>250</Y>
+					<X>60</X><Y>650</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -30121,7 +30065,7 @@ v_currentBalanceNat_eur -= v_currentNettElectricityVolume_kWh * v_currentVariabl
 					<Id>1674907099647</Id>
 					<Name><![CDATA[p_capacitypricing_households_eur]]></Name>
 					<ExcludeFromBuild>true</ExcludeFromBuild>
-					<X>60</X><Y>270</Y>
+					<X>60</X><Y>670</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -30143,7 +30087,7 @@ v_currentBalanceNat_eur -= v_currentNettElectricityVolume_kWh * v_currentVariabl
 					<Id>1674907106415</Id>
 					<Name><![CDATA[p_hasCapacityPricing]]></Name>
 					<ExcludeFromBuild>true</ExcludeFromBuild>
-					<X>60</X><Y>230</Y>
+					<X>60</X><Y>630</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -30306,21 +30250,16 @@ else {
 		n.v_congested = true;
 		if (currentLoad_kW > 0) {
 			n.v_congestionMode = "Overconsumption";
-			n.v_currentCongestionPrice_eurpkWh = (abs(currentLoad_kW) / n.p_capacity_kW - v_congestionThreshold_fr ) / ( 1 - v_congestionThreshold_fr) * v_congestionPriceConsumption_eurpkWh;
+			n.v_currentCongestionPrice_eurpkWh = (abs(currentLoad_kW) / n.p_capacity_kW - v_congestionThreshold_fr ) / ( 1 - v_congestionThreshold_fr) * v_congestionPrice_eurpkWh;
 			//n.v_lowPasCongestionPrice_eurpkWh = 0.5 * n.v_lowPasCongestionPrice_eurpkWh + 0.5 * n.v_currentCongestionPrice_eurpkWh;
-			if( b_applyCongestionPriceWithConsumption ) {
-				//n.f_setCongestionTariff(n.v_lowPasCongestionPrice_eurpkWh, v_congestionAllowanceLevel_kW);
-				n.f_setCongestionTariff(n.v_currentCongestionPrice_eurpkWh, v_congestionAllowanceLevel_kW); 
-			}
+			n.f_setCongestionTariff(n.v_currentCongestionPrice_eurpkWh, v_congestionAllowanceLevel_kW); 
+
 		} 
 		else {
 			n.v_congestionMode = "Overproduction";
-			n.v_currentCongestionPrice_eurpkWh = (abs(currentLoad_kW) / n.p_capacity_kW - v_congestionThreshold_fr ) / ( 1 - v_congestionThreshold_fr) * v_congestionPriceProduction_eurpkWh;
+			n.v_currentCongestionPrice_eurpkWh = (abs(currentLoad_kW) / n.p_capacity_kW - v_congestionThreshold_fr ) / ( 1 - v_congestionThreshold_fr) * v_congestionPrice_eurpkWh;
 			//n.v_lowPasCongestionPrice_eurpkWh = 0.5 * n.v_lowPasCongestionPrice_eurpkWh + 0.5 * n.v_currentCongestionPrice_eurpkWh;
-			if( b_applyCongestionPriceWithProduction ) {
-				//n.f_setCongestionTariff(n.v_lowPasCongestionPrice_eurpkWh, v_congestionAllowanceLevel_kW);
-				n.f_setCongestionTariff(n.v_currentCongestionPrice_eurpkWh, v_congestionAllowanceLevel_kW); 
-			}
+			n.f_setCongestionTariff(n.v_currentCongestionPrice_eurpkWh, v_congestionAllowanceLevel_kW); 
 		}
 		if (!c_congestedGNConsumption.contains(n)){ c_congestedGNConsumption.add(n); }
 	}
@@ -37581,9 +37520,6 @@ if (p_batteryAsset != null){
 					<ParameterName><![CDATA[p_forceBrownFieldNetload]]></ParameterName>
 				</Parameter>
 				<Parameter>
-					<ParameterName><![CDATA[p_solarAbsorptionCoefficient]]></ParameterName>
-				</Parameter>
-				<Parameter>
 					<ParameterName><![CDATA[p_testHolontoolResponse]]></ParameterName>
 				</Parameter>
 				<Parameter>
@@ -37591,9 +37527,6 @@ if (p_batteryAsset != null){
 				</Parameter>
 				<Parameter>
 					<ParameterName><![CDATA[b_anylogicCostsForAllContracts]]></ParameterName>
-				</Parameter>
-				<Parameter>
-					<ParameterName><![CDATA[p_hybridHeatPumpCOPThreshold]]></ParameterName>
 				</Parameter>
 				<Parameter>
 					<ParameterName><![CDATA[p_scenarioJSON]]></ParameterName>
