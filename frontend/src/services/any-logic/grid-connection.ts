@@ -1,5 +1,4 @@
-
-import {EnergyAsset} from "./energy-asset";
+import {EnergyAsset} from './energy-asset'
 
 export type GridConnectionCategory =
     'HOUSE' |
@@ -30,25 +29,25 @@ export type GridConnectionType =
     'VILLAGE'
 
 type EVChargingMode =
-    "MAX_POWER" |
-    "MAX_SPREAD" |
-    "CHEAP" |
-    "SIMPLE"
+    'MAX_POWER' |
+    'MAX_SPREAD' |
+    'CHEAP' |
+    'SIMPLE'
 
 // Seems unused in the model
 type HeatingType =
-    "GASBURNER" |
-    "HEATPUMP_AIR" |
-    "DISTRICTHEAT" |
-    "NONE" |
-    "HEATPUMP_GASPEAK" |
-    "GASFIRED" |
-    "HYDROGENFIRED" |
-    "HEATPUMP_BOILERPEAK" |
-    "GASFIRED_CHPPEAK" |
-    "LT_RESIDUAL_HEATPUMP_GASPEAK" |
-    "DISTRICTHEATDECENTRAL" |
-    "DISTRICT_EBOILER_CHP"
+    'GASBURNER' |
+    'HEATPUMP_AIR' |
+    'DISTRICTHEAT' |
+    'NONE' |
+    'HEATPUMP_GASPEAK' |
+    'GASFIRED' |
+    'HYDROGENFIRED' |
+    'HEATPUMP_BOILERPEAK' |
+    'GASFIRED_CHPPEAK' |
+    'LT_RESIDUAL_HEATPUMP_GASPEAK' |
+    'DISTRICTHEATDECENTRAL' |
+    'DISTRICT_EBOILER_CHP'
 
 export type GridConnection = {
     id: string

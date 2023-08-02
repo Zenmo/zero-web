@@ -1,5 +1,5 @@
-import {AppState} from "../appState";
-import {appStateToScenarioInput} from "./scenario-input";
+import {AppState} from '../appState'
+import {appStateToScenarioInput} from './scenario-input'
 
 // this is imported old-school via <script> tag
 // see https://anylogic.help/cloud/api/js.html
@@ -14,8 +14,8 @@ export const startSimulation = async (divId: string, appState: AppState): Promis
     const model = await cloudClient.getModelById(modelId)
     const latestVersion = await cloudClient.getModelVersionByNumber(model, model.modelVersions.length)
     const inputs = cloudClient.createDefaultInputs(latestVersion)
-    inputs.setInput("P scenario JSON", appStateToScenarioInput(appState))
-    inputs.setInput("P import local config jsons", false)
+    inputs.setInput('P scenario JSON', appStateToScenarioInput(appState))
+    inputs.setInput('P import local config jsons', false)
     const animation = await cloudClient.startAnimation(inputs, divId)
     animation.setSpeed(1)
 

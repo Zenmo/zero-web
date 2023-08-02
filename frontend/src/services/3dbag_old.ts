@@ -1,27 +1,27 @@
-import {LatLngBounds, Polygon} from "leaflet";
-import {BAG_MAX_PANDEN, BoundingBox} from "./bag2d";
+import {LatLngBounds, Polygon} from 'leaflet'
+import {BAG_MAX_PANDEN, BoundingBox} from './bag2d'
 
 type ResponseBody = {
-    type: "FeatureCollection",
+    type: 'FeatureCollection',
     features: Bag3DFeature[],
     totalFeatures: number,
     numberMatched: number,
     numberReturned: number,
     timestamp: string,
     crs: {
-        type: "name",
+        type: 'name',
         properties: {
-            name: "urn:ogc:def:crs:EPSG::4326",
+            name: 'urn:ogc:def:crs:EPSG::4326',
         }
     }
     bbox: BoundingBox,
 }
 
 export type Bag3DFeature = {
-    type: "Feature",
+    type: 'Feature',
     id: string, // example: lod12.7552479
     geometry: Polygon,
-    geometry_name: "geometrie",
+    geometry_name: 'geometrie',
     properties: Bag3dProperties
 }
 
@@ -34,11 +34,11 @@ export type Bag3dProperties = {
     h_dak_max: number
     identificatie: string // example: "NL.IMBAG.Pand.0772100000304368"
     oorspronkelijk_bouwjaar: number
-    status:	string // e.g. "Pand in gebruik"
+    status: string // e.g. "Pand in gebruik"
     geconstateerd: boolean
     documentdatum: string // example "2001-07-04Z"
-    documentnummer:	string // example "2000/1411"
-    voorkomenidentificatie:	number
+    documentnummer: string // example "2000/1411"
+    voorkomenidentificatie: number
     begingeldigheid: string // example "2001-07-04Z"
     eindgeldigheid: string // example "2001-07-04Z"
     tijdstipinactief: null
@@ -64,18 +64,18 @@ export type Bag3dProperties = {
 
 export async function getBag3dFeatures(boundingBox: LatLngBounds): Promise<Bag3DFeature[]> {
     const params = new URLSearchParams({
-        request: "GetFeature",
-        typeName: "BAG3D_v2:lod12",
+        request: 'GetFeature',
+        typeName: 'BAG3D_v2:lod12',
         count: BAG_MAX_PANDEN.toString(),
-        srsName: "EPSG:4326", // output coordinate system
-        outputFormat: "json",
+        srsName: 'EPSG:4326', // output coordinate system
+        outputFormat: 'json',
         bbox: [
             boundingBox.getWest(),
             boundingBox.getSouth(),
             boundingBox.getEast(),
             boundingBox.getNorth(),
-            "EPSG:4326", // input coordinate system
-        ].join(","),
+            'EPSG:4326', // input coordinate system
+        ].join(','),
         // TODO: check if we can limit to only relevant properties using parameter "PropertyName"
     })
 
@@ -86,12 +86,12 @@ export async function getBag3dFeatures(boundingBox: LatLngBounds): Promise<Bag3D
 
     const response = await fetch(url)
     if (response.status != 200) {
-        throw Error("Failure getting BAG 2D data")
+        throw Error('Failure getting BAG 2D data')
     }
 
     const body = await response.json() as ResponseBody
     if (body.numberMatched > BAG_MAX_PANDEN) {
-        throw new Error("Maximum aantal panden overschreden")
+        throw new Error('Maximum aantal panden overschreden')
     }
 
     return body.features

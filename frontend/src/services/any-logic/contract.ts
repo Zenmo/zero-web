@@ -1,6 +1,10 @@
-import {EnergyCarrierType} from "./grid-node";
+import {EnergyCarrierType} from './grid-node'
 
-export type Contract = DeliveryContract | ConnectionContract | TransportContract | TaxContract
+export type Contract =
+    DeliveryContract
+    | ConnectionContract
+    | TransportContract
+    | TaxContract
 
 interface BaseContract {
     contractType: ContractType,

@@ -1,23 +1,36 @@
-import {KleinVerbruikPerPostcode, PandData} from "../services/appState";
-import {Bag2DPandProperties} from "../services/bag2d";
-import React, {createElement, Fragment, FunctionComponent, PropsWithChildren, ReactElement} from "react";
-import {Bag3dProperties} from "../services/3dbag_old";
-import {Verblijfsobject} from "../services/bag-verblijfsobject";
-import {PostcodeKleinverbruikProperties} from "../services/enexis";
+import React, {
+    createElement,
+    Fragment,
+    FunctionComponent,
+    PropsWithChildren,
+    ReactElement,
+} from 'react'
+import {Bag3dProperties} from '../services/3dbag_old'
+import {KleinVerbruikPerPostcode, PandData} from '../services/appState'
+import {Verblijfsobject} from '../services/bag-verblijfsobject'
+import {Bag2DPandProperties} from '../services/bag2d'
 
-
-export const PandDataDisplay = ({pandData}: {pandData: PandData}) => (
+export const PandDataDisplay = ({pandData}: { pandData: PandData }) => (
     <div>
         <h2>Pand</h2>
-        {pandData.bag2dPand && <PropertyList key="2d" props={pandData.bag2dPand.properties} specs={bag2dDisplaySpec} defaultSpec={bagDefaultDisplaySpec}/>}
-        {pandData.bag3dPand && <PropertyList key="3d" props={pandData.bag3dPand.properties} specs={bag3dDisplaySpec} defaultSpec={bag3dDefaultDisplaySpec}/>}
+        {pandData.bag2dPand &&
+            <PropertyList key="2d" props={pandData.bag2dPand.properties}
+                          specs={bag2dDisplaySpec}
+                          defaultSpec={bagDefaultDisplaySpec}/>}
+        {pandData.bag3dPand &&
+            <PropertyList key="3d" props={pandData.bag3dPand.properties}
+                          specs={bag3dDisplaySpec}
+                          defaultSpec={bag3dDefaultDisplaySpec}/>}
         {createElement(Fragment, {}, ...KleinverbruikDisplay({kleinverbruik: pandData.kleinverbruik}))}
 
-        <h2>Verblijfsobjecten ({pandData.bag2dPand?.properties.aantal_verblijfsobjecten})</h2>
+        <h2>Verblijfsobjecten
+            ({pandData.bag2dPand?.properties.aantal_verblijfsobjecten})</h2>
         {pandData.verblijfsobjecten.map((verblijfsobject, index) => (
             <>
                 <h3>Verblijfsobject {verblijfsobjectLabel(verblijfsobject)}</h3>
-                <PropertyList props={verblijfsobject} specs={verblijfsobjectDisplaySpec} defaultSpec={bagDefaultDisplaySpec}/>
+                <PropertyList props={verblijfsobject}
+                              specs={verblijfsobjectDisplaySpec}
+                              defaultSpec={bagDefaultDisplaySpec}/>
             </>
         ))}
 
@@ -28,16 +41,18 @@ export const PandDataDisplay = ({pandData}: {pandData: PandData}) => (
     </div>
 )
 
-const KleinverbruikDisplay = ({kleinverbruik}: {kleinverbruik: {[postcode: string]: KleinVerbruikPerPostcode}}): ReactElement[] => {
+const KleinverbruikDisplay = ({kleinverbruik}: {
+    kleinverbruik: { [postcode: string]: KleinVerbruikPerPostcode }
+}): ReactElement[] => {
     let result: ReactElement[] = [
-        <h2>Gemiddeld jaarverbruik per aansluiting</h2>
+        <h2>Gemiddeld jaarverbruik per aansluiting</h2>,
     ]
 
     const values = Object.values(kleinverbruik)
     if (values.length === 0) {
         return [
             ...result,
-            <>onbekend</>
+            <>onbekend</>,
         ]
     }
 
@@ -68,7 +83,7 @@ const KleinverbruikDisplay = ({kleinverbruik}: {kleinverbruik: {[postcode: strin
     } else {
         return [
             ...result,
-            <>TODO: meerdere postcodes in 1 pand</>
+            <>TODO: meerdere postcodes in 1 pand</>,
         ]
     }
 
@@ -89,19 +104,23 @@ const verblijfsobjectLabel = (verblijfsObject: Verblijfsobject): string => {
     return result
 }
 
-const PropertyList = ({props, specs, defaultSpec}: {props: object, specs: DisplaySpecMap, defaultSpec: DisplaySpec}) => {
+const PropertyList = ({props, specs, defaultSpec}: {
+    props: object,
+    specs: DisplaySpecMap,
+    defaultSpec: DisplaySpec
+}) => {
     return (
         <>
             {Object.keys(props).map((key) => (
-                <ObjectProperty key={key} object={props} objectKey={key} specs={specs} defaultSpec={defaultSpec} />
+                <ObjectProperty key={key} object={props} objectKey={key}
+                                specs={specs} defaultSpec={defaultSpec}/>
             ))}
         </>
     )
 }
 
-
 const ObjectProperty = ({object, objectKey, specs, defaultSpec}: {
-    object: {[key: string]: any},
+    object: { [key: string]: any },
     objectKey: string,
     specs: DisplaySpecMap,
     defaultSpec: DisplaySpec
@@ -117,17 +136,22 @@ const ObjectProperty = ({object, objectKey, specs, defaultSpec}: {
     }
 
     let value = object[objectKey]
-    if (typeof value === "undefined" || value === "") {
+    if (typeof value === 'undefined' || value === '') {
         return null
     }
 
     // @ts-ignore
-    return <Property key={objectKey} objectKey={objectKey} value={value} spec={spec}/>
+    return <Property key={objectKey} objectKey={objectKey} value={value}
+                     spec={spec}/>
 }
 
-const Property = ({objectKey, value, spec}: { objectKey: string, value: any, spec: DisplaySpec }) => {
+const Property = ({objectKey, value, spec}: {
+    objectKey: string,
+    value: any,
+    spec: DisplaySpec
+}) => {
     if (spec.is_meters) {
-        value = Math.round(value*10)/10
+        value = Math.round(value * 10) / 10
         value = `${value} m`
     }
 
@@ -141,8 +165,8 @@ const Property = ({objectKey, value, spec}: { objectKey: string, value: any, spe
         value = <a href={value}>{value}</a>
     }
 
-    if (typeof value === "boolean") {
-        value = value ? "Ja" : "Nee"
+    if (typeof value === 'boolean') {
+        value = value ? 'Ja' : 'Nee'
     }
 
     let label = toLabel(objectKey)
@@ -150,7 +174,7 @@ const Property = ({objectKey, value, spec}: { objectKey: string, value: any, spe
         label = spec.label
     }
 
-    const values: any[] =  Array.isArray(value) ? value : [value]
+    const values: any[] = Array.isArray(value) ? value : [value]
 
     return (
         <>
@@ -160,7 +184,7 @@ const Property = ({objectKey, value, spec}: { objectKey: string, value: any, spe
     )
 }
 
-type DisplaySpecMap = {[key: string]: Partial<DisplaySpec>}
+type DisplaySpecMap = { [key: string]: Partial<DisplaySpec> }
 
 type DisplaySpec = {
     visible: boolean,
@@ -173,7 +197,7 @@ type DisplaySpec = {
 const bagDefaultDisplaySpec: DisplaySpec = {
     visible: true,
     is_url: false,
-    label: "",
+    label: '',
     is_meters: false,
     is_m2: false,
 }
@@ -181,12 +205,12 @@ const bagDefaultDisplaySpec: DisplaySpec = {
 const bag3dDefaultDisplaySpec: DisplaySpec = {
     visible: false, // too many irrelevant props
     is_url: false,
-    label: "",
+    label: '',
     is_meters: false,
     is_m2: false,
 }
 
-const bag2dDisplaySpec: Partial<{[key in keyof Bag2DPandProperties]: Partial<DisplaySpec>}> = {
+const bag2dDisplaySpec: Partial<{ [key in keyof Bag2DPandProperties]: Partial<DisplaySpec> }> = {
     rdf_seealso: {
         is_url: true,
     },
@@ -195,10 +219,10 @@ const bag2dDisplaySpec: Partial<{[key in keyof Bag2DPandProperties]: Partial<Dis
     },
     oppervlakte_max: {
         is_m2: true,
-    }
+    },
 }
 
-const verblijfsobjectDisplaySpec: Partial<{[key in keyof Verblijfsobject]: Partial<DisplaySpec>}> = {
+const verblijfsobjectDisplaySpec: Partial<{ [key in keyof Verblijfsobject]: Partial<DisplaySpec> }> = {
     rdf_seealso: {
         is_url: true,
     },
@@ -206,39 +230,39 @@ const verblijfsobjectDisplaySpec: Partial<{[key in keyof Verblijfsobject]: Parti
         is_m2: true,
     },
     pandidentificatie: {
-        visible: false
+        visible: false,
     },
     pandstatus: {
-        visible: false
+        visible: false,
     },
     bouwjaar: {
-        visible: false
-    }
+        visible: false,
+    },
 }
 
-const bag3dDisplaySpec: Partial<{[key in keyof Bag3dProperties]: Partial<DisplaySpec>}> = {
+const bag3dDisplaySpec: Partial<{ [key in keyof Bag3dProperties]: Partial<DisplaySpec> }> = {
     h_maaiveld: {
         visible: true,
-        label: "Hoogte maaiveld",
+        label: 'Hoogte maaiveld',
         is_meters: true,
     },
     h_dak_50p: {
         visible: true,
-        label: "Mediaan dakhoogte",
+        label: 'Mediaan dakhoogte',
         is_meters: true,
     },
     h_dak_max: {
         visible: true,
-        label: "Hoogte nok",
+        label: 'Hoogte nok',
         is_meters: true,
     },
 }
 
-
-export const DtBold: FunctionComponent<PropsWithChildren> = ({children}) => <dt style={{fontWeight: "bold"}}>{children}</dt>
+export const DtBold: FunctionComponent<PropsWithChildren> = ({children}) => <dt
+    style={{fontWeight: 'bold'}}>{children}</dt>
 
 const toLabel = (key: string): string =>
-    uppercaseFirst(key).replaceAll("_", " ")
+    uppercaseFirst(key).replaceAll('_', ' ')
 
 const uppercaseFirst = (str: string): string =>
-    str.charAt(0).toUpperCase() + str.slice(1);
+    str.charAt(0).toUpperCase() + str.slice(1)

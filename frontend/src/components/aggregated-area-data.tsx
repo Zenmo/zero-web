@@ -1,25 +1,24 @@
-import {AppState} from "../services/appState";
-import {createElement as h} from "react";
-import {DtBold} from "./pand-display";
-import {Verblijfsobject} from "../services/bag-verblijfsobject";
-import {Bag2DPand} from "../services/bag2d";
+import {createElement as h} from 'react'
+import {AppState} from '../services/appState'
+import {Verblijfsobject} from '../services/bag-verblijfsobject'
+import {Bag2DPand} from '../services/bag2d'
+import {DtBold} from './pand-display'
 
-
-export const AggregatedAreaData = ({appState}: {appState: AppState}) => (
+export const AggregatedAreaData = ({appState}: { appState: AppState }) => (
     h('dl', {},
-        h(DtBold, {}, "Aantal panden"),
+        h(DtBold, {}, 'Aantal panden'),
         h('dd', {}, appState.bag2dPanden.length),
-        h(DtBold, {}, "Gemiddeld bouwjaar"),
+        h(DtBold, {}, 'Gemiddeld bouwjaar'),
         h('dd', {}, averageBouwjaar(appState.bag2dPanden)),
-        h(DtBold, {}, "Aantal verblijfsobjecten"),
+        h(DtBold, {}, 'Aantal verblijfsobjecten'),
         h('dd', {}, appState.verblijfsobjecten.length),
-        h(DtBold, {}, "Vloeroppervlak"),
+        h(DtBold, {}, 'Vloeroppervlak'),
         // TODO: does not include panden with no verblijfsobject, like factory floors
-        h('dd', {}, sumVloeroppervlak(appState.verblijfsobjecten).toLocaleString('nl-NL') + " m²"),
-        h(DtBold, {}, "Gebruiksdoelen"),
+        h('dd', {}, sumVloeroppervlak(appState.verblijfsobjecten).toLocaleString('nl-NL') + ' m²'),
+        h(DtBold, {}, 'Gebruiksdoelen'),
         h('dd', {}, Object.entries(gebruiksdoelenOverzicht(appState.verblijfsobjecten))
-                .map(([gebruiksdoel, aantal]) => h('div', {key: gebruiksdoel}, `${gebruiksdoel} (${aantal}x)`))
-        )
+            .map(([gebruiksdoel, aantal]) => h('div', {key: gebruiksdoel}, `${gebruiksdoel} (${aantal}x)`)),
+        ),
     )
 )
 
@@ -44,7 +43,9 @@ const averageBouwjaar = (panden: Bag2DPand[]) => {
     return Math.round(average)
 }
 
-const gebruiksdoelenOverzicht = (verblijfsobjecten: Verblijfsobject[]): {[gebruiksdoel: string]: number} =>
+const gebruiksdoelenOverzicht = (verblijfsobjecten: Verblijfsobject[]): {
+    [gebruiksdoel: string]: number
+} =>
     verblijfsobjecten
         .flatMap(verblijfsobject => verblijfsobject.gebruiksdoelen)
         .reduce((acc, gebruiksdoel) => ({

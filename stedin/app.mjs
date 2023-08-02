@@ -2,8 +2,7 @@ import http from 'http'
 import https from 'https'
 import fs from 'fs'
 import csv2json from 'csvjson-csv2json'
-import lodash from "lodash";
-// import {promisify} from 'util'
+import lodash from 'lodash'
 
 const {mapKeys, mapValues} = lodash
 
@@ -43,7 +42,6 @@ function tryConvertToNumber(str) {
     }
 }
 
-
 async function downloadCsv(csvName) {
     const csvFile = fs.openSync(csvName, 'w')
     try {
@@ -55,26 +53,24 @@ async function downloadCsv(csvName) {
                         reject(new Error(`Stedin.net http status code: ${response.statusCode}`))
                     }
 
-                    response.on("error", reject)
+                    response.on('error', reject)
 
-                    response.on("data", chunk => {
+                    response.on('data', chunk => {
                         fs.writeSync(csvFile, chunk)
                     })
 
-                    response.on("end", () => {
+                    response.on('end', () => {
                         fs.close(csvFile)
                         resolve()
                     })
-                }
+                },
             )
-            request.on('error', reject);
+            request.on('error', reject)
         })
     } finally {
         fs.closeSync(csvFile)
     }
 }
-
-
 
 try {
     const records = await initializeDataSet()
@@ -115,16 +111,15 @@ try {
 
         res.statusCode = 200
         res.end(JSON.stringify(matches))
-    });
+    })
 
     const hostname = '127.0.0.1'
     const port = 3000
 
     server.listen(port, hostname, () => {
         console.log(`Server running at http://${hostname}:${port}/`)
-    });
-}
-catch(e) {
+    })
+} catch (e) {
     console.log('Error intializing: ' + e)
-    process.exit(1);
+    process.exit(1)
 }

@@ -1,17 +1,16 @@
-import {GeoJSON, LayerGroup, LayersControl, MapContainer, Marker, Popup, TileLayer, useMap} from "react-leaflet";
-import {LatLng, Icon, LeafletEvent, Layer, PM, featureGroup} from "leaflet";
-import "leaflet/dist/leaflet.css";
-import {Component, FunctionComponent, PropsWithChildren, useEffect, useRef, useState} from "react";
-import '@geoman-io/leaflet-geoman-free';
-import '@geoman-io/leaflet-geoman-free/dist/leaflet-geoman.css';
+import '@geoman-io/leaflet-geoman-free'
+import '@geoman-io/leaflet-geoman-free/dist/leaflet-geoman.css'
+import {Icon, LatLng, PM} from 'leaflet'
+import markerIcon2xPng from 'leaflet/dist/images/marker-icon-2x.png'
 
-import markerIconPng from 'leaflet/dist/images/marker-icon.png';
-import markerIcon2xPng from 'leaflet/dist/images/marker-icon-2x.png';
-import markerShadowPng from 'leaflet/dist/images/marker-shadow.png';
-import {Bag2DPand, Bag2DPandProperties} from "../services/bag2d";
-import {PandData, SetBoundingBoxFn, useAppState} from "../services/appState";
-import {useOnce} from "../services/use-once";
-import {PandDataDisplay} from "./pand-display";
+import markerIconPng from 'leaflet/dist/images/marker-icon.png'
+import markerShadowPng from 'leaflet/dist/images/marker-shadow.png'
+import 'leaflet/dist/leaflet.css'
+import {useEffect, useRef} from 'react'
+import {GeoJSON, LayerGroup, MapContainer, TileLayer, useMap} from 'react-leaflet'
+import {SetBoundingBoxFn} from '../services/appState'
+import {Bag2DPand} from '../services/bag2d'
+import {useOnce} from '../services/use-once'
 
 const disruptorBuildingLocation = new LatLng(51.44971831403754, 5.4947035381928035)
 
@@ -40,13 +39,14 @@ export const MainMap = ({setCurrentPandId, bag2dPanden, setBoundingBox}: {
             />
             {/*<LayersControl position="topright">*/}
             {/*    <LayersControl.Overlay name="Panden">*/}
-                    <LayerGroup>
-                        <Panden bag2dPanden={bag2dPanden} setCurrentPandId={setCurrentPandId} />
-                    </LayerGroup>
-                {/*</LayersControl.Overlay>*/}
-                {/*<LayersControl.Overlay name="Tekenen">*/}
-                    <Geoman setBoundingBox={setBoundingBox} />
-                {/*</LayersControl.Overlay>*/}
+            <LayerGroup>
+                <Panden bag2dPanden={bag2dPanden}
+                        setCurrentPandId={setCurrentPandId}/>
+            </LayerGroup>
+            {/*</LayersControl.Overlay>*/}
+            {/*<LayersControl.Overlay name="Tekenen">*/}
+            <Geoman setBoundingBox={setBoundingBox}/>
+            {/*</LayersControl.Overlay>*/}
             {/*</LayersControl>*/}
         </MapContainer>
     )
@@ -54,13 +54,16 @@ export const MainMap = ({setCurrentPandId, bag2dPanden, setBoundingBox}: {
 
 const Panden = (
     {bag2dPanden, setCurrentPandId}:
-        {bag2dPanden: Bag2DPand[], setCurrentPandId: (pandId: string) => void}
+        {
+            bag2dPanden: Bag2DPand[],
+            setCurrentPandId: (pandId: string) => void
+        },
 ) => {
     const geoJsons = bag2dPanden.map(feature => (
         <GeoJSON key={feature.id} data={feature.geometry} eventHandlers={{
             click: () => {
                 setCurrentPandId(feature.properties.identificatie)
-            }
+            },
         }}/>
     ))
 
@@ -68,26 +71,26 @@ const Panden = (
 }
 
 // add paint controls
-const Geoman = ({setBoundingBox}: {setBoundingBox: SetBoundingBoxFn}) => {
+const Geoman = ({setBoundingBox}: { setBoundingBox: SetBoundingBoxFn }) => {
     const map = useMap()
-    const layerGroupRef = useRef(null);
+    const layerGroupRef = useRef(null)
 
     useOnce(() => {
         map.pm.setGlobalOptions({
             pathOptions: {
-                color: "purple"
-            }
+                color: 'purple',
+            },
         })
         map.pm.addControls({
             position: 'topleft',
             drawMarker: false,
             drawCircleMarker: false,
             drawPolyline: false,
-        });
+        })
     })
 
     useEffect(() => {
-        map.on("pm:create", ((event) => {
+        map.on('pm:create', ((event) => {
             const layer = event.layer
             // @ts-ignore
             layer.addTo(layerGroupRef.current)
@@ -97,6 +100,5 @@ const Geoman = ({setBoundingBox}: {setBoundingBox: SetBoundingBoxFn}) => {
         }) as PM.CreateEventHandler)
     }, [layerGroupRef.current])
 
-
-    return <LayerGroup ref={layerGroupRef} />
+    return <LayerGroup ref={layerGroupRef}/>
 }

@@ -1,6 +1,6 @@
-import {LatLng, LatLngBounds} from "leaflet";
-import {BAG_MAX_PANDEN, BoundingBox, boundingBoxToBAG} from "./bag2d";
-import {Point, Position} from "geojson";
+import {Point, Position} from 'geojson'
+import {LatLngBounds} from 'leaflet'
+import {BAG_MAX_PANDEN, BoundingBox} from './bag2d'
 
 // https://imbag.github.io/praktijkhandleiding/artikelen/welk-gebruiksdoel-moet-worden-geregistreerd
 export enum GebruiksDoel {
@@ -49,7 +49,7 @@ export type Verblijfsobject = {
 }
 
 type VerblijfsobjectFeature = {
-    type: "Feature",
+    type: 'Feature',
     id: string // e.g. "verblijfsobject.144b58ad-1e01-4025-b275-db34fc19ebf7"
     properties: VerblijfsobjectProperties,
     bbox: BoundingBox,
@@ -76,33 +76,33 @@ type VerblijfsobjectProperties = {
 
 export async function getBagVerblijfsobjecten(boundingBox: LatLngBounds): Promise<Verblijfsobject[]> {
     const params = new URLSearchParams({
-        request: "GetFeature",
-        service: "WFS",
-        typeName: "bag:verblijfsobject",
+        request: 'GetFeature',
+        service: 'WFS',
+        typeName: 'bag:verblijfsobject',
         // TODO: verify pagination cut-off
         count: BAG_MAX_PANDEN.toString(),
-        outputFormat: "json",
-        srsName: "EPSG:4326", // GPS
+        outputFormat: 'json',
+        srsName: 'EPSG:4326', // GPS
         bbox: [
             boundingBox.getWest(),
             boundingBox.getSouth(),
             boundingBox.getEast(),
             boundingBox.getNorth(),
-            "urn:ogc:def:rs:EPSG::4326", // input coordinate system
-        ].join(","),
-        version: "2.0.0"
+            'urn:ogc:def:rs:EPSG::4326', // input coordinate system
+        ].join(','),
+        version: '2.0.0',
     })
 
-    const url = 'https://service.pdok.nl/lv/bag/wfs/v2_0?' + params.toString();
+    const url = 'https://service.pdok.nl/lv/bag/wfs/v2_0?' + params.toString()
 
     const response = await fetch(url)
     if (response.status != 200) {
-        throw Error("Failure getting BAG Verblijfsobjecten")
+        throw Error('Failure getting BAG Verblijfsobjecten')
     }
 
     const body = await response.json() as any
     if (body.numberMatched > BAG_MAX_PANDEN) {
-        throw new Error("Maximum aantal verblijfsobjecten overschreden")
+        throw new Error('Maximum aantal verblijfsobjecten overschreden')
     }
 
     return body.features.map(postProcessing)
@@ -115,7 +115,7 @@ const postProcessing = (verblijfsobject: VerblijfsobjectFeature): Verblijfsobjec
         ...verblijfsobject.properties,
         feature_id: verblijfsobject.id,
         position: verblijfsobject.geometry.coordinates,
-        gebruiksdoelen: verblijfsobject.properties.gebruiksdoel.split(",").filter(Boolean) as GebruiksDoel[],
+        gebruiksdoelen: verblijfsobject.properties.gebruiksdoel.split(',').filter(Boolean) as GebruiksDoel[],
     }
 
     // @ts-ignore

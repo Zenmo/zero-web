@@ -1,5 +1,5 @@
-import {EnergyAsset} from "./energy-asset";
-import {defaultGridOperator} from "./actor";
+import {defaultGridOperator} from './actor'
+import {EnergyAsset} from './energy-asset'
 
 type GridNodeType =
     'HSMS' | // transformer high <> medium voltage
@@ -9,7 +9,12 @@ type GridNodeType =
     'LT' |
     'LT5thgen'
 
-export type EnergyCarrierType = 'ELECTRICITY' | 'METHANE' | 'HEAT' | 'HYDROGEN' | 'DIESEL'
+export type EnergyCarrierType =
+    'ELECTRICITY'
+    | 'METHANE'
+    | 'HEAT'
+    | 'HYDROGEN'
+    | 'DIESEL'
 
 export interface GridNode {
     id: string

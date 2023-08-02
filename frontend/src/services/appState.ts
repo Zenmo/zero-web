@@ -1,14 +1,9 @@
-import {Bag2DPand, getBag2dPanden} from "./bag2d";
-import {useState} from "react";
-import {LatLngBounds} from "leaflet";
-import {Bag3DFeature, getBag3dFeatures} from "./3dbag_old";
-import {getBagVerblijfsobjecten, Verblijfsobject} from "./bag-verblijfsobject";
-import {
-    getPostcodeKleinverbruik,
-    PostcodeKleinverbruikFeature,
-    PostcodeKleinverbruikProperties,
-    Verbruiktype
-} from "./enexis";
+import {LatLngBounds} from 'leaflet'
+import {useState} from 'react'
+import {Bag3DFeature, getBag3dFeatures} from './3dbag_old'
+import {getBagVerblijfsobjecten, Verblijfsobject} from './bag-verblijfsobject'
+import {Bag2DPand, getBag2dPanden} from './bag2d'
+import {getPostcodeKleinverbruik, PostcodeKleinverbruikFeature, Verbruiktype} from './enexis'
 
 export interface AppState {
     bag2dPanden: Bag2DPand[]
@@ -93,25 +88,25 @@ export const useAppState = () => {
             .catch(alert)
 
         getPostcodeKleinverbruik(boundingBox, Verbruiktype.ELEKTRICITEIT)
-            .then(data=> {
+            .then(data => {
                 setAppState(appState => ({
                     ...appState,
                     postcodeKleinverbruik: {
                         ...appState.postcodeKleinverbruik,
                         elektricity: data,
-                    }
+                    },
                 }))
             })
             .catch(alert)
 
         getPostcodeKleinverbruik(boundingBox, Verbruiktype.GAS)
-            .then(data=> {
+            .then(data => {
                 setAppState(appState => ({
                     ...appState,
                     postcodeKleinverbruik: {
                         ...appState.postcodeKleinverbruik,
                         gas: data,
-                    }
+                    },
                 }))
             })
             .catch(alert)
@@ -127,18 +122,20 @@ export const useAppState = () => {
             .filter(verblijfsobject => verblijfsobject.pandidentificatie === pandId)
 
         const postcodes = new Set(
-            verblijfsobjecten.map(verblijfsobject => verblijfsobject.postcode)
+            verblijfsobjecten.map(verblijfsobject => verblijfsobject.postcode),
         )
 
-        const kleinverbruik: {[postcode: string]: KleinVerbruikPerPostcode} = {}
+        const kleinverbruik: {
+            [postcode: string]: KleinVerbruikPerPostcode
+        } = {}
 
         for (const postcode of postcodes) {
             const electriciteitProperties = appState.postcodeKleinverbruik.elektricity
                 .map(feature => feature.properties)
                 .find(postcodeKleinverbruik =>
-                    postcodeKleinverbruik.postcodevan.replace(" ", "") >= postcode
+                    postcodeKleinverbruik.postcodevan.replace(' ', '') >= postcode
                     &&
-                    postcodeKleinverbruik.postcodetot.replace(" ", "") <= postcode
+                    postcodeKleinverbruik.postcodetot.replace(' ', '') <= postcode,
                 )
 
             kleinverbruik[postcode] = {}
@@ -155,9 +152,9 @@ export const useAppState = () => {
             const gasProperties = appState.postcodeKleinverbruik.gas
                 .map(feature => feature.properties)
                 .find(postcodeKleinverbruik =>
-                    postcodeKleinverbruik.postcodevan.replace(" ", "") >= postcode
+                    postcodeKleinverbruik.postcodevan.replace(' ', '') >= postcode
                     &&
-                    postcodeKleinverbruik.postcodetot.replace(" ", "") <= postcode
+                    postcodeKleinverbruik.postcodetot.replace(' ', '') <= postcode,
                 )
 
             if (gasProperties) {
