@@ -56,7 +56,7 @@ export type GridConnection = {
     category: GridConnectionCategory
     assets: EnergyAsset[]
 
-    type?: GridConnectionCategory
+    type?: GridConnectionType
     parent_electric?: string // gride node id
     capacity_kw?: number
     charging_mode?: EVChargingMode

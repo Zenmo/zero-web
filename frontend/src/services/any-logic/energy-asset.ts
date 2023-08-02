@@ -27,7 +27,7 @@ export type EnergyAssetType =
     "RESIDUALHEATLT" |
     "METHANE_CHP" |
     "GAS_PIT" |
-    "HEATMODEL" |
+    "BUILDINGTHERMALS" |
     "HEAT_PUMP_WATER" |
     "DISTRICT_EBOILER_CHPPEAK" |
     "LIVESTOCK" |
@@ -72,7 +72,7 @@ export const defaultEnergyAssets: EnergyAsset[] = [
         "minTemp_degC": -10,
         "name": "TEMPLATE: House_heatmodel_D TVW",
         "setTemp_degC": 20,
-        "type": "HEATMODEL"
+        "type": "BUILDINGTHERMALS",
     },
     {
         "category": "CONSUMPTION",
