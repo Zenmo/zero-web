@@ -5354,7 +5354,7 @@
             "tempSetpointDay_start_hr": 9.0,
             "tempSetpointNight_degC": 15.0,
             "tempSetpointNight_start_hr": 22.0,
-            "type": "TERRACED"
+            "type": "SEMIDETACHED"
         },
         {
             "assets": [
@@ -5452,7 +5452,7 @@
             "tempSetpointDay_start_hr": 8.0,
             "tempSetpointNight_degC": 15.0,
             "tempSetpointNight_start_hr": 21.0,
-            "type": "TERRACED"
+            "type": "DETACHED"
         },
         {
             "assets": [
@@ -5550,7 +5550,7 @@
             "tempSetpointDay_start_hr": 7.0,
             "tempSetpointNight_degC": 15.0,
             "tempSetpointNight_start_hr": 22.0,
-            "type": "TERRACED"
+            "type": "APPARTMENT"
         },
         {
             "assets": [
@@ -5648,7 +5648,7 @@
             "tempSetpointDay_start_hr": 7.0,
             "tempSetpointNight_degC": 15.0,
             "tempSetpointNight_start_hr": 22.0,
-            "type": "TERRACED"
+            "type": "HIGHRISE"
         },
         {
             "assets": [

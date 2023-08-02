@@ -1,0 +1,192 @@
+{
+	"TERRACED": 
+	{
+		"A":
+		{
+			"lossFactor_WpK": 80.0,
+			"heatCapacity_JpK": 10000000.0
+		},
+		"B":
+		{
+			"lossFactor_WpK": 100.0,
+			"heatCapacity_JpK": 10000000.0
+		},
+		"C":
+		{
+			"lossFactor_WpK": 120.0,
+			"heatCapacity_JpK": 10000000.0
+		},
+		"D":
+		{
+			"lossFactor_WpK": 140.0,
+			"heatCapacity_JpK": 10000000.0
+		},
+		"E":
+		{
+			"lossFactor_WpK": 160.0,
+			"heatCapacity_JpK": 10000000.0
+		},
+		"F":
+		{
+			"lossFactor_WpK": 180.0,
+			"heatCapacity_JpK": 10000000.0
+		},
+		"G":
+		{
+			"lossFactor_WpK": 200.0,
+			"heatCapacity_JpK": 10000000.0
+		}
+	},
+	"SEMIDETACHED": 
+	{
+		"A":
+		{
+			"lossFactor_WpK": 120.0,
+			"heatCapacity_JpK": 10000000.0
+		},
+		"B":
+		{
+			"lossFactor_WpK": 160.0,
+			"heatCapacity_JpK": 10000000.0
+		},
+		"C":
+		{
+			"lossFactor_WpK": 200.0,
+			"heatCapacity_JpK": 10000000.0
+		},
+		"D":
+		{
+			"lossFactor_WpK": 240.0,
+			"heatCapacity_JpK": 10000000.0
+		},
+		"E":
+		{
+			"lossFactor_WpK": 280.0,
+			"heatCapacity_JpK": 10000000.0
+		},
+		"F":
+		{
+			"lossFactor_WpK": 320.0,
+			"heatCapacity_JpK": 10000000.0
+		},
+		"G":
+		{
+			"lossFactor_WpK": 360.0,
+			"heatCapacity_JpK": 10000000.0
+		}
+	},
+	"DETACHED": 
+	{
+		"A":
+		{
+			"lossFactor_WpK": 160.0,
+			"heatCapacity_JpK": 10000000.0
+		},
+		"B":
+		{
+			"lossFactor_WpK": 200.0,
+			"heatCapacity_JpK": 10000000.0
+		},
+		"C":
+		{
+			"lossFactor_WpK": 240.0,
+			"heatCapacity_JpK": 10000000.0
+		},
+		"D":
+		{
+			"lossFactor_WpK": 280.0,
+			"heatCapacity_JpK": 10000000.0
+		},
+		"E":
+		{
+			"lossFactor_WpK": 320.0,
+			"heatCapacity_JpK": 10000000.0
+		},
+		"F":
+		{
+			"lossFactor_WpK": 360.0,
+			"heatCapacity_JpK": 10000000.0
+		},
+		"G":
+		{
+			"lossFactor_WpK": 400.0,
+			"heatCapacity_JpK": 10000000.0
+		}
+	},
+	"APPARTMENT": 
+	{
+		"A":
+		{
+			"lossFactor_WpK": 50.0,
+			"heatCapacity_JpK": 10000000.0
+		},
+		"B":
+		{
+			"lossFactor_WpK": 60.0,
+			"heatCapacity_JpK": 10000000.0
+		},
+		"C":
+		{
+			"lossFactor_WpK": 70.0,
+			"heatCapacity_JpK": 10000000.0
+		},
+		"D":
+		{
+			"lossFactor_WpK": 80.0,
+			"heatCapacity_JpK": 10000000.0
+		},
+		"E":
+		{
+			"lossFactor_WpK": 90.0,
+			"heatCapacity_JpK": 10000000.0
+		},
+		"F":
+		{
+			"lossFactor_WpK": 100.0,
+			"heatCapacity_JpK": 10000000.0
+		},
+		"G":
+		{
+			"lossFactor_WpK": 120.0,
+			"heatCapacity_JpK": 10000000.0
+		}
+	},
+	"HIGHRISE": 
+	{
+		"A":
+		{
+			"lossFactor_WpK": 50.0,
+			"heatCapacity_JpK": 10000000.0
+		},
+		"B":
+		{
+			"lossFactor_WpK": 60.0,
+			"heatCapacity_JpK": 10000000.0
+		},
+		"C":
+		{
+			"lossFactor_WpK": 70.0,
+			"heatCapacity_JpK": 10000000.0
+		},
+		"D":
+		{
+			"lossFactor_WpK": 80.0,
+			"heatCapacity_JpK": 10000000.0
+		},
+		"E":
+		{
+			"lossFactor_WpK": 90.0,
+			"heatCapacity_JpK": 10000000.0
+		},
+		"F":
+		{
+			"lossFactor_WpK": 100.0,
+			"heatCapacity_JpK": 10000000.0
+		},
+		"G":
+		{
+			"lossFactor_WpK": 120.0,
+			"heatCapacity_JpK": 10000000.0
+		}
+	}
+}

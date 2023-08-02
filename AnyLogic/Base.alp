@@ -1943,6 +1943,18 @@ traceln(" ");
 						<Type><![CDATA[com.fasterxml.jackson.databind.node.ArrayNode]]></Type>        
 					</Properties>
 				</Variable>
+				<Variable Class="PlainVariable">
+					<Id>1690977261064</Id>
+					<Name><![CDATA[v_buildingThermalPars]]></Name>
+					<X>-700</X><Y>330</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
+						<Type><![CDATA[com.fasterxml.jackson.databind.node.ObjectNode]]></Type>        
+					</Properties>
+				</Variable>
 				<Variable Class="Parameter">
 					<Id>1658496701675</Id>
 					<Name><![CDATA[p_timeStep_h]]></Name>
@@ -2276,7 +2288,7 @@ traceln(" ");
 				<Variable Class="Parameter">
 					<Id>1681379106589</Id>
 					<Name><![CDATA[p_printInputJsons]]></Name>
-					<X>-390</X><Y>270</Y>
+					<X>-390</X><Y>330</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -2360,6 +2372,27 @@ traceln(" ");
 						<SdArray>false</SdArray>
 						<ParameterEditor>
 							<Id>1690809204160</Id>
+							<EditorContolType>TEXT_BOX</EditorContolType>
+							<MinSliderValue><![CDATA[0]]></MinSliderValue>
+							<MaxSliderValue><![CDATA[100]]></MaxSliderValue>
+							<DelimeterType>NO_DELIMETER</DelimeterType>
+						</ParameterEditor>
+					</Properties>                 
+				</Variable>
+				<Variable Class="Parameter">
+					<Id>1690977196630</Id>
+					<Name><![CDATA[p_buildingThermalPars]]></Name>
+					<X>-389</X><Y>290</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" ModificatorType="STATIC">
+						<Type><![CDATA[String]]></Type>
+						<UnitType><![CDATA[NONE]]></UnitType>
+						<SdArray>false</SdArray>
+						<ParameterEditor>
+							<Id>1690977196628</Id>
 							<EditorContolType>TEXT_BOX</EditorContolType>
 							<MinSliderValue><![CDATA[0]]></MinSliderValue>
 							<MaxSliderValue><![CDATA[100]]></MaxSliderValue>
@@ -2877,6 +2910,27 @@ if( p_printInputJsons) {
 	traceln("--------------------------------------------------------------------------------------------------");
 	traceln(root.toPrettyString());
 }
+
+p_buildingThermalPars = t_buildingThermalPars.readString();
+try {
+	root = mapper.readTree(p_buildingThermalPars);
+	traceln("readTree succeeded!");
+} catch (JsonProcessingException e) {
+	throw new RuntimeException(e);
+}
+v_buildingThermalPars = (ObjectNode) root;
+if( p_printInputJsons) {
+	traceln("--------------------------------------------------------------------------------------------------");
+	traceln("------------------- BuildingThermalParameters-----------------------------------------------------");
+	traceln("--------------------------------------------------------------------------------------------------");
+	traceln(root.toPrettyString());
+}
+
+// Test buildingpars
+double lossfactorTest_WpK = v_buildingThermalPars.path("TERRACED").path("A").path("lossFactor_WpK").doubleValue();
+traceln("Loss factor from json: %s", lossfactorTest_WpK);
+
+
 
 /* // Policies config
 try {
@@ -5859,6 +5913,24 @@ t_numberOfRooftopPV.setText(count(Houses, x->x.v_hasPV == true));]]></Body>
 					<ResourceReference>
 						<PackageName><![CDATA[base]]></PackageName>
 						<ClassName><![CDATA[TemplateAssets.json]]></ClassName>
+					</ResourceReference>
+					<FileMode>READ</FileMode>
+					<CharsetName>null</CharsetName>
+					<Separators></Separators>
+				</TextFile>
+				<TextFile>
+					<Id>1690977196615</Id>
+					<Name><![CDATA[t_buildingThermalPars]]></Name>
+					<X>-389</X><Y>270</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<FileType>FILE</FileType>
+					<Url><![CDATA[]]></Url>
+					<ResourceReference>
+						<PackageName><![CDATA[base]]></PackageName>
+						<ClassName><![CDATA[BuildingThermalsMap.json]]></ClassName>
 					</ResourceReference>
 					<FileMode>READ</FileMode>
 					<CharsetName>null</CharsetName>
@@ -9341,6 +9413,7 @@ if( sl_homeBattery.getValue()/100.0*Houses.size() < HouseholdBatteries){
 		EnergyAsset EA = h.p_batteryAsset;
 		traceln("Found household battery: " + EA);
 		if (EA!=null) {
+			c_storageAssets.remove(EA);
 			h.c_storageAssets.remove(EA);
 			h.p_batteryAsset = null;
 			remove_pop_energyAssets(EA);
@@ -9795,6 +9868,28 @@ rectangle_electricitySettings.setVisible(false);]]></OnClickCode>
 					<FillAreaUnderLine>false</FillAreaUnderLine>
 					<LabelFormat>MODEL_TIME_UNITS</LabelFormat>
     			</TimePlot>
+				<Text>
+					<Id>1690975123923</Id>
+					<Name><![CDATA[text37]]></Name>
+					<X>656</X><Y>169</Y>
+					<Label><X>0</X><Y>-10</Y></Label>
+					<PublicFlag>true</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>false</ShowLabel>
+					<DrawMode>SHAPE_DRAW_2D</DrawMode>
+					<EmbeddedIcon>false</EmbeddedIcon>
+					<Z>0</Z>
+					<Rotation>0.0</Rotation>
+					<Color>-16777216</Color>
+					<Text><![CDATA[Datum]]></Text>
+					<TextCode><![CDATA[date()]]></TextCode>
+					<Font>
+						<Name>SansSerif</Name>
+						<Size>18</Size>
+						<Style>0</Style>
+					</Font>
+					<Alignment>LEFT</Alignment>
+				</Text>
 			</Presentation>
 
 				</Level>
@@ -13989,8 +14084,10 @@ if( p_energyAssetList != null) {
 				else if (storageAsset.p_energyAssetType == OL_EnergyAssetType.BUILDINGTHERMALS ){
 				
 					double capacityHeat_kW3 = l.path( "capacityHeat_kW").doubleValue();
+			
 					double lossFactor_WpK2 = l.path( "lossFactor_WpK" ).doubleValue() * uniform(0.8, 1.2);
 					double heatCapacity_JpK2 = l.path( "heatCapacity_JpK" ).doubleValue() * uniform(0.7, 1.3);
+									
 					double minTemperature_degC2 = l.path( "minTemp_degC" ).asDouble(1.0);
 					double maxTemperature_degC2 = l.path( "maxTemp_degC" ).asDouble(90.0);
 					double initialTemperature_degC2 = l.path( "initialTemperature_degC" ).doubleValue();
@@ -14000,7 +14097,7 @@ if( p_energyAssetList != null) {
 
 					p_BuildingThermalAsset = storageAsset;
 					p_BuildingThermalAsset.p_energyAssetInstance = new J_EABuilding(p_BuildingThermalAsset, OL_EAStorageTypes.HEATMODEL_BUILDING, capacityHeat_kW3, lossFactor_WpK2, main.p_timeStep_h, initialTemperature_degC2 , minTemperature_degC2, maxTemperature_degC2, setTemperature_degC2, heatCapacity_JpK2, ambientTempType3, solarAbsorptionFactor_m2);
-					p_BuildingThermalAsset.f_connectToParentNode( this );
+					//p_BuildingThermalAsset.f_connectToParentNode( this ); dubbelop!
 					//main.c_storageAssets.add( p_BuildingThermalAsset );
 					main.c_ambientAirDependentAssets.add( p_BuildingThermalAsset );
 					
@@ -31296,10 +31393,10 @@ if( p_batteryAsset != null){
 EnergyAsset EA = (EnergyAsset) ConnectingParentNode;
 J_EA j_instance = EA.p_energyAssetInstance;
 
-//dont add asset to list if it is not a tangible asset (i.e. a heating model for buildings)
-if(! (j_instance instanceof J_EAStorageHeat && ((J_EAStorageHeat)j_instance).heatStorageType == OL_EAStorageTypes.HEATMODEL_BUILDING)) {
+//dont add asset to list if it is not a tangible asset (i.e. a heating model for buildings) [GH] How is this not a tangible asset??
+//if(! (j_instance instanceof J_EAStorageHeat && ((J_EAStorageHeat)j_instance).heatStorageType == OL_EAStorageTypes.HEATMODEL_BUILDING)) {
 	c_energyAssets.add(EA);
-}
+//}
 
 if (j_instance instanceof J_EAConsumption) {
 	c_consumptionAssets.add(EA);
@@ -31339,16 +31436,25 @@ else if (j_instance instanceof J_EAProduction ) {
 	}
 } 
 else if (j_instance instanceof J_EAStorage ) {
-	if (j_instance instanceof J_EAStorageHeat) {
-		if ( ((J_EAStorageHeat)j_instance).heatStorageType == OL_EAStorageTypes.HEATMODEL_BUILDING ) {
-			p_BuildingThermalAsset = EA;
-			//traceln( "Household heat model has kWh: " + ((J_EAStorageHeat) j_instance).getStorageCapacity());
-		}
-		else if ( ((J_EAStorageHeat)j_instance).heatStorageType == OL_EAStorageTypes.HEATBUFFER ) {
+	//traceln("storage asset type connecting to House: " + j_instance);
+	if (j_instance instanceof J_EABuilding) {
+		
+		p_BuildingThermalAsset = EA;
+				
+		double lossFactor_WpK2 = main.v_buildingThermalPars.path( p_gridConnectionType.name() ).path(p_isolationLabel.name()).path("lossFactor_WpK").doubleValue();
+		double heatCapacity_JpK2 = main.v_buildingThermalPars.path( p_gridConnectionType.name() ).path(p_isolationLabel.name()).path("heatCapacity_JpK").doubleValue();
+		((J_EABuilding)EA.p_energyAssetInstance).lossFactor_WpK = lossFactor_WpK2;
+		((J_EABuilding)EA.p_energyAssetInstance).heatCapacity_JpK = heatCapacity_JpK2;
+		traceln("House thermal model updated!");
+		traceln("House type: %s, energy label: %s", p_gridConnectionType, p_isolationLabel);
+		traceln("lossfactor %s, heatcapacity %s", lossFactor_WpK2, heatCapacity_JpK2);
+		//traceln( "Household heat model has kWh: " + ((J_EAStorageHeat) j_instance).getStorageCapacity());
+	}	
+	else if ( ((J_EAStorageHeat)j_instance).heatStorageType == OL_EAStorageTypes.HEATBUFFER ) {
 			c_storageAssets.add(EA);
 			p_heatBuffer = EA;
 			//traceln( "Heatbuffer has kWH: " +((J_EAStorageHeat) j_instance).getStorageCapacity());
-		}
+		
 	} 
 	else if (j_instance instanceof J_EAEV) {
 		c_storageAssets.add(EA);
@@ -37534,6 +37640,9 @@ if (p_batteryAsset != null){
 				<Parameter>
 					<ParameterName><![CDATA[p_templateAssetsJSON]]></ParameterName>
 				</Parameter>
+				<Parameter>
+					<ParameterName><![CDATA[p_buildingThermalPars]]></ParameterName>
+				</Parameter>
 			</Parameters>			
 			<PresentationProperties>
 				<EnableZoomAndPanning>true</EnableZoomAndPanning>
@@ -38527,24 +38636,24 @@ public class J_EAStorageHeat extends base.J_EAStorage implements Serializable {
  */
 public class J_EABuilding extends base.J_EAStorageHeat implements Serializable {
 
-	EnergyAsset ownerAsset;
+	//EnergyAsset ownerAsset;
 	private double capacityElectric_kW = 0;
-	public OL_EnergyCarrierType storageMedium = OL_EnergyCarrierType.HEAT;
+	//public OL_EnergyCarrierType storageMedium = OL_EnergyCarrierType.HEAT;
 	public OL_EAStorageTypes heatStorageType;
 	private double storageCapacity_kWh;
 	private double stateOfCharge_r;
-	private double lossFactor_WpK;
+	public double lossFactor_WpK;
 	private double timestep_h;
 	private double temperature_degC;
 	private double minTemperature_degC;
 	private double maxTemperature_degC;
 	private double setTemperature_degC;
-	private double heatCapacity_JpK;
+	public double heatCapacity_JpK;
 	private double ambientTemperature_degC;
 	private double solarAbsorptionFactor_m2;
 	private double solarRadiation_Wpm2=0;
 	public double energyAbsorbed_kWh=0;
-	public boolean requiresHeat = false;
+	//public boolean requiresHeat = false;
 
 
     /**
@@ -40407,6 +40516,10 @@ public class J_EAConversionCurtailerHeat extends J_EAConversion implements Seria
 		</Resource>
 		<Resource>
 			<Path><![CDATA[exampleAnylogicInput.json]]></Path>
+			<ReferencedFromUserCode>false</ReferencedFromUserCode>
+		</Resource>
+		<Resource>
+			<Path><![CDATA[BuildingThermalsMap.json]]></Path>
 			<ReferencedFromUserCode>false</ReferencedFromUserCode>
 		</Resource>
 	</ModelResources>
