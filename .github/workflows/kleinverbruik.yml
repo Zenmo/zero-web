@@ -9,6 +9,7 @@ on:
 
 jobs:
   image-tag:
+    if: github.event.action != 'closed'
     runs-on: ubuntu-latest
     outputs:
       IMAGE_TAG: ${{ steps.unique-tag.outputs.result }}
@@ -29,6 +30,7 @@ jobs:
             return shortBranch + '-' + shortCommit
 
   build:
+    if: github.event.action != 'closed'
     runs-on: ubuntu-latest
     needs: image-tag
     steps:
@@ -153,9 +155,11 @@ jobs:
         with:
           azcliversion: 2.51.0
           inlineScript: >
+            set -ex
+            
             az containerapp list
             --resource-group Zenmo_Zero
-            | jq -r '.[] | select(.tags.branch == "${{ github.ref_name }}") | .name'
+            | jq -r '.[] | select(.tags.branch == "${{ github.head_ref }}") | .name'
             | xargs -I {} az containerapp delete --resource-group Zenmo_Zero --name {} --yes
 
   ## TODO: remove images from registry after pull request closed
