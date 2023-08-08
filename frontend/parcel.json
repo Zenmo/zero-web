@@ -1,0 +1,7 @@
+{
+  // This file exists because of a bug when using Ant Design with Parcel https://github.com/parcel-bundler/parcel/issues/9081#issuecomment-1635599430
+  "extends": "@parcel/config-default",
+  "optimizers": {
+      "*.js": ["@parcel/optimizer-esbuild"]
+  }
+}

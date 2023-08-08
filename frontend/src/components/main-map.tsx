@@ -13,6 +13,7 @@ import {GeoJSON, LayerGroup, MapContainer, TileLayer, useMap} from 'react-leafle
 import {SetBoundingBoxFn} from '../services/appState'
 import {Bag2DPand} from '../services/bag2d'
 import {useOnce} from '../services/use-once'
+import {Buurt, getBuurtCenter} from '../services/wijken-buurten'
 
 const disruptorBuildingLocation = new LatLng(51.44971831403754, 5.4947035381928035)
 
@@ -24,10 +25,11 @@ Icon.Default.mergeOptions({
     shadowUrl: markerShadowPng,
 })
 
-export const MainMap = ({setCurrentPandId, bag2dPanden, setBoundingBox}: {
+export const MainMap = ({setCurrentPandId, bag2dPanden, setBoundingBox, buurt}: {
     setCurrentPandId: (pandId: string) => void,
     bag2dPanden: Bag2DPand[],
     setBoundingBox: SetBoundingBoxFn,
+    buurt?: Buurt,
 }) => {
     return (
         <MapContainer center={disruptorBuildingLocation}
@@ -39,6 +41,8 @@ export const MainMap = ({setCurrentPandId, bag2dPanden, setBoundingBox}: {
                 // TODO: option to use BAG WMS tiles
                 url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
             />
+            {buurt && <Center center={getBuurtCenter(buurt)}/>}
+            {buurt && <GeoJSON key={buurt.properties.buurtnaam} data={buurt.geometry} pathOptions={{color: 'red'}}/>}
             {/*<LayersControl position="topright">*/}
             {/*    <LayersControl.Overlay name="Panden">*/}
             <LayerGroup>
@@ -50,8 +54,21 @@ export const MainMap = ({setCurrentPandId, bag2dPanden, setBoundingBox}: {
             <Geoman setBoundingBox={setBoundingBox}/>
             {/*</LayersControl.Overlay>*/}
             {/*</LayersControl>*/}
+
         </MapContainer>
     )
+}
+
+// Component used to change the center after initial render.
+// Changing properties like this is not supported by react-leaflet.
+const Center = ({center}: { center?: LatLng }) => {
+    const map = useMap()
+    useEffect(() => {
+        if (center) {
+            map.setView(center)
+        }
+    }, [center])
+    return null
 }
 
 const Panden = (
