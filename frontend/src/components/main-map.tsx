@@ -1,11 +1,13 @@
-import '@geoman-io/leaflet-geoman-free'
-import '@geoman-io/leaflet-geoman-free/dist/leaflet-geoman.css'
+
 import {Icon, LatLng, PM} from 'leaflet'
 import markerIcon2xPng from 'leaflet/dist/images/marker-icon-2x.png'
 
 import markerIconPng from 'leaflet/dist/images/marker-icon.png'
 import markerShadowPng from 'leaflet/dist/images/marker-shadow.png'
 import 'leaflet/dist/leaflet.css'
+// geoman must be imported after leaflet
+import '@geoman-io/leaflet-geoman-free'
+import '@geoman-io/leaflet-geoman-free/dist/leaflet-geoman.css'
 import {useEffect, useRef} from 'react'
 import {GeoJSON, LayerGroup, MapContainer, TileLayer, useMap} from 'react-leaflet'
 import {SetBoundingBoxFn} from '../services/appState'

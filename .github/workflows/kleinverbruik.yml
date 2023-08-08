@@ -35,20 +35,20 @@ jobs:
         ## Buildx is needed for caching
       - name: Set up Buildx
         uses: docker/setup-buildx-action@v2
-        ## Note: GitHub Container Registry (ghcr.io) is not available
+        ## Note: GitHub Container Registry (ghcr.io) under organization ZEnMo is not available
         ## because ZEnMo is on a legacy GitHub plan.
       - name: Login to Azure Container Registry
         uses: docker/login-action@v2
         with:
-          registry: holonregistry.azurecr.io
-          username: zero-github-actions
-          password: ${{ secrets.HOLON_CONTAINER_REGISTRY_PASSWORD }}
+          registry: ghcr.io
+          username: erikvv
+          password: ${{ secrets.ERIKVV_GHCR_PUSH_PASSWORD }}
       - name: Build and push
         uses: docker/build-push-action@v4
         with:
           context: "{{defaultContext}}:kleinverbruik"
           push: true
-          tags: holonregistry.azurecr.io/kleinverbruik:${{ needs.image-tag.outputs.IMAGE_TAG }}
+          tags: ghcr.io/erikvv/kleinverbruik:${{ needs.image-tag.outputs.IMAGE_TAG }}
           cache-from: type=gha
           cache-to: type=gha,mode=max
 
@@ -88,13 +88,13 @@ jobs:
             --target-port 80
             --ingress external
             --tags branch=${{ github.head_ref }}
-            --image holonregistry.azurecr.io/kleinverbruik:${{ needs.image-tag.outputs.IMAGE_TAG }}
-            --registry-username zero-github-actions 
-            --registry-password ${{ secrets.HOLON_CONTAINER_REGISTRY_PASSWORD }} 
-            --registry-server holonregistry.azurecr.io 
+            --image ghcr.io/erikvv/kleinverbruik:${{ needs.image-tag.outputs.IMAGE_TAG }}
+            --registry-username erikvv
+            --registry-password ${{ secrets.ERIKVV_GHCR_PULL_PASSWORD }}
+            --registry-server ghcr.io
             --cpu 0.25 
             --memory 0.5 
-            --min-replicas 1
+            --min-replicas 0
 
   deploy-main:
     if: github.event_name == 'push' && github.ref_name == 'main'
@@ -132,10 +132,10 @@ jobs:
             --target-port 80
             --ingress external
             --tags branch=${{ github.ref_name }}
-            --image holonregistry.azurecr.io/kleinverbruik:${{ needs.image-tag.outputs.IMAGE_TAG }}
-            --registry-username zero-github-actions 
-            --registry-password ${{ secrets.HOLON_CONTAINER_REGISTRY_PASSWORD }} 
-            --registry-server holonregistry.azurecr.io 
+            --image ghcr.io/erikvv/kleinverbruik:${{ needs.image-tag.outputs.IMAGE_TAG }}
+            --registry-username erikvv
+            --registry-password ${{ secrets.ERIKVV_GHCR_PULL_PASSWORD }}
+            --registry-server ghcr.io
             --cpu 0.25 
             --memory 0.5 
             --min-replicas 1
