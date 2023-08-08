@@ -1,0 +1,161 @@
+name: kleinverbruik
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    types: [ opened, synchronize, reopened, closed ]
+
+jobs:
+  image-tag:
+    runs-on: ubuntu-latest
+    outputs:
+      IMAGE_TAG: ${{ steps.unique-tag.outputs.result }}
+    steps:
+      ## produce a unique tag name like "main-3669d3b" or "nice-feature-f97fab8"
+      - uses: actions/github-script@v6
+        id: unique-tag
+        with:
+          result-encoding: string
+          script: |
+            const commit = context.payload.pull_request?.head?.sha ?? context.sha
+            const shortCommit = commit.substr(0, 7)
+            const branch = context.payload.pull_request?.head?.ref ?? context.ref.match(/refs\/heads\/(.+)/)[1]
+            // Azure Container Apps name can be max 32 characters
+            const maxBranchLength = 32 - shortCommit.length - 'kleinverbruik'.length - 2 * '-'.length
+            const shortBranch = branch.substr(0, maxBranchLength)
+            
+            return shortBranch + '-' + shortCommit
+
+  build:
+    runs-on: ubuntu-latest
+    needs: image-tag
+    steps:
+        ## Buildx is needed for caching
+      - name: Set up Buildx
+        uses: docker/setup-buildx-action@v2
+        ## Note: GitHub Container Registry (ghcr.io) is not available
+        ## because ZEnMo is on a legacy GitHub plan.
+      - name: Login to Azure Container Registry
+        uses: docker/login-action@v2
+        with:
+          registry: holonregistry.azurecr.io
+          username: zero-github-actions
+          password: ${{ secrets.HOLON_CONTAINER_REGISTRY_PASSWORD }}
+      - name: Build and push
+        uses: docker/build-push-action@v4
+        with:
+          context: "{{defaultContext}}:kleinverbruik"
+          push: true
+          tags: holonregistry.azurecr.io/kleinverbruik:${{ needs.image-tag.outputs.IMAGE_TAG }}
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
+
+  deploy-test:
+    if: github.event_name == 'pull_request' && github.event.action != 'closed'
+    needs:
+      - build
+      - image-tag
+    runs-on: ubuntu-latest
+    steps:
+      - name: Log in to Azure
+        uses: azure/login@v1
+        with:
+          ## https://github.com/Azure/login#configure-a-service-principal-with-a-secret
+          creds: ${{ secrets.ZERO_AZURE_CREDENTIALS }}
+#      - name: Create app environment
+#        uses: azure/CLI@v1
+#        with:
+#          azcliversion: 2.51.0
+#          inlineScript: >
+#            az containerapp env create
+#            --name zero
+#            --location westeurope
+#            --resource-group Zenmo_Zero
+      - name: Deploy
+        uses: azure/CLI@v1
+        with:
+          ## Use generic azure/CLI@v1 instead of specific azure/container-apps-deploy-action@v1
+          ## because it supports the options that we want.
+          azcliversion: 2.51.0
+          inlineScript: >
+            az containerapp create
+            --resource-group Zenmo_Zero
+            --name kleinverbruik-${{ needs.image-tag.outputs.IMAGE_TAG }}
+            --environment zero 
+            --env-vars PORT=80 
+            --target-port 80
+            --ingress external
+            --tags branch=${{ github.head_ref }}
+            --image holonregistry.azurecr.io/kleinverbruik:${{ needs.image-tag.outputs.IMAGE_TAG }}
+            --registry-username zero-github-actions 
+            --registry-password ${{ secrets.HOLON_CONTAINER_REGISTRY_PASSWORD }} 
+            --registry-server holonregistry.azurecr.io 
+            --cpu 0.25 
+            --memory 0.5 
+            --min-replicas 1
+
+  deploy-main:
+    if: github.event_name == 'push' && github.ref_name == 'main'
+    needs:
+      - build
+      - image-tag
+    runs-on: ubuntu-latest
+    steps:
+      - name: Log in to Azure
+        uses: azure/login@v1
+        with:
+          ## https://github.com/Azure/login#configure-a-service-principal-with-a-secret
+          creds: ${{ secrets.ZERO_AZURE_CREDENTIALS }}
+#      - name: Create app environment
+#        uses: azure/CLI@v1
+#        with:
+#          azcliversion: 2.51.0
+#          inlineScript: >
+#            az containerapp env create
+#            --name zero
+#            --location westeurope
+#            --resource-group Zenmo_Zero
+      - name: Deploy
+        uses: azure/CLI@v1
+        with:
+          ## Use generic azure/CLI@v1 instead of specific azure/container-apps-deploy-action@v1
+          ## because it supports the options that we want.
+          azcliversion: 2.51.0
+          inlineScript: >
+            az containerapp create
+            --resource-group Zenmo_Zero
+            --name kleinverbruik
+            --environment zero 
+            --env-vars PORT=80 
+            --target-port 80
+            --ingress external
+            --tags branch=${{ github.ref_name }}
+            --image holonregistry.azurecr.io/kleinverbruik:${{ needs.image-tag.outputs.IMAGE_TAG }}
+            --registry-username zero-github-actions 
+            --registry-password ${{ secrets.HOLON_CONTAINER_REGISTRY_PASSWORD }} 
+            --registry-server holonregistry.azurecr.io 
+            --cpu 0.25 
+            --memory 0.5 
+            --min-replicas 1
+
+  remove-test:
+    if: github.event_name == 'pull_request' && github.event.action == 'closed'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Log in to Azure
+        uses: azure/login@v1
+        with:
+          creds: ${{ secrets.ZERO_AZURE_CREDENTIALS }}
+      - name: Remove app
+        uses: azure/CLI@v1
+        with:
+          azcliversion: 2.51.0
+          inlineScript: >
+            az containerapp list
+            --resource-group Zenmo_Zero
+            | jq -r '.[] | select(.tags.branch == "${{ github.ref_name }}") | .name'
+            | xargs -I {} az containerapp delete --resource-group Zenmo_Zero --name {} --yes
+
+  ## TODO: remove images from registry after pull request closed

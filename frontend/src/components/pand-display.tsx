@@ -1,10 +1,4 @@
-import React, {
-    createElement,
-    Fragment,
-    FunctionComponent,
-    PropsWithChildren,
-    ReactElement,
-} from 'react'
+import React, {createElement, Fragment, FunctionComponent, PropsWithChildren, ReactElement} from 'react'
 import {Bag3dProperties} from '../services/3dbag_old'
 import {KleinVerbruikPerPostcode, PandData} from '../services/appState'
 import {Verblijfsobject} from '../services/bag-verblijfsobject'
@@ -125,13 +119,12 @@ const ObjectProperty = ({object, objectKey, specs, defaultSpec}: {
     specs: DisplaySpecMap,
     defaultSpec: DisplaySpec
 }) => {
-    let spec = specs[objectKey] ?? {}
-    spec = {
+    const spec: DisplaySpec = {
         ...defaultSpec,
-        ...spec,
+        ...specs[objectKey] ?? {},
     }
 
-    if (spec.visible === false) {
+    if (!spec.visible) {
         return null
     }
 
@@ -140,7 +133,6 @@ const ObjectProperty = ({object, objectKey, specs, defaultSpec}: {
         return null
     }
 
-    // @ts-ignore
     return <Property key={objectKey} objectKey={objectKey} value={value}
                      spec={spec}/>
 }
