@@ -63,7 +63,7 @@ jobs:
         uses: azure/login@v1
         with:
           ## https://github.com/Azure/login#configure-a-service-principal-with-a-secret
-          creds: ${{ secrets.HOLON_AZURE_CREDENTIALS }}
+          creds: ${{ secrets.ZERO_AZURE_CREDENTIALS }}
 #      - name: Create app environment
 #        uses: azure/CLI@v1
 #        with:
@@ -72,7 +72,7 @@ jobs:
 #            az containerapp env create
 #            --name zero
 #            --location westeurope
-#            --resource-group HOLON-webapp
+#            --resource-group Zenmo_Zero
       - name: Deploy
         uses: azure/CLI@v1
         with:
@@ -81,7 +81,7 @@ jobs:
           azcliversion: 2.51.0
           inlineScript: >
             az containerapp create
-            --resource-group HOLON-webapp 
+            --resource-group Zenmo_Zero
             --name kleinverbruik-${{ needs.image-tag.outputs.IMAGE_TAG }}
             --environment zero 
             --env-vars PORT=80 
@@ -107,7 +107,7 @@ jobs:
         uses: azure/login@v1
         with:
           ## https://github.com/Azure/login#configure-a-service-principal-with-a-secret
-          creds: ${{ secrets.HOLON_AZURE_CREDENTIALS }}
+          creds: ${{ secrets.ZERO_AZURE_CREDENTIALS }}
 #      - name: Create app environment
 #        uses: azure/CLI@v1
 #        with:
@@ -116,7 +116,7 @@ jobs:
 #            az containerapp env create
 #            --name zero
 #            --location westeurope
-#            --resource-group HOLON-webapp
+#            --resource-group Zenmo_Zero
       - name: Deploy
         uses: azure/CLI@v1
         with:
@@ -125,7 +125,7 @@ jobs:
           azcliversion: 2.51.0
           inlineScript: >
             az containerapp create
-            --resource-group HOLON-webapp 
+            --resource-group Zenmo_Zero
             --name kleinverbruik
             --environment zero 
             --env-vars PORT=80 
@@ -147,15 +147,15 @@ jobs:
       - name: Log in to Azure
         uses: azure/login@v1
         with:
-          creds: ${{ secrets.HOLON_AZURE_CREDENTIALS }}
+          creds: ${{ secrets.ZERO_AZURE_CREDENTIALS }}
       - name: Remove app
         uses: azure/CLI@v1
         with:
           azcliversion: 2.51.0
           inlineScript: >
             az containerapp list
-            --resource-group HOLON-webapp 
+            --resource-group Zenmo_Zero
             | jq -r '.[] | select(.tags.branch == "${{ github.ref_name }}") | .name'
-            | xargs -I {} az containerapp delete --resource-group HOLON-webapp --name {} --yes
+            | xargs -I {} az containerapp delete --resource-group Zenmo_Zero --name {} --yes
 
   ## TODO: remove images from registry after pull request closed
