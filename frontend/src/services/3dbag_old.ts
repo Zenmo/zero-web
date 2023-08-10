@@ -1,10 +1,10 @@
 import {LatLngBounds, Polygon} from 'leaflet'
-import {BAG_MAX_PANDEN, BoundingBox} from './bag2d'
+import {BoundingBox} from './bag2d'
 
 type ResponseBody = {
     type: 'FeatureCollection',
     features: Bag3DFeature[],
-    totalFeatures: number,
+    totalFeatures: number, // not part of the WFS standard
     numberMatched: number,
     numberReturned: number,
     timestamp: string,
@@ -62,11 +62,10 @@ export type Bag3dProperties = {
     kwaliteits_klasse_lod13_2d: null
 }
 
-export async function getBag3dFeatures(boundingBox: LatLngBounds): Promise<Bag3DFeature[]> {
+export async function getBag3dFeatures(boundingBox: LatLngBounds, startIndex = 0): Promise<Bag3DFeature[]> {
     const params = new URLSearchParams({
         request: 'GetFeature',
         typeName: 'BAG3D_v2:lod12',
-        count: BAG_MAX_PANDEN.toString(),
         srsName: 'EPSG:4326', // output coordinate system
         outputFormat: 'json',
         bbox: [
@@ -76,6 +75,7 @@ export async function getBag3dFeatures(boundingBox: LatLngBounds): Promise<Bag3D
             boundingBox.getNorth(),
             'EPSG:4326', // input coordinate system
         ].join(','),
+        startIndex: startIndex.toString(),
         // TODO: check if we can limit to only relevant properties using parameter "PropertyName"
     })
 
@@ -86,13 +86,18 @@ export async function getBag3dFeatures(boundingBox: LatLngBounds): Promise<Bag3D
 
     const response = await fetch(url)
     if (response.status != 200) {
-        throw Error('Failure getting BAG 2D data')
+        throw Error('Failure getting BAG 3D data')
     }
 
     const body = await response.json() as ResponseBody
-    if (body.numberMatched > BAG_MAX_PANDEN) {
-        throw new Error('Maximum aantal panden overschreden')
+    if (body.numberReturned + startIndex >= body.numberMatched) {
+        // this is the last page
+        return body.features
     }
 
-    return body.features
+    // recurse to get the next page
+    return [
+        ...body.features,
+        ...await getBag3dFeatures(boundingBox, startIndex + body.numberReturned)
+    ]
 }
