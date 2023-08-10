@@ -2000,7 +2000,7 @@ traceln(" ");
 						<UnitType><![CDATA[NONE]]></UnitType>
 						<SdArray>false</SdArray>
 						<DefaultValue Class="CodeValue">
-							<Code><![CDATA[true]]></Code>
+							<Code><![CDATA[false]]></Code>
 						</DefaultValue>
 						<ParameterEditor>
 							<Id>1658752734131</Id>
@@ -31334,12 +31334,6 @@ else if (j_instance instanceof J_EAStorage ) {
 		}
 		//traceln( "Household heat model has kWh: " + ((J_EAStorageHeat) j_instance).getStorageCapacity());
 	}	
-	else if ( ((J_EAStorageHeat)j_instance).heatStorageType == OL_EAStorageTypes.HEATBUFFER ) {
-			c_storageAssets.add(EA);
-			p_heatBuffer = EA;
-			//traceln( "Heatbuffer has kWH: " +((J_EAStorageHeat) j_instance).getStorageCapacity());
-		
-	} 
 	else if (j_instance instanceof J_EAEV) {
 		c_storageAssets.add(EA);
 		c_vehicleAssets.add( EA );
@@ -31369,6 +31363,13 @@ else if (j_instance instanceof J_EAStorage ) {
 		c_storageAssets.add(EA);
 		v_batterySOC_fr = ((J_EAStorageElectric)p_batteryAsset.p_energyAssetInstance).getCurrentStateOfCharge();
 	}
+	else if ( j_instance instanceof J_EAStorageHeat ) {
+			if ( ((J_EAStorageHeat)j_instance).heatStorageType == OL_EAStorageTypes.HEATBUFFER ) {
+				c_storageAssets.add(EA);
+				p_heatBuffer = EA;				
+			//traceln( "Heatbuffer has kWH: " +((J_EAStorageHeat) j_instance).getStorageCapacity());		
+			}
+	} 
 	else{
 		traceln(getName() + "storage asset create that cannot be identified (i.e. its not an EV and not an heatstorage");
 	}
