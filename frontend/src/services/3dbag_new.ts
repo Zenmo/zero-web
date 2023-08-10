@@ -1,5 +1,5 @@
 import {LatLngBounds, Polygon} from 'leaflet'
-import {BAG_MAX_PANDEN, BoundingBox} from './bag2d'
+import {BoundingBox} from './bag2d'
 
 type ResponseBody = {
     type: 'FeatureCollection',
@@ -42,7 +42,6 @@ export async function getBag3dFeatures(boundingBox: LatLngBounds): Promise<Bag3D
     const params = new URLSearchParams({
         request: 'GetFeature',
         typeName: 'BAG3D:lod12',
-        count: BAG_MAX_PANDEN.toString(),
         srsName: 'EPSG:4326', // output coordinate system
         outputFormat: 'json',
         bbox: [
@@ -65,7 +64,7 @@ export async function getBag3dFeatures(boundingBox: LatLngBounds): Promise<Bag3D
     }
 
     const body = await response.json() as ResponseBody
-    if (body.numberMatched > BAG_MAX_PANDEN) {
+    if (body.numberMatched > 1000) {
         throw new Error('Maximum aantal panden overschreden')
     }
 
@@ -77,7 +76,7 @@ function getBag3dByPandId(pandId: string) {
     const params = new URLSearchParams({
         request: 'GetFeature',
         typeName: 'BAG3D:lod12',
-        count: BAG_MAX_PANDEN.toString(),
+        count: '2',
         outputFormat: 'json',
         CQL_FILTER: `identificatie='NL.IMBAG.Pand.${pandId}'`,
     })

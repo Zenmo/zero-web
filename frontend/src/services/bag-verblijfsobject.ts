@@ -1,6 +1,7 @@
 import {Point, Position} from 'geojson'
 import {LatLngBounds} from 'leaflet'
-import {BAG_MAX_PANDEN, BoundingBox} from './bag2d'
+import unionBy from 'lodash/unionBy'
+import {BoundingBox} from './bag2d'
 
 // https://imbag.github.io/praktijkhandleiding/artikelen/welk-gebruiksdoel-moet-worden-geregistreerd
 export enum GebruiksDoel {
@@ -74,13 +75,11 @@ type VerblijfsobjectProperties = {
     pandstatus: string,
 }
 
-export async function getBagVerblijfsobjecten(boundingBox: LatLngBounds): Promise<Verblijfsobject[]> {
+export async function getBagVerblijfsobjecten(boundingBox: LatLngBounds, startIndex = 0): Promise<Verblijfsobject[]> {
     const params = new URLSearchParams({
         request: 'GetFeature',
         service: 'WFS',
         typeName: 'bag:verblijfsobject',
-        // TODO: verify pagination cut-off
-        count: BAG_MAX_PANDEN.toString(),
         outputFormat: 'json',
         srsName: 'EPSG:4326', // GPS
         bbox: [
@@ -91,6 +90,7 @@ export async function getBagVerblijfsobjecten(boundingBox: LatLngBounds): Promis
             'urn:ogc:def:rs:EPSG::4326', // input coordinate system
         ].join(','),
         version: '2.0.0',
+        startIndex: startIndex.toString(),
     })
 
     const url = 'https://service.pdok.nl/lv/bag/wfs/v2_0?' + params.toString()
@@ -101,11 +101,23 @@ export async function getBagVerblijfsobjecten(boundingBox: LatLngBounds): Promis
     }
 
     const body = await response.json() as any
-    if (body.numberMatched > BAG_MAX_PANDEN) {
-        throw new Error('Maximum aantal verblijfsobjecten overschreden')
+
+    // There seems no consistent indication of whether there are more results.
+    // We assume this is the last page if there are less than 900 results.
+    if (body.features.length < 900) {
+        return body.features.map(postProcessing)
     }
 
-    return body.features.map(postProcessing)
+    // Recursively fetch the next page.
+    // There is sometimes overlap between the last items of the previous page
+    // and the first items of the next page.
+    // We remove these duplicates.
+    // (it is kinda inefficient to de-duplicate in every recursive call)
+    return unionBy(
+        body.features.map(postProcessing),
+        await getBagVerblijfsobjecten(boundingBox, startIndex + body.features.length),
+        'feature_id',
+    )
 }
 
 // Create a flatter, more strongly typed object

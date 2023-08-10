@@ -1,12 +1,13 @@
 import {Polygon} from 'geojson'
 import {LatLngBounds} from 'leaflet'
 import proj4 from 'proj4'
-
-export const BAG_MAX_PANDEN = 1000
+import unionBy from 'lodash/unionBy'
 
 interface ResponseBody {
     type: 'FeatureCollection',
-    numberMatched: number,
+    // presence of these numbers is finicky
+    numberMatched?: number,
+    numberReturned?: number,
     name: 'pand',
     features: Bag2DPand[],
     bbox: BoundingBox,
@@ -34,12 +35,11 @@ export interface Bag2DPandProperties {
 
 export type BoundingBox = [number, number, number, number]
 
-export async function getBag2dPanden(boundingBox: LatLngBounds): Promise<Bag2DPand[]> {
+export async function getBag2dPanden(boundingBox: LatLngBounds, startIndex = 0): Promise<Bag2DPand[]> {
     const params = new URLSearchParams({
         request: 'GetFeature',
         service: 'WFS',
         typeName: 'bag:pand',
-        count: BAG_MAX_PANDEN.toString(),
         srsName: 'EPSG:4326', // output coordinate system
         outputFormat: 'json',
         bbox: [
@@ -50,6 +50,7 @@ export async function getBag2dPanden(boundingBox: LatLngBounds): Promise<Bag2DPa
             'urn:ogc:def:rs:EPSG::4326', // input coordinate system
         ].join(','),
         version: '2.0.0',
+        startIndex: startIndex.toString(),
     })
 
     const url = 'https://service.pdok.nl/lv/bag/wfs/v2_0?' + params.toString()
@@ -60,11 +61,23 @@ export async function getBag2dPanden(boundingBox: LatLngBounds): Promise<Bag2DPa
     }
 
     const json = await response.json() as ResponseBody
-    if (json.numberMatched > BAG_MAX_PANDEN) {
-        throw new Error('Maximum aantal panden overschreden')
+
+    // There seems no consistent indication of whether there are more results.
+    // We assume this is the last page if there are less than 900 results.
+    if (json.features.length < 900) {
+        return json.features
     }
 
-    return json.features
+    // Recursively fetch the next page.
+    // There is sometimes overlap between the last items of the previous page
+    // and the first items of the next page.
+    // We remove these duplicates.
+    // (it is kinda inefficient to de-duplicate in every recursive call)
+    return unionBy(
+        json.features,
+        await getBag2dPanden(boundingBox, startIndex + json.features.length),
+        'id',
+    )
 }
 
 // definitie van de Nederlandse coördinatenstelsel

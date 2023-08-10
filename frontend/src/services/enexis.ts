@@ -2,7 +2,8 @@ import {MultiPolygon} from 'geojson'
 import {LatLngBounds} from 'leaflet'
 import {BoundingBox} from './bag2d'
 
-const MAX = 100
+// the full dataset is 236014 records
+const MAX = 1000
 
 export enum Verbruiktype {
     GAS = 'g',
