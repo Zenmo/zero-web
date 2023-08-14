@@ -2000,7 +2000,7 @@ traceln(" ");
 						<UnitType><![CDATA[NONE]]></UnitType>
 						<SdArray>false</SdArray>
 						<DefaultValue Class="CodeValue">
-							<Code><![CDATA[true]]></Code>
+							<Code><![CDATA[false]]></Code>
 						</DefaultValue>
 						<ParameterEditor>
 							<Id>1658752734131</Id>
@@ -22991,6 +22991,51 @@ ea 2
 				<Parameter>
 					<Name><![CDATA[p_actorType]]></Name>
 				</Parameter>
+				<Parameter>
+					<Name><![CDATA[p_holonParent]]></Name>
+				</Parameter>
+				<Parameter>
+					<Name><![CDATA[p_actorContractList]]></Name>
+				</Parameter>
+				<Parameter>
+					<Name><![CDATA[p_capacityTariffApplicable]]></Name>
+				</Parameter>
+				<Parameter>
+					<Name><![CDATA[p_capacityPrice_eur]]></Name>
+				</Parameter>
+				<Parameter>
+					<Name><![CDATA[p_capacityLevel_kW]]></Name>
+				</Parameter>
+				<Parameter>
+					<Name><![CDATA[p_congestionTariffApplicable]]></Name>
+				</Parameter>
+				<Parameter>
+					<Name><![CDATA[p_connectionCapacity_kW]]></Name>
+				</Parameter>
+				<Parameter>
+					<Name><![CDATA[p_electricitySupplier]]></Name>
+				</Parameter>
+				<Parameter>
+					<Name><![CDATA[p_nfatoStart_h]]></Name>
+				</Parameter>
+				<Parameter>
+					<Name><![CDATA[p_nfatoEnd_h]]></Name>
+				</Parameter>
+				<Parameter>
+					<Name><![CDATA[p_nfatoLvl_kW]]></Name>
+				</Parameter>
+				<Parameter>
+					<Name><![CDATA[p_gridOperator]]></Name>
+				</Parameter>
+				<Parameter>
+					<Name><![CDATA[p_methaneSupplier]]></Name>
+				</Parameter>
+				<Parameter>
+					<Name><![CDATA[p_hydrogenSupplier]]></Name>
+				</Parameter>
+				<Parameter>
+					<Name><![CDATA[p_heatSupplier]]></Name>
+				</Parameter>
 			</Parameters>
 			<Generic>false</Generic>
 			<GenericParameter>
@@ -26607,6 +26652,36 @@ Supplier]]></Text>
 				<Parameter>
 					<Name><![CDATA[p_actorType]]></Name>
 				</Parameter>
+				<Parameter>
+					<Name><![CDATA[p_actorContractList]]></Name>
+				</Parameter>
+				<Parameter>
+					<Name><![CDATA[p_connectionCapacity_kW]]></Name>
+				</Parameter>
+				<Parameter>
+					<Name><![CDATA[p_gridNodeUnderResponsibility]]></Name>
+				</Parameter>
+				<Parameter>
+					<Name><![CDATA[p_parentActorID]]></Name>
+				</Parameter>
+				<Parameter>
+					<Name><![CDATA[p_electricitySupplier]]></Name>
+				</Parameter>
+				<Parameter>
+					<Name><![CDATA[p_holonParent]]></Name>
+				</Parameter>
+				<Parameter>
+					<Name><![CDATA[p_gridOperator]]></Name>
+				</Parameter>
+				<Parameter>
+					<Name><![CDATA[p_methaneSupplier]]></Name>
+				</Parameter>
+				<Parameter>
+					<Name><![CDATA[p_hydrogenSupplier]]></Name>
+				</Parameter>
+				<Parameter>
+					<Name><![CDATA[p_heatSupplier]]></Name>
+				</Parameter>
 			</Parameters>
 			<Generic>false</Generic>
 			<GenericParameter>
@@ -28683,6 +28758,33 @@ if( p_congestionTariffApplicable ){
 				<Parameter>
 					<Name><![CDATA[p_actorType]]></Name>
 				</Parameter>
+				<Parameter>
+					<Name><![CDATA[p_parentActorID]]></Name>
+				</Parameter>
+				<Parameter>
+					<Name><![CDATA[p_parentActor]]></Name>
+				</Parameter>
+				<Parameter>
+					<Name><![CDATA[p_fixedElectricityPrice_eurpkWh]]></Name>
+				</Parameter>
+				<Parameter>
+					<Name><![CDATA[p_fixedHeatPrice_eurpkWh]]></Name>
+				</Parameter>
+				<Parameter>
+					<Name><![CDATA[p_fixedMethanePrice_eurpkWh]]></Name>
+				</Parameter>
+				<Parameter>
+					<Name><![CDATA[p_fixedHydrogenPrice_eurpkWh]]></Name>
+				</Parameter>
+				<Parameter>
+					<Name><![CDATA[p_variableElectricityPriceOverNational_eurpkWh]]></Name>
+				</Parameter>
+				<Parameter>
+					<Name><![CDATA[p_fixedFeedinTariff_eurpkWh]]></Name>
+				</Parameter>
+				<Parameter>
+					<Name><![CDATA[p_salderenActive]]></Name>
+				</Parameter>
 			</Parameters>
 			<Generic>false</Generic>
 			<GenericParameter>
@@ -29708,6 +29810,24 @@ v_currentBalanceNat_eur -= v_currentNettElectricityVolume_kWh * v_currentVariabl
 				</Parameter>
 				<Parameter>
 					<Name><![CDATA[p_actorType]]></Name>
+				</Parameter>
+				<Parameter>
+					<Name><![CDATA[p_parentActorID]]></Name>
+				</Parameter>
+				<Parameter>
+					<Name><![CDATA[p_parentActor]]></Name>
+				</Parameter>
+				<Parameter>
+					<Name><![CDATA[p_capacitypricing_households_kW]]></Name>
+				</Parameter>
+				<Parameter>
+					<Name><![CDATA[p_capacitypricing_households_eur]]></Name>
+				</Parameter>
+				<Parameter>
+					<Name><![CDATA[p_hasCapacityPricing]]></Name>
+				</Parameter>
+				<Parameter>
+					<Name><![CDATA[p_hasCongestionPricing]]></Name>
 				</Parameter>
 			</Parameters>
 			<Generic>false</Generic>
@@ -30752,6 +30872,24 @@ void f_heatWithHybridHeatpump() {
 				</Parameter>
 				<Parameter>
 					<Name><![CDATA[p_gasBuffer]]></Name>
+				</Parameter>
+				<Parameter>
+					<Name><![CDATA[p_isolationLabel]]></Name>
+				</Parameter>
+				<Parameter>
+					<Name><![CDATA[p_minEVChargeTarget_fr]]></Name>
+				</Parameter>
+				<Parameter>
+					<Name><![CDATA[p_householdEV]]></Name>
+				</Parameter>
+				<Parameter>
+					<Name><![CDATA[p_minChargingPower_kW]]></Name>
+				</Parameter>
+				<Parameter>
+					<Name><![CDATA[p_DHWAsset]]></Name>
+				</Parameter>
+				<Parameter>
+					<Name><![CDATA[p_smartChargingPowerAttenuation_fr]]></Name>
 				</Parameter>
 			</Parameters>
 			<Generic>false</Generic>
@@ -32306,6 +32444,9 @@ public void f_connectToChild(Agent ConnectingChildNode){
 				</Parameter>
 				<Parameter>
 					<Name><![CDATA[p_gasBuffer]]></Name>
+				</Parameter>
+				<Parameter>
+					<Name><![CDATA[p_residualHeatLTSource]]></Name>
 				</Parameter>
 			</Parameters>
 			<Generic>false</Generic>
@@ -36869,6 +37010,9 @@ public void f_operateFlexAssets(){
 				<Parameter>
 					<Name><![CDATA[p_gasBuffer]]></Name>
 				</Parameter>
+				<Parameter>
+					<Name><![CDATA[p_deliveryTemp_degC]]></Name>
+				</Parameter>
 			</Parameters>
 			<Generic>false</Generic>
 			<GenericParameter>
@@ -37537,7 +37681,7 @@ if (p_batteryAsset != null){
 			<Text><![CDATA[/**
  * J_EAProduction
  */
-public class J_EAProduction extends zero.J_EA implements Serializable {
+public class J_EAProduction extends base.J_EA implements Serializable {
 	//public double yearlyProductionElectricity_kWh;
 	//public double yearlyProductionHeat_kWh;
 	public double yearlyProductionHydrogen_kWh;
@@ -37693,7 +37837,7 @@ public class J_EAStorage extends J_EA implements Serializable {
 			<Text><![CDATA[/**
  * J_EAConversion
  */
-public class J_EAConversion extends zero.J_EA implements Serializable {
+public class J_EAConversion extends base.J_EA implements Serializable {
 
 	protected OL_EnergyCarrierType energyCarrierProduced;
 	protected OL_EnergyCarrierType energyCarrierConsumed;
@@ -37749,7 +37893,7 @@ public class J_EAConversion extends zero.J_EA implements Serializable {
 			<Text><![CDATA[/**
  * J_EAConsumption
  */
-public class J_EAConsumption extends zero.J_EA implements Serializable {
+public class J_EAConsumption extends base.J_EA implements Serializable {
 	public double yearlyDemandElectricity_kWh;
 	public double yearlyDemandHeat_kWh;
 	public double yearlyDemandHydrogen_kWh;
@@ -37949,7 +38093,7 @@ public class J_EA {
 			<Text><![CDATA[/**
  * J_EAConversionGasBurner
  */
-public class J_EAConversionGasBurner extends zero.J_EAConversion implements Serializable {
+public class J_EAConversionGasBurner extends base.J_EAConversion implements Serializable {
 
 	private OL_EnergyCarrierType energyCarrierProduced = OL_EnergyCarrierType.HEAT;
 	private OL_EnergyCarrierType energyCarrierConsumed = OL_EnergyCarrierType.METHANE;
@@ -38020,7 +38164,7 @@ public class J_EAConversionGasBurner extends zero.J_EAConversion implements Seri
 			<Text><![CDATA[/**
  * J_EAConversionBiogasMethane
  */
-public class J_EAConversionBiogasMethane extends zero.J_EAConversion implements Serializable {
+public class J_EAConversionBiogasMethane extends base.J_EAConversion implements Serializable {
 
 	//private OL_EnergyCarrierType energyCarrierProduced = OL_EnergyCarrierType.METHANE;
 	//private OL_EnergyCarrierType energyCarrierConsumed = OL_EnergyCarrierType.METHANE;
@@ -38082,7 +38226,7 @@ public class J_EAConversionBiogasMethane extends zero.J_EAConversion implements 
 			<Text><![CDATA[/**
  * J_EAStorageElectric
  */
-public class J_EAStorageElectric extends zero.J_EAStorage implements Serializable {
+public class J_EAStorageElectric extends base.J_EAStorage implements Serializable {
 
 	private OL_EnergyCarrierType storageMedium = OL_EnergyCarrierType.ELECTRICITY;
 	private double lossFactor_r = 0;
@@ -38195,7 +38339,7 @@ public class J_EAStorageElectric extends zero.J_EAStorage implements Serializabl
 			<Text><![CDATA[/**
  * J_EAStorageGas
  */
-public class J_EAStorageGas extends zero.J_EAStorage implements Serializable {
+public class J_EAStorageGas extends base.J_EAStorage implements Serializable {
 
 	private OL_EnergyCarrierType storageMedium = OL_EnergyCarrierType.METHANE;
 	private double lossFactor_r = 0;
@@ -38308,7 +38452,7 @@ public class J_EAStorageGas extends zero.J_EAStorage implements Serializable {
 			<Text><![CDATA[/**
  * J_EAStorageHeat
  */
-public class J_EAStorageHeat extends zero.J_EAStorage implements Serializable {
+public class J_EAStorageHeat extends base.J_EAStorage implements Serializable {
 
 	EnergyAsset ownerAsset;
 	private double capacityElectric_kW = 0;
@@ -38501,7 +38645,7 @@ public class J_EAStorageHeat extends zero.J_EAStorage implements Serializable {
 			<Text><![CDATA[/**
  * J_EABuilding
  */
-public class J_EABuilding extends zero.J_EAStorageHeat implements Serializable {
+public class J_EABuilding extends base.J_EAStorageHeat implements Serializable {
 
 	//EnergyAsset ownerAsset;
 	private double capacityElectric_kW = 0;
@@ -38715,7 +38859,7 @@ public class J_EABuilding extends zero.J_EAStorageHeat implements Serializable {
 			<Text><![CDATA[/**
  * J_EAConversionHeatPump
  */
-public class J_EAConversionHeatPump extends zero.J_EAConversion implements Serializable {
+public class J_EAConversionHeatPump extends base.J_EAConversion implements Serializable {
 	private double capacityHeat_kW = 0;
 	private double COP_r;
 	private double belowZeroHeatpumpEtaReductionFactor;
@@ -38873,7 +39017,7 @@ public class J_EAConversionHeatPump extends zero.J_EAConversion implements Seria
 			<Text><![CDATA[/**
  * J_EAEV
  */
-public class J_EAEV extends zero.J_EAStorageElectric implements Serializable {
+public class J_EAEV extends base.J_EAStorageElectric implements Serializable {
 
 
 	public OL_EnergyCarrierType storageMedium = OL_EnergyCarrierType.ELECTRICITY;
@@ -39062,7 +39206,7 @@ public class J_EAEV extends zero.J_EAStorageElectric implements Serializable {
 			<Text><![CDATA[/**
  * J_EAConversionHeatDeliverySet
  */
-public class J_EAConversionHeatDeliverySet extends zero.J_EAConversion implements Serializable {
+public class J_EAConversionHeatDeliverySet extends base.J_EAConversion implements Serializable {
 
 	private OL_EnergyCarrierType energyCarrierProduced = OL_EnergyCarrierType.HEAT;
 	private OL_EnergyCarrierType energyCarrierConsumed = OL_EnergyCarrierType.HEAT;
@@ -39381,7 +39525,7 @@ public class J_ActorData implements Serializable {
 			<Text><![CDATA[/**
  * J_EAConversionGasBurner
  */
-public class J_EAConversionHydrogenBurner extends zero.J_EAConversion implements Serializable {
+public class J_EAConversionHydrogenBurner extends base.J_EAConversion implements Serializable {
 
 	private OL_EnergyCarrierType energyCarrierProduced = OL_EnergyCarrierType.HEAT;
 	private OL_EnergyCarrierType energyCarrierConsumed = OL_EnergyCarrierType.HYDROGEN;
@@ -39799,7 +39943,7 @@ public class J_HourlyCurvesData implements Serializable {
 			<Text><![CDATA[/**
  * J_EAConversionDieselVehicle
  */
-public class J_EADieselVehicle extends zero.J_EAConsumption implements Serializable {
+public class J_EADieselVehicle extends base.J_EAConsumption implements Serializable {
 
 	private OL_EnergyCarrierType energyCarrierConsumed = OL_EnergyCarrierType.DIESEL;
 	private double energyConsumption_kWhpkm;
@@ -39889,7 +40033,7 @@ public class J_EADieselVehicle extends zero.J_EAConsumption implements Serializa
 			<Text><![CDATA[/**
  * J_EAConversionElektrolyser
  */
-public class J_EAConversionElektrolyser extends zero.J_EAConversion implements Serializable {
+public class J_EAConversionElektrolyser extends base.J_EAConversion implements Serializable {
 
 	private OL_EnergyCarrierType energyCarrierProduced = OL_EnergyCarrierType.HYDROGEN;
 	private OL_EnergyCarrierType energyCarrierConsumed = OL_EnergyCarrierType.ELECTRICITY;
@@ -39956,7 +40100,7 @@ public class J_EAConversionElektrolyser extends zero.J_EAConversion implements S
 			<Text><![CDATA[/**
  * J_EAConversionGasCHP
  */
-public class J_EAConversionGasCHP extends zero.J_EAConversion implements Serializable {
+public class J_EAConversionGasCHP extends base.J_EAConversion implements Serializable {
 
 	private OL_EnergyCarrierType energyCarrierProduced = OL_EnergyCarrierType.ELECTRICITY;
 	private OL_EnergyCarrierType energyCarrierConsumed = OL_EnergyCarrierType.METHANE;
@@ -40131,7 +40275,7 @@ public class J_Contract implements Serializable {
 			<Text><![CDATA[/**
  * J_DeliveryContract
  */
-public class J_DeliveryContract extends zero.J_Contract implements Serializable {
+public class J_DeliveryContract extends base.J_Contract implements Serializable {
 
 	//public String contractScope; // Kan energySupplier of Holon zijn  (dus kan niet specifieker zijn dan 'String' hier, tenzij we interfaces gaan gebruiken. ('Implements energy supplier')
 	public OL_DeliveryContractType deliveryContractType; // Fixed of variable
@@ -40173,7 +40317,7 @@ public class J_DeliveryContract extends zero.J_Contract implements Serializable 
 			<Text><![CDATA[/**
  * J_TransportContract
  */
-public class J_TransportContract extends zero.J_Contract implements Serializable {
+public class J_TransportContract extends base.J_Contract implements Serializable {
 
 	//public String contractScope; // Kan GridOperator of Holon zijn (dus kan niet specifieker zijn dan 'String' hier, tenzij we interfaces gaan gebruiken. ('Implements grid operator')
 	//public OL_TransportContractType contractType; // Nodal-pricing, bandwidth, peak
@@ -40212,7 +40356,7 @@ public class J_TransportContract extends zero.J_Contract implements Serializable
 			<Text><![CDATA[/**
  * J_TaxContract
  */
-public class J_TaxContract extends zero.J_Contract implements Serializable {
+public class J_TaxContract extends base.J_Contract implements Serializable {
 
 	//public String contractScope; // Kan energySupplier of Holon zijn
 	//public OL_ContractType contractType; // Fixed of variable
@@ -40243,7 +40387,7 @@ public class J_TaxContract extends zero.J_Contract implements Serializable {
 			<Text><![CDATA[/**
  * J_ConnectionContract
  */
-public class J_ConnectionContract extends zero.J_Contract implements Serializable {
+public class J_ConnectionContract extends base.J_Contract implements Serializable {
 
 	//public String contractScope; // Kan energySupplier of Holon zijn
 	public OL_ConnectionContractType connectionContractType; // Fixed of variable
