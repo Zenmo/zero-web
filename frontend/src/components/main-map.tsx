@@ -1,5 +1,5 @@
 
-import {Icon, LatLng, PM} from 'leaflet'
+import {Icon, LatLng, PM, LayerGroup as NativeLayerGroup} from 'leaflet'
 import markerIcon2xPng from 'leaflet/dist/images/marker-icon-2x.png'
 
 import markerIconPng from 'leaflet/dist/images/marker-icon.png'
@@ -8,10 +8,12 @@ import 'leaflet/dist/leaflet.css'
 // geoman must be imported after leaflet
 import '@geoman-io/leaflet-geoman-free'
 import '@geoman-io/leaflet-geoman-free/dist/leaflet-geoman.css'
-import {useEffect, useRef} from 'react'
-import {GeoJSON, LayerGroup, MapContainer, TileLayer, useMap} from 'react-leaflet'
-import {SetBoundingBoxFn} from '../services/appState'
+import {useEffect, useLayoutEffect, useRef, useState} from 'react'
+import {GeoJSON, MapContainer, TileLayer, useMap, LayerGroup} from 'react-leaflet'
+import {useLeafletContext} from '@react-leaflet/core'
+import {SetGeometryFn} from '../services/appState'
 import {Bag2DPand} from '../services/bag2d'
+import {map} from '../services/iterable'
 import {useOnce} from '../services/use-once'
 import {Buurt, getBuurtCenter} from '../services/wijken-buurten'
 
@@ -25,10 +27,10 @@ Icon.Default.mergeOptions({
     shadowUrl: markerShadowPng,
 })
 
-export const MainMap = ({setCurrentPandId, bag2dPanden, setBoundingBox, buurt}: {
+export const MainMap = ({setCurrentPandId, bag2dPanden, setGeometry, buurt}: {
     setCurrentPandId: (pandId: string) => void,
-    bag2dPanden: Bag2DPand[],
-    setBoundingBox: SetBoundingBoxFn,
+    bag2dPanden: Iterable<Bag2DPand>,
+    setGeometry: SetGeometryFn,
     buurt?: Buurt,
 }) => {
     return (
@@ -51,7 +53,9 @@ export const MainMap = ({setCurrentPandId, bag2dPanden, setBoundingBox, buurt}: 
             </LayerGroup>
             {/*</LayersControl.Overlay>*/}
             {/*<LayersControl.Overlay name="Tekenen">*/}
-            <Geoman setBoundingBox={setBoundingBox}/>
+            <LayerGroup>
+                <Geoman setGeometry={setGeometry}/>
+            </LayerGroup>
             {/*</LayersControl.Overlay>*/}
             {/*</LayersControl>*/}
 
@@ -74,50 +78,47 @@ const Center = ({center}: { center?: LatLng }) => {
 const Panden = (
     {bag2dPanden, setCurrentPandId}:
         {
-            bag2dPanden: Bag2DPand[],
+            bag2dPanden: Iterable<Bag2DPand>,
             setCurrentPandId: (pandId: string) => void
         },
 ) => {
-    const geoJsons = bag2dPanden.map(feature => (
-        <GeoJSON key={feature.id} data={feature.geometry} eventHandlers={{
+    const geoJsons = map(bag2dPanden, pand => (
+        <GeoJSON key={pand.id} data={pand.geometry} eventHandlers={{
             click: () => {
-                setCurrentPandId(feature.properties.identificatie)
+                setCurrentPandId(pand.properties.identificatie)
             },
         }}/>
     ))
 
-    return <>{geoJsons}</>
+    return <>{[...geoJsons]}</>
 }
 
 // add paint controls
-const Geoman = ({setBoundingBox}: { setBoundingBox: SetBoundingBoxFn }) => {
+const Geoman = ({setGeometry}: { setGeometry: SetGeometryFn }) => {
     const map = useMap()
-    const layerGroupRef = useRef(null)
+    const {layerContainer } = useLeafletContext() as {layerContainer: NativeLayerGroup}
 
     useOnce(() => {
         map.pm.setGlobalOptions({
             pathOptions: {
                 color: 'purple',
             },
+            layerGroup: layerContainer,
         })
         map.pm.addControls({
             position: 'topleft',
             drawMarker: false,
             drawCircleMarker: false,
+            // Circles don't have a GeoJSON representation,
+            // plus they don't seem an obvious tool to select an area.
+            drawCircle: false,
             drawPolyline: false,
         })
+        map.on('pm:create', ((event) => {
+            // TODO: add id to every feature.
+            setGeometry(layerContainer.toGeoJSON())
+        }) as PM.CreateEventHandler)
     })
 
-    useEffect(() => {
-        map.on('pm:create', ((event) => {
-            const layer = event.layer
-            // @ts-ignore
-            layer.addTo(layerGroupRef.current)
-            // @ts-ignore
-            const featureGroup = layer._map.pm.getGeomanLayers(true)
-            setBoundingBox(featureGroup.getBounds())
-        }) as PM.CreateEventHandler)
-    }, [layerGroupRef.current])
-
-    return <LayerGroup ref={layerGroupRef}/>
+    return null
 }

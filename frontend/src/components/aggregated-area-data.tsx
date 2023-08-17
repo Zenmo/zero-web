@@ -1,55 +1,56 @@
 import {createElement as h} from 'react'
-import {AppState} from '../services/appState'
+import {AppHook} from '../services/appState'
 import {Verblijfsobject} from '../services/bag-verblijfsobject'
 import {Bag2DPand} from '../services/bag2d'
+import {count, empty, filter, flatMap, map, reduce, toIterable} from '../services/iterable'
 import {DtBold} from './pand-display'
 
-export const AggregatedAreaData = ({appState}: { appState: AppState }) => (
+export const AggregatedAreaData = ({appHook: {bag2dPanden, verblijfsobjecten}}: { appHook: AppHook }) => (
     h('dl', {},
         h(DtBold, {}, 'Aantal panden'),
-        h('dd', {}, appState.bag2dPanden.length),
+        h('dd', {}, count(bag2dPanden)),
         h(DtBold, {}, 'Gemiddeld bouwjaar'),
-        h('dd', {}, averageBouwjaar(appState.bag2dPanden)),
+        h('dd', {}, averageBouwjaar(bag2dPanden)),
         h(DtBold, {}, 'Aantal verblijfsobjecten'),
-        h('dd', {}, appState.verblijfsobjecten.length),
+        h('dd', {}, count(verblijfsobjecten)),
         h(DtBold, {}, 'Vloeroppervlak'),
         // TODO: does not include panden with no verblijfsobject, like factory floors
-        h('dd', {}, sumVloeroppervlak(appState.verblijfsobjecten).toLocaleString('nl-NL') + ' m²'),
+        h('dd', {}, sumVloeroppervlak(verblijfsobjecten).toLocaleString('nl-NL') + ' m²'),
         h(DtBold, {}, 'Gebruiksdoelen'),
-        h('dd', {}, Object.entries(gebruiksdoelenOverzicht(appState.verblijfsobjecten))
-            .map(([gebruiksdoel, aantal]) => h('div', {key: gebruiksdoel}, `${gebruiksdoel} (${aantal}x)`)),
-        ),
+        h('dd', {}, [...map(
+            gebruiksdoelenOverzicht(verblijfsobjecten).entries(),
+            ([gebruiksdoel, aantal]) => h('div', {key: gebruiksdoel}, `${gebruiksdoel} (${aantal}x)`)),
+        ]),
     )
 )
 
-const sumVloeroppervlak = (verblijfsobjecten: Verblijfsobject[]): number =>
-    verblijfsobjecten
-        .map(verblijfsobject => verblijfsobject.oppervlakte)
-        .reduce((acc, val) => acc + val, 0)
+const sumVloeroppervlak = (verblijfsobjecten: Iterable<Verblijfsobject>): number =>
+    reduce(
+        map(verblijfsobjecten, verblijfsobject => verblijfsobject.oppervlakte),
+        (acc, val) => acc + val,
+        0,
+    )
 
-const averageBouwjaar = (panden: Bag2DPand[]) => {
-    const bouwjaren = panden
-        .map(pand => pand.properties.bouwjaar)
-        .filter(bouwjaar => bouwjaar)
+const averageBouwjaar = (panden: Iterable<Bag2DPand>) => {
+    const bouwjaren = toIterable(() => filter(
+        map(panden, pand => pand.properties.bouwjaar),
+        bouwjaar => Boolean(bouwjaar),
+    ))
 
-    if (bouwjaren.length === 0) {
+    if (empty(bouwjaren)) {
         return 1995
     }
 
-    const sum = bouwjaren.reduce((sum, bouwjaar) => sum + bouwjaar, 0)
+    const sum = reduce(bouwjaren, (acc, val) => acc + val, 0)
 
-    const average = sum / bouwjaren.length
+    const average = sum / count(bouwjaren)
 
     return Math.round(average)
 }
 
-const gebruiksdoelenOverzicht = (verblijfsobjecten: Verblijfsobject[]): {
-    [gebruiksdoel: string]: number
-} =>
-    verblijfsobjecten
-        .flatMap(verblijfsobject => verblijfsobject.gebruiksdoelen)
-        .reduce((acc, gebruiksdoel) => ({
-            ...acc,
-            // @ts-ignore
-            [gebruiksdoel]: (acc[gebruiksdoel] ?? 0) + 1,
-        }), {})
+const gebruiksdoelenOverzicht = (verblijfsobjecten: Iterable<Verblijfsobject>): Map<string, number> =>
+    reduce(
+        flatMap(verblijfsobjecten, verblijfsobject => verblijfsobject.gebruiksdoelen),
+        (acc, gebruiksdoel) => acc.set(gebruiksdoel, (acc.get(gebruiksdoel) ?? 0) + 1),
+        new Map<string, number>(),
+    )

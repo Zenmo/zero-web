@@ -1,8 +1,10 @@
+import {Point, Position} from 'geojson'
 import React, {createElement, Fragment, FunctionComponent, PropsWithChildren, ReactElement} from 'react'
 import {Bag3dProperties} from '../services/3dbag_old'
 import {KleinVerbruikPerPostcode, PandData} from '../services/appState'
 import {Verblijfsobject} from '../services/bag-verblijfsobject'
 import {Bag2DPandProperties} from '../services/bag2d'
+import {map} from '../services/iterable'
 import {printPostalCodeRange} from '../services/postalcode'
 
 export const PandDataDisplay = ({pandData}: { pandData: PandData }) => (
@@ -20,14 +22,14 @@ export const PandDataDisplay = ({pandData}: { pandData: PandData }) => (
 
         <h2>Verblijfsobjecten
             ({pandData.bag2dPand?.properties.aantal_verblijfsobjecten})</h2>
-        {pandData.verblijfsobjecten.map((verblijfsobject, index) => (
+        {Array.from(map(pandData.verblijfsobjecten, verblijfsobject => (
             <>
                 <h3>Verblijfsobject {verblijfsobjectLabel(verblijfsobject)}</h3>
                 <PropertyList props={verblijfsobject}
                               specs={verblijfsobjectDisplaySpec}
                               defaultSpec={bagDefaultDisplaySpec}/>
             </>
-        ))}
+        )))}
 
 
         {/*<pre>*/}
@@ -177,6 +179,10 @@ const Property = ({objectKey, value, spec}: {
         label = spec.label
     }
 
+    if (spec.transform) {
+        value = spec.transform(value)
+    }
+
     const values: any[] = Array.isArray(value) ? value : [value]
 
     return (
@@ -195,6 +201,7 @@ type DisplaySpec = {
     label: string,
     is_meters: boolean,
     is_m2: boolean,
+    transform?: Function,
 }
 
 const bagDefaultDisplaySpec: DisplaySpec = {
@@ -241,6 +248,9 @@ const verblijfsobjectDisplaySpec: Partial<{ [key in keyof Verblijfsobject]: Part
     bouwjaar: {
         visible: false,
     },
+    position: {
+        transform: (point: Point) => point.coordinates,
+    }
 }
 
 const bag3dDisplaySpec: Partial<{ [key in keyof Bag3dProperties]: Partial<DisplaySpec> }> = {

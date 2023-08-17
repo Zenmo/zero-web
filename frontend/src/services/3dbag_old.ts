@@ -1,5 +1,6 @@
-import {LatLngBounds, Polygon} from 'leaflet'
-import {BoundingBox} from './bag2d'
+import {BBox2d} from '@turf/helpers/dist/js/lib/geojson'
+import {Polygon} from 'geojson'
+import {LatLngBounds} from 'leaflet'
 
 type ResponseBody = {
     type: 'FeatureCollection',
@@ -14,7 +15,7 @@ type ResponseBody = {
             name: 'urn:ogc:def:crs:EPSG::4326',
         }
     }
-    bbox: BoundingBox,
+    bbox: BBox2d,
 }
 
 export type Bag3DFeature = {
@@ -62,7 +63,7 @@ export type Bag3dProperties = {
     kwaliteits_klasse_lod13_2d: null
 }
 
-export async function getBag3dFeatures(boundingBox: LatLngBounds, startIndex = 0): Promise<Bag3DFeature[]> {
+export async function fetchBag3dPanden(boundingBox: LatLngBounds, startIndex = 0): Promise<Bag3DFeature[]> {
     const params = new URLSearchParams({
         request: 'GetFeature',
         typeName: 'BAG3D_v2:lod12',
@@ -98,6 +99,6 @@ export async function getBag3dFeatures(boundingBox: LatLngBounds, startIndex = 0
     // recurse to get the next page
     return [
         ...body.features,
-        ...await getBag3dFeatures(boundingBox, startIndex + body.numberReturned)
+        ...await fetchBag3dPanden(boundingBox, startIndex + body.numberReturned)
     ]
 }

@@ -1,12 +1,7 @@
+import {BBox2d} from '@turf/helpers/dist/js/lib/geojson'
 import {MultiPolygon} from 'geojson'
 import {LatLngBounds} from 'leaflet'
-import {BoundingBox} from '../bag2d'
-import {PostcodeKleinverbruik, Productsoort, SoortElektriciteitsaansluiting, SoortGasaansluiting} from './types'
-
-export enum Verbruiktype {
-    GAS = 'g',
-    ELEKTRICITEIT = 'e',
-}
+import {PostcodeKleinverbruik} from './types'
 
 type ResponseBody = {
     type: 'FeatureCollection',
@@ -21,7 +16,7 @@ type ResponseBody = {
             name: 'urn:ogc:def:crs:EPSG::4326',
         }
     }
-    bbox: BoundingBox,
+    bbox: BBox2d,
 }
 
 export type EnexisPostcodeKleinverbruikFeature = {

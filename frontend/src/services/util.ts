@@ -1,4 +1,8 @@
-import {BBox, Position} from 'geojson'
+import bbox from '@turf/bbox'
+import booleanContains from '@turf/boolean-contains'
+import {Geometries, GeometryCollection} from '@turf/helpers'
+import {geomReduce} from '@turf/meta'
+import {BBox, Geometry, Position} from 'geojson'
 import {LatLng, LatLngBounds} from 'leaflet'
 
 export const geoJsonBoundingBoxToLeaflet = (bbox: BBox): LatLngBounds =>
@@ -10,9 +14,19 @@ export const geoJsonBoundingBoxToLeaflet = (bbox: BBox): LatLngBounds =>
 export const geoJsonPositionToLeaflet = (position: Position): LatLng =>
     new LatLng(position[1], position[0])
 
-export const assertDefined = <T>(value: T | undefined): T => {
-    if (value === undefined) {
+export const geometryToBoundingBox = (geometry: Geometry): LatLngBounds =>
+    geoJsonBoundingBoxToLeaflet(bbox(geometry))
+
+export const geometryCollectionContains = (geometryCollection: GeometryCollection, geometry: Geometries): boolean => {
+    return geomReduce(geometryCollection, (contains: boolean, geometryObject: Geometries) => {
+        return contains || booleanContains(geometryObject, geometry)
+    }, false)
+}
+
+export const assertDefined = <T>(value: T | undefined | null): T => {
+    if (value === undefined || value === null) {
         throw new Error('value is undefined')
     }
     return value
 }
+
