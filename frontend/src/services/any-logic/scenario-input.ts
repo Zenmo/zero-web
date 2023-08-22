@@ -1,5 +1,6 @@
-import {AppState} from '../appState'
+import {AppHook} from '../appState'
 import {Verblijfsobject} from '../bag-verblijfsobject'
+import {map, reduce} from '../iterable'
 import {getElectricityUsage} from '../kleinverbruik/kleinverbruik'
 import {PostcodeKleinverbruik} from '../kleinverbruik/types'
 import {Actor, defaultElectrictySupplier, defaultGovernment, defaultGridOperator} from './actor'
@@ -17,16 +18,17 @@ export type ScenarioInput = {
     templateAssets: EnergyAsset[],
 }
 
-export const appStateToScenarioInput = (appState: AppState): ScenarioInput => {
-    const tuples = appState.verblijfsobjecten.map(
-        verblijfsObject => verblijfsObjectToGridConnection(verblijfsObject, appState.postcodeKleinverbruik)
+export const appStateToScenarioInput = (appHook: AppHook): ScenarioInput => {
+    const tuples = map(
+        appHook.verblijfsobjecten,
+        verblijfsObject => verblijfsObjectToGridConnection(verblijfsObject, appHook.getPostcodeKleinverbruik())
     )
 
     // this is a silly way to do it
-    const {actors, gridConnections} = tuples.reduce<{
+    const {actors, gridConnections} = reduce<[Actor, GridConnection], {
         actors: Actor[],
         gridConnections: GridConnection[]
-    }>(
+    }>(tuples,
         (acc, [actor, gridConnection]) => ({
             actors: [
                 ...acc.actors,

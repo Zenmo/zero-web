@@ -18,6 +18,7 @@ const config = {
     "json",
     "node"
   ],
+  testEnvironment: "jsdom",
 };
 
 module.exports = config;

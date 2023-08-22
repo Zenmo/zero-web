@@ -1,3 +1,4 @@
+import {BBox2d} from '@turf/helpers/dist/js/lib/geojson'
 import {Polygon} from 'geojson'
 import {LatLngBounds} from 'leaflet'
 import proj4 from 'proj4'
@@ -10,14 +11,14 @@ interface ResponseBody {
     numberReturned?: number,
     name: 'pand',
     features: Bag2DPand[],
-    bbox: BoundingBox,
+    bbox: BBox2d,
 }
 
 export interface Bag2DPand {
     type: 'Feature',
     id: string // e.g. pand.97faabcf-a317-4c15-ae42-d1b8d04beb7d
     properties: Bag2DPandProperties,
-    bbox: BoundingBox,
+    bbox: BBox2d,
     geometry: Polygon,
 }
 
@@ -33,9 +34,7 @@ export interface Bag2DPandProperties {
     // incomplete
 }
 
-export type BoundingBox = [number, number, number, number]
-
-export async function getBag2dPanden(boundingBox: LatLngBounds, startIndex = 0): Promise<Bag2DPand[]> {
+export async function fetchBag2dPanden(boundingBox: LatLngBounds, startIndex = 0): Promise<Map<BigInt, Bag2DPand>> {
     const params = new URLSearchParams({
         request: 'GetFeature',
         service: 'WFS',
@@ -62,22 +61,17 @@ export async function getBag2dPanden(boundingBox: LatLngBounds, startIndex = 0):
 
     const json = await response.json() as ResponseBody
 
+    // Recursively fetch the next page.
+    //
     // There seems no consistent indication of whether there are more results.
     // We assume this is the last page if there are less than 900 results.
-    if (json.features.length < 900) {
-        return json.features
-    }
-
-    // Recursively fetch the next page.
+    //
     // There is sometimes overlap between the last items of the previous page
     // and the first items of the next page.
-    // We remove these duplicates.
-    // (it is kinda inefficient to de-duplicate in every recursive call)
-    return unionBy(
-        json.features,
-        await getBag2dPanden(boundingBox, startIndex + json.features.length),
-        'id',
-    )
+    // We remove these duplicates by using a Map.
+    return json.features.reduce((map, feature) => {
+        return map.set(BigInt(feature.properties.identificatie), feature)
+    }, json.features.length > 900 ? await fetchBag2dPanden(boundingBox, startIndex + json.features.length) : new Map<BigInt, Bag2DPand>())
 }
 
 // definitie van de Nederlandse coördinatenstelsel

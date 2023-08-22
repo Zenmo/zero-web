@@ -1,9 +1,9 @@
 import {useRef, useState} from 'react'
 import {startSimulation} from '../services/any-logic/any-logic-client'
 import {appStateToScenarioInput} from '../services/any-logic/scenario-input'
-import {AppState} from '../services/appState'
+import {AppHook} from '../services/appState'
 
-export const AnyLogic = ({appState}: { appState: AppState }) => {
+export const AnyLogic = ({appHook}: { appHook: AppHook }) => {
 
     const divId = 'any-logic'
 
@@ -11,11 +11,11 @@ export const AnyLogic = ({appState}: { appState: AppState }) => {
 
     const onStartSimulation = async () => {
         setVisible(true)
-        await startSimulation(divId, appState)
+        await startSimulation(divId, appHook)
     }
 
     const onViewInput = () => {
-        const input = JSON.stringify(appStateToScenarioInput(appState))
+        const input = JSON.stringify(appStateToScenarioInput(appHook))
         const newWindow = window.open('data:application/json,' + encodeURIComponent(input), '_blank')
         if (newWindow === null) {
             throw new Error('Can\'t open new window')

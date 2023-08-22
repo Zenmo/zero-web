@@ -1,5 +1,5 @@
+import {BBox2d} from '@turf/helpers/dist/js/lib/geojson'
 import {LatLngBounds, Polygon} from 'leaflet'
-import {BoundingBox} from './bag2d'
 
 type ResponseBody = {
     type: 'FeatureCollection',
@@ -14,7 +14,7 @@ type ResponseBody = {
             name: 'urn:ogc:def:crs:EPSG::4326',
         }
     }
-    bbox: BoundingBox,
+    bbox: BBox2d,
 }
 
 export type Bag3DFeature = {
@@ -38,7 +38,7 @@ type FeatureProperties = {
     // https://geoforum.nl/t/missing-properties-in-getfeatures/8482
 }
 
-export async function getBag3dFeatures(boundingBox: LatLngBounds): Promise<Bag3DFeature[]> {
+export async function fetchBag3dPanden(boundingBox: LatLngBounds): Promise<Bag3DFeature[]> {
     const params = new URLSearchParams({
         request: 'GetFeature',
         typeName: 'BAG3D:lod12',

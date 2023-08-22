@@ -1,7 +1,6 @@
-import {Point, Position} from 'geojson'
+import {BBox2d} from '@turf/helpers/dist/js/lib/geojson'
+import {Point} from 'geojson'
 import {LatLngBounds} from 'leaflet'
-import unionBy from 'lodash/unionBy'
-import {BoundingBox} from './bag2d'
 
 // https://imbag.github.io/praktijkhandleiding/artikelen/welk-gebruiksdoel-moet-worden-geregistreerd
 export enum GebruiksDoel {
@@ -31,7 +30,7 @@ export enum GebruiksDoel {
 
 export type Verblijfsobject = {
     feature_id: string // e.g. "verblijfsobject.144b58ad-1e01-4025-b275-db34fc19ebf7"
-    position: Position,
+    position: Point,
     identificatie: string, // example: "0772010000726364"
     pandidentificatie: string, // example: "0772100000306503"
     rdf_seealso: string, // url
@@ -53,7 +52,7 @@ type VerblijfsobjectFeature = {
     type: 'Feature',
     id: string // e.g. "verblijfsobject.144b58ad-1e01-4025-b275-db34fc19ebf7"
     properties: VerblijfsobjectProperties,
-    bbox: BoundingBox,
+    bbox: BBox2d,
     geometry: Point,
 }
 
@@ -75,7 +74,7 @@ type VerblijfsobjectProperties = {
     pandstatus: string,
 }
 
-export async function getBagVerblijfsobjecten(boundingBox: LatLngBounds, startIndex = 0): Promise<Verblijfsobject[]> {
+export async function fetchBagVerblijfsobjecten(boundingBox: LatLngBounds, startIndex = 0): Promise<Map<BigInt, Verblijfsobject>> {
     const params = new URLSearchParams({
         request: 'GetFeature',
         service: 'WFS',
@@ -100,24 +99,19 @@ export async function getBagVerblijfsobjecten(boundingBox: LatLngBounds, startIn
         throw Error('Failure getting BAG Verblijfsobjecten')
     }
 
-    const body = await response.json() as any
-
-    // There seems no consistent indication of whether there are more results.
-    // We assume this is the last page if there are less than 900 results.
-    if (body.features.length < 900) {
-        return body.features.map(postProcessing)
-    }
+    const features = (await response.json()).features as VerblijfsobjectFeature[]
 
     // Recursively fetch the next page.
+    //
+    // There seems no consistent indication of whether there are more results.
+    // We assume this is the last page if there are less than 900 results.
+    //
     // There is sometimes overlap between the last items of the previous page
     // and the first items of the next page.
-    // We remove these duplicates.
-    // (it is kinda inefficient to de-duplicate in every recursive call)
-    return unionBy(
-        body.features.map(postProcessing),
-        await getBagVerblijfsobjecten(boundingBox, startIndex + body.features.length),
-        'feature_id',
-    )
+    // We remove these duplicates by using a Map.
+    return features.map(postProcessing).reduce((map, verblijfsobject) => {
+        return map.set(BigInt(verblijfsobject.identificatie), verblijfsobject)
+    }, features.length > 900 ? await fetchBagVerblijfsobjecten(boundingBox, startIndex + features.length) : new Map<BigInt, Verblijfsobject>())
 }
 
 // Create a flatter, more strongly typed object
@@ -126,7 +120,7 @@ const postProcessing = (verblijfsobject: VerblijfsobjectFeature): Verblijfsobjec
     let result: Verblijfsobject = {
         ...verblijfsobject.properties,
         feature_id: verblijfsobject.id,
-        position: verblijfsobject.geometry.coordinates,
+        position: verblijfsobject.geometry,
         gebruiksdoelen: verblijfsobject.properties.gebruiksdoel.split(',').filter(Boolean) as GebruiksDoel[],
     }
 

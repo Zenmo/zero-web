@@ -1,6 +1,6 @@
+import {BBox2d} from '@turf/helpers/dist/js/lib/geojson'
 import {MultiPolygon} from 'geojson'
 import {LatLng} from 'leaflet'
-import {BoundingBox} from './bag2d'
 import center from '@turf/center'
 import {geoJsonPositionToLeaflet} from './util'
 
@@ -135,7 +135,7 @@ export interface Buurt {
     type: 'Feature',
     id: string // e.g. buurten.c443da6a-ae59-4cc3-b0a1-3e426a8eaa2b
     properties: BuurtProperties,
-    bbox: BoundingBox,
+    bbox: BBox2d,
     geometry: MultiPolygon,
 }
 

@@ -7,3 +7,7 @@ declare var process: {
         [key: string]: string | undefined
     }
 }
+
+declare module 'memoize-immutable' {
+    export default function memoize<Fn extends Function>(f: Fn): Fn
+}
