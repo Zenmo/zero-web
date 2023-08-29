@@ -20,10 +20,10 @@
                     "annualFee_eur": 20.1,
                     "contractScope": "defaultEnergySupplier",
                     "contractType": "DELIVERY",
-                    "deliveryContractType": "ELECTRICITY_FIXED",
-                    "deliveryPrice_eurpkWh": 0.01,
+                    "deliveryContractType": "ELECTRICITY_VARIABLE",
+                    "deliveryPrice_eurpkWh": 0.0,
                     "energyCarrier": "ELECTRICITY",
-                    "feedinPrice_eurpkWh": 0.01
+                    "feedinPrice_eurpkWh": 0.0
                 },
                 {
                     "annualFee_eur": 20.1,
@@ -44,9 +44,9 @@
                     "contractScope": "defaultGovernment",
                     "contractType": "TAX",
                     "energyCarrier": "ELECTRICITY",
-                    "proportionalTax_pct": 0.21,
-                    "taxDelivery_eurpkWh": 0.01,
-                    "taxFeedin_eurpkWh": 0.01
+                    "proportionalTax_pct": 0.00,
+                    "taxDelivery_eurpkWh": 0.00,
+                    "taxFeedin_eurpkWh": 0.00
                 }
             ],
             "group": "ENERGYCOOP"

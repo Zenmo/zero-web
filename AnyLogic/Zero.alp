@@ -3040,6 +3040,7 @@ if( p_printInputJsons) {
 	traceln(root.toPrettyString());
 }
 
+/*
 // Test buildingpars
 double lossfactorTest_WpK = v_buildingThermalPars.path("TERRACED").path("A").path("lossFactor_WpK").doubleValue();
 traceln("Loss factor from json: %s", lossfactorTest_WpK);
@@ -3047,19 +3048,7 @@ traceln("Loss factor from json: %s", lossfactorTest_WpK);
 // Test asset depreciation
 double PV_depreciation_eurpkWpa = v_assetDepreciation.path("PHOTOVOLTAIC").path("Depreciation_eurpkWpa").doubleValue();
 traceln("Depreciation of solar panels is %s eur/kW/annum", PV_depreciation_eurpkWpa);
-
-/* // Policies config
-try {
-parsedJSONPolicies = mapper.readValue(
-		root.required("policies").toString(),
-		ArrayList.class);
-
-} catch (IOException e) {
-e.printStackTrace();
-update_o_outputExceptions(e.getMessage());
-} */
-
-// Template assets config
+*/
 ]]></Body>
 				</Function>
 				<Function AccessType="default" StaticFunction="false">
@@ -4519,9 +4508,7 @@ else {
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>true</ShowLabel>
-					<Body><![CDATA[traceln("f_createActors test");
-
-for(JsonNode actorJson : v_actorsJson)
+					<Body><![CDATA[for(JsonNode actorJson : v_actorsJson)
 {
 	OL_ActorType actorcategory = OL_ActorType.valueOf(actorJson.required("category").textValue());
 	
@@ -13719,16 +13706,13 @@ v_electricityDischargedByBattery_kWh += max(-v_batteryPowerElectric_kW,0) * main
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>true</ShowLabel>
 					<Body><![CDATA[//traceln("asset " + p_energyAssetList);
-
 if( p_energyAssetList != null) {
 	for( JsonNode l : p_energyAssetList ) {
 		OL_EACategories assetCategory = OL_EACategories.valueOf(l.required( "category" ).textValue());
 		OL_EnergyAssetType assetType = OL_EnergyAssetType.valueOf(l.required( "type" ).textValue()) ;
 		String assetName = l.required( "name" ).textValue();	
 		switch( assetCategory )  {
-			case CONSUMPTION:			
-				//String assetTypeString = l.required( "type" ).textValue();				
-								
+			case CONSUMPTION:							
 				if ( p_gridConnectionCategory == OL_GridConnectionCategory.HOUSE) {
 					if( assetType.equals("ELECTRICITY_DEMAND") && assetName.contains("TEMPLATE House other electricity demand") ) {
 						assetName = "House_other_electricity"; 
@@ -13749,21 +13733,13 @@ if( p_energyAssetList != null) {
 					//traceln("Adding diesel vehicle asset without EnergyAsset agent!");
 					J_EADieselVehicle dieselVehicle = new J_EADieselVehicle(this, energyConsumption_kWhpkm, main.p_timeStep_h, vehicleScaling);
 					f_connectToJ_EA(dieselVehicle);					
-				/*} else if (assetType == OL_EnergyAssetType.ELECTRICITY_DEMAND) {
-					J_EAConsumption electricityDemand = new J_EAConsumption(this,assetType,assetName,yearlyDemandElectricity_kWh,yearlyDemandHeat_kWh,yearlyDemandHydrogen_kWh,yearlyDemandMethane_kWh,yearlyDemandDiesel_kWh,main.p_timeStep_h);
-					f_connectToJ_EA(electricityDemand);	
-				} else if (assetType == OL_EnergyAssetType.HOT_WATER_CONSUMPTION) {
-					J_EAConsumption dhwDemand = new J_EAConsumption(this,assetType,assetName,yearlyDemandElectricity_kWh,yearlyDemandHeat_kWh,yearlyDemandHydrogen_kWh,yearlyDemandMethane_kWh,yearlyDemandDiesel_kWh,main.p_timeStep_h);
-					f_connectToJ_EA(dhwDemand);	
-				*/
 				} else {
 					J_EAConsumption consumptionAsset = new J_EAConsumption(this,assetType,assetName,yearlyDemandElectricity_kWh,yearlyDemandHeat_kWh,yearlyDemandHydrogen_kWh,yearlyDemandMethane_kWh,yearlyDemandDiesel_kWh,main.p_timeStep_h);
 					f_connectToJ_EA(consumptionAsset);						
 				}
 			break;
 			
-			case PRODUCTION:
-								
+			case PRODUCTION:								
 				double capacityElectricity_kW = l.path( "capacityElectricity_kW").doubleValue();
 				double capacityHeat_kW = l.path( "capacityHeat_kW").doubleValue();
 				double yearlyProductionHydrogen_kWh = l.path( "yearlyProductionHydrogen_kWh").doubleValue();
@@ -13772,21 +13748,12 @@ if( p_energyAssetList != null) {
 				
 				J_EAProduction productionAsset = new J_EAProduction ( this, assetType, assetName, capacityElectricity_kW, capacityHeat_kW, yearlyProductionMethane_kWh, yearlyProductionHydrogen_kWh, main.p_timeStep_h, outputTemperature_degC );
 				f_connectToJ_EA(productionAsset);
-				//EnergyAsset producerAsset = main.add_pop_energyAssets();
-				//producerAsset.set_p_parentAgentID( this.p_agentID );
-				//producerAsset.set_p_energyAssetType( OL_EnergyAssetType.valueOf(l.required( "type" ).textValue() ));
-				//producerAsset.set_p_defaultEnergyAssetPresetName(l.required("name").textValue());
-
+			
 				// Determine residual heat delivery temperature from coldest connected asset
-				if(this instanceof GCResidualHeat) {
-					//double deliveryTemp_degC = l.get( "deliveryTemp_degC")== null? 0.0: Double.valueOf( l.get( "deliveryTemp_degC").toString()).doubleValue();
+				if(this instanceof GCResidualHeat) {					
 					traceln("Residual heat delivery temperature = "+outputTemperature_degC);
 					((GCResidualHeat)this).p_deliveryTemp_degC = outputTemperature_degC < ((GCResidualHeat)this).p_deliveryTemp_degC? outputTemperature_degC : ((GCResidualHeat)this).p_deliveryTemp_degC;
 				}
-							
-				//producerAsset.f_instantiateProducerAsset( producerAsset.p_energyAssetType, capacityElectricity_kW, capacityHeat_kW, yearlyProductionHydrogen_kWh, yearlyProductionMethane_kWh, outputTemperature_degC);
-				//producerAsset.f_connectToParentNode( this );
-				//main.c_productionAssets.add(producerAsset);
 				if ( l.required( "type" ).textValue().equals("WINDMILL") ) {
 					main.v_totalInstalledWindPower_kW += capacityElectricity_kW;
 				} else if ( l.required( "type" ).textValue().equals("PHOTOVOLTAIC") ) {
@@ -13866,37 +13833,8 @@ if( p_energyAssetList != null) {
 				} else {
 					traceln("Unknown conversion energy asset! Skipping instantiation!");
 
-				} /*else { // to phase out...
-					EnergyAsset converterAsset = main.add_pop_energyAssets();
-					converterAsset.set_p_parentAgentID( this.p_agentID );
-					converterAsset.set_p_energyAssetType( OL_EnergyAssetType.valueOf(l.required( "type" ).textValue() ));
-					converterAsset.set_p_defaultEnergyAssetPresetName(l.required( "name" ).textValue());
-					//traceln( "l contents"+l.toString() );
-					
-					double capacityElectric_kW = l.path( "capacityElectricity_kW").doubleValue();
-					double capacityHeat_kW1 = l.path( "capacityHeat_kW").doubleValue();
-					double capacityMethane_kW = l.path( "capacityMethane_kW").doubleValue();
-					double eta_r = l.path( "eta_r" ).doubleValue();
-					double deliveryTemp_degC1 = l.path( "deliveryTemp_degC" ).doubleValue();
-					String ambientTempType = l.path( "ambientTempType" ).asText();
-					double belowZeroHeatpumpEtaReductionFactor = l.path( "etaReduction_r" ).asDouble(1.0);
-	
-					
-					converterAsset.f_instantiateConverterAsset( converterAsset.p_energyAssetType,
-															capacityElectric_kW,
-															capacityHeat_kW1,
-															capacityMethane_kW,
-															eta_r,
-															deliveryTemp_degC1,
-															ambientTempType,
-															belowZeroHeatpumpEtaReductionFactor
-															);														
-					converterAsset.f_connectToParentNode( this );
-
-				}*/
-			break;
-		
-				
+				} 
+			break;				
 			case STORAGE:
 				if ( assetType == OL_EnergyAssetType.ELECTRIC_VEHICLE){
 					double capacityElectric_kW1 = l.path( "capacityElectricity_kW").doubleValue();
@@ -13924,11 +13862,7 @@ if( p_energyAssetList != null) {
 
 					J_EABuilding buildingThermals = new J_EABuilding(this, OL_EAStorageTypes.HEATMODEL_BUILDING, capacityHeat_kW3, lossFactor_WpK2, main.p_timeStep_h, initialTemperature_degC2, minTemperature_degC2, maxTemperature_degC2, setTemperature_degC2, heatCapacity_JpK2, ambientTempType3, solarAbsorptionFactor_m2);
 					f_connectToJ_EA(buildingThermals);
-					//main.c_storageAssets.add( p_BuildingThermalAsset );
-					//main.c_ambientAirDependentAssets.add( p_BuildingThermalAsset );
-					
-					//initialise temp, only option is AIR ambient temp type
-					
+							
 				} else if (assetType == OL_EnergyAssetType.STORAGE_ELECTRIC) {
 					double capacityElectric_kW1 = l.path( "capacityElectricity_kW").doubleValue();
 					double storageCapacity_kWh = l.path( "storageCapacity_kWh" ).doubleValue();
@@ -13950,11 +13884,6 @@ if( p_energyAssetList != null) {
 					//traceln("gasBuffer gasCapacity_kW: " + p_gasBuffer.j_ea.getGasCapacity_kW() + " kW");
 				
 				} else if( assetType == OL_EnergyAssetType.STORAGE_HEAT) {
-					
-					/*EnergyAsset storageAsset = main.add_pop_energyAssets();
-					storageAsset.set_p_parentAgentID( this.p_agentID );
-					storageAsset.set_p_energyAssetType( OL_EnergyAssetType.valueOf(l.required( "type" ).textValue() ));
-					storageAsset.set_p_defaultEnergyAssetPresetName( l.required( "name" ).textValue());*/
 					
 				    double capacityHeat_kW2 = l.path( "capacityHeat_kW").doubleValue();
 					double lossFactor_WpK = l.path( "lossFactor_WpK" ).doubleValue() * uniform(0.7, 1.3);
@@ -14802,8 +14731,24 @@ return level;]]></Body>
 					<Body><![CDATA[main.c_energyAssets.add(j_ea);
 c_energyAssets.add(j_ea);
 
-//traceln("Adding energyAsset directly as java class, without EnergyAsset agent!");
-if (j_ea instanceof J_EAConsumption) {
+if (j_ea instanceof J_EAVehicle) {
+	J_EAVehicle vehicle = (J_EAVehicle)j_ea;
+	if (vehicle instanceof J_EADieselVehicle) {
+		//c_vehicleAssets.add( EA );
+		c_dieselVehicles.add( (J_EADieselVehicle)vehicle );
+		//c_consumptionAssets.add((J_EADieselVehicle)vehicle);		
+	} else if (vehicle instanceof J_EAEV) {
+		c_vehiclesAvailableForCharging.add((J_EAEV)vehicle);
+		//c_storageAssets.add((J_EAEV)vehicle);
+	}
+	c_vehicleAssets.add(vehicle);	
+	// Hardcoded private vehicle trips for now! Use asset name to switch trip pattern later...
+	int rowIndex = uniform_discr(1, 200);//getIndex() % 200;
+	J_ActivityTrackerTrips tripTracker = new J_ActivityTrackerTrips(main, rowIndex, time(MINUTE), vehicle, OL_MobilityPatternType.PRIVATE_VEHICLE);
+	c_tripTrackers.add( tripTracker );
+	vehicle.tripTracker = tripTracker;	
+	v_vehicleIndex ++;
+} else if (j_ea instanceof J_EAConsumption) {
 	c_consumptionAssets.add((J_EAConsumption)j_ea);	
 	if (j_ea.energyAssetType == OL_EnergyAssetType.HOT_WATER_CONSUMPTION) {
 		p_DHWAsset = (J_EAConsumption)j_ea;	
@@ -14815,9 +14760,9 @@ if (j_ea instanceof J_EAConsumption) {
 } else if (j_ea instanceof J_EAConversion) {
 	c_conversionAssets.add((J_EAConversion)j_ea);
 	if ( j_ea.energyAssetType == OL_EnergyAssetType.GAS_PIT | j_ea.energyAssetType == OL_EnergyAssetType.ELECTRIC_HOB){
-		traceln("Adding HOB to house" + this);
+		//traceln("Adding HOB to house" + this);
 		if (p_cookingTracker == null) {
-			traceln("Adding cookingTracker to house" + this);
+			//traceln("Adding cookingTracker to house" + this);
 			int rowIndex = uniform_discr(2, 300); 
 			p_cookingTracker = new J_ActivityTrackerCooking(main, rowIndex, time(MINUTE), (J_EAConversion)j_ea );			
 		} else {
@@ -14829,24 +14774,7 @@ if (j_ea instanceof J_EAConsumption) {
 		
 } else if  (j_ea instanceof J_EAStorage) {
 	c_storageAssets.add((J_EAStorage)j_ea);
-	if (j_ea instanceof J_EAVehicle) {
-		J_EAVehicle vehicle = (J_EAVehicle)j_ea;
-		if (vehicle instanceof J_EADieselVehicle) {
-			//c_vehicleAssets.add( EA );
-			c_dieselVehicles.add( (J_EADieselVehicle)vehicle );
-			//c_vehicleAssets.get( v_vehicleIndex ).v_powerFraction_fr = 1;
-			//m.f_getData();
-		} else if (vehicle instanceof J_EAEV) {
-			c_vehiclesAvailableForCharging.add((J_EAEV)vehicle);
-		}
-		c_vehicleAssets.add(vehicle);	
-		// Hardcoded private vehicle trips for now! Use asset name to switch trip pattern later...
-		int rowIndex = uniform_discr(1, 200);//getIndex() % 200;
-		J_ActivityTrackerTrips tripTracker = new J_ActivityTrackerTrips(main, rowIndex, time(MINUTE), vehicle, OL_MobilityPatternType.PRIVATE_VEHICLE);
-		c_tripTrackers.add( tripTracker );
-		vehicle.tripTracker = tripTracker;	
-		v_vehicleIndex ++;
-	} else if (j_ea.energyAssetType == OL_EnergyAssetType.BUILDINGTHERMALS) {
+	if (j_ea.energyAssetType == OL_EnergyAssetType.BUILDINGTHERMALS) {
 		//traceln("Adding buildingThermals to gridconnection");	
 		p_BuildingThermalAsset = (J_EABuilding)j_ea;
 			if ( p_isolationLabel != null & p_gridConnectionType != null){ // Get building thermals from lookup table when isolation label and house type are available
@@ -14866,7 +14794,7 @@ if (j_ea instanceof J_EAConsumption) {
 		p_batteryAsset = (J_EAStorageElectric)j_ea;
 	}
 } else {
-	traceln("Unrecognized energy asset in gridconnection " + this);
+	traceln("Unrecognized energy asset %s in gridconnection %s", j_ea, this);
 }
 ]]></Body>
 				</Function>
@@ -23804,7 +23732,8 @@ if (mySupplier != null) {
 	//energySupplier.f_connectToChild(this);	
 } else { 
 	traceln(
-		"Connection owner --> f_connectToParentActor --> no parent actor found, this should not be happening. contract holder: %s, parent: %s",
+		"Connection owner %s --> f_connectToParentActor --> no parent actor found, this should not be happening. contract holder: %s, parent: %s",
+		this,
 		v_contractDelivery.contractHolder,
 		v_contractDelivery.contractScope
 	);
@@ -27589,7 +27518,7 @@ if (mySupplier != null) {
 } 
 else { 
 	p_electricitySupplier = main.pop_energySuppliers.get(0);  // this is a harcoded fix to make the buurtmodel run for 21-3-2023
-	traceln("Connection owner --> f_connectToParentActor --> no parent actor found, this should not be happening");
+	traceln("Connection owner %s --> f_connectToParentActor --> no parent actor %s found, this should not be happening", this, v_contractDelivery.contractScope);
 }
 
 Actor myGridoperator = null;

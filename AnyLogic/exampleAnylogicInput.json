@@ -10,7 +10,7 @@
         },
         {
             "category": "SUPPLIERENERGY",
-            "id": "defaultElectrictySupplier"
+            "id": "defaultEnergySupplier"
         },
 		{
             "category": "COOPENERGY",
