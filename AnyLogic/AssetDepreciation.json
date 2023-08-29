@@ -1,0 +1,10 @@
+{
+	"PHOTOVOLTAIC": 
+	{
+		"Depreciation_eurpkWpa": 70.0		
+	},
+	"WINDMILL": 
+	{
+		"Depreciation_eurpkWpa": 133.0		
+	}
+}
