@@ -11,8 +11,7 @@ const {mapKeys, mapValues} = lodash
 
 const jsonName = 'dataset.json'
 
-process
-export async function initializeDataSet() {
+export async function initializeDataSet(includeEnexis = false) {
     if (fs.existsSync(jsonName)) {
         return JSON.parse(
             fs.readFileSync(jsonName).toString(),
@@ -21,14 +20,27 @@ export async function initializeDataSet() {
 
     const stedin = fetchStedinRecords()
     const liander = fetchLianderRecords()
+    let enexis = Promise.resolve([])
+    if (includeEnexis) {
+        enexis = fetchEnexisRecords()
+    }
 
-    const [stedinRecords, lianderRecords] = await Promise.all([stedin, liander])
-    console.log(`Fetched ${stedinRecords.length} records from Stedin and ${lianderRecords.length} records from Liander`)
-    const allRecords = [...stedinRecords, ...lianderRecords]
+    const [stedinRecords, lianderRecords, enexisRecords] = await Promise.all([stedin, liander, enexis])
+    console.log(`Fetched ${stedinRecords.length} records from Stedin`)
+    console.log(`Fetched ${lianderRecords.length} records from Liander`)
+    console.log(`Fetched ${enexisRecords.length} records from Enexis`)
+    const allRecords = [...stedinRecords, ...lianderRecords, ...enexisRecords]
 
     fs.writeFileSync(jsonName, JSON.stringify(allRecords))
 
     return Promise.resolve(allRecords)
+}
+
+async function fetchEnexisRecords() {
+    const csvStream = download("https://s3-eu-west-1.amazonaws.com/enxp433-oda01/kv/Enexis_kleinverbruiksgegevens_01012023.csv")
+    const csvString = await text(csvStream)
+
+    return recordsFromCsvString(csvString)
 }
 
 async function fetchStedinRecords(): Promise<any[]> {

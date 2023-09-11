@@ -1,6 +1,9 @@
 package com.zenmo.plugins
 
 import com.zenmo.models.*
+import com.zenmo.models.companysurvey.CompanySurvey
+import com.zenmo.models.companysurvey.CompanySurveyElectricityConnectionTable
+import com.zenmo.models.companysurvey.CompanySurveyTable
 import io.ktor.http.*
 import io.ktor.server.application.*
 import io.ktor.server.request.*
@@ -9,7 +12,6 @@ import io.ktor.server.routing.*
 import java.sql.*
 import kotlinx.coroutines.*
 import org.jetbrains.exposed.sql.*
-import org.jetbrains.exposed.sql.SqlExpressionBuilder.like
 import org.jetbrains.exposed.sql.transactions.transaction
 import java.util.*
 
