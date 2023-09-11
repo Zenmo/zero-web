@@ -6,6 +6,7 @@ import {
 } from "react-router-dom";
 import App from './App'
 import './index.css'
+import {BedrijvenForm} from './components/bedrijven-form'
 import reportWebVitals from './reportWebVitals'
 
 const router = createBrowserRouter([
@@ -14,8 +15,8 @@ const router = createBrowserRouter([
         element: <App/>,
     },
     {
-        path: "/bedrijven",
-        element: <div>Bedrijven</div>,
+        path: "/bedrijven-drechtsteden",
+        element: <BedrijvenForm />,
     }
 ]);
 

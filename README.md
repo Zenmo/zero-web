@@ -15,3 +15,6 @@ Graphical user interface.
 Stedin, Liander and Enexis publish usage data of natural gas and electricity anually.
 This is a small webservice which wraps this data so the frontend can request small parts of the data.
 
+### Ztor
+
+This is the base backend built on Ktor framework. Like AnyLogic it leans on the Java ecosystem.

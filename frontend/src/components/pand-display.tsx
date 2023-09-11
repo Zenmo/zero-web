@@ -100,12 +100,12 @@ const KleinverbruikDisplay = ({kleinverbruik}: {
 const verblijfsobjectLabel = (verblijfsObject: Verblijfsobject): string => {
     let result = `${verblijfsObject.openbare_ruimte} ${verblijfsObject.huisnummer}`
 
-    if (verblijfsObject.toevoeging) {
-        result += `-${verblijfsObject.toevoeging}`
+    if (verblijfsObject.huisletter) {
+        result += `${verblijfsObject.huisletter}`
     }
 
-    if (verblijfsObject.huisletter) {
-        result += ` ${verblijfsObject.huisletter}`
+    if (verblijfsObject.toevoeging) {
+        result += `-${verblijfsObject.toevoeging}`
     }
 
     return result
