@@ -1,0 +1,294 @@
+name: Build and deploy all services
+
+on:
+    push:
+        branches:
+            - main
+    pull_request:
+        types: [ opened, synchronize, reopened ]
+
+jobs:
+    image-tag:
+        runs-on: ubuntu-latest
+        outputs:
+            IMAGE_TAG: ${{ steps.unique-tag.outputs.result }}
+        steps:
+            ## produce a unique tag name like "main-3669d3b" or "nice-feature-f97fab8"
+            -   uses: actions/github-script@v6
+                id: unique-tag
+                with:
+                    result-encoding: string
+                    script: |
+                        const commit = context.payload.pull_request?.head?.sha ?? context.sha
+                        const shortCommit = commit.substr(0, 7)
+                        const branch = context.payload.pull_request?.head?.ref ?? context.ref.match(/refs\/heads\/(.+)/)[1]
+                        // Azure Container Apps name can be max 32 characters
+                        const maxBranchLength = 32 - shortCommit.length - 'kleinverbruik'.length - 2 * '-'.length
+                        const shortBranch = branch
+                            .substr(0, maxBranchLength)
+                            .replaceAll(/-*$/g, '') // remove trailing dashes because it would lead to an invalid name
+                        
+                        return shortBranch + '-' + shortCommit
+
+    build-kleinverbruik:
+        runs-on: ubuntu-latest
+        needs: image-tag
+        steps:
+            ## Buildx is needed for caching
+            -   name: Set up Buildx
+                uses: docker/setup-buildx-action@v2
+                ## Note: GitHub Container Registry (ghcr.io) under organization ZEnMo is not available
+                ## because ZEnMo is on a legacy GitHub plan.
+            -   name: Login to Azure Container Registry
+                uses: docker/login-action@v2
+                with:
+                    registry: ghcr.io
+                    username: erikvv
+                    password: ${{ secrets.ERIKVV_GHCR_PUSH_PASSWORD }}
+            -   name: Build and push
+                uses: docker/build-push-action@v4
+                with:
+                    context: "{{defaultContext}}:kleinverbruik"
+                    push: true
+                    tags: ghcr.io/erikvv/kleinverbruik:${{ needs.image-tag.outputs.IMAGE_TAG }}
+                    cache-from: type=gha
+                    cache-to: type=gha,mode=max
+
+    deploy-kleinverbruik-test:
+        if: github.event_name == 'pull_request'
+        needs:
+            - build-kleinverbruik
+            - image-tag
+        runs-on: ubuntu-latest
+        steps:
+            -   name: Log in to Azure
+                uses: azure/login@v1
+                with:
+                    ## https://github.com/Azure/login#configure-a-service-principal-with-a-secret
+                    creds: ${{ secrets.ZERO_AZURE_CREDENTIALS }}
+            #      - name: Create app environment
+            #        uses: azure/CLI@v1
+            #        with:
+            #          azcliversion: 2.51.0
+            #          inlineScript: >
+            #            az containerapp env create
+            #            --name zero
+            #            --location westeurope
+            #            --resource-group Zenmo_Zero
+            -   name: Deploy
+                uses: azure/CLI@v1
+                with:
+                    ## Use generic azure/CLI@v1 instead of specific azure/container-apps-deploy-action@v1
+                    ## because it supports the options that we want.
+                    azcliversion: 2.51.0
+                    inlineScript: >
+                        az containerapp create
+                        --resource-group Zenmo_Zero
+                        --name kleinverbruik-${{ needs.image-tag.outputs.IMAGE_TAG }}
+                        --environment zero 
+                        --env-vars PORT=80 
+                        --target-port 80
+                        --ingress external
+                        --tags branch=${{ github.head_ref }}
+                        --image ghcr.io/erikvv/kleinverbruik:${{ needs.image-tag.outputs.IMAGE_TAG }}
+                        --registry-username erikvv
+                        --registry-password ${{ secrets.ERIKVV_GHCR_PULL_PASSWORD }}
+                        --registry-server ghcr.io
+                        --cpu 0.5
+                        --memory 1 
+                        --min-replicas 0
+
+    deploy-kleinverbruik-main:
+        if: github.event_name == 'push' && github.ref_name == 'main'
+        needs:
+            - build-kleinverbruik
+            - image-tag
+        runs-on: ubuntu-latest
+        steps:
+            -   name: Log in to Azure
+                uses: azure/login@v1
+                with:
+                    ## https://github.com/Azure/login#configure-a-service-principal-with-a-secret
+                    creds: ${{ secrets.ZERO_AZURE_CREDENTIALS }}
+            #      - name: Create app environment
+            #        uses: azure/CLI@v1
+            #        with:
+            #          azcliversion: 2.51.0
+            #          inlineScript: >
+            #            az containerapp env create
+            #            --name zero
+            #            --location westeurope
+            #            --resource-group Zenmo_Zero
+            -   name: Deploy
+                uses: azure/CLI@v1
+                with:
+                    ## Use generic azure/CLI@v1 instead of specific azure/container-apps-deploy-action@v1
+                    ## because it supports the options that we want.
+                    azcliversion: 2.51.0
+                    inlineScript: >
+                        az containerapp create
+                        --resource-group Zenmo_Zero
+                        --name kleinverbruik
+                        --environment zero 
+                        --env-vars PORT=80 
+                        --target-port 80
+                        --ingress external
+                        --tags branch=${{ github.ref_name }}
+                        --image ghcr.io/erikvv/kleinverbruik:${{ needs.image-tag.outputs.IMAGE_TAG }}
+                        --registry-username erikvv
+                        --registry-password ${{ secrets.ERIKVV_GHCR_PULL_PASSWORD }}
+                        --registry-server ghcr.io
+                        --cpu 0.5
+                        --memory 1
+                        --min-replicas 1
+
+    build-ztor:
+        runs-on: ubuntu-latest
+        needs: image-tag
+        steps:
+            ## Buildx is needed for caching
+            -   name: Set up Buildx
+                uses: docker/setup-buildx-action@v2
+            ## Note: GitHub Container Registry (ghcr.io) under organization ZEnMo is not available
+            ## because ZEnMo is on a legacy GitHub plan.
+            -   name: Login to Azure Container Registry
+                uses: docker/login-action@v2
+                with:
+                    registry: ghcr.io
+                    username: erikvv
+                    password: ${{ secrets.ERIKVV_GHCR_PUSH_PASSWORD }}
+            -   name: Build and push
+                uses: docker/build-push-action@v4
+                with:
+                    context: "{{defaultContext}}:ztor"
+                    push: true
+                    tags: ghcr.io/erikvv/ztor:${{ needs.image-tag.outputs.IMAGE_TAG }}
+                    cache-from: type=gha
+                    cache-to: type=gha,mode=max
+
+    deploy-ztor-test:
+        if: github.event_name == 'pull_request'
+        needs:
+            - build-ztor
+            - image-tag
+        runs-on: ubuntu-latest
+        steps:
+            -   name: Log in to Azure
+                uses: azure/login@v1
+                with:
+                    ## https://github.com/Azure/login#configure-a-service-principal-with-a-secret
+                    creds: ${{ secrets.ZERO_AZURE_CREDENTIALS }}
+            -   name: Deploy
+                uses: azure/CLI@v1
+                with:
+                    ## Use generic azure/CLI@v1 instead of specific azure/container-apps-deploy-action@v1
+                    ## because it supports the options that we want.
+                    azcliversion: 2.51.0
+                    inlineScript: >
+                        az containerapp create
+                        --resource-group Zenmo_Zero
+                        --name ztor-${{ needs.image-tag.outputs.IMAGE_TAG }}
+                        --environment zero 
+                        --target-port 8082
+                        --env-vars
+                        POSTGRES_URL=jdbc:postgresql://holon-webapp-database.postgres.database.azure.com:5432/zero_test
+                        POSTGRES_USER=zero_test
+                        POSTGRES_PASSWORD=${{ secrets.ZERO_TEST_POSTGRES_PASSWORD }}
+                        --ingress external
+                        --tags branch=${{ github.head_ref }}
+                        --image ghcr.io/erikvv/ztor:${{ needs.image-tag.outputs.IMAGE_TAG }}
+                        --registry-username erikvv
+                        --registry-password ${{ secrets.ERIKVV_GHCR_PULL_PASSWORD }}
+                        --registry-server ghcr.io
+                        --cpu 0.25
+                        --memory 0.5
+                        --min-replicas 0
+
+    deploy-ztor-main:
+        if: github.event_name == 'push' && github.ref_name == 'main'
+        needs:
+            - build-ztor
+            - image-tag
+        runs-on: ubuntu-latest
+        steps:
+            -   name: Log in to Azure
+                uses: azure/login@v1
+                with:
+                    ## https://github.com/Azure/login#configure-a-service-principal-with-a-secret
+                    creds: ${{ secrets.ZERO_AZURE_CREDENTIALS }}
+            -   name: Deploy
+                uses: azure/CLI@v1
+                with:
+                    ## Use generic azure/CLI@v1 instead of specific azure/container-apps-deploy-action@v1
+                    ## because it supports the options that we want.
+                    azcliversion: 2.51.0
+                    inlineScript: >
+                        az containerapp create
+                        --resource-group Zenmo_Zero
+                        --name ztor
+                        --environment zero 
+                        --target-port 8082
+                        --env-vars
+                        POSTGRES_URL=jdbc:postgresql://holon-webapp-database.postgres.database.azure.com:5432/zero_prod
+                        POSTGRES_USER=zero_prod
+                        POSTGRES_PASSWORD=${{ secrets.ZERO_PROD_POSTGRES_PASSWORD }}
+                        --ingress external
+                        --tags branch=${{ github.ref_name }}
+                        --image ghcr.io/erikvv/ztor:${{ needs.image-tag.outputs.IMAGE_TAG }}
+                        --registry-username erikvv
+                        --registry-password ${{ secrets.ERIKVV_GHCR_PULL_PASSWORD }}
+                        --registry-server ghcr.io
+                        --cpu 0.25
+                        --memory 0.5
+                        --min-replicas 1
+
+    build-deploy-static-site:
+        runs-on: ubuntu-latest
+        name: Build and deploy static site
+        needs:
+            - image-tag
+        steps:
+            -   name: set domain suffix
+                id: domain
+                ## This will become a custom domain like zero.zenmo.com
+                run: echo "DOMAIN_SUFFIX=thankfulbay-feb62349.westeurope.azurecontainerapps.io" >> $GITHUB_OUTPUT
+            -   if: github.event_name == 'pull_request'
+                name: set backend URL's for pull request test environment
+                run: |
+                    echo "KLEINVERBRUIK_URL=https://kleinverbruik-${{ needs.image-tag.outputs.IMAGE_TAG }}.${{ steps.domain.outputs.DOMAIN_SUFFIX }}" >> $GITHUB_ENV
+                    echo "ZTOR_URL=https://ztor-${{ needs.image-tag.outputs.IMAGE_TAG }}.${{ steps.domain.outputs.DOMAIN_SUFFIX }}" >> $GITHUB_ENV
+            -   if: github.event_name == 'push'
+                name: set backend URL's for main application
+                run: |
+                    echo "KLEINVERBRUIK_URL=https://kleinverbruik.${{ steps.domain.outputs.DOMAIN_SUFFIX }}" >> $GITHUB_ENV
+                    echo "ZTOR_URL=https://ztor.${{ steps.domain.outputs.DOMAIN_SUFFIX }}" >> $GITHUB_ENV
+            -   uses: actions/checkout@v3
+                with:
+                    submodules: true
+            -   uses: actions/setup-node@v3
+                with:
+                    node-version: 20
+                    cache: 'npm'
+                    cache-dependency-path: frontend/package-lock.json
+            -   name: Npm install
+                working-directory: frontend
+                run: npm ci
+            -   name: Type check
+                working-directory: frontend
+                run: npx tsc
+            -   name: Test
+                working-directory: frontend
+                run: npm test
+            -   name: Build And Deploy
+                id: builddeploy
+                uses: Azure/static-web-apps-deploy@v1
+                with:
+                    azure_static_web_apps_api_token: ${{ secrets.AZURE_STATIC_WEB_APPS_API_TOKEN_GRAY_HILL_0E1D72903 }}
+                    repo_token: ${{ secrets.GITHUB_TOKEN }} # Used for Github integrations (i.e. PR comments)
+                    action: "upload"
+                    ###### Repository/Build Configurations - These values can be configured to match your app requirements. ######
+                    # For more information regarding Static Web App workflow configurations, please visit: https://aka.ms/swaworkflowconfig
+                    app_location: "/frontend" # App source code path
+                    api_location: "" # Api source code path - optional
+                    output_location: "dist" # Built app content directory - optional
+                    ###### End of Repository/Build Configurations ######
