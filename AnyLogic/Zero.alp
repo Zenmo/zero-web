@@ -10422,7 +10422,7 @@ geupdate vanuit
 					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
 						<Type><![CDATA[double]]></Type>        
 						<InitialValue Class="CodeValue">
-							<Code><![CDATA[min(1, 0.2*1.2 * main.p_timeStep_h) // smaller value results in more filtering]]></Code>
+							<Code><![CDATA[min(1, 0.5*1.2 * main.p_timeStep_h) // smaller value results in more filtering]]></Code>
 						</InitialValue>
 					</Properties>
 				</Variable>
@@ -27670,7 +27670,7 @@ if (myGridoperator == null) {
 if (myGridoperator != null) {
 	p_gridOperator = myGridoperator;	
 } else { 
-	p_gridOperator = main.pop_gridOperators.get( 0 ) ; // this is a harcoded fix to make the buurtmodel run for 21-3-2023
+	//p_gridOperator = main.pop_gridOperators.get( 0 ) ; // this is a harcoded fix to make the buurtmodel run for 21-3-2023
 	traceln("Connection owner --> f_connectToParentActor --> no parent actor found, this should not be happening");
 }
 ]]></Body>
@@ -28159,11 +28159,11 @@ f_setInitPriceBands();]]></Body>
 					<ShowLabel>true</ShowLabel>
 					<Body><![CDATA[v_electricitySurplusLowPassed_kW += v_lowPassFactor_fr * ( v_electricitySurplus_kW - v_electricitySurplusLowPassed_kW );
 
-if (p_applyKostprijsPlus) {
+//if (p_applyKostprijsPlus) {
 	
-	v_electricityVariablePrice_eurpkWh= 0.1 - 0.0001 * v_electricitySurplusLowPassed_kW;
+	//v_electricityVariablePrice_eurpkWh= 0.1 - 0.0001 * v_electricitySurplusLowPassed_kW;
 	
-} else {
+//} else {
 	if (v_contractDelivery.deliveryContractType==OL_DeliveryContractType.ELECTRICITY_VARIABLE) {
 		if (p_electricitySupplier instanceof EnergySupplier) {
 			v_electricityVariablePrice_eurpkWh = ((EnergySupplier)p_electricitySupplier).f_getVariableEnergyPrice();
@@ -28171,7 +28171,7 @@ if (p_applyKostprijsPlus) {
 			v_electricityVariablePrice_eurpkWh = ((EnergyCoop)p_electricitySupplier).f_getVariableEnergyPrice();
 		}
 	}
-}
+//}
 // Transport pricing (nodal pricing) is 'pushed' to the connectionOwner from the GridNode, so don't have to ask for the price here.
 /*if (v_contractTransport.transportContractType.equals(OL_TransportContractType.NODALPRICING)) {
 	if (p_gridOperator instanceof GridOperator) {
@@ -28211,19 +28211,6 @@ if( p_capacityTariffApplicable ){
 	v_priceBandsDelivery.replace(p_capacityLevel_kW, v_electricityVariablePrice_eurpkWh + v_currentNodalPrice_eurpkWh);
 }
 */
-
-/* // Deze code was alleen actief bij bandbreedte-tarief, maar dat gaan we anders doen
-if (v_congestionTariffAllowance_kW != 0){
-	if(v_currentCongestionType == "Overconsumption"){
-		v_priceBandsDelivery.put( v_congestionTariffAllowance_kW,  v_electricityBuyPrice_eurpkWh);
-	}
-	else if (v_currentCongestionType == "Overproduction"){
-		v_priceBandsDelivery.put( v_congestionTariffAllowance_kW,  v_electricitySellPrice_eurpkWh);
-	}
-	else {
-		traceln("Connection owner --> f_setElectrcitiyPriceBands: geen congestie type gevonden");
-	}
-}*/
 
 
 
@@ -29792,7 +29779,7 @@ v_currentBalanceNat_eur -= v_currentNettElectricityVolume_kWh * v_currentVariabl
 					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
 						<Type><![CDATA[double]]></Type>        
 						<InitialValue Class="CodeValue">
-							<Code><![CDATA[0.2]]></Code>
+							<Code><![CDATA[0.0]]></Code>
 						</InitialValue>
 					</Properties>
 				</Variable>
@@ -29866,7 +29853,7 @@ v_currentBalanceNat_eur -= v_currentNettElectricityVolume_kWh * v_currentVariabl
 					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
 						<Type><![CDATA[double]]></Type>        
 						<InitialValue Class="CodeValue">
-							<Code><![CDATA[0.6]]></Code>
+							<Code><![CDATA[0.1]]></Code>
 						</InitialValue>
 					</Properties>
 				</Variable>
@@ -30183,7 +30170,7 @@ else {
 	if ( abs(currentLoad_kW) > v_congestionThreshold_fr * n.p_capacity_kW  ){
 		n.v_congested = true;
 		n.v_currentCongestionPrice_eurpkWh = signum(currentLoad_kW)*(abs(currentLoad_kW) / n.p_capacity_kW - v_congestionThreshold_fr ) / ( 1 - v_congestionThreshold_fr) * v_congestionPrice_eurpkWh;		
-		//n.f_setCongestionTariff(n.v_currentCongestionPrice_eurpkWh); 
+		n.f_setCongestionTariff(n.v_currentCongestionPrice_eurpkWh); 
 		if (currentLoad_kW > 0) {
 			n.v_congestionMode = "Overconsumption";
 			//n.f_setCongestionTariff(n.v_currentCongestionPrice_eurpkWh); 
