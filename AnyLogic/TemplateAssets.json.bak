@@ -1,0 +1,47 @@
+[
+    {
+        "name": "TEMPLATE: gas-pit",
+        "type": "GAS_PIT",
+        "capacityHeat_kW": 5.0,
+        "category": "CONVERSION",
+        "eta_r": 0.4
+    },
+    {
+        "capacityHeat_kW": 5.0,
+        "category": "CONVERSION",
+        "eta_r": 0.8,
+        "name": "TEMPLATE: Electric hob",
+        "type": "ELECTRIC_HOB"
+    },
+    {
+        "category": "PRODUCTION",
+        "type": "PHOTOVOLTAIC",
+        "capacityElectricity_kW": 4,
+        "name": "TEMPLATE: Household PV"
+    },
+    {
+        "capacityElectricity_kW": 11.0,
+        "category": "STORAGE",
+        "energyConsumption_kWhpkm": 0.2,
+        "name": "TEMPLATE: Private Electric Vehicle",
+        "stateOfCharge_r": 0.8,
+        "storageCapacity_kWh": 70.0,
+        "type": "ELECTRIC_VEHICLE",
+        "vehicleScaling": 1
+    },
+    {
+        "category": "CONSUMPTION",
+        "energyConsumption_kWhpkm": 0.6,
+        "name": "TEMPLATE: Private Diesel Vehicle",
+        "type": "DIESEL_VEHICLE",
+        "vehicleScaling": 1
+    },
+    {
+        "capacityElectricity_kW": 3.0,
+        "category": "STORAGE",
+        "name": "TEMPLATE: Private battery",
+        "stateOfCharge_r": 0.7,
+        "storageCapacity_kWh": 15.0,
+        "type": "STORAGE_ELECTRIC"
+    }
+]

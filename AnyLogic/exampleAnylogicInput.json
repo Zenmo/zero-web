@@ -20,10 +20,10 @@
                     "annualFee_eur": 20.1,
                     "contractScope": "defaultEnergySupplier",
                     "contractType": "DELIVERY",
-                    "deliveryContractType": "ELECTRICITY_VARIABLE",
-                    "deliveryPrice_eurpkWh": 0.0,
+                    "deliveryContractType": "ELECTRICITY_FIXED",
+                    "deliveryPrice_eurpkWh": 0.1,
                     "energyCarrier": "ELECTRICITY",
-                    "feedinPrice_eurpkWh": 0.0
+                    "feedinPrice_eurpkWh": 0.1
                 },
                 {
                     "annualFee_eur": 20.1,
@@ -37,7 +37,7 @@
                     "contractScope": "defaultGridOperator",
                     "contractType": "TRANSPORT",
                     "energyCarrier": "ELECTRICITY",
-                    "transportContractType": "DEFAULT"
+                    "transportContractType": "NODALPRICING"
                 },
                 {
                     "annualFee_eur": 20.1,
@@ -38549,7 +38549,7 @@
 		{
 			"assets": [
 				{
-					"capacityElectricity_kW": 3000.0,
+					"capacityElectricity_kW": 1000.0,
 					"category": "PRODUCTION",
 					"name": "Windmill_offshore",
 					"type": "WINDMILL"

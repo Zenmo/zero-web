@@ -915,6 +915,10 @@
 				<Id>1671011596610</Id>
 				<Name><![CDATA[CHEAP]]></Name>
 			</Option>
+			<Option>
+				<Id>1695825443639</Id>
+				<Name><![CDATA[V2G]]></Name>
+			</Option>
 		</OptionList>
 		<OptionList>
 			<Id>1668693527446</Id>
@@ -1739,7 +1743,7 @@ traceln(" ");
 				<Variable Class="PlainVariable">
 					<Id>1676968233773</Id>
 					<Name><![CDATA[v_totalEnergyCurtailed_MWh]]></Name>
-					<X>-560</X><Y>980</Y>
+					<X>-560</X><Y>970</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -1974,6 +1978,18 @@ traceln(" ");
 						</InitialValue>
 					</Properties>
 				</Variable>
+				<Variable Class="PlainVariable">
+					<Id>1695655479591</Id>
+					<Name><![CDATA[v_totalEnergyChargedOutsideModel_MWh]]></Name>
+					<X>-560</X><Y>990</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
+						<Type><![CDATA[double]]></Type>        
+					</Properties>
+				</Variable>
 				<Variable Class="Parameter">
 					<Id>1658496701675</Id>
 					<Name><![CDATA[p_timeStep_h]]></Name>
@@ -2019,7 +2035,7 @@ traceln(" ");
 						<UnitType><![CDATA[NONE]]></UnitType>
 						<SdArray>false</SdArray>
 						<DefaultValue Class="CodeValue">
-							<Code><![CDATA[false]]></Code>
+							<Code><![CDATA[true]]></Code>
 						</DefaultValue>
 						<ParameterEditor>
 							<Id>1658752734131</Id>
@@ -2908,7 +2924,7 @@ v_timeStepsElapsed ++;
 						<OccurrenceAtTime>true</OccurrenceAtTime>
 						<OccurrenceDate>1674115200000</OccurrenceDate>
 						<OccurrenceTime Class="CodeUnitValue">
-							<Code><![CDATA[24]]></Code>
+							<Code><![CDATA[575]]></Code>
 							<Unit Class="TimeUnits"><![CDATA[HOUR]]></Unit>
 						</OccurrenceTime>
 						<RecurrenceCode Class="CodeUnitValue">
@@ -2943,7 +2959,11 @@ f_createGridConnections();
 //f_setActorPolicies(); // Everything in here should be an attribute of the agents themselves, not a model-wide thing.
 f_createAgentLinks();
 f_initializeForecasts();
-//f_instantiateTemplateEnergyAssets();]]></Body>
+//f_instantiateTemplateEnergyAssets();
+
+sl_EV.setValue(100, true);
+ra_chargingStrategy.setValue(2,true);
+//traceln("EV slider set to: " + sl_EV.getValue() );]]></Body>
 				</Function>
 				<Function AccessType="default" StaticFunction="false">
 					<ReturnModificator>VOID</ReturnModificator>
@@ -3741,6 +3761,9 @@ for (J_EA e : c_energyAssets) {
 	}
 	if (e instanceof J_EABuilding) {
 		totalAmbientHeating_MWh += ((J_EABuilding)e).energyAbsorbed_kWh/1000;
+	}
+	if (e instanceof J_EAEV) {
+		v_totalEnergyChargedOutsideModel_MWh += ((J_EAEV)e).energyChargedOutsideModelArea_kWh/1000;
 	}
 }
 
@@ -4710,9 +4733,9 @@ for(JsonNode data : v_gridConnectionsJson) {
 			pricelevel_high_dif_from_avg_eurpkWh = 0.25 - pricelevel_low_dif_from_avg_eurpkWh;
 
 			gridConnectionBatteryMode = OL_BatteryOperationMode.HOUSEHOLD_LOAD;
-			double lowPassFilterHousehold = 0.03; // -->> deze moet uiteindelijk naar datamodel. Moet configureerbaar zijn.
+			//double lowPassFilterHousehold = 0.03; // -->> deze moet uiteindelijk naar datamodel. Moet configureerbaar zijn.
 			//irradianceRecievingSurface_m2 = 10.0;
-			GC.v_lowPassFactor_fr = lowPassFilterHousehold;			
+			//GC.v_lowPassFactor_fr = lowPassFilterHousehold;			
 			((GCHouse)GC).set_p_isolationLabel( gridConnectionIsolationLabel );
 
 			//double deltaStartTemp_degC = uniform_discr(-5, 5);			
@@ -8731,6 +8754,11 @@ t_numberOfRooftopPV.setText(count(Houses, x->x.v_hasPV == true));]]></Body>
 			h.p_chargingAttitudeVehicles = OL_ChargingAttitude.CHEAP;
 		}
 	break;
+	case 2:
+		for (GCHouse h: Houses) {
+			h.p_chargingAttitudeVehicles = OL_ChargingAttitude.V2G;
+		}
+	break;
 }
 ]]></ActionCode>
 					</BasicProperties>
@@ -8740,6 +8768,7 @@ t_numberOfRooftopPV.setText(count(Houses, x->x.v_hasPV == true));]]></Body>
 						<Orientation>VERTICAL</Orientation>
 						<Button><![CDATA[Gewoon laden]]></Button>
 						<Button><![CDATA[Slim laden]]></Button>
+						<Button><![CDATA[V2G]]></Button>
 						<LinkTo>false</LinkTo>
 					</ExtendedProperties>
 				</Control>
@@ -9043,7 +9072,7 @@ if( sl_EV.getValue()/100.0*Houses.size() < HouseholdEVs){
 	}
  
 } else { 
-	while ( sl_EV.getValue()/100.0 * Houses.size() > HouseholdEVs) { // !!!! Should also remove diesel vehicle!
+	while ( sl_EV.getValue()/100.0 * Houses.size() > HouseholdEVs) {
 		GCHouse h = findFirst(Houses, x->x.p_householdEV == null);
 		//traceln("Check presence of solarpanels: " + h.v_hasPV);	
 		
@@ -9454,7 +9483,7 @@ rectangle_electricitySettings.setVisible(false);]]></OnClickCode>
     			<TimePlot>
 					<Id>1690271885086</Id>
 					<Name><![CDATA[pl_netBelasting]]></Name>
-					<X>700</X><Y>570</Y>
+					<X>40</X><Y>400</Y>
 					<Label><X>0</X><Y>-10</Y></Label>
 					<PublicFlag>true</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -9472,15 +9501,15 @@ rectangle_electricitySettings.setVisible(false);]]></OnClickCode>
 						<Unit Class="TimeUnits"><![CDATA[HOUR]]></Unit>
 					</RecurrenceCode>
 					<EmbeddedIcon>false</EmbeddedIcon>
-					<Width>580</Width>
-					<Height>190</Height>
+					<Width>620</Width>
+					<Height>360</Height>
 					<BackgroundColor/>
 					<BorderColor/>
 					<ChartArea>
 						<XOffset>50</XOffset>
 						<YOffset>30</YOffset>
-						<Width>500</Width>
-						<Height>100</Height>
+						<Width>540</Width>
+						<Height>270</Height>
 						<BackgroundColor>-1</BackgroundColor>
 						<BorderColor>-16777216</BorderColor>
 						<GridColor>-12566464</GridColor>
@@ -9498,9 +9527,9 @@ rectangle_electricitySettings.setVisible(false);]]></OnClickCode>
 					<ShowLegend>true</ShowLegend>
 					<TimeWindowsMovementType>MOVEMENT_WITH_TIME</TimeWindowsMovementType>		
 					<TimeWindowUnits>MODEL_TIME_UNIT</TimeWindowUnits>
-					<VerScaleFromExpression><![CDATA[0]]></VerScaleFromExpression>
-					<VerScaleToExpression><![CDATA[1]]></VerScaleToExpression>
-					<VerScaleType>AUTO</VerScaleType>
+					<VerScaleFromExpression><![CDATA[-1000]]></VerScaleFromExpression>
+					<VerScaleToExpression><![CDATA[2000]]></VerScaleToExpression>
+					<VerScaleType>FIXED</VerScaleType>
 					<DrawLine>true</DrawLine>
 					<Interpolation>LINEAR</Interpolation>
 					<DatasetExpression>  
@@ -9521,7 +9550,7 @@ rectangle_electricitySettings.setVisible(false);]]></OnClickCode>
     			<TimePlot>
 					<Id>1690280530087</Id>
 					<Name><![CDATA[pl_gasVerbruik]]></Name>
-					<X>50</X><Y>350</Y>
+					<X>220</X><Y>-560</Y>
 					<Label><X>0</X><Y>-10</Y></Label>
 					<PublicFlag>true</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -9610,7 +9639,7 @@ rectangle_electricitySettings.setVisible(false);]]></OnClickCode>
     			<TimeStackChart>
 					<Id>1692628719495</Id>
 					<Name><![CDATA[pl_electricityConsumptionStack]]></Name>
-					<X>700</X><Y>40</Y>
+					<X>680</X><Y>40</Y>
 					<Label><X>0</X><Y>-10</Y></Label>
 					<PublicFlag>true</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -9628,15 +9657,15 @@ rectangle_electricitySettings.setVisible(false);]]></OnClickCode>
 						<Unit Class="TimeUnits"><![CDATA[HOUR]]></Unit>
 					</RecurrenceCode>
 					<EmbeddedIcon>false</EmbeddedIcon>
-					<Width>580</Width>
-					<Height>250</Height>
+					<Width>660</Width>
+					<Height>340</Height>
 					<BackgroundColor/>
 					<BorderColor/>
 					<ChartArea>
 						<XOffset>50</XOffset>
 						<YOffset>30</YOffset>
-						<Width>500</Width>
-						<Height>160</Height>
+						<Width>580</Width>
+						<Height>250</Height>
 						<BackgroundColor>-1</BackgroundColor>
 						<BorderColor>-16777216</BorderColor>
 						<GridColor>-12566464</GridColor>
@@ -9654,7 +9683,15 @@ rectangle_electricitySettings.setVisible(false);]]></OnClickCode>
 					<ShowLegend>true</ShowLegend>
 					<TimeWindowsMovementType>MOVEMENT_WITH_TIME</TimeWindowsMovementType>		
 					<TimeWindowUnits>MODEL_TIME_UNIT</TimeWindowUnits>
-					<TimeWindowExpression><![CDATA[100]]></TimeWindowExpression>
+					<TimeWindowExpression><![CDATA[48]]></TimeWindowExpression>
+					<DatasetExpression>
+					<Id>1692629800346</Id>
+					<Expression><![CDATA[my_dataset4]]></Expression>
+					<Color>-2354116</Color>
+					<Expression2><![CDATA[sum(c_gridConnections, g->max(0,g.v_batteryPowerElectric_kW))]]></Expression2>
+					<Expression2Flag>true</Expression2Flag>
+							<Title><![CDATA[Batterijen opladen]]></Title>
+					</DatasetExpression>
 					<DatasetExpression>
 					<Id>1692628720996</Id>
 					<Expression><![CDATA[my_dataset]]></Expression>
@@ -9666,18 +9703,10 @@ rectangle_electricitySettings.setVisible(false);]]></OnClickCode>
 					<DatasetExpression>
 					<Id>1692629007733</Id>
 					<Expression><![CDATA[my_dataset3]]></Expression>
-					<Color>-2354116</Color>
-					<Expression2><![CDATA[sum(c_gridConnections, g->g.v_evChargingPowerElectric_kW)]]></Expression2>
+					<Color>-10496</Color>
+					<Expression2><![CDATA[sum(c_gridConnections, g->max(0,g.v_evChargingPowerElectric_kW))]]></Expression2>
 					<Expression2Flag>true</Expression2Flag>
 							<Title><![CDATA[Laden EVs]]></Title>
-					</DatasetExpression>
-					<DatasetExpression>
-					<Id>1692629800346</Id>
-					<Expression><![CDATA[my_dataset4]]></Expression>
-					<Color>-10496</Color>
-					<Expression2><![CDATA[sum(c_gridConnections, g->max(0,g.v_batteryPowerElectric_kW))]]></Expression2>
-					<Expression2Flag>true</Expression2Flag>
-							<Title><![CDATA[Batterijen opladen]]></Title>
 					</DatasetExpression>
 					<DatasetExpression>
 					<Id>1692629871763</Id>
@@ -9687,15 +9716,15 @@ rectangle_electricitySettings.setVisible(false);]]></OnClickCode>
 					<Expression2Flag>true</Expression2Flag>
 							<Title><![CDATA[Elektrisch koken]]></Title>
 					</DatasetExpression>
-					<SamplesToKeep>400</SamplesToKeep>
-					<VerScaleToExpression><![CDATA[1]]></VerScaleToExpression>
-					<VerScaleType>AUTO</VerScaleType>
+					<SamplesToKeep>192</SamplesToKeep>
+					<VerScaleToExpression><![CDATA[2000]]></VerScaleToExpression>
+					<VerScaleType>FIXED</VerScaleType>
 					<LabelFormat>MODEL_TIME_UNITS</LabelFormat>
     			</TimeStackChart>
     			<TimeStackChart>
 					<Id>1692629344071</Id>
 					<Name><![CDATA[pl_electricityProductionStack]]></Name>
-					<X>700</X><Y>290</Y>
+					<X>680</X><Y>400</Y>
 					<Label><X>0</X><Y>-10</Y></Label>
 					<PublicFlag>true</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -9713,15 +9742,15 @@ rectangle_electricitySettings.setVisible(false);]]></OnClickCode>
 						<Unit Class="TimeUnits"><![CDATA[HOUR]]></Unit>
 					</RecurrenceCode>
 					<EmbeddedIcon>false</EmbeddedIcon>
-					<Width>580</Width>
-					<Height>250</Height>
+					<Width>660</Width>
+					<Height>350</Height>
 					<BackgroundColor/>
 					<BorderColor/>
 					<ChartArea>
 						<XOffset>50</XOffset>
 						<YOffset>30</YOffset>
-						<Width>500</Width>
-						<Height>160</Height>
+						<Width>580</Width>
+						<Height>260</Height>
 						<BackgroundColor>-1</BackgroundColor>
 						<BorderColor>-16777216</BorderColor>
 						<GridColor>-12566464</GridColor>
@@ -9739,7 +9768,7 @@ rectangle_electricitySettings.setVisible(false);]]></OnClickCode>
 					<ShowLegend>true</ShowLegend>
 					<TimeWindowsMovementType>MOVEMENT_WITH_TIME</TimeWindowsMovementType>		
 					<TimeWindowUnits>MODEL_TIME_UNIT</TimeWindowUnits>
-					<TimeWindowExpression><![CDATA[100]]></TimeWindowExpression>
+					<TimeWindowExpression><![CDATA[48]]></TimeWindowExpression>
 					<DatasetExpression>
 					<Id>1692629344066</Id>
 					<Expression><![CDATA[my_dataset1]]></Expression>
@@ -9757,6 +9786,14 @@ rectangle_electricitySettings.setVisible(false);]]></OnClickCode>
 							<Title><![CDATA[Opwek windmolens]]></Title>
 					</DatasetExpression>
 					<DatasetExpression>
+					<Id>1695823711551</Id>
+					<Expression><![CDATA[my_dataset4]]></Expression>
+					<Color>-10496</Color>
+					<Expression2><![CDATA[sum(c_gridConnections, g->max(0,-g.v_evChargingPowerElectric_kW))]]></Expression2>
+					<Expression2Flag>true</Expression2Flag>
+							<Title><![CDATA[V2G]]></Title>
+					</DatasetExpression>
+					<DatasetExpression>
 					<Id>1692629741744</Id>
 					<Expression><![CDATA[my_dataset3]]></Expression>
 					<Color>-2354116</Color>
@@ -9764,9 +9801,9 @@ rectangle_electricitySettings.setVisible(false);]]></OnClickCode>
 					<Expression2Flag>true</Expression2Flag>
 							<Title><![CDATA[Batterij teruglevering]]></Title>
 					</DatasetExpression>
-					<SamplesToKeep>400</SamplesToKeep>
-					<VerScaleToExpression><![CDATA[1]]></VerScaleToExpression>
-					<VerScaleType>AUTO</VerScaleType>
+					<SamplesToKeep>192</SamplesToKeep>
+					<VerScaleToExpression><![CDATA[1000]]></VerScaleToExpression>
+					<VerScaleType>FIXED</VerScaleType>
 					<LabelFormat>MODEL_TIME_UNITS</LabelFormat>
     			</TimeStackChart>
 				<Text>
@@ -11002,10 +11039,6 @@ v_loadFactor_fr = v_averageAbsoluteLoadElectricity_kW / abs(v_peakLoadAbsoluteEl
 						<Name><![CDATA[price_eurpkWh]]></Name>
 						<Type><![CDATA[double]]></Type>
 					</Parameter>
-					<Parameter>
-						<Name><![CDATA[allowance_kW]]></Name>
-						<Type><![CDATA[double]]></Type>
-					</Parameter>
 					<Body><![CDATA[for (GridConnection gc: c_electricityGridConnections){
 	//traceln("Gc "+ gc.toString() + ", price "+ price_eurpkWh + ", allowance "+ allowance_kW +".");
 	ConnectionOwner owner = ((ConnectionOwner)gc.l_ownerActor.getConnectedAgent());
@@ -12071,7 +12104,7 @@ import java.io.*;]]></Import>
 					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
 						<Type><![CDATA[int]]></Type>        
 						<InitialValue Class="CodeValue">
-							<Code><![CDATA[60]]></Code>
+							<Code><![CDATA[30]]></Code>
 						</InitialValue>
 					</Properties>
 				</Variable>
@@ -12169,6 +12202,9 @@ import java.io.*;]]></Import>
 					<ShowLabel>true</ShowLabel>
 					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
 						<Type><![CDATA[double]]></Type>        
+						<InitialValue Class="CodeValue">
+							<Code><![CDATA[0.3]]></Code>
+						</InitialValue>
 					</Properties>
 				</Variable>
 				<Variable Class="PlainVariable">
@@ -12182,7 +12218,7 @@ import java.io.*;]]></Import>
 					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
 						<Type><![CDATA[double]]></Type>        
 						<InitialValue Class="CodeValue">
-							<Code><![CDATA[min(1, 0.01 * 1.2 * main.p_timeStep_h)]]></Code>
+							<Code><![CDATA[min(1, 0.002 * 1.2 * main.p_timeStep_h)]]></Code>
 						</InitialValue>
 					</Properties>
 				</Variable>
@@ -12545,7 +12581,7 @@ import java.io.*;]]></Import>
 					<Id>1677585426154</Id>
 					<Name><![CDATA[v_currentAveraged7kWElectricityPrice_eurpkWh]]></Name>
 					<ExcludeFromBuild>true</ExcludeFromBuild>
-					<X>1120</X><Y>410</Y>
+					<X>1120</X><Y>490</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -12591,6 +12627,18 @@ import java.io.*;]]></Import>
 					<ShowLabel>true</ShowLabel>
 					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
 						<Type><![CDATA[boolean]]></Type>        
+					</Properties>
+				</Variable>
+				<Variable Class="PlainVariable">
+					<Id>1695824940090</Id>
+					<Name><![CDATA[v_WTRV2G_eurpkWh]]></Name>
+					<X>1120</X><Y>410</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
+						<Type><![CDATA[double]]></Type>        
 					</Properties>
 				</Variable>
 				<Variable Class="Parameter">
@@ -13480,7 +13528,7 @@ import java.io.*;]]></Import>
 						<OccurrenceAtTime>true</OccurrenceAtTime>
 						<OccurrenceDate>1675065600000</OccurrenceDate>
 						<OccurrenceTime Class="CodeUnitValue">
-							<Code><![CDATA[main.p_forecastTime_h/60+1]]></Code>
+							<Code><![CDATA[main.p_timeStep_h*60+1]]></Code>
 							<Unit Class="TimeUnits"><![CDATA[MINUTE]]></Unit>
 						</OccurrenceTime>
 						<RecurrenceCode Class="CodeUnitValue">
@@ -13996,10 +14044,10 @@ v_selfConsumption_fr = 1 - (v_electricityDeliveredToGrid_kWh + v_heatDelivered_k
 v_selfSufficiency_fr = 1 - (v_electricityDrawnFromGrid_kWh + v_heatDrawn_kWh + v_methaneDrawn_kWh + v_hydrogenDrawn_kWh + v_dieselDrawn_kWh) / v_totalEnergyUsed_kWh; // Need to account for energy in storages
 */
 
-/*if (main.b_addKpiVisuals) {
-	pl_SOC.updateData();
+if (main.b_addKpiVisuals) {
+	//pl_SOC.updateData();
 	pl_powerFlows.updateData();
-}*/
+}
 ]]></Body>
 				</Function>
 				<Function AccessType="default" StaticFunction="false">
@@ -14383,6 +14431,11 @@ switch (p_chargingAttitudeVehicles) {
 		v_electricityPriceLowPassed_eurpkWh += v_lowPassFactor_fr * ( v_currentElectricityPriceConsumption_eurpkWh - v_electricityPriceLowPassed_eurpkWh );
 		f_chargeOnPrice( v_currentElectricityPriceConsumption_eurpkWh, max(0, availableChargingCapacity));
 	break;
+	case V2G:
+		v_currentElectricityPriceConsumption_eurpkWh = ((ConnectionOwner)l_ownerActor.getConnectedAgent()).f_getElectricityPrice(p_connectionCapacity_kW); 
+		v_electricityPriceLowPassed_eurpkWh += v_lowPassFactor_fr * ( v_currentElectricityPriceConsumption_eurpkWh - v_electricityPriceLowPassed_eurpkWh );
+		f_chargeOnPrice_V2G( v_currentElectricityPriceConsumption_eurpkWh, max(0, availableChargingCapacity));
+	break;
 }
 ]]></Body>
 				</Function>
@@ -14524,30 +14577,33 @@ for ( int i = 0; i < copiedVehicleList.size(); i++ ){
 		double timeToNextTrip_min = vehicle.tripTracker.v_nextEventStartTime_min - time ( MINUTE );
 		double chargeDeadline_min = floor((vehicle.tripTracker.v_nextEventStartTime_min / 60 - chargeNeedForNextTrip_kWh / maxChargingPower_kW) / main.p_timeStep_h) * 60 * main.p_timeStep_h;
 
-		double priceGain_kWhpeur = 0.50; // When WTP is higher than current electricity price, ramp up charging power with this gain based on the price-delta.
-		double flexibilityGain_eurpkWh = 0.5; // How strongly WTP-price shifts based on charging flexibility
+		double priceGain_kWhpeur = 1; // When WTP is higher than current electricity price, ramp up charging power with this gain based on the price-delta.
+		double urgencyGain_eurpkWh = 0.4; // How strongly WTP-price shifts based on charging flexibility
 		double maxSpreadChargingPower_kW = min(chargeNeedForNextTrip_kWh / (max(1, timeToNextTrip_min - v_additionalTimeSpreadCharging_MIN) / 60), maxChargingPower_kW);
 		//traceln("maxSpreadChargingPower_kW" + maxSpreadChargingPower_kW);
-		double WTPoffset_eurpkWh = 0.0;//0.15; // Adds an offset to the WTP price; this value is very much context specific, depending on market conditions during charging periods
+		double WTPoffset_eurpkWh = 0.05*(1-main.v_WindYieldForecast_fr);//0.15; // Adds an offset to the WTP price; this value is very much context specific, depending on market conditions during charging periods
 		
 		double chargeSetpoint_kW = 0;
 
 		if ( time(MINUTE) >= chargeDeadline_min & chargeNeedForNextTrip_kWh > 0) { // Must-charge time at max charging power
-			traceln("Urgency charging! May exceed connection capacity!");
+			//traceln("Urgency charging! May exceed connection capacity!");
 			chargeSetpoint_kW = maxChargingPower_kW;				
+		} else if ( vehicle.getCurrentStateOfCharge() < 0.15 ) {
+			chargeSetpoint_kW = min(remainingChargePower_kW, maxChargingPower_kW);
 		} else {
 			//double WTPprice_eurpkWh = v_electricityPriceLowPassed_eurpkWh - flexibilityGain_eurph * (chargeDeadline_min - time(MINUTE) - 600);
-			v_WTPCharging_eurpkWh = WTPoffset_eurpkWh + v_electricityPriceLowPassed_eurpkWh + flexibilityGain_eurpkWh * ( maxSpreadChargingPower_kW / maxChargingPower_kW ); // Scale WTP based on flexibility expressed in terms of power-fraction
+			v_WTPCharging_eurpkWh = WTPoffset_eurpkWh + v_electricityPriceLowPassed_eurpkWh + urgencyGain_eurpkWh * ( maxSpreadChargingPower_kW / maxChargingPower_kW ); // Scale WTP based on flexibility expressed in terms of power-fraction
 			//WTPprice_eurpkWh = WTPoffset_eurpkWh + (main.v_epexNext24hours_eurpkWh+v_electricityPriceLowPassed_eurpkWh)/2 + flexibilityGain_eurpkWh * sqrt(maxSpreadChargingPower_kW/maxChargingPower_kW); // Scale WTP based on flexibility expressed in terms of power-fraction
 			chargeSetpoint_kW = max(0, maxChargingPower_kW * (v_WTPCharging_eurpkWh / currentElectricityPriceConsumption_eurpkWh - 1) * priceGain_kWhpeur);
 			chargeSetpoint_kW = min(remainingChargePower_kW, chargeSetpoint_kW);
 			//traceln("Trying to charge cheaply, time " + time(MINUTE) + " minutes, charge setpoint: " + chargeSetpoint_kW + " kW");
-			if (p_agentID.equals("h1")){
+			/*if (this.getIndex() == 0){
 				traceln("wtp = " + v_WTPCharging_eurpkWh);
-				traceln("charge setpoint kW: " + chargeSetpoint_kW);
-			}
+				traceln("remainingChargePower_kW: " + remainingChargePower_kW + "charge setpoint kW: " + chargeSetpoint_kW);
+			}*/
 		}
 		//}
+		//traceln("Hello! Charge setpoint: " + chargeSetpoint_kW);
 		vehicle.f_updateAllFlows( chargeSetpoint_kW / maxChargingPower_kW );
 		v_evChargingPowerElectric_kW += vehicle.electricityConsumption_kW - vehicle.electricityProduction_kW;
 		remainingChargePower_kW = availableChargingPower_kW - v_evChargingPowerElectric_kW;
@@ -14557,6 +14613,7 @@ for ( int i = 0; i < copiedVehicleList.size(); i++ ){
 	((GCHouse)this).v_vehicleSOC_fr = vehicle.getCurrentStateOfCharge();
 }
 }
+
 ]]></Body>
 				</Function>
 				<Function AccessType="default" StaticFunction="false">
@@ -14677,7 +14734,7 @@ p_secondaryHeatingAsset.f_updateAllFlows(p_secondaryHeatingAsset.v_powerFraction
 					<ReturnType><![CDATA[OL_priceLevels]]></ReturnType>
 					<Id>1676476236040</Id>
 					<Name><![CDATA[f_getPriceLevel]]></Name>
-					<X>800</X><Y>460</Y>
+					<X>800</X><Y>510</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -14814,6 +14871,89 @@ if (j_ea instanceof J_EAVehicle) {
 					</Parameter>
 					<Body><![CDATA[f_connectToJ_EA_default(j_ea);
 // Abstract method to be used call GC-subtype specific functions]]></Body>
+				</Function>
+				<Function AccessType="default" StaticFunction="false">
+					<ReturnModificator>VOID</ReturnModificator>
+					<ReturnType><![CDATA[double]]></ReturnType>
+					<Id>1695822607494</Id>
+					<Name><![CDATA[f_chargeOnPrice_V2G]]></Name>
+					<X>830</X><Y>460</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Parameter>
+						<Name><![CDATA[currentElectricityPriceConsumption_eurpkWh]]></Name>
+						<Type><![CDATA[double]]></Type>
+					</Parameter>
+					<Parameter>
+						<Name><![CDATA[availableChargingPower_kW]]></Name>
+						<Type><![CDATA[double]]></Type>
+					</Parameter>
+					<Body><![CDATA[ArrayList<J_EAEV> copiedVehicleList = new ArrayList<J_EAEV>(c_vehiclesAvailableForCharging);
+int countDeletedItems = 0;
+
+double remainingChargePower_kW = availableChargingPower_kW;
+
+for ( int i = 0; i < copiedVehicleList.size(); i++ ){
+	J_EAEV vehicle = copiedVehicleList.get(i);
+	if(!vehicle.getAvailability() ){
+		vehicle.f_updateAllFlows( 0 );
+		c_vehiclesAvailableForCharging.remove( i - countDeletedItems );
+		countDeletedItems ++;
+	} else {
+		//double availableChargingPower_kW = v_allowedCapacity_kW - v_currentPowerElectricity_kW - v_chargingPower_kW;
+		double chargeNeedForNextTrip_kWh = vehicle.energyNeedForNextTrip_kWh - vehicle.getStorageCapacity_kWh()*vehicle.getCurrentStateOfCharge();
+		//double timeToNexTrip_min = vehicle.getMobilityTracker().v_nextTripStartTime_min - time( MINUTE );
+		double maxChargingPower_kW = vehicle.getElectricCapacity_kW();
+		double timeToNextTrip_min = vehicle.tripTracker.v_nextEventStartTime_min - time ( MINUTE );
+		double chargeDeadline_min = floor((vehicle.tripTracker.v_nextEventStartTime_min / 60 - chargeNeedForNextTrip_kWh / maxChargingPower_kW) / main.p_timeStep_h) * 60 * main.p_timeStep_h;
+
+		double priceGain_kWhpeur = 1; // When WTP is higher than current electricity price, ramp up charging power with this gain based on the price-delta.
+		double urgencyGain_eurpkWh = 0.4; // How strongly WTP-price shifts based on charging flexibility
+		double maxSpreadChargingPower_kW = min(chargeNeedForNextTrip_kWh / (max(1, timeToNextTrip_min - v_additionalTimeSpreadCharging_MIN) / 60), maxChargingPower_kW);
+		//traceln("maxSpreadChargingPower_kW" + maxSpreadChargingPower_kW);
+		double WTPoffset_eurpkWh = 0.05*(1-main.v_WindYieldForecast_fr);//0.15; // Adds an offset to the WTP price; this value is very much context specific, depending on market conditions during charging periods
+		double V2G_WTR_offset_eurpkWh = 0.05;
+		double chargeSetpoint_kW = 0;
+
+		if ( time(MINUTE) >= chargeDeadline_min & chargeNeedForNextTrip_kWh > 0) { // Must-charge time at max charging power
+			//traceln("Urgency charging! May exceed connection capacity!");
+			chargeSetpoint_kW = maxChargingPower_kW;				
+		} else if ( vehicle.getCurrentStateOfCharge() < 0.15 ) {
+			chargeSetpoint_kW = min(remainingChargePower_kW, maxChargingPower_kW);
+		} else {
+			//double WTPprice_eurpkWh = v_electricityPriceLowPassed_eurpkWh - flexibilityGain_eurph * (chargeDeadline_min - time(MINUTE) - 600);
+			v_WTPCharging_eurpkWh = WTPoffset_eurpkWh + v_electricityPriceLowPassed_eurpkWh + urgencyGain_eurpkWh * ( max(0,maxSpreadChargingPower_kW) / maxChargingPower_kW ); // Scale WTP based on flexibility expressed in terms of power-fraction
+			//WTPprice_eurpkWh = WTPoffset_eurpkWh + (main.v_epexNext24hours_eurpkWh+v_electricityPriceLowPassed_eurpkWh)/2 + flexibilityGain_eurpkWh * sqrt(maxSpreadChargingPower_kW/maxChargingPower_kW); // Scale WTP based on flexibility expressed in terms of power-fraction
+			chargeSetpoint_kW = max(0, maxChargingPower_kW * (v_WTPCharging_eurpkWh / currentElectricityPriceConsumption_eurpkWh - 1) * priceGain_kWhpeur);
+			chargeSetpoint_kW = min(remainingChargePower_kW, chargeSetpoint_kW);
+			
+			if ( chargeNeedForNextTrip_kWh < -maxChargingPower_kW*main.p_timeStep_h && chargeSetpoint_kW == 0 ) { // Surpluss SOC and high energy price			
+				v_WTRV2G_eurpkWh  = V2G_WTR_offset_eurpkWh + v_electricityPriceLowPassed_eurpkWh; // Scale WTP based on flexibility expressed in terms of power-fraction
+				chargeSetpoint_kW = min(0, -maxChargingPower_kW * (currentElectricityPriceConsumption_eurpkWh / v_WTRV2G_eurpkWh - 1) * priceGain_kWhpeur);
+				/*if (chargeSetpoint_kW < 0) {
+					traceln(" V2G Active! Power: " + chargeSetpoint_kW );
+				}*/
+				
+			}
+			//traceln("Trying to charge cheaply, time " + time(MINUTE) + " minutes, charge setpoint: " + chargeSetpoint_kW + " kW");
+			/*if (this.getIndex() == 0){
+				traceln("wtp = " + v_WTPCharging_eurpkWh);
+				traceln("remainingChargePower_kW: " + remainingChargePower_kW + "charge setpoint kW: " + chargeSetpoint_kW);
+			}*/
+		}
+		vehicle.f_updateAllFlows( chargeSetpoint_kW / maxChargingPower_kW );
+		v_evChargingPowerElectric_kW += vehicle.electricityConsumption_kW - vehicle.electricityProduction_kW;
+		remainingChargePower_kW = availableChargingPower_kW - v_evChargingPowerElectric_kW;
+		
+	}
+	if( this instanceof GCHouse){
+		((GCHouse)this).v_vehicleSOC_fr = vehicle.getCurrentStateOfCharge();
+	}
+}
+
+]]></Body>
 				</Function>
 			</Functions>
 			<AgentLinks>
@@ -15330,7 +15470,6 @@ if (j_ea instanceof J_EAVehicle) {
     			<TimePlot>
 					<Id>1668439095469</Id>
 					<Name><![CDATA[pl_powerFlows]]></Name>
-					<ExcludeFromBuild>true</ExcludeFromBuild>
 					<X>0</X><Y>520</Y>
 					<Label><X>0</X><Y>-10</Y></Label>
 					<PublicFlag>false</PublicFlag>
@@ -15385,7 +15524,7 @@ if (j_ea instanceof J_EAVehicle) {
 					<Id>1668439095463</Id>
 					<Expression><![CDATA[my_dataset]]></Expression>
 					<Color>-10496</Color>
-					<Expression2><![CDATA[sum(c_consumptionAssets, x -> x.v_currentConsumptionElectricity_kW)]]></Expression2>
+					<Expression2><![CDATA[sum(c_consumptionAssets, x -> x.electricityConsumption_kW)]]></Expression2>
 					<Expression2Flag>true</Expression2Flag>
 						<PointStyle>NONE</PointStyle>
 						<LineWidth>1.0</LineWidth>
@@ -15395,7 +15534,7 @@ if (j_ea instanceof J_EAVehicle) {
 					<Id>1668439095464</Id>
 					<Expression><![CDATA[my_dataset1]]></Expression>
 					<Color>-3137392</Color>
-					<Expression2><![CDATA[-sum(c_productionAssets, x -> x.v_currentProductionElectricity_kW)]]></Expression2>
+					<Expression2><![CDATA[-sum(c_productionAssets, x -> x.electricityProduction_kW)]]></Expression2>
 					<Expression2Flag>true</Expression2Flag>
 						<PointStyle>NONE</PointStyle>
 						<LineWidth>1.0</LineWidth>
@@ -15405,7 +15544,7 @@ if (j_ea instanceof J_EAVehicle) {
 					<Id>1668439095465</Id>
 					<Expression><![CDATA[my_dataset2]]></Expression>
 					<Color>-32944</Color>
-					<Expression2><![CDATA[sum(c_conversionAssets, x -> x.v_currentConsumptionElectricity_kW) - sum(c_conversionAssets, x -> x.v_currentProductionElectricity_kW)]]></Expression2>
+					<Expression2><![CDATA[sum(c_conversionAssets, x -> x.electricityConsumption_kW) - sum(c_conversionAssets, x -> x.electricityProduction_kW)]]></Expression2>
 					<Expression2Flag>true</Expression2Flag>
 						<PointStyle>NONE</PointStyle>
 						<LineWidth>1.0</LineWidth>
@@ -23933,17 +24072,17 @@ f_setElectricityPriceBands();
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>true</ShowLabel>
 					<Body><![CDATA[if (v_contractDelivery.deliveryContractType.equals(OL_DeliveryContractType.ELECTRICITY_VARIABLE)) {
-	v_priceBandsDelivery.replace(-99999.0, v_contractDelivery.feedinPrice_eurpkWh + v_electricityVariablePrice_eurpkWh );
-	v_priceBandsDelivery.replace(99999.0, v_contractDelivery.deliveryPrice_eurpkWh + v_electricityVariablePrice_eurpkWh );
+	v_priceBandsDelivery.replace(-9999999.0, v_contractDelivery.feedinPrice_eurpkWh + v_electricityVariablePrice_eurpkWh );
+	v_priceBandsDelivery.replace(9999999.0, v_contractDelivery.deliveryPrice_eurpkWh + v_electricityVariablePrice_eurpkWh );
 }
 if (v_contractTransport.transportContractType.equals(OL_TransportContractType.NODALPRICING)) {
-	v_priceBandsTransport.replace(-99999.0, v_currentNodalPrice_eurpkWh);
-	v_priceBandsTransport.replace(99999.0, v_currentNodalPrice_eurpkWh);
+	v_priceBandsTransport.replace(-9999999.0, v_currentNodalPrice_eurpkWh);
+	v_priceBandsTransport.replace(9999999.0, v_currentNodalPrice_eurpkWh);
 }
 
 if (v_contractTax.proportionalTax_pct != 0.0) { // Add VAT (BTW), over all other cost components. At this point assumes there are only 2 price-bands, for delivery and feedin! No other 'steps'! Not true for capacity-tariff (bandbreedtemodel)!
-	v_priceBandsTax.replace(-99999.0, v_contractTax.feedinTax_eurpkWh + v_contractTax.proportionalTax_pct*(v_contractDelivery.feedinPrice_eurpkWh + v_electricityVariablePrice_eurpkWh + v_currentNodalPrice_eurpkWh + v_contractTax.feedinTax_eurpkWh));
-	v_priceBandsTax.replace(99999.0, v_contractTax.deliveryTax_eurpkWh + v_contractTax.proportionalTax_pct*(v_contractDelivery.deliveryPrice_eurpkWh + v_electricityVariablePrice_eurpkWh + v_currentNodalPrice_eurpkWh + v_contractTax.deliveryTax_eurpkWh));
+	v_priceBandsTax.replace(-9999999.0, v_contractTax.feedinTax_eurpkWh + v_contractTax.proportionalTax_pct*(v_contractDelivery.feedinPrice_eurpkWh + v_electricityVariablePrice_eurpkWh + v_currentNodalPrice_eurpkWh + v_contractTax.feedinTax_eurpkWh));
+	v_priceBandsTax.replace(9999999.0, v_contractTax.deliveryTax_eurpkWh + v_contractTax.proportionalTax_pct*(v_contractDelivery.deliveryPrice_eurpkWh + v_electricityVariablePrice_eurpkWh + v_currentNodalPrice_eurpkWh + v_contractTax.deliveryTax_eurpkWh));
 }
 
 /*
@@ -24207,32 +24346,32 @@ v_heatPrice_eurpkWh = (heatDeliveryPrice_eurpkWh + heatDeliveryTax_eurpkWh) * (1
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>true</ShowLabel>
 					<Body><![CDATA[v_priceBandsDelivery = new TreeMap<Double, Double>();
-v_priceBandsDelivery.put(-99999.0, v_contractDelivery.feedinPrice_eurpkWh);
+v_priceBandsDelivery.put(-9999999.0, v_contractDelivery.feedinPrice_eurpkWh);
 v_priceBandsDelivery.put(0.0, 0.0);
-v_priceBandsDelivery.put(99999.0,  v_contractDelivery.deliveryPrice_eurpkWh);
+v_priceBandsDelivery.put(9999999.0,  v_contractDelivery.deliveryPrice_eurpkWh);
 
 v_priceBandsTransport = new TreeMap<Double, Double>();
-v_priceBandsTransport.put(-99999.0, 0.0);
+v_priceBandsTransport.put(-9999999.0, 0.0);
 v_priceBandsTransport.put(0.0, 0.0);
-v_priceBandsTransport.put(99999.0, 0.0);
+v_priceBandsTransport.put(9999999.0, 0.0);
 if (v_contractTransport.transportContractType.equals(OL_TransportContractType.BANDWIDTH)) {
 	//traceln("Setting capacity tariff for " + p_actorID);
-	v_priceBandsTransport.put(-99999.0, v_contractTransport.bandwidthTariff_eurpkWh);
+	v_priceBandsTransport.put(-9999999.0, v_contractTransport.bandwidthTariff_eurpkWh);
 	v_priceBandsTransport.put(-v_contractTransport.bandwidthTreshold_kW, 0.0);
 	v_priceBandsTransport.put(0.0, 0.0);
 	v_priceBandsTransport.put(v_contractTransport.bandwidthTreshold_kW, 0.0);	
-	v_priceBandsTransport.put(99999.0, v_contractTransport.bandwidthTariff_eurpkWh);
+	v_priceBandsTransport.put(9999999.0, v_contractTransport.bandwidthTariff_eurpkWh);
 	//traceln(v_priceBandsTransport.toString());
 } else {
-	v_priceBandsTransport.put(-99999.0, 0.0);
+	v_priceBandsTransport.put(-9999999.0, 0.0);
 	v_priceBandsTransport.put(0.0, 0.0);
-	v_priceBandsTransport.put(99999.0, 0.0);
+	v_priceBandsTransport.put(9999999.0, 0.0);
 }
 
 v_priceBandsTax = new TreeMap<Double, Double>();
-v_priceBandsTax.put(-99999.0, v_contractTax.feedinTax_eurpkWh);
+v_priceBandsTax.put(-9999999.0, v_contractTax.feedinTax_eurpkWh);
 v_priceBandsTax.put(0.0, 0.0);
-v_priceBandsTax.put(99999.0, v_contractTax.deliveryTax_eurpkWh);
+v_priceBandsTax.put(9999999.0, v_contractTax.deliveryTax_eurpkWh);
 
 /*
 if( p_congestionTariffApplicable ){
@@ -28056,12 +28195,12 @@ f_setElectricityPriceBands();
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>true</ShowLabel>
 					<Body><![CDATA[if (v_contractDelivery.deliveryContractType.equals(OL_DeliveryContractType.ELECTRICITY_VARIABLE)) {
-	v_priceBandsDelivery.replace(-99999.0, v_contractDelivery.feedinPrice_eurpkWh + v_electricityVariablePrice_eurpkWh );
-	v_priceBandsDelivery.replace(99999.0, v_contractDelivery.deliveryPrice_eurpkWh + v_electricityVariablePrice_eurpkWh );
+	v_priceBandsDelivery.replace(-9999999.0, v_contractDelivery.feedinPrice_eurpkWh + v_electricityVariablePrice_eurpkWh );
+	v_priceBandsDelivery.replace(9999999.0, v_contractDelivery.deliveryPrice_eurpkWh + v_electricityVariablePrice_eurpkWh );
 }
 if (v_contractTransport.transportContractType.equals(OL_TransportContractType.NODALPRICING)) {
-	v_priceBandsTransport.replace(-99999.0, v_currentNodalPrice_eurpkWh);
-	v_priceBandsTransport.replace(99999.0, v_currentNodalPrice_eurpkWh);
+	v_priceBandsTransport.replace(-9999999.0, v_currentNodalPrice_eurpkWh);
+	v_priceBandsTransport.replace(9999999.0, v_currentNodalPrice_eurpkWh);
 }
 
 // Assuming Tax is not varying in time!!
@@ -28101,19 +28240,19 @@ if (v_congestionTariffAllowance_kW != 0){
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>true</ShowLabel>
 					<Body><![CDATA[v_priceBandsDelivery = new TreeMap<Double, Double>();
-v_priceBandsDelivery.put(-99999.0, 0.0);
+v_priceBandsDelivery.put(-9999999.0, v_contractDelivery.feedinPrice_eurpkWh);
 v_priceBandsDelivery.put(0.0, 0.0);
-v_priceBandsDelivery.put(99999.0, 0.0);
+v_priceBandsDelivery.put(9999999.0, v_contractDelivery.deliveryPrice_eurpkWh);
 
 v_priceBandsTransport = new TreeMap<Double, Double>();
-v_priceBandsTransport.put(-99999.0, 0.0);
+v_priceBandsTransport.put(-9999999.0, 0.0);
 v_priceBandsTransport.put(0.0, 0.0);
-v_priceBandsTransport.put(99999.0, 0.0);
+v_priceBandsTransport.put(9999999.0, 0.0);
 
 v_priceBandsTax = new TreeMap<Double, Double>();
-v_priceBandsTax.put(-99999.0, v_contractTax.feedinTax_eurpkWh);
+v_priceBandsTax.put(-9999999.0, v_contractTax.feedinTax_eurpkWh);
 v_priceBandsTax.put(0.0, 0.0);
-v_priceBandsTax.put(99999.0, v_contractTax.deliveryTax_eurpkWh);
+v_priceBandsTax.put(9999999.0, v_contractTax.deliveryTax_eurpkWh);
 
 /*
 if( p_congestionTariffApplicable ){
@@ -29615,6 +29754,7 @@ v_currentBalanceNat_eur -= v_currentNettElectricityVolume_kWh * v_currentVariabl
 				<Variable Class="PlainVariable">
 					<Id>1665060534142</Id>
 					<Name><![CDATA[v_congestionAllowanceLevel_kW]]></Name>
+					<ExcludeFromBuild>true</ExcludeFromBuild>
 					<X>60</X><Y>180</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
@@ -29652,7 +29792,7 @@ v_currentBalanceNat_eur -= v_currentNettElectricityVolume_kWh * v_currentVariabl
 					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
 						<Type><![CDATA[double]]></Type>        
 						<InitialValue Class="CodeValue">
-							<Code><![CDATA[0]]></Code>
+							<Code><![CDATA[0.2]]></Code>
 						</InitialValue>
 					</Properties>
 				</Variable>
@@ -29725,6 +29865,9 @@ v_currentBalanceNat_eur -= v_currentNettElectricityVolume_kWh * v_currentVariabl
 					<ShowLabel>true</ShowLabel>
 					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
 						<Type><![CDATA[double]]></Type>        
+						<InitialValue Class="CodeValue">
+							<Code><![CDATA[0.6]]></Code>
+						</InitialValue>
 					</Properties>
 				</Variable>
 				<Variable Class="Parameter">
@@ -29913,7 +30056,7 @@ v_currentBalanceNat_eur -= v_currentNettElectricityVolume_kWh * v_currentVariabl
 						<UnitType><![CDATA[NONE]]></UnitType>
 						<SdArray>false</SdArray>
 						<DefaultValue Class="CodeValue">
-							<Code><![CDATA[false]]></Code>
+							<Code><![CDATA[true]]></Code>
 						</DefaultValue>
 						<ParameterEditor>
 							<Id>1675688426538</Id>
@@ -30036,22 +30179,18 @@ else {
 					<ShowLabel>true</ShowLabel>
 					<Body><![CDATA[for( GridNode n : c_electricityGridNodes ){
 	double currentLoad_kW = n.v_filteredLoadCongestionPricing_kW;
-	//double currentcongestionPrice = n.v_lowPasCongestionPrice_eurpkWh;
-	//double currentcongestionPrice = n.v_currentCongestionPrice_eurpkWh;
+	
 	if ( abs(currentLoad_kW) > v_congestionThreshold_fr * n.p_capacity_kW  ){
 		n.v_congested = true;
+		n.v_currentCongestionPrice_eurpkWh = signum(currentLoad_kW)*(abs(currentLoad_kW) / n.p_capacity_kW - v_congestionThreshold_fr ) / ( 1 - v_congestionThreshold_fr) * v_congestionPrice_eurpkWh;		
+		//n.f_setCongestionTariff(n.v_currentCongestionPrice_eurpkWh); 
 		if (currentLoad_kW > 0) {
 			n.v_congestionMode = "Overconsumption";
-			n.v_currentCongestionPrice_eurpkWh = (abs(currentLoad_kW) / n.p_capacity_kW - v_congestionThreshold_fr ) / ( 1 - v_congestionThreshold_fr) * v_congestionPrice_eurpkWh;
-			//n.v_lowPasCongestionPrice_eurpkWh = 0.5 * n.v_lowPasCongestionPrice_eurpkWh + 0.5 * n.v_currentCongestionPrice_eurpkWh;
-			n.f_setCongestionTariff(n.v_currentCongestionPrice_eurpkWh, v_congestionAllowanceLevel_kW); 
-
+			//n.f_setCongestionTariff(n.v_currentCongestionPrice_eurpkWh); 
 		} 
 		else {
-			n.v_congestionMode = "Overproduction";
-			n.v_currentCongestionPrice_eurpkWh = (abs(currentLoad_kW) / n.p_capacity_kW - v_congestionThreshold_fr ) / ( 1 - v_congestionThreshold_fr) * v_congestionPrice_eurpkWh;
-			//n.v_lowPasCongestionPrice_eurpkWh = 0.5 * n.v_lowPasCongestionPrice_eurpkWh + 0.5 * n.v_currentCongestionPrice_eurpkWh;
-			n.f_setCongestionTariff(n.v_currentCongestionPrice_eurpkWh, v_congestionAllowanceLevel_kW); 
+			n.v_congestionMode = "Overproduction";	
+			//n.f_setCongestionTariff(-n.v_currentCongestionPrice_eurpkWh); 
 		}
 		if (!c_congestedGNConsumption.contains(n)){ c_congestedGNConsumption.add(n); }
 	}
@@ -30449,10 +30588,11 @@ public void f_manageHeatingAssets(){
 public void f_manageCharging(){
 	f_manageCharging_overwrite();
 }
-@Override 
+
+/*@Override 
 public void f_chargeOnPrice(double a, double b){
 	f_chargeOnPrice_overwrite(a,b);
-}
+}*/
 
 @Override
 public void f_simpleCharging(){
@@ -30964,7 +31104,7 @@ v_currentPriceLevel = f_getPriceLevel( v_currentElectricityPriceConsumption_eurp
 double availablePowerAtPrice_kW = ((ConnectionOwner)l_ownerActor.getConnectedAgent()).f_getAvailablePowerAtPrice( v_currentPowerElectricity_kW );
 
 if (p_householdEV != null ){
-	f_determineChargingDemandOfEV(); //we do this here because with smart assets the heatpumps will need information of the SOC of the EV
+	//f_determineChargingDemandOfEV(); //we do this here because with smart assets the heatpumps will need information of the SOC of the EV
 }
 
 f_manageHeatingAssets();
@@ -31268,6 +31408,7 @@ if( ambientTempType != null && ambientTempType.equals("AIR") ) {
 					<ReturnType><![CDATA[double]]></ReturnType>
 					<Id>1674402121915</Id>
 					<Name><![CDATA[f_chargeOnPrice_overwrite]]></Name>
+					<ExcludeFromBuild>true</ExcludeFromBuild>
 					<X>830</X><Y>440</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
@@ -31388,7 +31529,8 @@ v_evChargingPowerElectric_kW += p_householdEV.electricityConsumption_kW - p_hous
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>true</ShowLabel>
 					<Body><![CDATA[double availableCapacityFromBatteries = p_batteryAsset == null ? 0 : p_batteryAsset.getCapacityAvailable_kW(); 
-double availableChargingCapacity = v_allowedCapacity_kW + availableCapacityFromBatteries - v_currentPowerElectricity_kW;
+//double availableChargingCapacity = v_allowedCapacity_kW + availableCapacityFromBatteries - v_currentPowerElectricity_kW;
+double availableChargingCapacity = p_connectionCapacity_kW + availableCapacityFromBatteries - v_currentPowerElectricity_kW;
 v_vehicleSOC_fr = p_householdEV.getCurrentStateOfCharge();
 
 switch (p_chargingAttitudeVehicles) {
@@ -31397,8 +31539,12 @@ switch (p_chargingAttitudeVehicles) {
 	break;
 	case CHEAP:
 		f_chargeOnPrice( v_currentElectricityPriceConsumption_eurpkWh, max(0, availableChargingCapacity));
-		//f_chargeOnPrice2( max(0, availableChargingCapacity));
-	break;
+	break;	
+	case V2G:
+		//v_currentElectricityPriceConsumption_eurpkWh = ((ConnectionOwner)l_ownerActor.getConnectedAgent()).f_getElectricityPrice(p_connectionCapacity_kW); 
+		//v_electricityPriceLowPassed_eurpkWh += v_lowPassFactor_fr * ( v_currentElectricityPriceConsumption_eurpkWh - v_electricityPriceLowPassed_eurpkWh );
+		f_chargeOnPrice_V2G( v_currentElectricityPriceConsumption_eurpkWh, max(0, availableChargingCapacity));
+	break;	
 	default:
 		traceln("Incorrect charging mode in household @f_manageCharging_overwrite");
 }
@@ -31435,6 +31581,7 @@ v_evChargingPowerElectric_kW += p_householdEV.electricityConsumption_kW - p_hous
 					<ReturnType><![CDATA[double]]></ReturnType>
 					<Id>1675034695162</Id>
 					<Name><![CDATA[f_determineChargingDemandOfEV]]></Name>
+					<ExcludeFromBuild>true</ExcludeFromBuild>
 					<X>800</X><Y>480</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
@@ -38617,7 +38764,7 @@ public class J_EAEV extends J_EAVehicle implements Serializable {
 				stateOfCharge_r = 0;
 			}
 			available = true;
-
+			((GridConnection)this.parentAgent).c_vehiclesAvailableForCharging.add(this);
 			//maxSpreadChargingRatio = (1-stateOfCharge_r) * storageCapacity_kWh / (timeToNextTrip_min/60);
 			return true;
 		}
@@ -38649,25 +38796,6 @@ public class J_EAEV extends J_EAVehicle implements Serializable {
 		return chargingTime_min;
 	}
 
-	/*public double getIdleTime() {
-		return idleTimeToNextTrip_MIN;
-	}*/
-
-	/*public double getMaxSpreadChargingRatio() {
-		return maxSpreadChargingRatio;
-	}*/
-
-	/*public void setMaxSpreadChargingRatio(int extraTime_MIN) {
-		maxSpreadChargingRatio = (storageCapacity_kWh - stateOfCharge_r * storageCapacity_kWh) /  ((EnergyAsset.v_idleTimeToNextTrip_min - extraTime_MIN ) / 60); // determine required charging speed
-		if( stateOfCharge_r < 0 ) {
-			maxSpreadChargingRatio = - maxSpreadChargingRatio +  storageCapacity_kWh /  (EnergyAsset.v_idleTimeToNextTrip_min / 60); // make sure negative SOCs are corrected for
-			traceln( "State of charge from vehicle < 0, max spread charging power fixed to " + maxSpreadChargingRatio);
-		}
-		maxSpreadChargingRatio = maxSpreadChargingRatio / capacityElectric_kW; //turn kW into ratio
-		if ( maxSpreadChargingRatio >  1) {
-			traceln("J_EAEV will charge faster than max to get full for next trip. charging speed: " + maxSpreadChargingRatio * capacityElectric_kW);
-		}
-	}*/
 
 	@Override
 	public String toString() {
@@ -40044,7 +40172,11 @@ public class J_ActivityTrackerTrips extends J_ActivityTracker implements Seriali
 		    for (int i = 0; i < nbActivities; i++){
 		    	starttimes_min.add(main.inputHouseholdTrips.getCellNumericValue("sheet1", rowIndex + 2, 3 + i * 3));
 		    	endtimes_min.add(main.inputHouseholdTrips.getCellNumericValue("sheet1", rowIndex + 2, 4 + i * 3));
-		    	distances_km.add(main.inputHouseholdTrips.getCellNumericValue("sheet1", rowIndex + 2, 5 + i * 3));
+		    	distances_km.add(min(350,main.inputHouseholdTrips.getCellNumericValue("sheet1", rowIndex + 2, 5 + i * 3)));
+			    if (rowIndex == 55) {
+    		    	distances_km.set(i,distances_km.get(i)/2.0);
+    		    }
+
 		    }
 	
 		    while ( starttimes_min.get(v_eventIndex) - time_min < 0) {
@@ -40056,6 +40188,9 @@ public class J_ActivityTrackerTrips extends J_ActivityTracker implements Seriali
 		    	}
 		    }
 		    v_nextEventStartTime_min = starttimes_min.get(v_eventIndex);
+		    
+		    //Reducing trip lengths on rowIndex 55, they are infeasible!
+		    
     	} else {
     		traceln("Mobility pattern type not yet implemented! No trips loaded!");
     	}
@@ -40079,10 +40214,36 @@ public class J_ActivityTrackerTrips extends J_ActivityTracker implements Seriali
     			}
     			
     		    v_nextEventStartTime_min = starttimes_min.get(v_eventIndex);
-    			v_idleTimeToNextTrip_min = starttimes_min.get(v_eventIndex) - time_min;
+    			v_idleTimeToNextTrip_min = v_nextEventStartTime_min - time_min;
     			v_tripDist_km = distances_km.get( v_eventIndex ); // Update upcoming trip distance
-    			v_energyNeedForNextTrip_kWh = Vehicle.energyConsumption_kWhpkm * v_tripDist_km;
+
     			
+    			if (Vehicle instanceof J_EAEV) {
+    				J_EAEV EV = (J_EAEV)Vehicle;
+        			v_energyNeedForNextTrip_kWh = EV.energyConsumption_kWhpkm * v_tripDist_km;
+
+        			// Check if more charging is needed for next trip!
+					double nextTripDist_km = 0;
+					double nextTripStartTime_min = 0;
+
+        			if ( v_eventIndex == starttimes_min.size() - 1 ) { 
+						nextTripDist_km = distances_km.get( 0 );
+						nextTripStartTime_min = starttimes_min.get(0);
+	    			} else {		
+	    				nextTripDist_km = distances_km.get( v_eventIndex+1 );
+						nextTripStartTime_min = starttimes_min.get( v_eventIndex+1 );
+					}
+					double additionalChargingNeededForNextTrip_kWh = max(0,nextTripDist_km * EV.energyConsumption_kWhpkm - (nextTripStartTime_min - endtimes_min.get(v_eventIndex))/60*EV.capacityElectric_kW);
+					//if (additionalChargingNeededForNextTrip_kWh>0) {
+					//	traceln("*******Additional charging required to prepare for trip after next trip!*********");
+					//}
+					v_energyNeedForNextTrip_kWh += additionalChargingNeededForNextTrip_kWh;
+    				EV.energyNeedForNextTrip_kWh = v_energyNeedForNextTrip_kWh;
+    				if ( (v_energyNeedForNextTrip_kWh - EV.getCurrentStateOfCharge() * EV.getStorageCapacity_kWh()) / (v_idleTimeToNextTrip_min/60) > EV.capacityElectric_kW ) {    					
+    					traceln("Infeasible trip pattern for EV, not enough time to charge for next trip! Required charging power is: " + (v_energyNeedForNextTrip_kWh - EV.getCurrentStateOfCharge() * EV.getStorageCapacity_kWh()) / (v_idleTimeToNextTrip_min/60) + " kW");
+    					traceln("RowIndex: " + rowIndex + " tripDistance: " + v_tripDist_km + " km, time to next trip: " + v_idleTimeToNextTrip_min + " minutes");
+    				} 
+    			}
     			//v_nextEventStartTime_min = starttimes_min.get(v_eventIndex);
     			//v_nextEventEndTime_min = endtimes_min.get(v_eventIndex);    			
     		}    		
