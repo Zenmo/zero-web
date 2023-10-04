@@ -29,7 +29,7 @@ services:
         volumes:
             - ./ztor:/home/gradle/ztor
             - gradle-build-cache:/home/gradle/.gradle
-        command: gradle --continuous build
+        command: gradle --continuous classes
 
     ## Runs Ktor web server and reloads classes if the compiled .class file changes.
     ## Do ensure that the two Gradle containers have independent Home directories and Project cache directories.
@@ -48,8 +48,23 @@ services:
             POSTGRES_URL: jdbc:postgresql://postgres:5432/postgres
             POSTGRES_USER: postgres
             POSTGRES_PASSWORD: welkom123
-        depends_on:
-            - ztor-build
+#        depends_on:
+#            - ztor-build
+
+#    ztor-cmd:
+#        image: gradle:8.3.0-jdk20
+#        ports:
+#            - 127.0.0.1:8082:8082
+#        working_dir: /home/gradle/ztor
+#        user: gradle
+#        volumes:
+#            - ./ztor:/home/gradle/ztor
+#            - gradle-cmd-cache:/home/gradle/.gradle
+#        command: gradle --project-cache-dir=/tmp/gradle -Dep-online-csv=poepie run
+#        environment:
+#            POSTGRES_URL: jdbc:postgresql://postgres:5432/postgres
+#            POSTGRES_USER: postgres
+#            POSTGRES_PASSWORD: welkom123
 
     frontend:
         image: node:20.4.0
@@ -75,4 +90,5 @@ services:
 volumes:
     gradle-build-cache:
     gradle-run-cache:
+    gradle-cmd-cache:
     postgres:

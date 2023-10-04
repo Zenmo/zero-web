@@ -1,5 +1,6 @@
 package com.zenmo.plugins
 
+import com.zenmo.energieprestatieonline.RawPandTable
 import com.zenmo.models.*
 import com.zenmo.models.companysurvey.CompanySurvey
 import com.zenmo.models.companysurvey.CompanySurveyElectricityConnectionTable
@@ -15,11 +16,11 @@ import org.jetbrains.exposed.sql.*
 import org.jetbrains.exposed.sql.transactions.transaction
 import java.util.*
 
-fun Application.configureDatabases() {
+fun Application.configureDatabases(): Database {
     val db: Database = connectToPostgres(embedded = false)
 
     transaction(db) {
-        SchemaUtils.create(CompanySurveyTable, CompanySurveyElectricityConnectionTable)
+        SchemaUtils.create(CompanySurveyTable, CompanySurveyElectricityConnectionTable, RawPandTable)
     }
 
     routing {
@@ -34,22 +35,22 @@ fun Application.configureDatabases() {
                     it[companyName] = survey.companyName
                     it[personName] = survey.personName
                     it[email] = survey.email
-                    it[usageAssets] = survey.usageAssets
-                    it[generationAssets] = survey.generationAssets
-                    it[usagePattern] = survey.usagePattern
+//                    it[usageAssets] = survey.usageAssets
+//                    it[generationAssets] = survey.generationAssets
+//                    it[usagePattern] = survey.usagePattern
                 }
 
                 CompanySurveyElectricityConnectionTable.batchInsert(survey.electricityConnections) {
                     companyElectricityConnection ->
-                        this[CompanySurveyElectricityConnectionTable.surveyId] = surveyId
+//                        this[CompanySurveyElectricityConnectionTable.surveyId] = surveyId
                         this[CompanySurveyElectricityConnectionTable.street] = companyElectricityConnection.street
                         this[CompanySurveyElectricityConnectionTable.houseNumber] = companyElectricityConnection.houseNumber
                         this[CompanySurveyElectricityConnectionTable.houseLetter] = companyElectricityConnection.houseLetter
                         this[CompanySurveyElectricityConnectionTable.houseNumberSuffix] = companyElectricityConnection.houseNumberSuffix
-                        this[CompanySurveyElectricityConnectionTable.annualUsageKWh] = companyElectricityConnection.annualUsageKWh
-                        this[CompanySurveyElectricityConnectionTable.quarterlyValuesFile] = companyElectricityConnection.quarterlyValuesFile
-                        this[CompanySurveyElectricityConnectionTable.ean] = companyElectricityConnection.ean
-                        this[CompanySurveyElectricityConnectionTable.description] = companyElectricityConnection.description
+//                        this[CompanySurveyElectricityConnectionTable.annualUsageKWh] = companyElectricityConnection.annualUsageKWh
+//                        this[CompanySurveyElectricityConnectionTable.quarterlyValuesFile] = companyElectricityConnection.quarterlyValuesFile
+//                        this[CompanySurveyElectricityConnectionTable.ean] = companyElectricityConnection.ean
+//                        this[CompanySurveyElectricityConnectionTable.description] = companyElectricityConnection.description
                 }
             }
 
@@ -57,6 +58,8 @@ fun Application.configureDatabases() {
             call.respond(HttpStatusCode.Created, survey)
         }
     }
+
+    return db
 }
 
 /**
@@ -66,7 +69,7 @@ fun Application.configureDatabases() {
  * @return [Connection] that represent connection to the database. Please, don't forget to close this connection when
  * your application shuts down by calling [Connection.close]
  * */
-fun Application.connectToPostgres(embedded: Boolean): Database {
+fun connectToPostgres(embedded: Boolean): Database {
     Class.forName("org.postgresql.Driver")
     return if (embedded) {
         Database.connect("jdbc:h2:mem:test;DB_CLOSE_DELAY=-1", driver = "org.h2.Driver", user = "root", password = "")
