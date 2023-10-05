@@ -38549,7 +38549,7 @@
 		{
 			"assets": [
 				{
-					"capacityElectricity_kW": 1000.0,
+					"capacityElectricity_kW": 0.0,
 					"category": "PRODUCTION",
 					"name": "Windmill_offshore",
 					"type": "WINDMILL"

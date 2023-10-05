@@ -2962,6 +2962,7 @@ f_initializeForecasts();
 //f_instantiateTemplateEnergyAssets();
 
 sl_EV.setValue(100, true);
+sl_rooftopPV.setValue(50, true);
 ra_chargingStrategy.setValue(2,true);
 //traceln("EV slider set to: " + sl_EV.getValue() );]]></Body>
 				</Function>
@@ -9483,7 +9484,7 @@ rectangle_electricitySettings.setVisible(false);]]></OnClickCode>
     			<TimePlot>
 					<Id>1690271885086</Id>
 					<Name><![CDATA[pl_netBelasting]]></Name>
-					<X>40</X><Y>400</Y>
+					<X>670</X><Y>510</Y>
 					<Label><X>0</X><Y>-10</Y></Label>
 					<PublicFlag>true</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -9501,15 +9502,15 @@ rectangle_electricitySettings.setVisible(false);]]></OnClickCode>
 						<Unit Class="TimeUnits"><![CDATA[HOUR]]></Unit>
 					</RecurrenceCode>
 					<EmbeddedIcon>false</EmbeddedIcon>
-					<Width>620</Width>
-					<Height>360</Height>
+					<Width>660</Width>
+					<Height>270</Height>
 					<BackgroundColor/>
 					<BorderColor/>
 					<ChartArea>
 						<XOffset>50</XOffset>
 						<YOffset>30</YOffset>
-						<Width>540</Width>
-						<Height>270</Height>
+						<Width>580</Width>
+						<Height>180</Height>
 						<BackgroundColor>-1</BackgroundColor>
 						<BorderColor>-16777216</BorderColor>
 						<GridColor>-12566464</GridColor>
@@ -9526,9 +9527,9 @@ rectangle_electricitySettings.setVisible(false);]]></OnClickCode>
 					</Labels>
 					<ShowLegend>true</ShowLegend>
 					<TimeWindowsMovementType>MOVEMENT_WITH_TIME</TimeWindowsMovementType>		
-					<TimeWindowUnits>MODEL_TIME_UNIT</TimeWindowUnits>
-					<VerScaleFromExpression><![CDATA[-1000]]></VerScaleFromExpression>
-					<VerScaleToExpression><![CDATA[2000]]></VerScaleToExpression>
+					<TimeWindowUnits>DAY</TimeWindowUnits>
+					<VerScaleFromExpression><![CDATA[-750]]></VerScaleFromExpression>
+					<VerScaleToExpression><![CDATA[1500]]></VerScaleToExpression>
 					<VerScaleType>FIXED</VerScaleType>
 					<DrawLine>true</DrawLine>
 					<Interpolation>LINEAR</Interpolation>
@@ -9543,7 +9544,7 @@ rectangle_electricitySettings.setVisible(false);]]></OnClickCode>
 						<LineWidth>1.0</LineWidth>
 					</DatasetExpression>
 					<SamplesToKeep>192</SamplesToKeep>
-					<TimeWindowExpression><![CDATA[48]]></TimeWindowExpression>
+					<TimeWindowExpression><![CDATA[2]]></TimeWindowExpression>
 					<FillAreaUnderLine>false</FillAreaUnderLine>
 					<LabelFormat>MODEL_TIME_UNITS</LabelFormat>
     			</TimePlot>
@@ -9617,7 +9618,7 @@ rectangle_electricitySettings.setVisible(false);]]></OnClickCode>
 				<Text>
 					<Id>1690975123923</Id>
 					<Name><![CDATA[text37]]></Name>
-					<X>550</X><Y>30</Y>
+					<X>560</X><Y>20</Y>
 					<Label><X>0</X><Y>-10</Y></Label>
 					<PublicFlag>true</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -9639,7 +9640,7 @@ rectangle_electricitySettings.setVisible(false);]]></OnClickCode>
     			<TimeStackChart>
 					<Id>1692628719495</Id>
 					<Name><![CDATA[pl_electricityConsumptionStack]]></Name>
-					<X>680</X><Y>40</Y>
+					<X>670</X><Y>40</Y>
 					<Label><X>0</X><Y>-10</Y></Label>
 					<PublicFlag>true</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -9658,14 +9659,14 @@ rectangle_electricitySettings.setVisible(false);]]></OnClickCode>
 					</RecurrenceCode>
 					<EmbeddedIcon>false</EmbeddedIcon>
 					<Width>660</Width>
-					<Height>340</Height>
+					<Height>270</Height>
 					<BackgroundColor/>
 					<BorderColor/>
 					<ChartArea>
 						<XOffset>50</XOffset>
 						<YOffset>30</YOffset>
 						<Width>580</Width>
-						<Height>250</Height>
+						<Height>180</Height>
 						<BackgroundColor>-1</BackgroundColor>
 						<BorderColor>-16777216</BorderColor>
 						<GridColor>-12566464</GridColor>
@@ -9682,8 +9683,8 @@ rectangle_electricitySettings.setVisible(false);]]></OnClickCode>
 					</Labels>
 					<ShowLegend>true</ShowLegend>
 					<TimeWindowsMovementType>MOVEMENT_WITH_TIME</TimeWindowsMovementType>		
-					<TimeWindowUnits>MODEL_TIME_UNIT</TimeWindowUnits>
-					<TimeWindowExpression><![CDATA[48]]></TimeWindowExpression>
+					<TimeWindowUnits>DAY</TimeWindowUnits>
+					<TimeWindowExpression><![CDATA[2]]></TimeWindowExpression>
 					<DatasetExpression>
 					<Id>1692629800346</Id>
 					<Expression><![CDATA[my_dataset4]]></Expression>
@@ -9703,7 +9704,7 @@ rectangle_electricitySettings.setVisible(false);]]></OnClickCode>
 					<DatasetExpression>
 					<Id>1692629007733</Id>
 					<Expression><![CDATA[my_dataset3]]></Expression>
-					<Color>-10496</Color>
+					<Color>-14774017</Color>
 					<Expression2><![CDATA[sum(c_gridConnections, g->max(0,g.v_evChargingPowerElectric_kW))]]></Expression2>
 					<Expression2Flag>true</Expression2Flag>
 							<Title><![CDATA[Laden EVs]]></Title>
@@ -9717,14 +9718,14 @@ rectangle_electricitySettings.setVisible(false);]]></OnClickCode>
 							<Title><![CDATA[Elektrisch koken]]></Title>
 					</DatasetExpression>
 					<SamplesToKeep>192</SamplesToKeep>
-					<VerScaleToExpression><![CDATA[2000]]></VerScaleToExpression>
+					<VerScaleToExpression><![CDATA[1000]]></VerScaleToExpression>
 					<VerScaleType>FIXED</VerScaleType>
 					<LabelFormat>MODEL_TIME_UNITS</LabelFormat>
     			</TimeStackChart>
     			<TimeStackChart>
 					<Id>1692629344071</Id>
 					<Name><![CDATA[pl_electricityProductionStack]]></Name>
-					<X>680</X><Y>400</Y>
+					<X>670</X><Y>300</Y>
 					<Label><X>0</X><Y>-10</Y></Label>
 					<PublicFlag>true</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -9743,14 +9744,14 @@ rectangle_electricitySettings.setVisible(false);]]></OnClickCode>
 					</RecurrenceCode>
 					<EmbeddedIcon>false</EmbeddedIcon>
 					<Width>660</Width>
-					<Height>350</Height>
+					<Height>240</Height>
 					<BackgroundColor/>
 					<BorderColor/>
 					<ChartArea>
 						<XOffset>50</XOffset>
 						<YOffset>30</YOffset>
 						<Width>580</Width>
-						<Height>260</Height>
+						<Height>150</Height>
 						<BackgroundColor>-1</BackgroundColor>
 						<BorderColor>-16777216</BorderColor>
 						<GridColor>-12566464</GridColor>
@@ -9767,12 +9768,12 @@ rectangle_electricitySettings.setVisible(false);]]></OnClickCode>
 					</Labels>
 					<ShowLegend>true</ShowLegend>
 					<TimeWindowsMovementType>MOVEMENT_WITH_TIME</TimeWindowsMovementType>		
-					<TimeWindowUnits>MODEL_TIME_UNIT</TimeWindowUnits>
-					<TimeWindowExpression><![CDATA[48]]></TimeWindowExpression>
+					<TimeWindowUnits>DAY</TimeWindowUnits>
+					<TimeWindowExpression><![CDATA[2]]></TimeWindowExpression>
 					<DatasetExpression>
 					<Id>1692629344066</Id>
 					<Expression><![CDATA[my_dataset1]]></Expression>
-					<Color>-16728065</Color>
+					<Color>-256</Color>
 					<Expression2><![CDATA[sum(c_gridConnections, g->g.v_pvProductionElectric_kW)]]></Expression2>
 					<Expression2Flag>true</Expression2Flag>
 							<Title><![CDATA[Opwek zonnepanelen]]></Title>
@@ -9788,7 +9789,7 @@ rectangle_electricitySettings.setVisible(false);]]></OnClickCode>
 					<DatasetExpression>
 					<Id>1695823711551</Id>
 					<Expression><![CDATA[my_dataset4]]></Expression>
-					<Color>-10496</Color>
+					<Color>-14774017</Color>
 					<Expression2><![CDATA[sum(c_gridConnections, g->max(0,-g.v_evChargingPowerElectric_kW))]]></Expression2>
 					<Expression2Flag>true</Expression2Flag>
 							<Title><![CDATA[V2G]]></Title>
@@ -9802,7 +9803,7 @@ rectangle_electricitySettings.setVisible(false);]]></OnClickCode>
 							<Title><![CDATA[Batterij teruglevering]]></Title>
 					</DatasetExpression>
 					<SamplesToKeep>192</SamplesToKeep>
-					<VerScaleToExpression><![CDATA[1000]]></VerScaleToExpression>
+					<VerScaleToExpression><![CDATA[600]]></VerScaleToExpression>
 					<VerScaleType>FIXED</VerScaleType>
 					<LabelFormat>MODEL_TIME_UNITS</LabelFormat>
     			</TimeStackChart>
@@ -10422,7 +10423,7 @@ geupdate vanuit
 					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
 						<Type><![CDATA[double]]></Type>        
 						<InitialValue Class="CodeValue">
-							<Code><![CDATA[min(1, 0.5*1.2 * main.p_timeStep_h) // smaller value results in more filtering]]></Code>
+							<Code><![CDATA[min(1, 0.5 * main.p_timeStep_h) // smaller value results in more filtering]]></Code>
 						</InitialValue>
 					</Properties>
 				</Variable>
@@ -12203,7 +12204,7 @@ import java.io.*;]]></Import>
 					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
 						<Type><![CDATA[double]]></Type>        
 						<InitialValue Class="CodeValue">
-							<Code><![CDATA[0.3]]></Code>
+							<Code><![CDATA[0.15]]></Code>
 						</InitialValue>
 					</Properties>
 				</Variable>
@@ -12218,7 +12219,7 @@ import java.io.*;]]></Import>
 					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
 						<Type><![CDATA[double]]></Type>        
 						<InitialValue Class="CodeValue">
-							<Code><![CDATA[min(1, 0.002 * 1.2 * main.p_timeStep_h)]]></Code>
+							<Code><![CDATA[min(1, 0.02 * 1.2 * main.p_timeStep_h)]]></Code>
 						</InitialValue>
 					</Properties>
 				</Variable>
@@ -14913,7 +14914,12 @@ for ( int i = 0; i < copiedVehicleList.size(); i++ ){
 		double urgencyGain_eurpkWh = 0.4; // How strongly WTP-price shifts based on charging flexibility
 		double maxSpreadChargingPower_kW = min(chargeNeedForNextTrip_kWh / (max(1, timeToNextTrip_min - v_additionalTimeSpreadCharging_MIN) / 60), maxChargingPower_kW);
 		//traceln("maxSpreadChargingPower_kW" + maxSpreadChargingPower_kW);
-		double WTPoffset_eurpkWh = 0.05*(1-main.v_WindYieldForecast_fr);//0.15; // Adds an offset to the WTP price; this value is very much context specific, depending on market conditions during charging periods
+		double WTPoffset_eurpkWh = 0;
+		if (main.v_totalInstalledWindPower_kW > 499) {
+			WTPoffset_eurpkWh = 0.05*(1-main.v_WindYieldForecast_fr);//0.15; // Adds an offset to the WTP price; this value is very much context specific, depending on market conditions during charging periods
+		} else {
+			WTPoffset_eurpkWh = 0.02;
+		}
 		double V2G_WTR_offset_eurpkWh = 0.05;
 		double chargeSetpoint_kW = 0;
 
@@ -29853,7 +29859,7 @@ v_currentBalanceNat_eur -= v_currentNettElectricityVolume_kWh * v_currentVariabl
 					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
 						<Type><![CDATA[double]]></Type>        
 						<InitialValue Class="CodeValue">
-							<Code><![CDATA[0.1]]></Code>
+							<Code><![CDATA[0.2]]></Code>
 						</InitialValue>
 					</Properties>
 				</Variable>
