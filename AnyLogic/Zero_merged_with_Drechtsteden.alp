@@ -974,18 +974,18 @@
 		</OptionList>
 		<OptionList>
 			<Id>1675025163072</Id>
-			<Name><![CDATA[OL_priceLevels]]></Name>
+			<Name><![CDATA[OL_SimulatedArea]]></Name>
 			<Option>
 				<Id>1675025163073</Id>
-				<Name><![CDATA[LOW]]></Name>
+				<Name><![CDATA[BUSINESSPARK]]></Name>
 			</Option>
 			<Option>
 				<Id>1675025163074</Id>
-				<Name><![CDATA[MEDIUM]]></Name>
+				<Name><![CDATA[NEIGHBORHOOD]]></Name>
 			</Option>
 			<Option>
 				<Id>1675025163075</Id>
-				<Name><![CDATA[HIGH]]></Name>
+				<Name><![CDATA[HVTRANSFORMER]]></Name>
 			</Option>
 		</OptionList>
 	</OptionLists>
@@ -1027,6 +1027,7 @@ traceln("");
 f_readConfig();
 f_loadParameters();
 
+f_startSimulationSettings();
 //Adjust startdate
 /*Date date = new Date();
 date.setMonth(5); // january is 0
@@ -3919,6 +3920,72 @@ traceln(" ");
 						</ParameterEditor>
 					</Properties>                 
 				</Variable>
+				<Variable Class="Parameter">
+					<Id>1696926175869</Id>
+					<Name><![CDATA[p_centerLatitude]]></Name>
+					<X>-740</X><Y>290</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" ModificatorType="STATIC">
+						<Type><![CDATA[double]]></Type>
+						<UnitType><![CDATA[NONE]]></UnitType>
+						<SdArray>false</SdArray>
+						<ParameterEditor>
+							<Id>1696926175867</Id>
+							<EditorContolType>TEXT_BOX</EditorContolType>
+							<MinSliderValue><![CDATA[0]]></MinSliderValue>
+							<MaxSliderValue><![CDATA[100]]></MaxSliderValue>
+							<DelimeterType>NO_DELIMETER</DelimeterType>
+						</ParameterEditor>
+					</Properties>                 
+				</Variable>
+				<Variable Class="Parameter">
+					<Id>1696926175877</Id>
+					<Name><![CDATA[p_centerLongitude]]></Name>
+					<X>-740</X><Y>310</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" ModificatorType="STATIC">
+						<Type><![CDATA[double]]></Type>
+						<UnitType><![CDATA[NONE]]></UnitType>
+						<SdArray>false</SdArray>
+						<ParameterEditor>
+							<Id>1696926175875</Id>
+							<EditorContolType>TEXT_BOX</EditorContolType>
+							<MinSliderValue><![CDATA[0]]></MinSliderValue>
+							<MaxSliderValue><![CDATA[100]]></MaxSliderValue>
+							<DelimeterType>NO_DELIMETER</DelimeterType>
+						</ParameterEditor>
+					</Properties>                 
+				</Variable>
+				<Variable Class="Parameter">
+					<Id>1696926273936</Id>
+					<Name><![CDATA[p_simulatedArea]]></Name>
+					<X>-740</X><Y>330</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" ModificatorType="STATIC">
+						<Type><![CDATA[OL_SimulatedArea]]></Type>
+						<UnitType><![CDATA[NONE]]></UnitType>
+						<SdArray>false</SdArray>
+						<DefaultValue Class="CodeValue">
+							<Code><![CDATA[OL_SimulatedArea.NEIGHBORHOOD]]></Code>
+						</DefaultValue>
+						<ParameterEditor>
+							<Id>1696926273934</Id>
+							<EditorContolType>TEXT_BOX</EditorContolType>
+							<MinSliderValue><![CDATA[0]]></MinSliderValue>
+							<MaxSliderValue><![CDATA[100]]></MaxSliderValue>
+							<DelimeterType>NO_DELIMETER</DelimeterType>
+						</ParameterEditor>
+					</Properties>                 
+				</Variable>
 				<Variable Class="CollectionVariable">
 					<Id>1663238323139</Id>
 					<Name><![CDATA[c_connectionOwners]]></Name>
@@ -4316,6 +4383,17 @@ if (b_addKpiVisuals) {
 	pl_electricityConsumptionStack.updateData();
 	pl_electricityProductionStack.updateData();
 	UI_energyAssets.f_updateData();	*/
+	//if (v_isRapidRun == false){
+	//f_neighborhoodEnergyTotalsCurrentHour();
+	energyDemandChart.updateData();
+	energySupplyChart.updateData();
+	//energyDemandChartHousehold.updateData();
+	//energySupplyChartHousehold.updateData();
+	businessParkEnergyDemandChart.updateData();
+	businessParkEnergySupplyChart.updateData();
+	//companyEnergyDemandChart.updateData();
+	//companyEnergySupplyChart.updateData();
+//}
 }
 
 v_timeStepsElapsed ++;
@@ -6959,6 +7037,162 @@ f_setNeighborhoodSliders(sliderIndex);
 f_resetSettings();
 */
 traceln("f_updateInputSettingsNeighborhoods is not functional!");]]></Body>
+				</Function>
+				<Function AccessType="default" StaticFunction="false">
+					<ReturnModificator>VOID</ReturnModificator>
+					<ReturnType><![CDATA[double]]></ReturnType>
+					<Id>1696925902737</Id>
+					<Name><![CDATA[f_startSimulationSettings]]></Name>
+					<X>-500</X><Y>390</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Body><![CDATA[//Initalize - delete these lines when finished
+/*
+[load building GIS regions from QGIS]
+[create collection c_buildingGISRegions from building GIS regions]
+[load neighborhood GIS regions from QGIS using shapefiles and change shapefile to space markup]
+[create collection c_neighborhoodGISRegions from neighborhood GIS regions]
+[upload data in excel _buildings]
+[upload data in excel _companies]
+[upload data in excel _hvmv_transformers]
+[upload data in excel _mvlv_transformers]
+[upload data in excel _residence_objects]
+[upload data in excel _neighborhoods]
+[upload LV grid shapefiles in color steelblue]
+[upload MV grid shapefiles in color orchid]
+*/
+
+//default GIS regions
+//f_defaultGISRegionColors();
+
+//default values
+//dt_h = 1;
+v_isCostsPerHousehold = true;
+
+p_simulatedArea = NEIGHBORHOOD;
+p_centerLongitude = 4.62081213207812;
+p_centerLatitude = 51.8066803651812;
+map.setCenterLongitude(p_centerLongitude);
+map.setCenterLatitude(p_centerLatitude);
+/*p_EVChargingType = "conventional";
+p_homeBatteryChargeAlgorithm = "Household optimization";
+v_districtHeatingTemperature_string = "HT";
+v_householdEnergyLabel = "Huidig";
+v_electricBoilerChargingStrategy = Conventional;
+v_excelSheetNumber = 1;
+c_detailNeighborhoods.add("BU06420701");
+//c_detailNeighborhoods.add("[insert CBS Neighborhood name]");
+p_PVRatedPower_kWpPanel = 0.300;
+p_PVPanelSurfaceArea_m2 = 1.65;
+p_PVefficiency = p_PVRatedPower_kWpPanel / p_PVPanelSurfaceArea_m2;
+p_PVCapacityFactor = 0.85;
+p_simulationYear = p_startSimulationYear;
+
+	
+//Initialize agent populations
+f_initializeAgentPopulations();
+
+//set cost parameters from database
+f_setEnergyPrice();
+*/
+
+//update charts
+ch_energyLabels.updateData();
+//ch_heatSupplyMethods.updateData();
+
+
+//MAP
+v_clickedBuilding = randomWhere(pop_GIS_Buildings, x->x.c_householdsInBuilding.size() > 0);
+//v_clickedHousehold = randomFrom(v_clickedBuilding.c_householdsInBuilding);
+//v_timeInMillis = System.currentTimeMillis();
+
+//SETTING UI
+
+//select simulation type for right UI
+switch( p_simulatedArea ){
+	case BUSINESSPARK :
+		gr_businessParkSettings.setVisible(true);
+		gr_businessParkResultTabs.setVisible(true);
+		gr_businessParkDashboard.setVisible(true);
+		break;
+	case NEIGHBORHOOD:
+		gr_heatSettings.setVisible(true);
+		gr_neighborhoodResultsTabs.setVisible(true);
+		gr_neighborhoodDashboard.setVisible(true);
+		break;
+	case HVTRANSFORMER:
+		gr_HVMVTrafoSettings.setVisible(true);
+		gr_settingsMenu.setVisible(false);
+		break;
+	
+}
+	
+	
+
+gr_heatSettings.setX(-205);
+gr_heatSettings.setY(380);
+gr_electricitySettings.setX(-200);
+gr_electricitySettings.setY(350);
+gr_electricitySettings.setVisible(false);
+
+gr_heatDemandLegenda.setX(-55);
+gr_heatDemandLegenda.setY(-180);
+gr_heatDemandLegenda.setVisible(true);
+
+gr_loadIconCosts.setX(1668);
+gr_loadIconCosts.setY(603);
+gr_simulateCostsScreen.setX(1665);
+gr_simulateCostsScreen.setY(603);
+
+gr_loadIconCostsSmall.setX(1668);
+gr_loadIconCostsSmall.setY(180);
+gr_simulateCostsScreenSmall.setX(1675);
+gr_simulateCostsScreenSmall.setY(220);
+
+gr_neighborhoodConnections.setX(-515);
+gr_neighborhoodConnections.setY(103);
+gr_neighborhoodCosts.setX(-515);
+gr_neighborhoodCosts.setY(80);
+
+
+gr_householdDashboard.setX(1885);
+gr_householdDashboard.setY(520);
+gr_clickOnBuildingGroup.setX(1670);
+gr_clickOnBuildingGroup.setY(505);
+
+gr_compareResults.setX(1100);
+gr_compareResults.setY(560);
+gr_compareResultsLoading.setY(-50);
+
+//f_intantiateResultsMatrix();
+
+gr_HVMVTrafoSettings.setX(196);
+gr_HVMVTrafoSettings.setY(220);
+
+gr_HSMSTrafoResults.setX(1645);
+gr_HSMSTrafoResults.setY(520);
+
+gr_businessParkSettings.setX(-240);
+gr_businessParkSettings.setY(360);
+
+gr_businessParkResultTabs.setX(1700);
+gr_businessParkResultTabs.setY(100);
+
+gr_businessParkDashboard.setX(2180);
+gr_businessParkDashboard.setY(500);
+
+gr_companyDashboard.setX(1665);
+gr_companyDashboard.setY(500);
+
+gr_businessParkLoad.setX(-515);
+gr_businessParkLoad.setY(103);
+
+gr_businessCollectiveDashboard.setX(2180);
+gr_businessCollectiveDashboard.setY(500);
+gr_businessCollectiveLoad.setX(-515);
+gr_businessCollectiveLoad.setY(103);]]></Body>
 				</Function>
 			</Functions>
 			<TableFunctions>
@@ -21845,7 +22079,7 @@ traceln("gr_compareResultsButton is not functional!");]]></OnClickCode>
 					<Id>1696520897695</Id>
 					<Expression><![CDATA[my_dataset]]></Expression>
 					<Color>-10496</Color>
-					<Expression2><![CDATA[sum(pop_gridConnections, x->x.v_pvProductionElectric_kW)]]></Expression2>
+					<Expression2><![CDATA[sum(Houses, x->x.v_pvProductionElectric_kW)]]></Expression2>
 					<Expression2Flag>true</Expression2Flag>
 							<Title><![CDATA[PV op dak]]></Title>
 					</DatasetExpression>
@@ -21853,7 +22087,7 @@ traceln("gr_compareResultsButton is not functional!");]]></OnClickCode>
 					<Id>1696520897696</Id>
 					<Expression><![CDATA[my_dataset]]></Expression>
 					<Color>-989556</Color>
-					<Expression2><![CDATA[sum(pop_gridConnections, x->max(0,-x.v_batteryPowerElectric_kW))]]></Expression2>
+					<Expression2><![CDATA[sum(Houses, x->max(0,-x.v_batteryPowerElectric_kW))]]></Expression2>
 					<Expression2Flag>true</Expression2Flag>
 							<Title><![CDATA[Batterij ontladen]]></Title>
 					</DatasetExpression>
@@ -21861,7 +22095,7 @@ traceln("gr_compareResultsButton is not functional!");]]></OnClickCode>
 					<Id>1696520897697</Id>
 					<Expression><![CDATA[my_dataset]]></Expression>
 					<Color>-4565549</Color>
-					<Expression2><![CDATA[sum(pop_gridConnections, x->max(0,-x.v_evChargingPowerElectric_kW))]]></Expression2>
+					<Expression2><![CDATA[sum(Houses, x->max(0,-x.v_evChargingPowerElectric_kW))]]></Expression2>
 					<Expression2Flag>true</Expression2Flag>
 							<Title><![CDATA[V2G ontladen]]></Title>
 					</DatasetExpression>
@@ -21930,7 +22164,7 @@ traceln("gr_compareResultsButton is not functional!");]]></OnClickCode>
 					<Id>1696520897702</Id>
 					<Expression><![CDATA[my_dataset]]></Expression>
 					<Color>-5383962</Color>
-					<Expression2><![CDATA[sum(pop_gridConnections, x->x.v_fixedConsumptionElectric_kW)]]></Expression2>
+					<Expression2><![CDATA[sum(Houses, x->x.v_fixedConsumptionElectric_kW)]]></Expression2>
 					<Expression2Flag>true</Expression2Flag>
 							<Title><![CDATA[Elektriciteit apparaten en licht]]></Title>
 					</DatasetExpression>
@@ -21938,7 +22172,7 @@ traceln("gr_compareResultsButton is not functional!");]]></OnClickCode>
 					<Id>1696520897703</Id>
 					<Expression><![CDATA[my_dataset]]></Expression>
 					<Color>-6632142</Color>
-					<Expression2><![CDATA[sum(pop_gridConnections, x->x.v_heatPumpElectricityConsumption_kW)]]></Expression2>
+					<Expression2><![CDATA[sum(Houses, x->x.v_heatPumpElectricityConsumption_kW)]]></Expression2>
 					<Expression2Flag>true</Expression2Flag>
 							<Title><![CDATA[Elektriciteit warmtepomp]]></Title>
 					</DatasetExpression>
@@ -21946,7 +22180,7 @@ traceln("gr_compareResultsButton is not functional!");]]></OnClickCode>
 					<Id>1696520897705</Id>
 					<Expression><![CDATA[my_dataset]]></Expression>
 					<Color>-12004916</Color>
-					<Expression2><![CDATA[sum(pop_gridConnections, x->max(0,x.v_evChargingPowerElectric_kW))]]></Expression2>
+					<Expression2><![CDATA[sum(Houses, x->max(0,x.v_evChargingPowerElectric_kW))]]></Expression2>
 					<Expression2Flag>true</Expression2Flag>
 							<Title><![CDATA[Elektriciteit elektrische auto's]]></Title>
 					</DatasetExpression>
@@ -21954,7 +22188,7 @@ traceln("gr_compareResultsButton is not functional!");]]></OnClickCode>
 					<Id>1696520897706</Id>
 					<Expression><![CDATA[my_dataset]]></Expression>
 					<Color>-10496</Color>
-					<Expression2><![CDATA[sum(pop_gridConnections, x->x.v_electricHobConsumption_kW)]]></Expression2>
+					<Expression2><![CDATA[sum(Houses, x->x.v_electricHobConsumption_kW)]]></Expression2>
 					<Expression2Flag>true</Expression2Flag>
 							<Title><![CDATA[Elektrisch koken]]></Title>
 					</DatasetExpression>
@@ -21962,7 +22196,7 @@ traceln("gr_compareResultsButton is not functional!");]]></OnClickCode>
 					<Id>1696520897707</Id>
 					<Expression><![CDATA[my_dataset]]></Expression>
 					<Color>-2572328</Color>
-					<Expression2><![CDATA[sum(pop_gridConnections, x->max(0,x.v_batteryPowerElectric_kW))]]></Expression2>
+					<Expression2><![CDATA[sum(Houses, x->max(0,x.v_batteryPowerElectric_kW))]]></Expression2>
 					<Expression2Flag>true</Expression2Flag>
 							<Title><![CDATA[Thuisbatterij laden]]></Title>
 					</DatasetExpression>
@@ -43442,6 +43676,7 @@ p_secondaryHeatingAsset.f_updateAllFlows(p_secondaryHeatingAsset.v_powerFraction
 					<ReturnType><![CDATA[OL_priceLevels]]></ReturnType>
 					<Id>1676476236040</Id>
 					<Name><![CDATA[f_getPriceLevel]]></Name>
+					<ExcludeFromBuild>true</ExcludeFromBuild>
 					<X>800</X><Y>510</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
@@ -59568,6 +59803,7 @@ void f_heatWithHybridHeatpump() {
 				<Variable Class="PlainVariable">
 					<Id>1675025488988</Id>
 					<Name><![CDATA[v_currentPriceLevel]]></Name>
+					<ExcludeFromBuild>true</ExcludeFromBuild>
 					<X>1120</X><Y>510</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
@@ -59817,7 +60053,7 @@ if (p_BuildingThermalAsset!=null & p_primaryHeatingAsset != null) {
 v_currentElectricityPriceConsumption_eurpkWh = ((ConnectionOwner)l_ownerActor.getConnectedAgent()).f_getElectricityPrice( v_currentPowerElectricity_kW );
 //v_currentAveraged7kWElectricityPrice_eurpkWh = ((ConnectionOwner)l_ownerActor.getConnectedAgent()).f_getAveragedElectricityPrice(v_currentPowerElectricity_kW, 7.0 );
 v_electricityPriceLowPassed_eurpkWh += v_lowPassFactor_fr * ( v_currentElectricityPriceConsumption_eurpkWh - v_electricityPriceLowPassed_eurpkWh );
-v_currentPriceLevel = f_getPriceLevel( v_currentElectricityPriceConsumption_eurpkWh );
+//v_currentPriceLevel = f_getPriceLevel( v_currentElectricityPriceConsumption_eurpkWh );
 double availablePowerAtPrice_kW = ((ConnectionOwner)l_ownerActor.getConnectedAgent()).f_getAvailablePowerAtPrice( v_currentPowerElectricity_kW );
 
 if (p_householdEV != null ){
@@ -59853,7 +60089,7 @@ v_currentLoadLowPassed_kW += v_lowPassFactorLoad_fr * ( v_currentPowerElectricit
 if( p_batteryAsset != null){
 	switch (p_batteryOperationMode){
 		case HOUSEHOLD_LOAD:
-			f_batteryManagementLoad();
+			f_batteryManagementBalance(v_batterySOC_fr);
 		break;
 		case PRICE:
 			f_batteryManagementPrice_overwrite(v_batterySOC_fr);
@@ -60551,6 +60787,7 @@ v_evChargingPowerElectric_kW += p_householdEV.ownerAsset.f_updateElectricityFlow
 					<ReturnType><![CDATA[double]]></ReturnType>
 					<Id>1678708804201</Id>
 					<Name><![CDATA[f_batteryManagementLoad]]></Name>
+					<ExcludeFromBuild>true</ExcludeFromBuild>
 					<X>800</X><Y>320</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
@@ -65636,8 +65873,8 @@ if (gisRegion == null ) {
 	<RelativeAccuracy>1.0</RelativeAccuracy>
 	<TimeAccuracy>0.1</TimeAccuracy>
 	<Frame>
-		<Width>1370</Width>
-		<Height>770</Height>
+		<Width>1920</Width>
+		<Height>980</Height>
 	</Frame>
 	<Database>
 		<Logging>false</Logging>
@@ -66017,6 +66254,15 @@ if (gisRegion == null ) {
 				</Parameter>
 				<Parameter>
 					<ParameterName><![CDATA[p_simulationYear]]></ParameterName>
+				</Parameter>
+				<Parameter>
+					<ParameterName><![CDATA[p_centerLatitude]]></ParameterName>
+				</Parameter>
+				<Parameter>
+					<ParameterName><![CDATA[p_centerLongitude]]></ParameterName>
+				</Parameter>
+				<Parameter>
+					<ParameterName><![CDATA[p_simulatedArea]]></ParameterName>
 				</Parameter>
 			</Parameters>			
 			<PresentationProperties>
