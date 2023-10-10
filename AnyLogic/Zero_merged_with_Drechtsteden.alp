@@ -6940,6 +6940,26 @@ traceln("f_setEnergyPrice is awaiting new implementation after model merge! Curr
 
 ]]></Body>
 				</Function>
+				<Function AccessType="default" StaticFunction="false">
+					<ReturnModificator>VOID</ReturnModificator>
+					<ReturnType><![CDATA[double]]></ReturnType>
+					<Id>1696924323569</Id>
+					<Name><![CDATA[f_updateInputSettingsNeighborhoods]]></Name>
+					<X>640</X><Y>-2120</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Parameter>
+						<Name><![CDATA[sliderIndex]]></Name>
+						<Type><![CDATA[int]]></Type>
+					</Parameter>
+					<Body><![CDATA[/*v_countSettings++;
+f_setNeighborhoodSliders(sliderIndex);
+f_resetSettings();
+*/
+traceln("f_updateInputSettingsNeighborhoods is not functional!");]]></Body>
+				</Function>
 			</Functions>
 			<TableFunctions>
 				<TableFunction AccessType="public" StaticFunction="false">
@@ -21400,14 +21420,13 @@ traceln(eb_scenarioRowNumber.getMax() + " max value editbox scenario row number"
 				<Group>
 					<Id>1696520897545</Id>
 					<Name><![CDATA[gr_compareResultsButton]]></Name>
-					<ExcludeFromBuild>true</ExcludeFromBuild>
 					<X>1600</X><Y>1280</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>true</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>false</ShowLabel>
 					<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
-					<OnClickCode><![CDATA[
+					<OnClickCode><![CDATA[/*
 if(gr_compareResults.isVisible() == false){
 	gr_compareResults.setVisible(true);
 	gr_compareResultsButton.setVisible(false);
@@ -21415,7 +21434,8 @@ if(gr_compareResults.isVisible() == false){
 	//gr_neighborhoodResultsTabs.setVisible(false);
 	//gr_scenariosVeghel.setVisible(false);
 }
-]]></OnClickCode>
+*/
+traceln("gr_compareResultsButton is not functional!");]]></OnClickCode>
 					<EmbeddedIcon>false</EmbeddedIcon>
 					<Z>0</Z>
 					<Rotation>0.0</Rotation>
@@ -60675,6 +60695,30 @@ p_batteryAsset.f_updateAllFlows( p_batteryAsset.v_powerFraction_fr );
     }
 }]]></Body>
 				</Function>
+				<Function AccessType="default" StaticFunction="false">
+					<ReturnModificator>VOID</ReturnModificator>
+					<ReturnType><![CDATA[double]]></ReturnType>
+					<Id>1696923950404</Id>
+					<Name><![CDATA[f_setAnnualEnergyDemand]]></Name>
+					<X>970</X><Y>150</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Body><![CDATA[traceln("Placeholder function f_setAnnualEnergyDemand called! Nothing will happen.");]]></Body>
+				</Function>
+				<Function AccessType="default" StaticFunction="false">
+					<ReturnModificator>VOID</ReturnModificator>
+					<ReturnType><![CDATA[double]]></ReturnType>
+					<Id>1696924006982</Id>
+					<Name><![CDATA[f_setEnergyLabel]]></Name>
+					<X>970</X><Y>170</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Body><![CDATA[traceln("Placeholder function f_setEnergyLabel called! Nothing will happen.");]]></Body>
+				</Function>
 			</Functions>
 			<AnalysisData>
     			<DataSet>
@@ -64597,19 +64641,7 @@ v_tripDist_km = distances.get(v_tripIndex);
 					<Name><![CDATA[p_DHWAsset]]></Name>
 				</Parameter>
 				<Parameter>
-					<Name><![CDATA[p_company_name]]></Name>
-				</Parameter>
-				<Parameter>
-					<Name><![CDATA[p_huisnummer]]></Name>
-				</Parameter>
-				<Parameter>
-					<Name><![CDATA[p_openbareR]]></Name>
-				</Parameter>
-				<Parameter>
 					<Name><![CDATA[p_GISbuilding]]></Name>
-				</Parameter>
-				<Parameter>
-					<Name><![CDATA[p_company_connection_id]]></Name>
 				</Parameter>
 			</Parameters>
 			<Generic>false</Generic>
@@ -65523,6 +65555,19 @@ if (gisRegion == null ) {
 	traceln(this.getName() + " has no GIS area");
 	//gisRegion = main.gisRegionUnknown;
 }
+]]></Body>
+				</Function>
+				<Function AccessType="default" StaticFunction="false">
+					<ReturnModificator>VOID</ReturnModificator>
+					<ReturnType><![CDATA[double]]></ReturnType>
+					<Id>1696924186553</Id>
+					<Name><![CDATA[f_countEnergyLabels]]></Name>
+					<X>180</X><Y>15</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Body><![CDATA[traceln("f_countEnergyLabels is not functional!");
 ]]></Body>
 				</Function>
 			</Functions>
