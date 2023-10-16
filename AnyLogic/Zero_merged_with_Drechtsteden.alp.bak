@@ -95,6 +95,10 @@
 				<Id>1676382460059</Id>
 				<Name><![CDATA[RESIDUALHEAT]]></Name>
 			</Option>
+			<Option>
+				<Id>1697095873493</Id>
+				<Name><![CDATA[UTILITY]]></Name>
+			</Option>
 		</OptionList>
 		<OptionList>
 			<Id>1659118272924</Id>
@@ -974,18 +978,18 @@
 		</OptionList>
 		<OptionList>
 			<Id>1675025163072</Id>
-			<Name><![CDATA[OL_priceLevels]]></Name>
+			<Name><![CDATA[OL_SimulatedArea]]></Name>
 			<Option>
 				<Id>1675025163073</Id>
-				<Name><![CDATA[LOW]]></Name>
+				<Name><![CDATA[BUSINESSPARK]]></Name>
 			</Option>
 			<Option>
 				<Id>1675025163074</Id>
-				<Name><![CDATA[MEDIUM]]></Name>
+				<Name><![CDATA[NEIGHBORHOOD]]></Name>
 			</Option>
 			<Option>
 				<Id>1675025163075</Id>
-				<Name><![CDATA[HIGH]]></Name>
+				<Name><![CDATA[HVTRANSFORMER]]></Name>
 			</Option>
 		</OptionList>
 	</OptionLists>
@@ -1015,7 +1019,8 @@ import java.io.*;
 import java.io.File;
 import java.io.IOException;
 //import java.util.Date;  
-import java.text.SimpleDateFormat;]]></Import>
+import java.text.SimpleDateFormat;
+import com.fasterxml.jackson.databind.node.JsonNodeFactory;]]></Import>
 			<StartupCode><![CDATA[double startTime = System.currentTimeMillis();
 v_timeOfModelStart_ms = startTime;
 traceln("---------------------------");
@@ -1025,8 +1030,11 @@ traceln("");
 
 // Get input
 f_readConfig();
-f_loadParameters();
+//f_zinc_init(); // Zenmo interactive configurator
 
+//f_loadParameters();
+
+f_startSimulationSettings();
 //Adjust startdate
 /*Date date = new Date();
 date.setMonth(5); // january is 0
@@ -1042,7 +1050,8 @@ v_hourOfYearStart=hourOfYearPerMonth[getMonth()] + (getDayOfMonth()-1)*24;
 
 
 // Populate the model
-f_configureBackBone();
+//f_configureBackBone();
+f_configureBackBoneZero();
 //if( b_addKpiVisuals ) { add_kpiVisuals() ;}
 
 j_dataOut = new DataOut();
@@ -1894,7 +1903,7 @@ traceln(" ");
 				<Variable Class="PlainVariable">
 					<Id>1690880921824</Id>
 					<Name><![CDATA[v_gridNodesJson]]></Name>
-					<X>-480</X><Y>252</Y>
+					<X>-480</X><Y>272</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -1906,7 +1915,7 @@ traceln(" ");
 				<Variable Class="PlainVariable">
 					<Id>1690881118425</Id>
 					<Name><![CDATA[v_gridConnectionsJson]]></Name>
-					<X>-480</X><Y>272</Y>
+					<X>-480</X><Y>292</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -1918,7 +1927,7 @@ traceln(" ");
 				<Variable Class="PlainVariable">
 					<Id>1690881147758</Id>
 					<Name><![CDATA[v_actorsJson]]></Name>
-					<X>-480</X><Y>232</Y>
+					<X>-480</X><Y>252</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -1930,7 +1939,7 @@ traceln(" ");
 				<Variable Class="PlainVariable">
 					<Id>1690964449063</Id>
 					<Name><![CDATA[v_templateAssetsJson]]></Name>
-					<X>-480</X><Y>292</Y>
+					<X>-480</X><Y>312</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -1942,7 +1951,7 @@ traceln(" ");
 				<Variable Class="PlainVariable">
 					<Id>1690977261064</Id>
 					<Name><![CDATA[v_buildingThermalPars]]></Name>
-					<X>-480</X><Y>312</Y>
+					<X>-480</X><Y>332</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -1954,7 +1963,7 @@ traceln(" ");
 				<Variable Class="PlainVariable">
 					<Id>1692014323313</Id>
 					<Name><![CDATA[v_assetDepreciation]]></Name>
-					<X>-480</X><Y>332</Y>
+					<X>-480</X><Y>352</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -2004,8 +2013,8 @@ traceln(" ");
 				</Variable>
 				<Variable Class="PlainVariable">
 					<Id>1696522189897</Id>
-					<Name><![CDATA[v_clickedHousehold]]></Name>
-					<X>100</X><Y>1260</Y>
+					<Name><![CDATA[v_clickedGridConnection]]></Name>
+					<X>410</X><Y>1210</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -2017,7 +2026,7 @@ traceln(" ");
 				<Variable Class="PlainVariable">
 					<Id>1696836844463</Id>
 					<Name><![CDATA[v_isCostsPerHousehold]]></Name>
-					<X>100</X><Y>1240</Y>
+					<X>130</X><Y>1130</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -2296,6 +2305,7 @@ traceln(" ");
 				<Variable Class="PlainVariable">
 					<Id>1696838343343</Id>
 					<Name><![CDATA[v_countHouseholdsGreenGasBoiler]]></Name>
+					<ExcludeFromBuild>true</ExcludeFromBuild>
 					<X>1290</X><Y>-2020</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
@@ -2320,6 +2330,7 @@ traceln(" ");
 				<Variable Class="PlainVariable">
 					<Id>1696838343348</Id>
 					<Name><![CDATA[v_countHouseholdsLTDistrictHeating]]></Name>
+					<ExcludeFromBuild>true</ExcludeFromBuild>
 					<X>1290</X><Y>-1940</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
@@ -2332,6 +2343,7 @@ traceln(" ");
 				<Variable Class="PlainVariable">
 					<Id>1696838343350</Id>
 					<Name><![CDATA[v_countHouseholdsMTDistrictHeating]]></Name>
+					<ExcludeFromBuild>true</ExcludeFromBuild>
 					<X>1290</X><Y>-1960</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
@@ -2356,6 +2368,7 @@ traceln(" ");
 				<Variable Class="PlainVariable">
 					<Id>1696838343355</Id>
 					<Name><![CDATA[v_countHouseholdsHTDistrictHeating]]></Name>
+					<ExcludeFromBuild>true</ExcludeFromBuild>
 					<X>1291</X><Y>-1919</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
@@ -3230,18 +3243,6 @@ traceln(" ");
 					</Properties>
 				</Variable>
 				<Variable Class="PlainVariable">
-					<Id>1696854856593</Id>
-					<Name><![CDATA[v_clickedUtilityObject]]></Name>
-					<X>100</X><Y>1280</Y>
-					<Label><X>10</X><Y>0</Y></Label>
-					<PublicFlag>false</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
-					<ShowLabel>true</ShowLabel>
-					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
-						<Type><![CDATA[GridConnection]]></Type>        
-					</Properties>
-				</Variable>
-				<Variable Class="PlainVariable">
 					<Id>1696855186180</Id>
 					<Name><![CDATA[v_menuFrameColor]]></Name>
 					<X>1480</X><Y>-90</Y>
@@ -3254,6 +3255,183 @@ traceln(" ");
 						<InitialValue Class="CodeValue">
 							<Code><![CDATA[new Color (226,0,37,180)]]></Code>
 						</InitialValue>
+					</Properties>
+				</Variable>
+				<Variable Class="PlainVariable">
+					<Id>1696863329257</Id>
+					<Name><![CDATA[v_clickedBuilding]]></Name>
+					<X>412</X><Y>1126</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
+						<Type><![CDATA[GIS_Building]]></Type>        
+					</Properties>
+				</Variable>
+				<Variable Class="PlainVariable">
+					<Id>1696863329260</Id>
+					<Name><![CDATA[previousClickedBuilding]]></Name>
+					<X>412</X><Y>1146</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
+						<Type><![CDATA[GIS_Building]]></Type>        
+					</Properties>
+				</Variable>
+				<Variable Class="PlainVariable">
+					<Id>1696863329263</Id>
+					<Name><![CDATA[v_clickedBuildingColor]]></Name>
+					<X>412</X><Y>1167</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
+						<Type><![CDATA[Color]]></Type>        
+					</Properties>
+				</Variable>
+				<Variable Class="PlainVariable">
+					<Id>1696863329269</Id>
+					<Name><![CDATA[v_gridConnectionInBuildingIndex]]></Name>
+					<X>410</X><Y>1250</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
+						<Type><![CDATA[int]]></Type>        
+						<InitialValue Class="CodeValue">
+							<Code><![CDATA[0]]></Code>
+						</InitialValue>
+					</Properties>
+				</Variable>
+				<Variable Class="PlainVariable">
+					<Id>1696863329272</Id>
+					<Name><![CDATA[v_gridConnectionInBuildingNumber]]></Name>
+					<X>410</X><Y>1230</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
+						<Type><![CDATA[int]]></Type>        
+						<InitialValue Class="CodeValue">
+							<Code><![CDATA[0]]></Code>
+						</InitialValue>
+					</Properties>
+				</Variable>
+				<Variable Class="PlainVariable">
+					<Id>1696863329274</Id>
+					<Name><![CDATA[v_clickedUtilityObject]]></Name>
+					<ExcludeFromBuild>true</ExcludeFromBuild>
+					<X>640</X><Y>1210</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
+						<Type><![CDATA[GCUtility]]></Type>        
+					</Properties>
+				</Variable>
+				<Variable Class="PlainVariable">
+					<Id>1696863329276</Id>
+					<Name><![CDATA[v_utilityObjectInBuildingIndex]]></Name>
+					<ExcludeFromBuild>true</ExcludeFromBuild>
+					<X>640</X><Y>1250</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
+						<Type><![CDATA[int]]></Type>        
+						<InitialValue Class="CodeValue">
+							<Code><![CDATA[0]]></Code>
+						</InitialValue>
+					</Properties>
+				</Variable>
+				<Variable Class="PlainVariable">
+					<Id>1696863329279</Id>
+					<Name><![CDATA[v_utilityObjectInBuildingNumber]]></Name>
+					<ExcludeFromBuild>true</ExcludeFromBuild>
+					<X>640</X><Y>1230</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
+						<Type><![CDATA[int]]></Type>        
+						<InitialValue Class="CodeValue">
+							<Code><![CDATA[0]]></Code>
+						</InitialValue>
+					</Properties>
+				</Variable>
+				<Variable Class="PlainVariable">
+					<Id>1696863807573</Id>
+					<Name><![CDATA[v_modelSelfSufficiency_fr]]></Name>
+					<X>-560</X><Y>1020</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
+						<Type><![CDATA[double]]></Type>        
+						<InitialValue Class="CodeValue">
+							<Code><![CDATA[0]]></Code>
+						</InitialValue>
+					</Properties>
+				</Variable>
+				<Variable Class="PlainVariable">
+					<Id>1696863821721</Id>
+					<Name><![CDATA[v_modelSelfConsumption_fr]]></Name>
+					<X>-560</X><Y>1040</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
+						<Type><![CDATA[double]]></Type>        
+						<InitialValue Class="CodeValue">
+							<Code><![CDATA[0]]></Code>
+						</InitialValue>
+					</Properties>
+				</Variable>
+				<Variable Class="PlainVariable">
+					<Id>1696868017200</Id>
+					<Name><![CDATA[v_timeInMillis]]></Name>
+					<X>680</X><Y>-230</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
+						<Type><![CDATA[double]]></Type>        
+					</Properties>
+				</Variable>
+				<Variable Class="PlainVariable">
+					<Id>1696868488028</Id>
+					<Name><![CDATA[v_costsUnknown]]></Name>
+					<X>130</X><Y>1150</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
+						<Type><![CDATA[boolean]]></Type>        
+					</Properties>
+				</Variable>
+				<Variable Class="PlainVariable">
+					<Id>1696868830796</Id>
+					<Name><![CDATA[v_householdEnergyLabel]]></Name>
+					<X>380</X><Y>-1240</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
+						<Type><![CDATA[String]]></Type>        
 					</Properties>
 				</Variable>
 				<Variable Class="Parameter">
@@ -3725,6 +3903,124 @@ traceln(" ");
 						</ParameterEditor>
 					</Properties>                 
 				</Variable>
+				<Variable Class="Parameter">
+					<Id>1696865272436</Id>
+					<Name><![CDATA[p_simulationYear]]></Name>
+					<Description><![CDATA[Niet gebruikt in model zelf, kan vrij gewijzigd worden om uncached cloud experiments te forceren
+
+@author: JorritvandenHouten
+@since: Sprint 7]]></Description>
+					<X>-740</X><Y>270</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" ModificatorType="STATIC">
+						<Type><![CDATA[double]]></Type>
+						<UnitType><![CDATA[NONE]]></UnitType>
+						<SdArray>false</SdArray>
+						<DefaultValue Class="CodeValue">
+							<Code><![CDATA[0]]></Code>
+						</DefaultValue>
+						<ParameterEditor>
+							<Id>1696865272434</Id>
+							<EditorContolType>TEXT_BOX</EditorContolType>
+							<MinSliderValue><![CDATA[0]]></MinSliderValue>
+							<MaxSliderValue><![CDATA[100]]></MaxSliderValue>
+							<DelimeterType>NO_DELIMETER</DelimeterType>
+						</ParameterEditor>
+					</Properties>                 
+				</Variable>
+				<Variable Class="Parameter">
+					<Id>1696926175869</Id>
+					<Name><![CDATA[p_centerLatitude]]></Name>
+					<X>-740</X><Y>290</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" ModificatorType="STATIC">
+						<Type><![CDATA[double]]></Type>
+						<UnitType><![CDATA[NONE]]></UnitType>
+						<SdArray>false</SdArray>
+						<ParameterEditor>
+							<Id>1696926175867</Id>
+							<EditorContolType>TEXT_BOX</EditorContolType>
+							<MinSliderValue><![CDATA[0]]></MinSliderValue>
+							<MaxSliderValue><![CDATA[100]]></MaxSliderValue>
+							<DelimeterType>NO_DELIMETER</DelimeterType>
+						</ParameterEditor>
+					</Properties>                 
+				</Variable>
+				<Variable Class="Parameter">
+					<Id>1696926175877</Id>
+					<Name><![CDATA[p_centerLongitude]]></Name>
+					<X>-740</X><Y>310</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" ModificatorType="STATIC">
+						<Type><![CDATA[double]]></Type>
+						<UnitType><![CDATA[NONE]]></UnitType>
+						<SdArray>false</SdArray>
+						<ParameterEditor>
+							<Id>1696926175875</Id>
+							<EditorContolType>TEXT_BOX</EditorContolType>
+							<MinSliderValue><![CDATA[0]]></MinSliderValue>
+							<MaxSliderValue><![CDATA[100]]></MaxSliderValue>
+							<DelimeterType>NO_DELIMETER</DelimeterType>
+						</ParameterEditor>
+					</Properties>                 
+				</Variable>
+				<Variable Class="Parameter">
+					<Id>1696926273936</Id>
+					<Name><![CDATA[p_simulatedArea]]></Name>
+					<X>-740</X><Y>330</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" ModificatorType="STATIC">
+						<Type><![CDATA[OL_SimulatedArea]]></Type>
+						<UnitType><![CDATA[NONE]]></UnitType>
+						<SdArray>false</SdArray>
+						<DefaultValue Class="CodeValue">
+							<Code><![CDATA[OL_SimulatedArea.NEIGHBORHOOD]]></Code>
+						</DefaultValue>
+						<ParameterEditor>
+							<Id>1696926273934</Id>
+							<EditorContolType>TEXT_BOX</EditorContolType>
+							<MinSliderValue><![CDATA[0]]></MinSliderValue>
+							<MaxSliderValue><![CDATA[100]]></MaxSliderValue>
+							<DelimeterType>NO_DELIMETER</DelimeterType>
+						</ParameterEditor>
+					</Properties>                 
+				</Variable>
+				<Variable Class="Parameter">
+					<Id>1697185477840</Id>
+					<Name><![CDATA[p_defaultConsumptionAsset]]></Name>
+					<X>-280</X><Y>390</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" ModificatorType="STATIC">
+						<Type><![CDATA[J_EA]]></Type>
+						<UnitType><![CDATA[NONE]]></UnitType>
+						<SdArray>false</SdArray>
+						<DefaultValue Class="CodeValue">
+							<Code><![CDATA[new J_EAConsumption(null, OL_EnergyAssetType.ELECTRICITY_DEMAND, "Default consumption profile", 0.0, 0.0, 0.0, 0.0, 0.0, p_timeStep_h)]]></Code>
+						</DefaultValue>
+						<ParameterEditor>
+							<Id>1697185477838</Id>
+							<EditorContolType>TEXT_BOX</EditorContolType>
+							<MinSliderValue><![CDATA[0]]></MinSliderValue>
+							<MaxSliderValue><![CDATA[100]]></MaxSliderValue>
+							<DelimeterType>NO_DELIMETER</DelimeterType>
+						</ParameterEditor>
+					</Properties>                 
+				</Variable>
 				<Variable Class="CollectionVariable">
 					<Id>1663238323139</Id>
 					<Name><![CDATA[c_connectionOwners]]></Name>
@@ -4042,7 +4338,8 @@ traceln(" ");
 				</Variable>
 				<Variable Class="CollectionVariable">
 					<Id>1696855562269</Id>
-					<Name><![CDATA[c_GISbuildings]]></Name>
+					<Name><![CDATA[c_GISRegions]]></Name>
+					<ExcludeFromBuild>true</ExcludeFromBuild>
 					<X>-1900</X><Y>230</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
@@ -4050,8 +4347,44 @@ traceln(" ");
 					<ShowLabel>true</ShowLabel>
 					<Properties SaveInSnapshot="true" AccessType="public" StaticVariable="false">
 						<CollectionClass><![CDATA[ArrayList]]></CollectionClass>
-						<ElementClass><![CDATA[GIS_Building]]></ElementClass>
+						<ElementClass><![CDATA[GISRegion]]></ElementClass>
 						<ValueElementClass><![CDATA[String]]></ValueElementClass>
+					</Properties>
+
+				</Variable>
+				<Variable Class="CollectionVariable">
+					<Id>1697012883787</Id>
+					<Name><![CDATA[c_buildingGISRegions]]></Name>
+					<X>660</X><Y>1120</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" AccessType="public" StaticVariable="false">
+						<CollectionClass><![CDATA[ArrayList]]></CollectionClass>
+						<ElementClass><![CDATA[GISRegion]]></ElementClass>
+						<ValueElementClass><![CDATA[String]]></ValueElementClass>
+						<CollectionInitializer Class="CodeValue">
+							<Code><![CDATA[{_0642100000000484, _0642100000000505, _0642100000000506, _0642100000000507, _0642100000000508, _0642100000000509, _0642100000000510, _0642100000000512, _0642100000000513, _0642100000000523, _0642100000000548, gisRegion, _0642100000000528, _0642100000000529, _0642100000000530, _0642100000000532, _0642100000000534, _0642100000000535, _0642100000000537, _0642100000000538, _0642100000000540, _0642100000000541, _0642100000000542, _0642100000000546, _0642100000000543, _0642100000000544, _0642100000000545, _0642100000000549, _0642100000001043, _0642100000001044, _0642100000001046, _0642100000001048, _0642100000000079, _0642100000001049, _0642100000002957, _0642100000002958, _0642100000003445, _0642100000003449, _0642100000003004, _0642100000003006, _0642100000003007, _0642100000003009, _0642100000003010, _0642100000003484, _0642100000003011, _0642100000003012, _0642100000003013, _0642100000003014, _0642100000003015, _0642100000003016, _0642100000003017, _0642100000003018, _0642100000003019, _0642100000003020, _0642100000003021, _0642100000003037, _0642100000003508, _0642100000003522, _0642100000003524, _0642100000000134, _0642100000003525, _0642100000003526, _0642100000003527, _0642100000003066, _0642100000003067, _0642100000003068, _0642100000003069, _0642100000003070, _0642100000003071, _0642100000003072, _0642100000004944, _0642100000000776, _0642100000004498, _0642100000000782, _0642100000004518, _0642100000003591, _0642100000004540, _0642100000004541, _0642100000004542, _0642100000003595, _0642100000003596, _0642100000004545, _0642100000004547, _0642100000004548, _0642100000005061, _0642100000000895, _0642100000000896, _0642100000000883, _0642100000000884, _0642100000000888, _0642100000000203, _0642100000000902, _0642100000000903, _0642100000003663, _0642100000003664, _0642100000003665, _0642100000000912, _0642100000003223, _0642100000003224, _0642100000000212, _0642100000000921, _0642100000000217, _0642100000000218, _0642100000000922, _0642100000003282, _0642100000004712, _0642100000005267, _0642100000003796, _0642100000003797, _0642100000003798, _0642100000005259, _0642100000005260, _0642100000005268, _0642100000005261, _0642100000005262, _0642100000005264, _0642100000005266, _0642100000005274, _0642100000005275, _0642100000005277, _0642100000003820, _0642100000003821, _0642100000004815, _0642100000004816, _0642100000005370, _0642100000005372, _0642100000005373, _0642100000004191, _0642100000004192, _0642100000007104, _0642100000007105, _0642100000007107, _0642100000007109, _0642100000000350, _0642100000000333, _0642100000000334, _0642100000000335, _0642100000007119, _0642100000000336, _0642100000000337, _0642100000000338, _0642100000000340, _0642100000000341, _0642100000000342, _0642100000000349, _0642100000000344, _0642100000000345, _0642100000000351, _0642100000000352, _0642100000004253, _0642100000000354, _0642100000004264, _0642100000004265, _0642100000000359, _0642100000000360, _0642100000000361, _0642100000000362, _0642100000007201, _0642100000007294, _0642100000007329, _0642100000007330, _0642100000007341, _0642100000007343, _0642100000012364, _0642100000012365, _0642100000022998, _0642100000022999, _0642100000012366, _0642100000012367, _0642100000012368, _0642100000012369, _0642100000012370, _0642100000012371, _0642100000012372, _0642100000012373, _0642100000012374, _0642100000012375, _0642100000012376, _0642100000012377, _0642100000012378, _0642100000012379, _0642100000012380, _0642100000012381, _0642100000012382, _0642100000012383, _0642100000012384, _0642100000014392, _0642100000014393, _0642100000014394, _0642100000014395, _0642100000014396, _0642100000014397, _0642100000024482, _0642100000021996, _0642100000022611, _0642100000025004, _0642100000025005, _0642100000025006, _0642100000022612, _0642100000022613, _0642100000024032, _0642100000024034, _0642100000024041, _0642100000022707, _0642100000022708, _0642100000022709, _0642100000022710, _0642100000022711, _0642100000022712, _0642100000022772, _0642100000026063, _0642100000023318, _0642100000025737, _0642100000027667, _0642100000022888, _0642100000022899, _0642100000022900, _0642100000023433, _0642100000023434, _0642100000023435, _0642100000023436, _0642100000023437, _0642100000023438, _0642100000027787, _0642100000027789, _0642100000027803, _0642100000027805, _0642100000023900, _0642100000023903, _0642100000023906, _0642100000023907, _0642100000023908, _0642100000022255, _0642100000023911, _0642100000023912, _0642100000023918, _0642100000023917, _0642100000023919, _0642100000023922, _0642100000024668, _0642100000026251, _0642100000026252, _0642100000026253, _0642100000026254, _0642100000024679, _0642100000024682, _0642100000024683, _0642100000024687, _0642100000024695, _0642100000025297, _0642100000025298, _0642100000026289, _0642100000025310, _0642100000026304, _0642100000024716, _0642100000024751, _0642100000025452, _0642100000024847, _0642100000024848, _0642100000024849, _0642100000024850, _0642100000024851, _0642100000024852, _0642100000024853, _0642100000024862, _0642100000024864, _0642100000024865, _0642100000024870, _0642100000024874, _0642100000024875, _0642100000024877, _0642100000024878, _0642100000024879, _0642100000024880, _0642100000024868, _0642100000024893, _0642100000024894, _0642100000027867, _0642100000027868, _0642100000027869, _0642100000027870, _0642100000027871, _0642100000003565, _0642100000028035, _0642100000024872, _0642100000027995, _0642100000028036, _0642100000025451, _0642100000026157, _0642100000003008, _0642100000028057, _0642100000028058, _0642100000028059, _0642100000001051, _0642100000028111, _0642100000028110, _0642100000028112, _0642100000028128}]]></Code>
+						</CollectionInitializer>
+					</Properties>
+
+				</Variable>
+				<Variable Class="CollectionVariable">
+					<Id>1697012883795</Id>
+					<Name><![CDATA[c_neighborhoodGISRegions]]></Name>
+					<X>660</X><Y>1140</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" AccessType="public" StaticVariable="false">
+						<CollectionClass><![CDATA[ArrayList]]></CollectionClass>
+						<ElementClass><![CDATA[GISRegion]]></ElementClass>
+						<ValueElementClass><![CDATA[String]]></ValueElementClass>
+						<CollectionInitializer Class="CodeValue">
+							<Code><![CDATA[{Bu06420701}]]></Code>
+						</CollectionInitializer>
 					</Properties>
 
 				</Variable>
@@ -4122,6 +4455,17 @@ if (b_addKpiVisuals) {
 	pl_electricityConsumptionStack.updateData();
 	pl_electricityProductionStack.updateData();
 	UI_energyAssets.f_updateData();	*/
+	//if (v_isRapidRun == false){
+	//f_neighborhoodEnergyTotalsCurrentHour();
+	energyDemandChart.updateData();
+	energySupplyChart.updateData();
+	//energyDemandChartHousehold.updateData();
+	//energySupplyChartHousehold.updateData();
+	businessParkEnergyDemandChart.updateData();
+	businessParkEnergySupplyChart.updateData();
+	//companyEnergyDemandChart.updateData();
+	//companyEnergySupplyChart.updateData();
+//}
 }
 
 v_timeStepsElapsed ++;
@@ -4180,15 +4524,16 @@ v_timeStepsElapsed ++;
 					<Body><![CDATA[f_createActors();
 f_createGridNodes();
 f_createGridConnections();
-//f_setActorPolicies(); // Everything in here should be an attribute of the agents themselves, not a model-wide thing.
+f_createGISBuildings();
 f_createAgentLinks();
 f_initializeForecasts();
 //f_instantiateTemplateEnergyAssets();
 
+// Change slider settings before starting simulation
 sl_EV.setValue(100, true);
 sl_rooftopPV.setValue(50, true);
 ra_chargingStrategy.setValue(2,true);
-//traceln("EV slider set to: " + sl_EV.getValue() );]]></Body>
+]]></Body>
 				</Function>
 				<Function AccessType="default" StaticFunction="false">
 					<ReturnModificator>VOID</ReturnModificator>
@@ -4306,6 +4651,7 @@ traceln("Depreciation of solar panels is %s eur/kW/annum", PV_depreciation_eurpk
 @return: none
 @since: Sprint 6
 @author: Jorrit]]></Description>
+					<ExcludeFromBuild>true</ExcludeFromBuild>
 					<X>-500</X><Y>112</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
@@ -4542,19 +4888,19 @@ traceln("Energy produced: "+ energyProduced_MWh + " MWh");
 
 traceln("");
 //Total selfconsumption, selfsufficiency
-double totalSelfConsumption_fr = 0;
+
 if ( energyProduced_MWh > 0 ){
-	totalSelfConsumption_fr = 1 - (v_totalElectricityExport_MWh + max(0,v_totalMethaneExport_MWh-v_totalMethaneImport_MWh) + max(0,v_totalHydrogenExport_MWh-v_totalHydrogenImport_MWh))/energyProduced_MWh;
+	v_modelSelfConsumption_fr = 1 - (v_totalElectricityExport_MWh + max(0,v_totalMethaneExport_MWh-v_totalMethaneImport_MWh) + max(0,v_totalHydrogenExport_MWh-v_totalHydrogenImport_MWh))/energyProduced_MWh;
 }
-traceln("Energy selfconsumption: " + totalSelfConsumption_fr*100 + "%");
+traceln("Energy selfconsumption: " + v_modelSelfConsumption_fr*100 + "%");
 double totalElectricitySelfConsumption_fr = 0;
 if ( electricityProduced_MWh > 0 ){
 	totalElectricitySelfConsumption_fr = 1 - v_totalElectricityExport_MWh/electricityProduced_MWh;
 }
 
-double totalSelfSufficiency_fr = 1 - (v_totalElectricityImport_MWh + max(0,v_totalMethaneImport_MWh - v_totalMethaneExport_MWh) + 
+v_modelSelfSufficiency_fr = 1 - (v_totalElectricityImport_MWh + max(0,v_totalMethaneImport_MWh - v_totalMethaneExport_MWh) + 
 max(0,v_totalHydrogenImport_MWh - v_totalHydrogenExport_MWh) + v_totalDieselImport_MWh - batteryStoredEnergyDeltaSinceStart_MWh - deltaThermalEnergySinceStart_MWh) / energyConsumed_MWh;
-traceln("Energy selfsufficiency (via import calc): %s %%", totalSelfSufficiency_fr*100);
+traceln("Energy selfsufficiency (via import calc): %s %%", v_modelSelfSufficiency_fr*100);
 double totalSelfSufficiency_fr_check = (energyProduced_MWh - (v_totalElectricityExport_MWh + max(0,v_totalMethaneExport_MWh-v_totalMethaneImport_MWh) + 
 max(0,v_totalHydrogenExport_MWh-v_totalHydrogenImport_MWh)))/energyConsumed_MWh;
 traceln("Energy selfsufficiency (via export calc): %s %%", totalSelfSufficiency_fr_check*100);
@@ -4615,8 +4961,8 @@ j_simulationResults.updateData( roundToDecimal( v_gridNodePeakLoadElectricityHSM
 							//c_globalEVChargingProfile_kWhph,
 							//c_globalEHGVChargingProfile_kWhph,
 							//c_globalBatteryChargingProfile_kWhph,
-							totalSelfConsumption_fr,
-							totalSelfSufficiency_fr,
+							v_modelSelfConsumption_fr,
+							v_modelSelfSufficiency_fr,
 							energyConsumed_MWh,
 							energyProduced_MWh,
 							v_totalEnergyCurtailed_MWh,
@@ -5079,7 +5425,7 @@ else {
 					<ReturnType><![CDATA[double]]></ReturnType>
 					<Id>1669130265565</Id>
 					<Name><![CDATA[f_createActors]]></Name>
-					<X>-480</X><Y>152</Y>
+					<X>-480</X><Y>172</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -5158,7 +5504,7 @@ for (ConnectionOwner a : pop_connectionOwners) {
 					<ReturnType><![CDATA[double]]></ReturnType>
 					<Id>1669130286710</Id>
 					<Name><![CDATA[f_createGridNodes]]></Name>
-					<X>-480</X><Y>172</Y>
+					<X>-480</X><Y>192</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -5234,7 +5580,7 @@ for( GridNode g : pop_gridNodes ) {
 					<ReturnType><![CDATA[double]]></ReturnType>
 					<Id>1669130296250</Id>
 					<Name><![CDATA[f_createGridConnections]]></Name>
-					<X>-480</X><Y>192</Y>
+					<X>-480</X><Y>212</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -5289,7 +5635,7 @@ for(JsonNode data : v_gridConnectionsJson) {
 			//double lowPassFilterHousehold = 0.03; // -->> deze moet uiteindelijk naar datamodel. Moet configureerbaar zijn.
 			//irradianceRecievingSurface_m2 = 10.0;
 			//GC.v_lowPassFactor_fr = lowPassFilterHousehold;			
-			((GCHouse)GC).set_p_isolationLabel( gridConnectionIsolationLabel );
+			((GCHouse)GC).set_p_energyLabel( gridConnectionIsolationLabel );
 
 			//double deltaStartTemp_degC = uniform_discr(-5, 5);			
 			//((J_EAStorageHeat)GC.p_BuildingThermalAsset.j_ea).updateStateOfCharge(deltaStartTemp_degC);
@@ -5309,10 +5655,6 @@ for(JsonNode data : v_gridConnectionsJson) {
 	 	break;
 	 	case GRIDBATTERY:
 	 		GC = add_GridBatteries();
-	 	break;
-	 	case RESIDUALHEAT:
-	 		GC = add_ResidualHeats();
-//	 		((GCResidualHeat)GC).set_p_deliveryTemperature(deliveryTemp_degC); 
 	 	break;
 	 	default:
 	 		GC = null;
@@ -5340,7 +5682,7 @@ for(JsonNode data : v_gridConnectionsJson) {
 	GC.v_heatingOff_time = tempSetpointNight_start_hr;
 	GC.v_dayTempSetpoint_degC = tempSetpointDay_degC;
 	GC.v_heatingOn_time = tempSetpointDay_start_hr;
-		
+
 	//Initialize
 	GC.f_initialize();
 	c_gridConnections.add(GC);
@@ -5381,7 +5723,7 @@ for (double ts_h = v_hourOfYearStart; ts_h<v_hourOfYearStart+p_forecastTime_h; t
 					<ReturnType><![CDATA[double]]></ReturnType>
 					<Id>1681918405543</Id>
 					<Name><![CDATA[f_createAgentLinks]]></Name>
-					<X>-480</X><Y>212</Y>
+					<X>-480</X><Y>232</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -5441,6 +5783,11 @@ for( EnergyCoop e : pop_energyCoops ) {
 	e.f_initialize(); // This function is called here because gridNodes need to be created before Coops can link to them.
 }
 
+for ( GridConnection GC : c_gridConnections) {// Temporary: add random GISbuilding to gridConnection (working with two inconsistent datasets, just testing functionality)
+	GIS_Building b = randomFrom(pop_GIS_Buildings);
+	GC.p_GISbuilding = b;
+	b.c_gridConnectionsInBuilding.add(GC);
+}
 UI_energyAssets.f_initializeData();
 ]]></Body>
 				</Function>
@@ -5858,7 +6205,8 @@ t_numberOfRooftopPV.setText(count(Houses, x->x.v_hasPV == true));]]></Body>
 						<Name><![CDATA[v_rooftopPV_kWp]]></Name>
 						<Type><![CDATA[double]]></Type>
 					</Parameter>
-					<Body><![CDATA[//ADD PV
+					<Body><![CDATA[/*
+//ADD PV
 while (sum(pop_EA_UtilityObjects, x->x.v_rooftopPVInstalledCapacity_kW) < v_rooftopPV_kWp){
 	double kWRequired = v_rooftopPV_kWp - sum(pop_EA_UtilityObjects, x->x.v_rooftopPVInstalledCapacity_kW);
 	
@@ -5898,7 +6246,10 @@ while (sum(pop_EA_UtilityObjects, x->x.v_rooftopPVInstalledCapacity_kW) > v_roof
 	}
 }
 
-traceln(sum(pop_EA_UtilityObjects, x->x.v_rooftopPVInstalledCapacity_kW) + " kWp PV installed");]]></Body>
+traceln(sum(pop_EA_UtilityObjects, x->x.v_rooftopPVInstalledCapacity_kW) + " kWp PV installed");
+*/
+
+traceln("f_setPVSystem awaiting new implementation after model merge. Currently not functional!");]]></Body>
 				</Function>
 				<Function AccessType="default" StaticFunction="false">
 					<ReturnModificator>VOID</ReturnModificator>
@@ -6083,17 +6434,17 @@ traceln("f_setHeatingSliders awaiting new implementation after model merge. Not 
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>true</ShowLabel>
-					<Body><![CDATA[v_countHouseholdsLabelAPlusPlusPlus = count(pop_EA_Households, x->x.p_energyLabel.equals("A+++"));
-v_countHouseholdsLabelAPlusPlus = count(pop_EA_Households, x->x.p_energyLabel.equals("A++"));
-v_countHouseholdsLabelAPlus = count(pop_EA_Households, x->x.p_energyLabel.equals("A+"));
-v_countHouseholdsLabelA = count(pop_EA_Households, x->x.p_energyLabel.equals("A"));
-v_countHouseholdsLabelB = count(pop_EA_Households, x->x.p_energyLabel.equals("B"));
-v_countHouseholdsLabelC = count(pop_EA_Households, x->x.p_energyLabel.equals("C"));
-v_countHouseholdsLabelD = count(pop_EA_Households, x->x.p_energyLabel.equals("D"));
-v_countHouseholdsLabelE = count(pop_EA_Households, x->x.p_energyLabel.equals("E"));
-v_countHouseholdsLabelF = count(pop_EA_Households, x->x.p_energyLabel.equals("F"));
-v_countHouseholdsLabelG = count(pop_EA_Households, x->x.p_energyLabel.equals("G"));
-v_countHouseholdsLabelUnknown = count(pop_EA_Households, x->x.p_energyLabel.equals("unknown"));]]></Body>
+					<Body><![CDATA[v_countHouseholdsLabelAPlusPlusPlus = count(Houses, x->x.p_energyLabel.equals("A+++"));
+v_countHouseholdsLabelAPlusPlus = count(Houses, x->x.p_energyLabel.equals("A++"));
+v_countHouseholdsLabelAPlus = count(Houses, x->x.p_energyLabel.equals("A+"));
+v_countHouseholdsLabelA = count(Houses, x->x.p_energyLabel.equals("A"));
+v_countHouseholdsLabelB = count(Houses, x->x.p_energyLabel.equals("B"));
+v_countHouseholdsLabelC = count(Houses, x->x.p_energyLabel.equals("C"));
+v_countHouseholdsLabelD = count(Houses, x->x.p_energyLabel.equals("D"));
+v_countHouseholdsLabelE = count(Houses, x->x.p_energyLabel.equals("E"));
+v_countHouseholdsLabelF = count(Houses, x->x.p_energyLabel.equals("F"));
+v_countHouseholdsLabelG = count(Houses, x->x.p_energyLabel.equals("G"));
+v_countHouseholdsLabelUnknown = count(Houses, x->x.p_energyLabel.equals("unknown"));]]></Body>
 				</Function>
 				<Function AccessType="default" StaticFunction="false">
 					<ReturnModificator>VOID</ReturnModificator>
@@ -6105,13 +6456,13 @@ v_countHouseholdsLabelUnknown = count(pop_EA_Households, x->x.p_energyLabel.equa
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>true</ShowLabel>
-					<Body><![CDATA[v_countHouseholdsNaturalGasBoiler = count(pop_EA_Households, x->x.p_householdHeatSupplyMethod == NaturalGasBoiler);
-v_countHouseholdsGreenGasBoiler = count(pop_EA_Households, x->x.p_householdHeatSupplyMethod == GreenGasBoiler);
-v_countHouseholdsElectricHeatPump = count(pop_EA_Households, x->x.p_householdHeatSupplyMethod == ElectricHeatPump);
-v_countHouseholdsHybridHeatPump = count(pop_EA_Households, x->x.p_householdHeatSupplyMethod == HybridHeatPump);
-v_countHouseholdsMTDistrictHeating = count(pop_EA_Households, x->x.p_householdHeatSupplyMethod == MTDistrictHeating);
-v_countHouseholdsLTDistrictHeating = count(pop_EA_Households, x->x.p_householdHeatSupplyMethod == LTDistrictHeating);
-v_countHouseholdsHTDistrictHeating = count(pop_EA_Households, x->x.p_householdHeatSupplyMethod == HTDistrictHeating);]]></Body>
+					<Body><![CDATA[v_countHouseholdsNaturalGasBoiler = count(Houses, x->x.p_heatingType == OL_GridConnectionHeatingType.GASBURNER);
+//v_countHouseholdsGreenGasBoiler = count(pop_EA_Households, x->x.p_householdHeatSupplyMethod == GreenGasBoiler);
+v_countHouseholdsElectricHeatPump = count(Houses, x->x.p_heatingType == OL_GridConnectionHeatingType.HEATPUMP_AIR);
+v_countHouseholdsHybridHeatPump = count(Houses, x->x.p_heatingType == OL_GridConnectionHeatingType.HEATPUMP_GASPEAK);
+//v_countHouseholdsMTDistrictHeating = count(pop_EA_Households, x->x.p_householdHeatSupplyMethod == MTDistrictHeating);
+//v_countHouseholdsLTDistrictHeating = count(pop_EA_Households, x->x.p_householdHeatSupplyMethod == LTDistrictHeating);
+//v_countHouseholdsHTDistrictHeating = count(pop_EA_Households, x->x.p_householdHeatSupplyMethod == HTDistrictHeating);]]></Body>
 				</Function>
 				<Function AccessType="default" StaticFunction="false">
 					<ReturnModificator>VOID</ReturnModificator>
@@ -6183,7 +6534,8 @@ traceln("f_setElectricCars awaiting new implementation after model merge. Not fu
 						<Name><![CDATA[v_householdsWithHomeBatteries_perc]]></Name>
 						<Type><![CDATA[double]]></Type>
 					</Parameter>
-					<Body><![CDATA[//Increase number of home batteries
+					<Body><![CDATA[/*
+//Increase number of home batteries
 while (count(pop_EA_Households, x->x.v_hasHomeBattery == true) < pop_EA_Households.size() * v_householdsWithHomeBatteries_perc){	
 	if (count(pop_EA_Households, x->x.v_hasHomeBattery == false && x.v_hasPV == true) > 0){
 		EA_Household h = randomWhere(pop_EA_Households, x->x.v_hasHomeBattery == false && x.v_hasPV == true);
@@ -6215,7 +6567,10 @@ while (count(pop_EA_Households, x->x.v_hasHomeBattery == true) > pop_EA_Househol
 	}
 }
 
-//traceln(count(pop_EA_Households, x->x.v_hasHomeBattery == true) + " households with home battery");                       ]]></Body>
+//traceln(count(pop_EA_Households, x->x.v_hasHomeBattery == true) + " households with home battery");                       
+*/ 
+
+traceln("f_setHomeBatteries is awaiting new implementation after model merge. Currently not functional!");]]></Body>
 				</Function>
 				<Function AccessType="default" StaticFunction="false">
 					<ReturnModificator>VOID</ReturnModificator>
@@ -6227,7 +6582,8 @@ while (count(pop_EA_Households, x->x.v_hasHomeBattery == true) > pop_EA_Househol
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>true</ShowLabel>
-					<Body><![CDATA[//Increase number of induction stoves
+					<Body><![CDATA[/*
+//Increase number of induction stoves
 while (count(pop_EA_Households, x->x.v_hasInductionStove == true) < pop_EA_Households.size() * sl_electricCooking.getValue() / 100){	
 	if (count(pop_EA_Households, x->x.v_hasInductionStove == false && !(x.p_householdHeatSupplyMethod == NaturalGasBoiler || x.p_householdHeatSupplyMethod == GreenGasBoiler)) > 0){
 		EA_Household h = randomWhere(pop_EA_Households, x->x.v_hasInductionStove == false  && !(x.p_householdHeatSupplyMethod == NaturalGasBoiler || x.p_householdHeatSupplyMethod == GreenGasBoiler));
@@ -6253,6 +6609,8 @@ while (count(pop_EA_Households, x->x.v_hasInductionStove == true) > pop_EA_House
 
 //traceln(count(pop_EA_Households, x->x.v_hasInductionStove == true) + " households with induction stove");
 //traceln(count(pop_EA_Households, x->x.v_hasInductionStove == true && x.p_householdHeatSupplyMethod == NaturalGasBoiler) + " households with induction stove en aardgas");
+*/
+traceln("f_setInductionStove awaiting new implementation after model merge. Currently not functional!");
 ]]></Body>
 				</Function>
 				<Function AccessType="default" StaticFunction="false">
@@ -6290,7 +6648,8 @@ gr_simulateCostsScreenSmall.setVisible(true);
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>true</ShowLabel>
-					<Body><![CDATA[if (v_districtHeatingTemperature_string.equals("HT")){
+					<Body><![CDATA[/*
+if (v_districtHeatingTemperature_string.equals("HT")){
 	for (EA_Household h : pop_EA_Households){
 		if(h.p_householdHeatSupplyMethod == MTDistrictHeating || h.p_householdHeatSupplyMethod == LTDistrictHeating){
 			h.p_householdHeatSupplyMethod = HTDistrictHeating;
@@ -6314,8 +6673,9 @@ else if (v_districtHeatingTemperature_string.equals("LT")){
 //traceln(nbGasBurner + " CV ketels, " + nbGreenGasBurner + " CV ketels groen gas, " + nbHeatpump + " warmtepompen, " + nbHybridHeatpump + " hybride warmtepompen, " + nbLTDistrictheating + " LT-warmtenet" + nbMTDistrictheating + " MT-warmtenet");
 
 f_countAndColorHeatSupply();
+*/
 
-
+traceln("f_setDistrictHeatingTemp awaiting new implementation after model merge. Currently not functional!");
 ]]></Body>
 				</Function>
 				<Function AccessType="default" StaticFunction="false">
@@ -6328,7 +6688,8 @@ f_countAndColorHeatSupply();
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>true</ShowLabel>
-					<Body><![CDATA[f_countHeatSupplyMethods();
+					<Body><![CDATA[/*
+f_countHeatSupplyMethods();
 
 for (EA_Building b : pop_EA_Buildings){
 	b.f_countHeatSystems();
@@ -6341,7 +6702,10 @@ ch_heatSupplyMethods.updateData();
 
 for (EA_Household h : pop_EA_Households){
 	h.f_setHeatMethodValues();
-}]]></Body>
+}
+*/
+
+traceln("f_countAndColorHeatSupply is awaiting new implementation after model merge. Currently not functional!");]]></Body>
 				</Function>
 				<Function AccessType="default" StaticFunction="false">
 					<ReturnModificator>VOID</ReturnModificator>
@@ -6497,6 +6861,713 @@ t_numberOfLTDistrictHeating.setText(nbDistrictheating);
 */
 traceln("f_setHeatingTypesHoushold awaiting new implementation after model merge... Not functionaly!");
 ]]></Body>
+				</Function>
+				<Function AccessType="default" StaticFunction="false">
+					<ReturnModificator>VOID</ReturnModificator>
+					<ReturnType><![CDATA[double]]></ReturnType>
+					<Id>1696863329251</Id>
+					<Name><![CDATA[f_selectGISRegion]]></Name>
+					<X>410</X><Y>1090</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Parameter>
+						<Name><![CDATA[clickx]]></Name>
+						<Type><![CDATA[double]]></Type>
+					</Parameter>
+					<Parameter>
+						<Name><![CDATA[clicky]]></Name>
+						<Type><![CDATA[double]]></Type>
+					</Parameter>
+					<Body><![CDATA[//Set click on building group invisible
+if (gr_clickOnBuildingGroup.isVisible() == true){
+	gr_clickOnBuildingGroup.setVisible(false);
+}
+
+previousClickedBuilding = v_clickedBuilding;
+if( previousClickedBuilding != null){
+	previousClickedBuilding.gisRegion.setFillColor( v_clickedBuildingColor );
+}
+
+
+for ( GIS_Building b : pop_GIS_Buildings ){
+	
+	if( b.gisRegion != null && b.gisRegion.contains(clickx, clicky) ){
+		v_clickedBuilding = b;
+		v_clickedBuildingColor = b.gisRegion.getFillColor();
+		b.gisRegion.setFillColor( yellow );
+		
+		/*
+		if(v_clickedBuilding.c_householdsInBuilding.size() > 1){
+			gr_nextHouseholdInBuilding.setVisible(true);
+		}
+		else {
+			gr_nextHouseholdInBuilding.setVisible(false);		
+		}
+		*/
+		 
+		//-----------HOUSEHOLD----------
+		if(v_clickedBuilding.c_gridConnectionsInBuilding.size() > 0){
+			v_gridConnectionInBuildingIndex = 0;
+			v_clickedGridConnection = v_clickedBuilding.c_gridConnectionsInBuilding.get(v_gridConnectionInBuildingIndex);
+			
+			v_gridConnectionInBuildingNumber = v_gridConnectionInBuildingIndex + 1;
+		}
+		else {
+			v_gridConnectionInBuildingNumber = 0;
+		}
+		
+		/*//----------UTILITY OBJECT-------
+		if(v_clickedBuilding.c_gridConnectionsInBuilding.size() > 0){
+			v_utilityObjectInBuildingIndex = 0;
+			v_clickedUtilityObject = v_clickedBuilding.c_gridConnectionsInBuilding.get(v_utilityObjectInBuildingIndex);
+			
+			v_utilityObjectInBuildingNumber = v_utilityObjectInBuildingIndex + 1;
+		}
+		else {
+			v_utilityObjectInBuildingNumber = 0;
+		}
+		*/
+		break;
+	}
+}
+
+
+]]></Body>
+				</Function>
+				<Function AccessType="default" StaticFunction="false">
+					<ReturnModificator>VOID</ReturnModificator>
+					<ReturnType><![CDATA[double]]></ReturnType>
+					<Id>1696863329254</Id>
+					<Name><![CDATA[f_selectGISRegionBusinessPark]]></Name>
+					<ExcludeFromBuild>true</ExcludeFromBuild>
+					<X>660</X><Y>1090</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Parameter>
+						<Name><![CDATA[clickx]]></Name>
+						<Type><![CDATA[double]]></Type>
+					</Parameter>
+					<Parameter>
+						<Name><![CDATA[clicky]]></Name>
+						<Type><![CDATA[double]]></Type>
+					</Parameter>
+					<Body><![CDATA[//Set click on building group invisible
+if (gr_clickOnBuildingGroup.isVisible() == true){
+	gr_clickOnBuildingGroup.setVisible(false);
+}
+
+previousClickedBuilding = v_clickedBuilding;
+if( previousClickedBuilding != null){
+	previousClickedBuilding.gisRegion.setFillColor( v_clickedBuildingColor );
+}
+
+
+for ( EA_Building b : pop_EA_Buildings ){
+	
+	if( b.gisRegion != null && b.gisRegion.contains(clickx, clicky) ){
+		v_clickedBuilding = b;
+		v_clickedBuildingColor = b.gisRegion.getFillColor();
+		b.gisRegion.setFillColor( yellow );
+		
+		/*
+		if(v_clickedBuilding.c_householdsInBuilding.size() > 1){
+			gr_nextHouseholdInBuilding.setVisible(true);
+		}
+		else {
+			gr_nextHouseholdInBuilding.setVisible(false);		
+		}
+		*/ 
+		
+		if(v_clickedBuilding.c_utilityObjectsInBuilding.size() > 0){
+			v_utilityObjectInBuildingIndex = 0;
+			v_clickedUtilityObject = v_clickedBuilding.c_householdsInBuilding.get(v_householdInBuildingIndex);
+			
+			v_utilityObjectInBuildingNumber = v_utilityObjectInBuildingIndex + 1;
+		}
+		else {
+			v_utilityObjectInBuildingNumber = 0;
+		}
+		break;
+	}
+}
+
+
+]]></Body>
+				</Function>
+				<Function AccessType="default" StaticFunction="false">
+					<ReturnModificator>VOID</ReturnModificator>
+					<ReturnType><![CDATA[double]]></ReturnType>
+					<Id>1696865756419</Id>
+					<Name><![CDATA[f_setEnergyPrice]]></Name>
+					<X>130</X><Y>1090</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Body><![CDATA[/*
+//Electricity
+List< Tuple > electricityPrices = selectFrom( energy_costs )
+	.where( energy_costs.jaar.eq(p_simulationYear))
+	.where( energy_costs.energiedrager.eq("electricity") ) 
+	.list();
+	
+
+for (Tuple tup : electricityPrices){
+	double p_elecNetbeheerkosten = tup.get(energy_costs.netbeheerkosten_eur_jaar);
+	double p_elecVasteLeveringskosten = tup.get(energy_costs.vaste_leveringskosten_eur_jaar);
+	double p_elecBelastingvermindering = tup.get(energy_costs.belastingvermindering);
+	double p_elecVariabeleLeveringskosten = tup.get(energy_costs.variabele_leveringskosten);
+	double p_elecEnergiebelasting = tup.get(energy_costs.energiebelasting);
+	double p_elecODE = tup.get(energy_costs.ode);
+	p_electricityVariableCosts_EurPerkWh = p_elecVariabeleLeveringskosten + p_elecEnergiebelasting + p_elecODE;
+	p_electricityFixedCosts_EurPerYear = p_elecNetbeheerkosten + p_elecVasteLeveringskosten;
+	p_CO2EmissionsGridElectricity_kgperkWh = tup.get(energy_costs.co2_emissiefactor_kg_k_wh);
+}
+
+
+//Natural Gas
+List< Tuple > NaturalGasPrices = selectFrom( energy_costs )
+	.where( energy_costs.jaar.eq(p_simulationYear))
+	.where( energy_costs.energiedrager.eq("natural gas") ) 
+	.list();
+for (Tuple tup : NaturalGasPrices){
+	double p_naturalGasNetbeheerkosten = tup.get(energy_costs.netbeheerkosten_eur_jaar);
+	double p_naturalGasVasteLeveringskosten = tup.get(energy_costs.vaste_leveringskosten_eur_jaar);
+	double p_naturalGasVariabeleLeveringskosten = tup.get(energy_costs.variabele_leveringskosten);
+	double p_naturalGasEnergiebelasting = tup.get(energy_costs.energiebelasting);
+	double p_naturalGasODE = tup.get(energy_costs.ode);
+	p_naturalGasVariableCosts_EurPerM3 = (p_naturalGasVariabeleLeveringskosten + p_naturalGasEnergiebelasting + p_naturalGasODE) ;
+	p_naturalGasVariableCosts_EurPerkWh = p_naturalGasVariableCosts_EurPerM3 / p_energyDensityGas_kWhpm3;
+	p_naturalGasFixedCosts_EurPerYear = p_naturalGasNetbeheerkosten + p_naturalGasVasteLeveringskosten ;	
+	p_CO2EmissionsNaturalGas_kgperkWh = tup.get(energy_costs.co2_emissiefactor_kg_k_wh); 
+}
+
+
+//Green Gas
+List< Tuple > GreenGasPrices = selectFrom( energy_costs )
+	.where( energy_costs.jaar.eq(p_simulationYear))
+	.where( energy_costs.energiedrager.eq("green gas") ) 
+	.list();
+
+for (Tuple tup : GreenGasPrices){
+	double p_greenGasNetbeheerkosten = tup.get(energy_costs.netbeheerkosten_eur_jaar);
+	double p_greenGasVasteLeveringskosten = tup.get(energy_costs.vaste_leveringskosten_eur_jaar);
+	double p_greenGasVariabeleLeveringskosten = tup.get(energy_costs.variabele_leveringskosten);
+	double p_greenGasEnergiebelasting = tup.get(energy_costs.energiebelasting);
+	double p_greenGasODE = tup.get(energy_costs.ode);
+	p_greenGasVariableCosts_EurPerM3 = (p_greenGasVariabeleLeveringskosten + p_greenGasEnergiebelasting + p_greenGasODE) ;
+	p_greenGasVariableCosts_EurPerkWh = p_greenGasVariableCosts_EurPerM3 / p_energyDensityGas_kWhpm3;
+	p_greenGasFixedCosts_EurPerYear = p_greenGasNetbeheerkosten + p_greenGasVasteLeveringskosten ;
+	p_CO2EmissionsGreenGas_kgperkWh = tup.get(energy_costs.co2_emissiefactor_kg_k_wh); 
+}
+
+//HTHeat
+
+p_CO2EmissionsHighTempHeat_kgperkWh = selectFrom( energy_costs )
+	.where( energy_costs.jaar.eq(p_simulationYear))
+	.where( energy_costs.energiedrager.eq("HT-warmte")) 
+	.firstResult(energy_costs.co2_emissiefactor_kg_k_wh);
+		
+//MTHeat
+p_CO2EmissionsMediumTempHeat_kgperkWh = selectFrom( energy_costs )
+	.where( energy_costs.jaar.eq(p_simulationYear))
+	.where( energy_costs.energiedrager.eq("MT-warmte")) 
+	.firstResult(energy_costs.co2_emissiefactor_kg_k_wh);		
+	
+//LTHeat
+p_CO2EmissionsLowTempHeat_kgperkWh =  selectFrom( energy_costs )
+	.where( energy_costs.jaar.eq(p_simulationYear))
+	.where( energy_costs.energiedrager.eq("LT-warmte")) 
+	.firstResult(energy_costs.co2_emissiefactor_kg_k_wh);
+
+//Benzine
+p_CO2EmissionsICE_kgperkm=  selectFrom( energy_costs )
+	.where( energy_costs.jaar.eq(p_simulationYear))
+	.where( energy_costs.energiedrager.eq("Benzine autokilometer")) 
+	.firstResult(energy_costs.co2_emissiefactor);
+*/
+
+traceln("f_setEnergyPrice is awaiting new implementation after model merge! Currently not functional");
+
+
+
+]]></Body>
+				</Function>
+				<Function AccessType="default" StaticFunction="false">
+					<ReturnModificator>VOID</ReturnModificator>
+					<ReturnType><![CDATA[double]]></ReturnType>
+					<Id>1696924323569</Id>
+					<Name><![CDATA[f_updateInputSettingsNeighborhoods]]></Name>
+					<X>640</X><Y>-2120</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Parameter>
+						<Name><![CDATA[sliderIndex]]></Name>
+						<Type><![CDATA[int]]></Type>
+					</Parameter>
+					<Body><![CDATA[/*v_countSettings++;
+f_setNeighborhoodSliders(sliderIndex);
+f_resetSettings();
+*/
+traceln("f_updateInputSettingsNeighborhoods is not functional!");]]></Body>
+				</Function>
+				<Function AccessType="default" StaticFunction="false">
+					<ReturnModificator>VOID</ReturnModificator>
+					<ReturnType><![CDATA[double]]></ReturnType>
+					<Id>1696925902737</Id>
+					<Name><![CDATA[f_startSimulationSettings]]></Name>
+					<X>-500</X><Y>390</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Body><![CDATA[//Initalize - delete these lines when finished
+/*
+[load building GIS regions from QGIS]
+[create collection c_buildingGISRegions from building GIS regions]
+[load neighborhood GIS regions from QGIS using shapefiles and change shapefile to space markup]
+[create collection c_neighborhoodGISRegions from neighborhood GIS regions]
+[upload data in excel _buildings]
+[upload data in excel _companies]
+[upload data in excel _hvmv_transformers]
+[upload data in excel _mvlv_transformers]
+[upload data in excel _residence_objects]
+[upload data in excel _neighborhoods]
+[upload LV grid shapefiles in color steelblue]
+[upload MV grid shapefiles in color orchid]
+*/
+
+//default GIS regions
+//f_defaultGISRegionColors();
+
+//default values
+//dt_h = 1;
+v_isCostsPerHousehold = true;
+
+p_simulatedArea = NEIGHBORHOOD;
+p_centerLongitude = 4.62081213207812;
+p_centerLatitude = 51.8066803651812;
+map.setCenterLongitude(p_centerLongitude);
+map.setCenterLatitude(p_centerLatitude);
+/*p_EVChargingType = "conventional";
+p_homeBatteryChargeAlgorithm = "Household optimization";
+v_districtHeatingTemperature_string = "HT";
+v_householdEnergyLabel = "Huidig";
+v_electricBoilerChargingStrategy = Conventional;
+v_excelSheetNumber = 1;
+c_detailNeighborhoods.add("BU06420701");
+//c_detailNeighborhoods.add("[insert CBS Neighborhood name]");
+p_PVRatedPower_kWpPanel = 0.300;
+p_PVPanelSurfaceArea_m2 = 1.65;
+p_PVefficiency = p_PVRatedPower_kWpPanel / p_PVPanelSurfaceArea_m2;
+p_PVCapacityFactor = 0.85;
+p_simulationYear = p_startSimulationYear;
+
+	
+//Initialize agent populations
+f_initializeAgentPopulations();
+
+//set cost parameters from database
+f_setEnergyPrice();
+*/
+
+//update charts
+ch_energyLabels.updateData();
+//ch_heatSupplyMethods.updateData();
+
+
+//MAP
+v_clickedBuilding = randomWhere(pop_GIS_Buildings, x->x.c_gridConnectionsInBuilding.size() > 0);
+//v_clickedHousehold = randomFrom(v_clickedBuilding.c_householdsInBuilding);
+//v_timeInMillis = System.currentTimeMillis();
+
+//SETTING UI
+
+//select simulation type for right UI
+switch( p_simulatedArea ){
+	case BUSINESSPARK :
+		gr_businessParkSettings.setVisible(true);
+		gr_businessParkResultTabs.setVisible(true);
+		gr_businessParkDashboard.setVisible(true);
+		break;
+	case NEIGHBORHOOD:
+		gr_heatSettings.setVisible(false);
+		gr_neighborhoodResultsTabs.setVisible(true);
+		gr_neighborhoodDashboard.setVisible(true);
+		//gr_settingsMenu.setVisible(false);
+		break;
+	case HVTRANSFORMER:
+		gr_HVMVTrafoSettings.setVisible(true);
+		gr_settingsMenu.setVisible(false);
+		break;
+	
+}
+	
+	
+
+gr_heatSettings.setX(-205);
+gr_heatSettings.setY(380);
+gr_electricitySettings.setX(-200);
+gr_electricitySettings.setY(350);
+gr_electricitySettings.setVisible(false);
+
+gr_heatDemandLegenda.setX(-65);
+gr_heatDemandLegenda.setY(-190);
+gr_heatDemandLegenda.setVisible(true);
+
+gr_loadIconCosts.setX(1668);
+gr_loadIconCosts.setY(603);
+gr_simulateCostsScreen.setX(1665);
+gr_simulateCostsScreen.setY(603);
+
+gr_loadIconCostsSmall.setX(1668);
+gr_loadIconCostsSmall.setY(180);
+gr_simulateCostsScreenSmall.setX(1675);
+gr_simulateCostsScreenSmall.setY(220);
+
+gr_neighborhoodConnections.setX(-515);
+gr_neighborhoodConnections.setY(103);
+gr_neighborhoodCosts.setX(-515);
+gr_neighborhoodCosts.setY(80);
+
+
+gr_householdDashboard.setX(1885);
+gr_householdDashboard.setY(520);
+gr_clickOnBuildingGroup.setX(1670);
+gr_clickOnBuildingGroup.setY(505);
+
+gr_compareResults.setX(1100);
+gr_compareResults.setY(560);
+gr_compareResultsLoading.setY(-50);
+
+//f_intantiateResultsMatrix();
+
+gr_HVMVTrafoSettings.setX(196);
+gr_HVMVTrafoSettings.setY(220);
+
+gr_HSMSTrafoResults.setX(1645);
+gr_HSMSTrafoResults.setY(520);
+
+gr_businessParkSettings.setX(-240);
+gr_businessParkSettings.setY(360);
+
+gr_businessParkResultTabs.setX(1700);
+gr_businessParkResultTabs.setY(100);
+
+gr_businessParkDashboard.setX(2180);
+gr_businessParkDashboard.setY(500);
+
+gr_companyDashboard.setX(1665);
+gr_companyDashboard.setY(500);
+
+gr_businessParkLoad.setX(-515);
+gr_businessParkLoad.setY(103);
+
+gr_businessCollectiveDashboard.setX(2180);
+gr_businessCollectiveDashboard.setY(500);
+gr_businessCollectiveLoad.setX(-515);
+gr_businessCollectiveLoad.setY(103);]]></Body>
+				</Function>
+				<Function AccessType="default" StaticFunction="false">
+					<ReturnModificator>VOID</ReturnModificator>
+					<ReturnType><![CDATA[double]]></ReturnType>
+					<Id>1697017019953</Id>
+					<Name><![CDATA[f_createGISBuildings]]></Name>
+					<X>-480</X><Y>152</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Body><![CDATA[// Get trip tuples from this household ID from database
+List<Tuple> rows = selectFrom(buildings)
+	//.where(buildings.aantal_ver.gt(0))
+	.list();
+
+
+for (Tuple row : rows) {
+	GIS_Building b = add_pop_GIS_Buildings();
+	
+	b.p_id = row.get( buildings.identifica );
+	b.p_buildingYear = row.get( buildings.bouwjaar );	
+	b.p_status = row.get( buildings.status );
+	b.p_useType = row.get( buildings.gebruiksdo );	
+	b.p_surfaceArea = row.get( buildings.oppervlakt );
+	b.p_useType = row.get( buildings.gebruiksdo );
+	b.p_floors = row.get( buildings.aantal_ver );
+	b.p_buildingType = row.get( buildings.type );
+	//b.p_householdsInBuilding = row.get( buildings.h_in_b );
+	
+	b.p_longitude = row.get( buildings.longitude );
+	b.p_latitude = row.get( buildings.latitude );
+	
+	b.setLatLon(b.p_latitude, b.p_longitude);		
+	b.f_findGisRegion();
+	b.f_listGridConnectionsInBuilding(); // need to do this after gridConnections are created!
+	//b.f_listUtilityObjectsInBuilding();
+}		
+		
+
+
+]]></Body>
+				</Function>
+				<Function AccessType="default" StaticFunction="false">
+					<ReturnModificator>VOID</ReturnModificator>
+					<ReturnType><![CDATA[double]]></ReturnType>
+					<Id>1697095071210</Id>
+					<Name><![CDATA[f_generateUtilityObjects]]></Name>
+					<X>-500</X><Y>410</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Body><![CDATA[// Get trip tuples from this household ID from database
+List<Tuple> rows = selectFrom(residence_objects)
+	.where(residence_objects.gebruiksdo.ne("woonfunctie"))
+	.list();
+	
+//JsonNode t=null;
+/*
+JsonNodeFactory jn = new JsonNodeFactory(false);
+ArrayNode gridConnectionEnergyAssets = new ArrayNode(jn);
+for(JsonNode assetJson : v_templateAssetsJson) {
+	if (assetJson.required( "name" ).textValue().equals("TEMPLATE other electricity demand")) {
+		gridConnectionEnergyAssets.add(assetJson);		
+		traceln("Consumption asset found:" + assetJson);
+	}
+}
+traceln("gridConnectionEnergyAssets: " + gridConnectionEnergyAssets);
+*/
+
+for (Tuple row : rows) {
+	GCUtility GC = add_UtilityConnections();
+
+	//Set parameters
+ 	GC.set_p_agentID( row.get( residence_objects.identifica ) );
+	GC.set_p_gridConnectionCategory( OL_GridConnectionCategory.UTILITY );
+	//GC.set_p_gridConnectionType( gridConnectionType );
+	GC.set_p_connectionCapacity_kW( 17 );
+	GC.set_p_parentNodeElectricID( c_gridNodesMSLS.get(0).p_agentID );
+	//GC.set_p_parentNodeHeatID( gridConnectionParentHeat );
+	//GC.set_p_ownerID( ownerActorID );
+	GC.set_p_heatingType( OL_GridConnectionHeatingType.NONE );
+	//GC.set_p_energyAssetList( gridConnectionEnergyAssets );
+	GC.set_p_longitude(row.get(residence_objects.longitude));
+	GC.set_p_latitude(row.get(residence_objects.latitude));
+	GC.set_p_openbareR(row.get(residence_objects.openbare_r));
+	GC.set_p_huisnummer(row.get(residence_objects.huisnummer));
+	//GC.set_p_company_connection_id(row.get(residence_objects.));
+	
+	
+	//GC.set_p_batteryOperationMode( gridConnectionBatteryMode );
+	//GC.set_p_elektrolyserOperationMode( gridConnectionElektrolyserMode );
+	//GC.set_p_chargingAttitudeVehicles( gridConnectionChargingAttitude );
+	//GC.set_p_smartHeatingEnabled( smartAssets );
+	//GC.set_p_pricelevelHighDifFromAvg_eurpkWh( pricelevel_high_dif_from_avg_eurpkWh );
+	//GC.set_p_pricelevelLowDifFromAvg_eurpkWh( pricelevel_low_dif_from_avg_eurpkWh );
+	//GC.set_p_irradianceRecievingSurface_m2( irradianceRecievingSurface_m2 );
+	//GC.v_nightTempSetpoint_degC = tempSetpointNight_degC;
+	//GC.v_heatingOff_time = tempSetpointNight_start_hr;
+	//GC.v_dayTempSetpoint_degC = tempSetpointDay_degC;
+	//GC.v_heatingOn_time = tempSetpointDay_start_hr;
+
+	//Initialize
+	GC.f_initialize();
+	c_gridConnections.add(GC);
+	
+	/*x.householdID = row.get( residence_objects.identifica );
+	x.p_energyLabel = row.get( residence_objects.energieklasse );
+	x.p_defaultEnergyLabel = row.get( residence_objects.energieklasse );
+	//h.energieIndex = row.get( residence_objects.energie_index );
+	//h.energieIndexEMG = row.get( residence_objects.energie_index_emg_forfaitair );
+	//h.buildingTypeEnergyLabel = row.get( residence_objects.gebouwtype ); 
+	//h.buildingSubTypeEnergyLabel = row.get( residence_objects.gebouwsubtype );
+	x.p_floorSurfaceArea = row.get( residence_objects.oppervlakt );
+	x.status = row.get( residence_objects.status );
+	x.gebruiksdo = row.get( residence_objects.gebruiksdo );
+	x.openbareR = row.get( residence_objects.openbare_r );
+	x.huisnummer = row.get( residence_objects.huisnummer );
+	x.huisletter = row.get( residence_objects.huisletter );
+	x.toevoeging = row.get( residence_objects.toevoeging );
+	x.postcode = row.get( residence_objects.postcode );
+	x.woonplaats = row.get( residence_objects.woonplaats );
+	x.bouwjaar = row.get( residence_objects.bouwjaar );
+	x.pandidenti = row.get( residence_objects.pandidenti );
+	x.pandstatus = row.get( residence_objects.pandstatus );
+	x.rdfSeeals = row.get( residence_objects.rdf_seeals );
+
+	x.setLatLon(x.p_latitude, x.p_longitude);
+	*/
+	
+	
+	//Connect utility object to company connection data
+	List<Tuple> companyConnectionList = selectFrom(comp_connections)
+		.where(comp_connections.street.eq(GC.p_openbareR))
+		.where(comp_connections.number.eq(GC.p_huisnummer))
+		.list();
+	
+	
+		
+	if (companyConnectionList != null){
+		
+		for (Tuple companyConnection : companyConnectionList){
+			
+			if (count(UtilityConnections, y->y.p_company_connection_id == companyConnection.get(comp_connections.company_connection_id)) > 0){
+				break;
+			}
+		
+			GC.p_company_connection_id = companyConnection.get(comp_connections.company_connection_id);
+			GC.p_company_name = companyConnection.get(comp_connections.name);
+			/*x.p_connection = companyConnection.get(comp_connections.aansluiting);
+			x.p_business = companyConnection.get(comp_connections.business);
+			x.p_numberOfConnections = companyConnection.get(comp_connections.number_of_connections);
+			x.p_hasQuarterlyData = companyConnection.get(comp_connections.kwartierwaardes);
+			x.p_PVInstalledCapacity_kW = companyConnection.get(comp_connections.pv_installed_capacity_k_w);
+			x.p_PVOrientation = companyConnection.get(comp_connections.pv_orientation);
+			x.p_PVInvestmentYear = companyConnection.get(comp_connections.pv_investment_year);
+			x.p_PVInvestmentkW = companyConnection.get(comp_connections.pv_investment_k_w);
+			x.p_PVInvestmentOrientation = companyConnection.get(comp_connections.pv_investment_orientation);
+			x.p_electricityProduction_kWhPerYear = companyConnection.get(comp_connections.electricity_production_k_wh_year);
+			x.p_electricityConsumption_kWhPerYear = companyConnection.get(comp_connections.electricity_consumption_k_wh_year);
+			x.p_gasConsumption_m3PerYear = companyConnection.get(comp_connections.gas_consumption_m3_year);
+			x.p_heatConsumption_GJPerYear = companyConnection.get(comp_connections.heat_consumption_gj);
+			x.p_chargePoints = companyConnection.get(comp_connections.charge_points_number);
+			x.p_chargePointPower_kW = companyConnection.get(comp_connections.charge_points_power);
+			x.p_chargePointsPlanned = companyConnection.get(comp_connections.charge_points_investment);
+			x.p_chargePointsPlannedPower_kW = companyConnection.get(comp_connections.charge_points_investment_power);
+			x.p_connectionCapacityDemand_kW = companyConnection.get(comp_connections.connection_capacity_demand);
+			x.p_connectionCapacityFeedIn_kW = companyConnection.get(comp_connections.connection_capacity_supply);
+			x.p_electricityDemandTrend = companyConnection.get(comp_connections.electricity_demand_trend);
+
+			x.v_rooftopPVInstalledCapacity_kW = x.p_PVInstalledCapacity_kW;
+			x.f_getElectricityDemandData();
+			traceln(x.getIndex() + " index of utility object with data");*/
+		}
+	}
+	/*
+	x.f_setEnergyLabelNumbers();
+	x.p_defaultEnergyLabelNumber = x.p_energyLabelNumber;
+	x.f_setBuildingTypeString();
+	x.f_setAnnualEnergyDemand();
+	*/	 	
+}	
+
+//traceln(count(UtilityConnections, x->x.p_company_connection_id != null) + " number of UO in collective");]]></Body>
+				</Function>
+				<Function AccessType="default" StaticFunction="false">
+					<ReturnModificator>VOID</ReturnModificator>
+					<ReturnType><![CDATA[double]]></ReturnType>
+					<Id>1697096723758</Id>
+					<Name><![CDATA[f_configureBackBoneZero]]></Name>
+					<Description><![CDATA[Generieke functie die flexibele modelconfiguratie mogelijk maakt op basis van externe data. Expliciet gemodelleerd om profiling en volgorde van initialisatie te kunnen controleren.
+
+@param: none
+@return: none
+@since: Sprint 6
+@author: Jorrit]]></Description>
+					<X>-520</X><Y>370</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Body><![CDATA[//f_createActors(); 
+f_createGridNodes();
+f_generateUtilityObjects();
+f_instantiateEnergyAssets();
+f_createGISBuildings();
+//f_createAgentLinks();
+f_initializeForecasts();
+
+//f_instantiateTemplateEnergyAssets();
+
+]]></Body>
+				</Function>
+				<Function AccessType="default" StaticFunction="false">
+					<ReturnModificator>VOID</ReturnModificator>
+					<ReturnType><![CDATA[double]]></ReturnType>
+					<Id>1697184779060</Id>
+					<Name><![CDATA[f_zinc_init]]></Name>
+					<Description><![CDATA[Functie om handmatig databases te updaten vanuit custom database connection objecten (niet aanwezig als het model is opgeslagen met Gillis' AnyLogic-versie). Gebruikt om mogelijk externe database-connecties (via URLs) te kunnen implementeren, en voor profiling doeleinden.
+
+@since: Sprint 6
+@author: Jorrit]]></Description>
+					<ExcludeFromBuild>true</ExcludeFromBuild>
+					<X>-500</X><Y>20</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Parameter>
+						<Name><![CDATA[buurt]]></Name>
+						<Type><![CDATA[String]]></Type>
+					</Parameter>
+					<Parameter>
+						<Name><![CDATA[polygon]]></Name>
+						<Type><![CDATA[double[][]]]></Type>
+					</Parameter>
+					<Parameter>
+						<Name><![CDATA[bedrijventerreinID]]></Name>
+						<Type><![CDATA[String]]></Type>
+					</Parameter>
+					<Parameter>
+						<Name><![CDATA[SavedScenarioID]]></Name>
+						<Type><![CDATA[String]]></Type>
+					</Parameter>
+					<Body><![CDATA[// Als buurt/bedrijventerrein is gekozen, vertaal naar een polygon
+
+// verzamel publieke data of lees bestaand scenario in
+
+// Maak GIS_Buildings en GIS_neighborhoods aan
+
+// Maak gridconnections aan (en link aan GIS_Building/GIS_neighborhood)
+GridConnection GC = new add_GC();
+
+// Maak bijbehorende actoren aan
+
+
+// Ken energy assets toe adhv allerlei databronnen/parameters/...
+// Consumptieprofielen
+for (GridConnection GC : c_gridConnections) {
+		J_EA newAsset = p_defaultConsumptionAsset.getClone();
+		c_energyAssets.add(newAsset);
+		GC.f_connectToJ_EA(newAsset);
+}
+
+// Voertuigen
+
+// verwarming
+
+// Gebouwtype + Isolatiegraad
+
+// Extra 'handmatige' assets uit een excel of andere input]]></Body>
+				</Function>
+				<Function AccessType="default" StaticFunction="false">
+					<ReturnModificator>VOID</ReturnModificator>
+					<ReturnType><![CDATA[double]]></ReturnType>
+					<Id>1697186722600</Id>
+					<Name><![CDATA[f_instantiateEnergyAssets]]></Name>
+					<X>-500</X><Y>432</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Body><![CDATA[for (GridConnection GC : c_gridConnections) {
+		J_EAConsumption newAsset;
+		newAsset = (J_EAConsumption)p_defaultConsumptionAsset.clone();		
+		newAsset.yearlyDemandElectricity_kWh=1;
+		if (GC.p_company_connection_id != null) {
+			newAsset.energyAssetName=GC.p_company_connection_id;
+		} else {
+			newAsset.energyAssetName="INDUSTRY_OTHER_ELECTRICITY_DEMAND";
+		}
+		c_energyAssets.add(newAsset);
+		GC.f_connectToJ_EA(newAsset);
+}]]></Body>
 				</Function>
 			</Functions>
 			<TableFunctions>
@@ -7191,9 +8262,6 @@ traceln("f_setHeatingTypesHoushold awaiting new implementation after model merge
 					</GenericParameterSubstitute>
 					<Parameters>
 						<Parameter>
-							<Name><![CDATA[p_agentID]]></Name>
-						</Parameter>
-						<Parameter>
 							<Name><![CDATA[p_energyAssetList]]></Name>
 						</Parameter>
 						<Parameter>
@@ -7275,10 +8343,34 @@ traceln("f_setHeatingTypesHoushold awaiting new implementation after model merge
 							<Name><![CDATA[p_cookingTracker]]></Name>
 						</Parameter>
 						<Parameter>
-							<Name><![CDATA[p_isolationLabel]]></Name>
+							<Name><![CDATA[p_energyLabel]]></Name>
 						</Parameter>
 						<Parameter>
 							<Name><![CDATA[p_DHWAsset]]></Name>
+						</Parameter>
+						<Parameter>
+							<Name><![CDATA[p_GISbuilding]]></Name>
+						</Parameter>
+						<Parameter>
+							<Name><![CDATA[p_longitude]]></Name>
+						</Parameter>
+						<Parameter>
+							<Name><![CDATA[p_latitude]]></Name>
+						</Parameter>
+						<Parameter>
+							<Name><![CDATA[p_company_name]]></Name>
+						</Parameter>
+						<Parameter>
+							<Name><![CDATA[p_huisnummer]]></Name>
+						</Parameter>
+						<Parameter>
+							<Name><![CDATA[p_openbareR]]></Name>
+						</Parameter>
+						<Parameter>
+							<Name><![CDATA[p_company_connection_id]]></Name>
+						</Parameter>
+						<Parameter>
+							<Name><![CDATA[p_agentID]]></Name>
 						</Parameter>
 					</Parameters>
 					<ReplicationFlag>true</ReplicationFlag>
@@ -8066,9 +9158,6 @@ traceln("f_setHeatingTypesHoushold awaiting new implementation after model merge
 							<Name><![CDATA[p_parentNodeElectricID]]></Name>
 						</Parameter>
 						<Parameter>
-							<Name><![CDATA[p_agentID]]></Name>
-						</Parameter>
-						<Parameter>
 							<Name><![CDATA[p_parentNodeHeatID]]></Name>
 						</Parameter>
 						<Parameter>
@@ -8150,10 +9239,34 @@ traceln("f_setHeatingTypesHoushold awaiting new implementation after model merge
 							<Name><![CDATA[p_cookingTracker]]></Name>
 						</Parameter>
 						<Parameter>
-							<Name><![CDATA[p_isolationLabel]]></Name>
+							<Name><![CDATA[p_energyLabel]]></Name>
 						</Parameter>
 						<Parameter>
 							<Name><![CDATA[p_DHWAsset]]></Name>
+						</Parameter>
+						<Parameter>
+							<Name><![CDATA[p_GISbuilding]]></Name>
+						</Parameter>
+						<Parameter>
+							<Name><![CDATA[p_longitude]]></Name>
+						</Parameter>
+						<Parameter>
+							<Name><![CDATA[p_latitude]]></Name>
+						</Parameter>
+						<Parameter>
+							<Name><![CDATA[p_company_name]]></Name>
+						</Parameter>
+						<Parameter>
+							<Name><![CDATA[p_huisnummer]]></Name>
+						</Parameter>
+						<Parameter>
+							<Name><![CDATA[p_openbareR]]></Name>
+						</Parameter>
+						<Parameter>
+							<Name><![CDATA[p_company_connection_id]]></Name>
+						</Parameter>
+						<Parameter>
+							<Name><![CDATA[p_agentID]]></Name>
 						</Parameter>
 					</Parameters>
 					<ReplicationFlag>true</ReplicationFlag>
@@ -8229,9 +9342,6 @@ traceln("f_setHeatingTypesHoushold awaiting new implementation after model merge
 							<Name><![CDATA[p_parentNodeElectricID]]></Name>
 						</Parameter>
 						<Parameter>
-							<Name><![CDATA[p_agentID]]></Name>
-						</Parameter>
-						<Parameter>
 							<Name><![CDATA[p_parentNodeHeatID]]></Name>
 						</Parameter>
 						<Parameter>
@@ -8304,10 +9414,34 @@ traceln("f_setHeatingTypesHoushold awaiting new implementation after model merge
 							<Name><![CDATA[p_cookingTracker]]></Name>
 						</Parameter>
 						<Parameter>
-							<Name><![CDATA[p_isolationLabel]]></Name>
+							<Name><![CDATA[p_energyLabel]]></Name>
 						</Parameter>
 						<Parameter>
 							<Name><![CDATA[p_DHWAsset]]></Name>
+						</Parameter>
+						<Parameter>
+							<Name><![CDATA[p_GISbuilding]]></Name>
+						</Parameter>
+						<Parameter>
+							<Name><![CDATA[p_longitude]]></Name>
+						</Parameter>
+						<Parameter>
+							<Name><![CDATA[p_latitude]]></Name>
+						</Parameter>
+						<Parameter>
+							<Name><![CDATA[p_company_name]]></Name>
+						</Parameter>
+						<Parameter>
+							<Name><![CDATA[p_huisnummer]]></Name>
+						</Parameter>
+						<Parameter>
+							<Name><![CDATA[p_openbareR]]></Name>
+						</Parameter>
+						<Parameter>
+							<Name><![CDATA[p_company_connection_id]]></Name>
+						</Parameter>
+						<Parameter>
+							<Name><![CDATA[p_agentID]]></Name>
 						</Parameter>
 					</Parameters>
 					<ReplicationFlag>true</ReplicationFlag>
@@ -8383,9 +9517,6 @@ traceln("f_setHeatingTypesHoushold awaiting new implementation after model merge
 							<Name><![CDATA[p_parentNodeElectricID]]></Name>
 						</Parameter>
 						<Parameter>
-							<Name><![CDATA[p_agentID]]></Name>
-						</Parameter>
-						<Parameter>
 							<Name><![CDATA[p_parentNodeHeatID]]></Name>
 						</Parameter>
 						<Parameter>
@@ -8455,10 +9586,34 @@ traceln("f_setHeatingTypesHoushold awaiting new implementation after model merge
 							<Name><![CDATA[p_cookingTracker]]></Name>
 						</Parameter>
 						<Parameter>
-							<Name><![CDATA[p_isolationLabel]]></Name>
+							<Name><![CDATA[p_energyLabel]]></Name>
 						</Parameter>
 						<Parameter>
 							<Name><![CDATA[p_DHWAsset]]></Name>
+						</Parameter>
+						<Parameter>
+							<Name><![CDATA[p_GISbuilding]]></Name>
+						</Parameter>
+						<Parameter>
+							<Name><![CDATA[p_longitude]]></Name>
+						</Parameter>
+						<Parameter>
+							<Name><![CDATA[p_latitude]]></Name>
+						</Parameter>
+						<Parameter>
+							<Name><![CDATA[p_company_name]]></Name>
+						</Parameter>
+						<Parameter>
+							<Name><![CDATA[p_huisnummer]]></Name>
+						</Parameter>
+						<Parameter>
+							<Name><![CDATA[p_openbareR]]></Name>
+						</Parameter>
+						<Parameter>
+							<Name><![CDATA[p_company_connection_id]]></Name>
+						</Parameter>
+						<Parameter>
+							<Name><![CDATA[p_agentID]]></Name>
 						</Parameter>
 					</Parameters>
 					<ReplicationFlag>true</ReplicationFlag>
@@ -8534,6 +9689,178 @@ traceln("f_setHeatingTypesHoushold awaiting new implementation after model merge
 							<Name><![CDATA[p_parentNodeElectricID]]></Name>
 						</Parameter>
 						<Parameter>
+							<Name><![CDATA[p_parentNodeHeatID]]></Name>
+						</Parameter>
+						<Parameter>
+							<Name><![CDATA[p_BuildingThermalAsset]]></Name>
+						</Parameter>
+						<Parameter>
+							<Name><![CDATA[p_primaryHeatingAsset]]></Name>
+						</Parameter>
+						<Parameter>
+							<Name><![CDATA[p_ownerID]]></Name>
+						</Parameter>
+						<Parameter>
+							<Name><![CDATA[p_secondaryHeatingAsset]]></Name>
+						</Parameter>
+						<Parameter>
+							<Name><![CDATA[p_heatingType]]></Name>
+						</Parameter>
+						<Parameter>
+							<Name><![CDATA[p_energyAssetList]]></Name>
+						</Parameter>
+						<Parameter>
+							<Name><![CDATA[p_chargingAttitudeVehicles]]></Name>
+						</Parameter>
+						<Parameter>
+							<Name><![CDATA[p_batteryOperationMode]]></Name>
+						</Parameter>
+						<Parameter>
+							<Name><![CDATA[p_batteryAsset]]></Name>
+						</Parameter>
+						<Parameter>
+							<Name><![CDATA[p_nfatoStart_h]]></Name>
+						</Parameter>
+						<Parameter>
+							<Name><![CDATA[p_nfatoEnd_h]]></Name>
+						</Parameter>
+						<Parameter>
+							<Name><![CDATA[p_nfatoLvl_kW]]></Name>
+						</Parameter>
+						<Parameter>
+							<Name><![CDATA[p_elektrolyserOperationMode]]></Name>
+						</Parameter>
+						<Parameter>
+							<Name><![CDATA[p_hasElectricHob]]></Name>
+						</Parameter>
+						<Parameter>
+							<Name><![CDATA[p_smartHeatingEnabled]]></Name>
+						</Parameter>
+						<Parameter>
+							<Name><![CDATA[p_curtailer]]></Name>
+						</Parameter>
+						<Parameter>
+							<Name><![CDATA[p_heatBuffer]]></Name>
+						</Parameter>
+						<Parameter>
+							<Name><![CDATA[p_pricelevelLowDifFromAvg_eurpkWh]]></Name>
+						</Parameter>
+						<Parameter>
+							<Name><![CDATA[p_pricelevelHighDifFromAvg_eurpkWh]]></Name>
+						</Parameter>
+						<Parameter>
+							<Name><![CDATA[p_heatingKickinTreshold_degC]]></Name>
+						</Parameter>
+						<Parameter>
+							<Name><![CDATA[p_gasBuffer]]></Name>
+						</Parameter>
+						<Parameter>
+							<Name><![CDATA[p_cookingTracker]]></Name>
+						</Parameter>
+						<Parameter>
+							<Name><![CDATA[p_energyLabel]]></Name>
+						</Parameter>
+						<Parameter>
+							<Name><![CDATA[p_DHWAsset]]></Name>
+						</Parameter>
+						<Parameter>
+							<Name><![CDATA[p_GISbuilding]]></Name>
+						</Parameter>
+						<Parameter>
+							<Name><![CDATA[p_longitude]]></Name>
+						</Parameter>
+						<Parameter>
+							<Name><![CDATA[p_latitude]]></Name>
+						</Parameter>
+						<Parameter>
+							<Name><![CDATA[p_company_name]]></Name>
+						</Parameter>
+						<Parameter>
+							<Name><![CDATA[p_huisnummer]]></Name>
+						</Parameter>
+						<Parameter>
+							<Name><![CDATA[p_openbareR]]></Name>
+						</Parameter>
+						<Parameter>
+							<Name><![CDATA[p_company_connection_id]]></Name>
+						</Parameter>
+						<Parameter>
+							<Name><![CDATA[p_agentID]]></Name>
+						</Parameter>
+					</Parameters>
+					<ReplicationFlag>true</ReplicationFlag>
+					<Replication Class="CodeValue">
+						<Code><![CDATA[100]]></Code>
+					</Replication>
+					<CollectionType>ARRAY_LIST_BASED</CollectionType>
+					<InEnvironment>true</InEnvironment>	
+					<InitialLocationType>AT_ANIMATION_POSITION</InitialLocationType>
+					<XCode Class="CodeValue">
+						<Code><![CDATA[0]]></Code>
+					</XCode>
+					<YCode Class="CodeValue">
+						<Code><![CDATA[0]]></Code>
+					</YCode>
+					<ZCode Class="CodeValue">
+						<Code><![CDATA[0]]></Code>
+					</ZCode>
+					<ColumnCode Class="CodeValue">
+						<Code><![CDATA[0]]></Code>
+					</ColumnCode>
+					<RowCode Class="CodeValue">
+						<Code><![CDATA[0]]></Code>
+					</RowCode>
+					<LatitudeCode Class="CodeValue">
+						<Code><![CDATA[0]]></Code>
+					</LatitudeCode>
+					<LongitudeCode Class="CodeValue">
+						<Code><![CDATA[0]]></Code>
+					</LongitudeCode>
+					<LocationNameCode Class="CodeValue">
+						<Code><![CDATA[""]]></Code>
+					</LocationNameCode>
+					<InitializationType>EMPTY</InitializationType>
+					<InitializationDatabaseTableQuery>
+						<TableReference>
+						</TableReference>
+					</InitializationDatabaseTableQuery>
+					<InitializationDatabaseType>ONE_AGENT_PER_DATABASE_RECORD</InitializationDatabaseType>
+					<QuantityColumn>
+					</QuantityColumn>
+				</EmbeddedObject>
+				<EmbeddedObject>
+					<Id>1663774484696</Id>
+					<Name><![CDATA[UtilityConnections]]></Name>
+					<X>-2107</X><Y>200</Y>
+					<Label><X>15</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<ActiveObjectClass>
+						<PackageName><![CDATA[zero]]></PackageName>
+						<ClassName><![CDATA[GCUtility]]></ClassName>
+					</ActiveObjectClass>
+					<GenericParameterSubstitute>
+						<GenericParameterSubstituteReference>
+							<PackageName><![CDATA[zero]]></PackageName>
+							<ClassName><![CDATA[GCUtility]]></ClassName>
+							<ItemName><![CDATA[1672138285225]]></ItemName>
+						</GenericParameterSubstituteReference>
+					</GenericParameterSubstitute>
+					<Parameters>
+						<Parameter>
+							<Name><![CDATA[p_gridConnectionCategory]]></Name>
+						</Parameter>
+						<Parameter>
+							<Name><![CDATA[p_gridConnectionType]]></Name>
+						</Parameter>
+						<Parameter>
+							<Name><![CDATA[p_connectionCapacity_kW]]></Name>
+						</Parameter>
+						<Parameter>
+							<Name><![CDATA[p_parentNodeElectricID]]></Name>
+						</Parameter>
+						<Parameter>
 							<Name><![CDATA[p_agentID]]></Name>
 						</Parameter>
 						<Parameter>
@@ -8606,10 +9933,31 @@ traceln("f_setHeatingTypesHoushold awaiting new implementation after model merge
 							<Name><![CDATA[p_cookingTracker]]></Name>
 						</Parameter>
 						<Parameter>
-							<Name><![CDATA[p_isolationLabel]]></Name>
+							<Name><![CDATA[p_energyLabel]]></Name>
 						</Parameter>
 						<Parameter>
 							<Name><![CDATA[p_DHWAsset]]></Name>
+						</Parameter>
+						<Parameter>
+							<Name><![CDATA[p_GISbuilding]]></Name>
+						</Parameter>
+						<Parameter>
+							<Name><![CDATA[p_longitude]]></Name>
+						</Parameter>
+						<Parameter>
+							<Name><![CDATA[p_latitude]]></Name>
+						</Parameter>
+						<Parameter>
+							<Name><![CDATA[p_company_name]]></Name>
+						</Parameter>
+						<Parameter>
+							<Name><![CDATA[p_huisnummer]]></Name>
+						</Parameter>
+						<Parameter>
+							<Name><![CDATA[p_openbareR]]></Name>
+						</Parameter>
+						<Parameter>
+							<Name><![CDATA[p_company_connection_id]]></Name>
 						</Parameter>
 					</Parameters>
 					<ReplicationFlag>true</ReplicationFlag>
@@ -8685,9 +10033,6 @@ traceln("f_setHeatingTypesHoushold awaiting new implementation after model merge
 							<Name><![CDATA[p_parentNodeElectricID]]></Name>
 						</Parameter>
 						<Parameter>
-							<Name><![CDATA[p_agentID]]></Name>
-						</Parameter>
-						<Parameter>
 							<Name><![CDATA[p_parentNodeHeatID]]></Name>
 						</Parameter>
 						<Parameter>
@@ -8757,10 +10102,34 @@ traceln("f_setHeatingTypesHoushold awaiting new implementation after model merge
 							<Name><![CDATA[p_cookingTracker]]></Name>
 						</Parameter>
 						<Parameter>
-							<Name><![CDATA[p_isolationLabel]]></Name>
+							<Name><![CDATA[p_energyLabel]]></Name>
 						</Parameter>
 						<Parameter>
 							<Name><![CDATA[p_DHWAsset]]></Name>
+						</Parameter>
+						<Parameter>
+							<Name><![CDATA[p_GISbuilding]]></Name>
+						</Parameter>
+						<Parameter>
+							<Name><![CDATA[p_longitude]]></Name>
+						</Parameter>
+						<Parameter>
+							<Name><![CDATA[p_latitude]]></Name>
+						</Parameter>
+						<Parameter>
+							<Name><![CDATA[p_company_name]]></Name>
+						</Parameter>
+						<Parameter>
+							<Name><![CDATA[p_huisnummer]]></Name>
+						</Parameter>
+						<Parameter>
+							<Name><![CDATA[p_openbareR]]></Name>
+						</Parameter>
+						<Parameter>
+							<Name><![CDATA[p_company_connection_id]]></Name>
+						</Parameter>
+						<Parameter>
+							<Name><![CDATA[p_agentID]]></Name>
 						</Parameter>
 					</Parameters>
 					<ReplicationFlag>true</ReplicationFlag>
@@ -8825,9 +10194,6 @@ traceln("f_setHeatingTypesHoushold awaiting new implementation after model merge
 					<Parameters>
 						<Parameter>
 							<Name><![CDATA[p_connectionCapacity_kW]]></Name>
-						</Parameter>
-						<Parameter>
-							<Name><![CDATA[p_agentID]]></Name>
 						</Parameter>
 						<Parameter>
 							<Name><![CDATA[p_gridConnectionCategory]]></Name>
@@ -8908,10 +10274,34 @@ traceln("f_setHeatingTypesHoushold awaiting new implementation after model merge
 							<Name><![CDATA[p_cookingTracker]]></Name>
 						</Parameter>
 						<Parameter>
-							<Name><![CDATA[p_isolationLabel]]></Name>
+							<Name><![CDATA[p_energyLabel]]></Name>
 						</Parameter>
 						<Parameter>
 							<Name><![CDATA[p_DHWAsset]]></Name>
+						</Parameter>
+						<Parameter>
+							<Name><![CDATA[p_GISbuilding]]></Name>
+						</Parameter>
+						<Parameter>
+							<Name><![CDATA[p_longitude]]></Name>
+						</Parameter>
+						<Parameter>
+							<Name><![CDATA[p_latitude]]></Name>
+						</Parameter>
+						<Parameter>
+							<Name><![CDATA[p_company_name]]></Name>
+						</Parameter>
+						<Parameter>
+							<Name><![CDATA[p_huisnummer]]></Name>
+						</Parameter>
+						<Parameter>
+							<Name><![CDATA[p_openbareR]]></Name>
+						</Parameter>
+						<Parameter>
+							<Name><![CDATA[p_company_connection_id]]></Name>
+						</Parameter>
+						<Parameter>
+							<Name><![CDATA[p_agentID]]></Name>
 						</Parameter>
 					</Parameters>
 					<ReplicationFlag>true</ReplicationFlag>
@@ -9001,6 +10391,9 @@ traceln("f_setHeatingTypesHoushold awaiting new implementation after model merge
 						</Parameter>
 						<Parameter>
 							<Name><![CDATA[p_floors]]></Name>
+						</Parameter>
+						<Parameter>
+							<Name><![CDATA[p_id]]></Name>
 						</Parameter>
 					</Parameters>
 					<ReplicationFlag>true</ReplicationFlag>
@@ -10933,6 +12326,7 @@ rectangle_electricitySettings.setVisible(false);]]></OnClickCode>
 				 	<EmbeddedIcon>false</EmbeddedIcon>				
 					<Id>1696520897135</Id>
 					<Name><![CDATA[cb_excelSheet]]></Name>
+					<ExcludeFromBuild>true</ExcludeFromBuild>
 					<X>1510</X><Y>1480</Y>
 					<Label><X>0</X><Y>-10</Y></Label>
 					<PublicFlag>true</PublicFlag>
@@ -11008,7 +12402,7 @@ traceln(eb_scenarioRowNumber.getMax() + " max value editbox scenario row number"
 							<FillColor>-1</FillColor>
 							<LineColor>-16777216</LineColor>
 							<NameColumnIndex>0</NameColumnIndex>
-							<Visible>false</Visible>
+							<Visible>true</Visible>
 							<Bounds><LonMin>4.597853343603809</LonMin><LatMin>51.8021175831736</LatMin><LonMax>4.648294997152933</LonMax><LatMax>51.81296205193002</LatMax></Bounds>
 						</GISShapeFile>
 						<GISShapeFile>
@@ -20770,14 +22164,13 @@ traceln(eb_scenarioRowNumber.getMax() + " max value editbox scenario row number"
 				<Group>
 					<Id>1696520897545</Id>
 					<Name><![CDATA[gr_compareResultsButton]]></Name>
-					<ExcludeFromBuild>true</ExcludeFromBuild>
 					<X>1600</X><Y>1280</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>true</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>false</ShowLabel>
 					<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
-					<OnClickCode><![CDATA[
+					<OnClickCode><![CDATA[/*
 if(gr_compareResults.isVisible() == false){
 	gr_compareResults.setVisible(true);
 	gr_compareResultsButton.setVisible(false);
@@ -20785,7 +22178,8 @@ if(gr_compareResults.isVisible() == false){
 	//gr_neighborhoodResultsTabs.setVisible(false);
 	//gr_scenariosVeghel.setVisible(false);
 }
-]]></OnClickCode>
+*/
+traceln("gr_compareResultsButton is not functional!");]]></OnClickCode>
 					<EmbeddedIcon>false</EmbeddedIcon>
 					<Z>0</Z>
 					<Rotation>0.0</Rotation>
@@ -21195,7 +22589,7 @@ if(gr_compareResults.isVisible() == false){
 					<Id>1696520897695</Id>
 					<Expression><![CDATA[my_dataset]]></Expression>
 					<Color>-10496</Color>
-					<Expression2><![CDATA[v_PVGeneration_kW]]></Expression2>
+					<Expression2><![CDATA[sum(Houses, x->x.v_pvProductionElectric_kW)]]></Expression2>
 					<Expression2Flag>true</Expression2Flag>
 							<Title><![CDATA[PV op dak]]></Title>
 					</DatasetExpression>
@@ -21203,7 +22597,7 @@ if(gr_compareResults.isVisible() == false){
 					<Id>1696520897696</Id>
 					<Expression><![CDATA[my_dataset]]></Expression>
 					<Color>-989556</Color>
-					<Expression2><![CDATA[sum(pop_gridConnections, x->max(0,-x.v_batteryPowerElectric_kW))]]></Expression2>
+					<Expression2><![CDATA[sum(Houses, x->max(0,-x.v_batteryPowerElectric_kW))]]></Expression2>
 					<Expression2Flag>true</Expression2Flag>
 							<Title><![CDATA[Batterij ontladen]]></Title>
 					</DatasetExpression>
@@ -21211,7 +22605,7 @@ if(gr_compareResults.isVisible() == false){
 					<Id>1696520897697</Id>
 					<Expression><![CDATA[my_dataset]]></Expression>
 					<Color>-4565549</Color>
-					<Expression2><![CDATA[v_privateEVDischargePower_kW + v_publicEVDischargePower_kW]]></Expression2>
+					<Expression2><![CDATA[sum(Houses, x->max(0,-x.v_evChargingPowerElectric_kW))]]></Expression2>
 					<Expression2Flag>true</Expression2Flag>
 							<Title><![CDATA[V2G ontladen]]></Title>
 					</DatasetExpression>
@@ -21280,7 +22674,7 @@ if(gr_compareResults.isVisible() == false){
 					<Id>1696520897702</Id>
 					<Expression><![CDATA[my_dataset]]></Expression>
 					<Color>-5383962</Color>
-					<Expression2><![CDATA[sum(pop_gridConnections, x->x.v_fixedConsumptionElectric_kW)]]></Expression2>
+					<Expression2><![CDATA[sum(c_gridConnections, x->x.v_fixedConsumptionElectric_kW)]]></Expression2>
 					<Expression2Flag>true</Expression2Flag>
 							<Title><![CDATA[Elektriciteit apparaten en licht]]></Title>
 					</DatasetExpression>
@@ -21288,7 +22682,7 @@ if(gr_compareResults.isVisible() == false){
 					<Id>1696520897703</Id>
 					<Expression><![CDATA[my_dataset]]></Expression>
 					<Color>-6632142</Color>
-					<Expression2><![CDATA[sum(pop_gridConnections, x->x.v_heatPumpElectricityConsumption_kW)]]></Expression2>
+					<Expression2><![CDATA[sum(c_gridConnections, x->x.v_heatPumpElectricityConsumption_kW)]]></Expression2>
 					<Expression2Flag>true</Expression2Flag>
 							<Title><![CDATA[Elektriciteit warmtepomp]]></Title>
 					</DatasetExpression>
@@ -21296,7 +22690,7 @@ if(gr_compareResults.isVisible() == false){
 					<Id>1696520897705</Id>
 					<Expression><![CDATA[my_dataset]]></Expression>
 					<Color>-12004916</Color>
-					<Expression2><![CDATA[v_privateEVChargingDemand_kW + v_publicEVChargingDemand_kW]]></Expression2>
+					<Expression2><![CDATA[sum(c_gridConnections, x->max(0,x.v_evChargingPowerElectric_kW))]]></Expression2>
 					<Expression2Flag>true</Expression2Flag>
 							<Title><![CDATA[Elektriciteit elektrische auto's]]></Title>
 					</DatasetExpression>
@@ -21304,7 +22698,7 @@ if(gr_compareResults.isVisible() == false){
 					<Id>1696520897706</Id>
 					<Expression><![CDATA[my_dataset]]></Expression>
 					<Color>-10496</Color>
-					<Expression2><![CDATA[sum(pop_gridConnections, x->x.v_electricHobConsumption_kW)]]></Expression2>
+					<Expression2><![CDATA[sum(c_gridConnections, x->x.v_electricHobConsumption_kW)]]></Expression2>
 					<Expression2Flag>true</Expression2Flag>
 							<Title><![CDATA[Elektrisch koken]]></Title>
 					</DatasetExpression>
@@ -21312,7 +22706,7 @@ if(gr_compareResults.isVisible() == false){
 					<Id>1696520897707</Id>
 					<Expression><![CDATA[my_dataset]]></Expression>
 					<Color>-2572328</Color>
-					<Expression2><![CDATA[sum(pop_gridConnections, x->max(0,x.v_batteryPowerElectric_kW))]]></Expression2>
+					<Expression2><![CDATA[sumWhere(c_gridConnections, x->max(0,x.v_batteryPowerElectric_kW), x->x.p_gridConnectionCategory!= OL_GridConnectionCategory.GRIDBATTERY)]]></Expression2>
 					<Expression2Flag>true</Expression2Flag>
 							<Title><![CDATA[Thuisbatterij laden]]></Title>
 					</DatasetExpression>
@@ -22653,6 +24047,7 @@ rectanglePerHouseholdCosts.setFillColor(new Color (255, 255, 255, 100));
 				<Text>
 					<Id>1696520897838</Id>
 					<Name><![CDATA[text_gemeentenaam38]]></Name>
+					<ExcludeFromBuild>true</ExcludeFromBuild>
 					<X>-739</X><Y>-280</Y>
 					<Label><X>0</X><Y>-10</Y></Label>
 					<PublicFlag>true</PublicFlag>
@@ -22707,7 +24102,7 @@ rectanglePerHouseholdCosts.setFillColor(new Color (255, 255, 255, 100));
 					<Rotation>0.0</Rotation>
 					<Color>-16777216</Color>
 					<Text><![CDATA[Percentage duurzame energie]]></Text>
-					<TextCode><![CDATA[roundToInt(v_renewableEnergy_perc * 100) + "% duurzame energie"]]></TextCode>
+					<TextCode><![CDATA[roundToInt(v_modelSelfSufficiency_fr * 100) + "% duurzame energie"]]></TextCode>
 					<Font>
 						<Name>SansSerif</Name>
 						<Size>16</Size>
@@ -22729,7 +24124,7 @@ rectanglePerHouseholdCosts.setFillColor(new Color (255, 255, 255, 100));
 					<Rotation>0.0</Rotation>
 					<Color>-16777216</Color>
 					<Text><![CDATA[Aantal overbelaste transformatoren]]></Text>
-					<TextCode><![CDATA[roundToInt(max(v_numberOfTrafosWithDemandOverload, v_numberOfTrafosWithSupplyOverload)) + " overbelaste transformatoren"]]></TextCode>
+					<TextCode><![CDATA[roundToInt(count(pop_gridNodes,x->abs(x.v_currentLoadElectricity_kW)>x.p_capacity_kW)) + " overbelaste transformatoren"]]></TextCode>
 					<Font>
 						<Name>SansSerif</Name>
 						<Size>16</Size>
@@ -22751,7 +24146,7 @@ rectanglePerHouseholdCosts.setFillColor(new Color (255, 255, 255, 100));
 					<Rotation>0.0</Rotation>
 					<Color>-16777216</Color>
 					<Text><![CDATA[Zelfverbruik energie]]></Text>
-					<TextCode><![CDATA[roundToInt(v_selfConsumptionEnergy_perc * 100) + "% percentage zelfverbruik energie"]]></TextCode>
+					<TextCode><![CDATA[roundToInt(v_modelSelfConsumption_fr * 100) + "% percentage zelfverbruik energie"]]></TextCode>
 					<Font>
 						<Name>SansSerif</Name>
 						<Size>16</Size>
@@ -22821,6 +24216,7 @@ rectanglePerHouseholdCosts.setFillColor(new Color (255, 255, 255, 100));
     			<PieChart>
 					<Id>1696520897861</Id>
 					<Name><![CDATA[ch_heatSupplyMethods]]></Name>
+					<ExcludeFromBuild>true</ExcludeFromBuild>
 					<X>-240</X><Y>-190</Y>
 					<Label><X>0</X><Y>-10</Y></Label>
 					<PublicFlag>true</PublicFlag>
@@ -23091,7 +24487,7 @@ rectanglePerHouseholdCosts.setFillColor(new Color (255, 255, 255, 100));
 					<Rotation>0.0</Rotation>
 					<Color>-16777216</Color>
 					<Text><![CDATA[Percentage duurzame energie]]></Text>
-					<TextCode><![CDATA[roundToInt(v_clickedHousehold.v_selfSufficiency_fr * 100) + "% eigen opwek"]]></TextCode>
+					<TextCode><![CDATA[roundToInt(v_clickedGridConnection.v_selfSufficiency_fr * 100) + "% eigen opwek"]]></TextCode>
 					<Font>
 						<Name>SansSerif</Name>
 						<Size>16</Size>
@@ -23113,7 +24509,7 @@ rectanglePerHouseholdCosts.setFillColor(new Color (255, 255, 255, 100));
 					<Rotation>0.0</Rotation>
 					<Color>-16777216</Color>
 					<Text><![CDATA[Huishouden x/x in gebouw]]></Text>
-					<TextCode><![CDATA["Huishouden " + (v_householdInBuildingNumber) + "/" + v_clickedBuilding.c_householdsInBuilding.size() + " in gebouw"]]></TextCode>
+					<TextCode><![CDATA["Huishouden " + (v_gridConnectionInBuildingNumber) + "/" + v_clickedBuilding.c_gridConnectionsInBuilding.size() + " in gebouw"]]></TextCode>
 					<Font>
 						<Name>SansSerif</Name>
 						<Size>16</Size>
@@ -23156,7 +24552,7 @@ rectanglePerHouseholdCosts.setFillColor(new Color (255, 255, 255, 100));
 					<Rotation>0.0</Rotation>
 					<Color>-16777216</Color>
 					<Text><![CDATA[Zelfverbruik energie]]></Text>
-					<TextCode><![CDATA[roundToInt(v_clickedHousehold.v_selfConsumption_fr * 100) + "% percentage zelfverbruik energie"]]></TextCode>
+					<TextCode><![CDATA[roundToInt(v_clickedGridConnection.v_selfConsumption_fr * 100) + "% percentage zelfverbruik energie"]]></TextCode>
 					<Font>
 						<Name>SansSerif</Name>
 						<Size>16</Size>
@@ -23253,7 +24649,7 @@ rectanglePerHouseholdCosts.setFillColor(new Color (255, 255, 255, 100));
 					<Id>1696520899119</Id>
 					<Expression><![CDATA[my_dataset]]></Expression>
 					<Color>-10496</Color>
-					<Expression2><![CDATA[v_clickedHousehold.v_pvProductionElectric_kW]]></Expression2>
+					<Expression2><![CDATA[v_clickedGridConnection.v_pvProductionElectric_kW]]></Expression2>
 					<Expression2Flag>true</Expression2Flag>
 							<Title><![CDATA[PV kleinschalig]]></Title>
 					</DatasetExpression>
@@ -23261,7 +24657,7 @@ rectanglePerHouseholdCosts.setFillColor(new Color (255, 255, 255, 100));
 					<Id>1696520899120</Id>
 					<Expression><![CDATA[my_dataset]]></Expression>
 					<Color>-989556</Color>
-					<Expression2><![CDATA[-min(0,v_clickedHousehold.v_batteryPowerElectric_kW)]]></Expression2>
+					<Expression2><![CDATA[-min(0,v_clickedGridConnection.v_batteryPowerElectric_kW)]]></Expression2>
 					<Expression2Flag>true</Expression2Flag>
 							<Title><![CDATA[Batterij ontladen]]></Title>
 					</DatasetExpression>
@@ -23269,7 +24665,7 @@ rectanglePerHouseholdCosts.setFillColor(new Color (255, 255, 255, 100));
 					<Id>1696520899121</Id>
 					<Expression><![CDATA[my_dataset]]></Expression>
 					<Color>-4565549</Color>
-					<Expression2><![CDATA[-min(0,v_clickedHousehold.v_evChargingPowerElectric_kW)]]></Expression2>
+					<Expression2><![CDATA[-min(0,v_clickedGridConnection.v_evChargingPowerElectric_kW)]]></Expression2>
 					<Expression2Flag>true</Expression2Flag>
 							<Title><![CDATA[V2G ontladen]]></Title>
 					</DatasetExpression>
@@ -23330,7 +24726,7 @@ rectanglePerHouseholdCosts.setFillColor(new Color (255, 255, 255, 100));
 					<Id>1696520899126</Id>
 					<Expression><![CDATA[my_dataset]]></Expression>
 					<Color>-5383962</Color>
-					<Expression2><![CDATA[v_clickedHousehold.v_fixedConsumptionElectric_kW]]></Expression2>
+					<Expression2><![CDATA[v_clickedGridConnection.v_fixedConsumptionElectric_kW]]></Expression2>
 					<Expression2Flag>true</Expression2Flag>
 							<Title><![CDATA[Elektriciteit apparaten en licht]]></Title>
 					</DatasetExpression>
@@ -23338,7 +24734,7 @@ rectanglePerHouseholdCosts.setFillColor(new Color (255, 255, 255, 100));
 					<Id>1696520899127</Id>
 					<Expression><![CDATA[my_dataset]]></Expression>
 					<Color>-6632142</Color>
-					<Expression2><![CDATA[v_clickedHousehold.v_heatPumpElectricityConsumption_kW]]></Expression2>
+					<Expression2><![CDATA[v_clickedGridConnection.v_heatPumpElectricityConsumption_kW]]></Expression2>
 					<Expression2Flag>true</Expression2Flag>
 							<Title><![CDATA[Elektriciteit warmtepomp]]></Title>
 					</DatasetExpression>
@@ -23346,7 +24742,7 @@ rectanglePerHouseholdCosts.setFillColor(new Color (255, 255, 255, 100));
 					<Id>1696520899128</Id>
 					<Expression><![CDATA[my_dataset]]></Expression>
 					<Color>-12004916</Color>
-					<Expression2><![CDATA[max(0,v_clickedHousehold.v_evChargingPowerElectric_kW)]]></Expression2>
+					<Expression2><![CDATA[max(0,v_clickedGridConnection.v_evChargingPowerElectric_kW)]]></Expression2>
 					<Expression2Flag>true</Expression2Flag>
 							<Title><![CDATA[Elektriciteit elektrische auto's]]></Title>
 					</DatasetExpression>
@@ -23354,7 +24750,7 @@ rectanglePerHouseholdCosts.setFillColor(new Color (255, 255, 255, 100));
 					<Id>1696520899130</Id>
 					<Expression><![CDATA[my_dataset]]></Expression>
 					<Color>-2572328</Color>
-					<Expression2><![CDATA[max(0,v_clickedHousehold.v_batteryPowerElectric_kW)]]></Expression2>
+					<Expression2><![CDATA[max(0,v_clickedGridConnection.v_batteryPowerElectric_kW)]]></Expression2>
 					<Expression2Flag>true</Expression2Flag>
 							<Title><![CDATA[Batterij laden]]></Title>
 					</DatasetExpression>
@@ -23505,16 +24901,16 @@ rectanglePerHouseholdCosts.setFillColor(new Color (255, 255, 255, 100));
 
 //v_clickedHousehold = v_clickedBuil
 
-v_householdInBuildingIndex++;
-v_householdInBuildingNumber++;
-if (v_householdInBuildingIndex >= v_clickedBuilding.c_householdsInBuilding.size()){
-	v_householdInBuildingIndex = 0;
-	v_householdInBuildingNumber = v_householdInBuildingIndex + 1;
+v_gridConnectionInBuildingIndex++;
+v_gridConnectionInBuildingNumber++;
+if (v_gridConnectionInBuildingIndex >= v_clickedBuilding.c_gridConnectionsInBuilding.size()){
+	v_gridConnectionInBuildingIndex = 0;
+	v_gridConnectionInBuildingNumber = v_gridConnectionInBuildingIndex + 1;
 }
-v_clickedHousehold = v_clickedBuilding.c_householdsInBuilding.get(v_householdInBuildingIndex);
+v_clickedGridConnection = v_clickedBuilding.c_gridConnectionsInBuilding.get(v_gridConnectionInBuildingIndex);
 
-if (!(v_clickedBuilding.c_householdsInBuilding.size() > 0)){
-	v_householdInBuildingNumber = 0;
+if (!(v_clickedBuilding.c_gridConnectionsInBuilding.size() > 0)){
+	v_gridConnectionInBuildingNumber = 0;
 }]]></OnClickCode>
 					<EmbeddedIcon>false</EmbeddedIcon>
 					<Z>0</Z>
@@ -29094,13 +30490,16 @@ f_setEnergyPrice();]]></ActionCode>
                         <EmbeddedIcon>false</EmbeddedIcon>	
 						<TextColor/>
 						<Enabled>true</Enabled>
-						<ActionCode><![CDATA[if (ra_salderenScenarioInstellingen.getValue() == 0){
+						<ActionCode><![CDATA[/*if (ra_salderenScenarioInstellingen.getValue() == 0){
 	v_isNetMetering = true;
 }
 else {
 	v_isNetMetering = false;
 }
-traceln("Are we net metering? " + v_isNetMetering);]]></ActionCode>
+traceln("Are we net metering? " + v_isNetMetering);*/
+
+traceln("ra_salderenScenarioInstellingen is awaiting new implementation after model merge! Currently not functional");
+]]></ActionCode>
 					</BasicProperties>
 					<ExtendedProperties>
 						<Font Name="Dialog" Size="16" Style="0"/>
@@ -29371,7 +30770,7 @@ if (gr_electricitySettings.isVisible() == false){
 					<X>-45</X><Y>-210</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>true</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
+					<PresentationFlag>false</PresentationFlag>
 					<ShowLabel>false</ShowLabel>
 					<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
 					<EmbeddedIcon>false</EmbeddedIcon>
@@ -29871,7 +31270,7 @@ if (gr_electricitySettings.isVisible() == false){
 				<Group>
 					<Id>1696520903436</Id>
 					<Name><![CDATA[gr_heatDemandLegenda]]></Name>
-					<X>-55</X><Y>485</Y>
+					<X>-85</X><Y>470</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>true</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -30297,7 +31696,7 @@ if (gr_electricitySettings.isVisible() == false){
 						<TextColor/>
 						<Enabled>true</Enabled>
 						<ActionCode><![CDATA[if (cb_highlighParticipants.isSelected()){
-	for (EA_UtilityObject x : pop_EA_UtilityObjects){
+	for (GCUtility x : UtilityConnections){
 		x.f_setColorDetailedObjects();
 	}
 }
@@ -30469,7 +31868,7 @@ i_heatSupplyPopOut.setVisible(true);]]></OnClickCode>
                         <EmbeddedIcon>false</EmbeddedIcon>	
 						<TextColor/>
 						<Enabled>true</Enabled>
-						<ActionCode><![CDATA[if (rb_tempDistrictHeating.getValue() == 0){
+						<ActionCode><![CDATA[/*if (rb_tempDistrictHeating.getValue() == 0){
 	v_districtHeatingTemperature_string = "HT";
 	t_temperatuurWarmtenet.setText("80°C");
 }
@@ -30484,6 +31883,8 @@ else if (rb_tempDistrictHeating.getValue() == 2){
 
 f_setDistrictHeatingTemp();
 f_resetSettings();
+*/
+traceln("rb_tempDistrictHeating is awaiting new implementation after model merge. Currently not functional!");
 ]]></ActionCode>
 					</BasicProperties>
 					<ExtendedProperties>
@@ -30531,19 +31932,21 @@ f_resetSettings();
                         <EmbeddedIcon>false</EmbeddedIcon>	
 						<TextColor/>
 						<Enabled>true</Enabled>
-						<ActionCode><![CDATA[if (rb_controlEBoiler.getValue() == 0){
+						<ActionCode><![CDATA[/*
+if (rb_controlEBoiler.getValue() == 0){
 	v_electricBoilerChargingStrategy = Conventional;
 }
 else if (rb_controlEBoiler.getValue() == 1){
 	v_electricBoilerChargingStrategy = DispersedNightTariff;
 }
 
-for(EA_Household h : pop_EA_Households){
+for(GCHouse h : Houses){
 	h.f_setHeatMethodValues();
 }
 
 f_resetSettings();
-]]></ActionCode>
+*/
+traceln("rb_controlEBoiler is awaiting new implementation after model merge. Currently not functional!");]]></ActionCode>
 					</BasicProperties>
 					<ExtendedProperties>
 						<Font Name="Dialog" Size="11" Style="0"/>
@@ -31051,12 +32454,12 @@ i_heatSupplyPopOut.setVisible(false);]]></OnClickCode>
                         <EmbeddedIcon>false</EmbeddedIcon>	
 						<TextColor/>
 						<Enabled>true</Enabled>
-						<ActionCode><![CDATA[for (EA_Household h : pop_EA_Households){
+						<ActionCode><![CDATA[for (GCHouse h : Houses){
 	h.f_setEnergyLabel();
 	h.f_setAnnualEnergyDemand();
 }
 
-for (EA_Building b : pop_EA_Buildings){
+for (GIS_Building b : pop_GIS_Buildings){
 	b.f_countEnergyLabels();
 }
 ra_legendaOptions.setValue(0, true);
@@ -31149,7 +32552,7 @@ else {
                         <EmbeddedIcon>false</EmbeddedIcon>	
 						<TextColor/>
 						<Enabled>true</Enabled>
-						<ActionCode><![CDATA[switch (ra_chargingStrategy.getValue()){
+						<ActionCode><![CDATA[/*switch (ra_chargingStrategy.getValue()){
 	case 0:
 		p_EVChargingType = "conventional";
 	break;
@@ -31159,7 +32562,8 @@ else {
 }
 
 f_resetSettings();
-]]></ActionCode>
+*/
+traceln("Function ra_chargingStrategy1 is obsolete!");]]></ActionCode>
 					</BasicProperties>
 					<ExtendedProperties>
 						<Font Name="Dialog" Size="16" Style="0"/>
@@ -31245,7 +32649,7 @@ i_electricAppliancesPopOut.setVisible(true);]]></OnClickCode>
                         <EmbeddedIcon>false</EmbeddedIcon>	
 						<Enabled>true</Enabled>
 						<ActionCode><![CDATA[//Setting PV Systems
-for (EA_Household h : pop_EA_Households){
+/*for (EA_Household h : pop_EA_Households){
 	h.f_setPVSystem(sl_rooftopPV.getValue());
 }
 
@@ -31253,7 +32657,9 @@ for (EA_Household h : pop_EA_Households){
 
 t_numberOfRooftopPV.setText(count(pop_EA_Households, x->x.v_hasPV == true));
 f_resetSettings();
-]]></ActionCode>
+*/
+
+traceln("sl_rooftopPV1 awaiting new implementation after model merge. Currently not functional!");]]></ActionCode>
 					</BasicProperties>
 					<ExtendedProperties>
 						<DefaultValueCode><![CDATA[0]]></DefaultValueCode>
@@ -31280,7 +32686,7 @@ f_resetSettings();
 						<ActionCode><![CDATA[f_setInductionStove();
 
 //traceln(count(pop_EA_Households, x->x.v_hasInductionStove == true) + " households with electric cooking");
-t_numberOfElectricStoves.setText(count(pop_EA_Households, x->x.v_hasInductionStove == true));
+t_numberOfElectricStoves.setText(count(Houses, x->x.p_hasElectricHob== true));
 f_resetSettings();
 ]]></ActionCode>
 					</BasicProperties>
@@ -31308,7 +32714,7 @@ f_resetSettings();
 						<Enabled>true</Enabled>
 						<ActionCode><![CDATA[f_setElectricCars(sl_EV.getValue()/100);
 
-t_numberOfElectricVehicles.setText(sum(pop_EA_Households, x->x.v_EVs));
+t_numberOfElectricVehicles.setText(sum(Houses, x->x.p_householdEV!=null ? 1 : 0));
 f_resetSettings();
 sl_careAreaEV.setValue(sl_EV.getValue());]]></ActionCode>
 					</BasicProperties>
@@ -31336,7 +32742,7 @@ sl_careAreaEV.setValue(sl_EV.getValue());]]></ActionCode>
 						<Enabled>true</Enabled>
 						<ActionCode><![CDATA[f_setHomeBatteries(sl_homeBattery.getValue() / 100);
 
-t_numberOfHomeBatteries.setText(count(pop_EA_Households, x->x.v_hasHomeBattery));
+t_numberOfHomeBatteries.setText(count(Houses, x->x.p_batteryAsset!=null));
 f_resetSettings();
 ]]></ActionCode>
 					</BasicProperties>
@@ -31657,7 +33063,8 @@ rectangle_electricitySettings.setVisible(false);]]></OnClickCode>
                         <EmbeddedIcon>false</EmbeddedIcon>	
 						<TextColor/>
 						<Enabled>true</Enabled>
-						<ActionCode><![CDATA[switch (ra_companyAssets.getValue()){
+						<ActionCode><![CDATA[/*
+switch (ra_companyAssets.getValue()){
 	case 0:
 		//PV
 		for (EA_UtilityObject x : pop_EA_UtilityObjects){
@@ -31676,7 +33083,7 @@ rectangle_electricitySettings.setVisible(false);]]></OnClickCode>
 	break;
 	case 1:
 		//PV
-		for (EA_UtilityObject x : pop_EA_UtilityObjects){
+		for (GCUtility x : Utilities){
 			if (x.p_PVInstalledCapacity_kW > 0){
 				x.v_rooftopPVInstalledCapacity_kW = x.p_PVInstalledCapacity_kW;
 			}
@@ -31684,8 +33091,8 @@ rectangle_electricitySettings.setVisible(false);]]></OnClickCode>
 				x.v_rooftopPVInstalledCapacity_kW = x.p_PVInvestmentkW;
 			}
 		}	
-		t_numberOfRooftopPVCompanies.setText(roundToInt(sum(pop_EA_UtilityObjects, x->x.v_rooftopPVInstalledCapacity_kW)));
-		sl_rooftopPVCompanies.setValue(roundToInt(sum(pop_EA_UtilityObjects, x->x.v_rooftopPVInstalledCapacity_kW)));
+		t_totalRooftopPV_kW.setText(roundToInt(v_totalInstalledPVPower_kW));
+		sl_rooftopPVCompanies.setValue(roundToInt(sum(Utilities, x->x.v_rooftopPVInstalledCapacity_kW)));
 		
 		sl_WindTurbines.setValue(0, true);
 		sl_EVCompanies.setValue(35, true);
@@ -31716,6 +33123,9 @@ rectangle_electricitySettings.setVisible(false);]]></OnClickCode>
 }
 
 f_resetSettings();
+*/
+
+traceln("ra_companyAssets is awaiting new implementation after model merge. Currently not functional!");
 ]]></ActionCode>
 					</BasicProperties>
 					<ExtendedProperties>
@@ -31814,6 +33224,7 @@ i_assetsCompaniesPopOut.setVisible(true);]]></OnClickCode>
 				 	<EmbeddedIcon>false</EmbeddedIcon>				
 					<Id>1696520903600</Id>
 					<Name><![CDATA[sl_rooftopPVCompanies]]></Name>
+					<ExcludeFromBuild>true</ExcludeFromBuild>
 					<X>70</X><Y>-55</Y>
 					<Label><X>0</X><Y>-10</Y></Label>
 					<PublicFlag>true</PublicFlag>
@@ -31846,6 +33257,7 @@ f_resetSettings();
 				 	<EmbeddedIcon>false</EmbeddedIcon>				
 					<Id>1696520903602</Id>
 					<Name><![CDATA[sl_WindTurbines]]></Name>
+					<ExcludeFromBuild>true</ExcludeFromBuild>
 					<X>70</X><Y>-25</Y>
 					<Label><X>0</X><Y>-10</Y></Label>
 					<PublicFlag>true</PublicFlag>
@@ -31874,6 +33286,7 @@ f_resetSettings();
 				 	<EmbeddedIcon>false</EmbeddedIcon>				
 					<Id>1696520903604</Id>
 					<Name><![CDATA[sl_EVCompanies]]></Name>
+					<ExcludeFromBuild>true</ExcludeFromBuild>
 					<X>70</X><Y>5</Y>
 					<Label><X>0</X><Y>-10</Y></Label>
 					<PublicFlag>true</PublicFlag>
@@ -31902,6 +33315,7 @@ f_resetSettings();
 				 	<EmbeddedIcon>false</EmbeddedIcon>				
 					<Id>1696520903606</Id>
 					<Name><![CDATA[sl_electricTrucks]]></Name>
+					<ExcludeFromBuild>true</ExcludeFromBuild>
 					<X>70</X><Y>35</Y>
 					<Label><X>0</X><Y>-10</Y></Label>
 					<PublicFlag>true</PublicFlag>
@@ -31939,13 +33353,14 @@ f_resetSettings();
 					<BasicProperties Width="100" Height="30">
                         <EmbeddedIcon>false</EmbeddedIcon>	
 						<Enabled>true</Enabled>
-						<ActionCode><![CDATA[p_neighborhoodMaxCapacity_MWh = sl_neighborhoodBattery.getValue();
+						<ActionCode><![CDATA[/*p_neighborhoodMaxCapacity_MWh = sl_neighborhoodBattery.getValue();
 p_neighborhoodMaxPower_MW = p_neighborhoodMaxCapacity_MWh / 2;
-v_batteryDistributionFinished = false;
+//v_batteryDistributionFinished = false;
 
-//traceln(count(pop_EA_Households, x->x.v_hasInductionStove == true) + " households with electric cooking");
 t_neighborhoodBatteryCapacity.setText(roundToDecimal(p_neighborhoodMaxCapacity_MWh,1));
 f_resetSettings();
+*/
+traceln("sl_neighborhoodBattery is awaiting new implementation after model merge! Currently not functional");
 ]]></ActionCode>
 					</BasicProperties>
 					<ExtendedProperties>
@@ -31961,6 +33376,7 @@ f_resetSettings();
 				 	<EmbeddedIcon>false</EmbeddedIcon>				
 					<Id>1696520903610</Id>
 					<Name><![CDATA[sl_heatDemandAnnualChange]]></Name>
+					<ExcludeFromBuild>true</ExcludeFromBuild>
 					<X>70</X><Y>125</Y>
 					<Label><X>0</X><Y>-10</Y></Label>
 					<PublicFlag>true</PublicFlag>
@@ -31991,6 +33407,7 @@ f_resetSettings();
 				 	<EmbeddedIcon>false</EmbeddedIcon>				
 					<Id>1696520903612</Id>
 					<Name><![CDATA[sl_electricityDemandAnnualChange]]></Name>
+					<ExcludeFromBuild>true</ExcludeFromBuild>
 					<X>70</X><Y>95</Y>
 					<Label><X>0</X><Y>-10</Y></Label>
 					<PublicFlag>true</PublicFlag>
@@ -32021,6 +33438,7 @@ f_resetSettings();
 				 	<EmbeddedIcon>false</EmbeddedIcon>				
 					<Id>1696520903614</Id>
 					<Name><![CDATA[sl_electrificationHeat]]></Name>
+					<ExcludeFromBuild>true</ExcludeFromBuild>
 					<X>70</X><Y>155</Y>
 					<Label><X>0</X><Y>-10</Y></Label>
 					<PublicFlag>true</PublicFlag>
@@ -32032,7 +33450,7 @@ f_resetSettings();
 						<Enabled>true</Enabled>
 						<ActionCode><![CDATA[f_electrificationHeat(sl_electrificationHeat.getValue() / 100);
 
-t_electrificationHeat.setText(count(pop_EA_UtilityObjects, x->x.v_hasHeatPump == true));
+t_electrificationHeat.setText(count(UtilityConnections, x->x.p_heatingType == OL_GridConnectionHeatingType.HEATPUMP_AIR));
 f_resetSettings();
 ]]></ActionCode>
 					</BasicProperties>
@@ -32049,6 +33467,7 @@ f_resetSettings();
 				 	<EmbeddedIcon>false</EmbeddedIcon>				
 					<Id>1696520903616</Id>
 					<Name><![CDATA[sl_heatDemandAnnualChange1]]></Name>
+					<ExcludeFromBuild>true</ExcludeFromBuild>
 					<X>70</X><Y>185</Y>
 					<Label><X>0</X><Y>-10</Y></Label>
 					<PublicFlag>true</PublicFlag>
@@ -32079,6 +33498,7 @@ f_resetSettings();
 				 	<EmbeddedIcon>false</EmbeddedIcon>				
 					<Id>1696520903618</Id>
 					<Name><![CDATA[sl_electrificationHeat1]]></Name>
+					<ExcludeFromBuild>true</ExcludeFromBuild>
 					<X>70</X><Y>215</Y>
 					<Label><X>0</X><Y>-10</Y></Label>
 					<PublicFlag>true</PublicFlag>
@@ -32090,7 +33510,7 @@ f_resetSettings();
 						<Enabled>false</Enabled>
 						<ActionCode><![CDATA[f_electrificationHeat(sl_electrificationHeat.getValue() / 100);
 
-t_electrificationHeat.setText(count(pop_EA_UtilityObjects, x->x.v_hasHeatPump == true));
+t_electrificationHeat.setText(count(UtilityConnections, x->x.p_heatingType == OL_GridConnectionHeatingType.HEATPUMP_AIR));
 f_resetSettings();
 ]]></ActionCode>
 					</BasicProperties>
@@ -32234,7 +33654,7 @@ rectangle_assetCompaniesSettings.setVisible(false);]]></OnClickCode>
 				</Text>
 				<Text>
 					<Id>1696520903632</Id>
-					<Name><![CDATA[t_numberOfRooftopPVCompanies]]></Name>
+					<Name><![CDATA[t_totalRooftopPV_kW]]></Name>
 					<X>105</X><Y>-52</Y>
 					<Label><X>0</X><Y>-10</Y></Label>
 					<PublicFlag>true</PublicFlag>
@@ -32925,6 +34345,7 @@ else {
 				 	<EmbeddedIcon>false</EmbeddedIcon>				
 					<Id>1696520906251</Id>
 					<Name><![CDATA[sl_LTDistrictHeatingNeighborhood]]></Name>
+					<ExcludeFromBuild>true</ExcludeFromBuild>
 					<X>70</X><Y>35</Y>
 					<Label><X>0</X><Y>-10</Y></Label>
 					<PublicFlag>true</PublicFlag>
@@ -32949,6 +34370,7 @@ else {
 				 	<EmbeddedIcon>false</EmbeddedIcon>				
 					<Id>1696520906253</Id>
 					<Name><![CDATA[sl_MTDistrictHeatingNeighborhood]]></Name>
+					<ExcludeFromBuild>true</ExcludeFromBuild>
 					<X>70</X><Y>65</Y>
 					<Label><X>0</X><Y>-10</Y></Label>
 					<PublicFlag>true</PublicFlag>
@@ -33060,7 +34482,7 @@ image23.setVisible(true);]]></OnClickCode>
 					<BasicProperties Width="100" Height="30">
                         <EmbeddedIcon>false</EmbeddedIcon>	
 						<Enabled>true</Enabled>
-						<ActionCode><![CDATA[f_setCareAreaPV();]]></ActionCode>
+						<ActionCode><![CDATA[//f_setCareAreaPV();]]></ActionCode>
 					</BasicProperties>
 					<ExtendedProperties>
 						<DefaultValueCode><![CDATA[0]]></DefaultValueCode>
@@ -33328,6 +34750,7 @@ image23.setVisible(true);]]></OnClickCode>
 				<Text>
 					<Id>1696520906287</Id>
 					<Name><![CDATA[text69]]></Name>
+					<ExcludeFromBuild>true</ExcludeFromBuild>
 					<X>86.5</X><Y>37</Y>
 					<Label><X>0</X><Y>-10</Y></Label>
 					<PublicFlag>true</PublicFlag>
@@ -33350,6 +34773,7 @@ image23.setVisible(true);]]></OnClickCode>
 				<Text>
 					<Id>1696520906289</Id>
 					<Name><![CDATA[text70]]></Name>
+					<ExcludeFromBuild>true</ExcludeFromBuild>
 					<X>86.5</X><Y>67</Y>
 					<Label><X>0</X><Y>-10</Y></Label>
 					<PublicFlag>true</PublicFlag>
@@ -34207,7 +35631,7 @@ if (gr_businessCollectiveDashboard.isVisible() == true){
 					<Id>1696520907207</Id>
 					<Expression><![CDATA[my_dataset]]></Expression>
 					<Color>-10496</Color>
-					<Expression2><![CDATA[sum(pop_gridConnections, x->x.v_pvProductionElectric_kW)]]></Expression2>
+					<Expression2><![CDATA[sum(c_gridConnections, x->x.v_pvProductionElectric_kW)]]></Expression2>
 					<Expression2Flag>true</Expression2Flag>
 							<Title><![CDATA[PV op dak]]></Title>
 					</DatasetExpression>
@@ -34215,7 +35639,7 @@ if (gr_businessCollectiveDashboard.isVisible() == true){
 					<Id>1696520907208</Id>
 					<Expression><![CDATA[my_dataset]]></Expression>
 					<Color>-7876870</Color>
-					<Expression2><![CDATA[sum(pop_gridConnections, x->x.v_windProductionElectric_kW)]]></Expression2>
+					<Expression2><![CDATA[sum(c_gridConnections, x->x.v_windProductionElectric_kW)]]></Expression2>
 					<Expression2Flag>true</Expression2Flag>
 							<Title><![CDATA[Windturbines]]></Title>
 					</DatasetExpression>
@@ -34231,7 +35655,7 @@ if (gr_businessCollectiveDashboard.isVisible() == true){
 					<Id>1696520907210</Id>
 					<Expression><![CDATA[my_dataset]]></Expression>
 					<Color>-4565549</Color>
-					<Expression2><![CDATA[v_EVDischargePower_kW]]></Expression2>
+					<Expression2><![CDATA[sum(c_gridConnections, x->-min(0,x.v_evChargingPowerElectric_kW))]]></Expression2>
 					<Expression2Flag>true</Expression2Flag>
 							<Title><![CDATA[V2G ontladen]]></Title>
 					</DatasetExpression>
@@ -34292,23 +35716,15 @@ if (gr_businessCollectiveDashboard.isVisible() == true){
 					<Id>1696520907214</Id>
 					<Expression><![CDATA[my_dataset]]></Expression>
 					<Color>-5383962</Color>
-					<Expression2><![CDATA[sum(pop_EA_UtilityObjects, x->x.v_baseloadElectricityDemand_kW)]]></Expression2>
+					<Expression2><![CDATA[sum(UtilityConnections, x->x.v_fixedConsumptionElectric_kW)]]></Expression2>
 					<Expression2Flag>true</Expression2Flag>
 							<Title><![CDATA[Elektriciteit basislast]]></Title>
-					</DatasetExpression>
-					<DatasetExpression>
-					<Id>1696520907215</Id>
-					<Expression><![CDATA[my_dataset]]></Expression>
-					<Color>-11861886</Color>
-					<Expression2><![CDATA[sum(pop_EA_UtilityObjects, x->x.v_electricCarsDemand_kW)]]></Expression2>
-					<Expression2Flag>true</Expression2Flag>
-							<Title><![CDATA[Laden EVs]]></Title>
 					</DatasetExpression>
 					<DatasetExpression>
 					<Id>1696520907216</Id>
 					<Expression><![CDATA[my_dataset]]></Expression>
 					<Color>-14774017</Color>
-					<Expression2><![CDATA[sum(pop_EA_UtilityObjects, x->x.v_electricTrucksDemand_kW)]]></Expression2>
+					<Expression2><![CDATA[sum(UtilityConnections, x->max(0,x.v_evChargingPowerElectric_kW))]]></Expression2>
 					<Expression2Flag>true</Expression2Flag>
 							<Title><![CDATA[Laden elektrische trucks]]></Title>
 					</DatasetExpression>
@@ -34316,7 +35732,7 @@ if (gr_businessCollectiveDashboard.isVisible() == true){
 					<Id>1696520907217</Id>
 					<Expression><![CDATA[my_dataset]]></Expression>
 					<Color>-3137392</Color>
-					<Expression2><![CDATA[sum(pop_EA_UtilityObjects, x->x.v_heatPumpElectricityDemand_kW)]]></Expression2>
+					<Expression2><![CDATA[sum(UtilityConnections, x->x.v_heatPumpElectricityConsumption_kW)]]></Expression2>
 					<Expression2Flag>true</Expression2Flag>
 							<Title><![CDATA[Warmtepompen]]></Title>
 					</DatasetExpression>
@@ -34324,7 +35740,7 @@ if (gr_businessCollectiveDashboard.isVisible() == true){
 					<Id>1696520907218</Id>
 					<Expression><![CDATA[my_dataset]]></Expression>
 					<Color>-2572328</Color>
-					<Expression2><![CDATA[sum(pop_EA_NeighborhoodBatteries, x->x.v_requiredChargePower_kW)]]></Expression2>
+					<Expression2><![CDATA[sum(GridBatteries, x->max(0,x.v_batteryPowerElectric_kW))]]></Expression2>
 					<Expression2Flag>true</Expression2Flag>
 							<Title><![CDATA[Buurtbatterij laden]]></Title>
 					</DatasetExpression>
@@ -35757,7 +37173,7 @@ rectanglePerHouseholdCosts.setFillColor(new Color (255, 255, 255, 100));
 					<Rotation>0.0</Rotation>
 					<Color>-16777216</Color>
 					<Text><![CDATA[Zelfverbruik elektriciteit]]></Text>
-					<TextCode><![CDATA[roundToInt(v_businessParkSelfConsumptionEnergy_perc * 100) + "% percentage zelfverbruik elektriciteit"]]></TextCode>
+					<TextCode><![CDATA[roundToInt(v_modelSelfConsumption_fr * 100) + "% percentage zelfverbruik elektriciteit"]]></TextCode>
 					<Font>
 						<Name>SansSerif</Name>
 						<Size>16</Size>
@@ -36042,7 +37458,7 @@ rectanglePerHouseholdCosts.setFillColor(new Color (255, 255, 255, 100));
 					<Id>1696520908583</Id>
 					<Expression><![CDATA[my_dataset]]></Expression>
 					<Color>-10496</Color>
-					<Expression2><![CDATA[v_clickedUtilityObject.v_rooftopSolarGeneration_kW]]></Expression2>
+					<Expression2><![CDATA[v_clickedGridConnection.v_pvProductionElectric_kW]]></Expression2>
 					<Expression2Flag>true</Expression2Flag>
 							<Title><![CDATA[PV op dak]]></Title>
 					</DatasetExpression>
@@ -36050,7 +37466,7 @@ rectanglePerHouseholdCosts.setFillColor(new Color (255, 255, 255, 100));
 					<Id>1696520908584</Id>
 					<Expression><![CDATA[my_dataset]]></Expression>
 					<Color>-4565549</Color>
-					<Expression2><![CDATA[v_EVDischargePower_kW]]></Expression2>
+					<Expression2><![CDATA[max(0,-v_clickedGridConnection.v_evChargingPowerElectric_kW)]]></Expression2>
 					<Expression2Flag>true</Expression2Flag>
 							<Title><![CDATA[V2G ontladen]]></Title>
 					</DatasetExpression>
@@ -36111,7 +37527,7 @@ rectanglePerHouseholdCosts.setFillColor(new Color (255, 255, 255, 100));
 					<Id>1696520908588</Id>
 					<Expression><![CDATA[my_dataset]]></Expression>
 					<Color>-5383962</Color>
-					<Expression2><![CDATA[v_clickedUtilityObject.v_fixedConsumptionElectric_kW]]></Expression2>
+					<Expression2><![CDATA[v_clickedGridConnection.v_fixedConsumptionElectric_kW]]></Expression2>
 					<Expression2Flag>true</Expression2Flag>
 							<Title><![CDATA[Elektriciteit basislast]]></Title>
 					</DatasetExpression>
@@ -36119,7 +37535,7 @@ rectanglePerHouseholdCosts.setFillColor(new Color (255, 255, 255, 100));
 					<Id>1696520908589</Id>
 					<Expression><![CDATA[my_dataset]]></Expression>
 					<Color>-11861886</Color>
-					<Expression2><![CDATA[v_clickedUtilityObject.v_evChargingPowerElectric_kW]]></Expression2>
+					<Expression2><![CDATA[v_clickedGridConnection.v_evChargingPowerElectric_kW]]></Expression2>
 					<Expression2Flag>true</Expression2Flag>
 							<Title><![CDATA[Laden EVs of trucks]]></Title>
 					</DatasetExpression>
@@ -36499,7 +37915,7 @@ if(v_costsUnknown == true){
 					<Rotation>0.0</Rotation>
 					<Color>-16777216</Color>
 					<Text><![CDATA[Percentage duurzame elektriciteit]]></Text>
-					<TextCode><![CDATA[roundToInt(v_clickedUtilityObject.v_businessParkRenewableEnergy_perc * 100) + "% duurzame elektriciteit"]]></TextCode>
+					<TextCode><![CDATA[roundToInt(v_clickedGridConnection.v_selfSufficiency_fr * 100) + "% duurzame elektriciteit"]]></TextCode>
 					<Font>
 						<Name>SansSerif</Name>
 						<Size>16</Size>
@@ -36521,7 +37937,7 @@ if(v_costsUnknown == true){
 					<Rotation>0.0</Rotation>
 					<Color>-16777216</Color>
 					<Text><![CDATA[Zelfverbruik elektriciteit]]></Text>
-					<TextCode><![CDATA[roundToInt(v_clickedUtilityObject.v_businessParkSelfConsumptionEnergy_perc * 100) + "% percentage zelfverbruik elektriciteit"]]></TextCode>
+					<TextCode><![CDATA[roundToInt(v_clickedGridConnection.v_selfConsumption_fr * 100) + "% percentage zelfverbruik elektriciteit"]]></TextCode>
 					<Font>
 						<Name>SansSerif</Name>
 						<Size>16</Size>
@@ -36543,7 +37959,7 @@ if(v_costsUnknown == true){
 					<Rotation>0.0</Rotation>
 					<Color>-16777216</Color>
 					<Text><![CDATA[Bedrijf]]></Text>
-					<TextCode><![CDATA[v_clickedUtilityObject.p_company_name == null ? v_clickedUtilityObject.openbareR + " " + v_clickedUtilityObject.huisnummer : v_clickedUtilityObject.p_company_name + " " + v_clickedUtilityObject.openbareR + " " + v_clickedUtilityObject.huisnummer]]></TextCode>
+					<TextCode><![CDATA[v_clickedGridConnection.p_company_name == null ? v_clickedGridConnection.p_openbareR + " " + v_clickedGridConnection.p_huisnummer : v_clickedGridConnection.p_company_name + " " + v_clickedGridConnection.p_openbareR + " " + v_clickedGridConnection.p_huisnummer]]></TextCode>
 					<Font>
 						<Name>SansSerif</Name>
 						<Size>16</Size>
@@ -36560,7 +37976,7 @@ if(v_costsUnknown == true){
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>false</ShowLabel>
 					<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
-					<OnClickCode><![CDATA[v_clickedUtilityObject.va_utilityObject.navigateTo();]]></OnClickCode>
+					<OnClickCode><![CDATA[v_clickedGridConnection.va_gridConnection.navigateTo();]]></OnClickCode>
 					<EmbeddedIcon>false</EmbeddedIcon>
 					<Z>0</Z>
 					<Rotation>0.0</Rotation>
@@ -36742,7 +38158,7 @@ if(v_costsUnknown == true){
 					<Id>1696520908844</Id>
 					<Expression><![CDATA[my_dataset]]></Expression>
 					<Color>-10496</Color>
-					<Expression2><![CDATA[sum(pop_gridConnections, x->x.v_pvProductionElectric_kW)]]></Expression2>
+					<Expression2><![CDATA[sum(c_gridConnections, x->x.v_pvProductionElectric_kW)]]></Expression2>
 					<Expression2Flag>true</Expression2Flag>
 							<Title><![CDATA[PV op dak]]></Title>
 					</DatasetExpression>
@@ -36750,7 +38166,7 @@ if(v_costsUnknown == true){
 					<Id>1696520908845</Id>
 					<Expression><![CDATA[my_dataset]]></Expression>
 					<Color>-7876870</Color>
-					<Expression2><![CDATA[sum(pop_gridConnections, x->x.v_windProductionElectric_kW)]]></Expression2>
+					<Expression2><![CDATA[sum(c_gridConnections, x->x.v_windProductionElectric_kW)]]></Expression2>
 					<Expression2Flag>true</Expression2Flag>
 							<Title><![CDATA[Windturbines]]></Title>
 					</DatasetExpression>
@@ -36758,7 +38174,7 @@ if(v_costsUnknown == true){
 					<Id>1696520908846</Id>
 					<Expression><![CDATA[my_dataset]]></Expression>
 					<Color>-6632142</Color>
-					<Expression2><![CDATA[sum(pop_gridConnections, x->-min(0,x.v_batteryPowerElectric_kW))]]></Expression2>
+					<Expression2><![CDATA[sum(c_gridConnections, x->-min(0,x.v_batteryPowerElectric_kW))]]></Expression2>
 					<Expression2Flag>true</Expression2Flag>
 							<Title><![CDATA[Batterij ontladen]]></Title>
 					</DatasetExpression>
@@ -36766,7 +38182,7 @@ if(v_costsUnknown == true){
 					<Id>1696520908847</Id>
 					<Expression><![CDATA[my_dataset]]></Expression>
 					<Color>-4565549</Color>
-					<Expression2><![CDATA[sum(pop_gridConnections, x->-min(0,-x.v_evChargingPowerElectric_kW))]]></Expression2>
+					<Expression2><![CDATA[sum(c_gridConnections, x->-min(0,-x.v_evChargingPowerElectric_kW))]]></Expression2>
 					<Expression2Flag>true</Expression2Flag>
 							<Title><![CDATA[V2G ontladen]]></Title>
 					</DatasetExpression>
@@ -37234,7 +38650,6 @@ if(v_costsUnknown == true){
 				<Text>
 					<Id>1696520908891</Id>
 					<Name><![CDATA[text_gemeentenaam95]]></Name>
-					<ExcludeFromBuild>true</ExcludeFromBuild>
 					<X>-719</X><Y>-340</Y>
 					<Label><X>0</X><Y>-10</Y></Label>
 					<PublicFlag>true</PublicFlag>
@@ -37246,7 +38661,7 @@ if(v_costsUnknown == true){
 					<Rotation>0.0</Rotation>
 					<Color>-16777216</Color>
 					<Text><![CDATA[Percentage duurzame elektriciteit]]></Text>
-					<TextCode><![CDATA[roundToInt(v_businessCollectiveRenewableEnergy_perc * 100) + "% duurzame elektriciteit"]]></TextCode>
+					<TextCode><![CDATA[roundToInt(v_modelSelfSufficiency_fr * 100) + "% duurzame elektriciteit"]]></TextCode>
 					<Font>
 						<Name>SansSerif</Name>
 						<Size>16</Size>
@@ -37257,7 +38672,6 @@ if(v_costsUnknown == true){
 				<Text>
 					<Id>1696520908893</Id>
 					<Name><![CDATA[text_gemeentenaam97]]></Name>
-					<ExcludeFromBuild>true</ExcludeFromBuild>
 					<X>-719</X><Y>-320</Y>
 					<Label><X>0</X><Y>-10</Y></Label>
 					<PublicFlag>true</PublicFlag>
@@ -37269,7 +38683,7 @@ if(v_costsUnknown == true){
 					<Rotation>0.0</Rotation>
 					<Color>-16777216</Color>
 					<Text><![CDATA[Zelfverbruik elektriciteit]]></Text>
-					<TextCode><![CDATA[roundToInt(v_businessCollectiveSelfConsumptionEnergy_perc * 100) + "% percentage zelfverbruik elektriciteit"]]></TextCode>
+					<TextCode><![CDATA[roundToInt(v_modelSelfConsumption_fr * 100) + "% percentage zelfverbruik elektriciteit"]]></TextCode>
 					<Font>
 						<Name>SansSerif</Name>
 						<Size>16</Size>
@@ -37823,6 +39237,48 @@ new Thread( () -> {
 						<Name>SansSerif</Name>
 						<Size>18</Size>
 						<Style>0</Style>
+					</Font>
+					<Alignment>LEFT</Alignment>
+				</Text>
+				<Text>
+					<Id>1696863329245</Id>
+					<Name><![CDATA[text57]]></Name>
+					<X>400</X><Y>1050</Y>
+					<Label><X>0</X><Y>-10</Y></Label>
+					<PublicFlag>true</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>false</ShowLabel>
+					<DrawMode>SHAPE_DRAW_2D</DrawMode>
+					<EmbeddedIcon>false</EmbeddedIcon>
+					<Z>0</Z>
+					<Rotation>0.0</Rotation>
+					<Color>-16777216</Color>
+					<Text><![CDATA[Map connections and clicking]]></Text>
+					<Font>
+						<Name>SansSerif</Name>
+						<Size>18</Size>
+						<Style>1</Style>
+					</Font>
+					<Alignment>LEFT</Alignment>
+				</Text>
+				<Text>
+					<Id>1696865756414</Id>
+					<Name><![CDATA[text56]]></Name>
+					<X>120</X><Y>1050</Y>
+					<Label><X>0</X><Y>-10</Y></Label>
+					<PublicFlag>true</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>false</ShowLabel>
+					<DrawMode>SHAPE_DRAW_2D</DrawMode>
+					<EmbeddedIcon>false</EmbeddedIcon>
+					<Z>0</Z>
+					<Rotation>0.0</Rotation>
+					<Color>-16777216</Color>
+					<Text><![CDATA[Costs and totals]]></Text>
+					<Font>
+						<Name>SansSerif</Name>
+						<Size>18</Size>
+						<Style>1</Style>
 					</Font>
 					<Alignment>LEFT</Alignment>
 				</Text>
@@ -40179,7 +41635,7 @@ import java.io.*;]]></Import>
 					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
 						<Type><![CDATA[double]]></Type>        
 						<InitialValue Class="CodeValue">
-							<Code><![CDATA[min(1, 0.02 * 1.2 * main.p_timeStep_h)]]></Code>
+							<Code><![CDATA[min(1, 0.6)]]></Code>
 						</InitialValue>
 					</Properties>
 				</Variable>
@@ -40863,7 +42319,7 @@ import java.io.*;]]></Import>
 					<X>972</X><Y>71</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
-					<PresentationFlag>false</PresentationFlag>
+					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>true</ShowLabel>
 					<Properties SaveInSnapshot="true" ModificatorType="STATIC">
 						<Type><![CDATA[com.fasterxml.jackson.databind.node.ArrayNode]]></Type>
@@ -41237,7 +42693,7 @@ import java.io.*;]]></Import>
 				</Variable>
 				<Variable Class="Parameter">
 					<Id>1692890035894</Id>
-					<Name><![CDATA[p_isolationLabel]]></Name>
+					<Name><![CDATA[p_energyLabel]]></Name>
 					<X>250</X><Y>380</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
@@ -41273,6 +42729,153 @@ import java.io.*;]]></Import>
 						</DefaultValue>
 						<ParameterEditor>
 							<Id>1692973005117</Id>
+							<EditorContolType>TEXT_BOX</EditorContolType>
+							<MinSliderValue><![CDATA[0]]></MinSliderValue>
+							<MaxSliderValue><![CDATA[100]]></MaxSliderValue>
+							<DelimeterType>NO_DELIMETER</DelimeterType>
+						</ParameterEditor>
+					</Properties>                 
+				</Variable>
+				<Variable Class="Parameter">
+					<Id>1696868137372</Id>
+					<Name><![CDATA[p_GISbuilding]]></Name>
+					<X>50</X><Y>250</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" ModificatorType="STATIC">
+						<Type><![CDATA[GIS_Building]]></Type>
+						<UnitType><![CDATA[NONE]]></UnitType>
+						<SdArray>false</SdArray>
+						<ParameterEditor>
+							<Id>1696868137370</Id>
+							<EditorContolType>TEXT_BOX</EditorContolType>
+							<MinSliderValue><![CDATA[0]]></MinSliderValue>
+							<MaxSliderValue><![CDATA[100]]></MaxSliderValue>
+							<DelimeterType>NO_DELIMETER</DelimeterType>
+						</ParameterEditor>
+					</Properties>                 
+				</Variable>
+				<Variable Class="Parameter">
+					<Id>1697021029662</Id>
+					<Name><![CDATA[p_longitude]]></Name>
+					<X>50</X><Y>280</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" ModificatorType="STATIC">
+						<Type><![CDATA[double]]></Type>
+						<UnitType><![CDATA[NONE]]></UnitType>
+						<SdArray>false</SdArray>
+						<ParameterEditor>
+							<Id>1697021029660</Id>
+							<EditorContolType>TEXT_BOX</EditorContolType>
+							<MinSliderValue><![CDATA[0]]></MinSliderValue>
+							<MaxSliderValue><![CDATA[100]]></MaxSliderValue>
+							<DelimeterType>NO_DELIMETER</DelimeterType>
+						</ParameterEditor>
+					</Properties>                 
+				</Variable>
+				<Variable Class="Parameter">
+					<Id>1697021029674</Id>
+					<Name><![CDATA[p_latitude]]></Name>
+					<X>50</X><Y>300</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" ModificatorType="STATIC">
+						<Type><![CDATA[double]]></Type>
+						<UnitType><![CDATA[NONE]]></UnitType>
+						<SdArray>false</SdArray>
+						<ParameterEditor>
+							<Id>1697021029672</Id>
+							<EditorContolType>TEXT_BOX</EditorContolType>
+							<MinSliderValue><![CDATA[0]]></MinSliderValue>
+							<MaxSliderValue><![CDATA[100]]></MaxSliderValue>
+							<DelimeterType>NO_DELIMETER</DelimeterType>
+						</ParameterEditor>
+					</Properties>                 
+				</Variable>
+				<Variable Class="Parameter">
+					<Id>1697034280316</Id>
+					<Name><![CDATA[p_company_name]]></Name>
+					<X>50</X><Y>340</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" ModificatorType="STATIC">
+						<Type><![CDATA[String]]></Type>
+						<UnitType><![CDATA[NONE]]></UnitType>
+						<SdArray>false</SdArray>
+						<ParameterEditor>
+							<Id>1697034280314</Id>
+							<EditorContolType>TEXT_BOX</EditorContolType>
+							<MinSliderValue><![CDATA[0]]></MinSliderValue>
+							<MaxSliderValue><![CDATA[100]]></MaxSliderValue>
+							<DelimeterType>NO_DELIMETER</DelimeterType>
+						</ParameterEditor>
+					</Properties>                 
+				</Variable>
+				<Variable Class="Parameter">
+					<Id>1697034280325</Id>
+					<Name><![CDATA[p_huisnummer]]></Name>
+					<X>50</X><Y>360</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" ModificatorType="STATIC">
+						<Type><![CDATA[int]]></Type>
+						<UnitType><![CDATA[NONE]]></UnitType>
+						<SdArray>false</SdArray>
+						<ParameterEditor>
+							<Id>1697034280323</Id>
+							<EditorContolType>TEXT_BOX</EditorContolType>
+							<MinSliderValue><![CDATA[0]]></MinSliderValue>
+							<MaxSliderValue><![CDATA[100]]></MaxSliderValue>
+							<DelimeterType>NO_DELIMETER</DelimeterType>
+						</ParameterEditor>
+					</Properties>                 
+				</Variable>
+				<Variable Class="Parameter">
+					<Id>1697034280332</Id>
+					<Name><![CDATA[p_openbareR]]></Name>
+					<X>50</X><Y>380</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" ModificatorType="STATIC">
+						<Type><![CDATA[String]]></Type>
+						<UnitType><![CDATA[NONE]]></UnitType>
+						<SdArray>false</SdArray>
+						<ParameterEditor>
+							<Id>1697034280330</Id>
+							<EditorContolType>TEXT_BOX</EditorContolType>
+							<MinSliderValue><![CDATA[0]]></MinSliderValue>
+							<MaxSliderValue><![CDATA[100]]></MaxSliderValue>
+							<DelimeterType>NO_DELIMETER</DelimeterType>
+						</ParameterEditor>
+					</Properties>                 
+				</Variable>
+				<Variable Class="Parameter">
+					<Id>1697034280340</Id>
+					<Name><![CDATA[p_company_connection_id]]></Name>
+					<X>50</X><Y>320</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" ModificatorType="STATIC">
+						<Type><![CDATA[String]]></Type>
+						<UnitType><![CDATA[NONE]]></UnitType>
+						<SdArray>false</SdArray>
+						<ParameterEditor>
+							<Id>1697034280338</Id>
 							<EditorContolType>TEXT_BOX</EditorContolType>
 							<MinSliderValue><![CDATA[0]]></MinSliderValue>
 							<MaxSliderValue><![CDATA[100]]></MaxSliderValue>
@@ -41485,6 +43088,7 @@ import java.io.*;]]></Import>
 					<Id>1675011317461</Id>
 					<Name><![CDATA[e_initializeLowPassEprice]]></Name>
 					<Description><![CDATA[Make sure this is correct, so after the first official timestep has passed]]></Description>
+					<ExcludeFromBuild>true</ExcludeFromBuild>
 					<X>1200</X><Y>40</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
@@ -42071,7 +43675,18 @@ for(J_EAConsumption e : c_consumptionAssets) {
 			double randomizer = 0.7 + uniform(0.0, 0.6);
 			e.f_updateAllFlows( main.v_currentHouseHoldOtherElectricityDemand_fr * randomizer );
 		}
-		else {
+		else if (p_company_connection_id != null) {
+			if (p_company_connection_id == e.energyAssetName) {
+				
+				String idInputValue = p_company_connection_id + "_demand";				
+				double quarterlyEnergyDemand_kWh = selectUniqueValue(double.class,
+				"SELECT " + idInputValue + " FROM comp_elec_consumption WHERE idx = " + time(HOUR)*4.0 + ";");			
+				e.f_updateAllFlows( quarterlyEnergyDemand_kWh );
+				traceln("Running custom demand profile for " + e.energyAssetName + " with current timestep demand " + quarterlyEnergyDemand_kWh + " kWh");	
+			} else {
+				e.f_updateAllFlows( main.v_currentBuildingOtherElectricityDemand_fr );
+			}
+		} else {
 			switch(e.energyAssetName) {
 				case "INDUSTRY_OTHER_ELECTRICITY_DEMAND":
 					e.f_updateAllFlows( main.v_currentIndustryOtherElectricityDemand_fr );
@@ -42099,6 +43714,7 @@ for(J_EAConsumption e : c_consumptionAssets) {
 				default:
 					traceln("ConsumptionAsset with unknown type, cannot operate!! Type: " + e.energyAssetType);
 					throw new IllegalStateException("ELECTRICITY_DEMAND with unknown name, cannot operate!! Name: " + e.energyAssetName);
+					// Try if the energyAssetName matches with one of the names in comp_elec_consumption
 			}
 		}
 		v_fixedConsumptionElectric_kW += e.electricityConsumption_kW;
@@ -42707,6 +44323,7 @@ p_secondaryHeatingAsset.f_updateAllFlows(p_secondaryHeatingAsset.v_powerFraction
 					<ReturnType><![CDATA[OL_priceLevels]]></ReturnType>
 					<Id>1676476236040</Id>
 					<Name><![CDATA[f_getPriceLevel]]></Name>
+					<ExcludeFromBuild>true</ExcludeFromBuild>
 					<X>800</X><Y>510</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
@@ -42758,7 +44375,7 @@ return level;]]></Body>
 						<Name><![CDATA[j_ea]]></Name>
 						<Type><![CDATA[J_EA]]></Type>
 					</Parameter>
-					<Body><![CDATA[main.c_energyAssets.add(j_ea);
+					<Body><![CDATA[//main.c_energyAssets.add(j_ea);
 c_energyAssets.add(j_ea);
 
 if (j_ea instanceof J_EAVehicle) {
@@ -42807,13 +44424,13 @@ if (j_ea instanceof J_EAVehicle) {
 	if (j_ea.energyAssetType == OL_EnergyAssetType.BUILDINGTHERMALS) {
 		//traceln("Adding buildingThermals to gridconnection");	
 		p_BuildingThermalAsset = (J_EABuilding)j_ea;
-			if ( p_isolationLabel != null & p_gridConnectionType != null){ // Get building thermals from lookup table when isolation label and house type are available
-				double lossFactor_WpK2 = main.v_buildingThermalPars.path( p_gridConnectionType.name() ).path(p_isolationLabel.name()).path("lossFactor_WpK").doubleValue();
-				double heatCapacity_JpK2 = main.v_buildingThermalPars.path( p_gridConnectionType.name() ).path(p_isolationLabel.name()).path("heatCapacity_JpK").doubleValue();
+			if ( p_energyLabel != null & p_gridConnectionType != null){ // Get building thermals from lookup table when isolation label and house type are available
+				double lossFactor_WpK2 = main.v_buildingThermalPars.path( p_gridConnectionType.name() ).path(p_energyLabel.name()).path("lossFactor_WpK").doubleValue();
+				double heatCapacity_JpK2 = main.v_buildingThermalPars.path( p_gridConnectionType.name() ).path(p_energyLabel.name()).path("heatCapacity_JpK").doubleValue();
 				p_BuildingThermalAsset.lossFactor_WpK = lossFactor_WpK2;
 				p_BuildingThermalAsset.heatCapacity_JpK = heatCapacity_JpK2;
 				traceln("House thermal model updated!");
-				traceln("House type: %s, energy label: %s", p_gridConnectionType, p_isolationLabel);
+				traceln("House type: %s, energy label: %s", p_gridConnectionType, p_energyLabel);
 				traceln("lossfactor %s, heatcapacity %s", lossFactor_WpK2, heatCapacity_JpK2);
 			}
 		p_BuildingThermalAsset.updateAmbientTemperature( main.v_currentAmbientTemperature_degC );
@@ -42932,6 +44549,25 @@ for ( int i = 0; i < copiedVehicleList.size(); i++ ){
 }
 
 ]]></Body>
+				</Function>
+				<Function AccessType="default" StaticFunction="false">
+					<ReturnModificator>VOID</ReturnModificator>
+					<ReturnType><![CDATA[double]]></ReturnType>
+					<Id>1697034280311</Id>
+					<Name><![CDATA[f_setColorDetailedObjects]]></Name>
+					<X>50</X><Y>400</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Body><![CDATA[if(p_company_connection_id != null){
+	if (p_GISbuilding == null){
+		traceln("Utility obect with ID " + p_company_connection_id + " and index " + this.getIndex() + " has no connected building");
+	}
+	else{
+		p_GISbuilding.gisRegion.setFillColor(main.v_highlightParticipantsColor);
+	}
+}]]></Body>
 				</Function>
 			</Functions>
 			<AgentLinks>
@@ -44039,6 +45675,20 @@ for ( int i = 0; i < copiedVehicleList.size(); i++ ){
 
 				</Level>
 			</Presentation>
+			<Areas>
+				<Area>
+					<Id>1696868322710</Id>
+					<Name><![CDATA[va_gridConnection]]></Name>
+					<X>0</X><Y>0</Y>
+					<Label><X>0</X><Y>-10</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>false</ShowLabel>
+					<Title><![CDATA[]]></Title>
+					<Width>1920</Width>
+					<Height>980</Height>
+				</Area>
+			</Areas>
 
 		</ActiveObjectClass>
 		<!--   =========   Active Object Class   ========  -->
@@ -58592,9 +60242,6 @@ void f_heatWithHybridHeatpump() {
 					<Name><![CDATA[p_parentNodeElectricID]]></Name>
 				</Parameter>
 				<Parameter>
-					<Name><![CDATA[p_agentID]]></Name>
-				</Parameter>
-				<Parameter>
 					<Name><![CDATA[p_parentNodeHeatID]]></Name>
 				</Parameter>
 				<Parameter>
@@ -58664,10 +60311,34 @@ void f_heatWithHybridHeatpump() {
 					<Name><![CDATA[p_cookingTracker]]></Name>
 				</Parameter>
 				<Parameter>
-					<Name><![CDATA[p_isolationLabel]]></Name>
+					<Name><![CDATA[p_energyLabel]]></Name>
 				</Parameter>
 				<Parameter>
 					<Name><![CDATA[p_DHWAsset]]></Name>
+				</Parameter>
+				<Parameter>
+					<Name><![CDATA[p_GISbuilding]]></Name>
+				</Parameter>
+				<Parameter>
+					<Name><![CDATA[p_longitude]]></Name>
+				</Parameter>
+				<Parameter>
+					<Name><![CDATA[p_latitude]]></Name>
+				</Parameter>
+				<Parameter>
+					<Name><![CDATA[p_company_name]]></Name>
+				</Parameter>
+				<Parameter>
+					<Name><![CDATA[p_huisnummer]]></Name>
+				</Parameter>
+				<Parameter>
+					<Name><![CDATA[p_openbareR]]></Name>
+				</Parameter>
+				<Parameter>
+					<Name><![CDATA[p_company_connection_id]]></Name>
+				</Parameter>
+				<Parameter>
+					<Name><![CDATA[p_agentID]]></Name>
 				</Parameter>
 			</Parameters>
 			<Generic>false</Generic>
@@ -58816,6 +60487,7 @@ void f_heatWithHybridHeatpump() {
 				<Variable Class="PlainVariable">
 					<Id>1675025488988</Id>
 					<Name><![CDATA[v_currentPriceLevel]]></Name>
+					<ExcludeFromBuild>true</ExcludeFromBuild>
 					<X>1120</X><Y>510</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
@@ -59065,7 +60737,7 @@ if (p_BuildingThermalAsset!=null & p_primaryHeatingAsset != null) {
 v_currentElectricityPriceConsumption_eurpkWh = ((ConnectionOwner)l_ownerActor.getConnectedAgent()).f_getElectricityPrice( v_currentPowerElectricity_kW );
 //v_currentAveraged7kWElectricityPrice_eurpkWh = ((ConnectionOwner)l_ownerActor.getConnectedAgent()).f_getAveragedElectricityPrice(v_currentPowerElectricity_kW, 7.0 );
 v_electricityPriceLowPassed_eurpkWh += v_lowPassFactor_fr * ( v_currentElectricityPriceConsumption_eurpkWh - v_electricityPriceLowPassed_eurpkWh );
-v_currentPriceLevel = f_getPriceLevel( v_currentElectricityPriceConsumption_eurpkWh );
+//v_currentPriceLevel = f_getPriceLevel( v_currentElectricityPriceConsumption_eurpkWh );
 double availablePowerAtPrice_kW = ((ConnectionOwner)l_ownerActor.getConnectedAgent()).f_getAvailablePowerAtPrice( v_currentPowerElectricity_kW );
 
 if (p_householdEV != null ){
@@ -59101,7 +60773,7 @@ v_currentLoadLowPassed_kW += v_lowPassFactorLoad_fr * ( v_currentPowerElectricit
 if( p_batteryAsset != null){
 	switch (p_batteryOperationMode){
 		case HOUSEHOLD_LOAD:
-			f_batteryManagementLoad();
+			f_batteryManagementBalance(v_batterySOC_fr);
 		break;
 		case PRICE:
 			f_batteryManagementPrice_overwrite(v_batterySOC_fr);
@@ -59799,6 +61471,7 @@ v_evChargingPowerElectric_kW += p_householdEV.ownerAsset.f_updateElectricityFlow
 					<ReturnType><![CDATA[double]]></ReturnType>
 					<Id>1678708804201</Id>
 					<Name><![CDATA[f_batteryManagementLoad]]></Name>
+					<ExcludeFromBuild>true</ExcludeFromBuild>
 					<X>800</X><Y>320</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
@@ -59942,6 +61615,30 @@ p_batteryAsset.f_updateAllFlows( p_batteryAsset.v_powerFraction_fr );
       	}
     }
 }]]></Body>
+				</Function>
+				<Function AccessType="default" StaticFunction="false">
+					<ReturnModificator>VOID</ReturnModificator>
+					<ReturnType><![CDATA[double]]></ReturnType>
+					<Id>1696923950404</Id>
+					<Name><![CDATA[f_setAnnualEnergyDemand]]></Name>
+					<X>970</X><Y>150</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Body><![CDATA[traceln("Placeholder function f_setAnnualEnergyDemand called! Nothing will happen.");]]></Body>
+				</Function>
+				<Function AccessType="default" StaticFunction="false">
+					<ReturnModificator>VOID</ReturnModificator>
+					<ReturnType><![CDATA[double]]></ReturnType>
+					<Id>1696924006982</Id>
+					<Name><![CDATA[f_setEnergyLabel]]></Name>
+					<X>970</X><Y>170</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Body><![CDATA[traceln("Placeholder function f_setEnergyLabel called! Nothing will happen.");]]></Body>
 				</Function>
 			</Functions>
 			<AnalysisData>
@@ -60128,9 +61825,6 @@ public void f_connectToJ_EA(J_EA j_ea){
 					<Name><![CDATA[p_parentNodeElectricID]]></Name>
 				</Parameter>
 				<Parameter>
-					<Name><![CDATA[p_agentID]]></Name>
-				</Parameter>
-				<Parameter>
 					<Name><![CDATA[p_parentNodeHeatID]]></Name>
 				</Parameter>
 				<Parameter>
@@ -60200,10 +61894,34 @@ public void f_connectToJ_EA(J_EA j_ea){
 					<Name><![CDATA[p_cookingTracker]]></Name>
 				</Parameter>
 				<Parameter>
-					<Name><![CDATA[p_isolationLabel]]></Name>
+					<Name><![CDATA[p_energyLabel]]></Name>
 				</Parameter>
 				<Parameter>
 					<Name><![CDATA[p_DHWAsset]]></Name>
+				</Parameter>
+				<Parameter>
+					<Name><![CDATA[p_GISbuilding]]></Name>
+				</Parameter>
+				<Parameter>
+					<Name><![CDATA[p_longitude]]></Name>
+				</Parameter>
+				<Parameter>
+					<Name><![CDATA[p_latitude]]></Name>
+				</Parameter>
+				<Parameter>
+					<Name><![CDATA[p_company_name]]></Name>
+				</Parameter>
+				<Parameter>
+					<Name><![CDATA[p_huisnummer]]></Name>
+				</Parameter>
+				<Parameter>
+					<Name><![CDATA[p_openbareR]]></Name>
+				</Parameter>
+				<Parameter>
+					<Name><![CDATA[p_company_connection_id]]></Name>
+				</Parameter>
+				<Parameter>
+					<Name><![CDATA[p_agentID]]></Name>
 				</Parameter>
 			</Parameters>
 			<Generic>false</Generic>
@@ -61179,9 +62897,6 @@ public void f_operateFlexAssets(){
 					<Name><![CDATA[p_parentNodeElectricID]]></Name>
 				</Parameter>
 				<Parameter>
-					<Name><![CDATA[p_agentID]]></Name>
-				</Parameter>
-				<Parameter>
 					<Name><![CDATA[p_parentNodeHeatID]]></Name>
 				</Parameter>
 				<Parameter>
@@ -61251,10 +62966,34 @@ public void f_operateFlexAssets(){
 					<Name><![CDATA[p_cookingTracker]]></Name>
 				</Parameter>
 				<Parameter>
-					<Name><![CDATA[p_isolationLabel]]></Name>
+					<Name><![CDATA[p_energyLabel]]></Name>
 				</Parameter>
 				<Parameter>
 					<Name><![CDATA[p_DHWAsset]]></Name>
+				</Parameter>
+				<Parameter>
+					<Name><![CDATA[p_GISbuilding]]></Name>
+				</Parameter>
+				<Parameter>
+					<Name><![CDATA[p_longitude]]></Name>
+				</Parameter>
+				<Parameter>
+					<Name><![CDATA[p_latitude]]></Name>
+				</Parameter>
+				<Parameter>
+					<Name><![CDATA[p_company_name]]></Name>
+				</Parameter>
+				<Parameter>
+					<Name><![CDATA[p_huisnummer]]></Name>
+				</Parameter>
+				<Parameter>
+					<Name><![CDATA[p_openbareR]]></Name>
+				</Parameter>
+				<Parameter>
+					<Name><![CDATA[p_company_connection_id]]></Name>
+				</Parameter>
+				<Parameter>
+					<Name><![CDATA[p_agentID]]></Name>
 				</Parameter>
 			</Parameters>
 			<Generic>false</Generic>
@@ -61622,9 +63361,6 @@ if (CurtailerAsset.getElectricCapacity_kW()>0) {
 					<Name><![CDATA[p_parentNodeElectricID]]></Name>
 				</Parameter>
 				<Parameter>
-					<Name><![CDATA[p_agentID]]></Name>
-				</Parameter>
-				<Parameter>
 					<Name><![CDATA[p_parentNodeHeatID]]></Name>
 				</Parameter>
 				<Parameter>
@@ -61694,10 +63430,34 @@ if (CurtailerAsset.getElectricCapacity_kW()>0) {
 					<Name><![CDATA[p_cookingTracker]]></Name>
 				</Parameter>
 				<Parameter>
-					<Name><![CDATA[p_isolationLabel]]></Name>
+					<Name><![CDATA[p_energyLabel]]></Name>
 				</Parameter>
 				<Parameter>
 					<Name><![CDATA[p_DHWAsset]]></Name>
+				</Parameter>
+				<Parameter>
+					<Name><![CDATA[p_GISbuilding]]></Name>
+				</Parameter>
+				<Parameter>
+					<Name><![CDATA[p_longitude]]></Name>
+				</Parameter>
+				<Parameter>
+					<Name><![CDATA[p_latitude]]></Name>
+				</Parameter>
+				<Parameter>
+					<Name><![CDATA[p_company_name]]></Name>
+				</Parameter>
+				<Parameter>
+					<Name><![CDATA[p_huisnummer]]></Name>
+				</Parameter>
+				<Parameter>
+					<Name><![CDATA[p_openbareR]]></Name>
+				</Parameter>
+				<Parameter>
+					<Name><![CDATA[p_company_connection_id]]></Name>
+				</Parameter>
+				<Parameter>
+					<Name><![CDATA[p_agentID]]></Name>
 				</Parameter>
 			</Parameters>
 			<Generic>false</Generic>
@@ -61880,9 +63640,6 @@ public void f_operateFlexAssets(){
 					<Name><![CDATA[p_parentNodeElectricID]]></Name>
 				</Parameter>
 				<Parameter>
-					<Name><![CDATA[p_agentID]]></Name>
-				</Parameter>
-				<Parameter>
 					<Name><![CDATA[p_parentNodeHeatID]]></Name>
 				</Parameter>
 				<Parameter>
@@ -61952,10 +63709,34 @@ public void f_operateFlexAssets(){
 					<Name><![CDATA[p_cookingTracker]]></Name>
 				</Parameter>
 				<Parameter>
-					<Name><![CDATA[p_isolationLabel]]></Name>
+					<Name><![CDATA[p_energyLabel]]></Name>
 				</Parameter>
 				<Parameter>
 					<Name><![CDATA[p_DHWAsset]]></Name>
+				</Parameter>
+				<Parameter>
+					<Name><![CDATA[p_GISbuilding]]></Name>
+				</Parameter>
+				<Parameter>
+					<Name><![CDATA[p_longitude]]></Name>
+				</Parameter>
+				<Parameter>
+					<Name><![CDATA[p_latitude]]></Name>
+				</Parameter>
+				<Parameter>
+					<Name><![CDATA[p_company_name]]></Name>
+				</Parameter>
+				<Parameter>
+					<Name><![CDATA[p_huisnummer]]></Name>
+				</Parameter>
+				<Parameter>
+					<Name><![CDATA[p_openbareR]]></Name>
+				</Parameter>
+				<Parameter>
+					<Name><![CDATA[p_company_connection_id]]></Name>
+				</Parameter>
+				<Parameter>
+					<Name><![CDATA[p_agentID]]></Name>
 				</Parameter>
 			</Parameters>
 			<Generic>false</Generic>
@@ -62532,9 +64313,6 @@ public void f_calculateEnergyBalance(){
 					<Name><![CDATA[p_connectionCapacity_kW]]></Name>
 				</Parameter>
 				<Parameter>
-					<Name><![CDATA[p_agentID]]></Name>
-				</Parameter>
-				<Parameter>
 					<Name><![CDATA[p_gridConnectionCategory]]></Name>
 				</Parameter>
 				<Parameter>
@@ -62613,10 +64391,34 @@ public void f_calculateEnergyBalance(){
 					<Name><![CDATA[p_cookingTracker]]></Name>
 				</Parameter>
 				<Parameter>
-					<Name><![CDATA[p_isolationLabel]]></Name>
+					<Name><![CDATA[p_energyLabel]]></Name>
 				</Parameter>
 				<Parameter>
 					<Name><![CDATA[p_DHWAsset]]></Name>
+				</Parameter>
+				<Parameter>
+					<Name><![CDATA[p_GISbuilding]]></Name>
+				</Parameter>
+				<Parameter>
+					<Name><![CDATA[p_longitude]]></Name>
+				</Parameter>
+				<Parameter>
+					<Name><![CDATA[p_latitude]]></Name>
+				</Parameter>
+				<Parameter>
+					<Name><![CDATA[p_company_name]]></Name>
+				</Parameter>
+				<Parameter>
+					<Name><![CDATA[p_huisnummer]]></Name>
+				</Parameter>
+				<Parameter>
+					<Name><![CDATA[p_openbareR]]></Name>
+				</Parameter>
+				<Parameter>
+					<Name><![CDATA[p_company_connection_id]]></Name>
+				</Parameter>
+				<Parameter>
+					<Name><![CDATA[p_agentID]]></Name>
 				</Parameter>
 			</Parameters>
 			<Generic>false</Generic>
@@ -63148,8 +64950,7 @@ v_maxConnectionLoad_fr = max(v_maxConnectionLoad_fr, abs(v_currentPowerElectrici
 		<!--   =========   Active Object Class   ========  -->
 		<ActiveObjectClass>
 			<Id>1667726338857</Id>
-			<Name><![CDATA[MobilityTracker]]></Name>
-			<ExcludeFromBuild>true</ExcludeFromBuild>
+			<Name><![CDATA[GIS_Region]]></Name>
 			<Generic>false</Generic>
 			<GenericParameter>
 				<Id>1667726338855</Id>
@@ -63242,128 +65043,20 @@ v_maxConnectionLoad_fr = max(v_maxConnectionLoad_fr, abs(v_currentPowerElectrici
 			<CurrentLevel>1667726338856</CurrentLevel>
 			<ConnectionsId>1667726338852</ConnectionsId>
 			<Variables>
-				<Variable Class="PlainVariable">
-					<Id>1667726387946</Id>
-					<Name><![CDATA[v_tripDist_km]]></Name>
-					<Description><![CDATA[[km]]]></Description>
-					<X>60</X><Y>220</Y>
-					<Label><X>10</X><Y>0</Y></Label>
-					<PublicFlag>false</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
-					<ShowLabel>true</ShowLabel>
-					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
-						<Type><![CDATA[double]]></Type>        
-					</Properties>
-				</Variable>
-				<Variable Class="PlainVariable">
-					<Id>1667726387948</Id>
-					<Name><![CDATA[v_tripIndex]]></Name>
-					<X>60</X><Y>240</Y>
-					<Label><X>10</X><Y>0</Y></Label>
-					<PublicFlag>false</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
-					<ShowLabel>true</ShowLabel>
-					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
-						<Type><![CDATA[int]]></Type>        
-						<InitialValue Class="CodeValue">
-							<Code><![CDATA[0]]></Code>
-						</InitialValue>
-					</Properties>
-				</Variable>
-				<Variable Class="PlainVariable">
-					<Id>1667743922290</Id>
-					<Name><![CDATA[v_away]]></Name>
-					<X>60</X><Y>200</Y>
-					<Label><X>10</X><Y>0</Y></Label>
-					<PublicFlag>false</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
-					<ShowLabel>true</ShowLabel>
-					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
-						<Type><![CDATA[boolean]]></Type>        
-						<InitialValue Class="CodeValue">
-							<Code><![CDATA[false]]></Code>
-						</InitialValue>
-					</Properties>
-				</Variable>
-				<Variable Class="PlainVariable">
-					<Id>1668366773319</Id>
-					<Name><![CDATA[v_idleTimeToNextTrip_min]]></Name>
-					<Description><![CDATA[[Minutes]]]></Description>
-					<X>60</X><Y>260</Y>
-					<Label><X>10</X><Y>0</Y></Label>
-					<PublicFlag>false</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
-					<ShowLabel>true</ShowLabel>
-					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
-						<Type><![CDATA[double]]></Type>        
-					</Properties>
-				</Variable>
-				<Variable Class="PlainVariable">
-					<Id>1668423440867</Id>
-					<Name><![CDATA[v_tripPatternName]]></Name>
-					<X>60</X><Y>150</Y>
-					<Label><X>10</X><Y>0</Y></Label>
-					<PublicFlag>false</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
-					<ShowLabel>true</ShowLabel>
-					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
-						<Type><![CDATA[String]]></Type>        
-					</Properties>
-				</Variable>
-				<Variable Class="PlainVariable">
-					<Id>1670946834008</Id>
-					<Name><![CDATA[v_nextTripStartTime_min]]></Name>
-					<Description><![CDATA[[Minutes]]]></Description>
-					<X>60</X><Y>280</Y>
-					<Label><X>10</X><Y>0</Y></Label>
-					<PublicFlag>false</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
-					<ShowLabel>true</ShowLabel>
-					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
-						<Type><![CDATA[double]]></Type>        
-					</Properties>
-				</Variable>
-				<Variable Class="PlainVariable">
-					<Id>1675635530400</Id>
-					<Name><![CDATA[v_tripPatternIndex]]></Name>
-					<X>190</X><Y>150</Y>
-					<Label><X>10</X><Y>0</Y></Label>
-					<PublicFlag>false</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
-					<ShowLabel>true</ShowLabel>
-					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
-						<Type><![CDATA[int]]></Type>        
-					</Properties>
-				</Variable>
-				<Variable Class="PlainVariable">
-					<Id>1686682721694</Id>
-					<Name><![CDATA[v_cumulativeMileage]]></Name>
-					<X>60</X><Y>180</Y>
-					<Label><X>10</X><Y>0</Y></Label>
-					<PublicFlag>false</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
-					<ShowLabel>true</ShowLabel>
-					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
-						<Type><![CDATA[double]]></Type>        
-						<InitialValue Class="CodeValue">
-							<Code><![CDATA[0]]></Code>
-						</InitialValue>
-					</Properties>
-				</Variable>
 				<Variable Class="Parameter">
-					<Id>1667742419409</Id>
-					<Name><![CDATA[p_mobilityPatternType]]></Name>
-					<X>60</X><Y>50</Y>
+					<Id>1697009799975</Id>
+					<Name><![CDATA[gisRegion]]></Name>
+					<X>50</X><Y>48</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>true</ShowLabel>
 					<Properties SaveInSnapshot="true" ModificatorType="STATIC">
-						<Type><![CDATA[OL_MobilityPatternType]]></Type>
+						<Type><![CDATA[GISRegion]]></Type>
 						<UnitType><![CDATA[NONE]]></UnitType>
 						<SdArray>false</SdArray>
 						<ParameterEditor>
-							<Id>1667742419407</Id>
+							<Id>1697009799973</Id>
 							<EditorContolType>TEXT_BOX</EditorContolType>
 							<MinSliderValue><![CDATA[0]]></MinSliderValue>
 							<MaxSliderValue><![CDATA[100]]></MaxSliderValue>
@@ -63372,19 +65065,19 @@ v_maxConnectionLoad_fr = max(v_maxConnectionLoad_fr, abs(v_currentPowerElectrici
 					</Properties>                 
 				</Variable>
 				<Variable Class="Parameter">
-					<Id>1667743331974</Id>
-					<Name><![CDATA[p_gridConnection]]></Name>
-					<X>60</X><Y>70</Y>
+					<Id>1697009799980</Id>
+					<Name><![CDATA[p_longitude]]></Name>
+					<X>49</X><Y>87</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>true</ShowLabel>
 					<Properties SaveInSnapshot="true" ModificatorType="STATIC">
-						<Type><![CDATA[GridConnection]]></Type>
+						<Type><![CDATA[double]]></Type>
 						<UnitType><![CDATA[NONE]]></UnitType>
 						<SdArray>false</SdArray>
 						<ParameterEditor>
-							<Id>1667743331972</Id>
+							<Id>1697009799978</Id>
 							<EditorContolType>TEXT_BOX</EditorContolType>
 							<MinSliderValue><![CDATA[0]]></MinSliderValue>
 							<MaxSliderValue><![CDATA[100]]></MaxSliderValue>
@@ -63393,64 +65086,19 @@ v_maxConnectionLoad_fr = max(v_maxConnectionLoad_fr, abs(v_currentPowerElectrici
 					</Properties>                 
 				</Variable>
 				<Variable Class="Parameter">
-					<Id>1667746868470</Id>
-					<Name><![CDATA[p_vehicleIndex]]></Name>
-					<X>60</X><Y>130</Y>
+					<Id>1697009799984</Id>
+					<Name><![CDATA[p_latitude]]></Name>
+					<X>49</X><Y>107</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>true</ShowLabel>
 					<Properties SaveInSnapshot="true" ModificatorType="STATIC">
-						<Type><![CDATA[int]]></Type>
-						<UnitType><![CDATA[NONE]]></UnitType>
-						<SdArray>false</SdArray>
-						<DefaultValue Class="CodeValue">
-							<Code><![CDATA[0]]></Code>
-						</DefaultValue>
-						<ParameterEditor>
-							<Id>1667746868468</Id>
-							<EditorContolType>TEXT_BOX</EditorContolType>
-							<MinSliderValue><![CDATA[0]]></MinSliderValue>
-							<MaxSliderValue><![CDATA[100]]></MaxSliderValue>
-							<DelimeterType>NO_DELIMETER</DelimeterType>
-						</ParameterEditor>
-					</Properties>                 
-				</Variable>
-				<Variable Class="Parameter">
-					<Id>1668359685412</Id>
-					<Name><![CDATA[p_energyAsset]]></Name>
-					<X>60</X><Y>90</Y>
-					<Label><X>10</X><Y>0</Y></Label>
-					<PublicFlag>false</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
-					<ShowLabel>true</ShowLabel>
-					<Properties SaveInSnapshot="true" ModificatorType="STATIC">
-						<Type><![CDATA[EnergyAsset]]></Type>
+						<Type><![CDATA[double]]></Type>
 						<UnitType><![CDATA[NONE]]></UnitType>
 						<SdArray>false</SdArray>
 						<ParameterEditor>
-							<Id>1668359685410</Id>
-							<EditorContolType>TEXT_BOX</EditorContolType>
-							<MinSliderValue><![CDATA[0]]></MinSliderValue>
-							<MaxSliderValue><![CDATA[100]]></MaxSliderValue>
-							<DelimeterType>NO_DELIMETER</DelimeterType>
-						</ParameterEditor>
-					</Properties>                 
-				</Variable>
-				<Variable Class="Parameter">
-					<Id>1668359695374</Id>
-					<Name><![CDATA[p_vehicleInstance]]></Name>
-					<X>60</X><Y>110</Y>
-					<Label><X>10</X><Y>0</Y></Label>
-					<PublicFlag>false</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
-					<ShowLabel>true</ShowLabel>
-					<Properties SaveInSnapshot="true" ModificatorType="STATIC">
-						<Type><![CDATA[J_EA]]></Type>
-						<UnitType><![CDATA[NONE]]></UnitType>
-						<SdArray>false</SdArray>
-						<ParameterEditor>
-							<Id>1668359695372</Id>
+							<Id>1697009799982</Id>
 							<EditorContolType>TEXT_BOX</EditorContolType>
 							<MinSliderValue><![CDATA[0]]></MinSliderValue>
 							<MaxSliderValue><![CDATA[100]]></MaxSliderValue>
@@ -63459,256 +65107,21 @@ v_maxConnectionLoad_fr = max(v_maxConnectionLoad_fr, abs(v_currentPowerElectrici
 					</Properties>                 
 				</Variable>
 				<Variable Class="CollectionVariable">
-					<Id>1667726387933</Id>
-					<Name><![CDATA[starttimes]]></Name>
-					<X>60</X><Y>360</Y>
+					<Id>1697009799967</Id>
+					<Name><![CDATA[c_buildingsInRegion]]></Name>
+					<X>40</X><Y>280</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>true</ShowLabel>
 					<Properties SaveInSnapshot="true" AccessType="public" StaticVariable="false">
 						<CollectionClass><![CDATA[ArrayList]]></CollectionClass>
-						<ElementClass><![CDATA[Double]]></ElementClass>
-						<ValueElementClass><![CDATA[String]]></ValueElementClass>
-					</Properties>
-
-				</Variable>
-				<Variable Class="CollectionVariable">
-					<Id>1667726387940</Id>
-					<Name><![CDATA[distances]]></Name>
-					<X>60</X><Y>420</Y>
-					<Label><X>10</X><Y>0</Y></Label>
-					<PublicFlag>false</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
-					<ShowLabel>true</ShowLabel>
-					<Properties SaveInSnapshot="true" AccessType="public" StaticVariable="false">
-						<CollectionClass><![CDATA[ArrayList]]></CollectionClass>
-						<ElementClass><![CDATA[Double]]></ElementClass>
-						<ValueElementClass><![CDATA[String]]></ValueElementClass>
-					</Properties>
-
-				</Variable>
-				<Variable Class="CollectionVariable">
-					<Id>1667726387942</Id>
-					<Name><![CDATA[endtimes]]></Name>
-					<X>60</X><Y>390</Y>
-					<Label><X>10</X><Y>0</Y></Label>
-					<PublicFlag>false</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
-					<ShowLabel>true</ShowLabel>
-					<Properties SaveInSnapshot="true" AccessType="public" StaticVariable="false">
-						<CollectionClass><![CDATA[ArrayList]]></CollectionClass>
-						<ElementClass><![CDATA[Double]]></ElementClass>
+						<ElementClass><![CDATA[GIS_Building]]></ElementClass>
 						<ValueElementClass><![CDATA[String]]></ValueElementClass>
 					</Properties>
 
 				</Variable>
 			</Variables>
-			<Events>
-				<Event>
-					<Id>1667726387951</Id>
-					<Name><![CDATA[nextActivityStartTimer]]></Name>
-					<X>60</X><Y>310</Y>
-					<Label><X>10</X><Y>0</Y></Label>
-					<PublicFlag>false</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
-					<ShowLabel>true</ShowLabel>
-					<Properties TriggerType="timeout" Mode="userControls">
-						<Timeout Class="CodeUnitValue">
-							<Code><![CDATA[1d / 0d]]></Code>
-							<Unit Class="TimeUnits"><![CDATA[MINUTE]]></Unit>
-						</Timeout>
-						<Rate Class="CodeUnitValue">
-							<Code><![CDATA[1]]></Code>
-							<Unit Class="RateUnits"><![CDATA[PER_MINUTE]]></Unit>
-						</Rate>
-						<OccurrenceAtTime>true</OccurrenceAtTime>
-						<OccurrenceDate>1643270400000</OccurrenceDate>
-						<OccurrenceTime Class="CodeUnitValue">
-							<Code><![CDATA[0]]></Code>
-							<Unit Class="TimeUnits"><![CDATA[MINUTE]]></Unit>
-						</OccurrenceTime>
-						<RecurrenceCode Class="CodeUnitValue">
-							<Code><![CDATA[1]]></Code>
-							<Unit Class="TimeUnits"><![CDATA[MINUTE]]></Unit>
-						</RecurrenceCode>
-						<Condition><![CDATA[false]]></Condition>
-					</Properties>
-					<Action><![CDATA[v_away = true;
-if(p_vehicleInstance instanceof J_EAEV){
-	((J_EAEV)p_vehicleInstance).startTrip();
-} else if (p_vehicleInstance instanceof J_EADieselVehicle){
-	((J_EADieselVehicle)p_vehicleInstance).startTrip();
-}
-//traceln("Truck vertrekt, met SOC: " + p_vehicleInstance.getCurrentStateOfCharge());
-v_idleTimeToNextTrip_min = 0;
-
-]]></Action>
-				</Event>
-				<Event>
-					<Id>1667726387954</Id>
-					<Name><![CDATA[nextActivityEndTimer]]></Name>
-					<X>60</X><Y>330</Y>
-					<Label><X>10</X><Y>0</Y></Label>
-					<PublicFlag>false</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
-					<ShowLabel>true</ShowLabel>
-					<Properties TriggerType="timeout" Mode="userControls">
-						<Timeout Class="CodeUnitValue">
-							<Code><![CDATA[1d / 0d]]></Code>
-							<Unit Class="TimeUnits"><![CDATA[MINUTE]]></Unit>
-						</Timeout>
-						<Rate Class="CodeUnitValue">
-							<Code><![CDATA[1]]></Code>
-							<Unit Class="RateUnits"><![CDATA[PER_MINUTE]]></Unit>
-						</Rate>
-						<OccurrenceAtTime>true</OccurrenceAtTime>
-						<OccurrenceDate>1643270400000</OccurrenceDate>
-						<OccurrenceTime Class="CodeUnitValue">
-							<Code><![CDATA[0]]></Code>
-							<Unit Class="TimeUnits"><![CDATA[MINUTE]]></Unit>
-						</OccurrenceTime>
-						<RecurrenceCode Class="CodeUnitValue">
-							<Code><![CDATA[1]]></Code>
-							<Unit Class="TimeUnits"><![CDATA[MINUTE]]></Unit>
-						</RecurrenceCode>
-						<Condition><![CDATA[false]]></Condition>
-					</Properties>
-					<Action><![CDATA[//set current trip as a planned trip for the next week.
-starttimes.set( v_tripIndex, starttimes.get(v_tripIndex) + 10080 );
-endtimes.set( v_tripIndex, endtimes.get(v_tripIndex) + 10080 );
-
-v_tripIndex++;
-if ( v_tripIndex > starttimes.size() - 1 ) {
-	v_tripIndex = 0;
-}
-
-v_idleTimeToNextTrip_min = starttimes.get(v_tripIndex) - time( MINUTE );
-v_nextTripStartTime_min = starttimes.get(v_tripIndex);
-//traceln(v_nextTripStartTime_min);
-nextActivityStartTimer.restart( v_idleTimeToNextTrip_min, MINUTE);
-nextActivityEndTimer.restart( endtimes.get(v_tripIndex) - time( MINUTE ), MINUTE);
-
-if(p_vehicleInstance instanceof J_EAEV){
-	((J_EAEV)p_vehicleInstance).endTrip( v_tripDist_km, v_idleTimeToNextTrip_min);
-	((J_EAEV)p_vehicleInstance).energyNeedForNextTrip_kWh = ((J_EAEV)p_vehicleInstance).getEnergyConsumption_kWhpkm() * distances.get( v_tripIndex );
-	if( ! (p_gridConnection instanceof GCHouse)){
-		p_gridConnection.c_vehiclesAvailableForCharging.add( p_energyAsset ); // for houses we dont use the collection. 
-	}
-	if (p_gridConnection.p_chargingAttitudeVehicles == MAX_SPREAD){
-		((J_EAEV)p_vehicleInstance).setMaxSpreadChargingRatio(p_gridConnection.v_additionalTimeSpreadCharging_MIN);
-		//traceln( "vehicle komt aan van " + v_tripDist_km + " km, charging ratio set at: " + p_vehicleInstance.getMaxSpreadChargingRatio());
-	}
-} 
-else if(p_vehicleInstance instanceof J_EADieselVehicle){
-	((J_EADieselVehicle)p_vehicleInstance).endTrip( v_tripDist_km, v_idleTimeToNextTrip_min);
-	//p_gridConnection.c_vehiclesAvailableForTanking.add( p_energyAsset ); // Doesn't do anything?
-}
-
-v_away = false;
-v_cumulativeMileage += v_tripDist_km;
-v_tripDist_km = distances.get( v_tripIndex ); // Update upcoming trip distance
-
-//traceln( date() +  " truck komt terug, km: " + v_tripDist_km);]]></Action>
-				</Event>
-			</Events>
-			<Functions>
-				<Function AccessType="default" StaticFunction="false">
-					<ReturnModificator>VOID</ReturnModificator>
-					<ReturnType><![CDATA[double]]></ReturnType>
-					<Id>1667726387944</Id>
-					<Name><![CDATA[f_getTruckTrips]]></Name>
-					<X>820</X><Y>70</Y>
-					<Label><X>10</X><Y>0</Y></Label>
-					<PublicFlag>false</PublicFlag>
-					<PresentationFlag>false</PresentationFlag>
-					<ShowLabel>true</ShowLabel>
-					<Body><![CDATA[int rowIndex = uniform_discr(2, 9); //nu hardcoded maar kunnen we zo met input files doen.
-v_tripPatternName = main.inputTruckTrips.getCellStringValue("sheet1", rowIndex, 1);
-int nbTrips = roundToInt(main.inputTruckTrips.getCellNumericValue("sheet1", rowIndex, 2));
-
-for (int i = 0; i < nbTrips; i++){
-	starttimes.add(main.inputTruckTrips.getCellNumericValue("sheet1", rowIndex, 3 + i * 3));
-	endtimes.add(main.inputTruckTrips.getCellNumericValue("sheet1", rowIndex, 4 + i * 3));
-	distances.add(main.inputTruckTrips.getCellNumericValue("sheet1", rowIndex, 5 + i * 3));
-}
-
-while ( starttimes.get(v_tripIndex) - time( MINUTE ) < 0) {
-	starttimes.set( v_tripIndex, starttimes.get(v_tripIndex) + 10080 );
-	endtimes.set( v_tripIndex, endtimes.get(v_tripIndex) + 10080 );
-	v_tripIndex++;
-	if ( v_tripIndex > starttimes.size() - 1 ) {
-		v_tripIndex = 0;
-	}
-}
-
-nextActivityStartTimer.restart( starttimes.get(v_tripIndex) - time( MINUTE ), MINUTE);
-nextActivityEndTimer.restart( endtimes.get(v_tripIndex) - time( MINUTE ), MINUTE);
-v_tripDist_km = distances.get(v_tripIndex);
-]]></Body>
-				</Function>
-				<Function AccessType="default" StaticFunction="false">
-					<ReturnModificator>VOID</ReturnModificator>
-					<ReturnType><![CDATA[double]]></ReturnType>
-					<Id>1667742541169</Id>
-					<Name><![CDATA[f_getData]]></Name>
-					<X>790</X><Y>50</Y>
-					<Label><X>10</X><Y>0</Y></Label>
-					<PublicFlag>false</PublicFlag>
-					<PresentationFlag>false</PresentationFlag>
-					<ShowLabel>true</ShowLabel>
-					<Body><![CDATA[switch (p_mobilityPatternType){
-	case TRUCK:
-		f_getTruckTrips();
-	break;
-	case PRIVATE_VEHICLE:
-		f_getHouseholdTrips();
-	break;
-	case BUS:
-
-	break;
-	default:
-		traceln("Mobility tracker -> f_getData(): incorrect mobility pattern type");
-	break;
-}]]></Body>
-				</Function>
-				<Function AccessType="default" StaticFunction="false">
-					<ReturnModificator>VOID</ReturnModificator>
-					<ReturnType><![CDATA[double]]></ReturnType>
-					<Id>1667742554956</Id>
-					<Name><![CDATA[f_getHouseholdTrips]]></Name>
-					<X>820</X><Y>90</Y>
-					<Label><X>10</X><Y>0</Y></Label>
-					<PublicFlag>false</PublicFlag>
-					<PresentationFlag>false</PresentationFlag>
-					<ShowLabel>true</ShowLabel>
-					<Body><![CDATA[int rowIndex = uniform_discr(1, 200);//getIndex() % 200;
-v_tripPatternIndex = rowIndex;
-
-int nbTrips = roundToInt(p_gridConnection.main.inputHouseholdTrips.getCellNumericValue("sheet1", rowIndex + 2, 2));
-
-for (int i = 0; i < nbTrips; i++){
-	starttimes.add(p_gridConnection.main.inputHouseholdTrips.getCellNumericValue("sheet1", rowIndex + 2, 3 + i * 3));
-	endtimes.add(p_gridConnection.main.inputHouseholdTrips.getCellNumericValue("sheet1", rowIndex + 2, 4 + i * 3));
-	distances.add(p_gridConnection.main.inputHouseholdTrips.getCellNumericValue("sheet1", rowIndex + 2, 5 + i * 3));
-}
-
-while ( starttimes.get(v_tripIndex) - time( MINUTE ) < 0) {
-	starttimes.set( v_tripIndex, starttimes.get(v_tripIndex) + 10080 );
-	endtimes.set( v_tripIndex, endtimes.get(v_tripIndex) + 10080 );
-	v_tripIndex++;
-	if ( v_tripIndex > starttimes.size() - 1 ) {
-		v_tripIndex = 0;
-	}
-}
-
-nextActivityStartTimer.restart( starttimes.get(v_tripIndex) - time( MINUTE ), MINUTE);
-nextActivityEndTimer.restart( endtimes.get(v_tripIndex) - time( MINUTE ), MINUTE);
-v_tripDist_km = distances.get(v_tripIndex);
-// IS DE - starttimes.get(0) in deze initialisatie correct?? ! Bij trukcs niet, Later nog checken.
-]]></Body>
-				</Function>
-			</Functions>
 			<AgentLinks>
 				<AgentLink>
 					<Id>1667726338852</Id>
@@ -63754,7 +65167,6 @@ v_tripDist_km = distances.get(v_tripIndex);
 		<ActiveObjectClass>
 			<Id>1672138285227</Id>
 			<Name><![CDATA[GCUtility]]></Name>
-			<ExcludeFromBuild>true</ExcludeFromBuild>
 			<ExtendsReference>
 				<PackageName><![CDATA[zero]]></PackageName>
 				<ClassName><![CDATA[GridConnection]]></ClassName>
@@ -63845,10 +65257,31 @@ v_tripDist_km = distances.get(v_tripIndex);
 					<Name><![CDATA[p_cookingTracker]]></Name>
 				</Parameter>
 				<Parameter>
-					<Name><![CDATA[p_isolationLabel]]></Name>
+					<Name><![CDATA[p_energyLabel]]></Name>
 				</Parameter>
 				<Parameter>
 					<Name><![CDATA[p_DHWAsset]]></Name>
+				</Parameter>
+				<Parameter>
+					<Name><![CDATA[p_GISbuilding]]></Name>
+				</Parameter>
+				<Parameter>
+					<Name><![CDATA[p_longitude]]></Name>
+				</Parameter>
+				<Parameter>
+					<Name><![CDATA[p_latitude]]></Name>
+				</Parameter>
+				<Parameter>
+					<Name><![CDATA[p_company_name]]></Name>
+				</Parameter>
+				<Parameter>
+					<Name><![CDATA[p_huisnummer]]></Name>
+				</Parameter>
+				<Parameter>
+					<Name><![CDATA[p_openbareR]]></Name>
+				</Parameter>
+				<Parameter>
+					<Name><![CDATA[p_company_connection_id]]></Name>
 				</Parameter>
 			</Parameters>
 			<Generic>false</Generic>
@@ -63964,6 +65397,22 @@ v_tripDist_km = distances.get(v_tripIndex);
 				</AgentLink>
 			</AgentLinks>
 
+			<ContainerLinks>
+				<ContainerLink>
+					<Id>1696862765126</Id>
+					<Name><![CDATA[main]]></Name>
+					<ExcludeFromBuild>true</ExcludeFromBuild>
+					<X>40</X><Y>-40</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<ActiveObjectClass>
+						<PackageName><![CDATA[zero]]></PackageName>
+						<ClassName><![CDATA[Main]]></ClassName>
+					</ActiveObjectClass>
+				</ContainerLink>
+			</ContainerLinks>
 
 			<Presentation>
 				<Level>
@@ -64380,7 +65829,7 @@ v_tripDist_km = distances.get(v_tripIndex);
 				<Variable Class="PlainVariable">
 					<Id>1696856781371</Id>
 					<Name><![CDATA[ar_countHeatSystems]]></Name>
-					<X>30</X><Y>220</Y>
+					<X>30</X><Y>240</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -64389,21 +65838,30 @@ v_tripDist_km = distances.get(v_tripIndex);
 						<Type><![CDATA[int[]]]></Type>        
 					</Properties>
 				</Variable>
+				<Variable Class="PlainVariable">
+					<Id>1697018028202</Id>
+					<Name><![CDATA[v_currentColor]]></Name>
+					<X>180</X><Y>110</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
+						<Type><![CDATA[Color]]></Type>        
+					</Properties>
+				</Variable>
 				<Variable Class="Parameter">
 					<Id>1676641559092</Id>
 					<Name><![CDATA[gisRegion]]></Name>
-					<X>40</X><Y>38</Y>
+					<X>40</X><Y>58</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>true</ShowLabel>
 					<Properties SaveInSnapshot="true" ModificatorType="STATIC">
-						<Type><![CDATA[GISregion]]></Type>
+						<Type><![CDATA[GISRegion]]></Type>
 						<UnitType><![CDATA[NONE]]></UnitType>
 						<SdArray>false</SdArray>
-						<DefaultValue Class="CodeValue">
-							<Code><![CDATA[9999]]></Code>
-						</DefaultValue>
 						<ParameterEditor>
 							<Id>1676641559090</Id>
 							<EditorContolType>TEXT_BOX</EditorContolType>
@@ -64416,7 +65874,7 @@ v_tripDist_km = distances.get(v_tripIndex);
 				<Variable Class="Parameter">
 					<Id>1696858052529</Id>
 					<Name><![CDATA[p_status]]></Name>
-					<X>39</X><Y>57</Y>
+					<X>39</X><Y>77</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -64437,7 +65895,7 @@ v_tripDist_km = distances.get(v_tripIndex);
 				<Variable Class="Parameter">
 					<Id>1696858052537</Id>
 					<Name><![CDATA[p_longitude]]></Name>
-					<X>39</X><Y>77</Y>
+					<X>39</X><Y>97</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -64458,7 +65916,7 @@ v_tripDist_km = distances.get(v_tripIndex);
 				<Variable Class="Parameter">
 					<Id>1696858052543</Id>
 					<Name><![CDATA[p_latitude]]></Name>
-					<X>39</X><Y>97</Y>
+					<X>39</X><Y>117</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -64479,7 +65937,7 @@ v_tripDist_km = distances.get(v_tripIndex);
 				<Variable Class="Parameter">
 					<Id>1696858052547</Id>
 					<Name><![CDATA[p_useType]]></Name>
-					<X>39</X><Y>117</Y>
+					<X>39</X><Y>137</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -64500,7 +65958,7 @@ v_tripDist_km = distances.get(v_tripIndex);
 				<Variable Class="Parameter">
 					<Id>1696858052551</Id>
 					<Name><![CDATA[p_buildingType]]></Name>
-					<X>39</X><Y>137</Y>
+					<X>39</X><Y>157</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -64521,7 +65979,7 @@ v_tripDist_km = distances.get(v_tripIndex);
 				<Variable Class="Parameter">
 					<Id>1696858052555</Id>
 					<Name><![CDATA[p_buildingYear]]></Name>
-					<X>39</X><Y>157</Y>
+					<X>39</X><Y>177</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -64542,7 +66000,7 @@ v_tripDist_km = distances.get(v_tripIndex);
 				<Variable Class="Parameter">
 					<Id>1696858052560</Id>
 					<Name><![CDATA[p_surfaceArea]]></Name>
-					<X>39</X><Y>177</Y>
+					<X>39</X><Y>197</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -64563,7 +66021,7 @@ v_tripDist_km = distances.get(v_tripIndex);
 				<Variable Class="Parameter">
 					<Id>1696858052564</Id>
 					<Name><![CDATA[p_floors]]></Name>
-					<X>39</X><Y>197</Y>
+					<X>39</X><Y>217</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -64581,6 +66039,58 @@ v_tripDist_km = distances.get(v_tripIndex);
 						</ParameterEditor>
 					</Properties>                 
 				</Variable>
+				<Variable Class="Parameter">
+					<Id>1697017325815</Id>
+					<Name><![CDATA[p_id]]></Name>
+					<X>40</X><Y>38</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" ModificatorType="STATIC">
+						<Type><![CDATA[double]]></Type>
+						<UnitType><![CDATA[NONE]]></UnitType>
+						<SdArray>false</SdArray>
+						<ParameterEditor>
+							<Id>1697017325813</Id>
+							<EditorContolType>TEXT_BOX</EditorContolType>
+							<MinSliderValue><![CDATA[0]]></MinSliderValue>
+							<MaxSliderValue><![CDATA[100]]></MaxSliderValue>
+							<DelimeterType>NO_DELIMETER</DelimeterType>
+						</ParameterEditor>
+					</Properties>                 
+				</Variable>
+				<Variable Class="CollectionVariable">
+					<Id>1696864251210</Id>
+					<Name><![CDATA[c_utilityObjectsInBuilding]]></Name>
+					<ExcludeFromBuild>true</ExcludeFromBuild>
+					<X>30</X><Y>290</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" AccessType="public" StaticVariable="false">
+						<CollectionClass><![CDATA[ArrayList]]></CollectionClass>
+						<ElementClass><![CDATA[GCUtility]]></ElementClass>
+						<ValueElementClass><![CDATA[String]]></ValueElementClass>
+					</Properties>
+
+				</Variable>
+				<Variable Class="CollectionVariable">
+					<Id>1696866057758</Id>
+					<Name><![CDATA[c_gridConnectionsInBuilding]]></Name>
+					<X>30</X><Y>320</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" AccessType="public" StaticVariable="false">
+						<CollectionClass><![CDATA[ArrayList]]></CollectionClass>
+						<ElementClass><![CDATA[GridConnection]]></ElementClass>
+						<ValueElementClass><![CDATA[String]]></ValueElementClass>
+					</Properties>
+
+				</Variable>
 			</Variables>
 			<Functions>
 				<Function AccessType="default" StaticFunction="false">
@@ -64593,14 +66103,16 @@ v_tripDist_km = distances.get(v_tripIndex);
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>true</ShowLabel>
-					<Body><![CDATA[for ( GISRegion r : main.c_GISbuildings ) {
+					<Body><![CDATA[for ( GISRegion r : main.c_buildingGISRegions ) {
 	if ( r.contains( p_latitude, p_longitude )) {
 		gisRegion = r;
 		gisRegion.setVisible(true);
 		gisRegion.setLineColor( black );
 		gisRegion.setLineStyle( LINE_STYLE_SOLID );
 		gisRegion.setLineWidth( 0.3 );
-		gisRegion.setFillColor( new Color(205, 133, 63, 90) );
+		//gisRegion.setFillColor( new Color(205, 133, 63, 90) );
+		gisRegion.setFillColor( blue );
+		//traceln("GISregion found for building " + this);
 	}
 	if (gisRegion != null){
 		break;
@@ -64612,6 +66124,53 @@ if (gisRegion == null ) {
 	traceln(this.getName() + " has no GIS area");
 	//gisRegion = main.gisRegionUnknown;
 }
+]]></Body>
+				</Function>
+				<Function AccessType="default" StaticFunction="false">
+					<ReturnModificator>VOID</ReturnModificator>
+					<ReturnType><![CDATA[double]]></ReturnType>
+					<Id>1696924186553</Id>
+					<Name><![CDATA[f_countEnergyLabels]]></Name>
+					<X>180</X><Y>15</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Body><![CDATA[traceln("f_countEnergyLabels is not functional!");
+]]></Body>
+				</Function>
+				<Function AccessType="default" StaticFunction="false">
+					<ReturnModificator>VOID</ReturnModificator>
+					<ReturnType><![CDATA[double]]></ReturnType>
+					<Id>1697017421161</Id>
+					<Name><![CDATA[f_listGridConnectionsInBuilding]]></Name>
+					<X>180</X><Y>37</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Body><![CDATA[if (gisRegion != null) {
+	for (GridConnection GC : main.c_gridConnections){
+		if (gisRegion.contains( GC.p_latitude, GC.p_longitude )){
+			c_gridConnectionsInBuilding.add(GC);
+			GC.p_GISbuilding = this;
+			//x.buildingTypeGIS = p_buildingType;
+		}
+	}
+}]]></Body>
+				</Function>
+				<Function AccessType="default" StaticFunction="false">
+					<ReturnModificator>VOID</ReturnModificator>
+					<ReturnType><![CDATA[double]]></ReturnType>
+					<Id>1697017422847</Id>
+					<Name><![CDATA[f_listUtilityObjectsInBuilding]]></Name>
+					<ExcludeFromBuild>true</ExcludeFromBuild>
+					<X>180</X><Y>60</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Body><![CDATA[traceln("f_listUtilityObjectsInBuilding is not functional!");
 ]]></Body>
 				</Function>
 			</Functions>
@@ -64669,6 +66228,20 @@ if (gisRegion == null ) {
 
 				</Level>
 			</Presentation>
+			<Areas>
+				<Area>
+					<Id>1697018621698</Id>
+					<Name><![CDATA[va_building]]></Name>
+					<X>0</X><Y>0</Y>
+					<Label><X>0</X><Y>-10</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>false</ShowLabel>
+					<Title><![CDATA[]]></Title>
+					<Width>1920</Width>
+					<Height>980</Height>
+				</Area>
+			</Areas>
 
 		</ActiveObjectClass>
 	</ActiveObjectClasses>	
@@ -64680,14 +66253,56 @@ if (gisRegion == null ) {
 	<RelativeAccuracy>1.0</RelativeAccuracy>
 	<TimeAccuracy>0.1</TimeAccuracy>
 	<Frame>
-		<Width>1370</Width>
-		<Height>770</Height>
+		<Width>1920</Width>
+		<Height>980</Height>
 	</Frame>
 	<Database>
 		<Logging>false</Logging>
 		<AutoExport>false</AutoExport>
 		<ShutdownCompact>false</ShutdownCompact>
 		<ImportSettings>
+			<ExternalConnection>
+				<Id>1658496976208</Id>
+				<Name><![CDATA[database]]></Name>
+				<X>0</X><Y>0</Y>
+				<Label><X>10</X><Y>0</Y></Label>
+				<PublicFlag>false</PublicFlag>
+				<PresentationFlag>true</PresentationFlag>
+				<ShowLabel>true</ShowLabel>
+				<DatabaseType>EXCEL_ACCESS</DatabaseType>
+				<ConnectionURL><![CDATA[]]></ConnectionURL>
+				<ConnectOnStartup>true</ConnectOnStartup>
+				<DatabaseName><![CDATA[]]></DatabaseName>
+				<ResourceReference>
+					<PackageName><![CDATA[zero]]></PackageName>
+					<ClassName><![CDATA[db_backboneParams.xlsx]]></ClassName>
+				</ResourceReference>
+				<Host><![CDATA[localhost]]></Host>
+				<JdbcDriverClassName><![CDATA[net.sourceforge.jtds.jdbc.Driver]]></JdbcDriverClassName>
+				<Login><![CDATA[]]></Login>
+				<Password><![CDATA[]]></Password>
+			</ExternalConnection>
+			<ExternalConnection>
+				<Id>1697095626039</Id>
+				<Name><![CDATA[database]]></Name>
+				<X>0</X><Y>0</Y>
+				<Label><X>10</X><Y>0</Y></Label>
+				<PublicFlag>false</PublicFlag>
+				<PresentationFlag>true</PresentationFlag>
+				<ShowLabel>true</ShowLabel>
+				<DatabaseType>EXCEL_ACCESS</DatabaseType>
+				<ConnectionURL><![CDATA[]]></ConnectionURL>
+				<ConnectOnStartup>true</ConnectOnStartup>
+				<DatabaseName><![CDATA[]]></DatabaseName>
+				<ResourceReference>
+					<PackageName><![CDATA[zero]]></PackageName>
+					<ClassName><![CDATA[_companies.xlsx]]></ClassName>
+				</ResourceReference>
+				<Host><![CDATA[localhost]]></Host>
+				<JdbcDriverClassName><![CDATA[net.sourceforge.jtds.jdbc.Driver]]></JdbcDriverClassName>
+				<Login><![CDATA[]]></Login>
+				<Password><![CDATA[]]></Password>
+			</ExternalConnection>
 			<ExternalConnection>
 				<Id>1659337777421</Id>
 				<Name><![CDATA[database]]></Name>
@@ -64710,7 +66325,7 @@ if (gisRegion == null ) {
 				<Password><![CDATA[]]></Password>
 			</ExternalConnection>
 			<ExternalConnection>
-				<Id>1658496976208</Id>
+				<Id>1697095214801</Id>
 				<Name><![CDATA[database]]></Name>
 				<X>0</X><Y>0</Y>
 				<Label><X>10</X><Y>0</Y></Label>
@@ -64723,7 +66338,7 @@ if (gisRegion == null ) {
 				<DatabaseName><![CDATA[]]></DatabaseName>
 				<ResourceReference>
 					<PackageName><![CDATA[zero]]></PackageName>
-					<ClassName><![CDATA[db_backboneParams.xlsx]]></ClassName>
+					<ClassName><![CDATA[_residence_objects.xlsx]]></ClassName>
 				</ResourceReference>
 				<Host><![CDATA[localhost]]></Host>
 				<JdbcDriverClassName><![CDATA[net.sourceforge.jtds.jdbc.Driver]]></JdbcDriverClassName>
@@ -64733,19 +66348,73 @@ if (gisRegion == null ) {
 			<TableImportSettings>
 				<TableReference>
 					<PackageName><![CDATA[zero]]></PackageName>
-					<ClassName><![CDATA[profiles]]></ClassName>
+					<ClassName><![CDATA[buildings]]></ClassName>
 				</TableReference>
 				<ConnectionIndex>0</ConnectionIndex>
+				<ExternalTableName><![CDATA["params"]]></ExternalTableName>
+				<AutoImport>false</AutoImport>
+			</TableImportSettings>
+			<TableImportSettings>
+				<TableReference>
+					<PackageName><![CDATA[zero]]></PackageName>
+					<ClassName><![CDATA[company_contacts]]></ClassName>
+				</TableReference>
+				<ConnectionIndex>1</ConnectionIndex>
+				<ExternalTableName><![CDATA["company contacts"]]></ExternalTableName>
+				<AutoImport>false</AutoImport>
+			</TableImportSettings>
+			<TableImportSettings>
+				<TableReference>
+					<PackageName><![CDATA[zero]]></PackageName>
+					<ClassName><![CDATA[profiles]]></ClassName>
+				</TableReference>
+				<ConnectionIndex>2</ConnectionIndex>
 				<ExternalTableName><![CDATA["profiles"]]></ExternalTableName>
 				<AutoImport>true</AutoImport>
 			</TableImportSettings>
 			<TableImportSettings>
 				<TableReference>
 					<PackageName><![CDATA[zero]]></PackageName>
-					<ClassName><![CDATA[params]]></ClassName>
+					<ClassName><![CDATA[companies]]></ClassName>
 				</TableReference>
 				<ConnectionIndex>1</ConnectionIndex>
-				<ExternalTableName><![CDATA["params"]]></ExternalTableName>
+				<ExternalTableName><![CDATA["companies"]]></ExternalTableName>
+				<AutoImport>false</AutoImport>
+			</TableImportSettings>
+			<TableImportSettings>
+				<TableReference>
+					<PackageName><![CDATA[zero]]></PackageName>
+					<ClassName><![CDATA[comp_gas_consumption]]></ClassName>
+				</TableReference>
+				<ConnectionIndex>1</ConnectionIndex>
+				<ExternalTableName><![CDATA["comp_gas_consumption"]]></ExternalTableName>
+				<AutoImport>false</AutoImport>
+			</TableImportSettings>
+			<TableImportSettings>
+				<TableReference>
+					<PackageName><![CDATA[zero]]></PackageName>
+					<ClassName><![CDATA[residence_objects]]></ClassName>
+				</TableReference>
+				<ConnectionIndex>3</ConnectionIndex>
+				<ExternalTableName><![CDATA["residence_objects"]]></ExternalTableName>
+				<AutoImport>false</AutoImport>
+			</TableImportSettings>
+			<TableImportSettings>
+				<TableReference>
+					<PackageName><![CDATA[zero]]></PackageName>
+					<ClassName><![CDATA[comp_connections]]></ClassName>
+				</TableReference>
+				<ConnectionIndex>1</ConnectionIndex>
+				<ExternalTableName><![CDATA["comp_connections"]]></ExternalTableName>
+				<AutoImport>false</AutoImport>
+			</TableImportSettings>
+			<TableImportSettings>
+				<TableReference>
+					<PackageName><![CDATA[zero]]></PackageName>
+					<ClassName><![CDATA[comp_elec_consumption]]></ClassName>
+				</TableReference>
+				<ConnectionIndex>1</ConnectionIndex>
+				<ExternalTableName><![CDATA["comp_elec_consumption"]]></ExternalTableName>
 				<AutoImport>true</AutoImport>
 			</TableImportSettings>
 		</ImportSettings>
@@ -65059,6 +66728,21 @@ if (gisRegion == null ) {
 				<Parameter>
 					<ParameterName><![CDATA[b_storeProfiles]]></ParameterName>
 				</Parameter>
+				<Parameter>
+					<ParameterName><![CDATA[p_simulationYear]]></ParameterName>
+				</Parameter>
+				<Parameter>
+					<ParameterName><![CDATA[p_centerLatitude]]></ParameterName>
+				</Parameter>
+				<Parameter>
+					<ParameterName><![CDATA[p_centerLongitude]]></ParameterName>
+				</Parameter>
+				<Parameter>
+					<ParameterName><![CDATA[p_simulatedArea]]></ParameterName>
+				</Parameter>
+				<Parameter>
+					<ParameterName><![CDATA[p_defaultConsumptionAsset]]></ParameterName>
+				</Parameter>
 			</Parameters>			
 			<PresentationProperties>
 				<EnableZoomAndPanning>true</EnableZoomAndPanning>
@@ -65367,7 +67051,7 @@ public class J_EAConsumption extends zero.J_EA implements Serializable {
 			<Text><![CDATA[/**
  * J_EA
  */
-public class J_EA {
+public class J_EA implements Cloneable {
 	
 	 // To remove eventually
 	 //protected EnergyAsset ownerAsset;
@@ -65460,7 +67144,7 @@ public class J_EA {
     public double getCurrentTemperature() {
     	return 0;
     }
-
+      
     public void updateAmbientTemperature(double currentAmbientTemperature_degC) {
     	// only for storage agents. Does it belong in this superclass?
     }
@@ -65500,7 +67184,15 @@ public class J_EA {
 //    public double getOutputTemperature_degC() {
 //   	return 0;
 //    }
-
+    @Override    
+    public Object clone() { 
+    	try {
+    		return super.clone(); 
+    	} catch (CloneNotSupportedException e) {
+    		throw new RuntimeException(e);
+    	}
+    } 
+    
 	@Override
 	public String toString() {
 		return
@@ -68336,6 +70028,14 @@ public class J_ActivityTrackerCooking extends J_ActivityTracker implements Seria
 		</Resource>
 		<Resource>
 			<Path><![CDATA[medium_voltage_cables_groote_lindt.shx]]></Path>
+			<ReferencedFromUserCode>false</ReferencedFromUserCode>
+		</Resource>
+		<Resource>
+			<Path><![CDATA[_companies.xlsx]]></Path>
+			<ReferencedFromUserCode>false</ReferencedFromUserCode>
+		</Resource>
+		<Resource>
+			<Path><![CDATA[_residence_objects.xlsx]]></Path>
 			<ReferencedFromUserCode>false</ReferencedFromUserCode>
 		</Resource>
 	</ModelResources>

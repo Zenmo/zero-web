@@ -43,5 +43,11 @@
         "stateOfCharge_r": 0.7,
         "storageCapacity_kWh": 15.0,
         "type": "STORAGE_ELECTRIC"
-    }
+    },
+	{
+		"category": "CONSUMPTION",
+		"name": "TEMPLATE other electricity demand",
+		"type": "ELECTRICITY_DEMAND",
+		"yearlyDemandElectricity_kWh": 0.0
+	}
 ]

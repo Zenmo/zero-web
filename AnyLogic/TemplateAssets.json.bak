@@ -24,7 +24,7 @@
         "category": "STORAGE",
         "energyConsumption_kWhpkm": 0.2,
         "name": "TEMPLATE: Private Electric Vehicle",
-        "stateOfCharge_r": 0.8,
+        "stateOfCharge_r": 1.0,
         "storageCapacity_kWh": 70.0,
         "type": "ELECTRIC_VEHICLE",
         "vehicleScaling": 1
