@@ -418,103 +418,60 @@
 		</OptionList>
 		<OptionList>
 			<Id>1659701773383</Id>
-			<Name><![CDATA[OL_EAPresetConsumptionAssets]]></Name>
+			<Name><![CDATA[OL_AreaType]]></Name>
 			<Option>
 				<Id>1659701782496</Id>
-				<Name><![CDATA[House_hot_water]]></Name>
+				<Name><![CDATA[NEIGHBORHOOD]]></Name>
 			</Option>
 			<Option>
 				<Id>1659701773953</Id>
-				<Name><![CDATA[House_other_electricity]]></Name>
+				<Name><![CDATA[RES]]></Name>
 			</Option>
 			<Option>
 				<Id>1659701788868</Id>
-				<Name><![CDATA[Office_other_electricity]]></Name>
+				<Name><![CDATA[INDUSTRY]]></Name>
 			</Option>
 			<Option>
 				<Id>1659701795639</Id>
-				<Name><![CDATA[Store_other_electricity]]></Name>
+				<Name><![CDATA[BUSINESS]]></Name>
 			</Option>
 			<Option>
-				<Id>1665497737979</Id>
-				<Name><![CDATA[Industry_steel_electricity]]></Name>
-			</Option>
-			<Option>
-				<Id>1665497737980</Id>
-				<Name><![CDATA[Industry_steel_heat]]></Name>
-			</Option>
-			<Option>
-				<Id>1665497737981</Id>
-				<Name><![CDATA[Industry_other_electricity]]></Name>
-			</Option>
-			<Option>
-				<Id>1665497737982</Id>
-				<Name><![CDATA[Industry_other_heat]]></Name>
-			</Option>
-			<Option>
-				<Id>1667399177906</Id>
-				<Name><![CDATA[Logistics_fleet_hgv_E]]></Name>
+				<Id>1697466302695</Id>
+				<Name><![CDATA[HVTRANSFORMER]]></Name>
 			</Option>
 		</OptionList>
 		<OptionList>
 			<Id>1659711659517</Id>
-			<Name><![CDATA[OL_EAPresetConversionAssets]]></Name>
+			<Name><![CDATA[OL_BuildingType]]></Name>
 			<Option>
 				<Id>1659711661606</Id>
-				<Name><![CDATA[House_heatpump_MT_S]]></Name>
+				<Name><![CDATA[House]]></Name>
 			</Option>
 			<Option>
 				<Id>1659711661607</Id>
-				<Name><![CDATA[House_heatpump_MT_M]]></Name>
+				<Name><![CDATA[Office]]></Name>
 			</Option>
 			<Option>
 				<Id>1659711661608</Id>
-				<Name><![CDATA[House_heatpump_MT_L]]></Name>
+				<Name><![CDATA[Store]]></Name>
 			</Option>
 			<Option>
 				<Id>1659711661609</Id>
-				<Name><![CDATA[House_gas_burner]]></Name>
+				<Name><![CDATA[School]]></Name>
 			</Option>
 			<Option>
 				<Id>1659711661610</Id>
-				<Name><![CDATA[Electrolyser]]></Name>
+				<Name><![CDATA[Factory]]></Name>
 			</Option>
 			<Option>
 				<Id>1660054094472</Id>
-				<Name><![CDATA[DH_gas_burner_S]]></Name>
-			</Option>
-			<Option>
-				<Id>1660131437985</Id>
-				<Name><![CDATA[House_DH_heatdeliveryset]]></Name>
-			</Option>
-			<Option>
-				<Id>1664544072424</Id>
-				<Name><![CDATA[DH_heat_pump_HT_S]]></Name>
-			</Option>
-			<Option>
-				<Id>1665500961507</Id>
-				<Name><![CDATA[Industrial_methane_furnace]]></Name>
-			</Option>
-			<Option>
-				<Id>1665500969196</Id>
-				<Name><![CDATA[Industrial_hydrogen_furnace]]></Name>
-			</Option>
-			<Option>
-				<Id>1666267164287</Id>
-				<Name><![CDATA[DH_boiler_L]]></Name>
-			</Option>
-			<Option>
-				<Id>1667996031710</Id>
-				<Name><![CDATA[Building_gas_burner_60kW]]></Name>
-			</Option>
-			<Option>
-				<Id>1667996045195</Id>
-				<Name><![CDATA[Building_heatpump_20kW]]></Name>
+				<Name><![CDATA[Other]]></Name>
 			</Option>
 		</OptionList>
 		<OptionList>
 			<Id>1659950471000</Id>
 			<Name><![CDATA[OL_EAPresetProductionAssets]]></Name>
+			<ExcludeFromBuild>true</ExcludeFromBuild>
 			<Option>
 				<Id>1659950531538</Id>
 				<Name><![CDATA[House_solarpanels_S]]></Name>
@@ -599,6 +556,7 @@
 		<OptionList>
 			<Id>1660055228680</Id>
 			<Name><![CDATA[OL_EAPresetStorageAssets]]></Name>
+			<ExcludeFromBuild>true</ExcludeFromBuild>
 			<Option>
 				<Id>1660055281773</Id>
 				<Name><![CDATA[House_battery]]></Name>
@@ -979,6 +937,7 @@
 		<OptionList>
 			<Id>1675025163072</Id>
 			<Name><![CDATA[OL_SimulatedArea]]></Name>
+			<ExcludeFromBuild>true</ExcludeFromBuild>
 			<Option>
 				<Id>1675025163073</Id>
 				<Name><![CDATA[BUSINESSPARK]]></Name>
@@ -3982,11 +3941,11 @@ traceln(" ");
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>true</ShowLabel>
 					<Properties SaveInSnapshot="true" ModificatorType="STATIC">
-						<Type><![CDATA[OL_SimulatedArea]]></Type>
+						<Type><![CDATA[OL_AreaType]]></Type>
 						<UnitType><![CDATA[NONE]]></UnitType>
 						<SdArray>false</SdArray>
 						<DefaultValue Class="CodeValue">
-							<Code><![CDATA[OL_SimulatedArea.NEIGHBORHOOD]]></Code>
+							<Code><![CDATA[OL_AreaType.BUSINESS]]></Code>
 						</DefaultValue>
 						<ParameterEditor>
 							<Id>1696926273934</Id>
@@ -4396,7 +4355,7 @@ traceln(" ");
 				</Variable>
 				<Variable Class="CollectionVariable">
 					<Id>1697012883795</Id>
-					<Name><![CDATA[c_neighborhoodGISRegions]]></Name>
+					<Name><![CDATA[c_areaGISRegions]]></Name>
 					<X>660</X><Y>1140</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
@@ -4484,12 +4443,15 @@ if (b_addKpiVisuals) {
 	//f_neighborhoodEnergyTotalsCurrentHour();
 	energyDemandChart.updateData();
 	energySupplyChart.updateData();
-	//energyDemandChartHousehold.updateData();
-	//energySupplyChartHousehold.updateData();
+	if (v_clickedGridConnection != null) {
+		energyDemandChartHousehold.updateData();
+		energySupplyChartHousehold.updateData();
+		companyEnergyDemandChart.updateData();
+		companyEnergySupplyChart.updateData();
+	}
 	businessParkEnergyDemandChart.updateData();
 	businessParkEnergySupplyChart.updateData();
-	//companyEnergyDemandChart.updateData();
-	//companyEnergySupplyChart.updateData();
+	
 //}
 }
 
@@ -7175,7 +7137,7 @@ traceln("f_updateInputSettingsNeighborhoods is not functional!");]]></Body>
 //dt_h = 1;
 v_isCostsPerHousehold = true;
 
-p_simulatedArea = NEIGHBORHOOD;
+p_simulatedArea = OL_AreaType.BUSINESS;
 p_centerLongitude = 4.62081213207812;
 p_centerLatitude = 51.8066803651812;
 map.setCenterLongitude(p_centerLongitude);
@@ -7216,7 +7178,7 @@ v_clickedBuilding = randomWhere(pop_GIS_Buildings, x->x.c_gridConnectionsInBuild
 
 //select simulation type for right UI
 switch( p_simulatedArea ){
-	case BUSINESSPARK :
+	case BUSINESS :
 		gr_businessParkSettings.setVisible(true);
 		gr_businessParkResultTabs.setVisible(true);
 		gr_businessParkDashboard.setVisible(true);
@@ -7288,7 +7250,7 @@ gr_businessParkResultTabs.setY(100);
 gr_businessParkDashboard.setX(2180);
 gr_businessParkDashboard.setY(500);
 
-gr_companyDashboard.setX(1665);
+gr_companyDashboard.setX(1650);
 gr_companyDashboard.setY(500);
 
 gr_businessParkLoad.setX(-515);
@@ -7325,7 +7287,7 @@ for (Tuple row : rows) {
 	b.p_surfaceArea = row.get( buildings.oppervlakt );
 	b.p_useType = row.get( buildings.gebruiksdo );
 	b.p_floors = row.get( buildings.aantal_ver );
-	b.p_buildingType = row.get( buildings.type );
+	//b.p_buildingType = OL_BuildingType.valueOf(OL_BuildingType, row.get( buildings.type ));
 	//b.p_householdsInBuilding = row.get( buildings.h_in_b );
 	
 	b.p_longitude = row.get( buildings.longitude );
@@ -7600,7 +7562,7 @@ for (GridConnection GC : c_gridConnections) {
 		newAsset = (J_EAConsumption)p_defaultConsumptionAsset.clone();
 		newAsset.parentAgent = GC;
 		newAsset.energyAssetName="INDUSTRY_OTHER_ELECTRICITY_DEMAND";
-		newAsset.yearlyDemandElectricity_kWh = 100000;
+		newAsset.yearlyDemandElectricity_kWh = 100000*uniform(0.5,1.5);
 		c_energyAssets.add(newAsset);
 		GC.f_connectToJ_EA(newAsset);
 	}
@@ -8534,7 +8496,7 @@ for (GridConnection GC : c_gridConnections) {
 
 @since: Sprint 6
 @author: Jorrit]]></Description>
-					<X>-1898</X><Y>206</Y>
+					<X>-1900</X><Y>210</Y>
 					<Label><X>15</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -10431,13 +10393,13 @@ for (GridConnection GC : c_gridConnections) {
 							<Name><![CDATA[gisRegion]]></Name>
 						</Parameter>
 						<Parameter>
-							<Name><![CDATA[p_status]]></Name>
-						</Parameter>
-						<Parameter>
 							<Name><![CDATA[p_longitude]]></Name>
 						</Parameter>
 						<Parameter>
 							<Name><![CDATA[p_latitude]]></Name>
+						</Parameter>
+						<Parameter>
+							<Name><![CDATA[p_status]]></Name>
 						</Parameter>
 						<Parameter>
 							<Name><![CDATA[p_useType]]></Name>
@@ -10456,6 +10418,79 @@ for (GridConnection GC : c_gridConnections) {
 						</Parameter>
 						<Parameter>
 							<Name><![CDATA[p_id]]></Name>
+						</Parameter>
+					</Parameters>
+					<ReplicationFlag>true</ReplicationFlag>
+					<Replication Class="CodeValue">
+						<Code><![CDATA[100]]></Code>
+					</Replication>
+					<CollectionType>ARRAY_LIST_BASED</CollectionType>
+					<InEnvironment>true</InEnvironment>	
+					<InitialLocationType>AT_ANIMATION_POSITION</InitialLocationType>
+					<XCode Class="CodeValue">
+						<Code><![CDATA[0]]></Code>
+					</XCode>
+					<YCode Class="CodeValue">
+						<Code><![CDATA[0]]></Code>
+					</YCode>
+					<ZCode Class="CodeValue">
+						<Code><![CDATA[0]]></Code>
+					</ZCode>
+					<ColumnCode Class="CodeValue">
+						<Code><![CDATA[0]]></Code>
+					</ColumnCode>
+					<RowCode Class="CodeValue">
+						<Code><![CDATA[0]]></Code>
+					</RowCode>
+					<LatitudeCode Class="CodeValue">
+						<Code><![CDATA[0]]></Code>
+					</LatitudeCode>
+					<LongitudeCode Class="CodeValue">
+						<Code><![CDATA[0]]></Code>
+					</LongitudeCode>
+					<LocationNameCode Class="CodeValue">
+						<Code><![CDATA[""]]></Code>
+					</LocationNameCode>
+					<InitializationType>EMPTY</InitializationType>
+					<InitializationDatabaseTableQuery>
+						<TableReference>
+						</TableReference>
+					</InitializationDatabaseTableQuery>
+					<InitializationDatabaseType>ONE_AGENT_PER_DATABASE_RECORD</InitializationDatabaseType>
+					<QuantityColumn>
+					</QuantityColumn>
+				</EmbeddedObject>
+				<EmbeddedObject>
+					<Id>1676382641980</Id>
+					<Name><![CDATA[pop_GIS_Area]]></Name>
+					<X>-1900</X><Y>280</Y>
+					<Label><X>15</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<ActiveObjectClass>
+						<PackageName><![CDATA[zero]]></PackageName>
+						<ClassName><![CDATA[GIS_Area]]></ClassName>
+					</ActiveObjectClass>
+					<GenericParameterSubstitute>
+						<GenericParameterSubstituteReference>
+							<PackageName><![CDATA[zero]]></PackageName>
+							<ClassName><![CDATA[GIS_Area]]></ClassName>
+							<ItemName><![CDATA[1667726338855]]></ItemName>
+						</GenericParameterSubstituteReference>
+					</GenericParameterSubstitute>
+					<Parameters>
+						<Parameter>
+							<Name><![CDATA[gisRegion]]></Name>
+						</Parameter>
+						<Parameter>
+							<Name><![CDATA[p_longitude]]></Name>
+						</Parameter>
+						<Parameter>
+							<Name><![CDATA[p_latitude]]></Name>
+						</Parameter>
+						<Parameter>
+							<Name><![CDATA[p_AreaType]]></Name>
 						</Parameter>
 					</Parameters>
 					<ReplicationFlag>true</ReplicationFlag>
@@ -25660,7 +25695,7 @@ kosten te berekenen]]></Text>
 				<Group>
 					<Id>1696520900146</Id>
 					<Name><![CDATA[gr_neighborhoodResultsTabs]]></Name>
-					<X>1700</X><Y>100</Y>
+					<X>1680</X><Y>100</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>true</PublicFlag>
 					<PresentationFlag>false</PresentationFlag>
@@ -25761,10 +25796,16 @@ if (gr_neighborhoodDashboard.isVisible() == true){
 	gr_compareResultsButton.setVisible(false);
 }
 
-
-if (gr_householdDashboard.isVisible() == false){
-	gr_householdDashboard.setVisible(true);
+if (p_simulatedArea == OL_AreaType.NEIGHBORHOOD) {
+	if (gr_householdDashboard.isVisible() == false){
+		gr_householdDashboard.setVisible(true);
+	}
+} else if (p_simulatedArea == OL_AreaType.BUSINESS) {
+	if (gr_companyDashboard.isVisible() == false){
+		gr_companyDashboard.setVisible(true);
+	}
 }
+
 
 //Als er nog niet op een knop gedruk is
 if (previousClickedBuilding == null){
@@ -35440,7 +35481,7 @@ if (gr_businessCollectiveDashboard.isVisible() == false){
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>false</ShowLabel>
 					<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
-					<OnClickCode><![CDATA[/*
+					<OnClickCode><![CDATA[
 if (gr_businessParkDashboard.isVisible() == true){
 	gr_businessParkDashboard.setVisible(false);
 	gr_compareResultsButton.setVisible(false);
@@ -35459,7 +35500,10 @@ if (previousClickedBuilding == null){
 if (gr_businessCollectiveDashboard.isVisible() == true){
 	gr_businessCollectiveDashboard.setVisible(false);
 }
-*/]]></OnClickCode>
+
+if (gr_simulateCostsScreenSmall.isVisible() == true) {
+	gr_simulateCostsScreenSmall.setVisible(false);
+}]]></OnClickCode>
 					<EmbeddedIcon>false</EmbeddedIcon>
 					<Z>0</Z>
 					<Rotation>0.0</Rotation>
@@ -65056,7 +65100,7 @@ v_maxConnectionLoad_fr = max(v_maxConnectionLoad_fr, abs(v_currentPowerElectrici
 		<!--   =========   Active Object Class   ========  -->
 		<ActiveObjectClass>
 			<Id>1667726338857</Id>
-			<Name><![CDATA[GIS_Region]]></Name>
+			<Name><![CDATA[GIS_Area]]></Name>
 			<Generic>false</Generic>
 			<GenericParameter>
 				<Id>1667726338855</Id>
@@ -65212,9 +65256,33 @@ v_maxConnectionLoad_fr = max(v_maxConnectionLoad_fr, abs(v_currentPowerElectrici
 						</ParameterEditor>
 					</Properties>                 
 				</Variable>
+				<Variable Class="Parameter">
+					<Id>1697464235545</Id>
+					<Name><![CDATA[p_AreaType]]></Name>
+					<X>50</X><Y>20</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" ModificatorType="STATIC">
+						<Type><![CDATA[OL_AreaType]]></Type>
+						<UnitType><![CDATA[NONE]]></UnitType>
+						<SdArray>false</SdArray>
+						<DefaultValue Class="CodeValue">
+							<Code><![CDATA[OL_AreaType.BUSINESS]]></Code>
+						</DefaultValue>
+						<ParameterEditor>
+							<Id>1697464235543</Id>
+							<EditorContolType>TEXT_BOX</EditorContolType>
+							<MinSliderValue><![CDATA[0]]></MinSliderValue>
+							<MaxSliderValue><![CDATA[100]]></MaxSliderValue>
+							<DelimeterType>NO_DELIMETER</DelimeterType>
+						</ParameterEditor>
+					</Properties>                 
+				</Variable>
 				<Variable Class="CollectionVariable">
 					<Id>1697009799967</Id>
-					<Name><![CDATA[c_buildingsInRegion]]></Name>
+					<Name><![CDATA[c_buildingsInArea]]></Name>
 					<X>40</X><Y>280</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
@@ -65250,6 +65318,21 @@ v_maxConnectionLoad_fr = max(v_maxConnectionLoad_fr, abs(v_currentPowerElectrici
 				</AgentLink>
 			</AgentLinks>
 
+			<ContainerLinks>
+				<ContainerLink>
+					<Id>1697464974649</Id>
+					<Name><![CDATA[main]]></Name>
+					<X>50</X><Y>-100</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<ActiveObjectClass>
+						<PackageName><![CDATA[zero]]></PackageName>
+						<ClassName><![CDATA[Main]]></ClassName>
+					</ActiveObjectClass>
+				</ContainerLink>
+			</ContainerLinks>
 
 			<Presentation>
 				<Level>
@@ -66073,9 +66156,12 @@ v_maxConnectionLoad_fr = max(v_maxConnectionLoad_fr, abs(v_currentPowerElectrici
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>true</ShowLabel>
 					<Properties SaveInSnapshot="true" ModificatorType="STATIC">
-						<Type><![CDATA[String]]></Type>
+						<Type><![CDATA[OL_BuildingType]]></Type>
 						<UnitType><![CDATA[NONE]]></UnitType>
 						<SdArray>false</SdArray>
+						<DefaultValue Class="CodeValue">
+							<Code><![CDATA[OL_BuildingType.Office]]></Code>
+						</DefaultValue>
 						<ParameterEditor>
 							<Id>1696858052549</Id>
 							<EditorContolType>TEXT_BOX</EditorContolType>

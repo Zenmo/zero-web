@@ -418,47 +418,28 @@
 		</OptionList>
 		<OptionList>
 			<Id>1659701773383</Id>
-			<Name><![CDATA[OL_EAPresetConsumptionAssets]]></Name>
+			<Name><![CDATA[OL_AreaType]]></Name>
 			<Option>
 				<Id>1659701782496</Id>
-				<Name><![CDATA[House_hot_water]]></Name>
+				<Name><![CDATA[Neighborhood]]></Name>
 			</Option>
 			<Option>
 				<Id>1659701773953</Id>
-				<Name><![CDATA[House_other_electricity]]></Name>
+				<Name><![CDATA[RES]]></Name>
 			</Option>
 			<Option>
 				<Id>1659701788868</Id>
-				<Name><![CDATA[Office_other_electricity]]></Name>
+				<Name><![CDATA[Industry]]></Name>
 			</Option>
 			<Option>
 				<Id>1659701795639</Id>
-				<Name><![CDATA[Store_other_electricity]]></Name>
-			</Option>
-			<Option>
-				<Id>1665497737979</Id>
-				<Name><![CDATA[Industry_steel_electricity]]></Name>
-			</Option>
-			<Option>
-				<Id>1665497737980</Id>
-				<Name><![CDATA[Industry_steel_heat]]></Name>
-			</Option>
-			<Option>
-				<Id>1665497737981</Id>
-				<Name><![CDATA[Industry_other_electricity]]></Name>
-			</Option>
-			<Option>
-				<Id>1665497737982</Id>
-				<Name><![CDATA[Industry_other_heat]]></Name>
-			</Option>
-			<Option>
-				<Id>1667399177906</Id>
-				<Name><![CDATA[Logistics_fleet_hgv_E]]></Name>
+				<Name><![CDATA[Business]]></Name>
 			</Option>
 		</OptionList>
 		<OptionList>
 			<Id>1659711659517</Id>
 			<Name><![CDATA[OL_EAPresetConversionAssets]]></Name>
+			<ExcludeFromBuild>true</ExcludeFromBuild>
 			<Option>
 				<Id>1659711661606</Id>
 				<Name><![CDATA[House_heatpump_MT_S]]></Name>
@@ -515,6 +496,7 @@
 		<OptionList>
 			<Id>1659950471000</Id>
 			<Name><![CDATA[OL_EAPresetProductionAssets]]></Name>
+			<ExcludeFromBuild>true</ExcludeFromBuild>
 			<Option>
 				<Id>1659950531538</Id>
 				<Name><![CDATA[House_solarpanels_S]]></Name>
@@ -599,6 +581,7 @@
 		<OptionList>
 			<Id>1660055228680</Id>
 			<Name><![CDATA[OL_EAPresetStorageAssets]]></Name>
+			<ExcludeFromBuild>true</ExcludeFromBuild>
 			<Option>
 				<Id>1660055281773</Id>
 				<Name><![CDATA[House_battery]]></Name>
@@ -4021,6 +4004,30 @@ traceln(" ");
 						</ParameterEditor>
 					</Properties>                 
 				</Variable>
+				<Variable Class="Parameter">
+					<Id>1697449583238</Id>
+					<Name><![CDATA[p_defaultProfile]]></Name>
+					<X>-280</X><Y>410</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" ModificatorType="STATIC">
+						<Type><![CDATA[J_EAProfile]]></Type>
+						<UnitType><![CDATA[NONE]]></UnitType>
+						<SdArray>false</SdArray>
+						<DefaultValue Class="CodeValue">
+							<Code><![CDATA[new J_EAProfile(null, null, p_timeStep_h)]]></Code>
+						</DefaultValue>
+						<ParameterEditor>
+							<Id>1697449583236</Id>
+							<EditorContolType>TEXT_BOX</EditorContolType>
+							<MinSliderValue><![CDATA[0]]></MinSliderValue>
+							<MaxSliderValue><![CDATA[100]]></MaxSliderValue>
+							<DelimeterType>NO_DELIMETER</DelimeterType>
+						</ParameterEditor>
+					</Properties>                 
+				</Variable>
 				<Variable Class="CollectionVariable">
 					<Id>1663238323139</Id>
 					<Name><![CDATA[c_connectionOwners]]></Name>
@@ -4454,7 +4461,8 @@ if (b_addKpiVisuals) {
 	pl_netBelasting.updateData();
 	pl_electricityConsumptionStack.updateData();
 	pl_electricityProductionStack.updateData();
-	UI_energyAssets.f_updateData();	*/
+	*/
+	UI_energyAssets.f_updateData();
 	//if (v_isRapidRun == false){
 	//f_neighborhoodEnergyTotalsCurrentHour();
 	energyDemandChart.updateData();
@@ -6907,7 +6915,7 @@ for ( GIS_Building b : pop_GIS_Buildings ){
 		}
 		*/
 		 
-		//-----------HOUSEHOLD----------
+		//-----------GRID CONNECTION---------- (household/utilityobject are both gridconnections now)
 		if(v_clickedBuilding.c_gridConnectionsInBuilding.size() > 0){
 			v_gridConnectionInBuildingIndex = 0;
 			v_clickedGridConnection = v_clickedBuilding.c_gridConnectionsInBuilding.get(v_gridConnectionInBuildingIndex);
@@ -7557,16 +7565,29 @@ for (GridConnection GC : c_gridConnections) {
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>true</ShowLabel>
 					<Body><![CDATA[for (GridConnection GC : c_gridConnections) {
-		J_EAConsumption newAsset;
-		newAsset = (J_EAConsumption)p_defaultConsumptionAsset.clone();		
-		newAsset.yearlyDemandElectricity_kWh=1;
-		if (GC.p_company_connection_id != null) {
-			newAsset.energyAssetName=GC.p_company_connection_id;
-		} else {
-			newAsset.energyAssetName="INDUSTRY_OTHER_ELECTRICITY_DEMAND";
-		}
+	// Add consumption profiles
+	//newAsset.yearlyDemandElectricity_kWh=1;
+	if (GC.p_company_connection_id != null) {
+		J_EAProfile newAsset;
+		newAsset = (J_EAProfile)p_defaultProfile.clone();			
+		newAsset.parentAgent = GC;
+		newAsset.energyAssetName=GC.p_company_connection_id;
+		
+		List<Double> quarterlyEnergyDemand_kWh = selectValues(double.class, "SELECT " + GC.p_company_connection_id + "_demand FROM comp_elec_consumption;");			
+		((J_EAProfile)newAsset).a_electricityProfile_kWh = quarterlyEnergyDemand_kWh.stream().mapToDouble(d -> d).toArray();
 		c_energyAssets.add(newAsset);
 		GC.f_connectToJ_EA(newAsset);
+		
+	} else {
+		J_EAConsumption newAsset;
+		newAsset = (J_EAConsumption)p_defaultConsumptionAsset.clone();
+		newAsset.parentAgent = GC;
+		newAsset.energyAssetName="INDUSTRY_OTHER_ELECTRICITY_DEMAND";
+		newAsset.yearlyDemandElectricity_kWh = 100000;
+		c_energyAssets.add(newAsset);
+		GC.f_connectToJ_EA(newAsset);
+	}
+
 }]]></Body>
 				</Function>
 			</Functions>
@@ -8372,6 +8393,9 @@ for (GridConnection GC : c_gridConnections) {
 						<Parameter>
 							<Name><![CDATA[p_agentID]]></Name>
 						</Parameter>
+						<Parameter>
+							<Name><![CDATA[p_energyProfile]]></Name>
+						</Parameter>
 					</Parameters>
 					<ReplicationFlag>true</ReplicationFlag>
 					<Replication Class="CodeValue">
@@ -8437,7 +8461,7 @@ for (GridConnection GC : c_gridConnections) {
 							<Name><![CDATA[j_ea]]></Name>
 						</Parameter>
 						<Parameter>
-							<Name><![CDATA[p_parentAgentID]]></Name>
+							<Name><![CDATA[p_parentAgent]]></Name>
 						</Parameter>
 						<Parameter>
 							<Name><![CDATA[p_energyAssetType]]></Name>
@@ -8493,7 +8517,7 @@ for (GridConnection GC : c_gridConnections) {
 
 @since: Sprint 6
 @author: Jorrit]]></Description>
-					<X>-1898</X><Y>206</Y>
+					<X>-1900</X><Y>210</Y>
 					<Label><X>15</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -9268,6 +9292,9 @@ for (GridConnection GC : c_gridConnections) {
 						<Parameter>
 							<Name><![CDATA[p_agentID]]></Name>
 						</Parameter>
+						<Parameter>
+							<Name><![CDATA[p_energyProfile]]></Name>
+						</Parameter>
 					</Parameters>
 					<ReplicationFlag>true</ReplicationFlag>
 					<Replication Class="CodeValue">
@@ -9443,6 +9470,9 @@ for (GridConnection GC : c_gridConnections) {
 						<Parameter>
 							<Name><![CDATA[p_agentID]]></Name>
 						</Parameter>
+						<Parameter>
+							<Name><![CDATA[p_energyProfile]]></Name>
+						</Parameter>
 					</Parameters>
 					<ReplicationFlag>true</ReplicationFlag>
 					<Replication Class="CodeValue">
@@ -9614,6 +9644,9 @@ for (GridConnection GC : c_gridConnections) {
 						</Parameter>
 						<Parameter>
 							<Name><![CDATA[p_agentID]]></Name>
+						</Parameter>
+						<Parameter>
+							<Name><![CDATA[p_energyProfile]]></Name>
 						</Parameter>
 					</Parameters>
 					<ReplicationFlag>true</ReplicationFlag>
@@ -9787,6 +9820,9 @@ for (GridConnection GC : c_gridConnections) {
 						<Parameter>
 							<Name><![CDATA[p_agentID]]></Name>
 						</Parameter>
+						<Parameter>
+							<Name><![CDATA[p_energyProfile]]></Name>
+						</Parameter>
 					</Parameters>
 					<ReplicationFlag>true</ReplicationFlag>
 					<Replication Class="CodeValue">
@@ -9958,6 +9994,9 @@ for (GridConnection GC : c_gridConnections) {
 						</Parameter>
 						<Parameter>
 							<Name><![CDATA[p_company_connection_id]]></Name>
+						</Parameter>
+						<Parameter>
+							<Name><![CDATA[p_energyProfile]]></Name>
 						</Parameter>
 					</Parameters>
 					<ReplicationFlag>true</ReplicationFlag>
@@ -10131,6 +10170,9 @@ for (GridConnection GC : c_gridConnections) {
 						<Parameter>
 							<Name><![CDATA[p_agentID]]></Name>
 						</Parameter>
+						<Parameter>
+							<Name><![CDATA[p_energyProfile]]></Name>
+						</Parameter>
 					</Parameters>
 					<ReplicationFlag>true</ReplicationFlag>
 					<Replication Class="CodeValue">
@@ -10303,6 +10345,9 @@ for (GridConnection GC : c_gridConnections) {
 						<Parameter>
 							<Name><![CDATA[p_agentID]]></Name>
 						</Parameter>
+						<Parameter>
+							<Name><![CDATA[p_energyProfile]]></Name>
+						</Parameter>
 					</Parameters>
 					<ReplicationFlag>true</ReplicationFlag>
 					<Replication Class="CodeValue">
@@ -10394,6 +10439,79 @@ for (GridConnection GC : c_gridConnections) {
 						</Parameter>
 						<Parameter>
 							<Name><![CDATA[p_id]]></Name>
+						</Parameter>
+					</Parameters>
+					<ReplicationFlag>true</ReplicationFlag>
+					<Replication Class="CodeValue">
+						<Code><![CDATA[100]]></Code>
+					</Replication>
+					<CollectionType>ARRAY_LIST_BASED</CollectionType>
+					<InEnvironment>true</InEnvironment>	
+					<InitialLocationType>AT_ANIMATION_POSITION</InitialLocationType>
+					<XCode Class="CodeValue">
+						<Code><![CDATA[0]]></Code>
+					</XCode>
+					<YCode Class="CodeValue">
+						<Code><![CDATA[0]]></Code>
+					</YCode>
+					<ZCode Class="CodeValue">
+						<Code><![CDATA[0]]></Code>
+					</ZCode>
+					<ColumnCode Class="CodeValue">
+						<Code><![CDATA[0]]></Code>
+					</ColumnCode>
+					<RowCode Class="CodeValue">
+						<Code><![CDATA[0]]></Code>
+					</RowCode>
+					<LatitudeCode Class="CodeValue">
+						<Code><![CDATA[0]]></Code>
+					</LatitudeCode>
+					<LongitudeCode Class="CodeValue">
+						<Code><![CDATA[0]]></Code>
+					</LongitudeCode>
+					<LocationNameCode Class="CodeValue">
+						<Code><![CDATA[""]]></Code>
+					</LocationNameCode>
+					<InitializationType>EMPTY</InitializationType>
+					<InitializationDatabaseTableQuery>
+						<TableReference>
+						</TableReference>
+					</InitializationDatabaseTableQuery>
+					<InitializationDatabaseType>ONE_AGENT_PER_DATABASE_RECORD</InitializationDatabaseType>
+					<QuantityColumn>
+					</QuantityColumn>
+				</EmbeddedObject>
+				<EmbeddedObject>
+					<Id>1676382641980</Id>
+					<Name><![CDATA[pop_GIS_Area]]></Name>
+					<X>-1900</X><Y>280</Y>
+					<Label><X>15</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<ActiveObjectClass>
+						<PackageName><![CDATA[zero]]></PackageName>
+						<ClassName><![CDATA[GIS_Area]]></ClassName>
+					</ActiveObjectClass>
+					<GenericParameterSubstitute>
+						<GenericParameterSubstituteReference>
+							<PackageName><![CDATA[zero]]></PackageName>
+							<ClassName><![CDATA[GIS_Area]]></ClassName>
+							<ItemName><![CDATA[1667726338855]]></ItemName>
+						</GenericParameterSubstituteReference>
+					</GenericParameterSubstitute>
+					<Parameters>
+						<Parameter>
+							<Name><![CDATA[gisRegion]]></Name>
+						</Parameter>
+						<Parameter>
+							<Name><![CDATA[p_longitude]]></Name>
+						</Parameter>
+						<Parameter>
+							<Name><![CDATA[p_latitude]]></Name>
+						</Parameter>
+						<Parameter>
+							<Name><![CDATA[p_AreaType]]></Name>
 						</Parameter>
 					</Parameters>
 					<ReplicationFlag>true</ReplicationFlag>
@@ -42883,6 +43001,30 @@ import java.io.*;]]></Import>
 						</ParameterEditor>
 					</Properties>                 
 				</Variable>
+				<Variable Class="Parameter">
+					<Id>1697450310305</Id>
+					<Name><![CDATA[p_energyProfile]]></Name>
+					<X>630</X><Y>160</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" ModificatorType="STATIC">
+						<Type><![CDATA[J_EAProfile]]></Type>
+						<UnitType><![CDATA[NONE]]></UnitType>
+						<SdArray>false</SdArray>
+						<DefaultValue Class="CodeValue">
+							<Code><![CDATA[null]]></Code>
+						</DefaultValue>
+						<ParameterEditor>
+							<Id>1697450310303</Id>
+							<EditorContolType>TEXT_BOX</EditorContolType>
+							<MinSliderValue><![CDATA[0]]></MinSliderValue>
+							<MaxSliderValue><![CDATA[100]]></MaxSliderValue>
+							<DelimeterType>NO_DELIMETER</DelimeterType>
+						</ParameterEditor>
+					</Properties>                 
+				</Variable>
 				<Variable Class="CollectionVariable">
 					<Id>1659962626903</Id>
 					<Name><![CDATA[c_energyAssets]]></Name>
@@ -43640,6 +43782,14 @@ if (main.b_addKpiVisuals) {
 					<Body><![CDATA[//v_heatRecievingFromSun_kW = p_irradianceRecievingSurface_m2 * main.v_currentSolarPowerNormalized_r * main.p_solarAbsorptionCoefficient;
 //v_totalHeatRecievedSun_kWh += v_heatRecievingFromSun_kW;
 
+if (p_energyProfile != null & p_company_connection_id != null) {
+	if (p_company_connection_id == p_energyProfile.energyAssetName) {
+		p_energyProfile.f_updateAllFlows( time(HOUR) );
+		v_currentPowerElectricity_kW += p_energyProfile.electricityConsumption_kW - p_energyProfile.electricityProduction_kW;
+		v_fixedConsumptionElectric_kW += p_energyProfile.electricityConsumption_kW;		
+	}
+}
+
 for(J_EAProduction e : c_productionAssets) {
 	if( e.energyAssetType == OL_EnergyAssetType.PHOTOVOLTAIC) {
 		e.f_updateAllFlows( main.v_currentSolarPowerNormalized_r );
@@ -43674,18 +43824,6 @@ for(J_EAConsumption e : c_consumptionAssets) {
 		if (this instanceof GCHouse){
 			double randomizer = 0.7 + uniform(0.0, 0.6);
 			e.f_updateAllFlows( main.v_currentHouseHoldOtherElectricityDemand_fr * randomizer );
-		}
-		else if (p_company_connection_id != null) {
-			if (p_company_connection_id == e.energyAssetName) {
-				
-				String idInputValue = p_company_connection_id + "_demand";				
-				double quarterlyEnergyDemand_kWh = selectUniqueValue(double.class,
-				"SELECT " + idInputValue + " FROM comp_elec_consumption WHERE idx = " + time(HOUR)*4.0 + ";");			
-				e.f_updateAllFlows( quarterlyEnergyDemand_kWh );
-				traceln("Running custom demand profile for " + e.energyAssetName + " with current timestep demand " + quarterlyEnergyDemand_kWh + " kWh");	
-			} else {
-				e.f_updateAllFlows( main.v_currentBuildingOtherElectricityDemand_fr );
-			}
 		} else {
 			switch(e.energyAssetName) {
 				case "INDUSTRY_OTHER_ELECTRICITY_DEMAND":
@@ -44440,6 +44578,8 @@ if (j_ea instanceof J_EAVehicle) {
 	} else if (j_ea instanceof J_EAStorageElectric) {
 		p_batteryAsset = (J_EAStorageElectric)j_ea;
 	}
+} else if  (j_ea instanceof J_EAProfile) {
+	p_energyProfile = (J_EAProfile)j_ea;
 } else {
 	traceln("Unrecognized energy asset %s in gridconnection %s", j_ea, this);
 }
@@ -45978,15 +46118,16 @@ for ( int i = 0; i < copiedVehicleList.size(); i++ ){
 				</Variable>
 				<Variable Class="Parameter">
 					<Id>1660130635726</Id>
-					<Name><![CDATA[p_parentAgentID]]></Name>
+					<Name><![CDATA[p_parentAgent]]></Name>
 					<X>90</X><Y>110</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>true</ShowLabel>
 					<Properties SaveInSnapshot="true" ModificatorType="STATIC">
-						<Type><![CDATA[String]]></Type>
+						<Type><![CDATA[Agent]]></Type>
 						<UnitType><![CDATA[NONE]]></UnitType>
+						<UnitOfValue Class="AccelerationUnits"><![CDATA[MPS_SQ]]></UnitOfValue>
 						<SdArray>false</SdArray>
 						<ParameterEditor>
 							<Id>1660130635724</Id>
@@ -46052,19 +46193,20 @@ for ( int i = 0; i < copiedVehicleList.size(); i++ ){
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>true</ShowLabel>
-					<Body><![CDATA[v_currentProductionElectricity_kW = j_ea.electricityProduction_kW;
-v_currentConsumptionElectricity_kW = j_ea.electricityConsumption_kW;
-v_currentProductionMethane_kW = j_ea.methaneProduction_kW;
-v_currentConsumptionMethane_kW = j_ea.methaneConsumption_kW;
-v_currentProductionHydrogen_kW = j_ea.hydrogenProduction_kW;
-v_currentConsumptionHydrogen_kW = j_ea.hydrogenConsumption_kW;
-v_currentProductionHeat_kW = j_ea.heatProduction_kW;
-v_currentConsumptionHeat_kW = j_ea.heatConsumption_kW;
-v_currentConsumptionDiesel_kW = j_ea.dieselConsumption_kW;
-v_currentStateOfCharge_r = j_ea.getCurrentStateOfCharge();
-v_powerFraction_fr = j_ea.v_powerFraction_fr;
-plot.updateData();
-]]></Body>
+					<Body><![CDATA[if (j_ea != null) {
+	v_currentProductionElectricity_kW = j_ea.electricityProduction_kW;
+	v_currentConsumptionElectricity_kW = j_ea.electricityConsumption_kW;
+	v_currentProductionMethane_kW = j_ea.methaneProduction_kW;
+	v_currentConsumptionMethane_kW = j_ea.methaneConsumption_kW;
+	v_currentProductionHydrogen_kW = j_ea.hydrogenProduction_kW;
+	v_currentConsumptionHydrogen_kW = j_ea.hydrogenConsumption_kW;
+	v_currentProductionHeat_kW = j_ea.heatProduction_kW;
+	v_currentConsumptionHeat_kW = j_ea.heatConsumption_kW;
+	v_currentConsumptionDiesel_kW = j_ea.dieselConsumption_kW;
+	v_currentStateOfCharge_r = j_ea.getCurrentStateOfCharge();
+	v_powerFraction_fr = j_ea.v_powerFraction_fr;
+	plot.updateData();
+}]]></Body>
 				</Function>
 				<Function AccessType="default" StaticFunction="false">
 					<ReturnModificator>VOID</ReturnModificator>
@@ -46080,6 +46222,7 @@ plot.updateData();
 j_ea = main.c_energyAssets.get(assetNr);
 p_energyAssetType = j_ea.energyAssetType;
 p_assetName = j_ea.energyAssetName;
+p_parentAgent = j_ea.parentAgent;
 ]]></Body>
 				</Function>
 			</Functions>
@@ -46572,6 +46715,7 @@ p_assetName = j_ea.energyAssetName;
 j_ea = main.c_energyAssets.get(assetNr);
 p_energyAssetType = j_ea.energyAssetType;
 p_assetName = j_ea.energyAssetName;
+p_parentAgent = j_ea.parentAgent;
 ]]></ActionCode>
 					</BasicProperties>
 					<ExtendedProperties>
@@ -60340,6 +60484,9 @@ void f_heatWithHybridHeatpump() {
 				<Parameter>
 					<Name><![CDATA[p_agentID]]></Name>
 				</Parameter>
+				<Parameter>
+					<Name><![CDATA[p_energyProfile]]></Name>
+				</Parameter>
 			</Parameters>
 			<Generic>false</Generic>
 			<GenericParameter>
@@ -61923,6 +62070,9 @@ public void f_connectToJ_EA(J_EA j_ea){
 				<Parameter>
 					<Name><![CDATA[p_agentID]]></Name>
 				</Parameter>
+				<Parameter>
+					<Name><![CDATA[p_energyProfile]]></Name>
+				</Parameter>
 			</Parameters>
 			<Generic>false</Generic>
 			<GenericParameter>
@@ -62995,6 +63145,9 @@ public void f_operateFlexAssets(){
 				<Parameter>
 					<Name><![CDATA[p_agentID]]></Name>
 				</Parameter>
+				<Parameter>
+					<Name><![CDATA[p_energyProfile]]></Name>
+				</Parameter>
 			</Parameters>
 			<Generic>false</Generic>
 			<GenericParameter>
@@ -63459,6 +63612,9 @@ if (CurtailerAsset.getElectricCapacity_kW()>0) {
 				<Parameter>
 					<Name><![CDATA[p_agentID]]></Name>
 				</Parameter>
+				<Parameter>
+					<Name><![CDATA[p_energyProfile]]></Name>
+				</Parameter>
 			</Parameters>
 			<Generic>false</Generic>
 			<GenericParameter>
@@ -63737,6 +63893,9 @@ public void f_operateFlexAssets(){
 				</Parameter>
 				<Parameter>
 					<Name><![CDATA[p_agentID]]></Name>
+				</Parameter>
+				<Parameter>
+					<Name><![CDATA[p_energyProfile]]></Name>
 				</Parameter>
 			</Parameters>
 			<Generic>false</Generic>
@@ -64420,6 +64579,9 @@ public void f_calculateEnergyBalance(){
 				<Parameter>
 					<Name><![CDATA[p_agentID]]></Name>
 				</Parameter>
+				<Parameter>
+					<Name><![CDATA[p_energyProfile]]></Name>
+				</Parameter>
 			</Parameters>
 			<Generic>false</Generic>
 			<GenericParameter>
@@ -64950,7 +65112,7 @@ v_maxConnectionLoad_fr = max(v_maxConnectionLoad_fr, abs(v_currentPowerElectrici
 		<!--   =========   Active Object Class   ========  -->
 		<ActiveObjectClass>
 			<Id>1667726338857</Id>
-			<Name><![CDATA[GIS_Region]]></Name>
+			<Name><![CDATA[GIS_Area]]></Name>
 			<Generic>false</Generic>
 			<GenericParameter>
 				<Id>1667726338855</Id>
@@ -65106,9 +65268,33 @@ v_maxConnectionLoad_fr = max(v_maxConnectionLoad_fr, abs(v_currentPowerElectrici
 						</ParameterEditor>
 					</Properties>                 
 				</Variable>
+				<Variable Class="Parameter">
+					<Id>1697464235545</Id>
+					<Name><![CDATA[p_AreaType]]></Name>
+					<X>50</X><Y>20</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" ModificatorType="STATIC">
+						<Type><![CDATA[OL_AreaType]]></Type>
+						<UnitType><![CDATA[NONE]]></UnitType>
+						<SdArray>false</SdArray>
+						<DefaultValue Class="CodeValue">
+							<Code><![CDATA[OL_AreaType.Business]]></Code>
+						</DefaultValue>
+						<ParameterEditor>
+							<Id>1697464235543</Id>
+							<EditorContolType>TEXT_BOX</EditorContolType>
+							<MinSliderValue><![CDATA[0]]></MinSliderValue>
+							<MaxSliderValue><![CDATA[100]]></MaxSliderValue>
+							<DelimeterType>NO_DELIMETER</DelimeterType>
+						</ParameterEditor>
+					</Properties>                 
+				</Variable>
 				<Variable Class="CollectionVariable">
 					<Id>1697009799967</Id>
-					<Name><![CDATA[c_buildingsInRegion]]></Name>
+					<Name><![CDATA[c_buildingsInArea]]></Name>
 					<X>40</X><Y>280</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
@@ -65144,6 +65330,21 @@ v_maxConnectionLoad_fr = max(v_maxConnectionLoad_fr, abs(v_currentPowerElectrici
 				</AgentLink>
 			</AgentLinks>
 
+			<ContainerLinks>
+				<ContainerLink>
+					<Id>1697464974649</Id>
+					<Name><![CDATA[main]]></Name>
+					<X>50</X><Y>-100</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<ActiveObjectClass>
+						<PackageName><![CDATA[zero]]></PackageName>
+						<ClassName><![CDATA[Main]]></ClassName>
+					</ActiveObjectClass>
+				</ContainerLink>
+			</ContainerLinks>
 
 			<Presentation>
 				<Level>
@@ -65282,6 +65483,9 @@ v_maxConnectionLoad_fr = max(v_maxConnectionLoad_fr, abs(v_currentPowerElectrici
 				</Parameter>
 				<Parameter>
 					<Name><![CDATA[p_company_connection_id]]></Name>
+				</Parameter>
+				<Parameter>
+					<Name><![CDATA[p_energyProfile]]></Name>
 				</Parameter>
 			</Parameters>
 			<Generic>false</Generic>
@@ -66743,6 +66947,9 @@ if (gisRegion == null ) {
 				<Parameter>
 					<ParameterName><![CDATA[p_defaultConsumptionAsset]]></ParameterName>
 				</Parameter>
+				<Parameter>
+					<ParameterName><![CDATA[p_defaultProfile]]></ParameterName>
+				</Parameter>
 			</Parameters>			
 			<PresentationProperties>
 				<EnableZoomAndPanning>true</EnableZoomAndPanning>
@@ -67325,6 +67532,78 @@ public class J_EAConversionBiogasMethane extends zero.J_EAConversion implements 
 		return
 			"parentAgent = " + parentAgent +", Energy consumed = " + this.energyUsed_kWh +
 			"capacityMethane_kW = " + this.capacityMethane_kW +" "+
+			"eta_r = " + this.eta_r+" " +
+			"energyUsed_kWh (losses) = " + this.energyUsed_kWh + " ";
+	}
+	
+	/**
+	 * This number is here for model snapshot storing purpose<br>
+	 * It needs to be changed when this class gets changed
+	 */
+	private static final long serialVersionUID = 1L;
+
+}]]></Text>
+		</JavaClass>
+		<!--   =========   Java Class   ========  -->
+		<JavaClass>
+			<Id>1659117174458</Id>
+			<Name><![CDATA[J_EAProfile]]></Name>
+			<Text><![CDATA[/**
+ * J_EAProfile
+ */
+public class J_EAProfile extends zero.J_EA implements Serializable {
+
+	//private OL_EnergyCarrierType energyCarrierProduced = OL_EnergyCarrierType.METHANE;
+	//private OL_EnergyCarrierType energyCarrierConsumed = OL_EnergyCarrierType.METHANE;
+	//public double capacityMethane_kW;
+	public double[] a_electricityProfile_kWh;
+	//protected double outputTemperature_degC;
+    /**
+     * Default constructor
+     */
+    public J_EAProfile() {
+    }
+
+    /**
+     * Constructor initializing the fields
+     */
+    public J_EAProfile(Agent parentAgent, double[] profile_kWh, double timestep_h) {
+	    this.parentAgent= parentAgent;
+	    this.a_electricityProfile_kWh = profile_kWh;
+	    this.timestep_h = timestep_h;
+	}
+
+    @Override
+    public void f_updateAllFlows(double time_h) {
+    	resetFlows();
+    	operate(time_h);
+    }
+    
+    @Override
+    public double[] operate(double time_h) {
+		//traceln("I convert now! GasBurner @ " + (ratioOfCapacity * 100) + " %");
+    	if ( (int)round(time_h/timestep_h) >= a_electricityProfile_kWh.length ) {
+    		traceln("Time out of bounds for evaluating J_EAProfile power!");
+    		time_h = a_electricityProfile_kWh.length * timestep_h - 1;
+    	}
+		this.electricityConsumption_kW = max(0,a_electricityProfile_kWh[(int)round(time_h/timestep_h)]/timestep_h);
+    	this.electricityProduction_kW = -min(0,a_electricityProfile_kWh[(int)round(time_h/timestep_h)]/timestep_h);
+    	//traceln("Running custom demand profile for " + energyAssetName + " with current timestep demand " + (electricityConsumption_kW - electricityProduction_kW) + " kW. Array index is " + (int)round(time_h/timestep_h) + ", time is: " + time_h + " hours, array size is " + a_electricityProfile_kWh.length);	
+		this.energyUsed_kWh += timestep_h * (electricityConsumption_kW - electricityProduction_kW); // This represents losses!
+		//double[] arr = {this.electricityProduction_kW, this.methaneProduction_kW, this.hydrogenProduction_kW, this.heatProduction_kW, this.electricityConsumption_kW, this.methaneConsumption_kW, this.hydrogenConsumption_kW, this.heatConsumption_kW };
+    	//return arr;
+		return returnEnergyFlows();
+    }
+
+	public double getEnergyUsed_kWh() {
+		return energyUsed_kWh;
+	}
+
+	@Override
+	public String toString() {
+		return
+			"parentAgent = " + parentAgent +", Energy consumed = " + this.energyUsed_kWh +
+			"current power = " + (electricityConsumption_kW - electricityProduction_kW) +" "+
 			"eta_r = " + this.eta_r+" " +
 			"energyUsed_kWh (losses) = " + this.energyUsed_kWh + " ";
 	}
