@@ -1247,7 +1247,7 @@ traceln(" ");
 					<Id>1659356181110</Id>
 					<Name><![CDATA[v_currentHouseHoldOtherElectricityDemand_fr]]></Name>
 					<Description><![CDATA[Fraction of yearly demand in MWh per hour, multiplied by demand in MWh per year = MW for that hour]]></Description>
-					<X>-1570</X><Y>70</Y>
+					<X>1459</X><Y>1058</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -1259,7 +1259,7 @@ traceln(" ");
 				<Variable Class="PlainVariable">
 					<Id>1659356201846</Id>
 					<Name><![CDATA[v_currentWindPowerNormalized_r]]></Name>
-					<X>-1570</X><Y>150</Y>
+					<X>1459</X><Y>1138</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -1271,7 +1271,7 @@ traceln(" ");
 				<Variable Class="PlainVariable">
 					<Id>1659356216131</Id>
 					<Name><![CDATA[v_currentSolarPowerNormalized_r]]></Name>
-					<X>-1570</X><Y>170</Y>
+					<X>1459</X><Y>1158</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -1283,7 +1283,7 @@ traceln(" ");
 				<Variable Class="PlainVariable">
 					<Id>1659364131698</Id>
 					<Name><![CDATA[v_currentAmbientTemperature_degC]]></Name>
-					<X>-1570</X><Y>190</Y>
+					<X>1459</X><Y>1178</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -1295,7 +1295,7 @@ traceln(" ");
 				<Variable Class="PlainVariable">
 					<Id>1663238634515</Id>
 					<Name><![CDATA[v_timeStepsElapsed]]></Name>
-					<X>-1230</X><Y>70</Y>
+					<X>900</X><Y>1240</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -1310,7 +1310,7 @@ traceln(" ");
 				<Variable Class="PlainVariable">
 					<Id>1663243393136</Id>
 					<Name><![CDATA[v_timeOfModelStart_ms]]></Name>
-					<X>-1230</X><Y>90</Y>
+					<X>900</X><Y>1260</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -1322,7 +1322,7 @@ traceln(" ");
 				<Variable Class="PlainVariable">
 					<Id>1663246198254</Id>
 					<Name><![CDATA[v_modelStartUpDuration_s]]></Name>
-					<X>-1230</X><Y>110</Y>
+					<X>900</X><Y>1280</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -1338,7 +1338,7 @@ traceln(" ");
 					<Id>1664530118871</Id>
 					<Name><![CDATA[v_currentBuildingOtherElectricityDemand_fr]]></Name>
 					<Description><![CDATA[Fraction of yearly demand in MWh per hour, multiplied by demand in MWh per year = MW for that hour]]></Description>
-					<X>-1570</X><Y>90</Y>
+					<X>1459</X><Y>1078</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -1350,7 +1350,7 @@ traceln(" ");
 				<Variable Class="PlainVariable">
 					<Id>1664533236896</Id>
 					<Name><![CDATA[v_currentHouseHoldHotWaterDemand_fr]]></Name>
-					<X>-1570</X><Y>130</Y>
+					<X>1459</X><Y>1118</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -1362,7 +1362,7 @@ traceln(" ");
 				<Variable Class="PlainVariable">
 					<Id>1665499321012</Id>
 					<Name><![CDATA[v_currentIndustrySteelElectricityDemand_fr]]></Name>
-					<X>-1570</X><Y>210</Y>
+					<X>1459</X><Y>1198</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -1374,7 +1374,7 @@ traceln(" ");
 				<Variable Class="PlainVariable">
 					<Id>1665499340739</Id>
 					<Name><![CDATA[v_currentIndustrySteelHeatDemand_fr]]></Name>
-					<X>-1570</X><Y>230</Y>
+					<X>1459</X><Y>1218</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -1386,7 +1386,7 @@ traceln(" ");
 				<Variable Class="PlainVariable">
 					<Id>1665499362356</Id>
 					<Name><![CDATA[v_currentIndustryOtherElectricityDemand_fr]]></Name>
-					<X>-1570</X><Y>250</Y>
+					<X>1459</X><Y>1238</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -1398,7 +1398,7 @@ traceln(" ");
 				<Variable Class="PlainVariable">
 					<Id>1665499375110</Id>
 					<Name><![CDATA[v_currentIndustryOtherHeatDemand_fr]]></Name>
-					<X>-1570</X><Y>270</Y>
+					<X>1459</X><Y>1258</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -1574,7 +1574,7 @@ traceln(" ");
 				<Variable Class="PlainVariable">
 					<Id>1667397284001</Id>
 					<Name><![CDATA[v_currentLogisticsFleetEDemand_fr]]></Name>
-					<X>-1570</X><Y>290</Y>
+					<X>1459</X><Y>1278</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -1610,7 +1610,7 @@ traceln(" ");
 				<Variable Class="PlainVariable">
 					<Id>1671636172718</Id>
 					<Name><![CDATA[v_WindYieldForecast_fr]]></Name>
-					<X>-2107</X><Y>538</Y>
+					<X>1153</X><Y>1258</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -1622,7 +1622,7 @@ traceln(" ");
 				<Variable Class="PlainVariable">
 					<Id>1671636200983</Id>
 					<Name><![CDATA[v_SolarYieldForecast_fr]]></Name>
-					<X>-2107</X><Y>558</Y>
+					<X>1153</X><Y>1278</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -1634,7 +1634,7 @@ traceln(" ");
 				<Variable Class="PlainVariable">
 					<Id>1671638019875</Id>
 					<Name><![CDATA[v_epexForecast_eurpkWh]]></Name>
-					<X>-2107</X><Y>578</Y>
+					<X>1153</X><Y>1298</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -1646,7 +1646,7 @@ traceln(" ");
 				<Variable Class="PlainVariable">
 					<Id>1672229241505</Id>
 					<Name><![CDATA[v_totalInstalledWindPower_kW]]></Name>
-					<X>-1230</X><Y>150</Y>
+					<X>1460</X><Y>1320</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -1661,7 +1661,7 @@ traceln(" ");
 				<Variable Class="PlainVariable">
 					<Id>1672229257384</Id>
 					<Name><![CDATA[v_totalInstalledPVPower_kW]]></Name>
-					<X>-1230</X><Y>170</Y>
+					<X>1460</X><Y>1340</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -1760,7 +1760,7 @@ traceln(" ");
 					<Id>1678367724979</Id>
 					<Name><![CDATA[v_currentBuildingHeatDemand_fr]]></Name>
 					<Description><![CDATA[Fraction of yearly demand in MWh per hour, multiplied by demand in MWh per year = MW for that hour]]></Description>
-					<X>-1570</X><Y>110</Y>
+					<X>1459</X><Y>1098</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -1772,7 +1772,7 @@ traceln(" ");
 				<Variable Class="PlainVariable">
 					<Id>1683718894234</Id>
 					<Name><![CDATA[v_timeSeriesRuntime_ms]]></Name>
-					<X>-1880</X><Y>700</Y>
+					<X>1130</X><Y>1080</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -1784,7 +1784,7 @@ traceln(" ");
 				<Variable Class="PlainVariable">
 					<Id>1683718916458</Id>
 					<Name><![CDATA[v_gridNodesRuntime_ms]]></Name>
-					<X>-1880</X><Y>740</Y>
+					<X>1130</X><Y>1120</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -1796,7 +1796,7 @@ traceln(" ");
 				<Variable Class="PlainVariable">
 					<Id>1683718921466</Id>
 					<Name><![CDATA[v_gridConnectionsRuntime_ms]]></Name>
-					<X>-1880</X><Y>720</Y>
+					<X>1130</X><Y>1100</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -1808,7 +1808,7 @@ traceln(" ");
 				<Variable Class="PlainVariable">
 					<Id>1683718924632</Id>
 					<Name><![CDATA[v_incentivesRuntime_ms]]></Name>
-					<X>-1880</X><Y>780</Y>
+					<X>1130</X><Y>1160</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -1820,7 +1820,7 @@ traceln(" ");
 				<Variable Class="PlainVariable">
 					<Id>1683718924634</Id>
 					<Name><![CDATA[v_financialsRuntime_ms]]></Name>
-					<X>-1880</X><Y>760</Y>
+					<X>1130</X><Y>1140</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -1832,7 +1832,7 @@ traceln(" ");
 				<Variable Class="PlainVariable">
 					<Id>1690290329895</Id>
 					<Name><![CDATA[hourOfYearPerMonth]]></Name>
-					<X>-2100</X><Y>840</Y>
+					<X>899</X><Y>1300</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -1847,7 +1847,7 @@ traceln(" ");
 				<Variable Class="PlainVariable">
 					<Id>1690290329902</Id>
 					<Name><![CDATA[v_hourOfYearStart]]></Name>
-					<X>-2100</X><Y>870</Y>
+					<X>899</X><Y>1323</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -1932,21 +1932,6 @@ traceln(" ");
 					</Properties>
 				</Variable>
 				<Variable Class="PlainVariable">
-					<Id>1692882842888</Id>
-					<Name><![CDATA[v_activeCookingSessions]]></Name>
-					<X>-1570</X><Y>340</Y>
-					<Label><X>10</X><Y>0</Y></Label>
-					<PublicFlag>false</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
-					<ShowLabel>true</ShowLabel>
-					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
-						<Type><![CDATA[int]]></Type>        
-						<InitialValue Class="CodeValue">
-							<Code><![CDATA[0]]></Code>
-						</InitialValue>
-					</Properties>
-				</Variable>
-				<Variable Class="PlainVariable">
 					<Id>1695655479591</Id>
 					<Name><![CDATA[v_totalEnergyChargedOutsideModel_MWh]]></Name>
 					<X>-560</X><Y>910</Y>
@@ -1973,7 +1958,7 @@ traceln(" ");
 				<Variable Class="PlainVariable">
 					<Id>1696522189897</Id>
 					<Name><![CDATA[v_clickedGridConnection]]></Name>
-					<X>410</X><Y>1210</Y>
+					<X>50</X><Y>1210</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -1985,7 +1970,7 @@ traceln(" ");
 				<Variable Class="PlainVariable">
 					<Id>1696836844463</Id>
 					<Name><![CDATA[v_isCostsPerHousehold]]></Name>
-					<X>130</X><Y>1130</Y>
+					<X>2830</X><Y>-880</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -3180,7 +3165,7 @@ traceln(" ");
 				<Variable Class="PlainVariable">
 					<Id>1696854657464</Id>
 					<Name><![CDATA[v_excelSheetNumber]]></Name>
-					<X>1680</X><Y>1490</Y>
+					<X>2430</X><Y>1310</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -3219,7 +3204,7 @@ traceln(" ");
 				<Variable Class="PlainVariable">
 					<Id>1696863329257</Id>
 					<Name><![CDATA[v_clickedBuilding]]></Name>
-					<X>412</X><Y>1126</Y>
+					<X>52</X><Y>1126</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -3231,7 +3216,7 @@ traceln(" ");
 				<Variable Class="PlainVariable">
 					<Id>1696863329260</Id>
 					<Name><![CDATA[previousClickedBuilding]]></Name>
-					<X>412</X><Y>1146</Y>
+					<X>52</X><Y>1146</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -3243,7 +3228,7 @@ traceln(" ");
 				<Variable Class="PlainVariable">
 					<Id>1696863329263</Id>
 					<Name><![CDATA[v_clickedBuildingColor]]></Name>
-					<X>412</X><Y>1167</Y>
+					<X>52</X><Y>1167</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -3255,7 +3240,7 @@ traceln(" ");
 				<Variable Class="PlainVariable">
 					<Id>1696863329269</Id>
 					<Name><![CDATA[v_gridConnectionInBuildingIndex]]></Name>
-					<X>410</X><Y>1250</Y>
+					<X>50</X><Y>1250</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -3270,52 +3255,7 @@ traceln(" ");
 				<Variable Class="PlainVariable">
 					<Id>1696863329272</Id>
 					<Name><![CDATA[v_gridConnectionInBuildingNumber]]></Name>
-					<X>410</X><Y>1230</Y>
-					<Label><X>10</X><Y>0</Y></Label>
-					<PublicFlag>false</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
-					<ShowLabel>true</ShowLabel>
-					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
-						<Type><![CDATA[int]]></Type>        
-						<InitialValue Class="CodeValue">
-							<Code><![CDATA[0]]></Code>
-						</InitialValue>
-					</Properties>
-				</Variable>
-				<Variable Class="PlainVariable">
-					<Id>1696863329274</Id>
-					<Name><![CDATA[v_clickedUtilityObject]]></Name>
-					<ExcludeFromBuild>true</ExcludeFromBuild>
-					<X>640</X><Y>1210</Y>
-					<Label><X>10</X><Y>0</Y></Label>
-					<PublicFlag>false</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
-					<ShowLabel>true</ShowLabel>
-					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
-						<Type><![CDATA[GCUtility]]></Type>        
-					</Properties>
-				</Variable>
-				<Variable Class="PlainVariable">
-					<Id>1696863329276</Id>
-					<Name><![CDATA[v_utilityObjectInBuildingIndex]]></Name>
-					<ExcludeFromBuild>true</ExcludeFromBuild>
-					<X>640</X><Y>1250</Y>
-					<Label><X>10</X><Y>0</Y></Label>
-					<PublicFlag>false</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
-					<ShowLabel>true</ShowLabel>
-					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
-						<Type><![CDATA[int]]></Type>        
-						<InitialValue Class="CodeValue">
-							<Code><![CDATA[0]]></Code>
-						</InitialValue>
-					</Properties>
-				</Variable>
-				<Variable Class="PlainVariable">
-					<Id>1696863329279</Id>
-					<Name><![CDATA[v_utilityObjectInBuildingNumber]]></Name>
-					<ExcludeFromBuild>true</ExcludeFromBuild>
-					<X>640</X><Y>1230</Y>
+					<X>50</X><Y>1230</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -3372,7 +3312,7 @@ traceln(" ");
 				<Variable Class="PlainVariable">
 					<Id>1696868488028</Id>
 					<Name><![CDATA[v_costsUnknown]]></Name>
-					<X>130</X><Y>1150</Y>
+					<X>2830</X><Y>-860</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -3391,6 +3331,45 @@ traceln(" ");
 					<ShowLabel>true</ShowLabel>
 					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
 						<Type><![CDATA[String]]></Type>        
+					</Properties>
+				</Variable>
+				<Variable Class="PlainVariable">
+					<Id>1697554735224</Id>
+					<Name><![CDATA[v_isRapidRun]]></Name>
+					<X>900</X><Y>1180</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
+						<Type><![CDATA[boolean]]></Type>        
+						<InitialValue Class="CodeValue">
+							<Code><![CDATA[false]]></Code>
+						</InitialValue>
+					</Properties>
+				</Variable>
+				<Variable Class="PlainVariable">
+					<Id>1697555814351</Id>
+					<Name><![CDATA[columnIndex]]></Name>
+					<X>50</X><Y>1380</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
+						<Type><![CDATA[int]]></Type>        
+					</Properties>
+				</Variable>
+				<Variable Class="PlainVariable">
+					<Id>1697555814354</Id>
+					<Name><![CDATA[m_resultsMatrix]]></Name>
+					<X>50</X><Y>1400</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
+						<Type><![CDATA[Object [][]]]></Type>        
 					</Properties>
 				</Variable>
 				<Variable Class="Parameter">
@@ -3628,7 +3607,7 @@ traceln(" ");
 
 @since: Sprint 6
 @author: Gillis]]></Description>
-					<X>-2107</X><Y>598</Y>
+					<X>1153</X><Y>1318</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -4007,7 +3986,7 @@ traceln(" ");
 				<Variable Class="CollectionVariable">
 					<Id>1663238323139</Id>
 					<Name><![CDATA[c_connectionOwners]]></Name>
-					<X>-1230</X><Y>260</Y>
+					<X>432</X><Y>1380</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -4022,7 +4001,7 @@ traceln(" ");
 				<Variable Class="CollectionVariable">
 					<Id>1663251681035</Id>
 					<Name><![CDATA[c_gridNodesHSMS]]></Name>
-					<X>-1230</X><Y>200</Y>
+					<X>642</X><Y>1086</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -4037,7 +4016,7 @@ traceln(" ");
 				<Variable Class="CollectionVariable">
 					<Id>1663252052482</Id>
 					<Name><![CDATA[c_gridNodesMSLS]]></Name>
-					<X>-1230</X><Y>220</Y>
+					<X>642</X><Y>1106</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -4052,7 +4031,7 @@ traceln(" ");
 				<Variable Class="CollectionVariable">
 					<Id>1663312177330</Id>
 					<Name><![CDATA[c_gridConnections]]></Name>
-					<X>-1230</X><Y>280</Y>
+					<X>430</X><Y>1220</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -4067,7 +4046,7 @@ traceln(" ");
 				<Variable Class="CollectionVariable">
 					<Id>1663336485480</Id>
 					<Name><![CDATA[c_gridNodesHeat]]></Name>
-					<X>-1230</X><Y>240</Y>
+					<X>642</X><Y>1126</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -4082,7 +4061,7 @@ traceln(" ");
 				<Variable Class="CollectionVariable">
 					<Id>1664953351408</Id>
 					<Name><![CDATA[c_productionAssets]]></Name>
-					<X>-1230</X><Y>300</Y>
+					<X>642</X><Y>1186</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -4097,7 +4076,7 @@ traceln(" ");
 				<Variable Class="CollectionVariable">
 					<Id>1665492426842</Id>
 					<Name><![CDATA[c_ambientAirDependentAssets]]></Name>
-					<X>-1230</X><Y>340</Y>
+					<X>642</X><Y>1226</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -4142,7 +4121,7 @@ traceln(" ");
 				<Variable Class="CollectionVariable">
 					<Id>1666978650654</Id>
 					<Name><![CDATA[c_energyAssets]]></Name>
-					<X>-1899</X><Y>80</Y>
+					<X>642</X><Y>1164</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -4292,7 +4271,7 @@ traceln(" ");
 				<Variable Class="CollectionVariable">
 					<Id>1692799535493</Id>
 					<Name><![CDATA[c_storageAssets]]></Name>
-					<X>-1230</X><Y>320</Y>
+					<X>642</X><Y>1206</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -4307,7 +4286,7 @@ traceln(" ");
 				<Variable Class="CollectionVariable">
 					<Id>1692871551713</Id>
 					<Name><![CDATA[c_EVs]]></Name>
-					<X>-1230</X><Y>360</Y>
+					<X>642</X><Y>1246</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -4323,7 +4302,7 @@ traceln(" ");
 					<Id>1696855562269</Id>
 					<Name><![CDATA[c_GISRegions]]></Name>
 					<ExcludeFromBuild>true</ExcludeFromBuild>
-					<X>-1900</X><Y>230</Y>
+					<X>640</X><Y>1420</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -4338,7 +4317,7 @@ traceln(" ");
 				<Variable Class="CollectionVariable">
 					<Id>1697012883787</Id>
 					<Name><![CDATA[c_buildingGISRegions]]></Name>
-					<X>660</X><Y>1120</Y>
+					<X>50</X><Y>1080</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -4356,7 +4335,7 @@ traceln(" ");
 				<Variable Class="CollectionVariable">
 					<Id>1697012883795</Id>
 					<Name><![CDATA[c_areaGISRegions]]></Name>
-					<X>660</X><Y>1140</Y>
+					<X>50</X><Y>1100</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -4371,6 +4350,24 @@ traceln(" ");
 					</Properties>
 
 				</Variable>
+				<Variable Class="CollectionVariable">
+					<Id>1697555814340</Id>
+					<Name><![CDATA[c_resultsTexts]]></Name>
+					<X>50</X><Y>1350</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" AccessType="public" StaticVariable="false">
+						<CollectionClass><![CDATA[ArrayList]]></CollectionClass>
+						<ElementClass><![CDATA[ShapeText]]></ElementClass>
+						<ValueElementClass><![CDATA[String]]></ValueElementClass>
+						<CollectionInitializer Class="CodeValue">
+							<Code><![CDATA[{ resultsText1, resultsText2, resultsText3, resultsText4, resultsText5, resultsText6, resultsText7, resultsText8, resultsText9, resultsText10, resultsText11, resultsText12, resultsText13, resultsText14, resultsText15, resultsText16, resultsText17, resultsText18, resultsText19, resultsText20, resultsText21, resultsText22, resultsText23, resultsText24, resultsText25, resultsText26, resultsText27, resultsText28, resultsText29, resultsText30, resultsText31, resultsText32, resultsText33, resultsText34, resultsText35, resultsText36, resultsText37, resultsText38, resultsText39, resultsText40, resultsText41, resultsText42, resultsText43, resultsText44, resultsText45, resultsText46, resultsText47, resultsText48, resultsText49, resultsText50, resultsText51, resultsText52, resultsText53, resultsText54, resultsText55, resultsText56, resultsText57, resultsText58, resultsText59, resultsText60, resultsText61, resultsText62, resultsText63, resultsText64, resultsText65, resultsText66, resultsText67, resultsText68, resultsText69, resultsText70, resultsText71, resultsText72 }]]></Code>
+						</CollectionInitializer>
+					</Properties>
+
+				</Variable>
 			</Variables>
 			<Events>
 				<Event>
@@ -4380,10 +4377,10 @@ traceln(" ");
 
 @since: Sprint 6
 @author: Jorrit]]></Description>
-					<X>-2110</X><Y>680</Y>
+					<X>900</X><Y>1060</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
-					<PresentationFlag>false</PresentationFlag>
+					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>true</ShowLabel>
 					<Properties TriggerType="timeout" Mode="cyclic">
 						<Timeout Class="CodeUnitValue">
@@ -4407,28 +4404,30 @@ traceln(" ");
 						<Condition><![CDATA[false]]></Condition>
 					</Properties>
 					<Action><![CDATA[// Update tijdreeksen in leesbare variabelen
+double t_h = (v_timeStepsElapsed * p_timeStep_h + v_hourOfYearStart) % 8760;
+
 double startTime = System.currentTimeMillis();
-f_updateTimeseries();
+f_updateTimeseries(t_h);
 v_timeSeriesRuntime_ms += (System.currentTimeMillis()-startTime);
 
 // Operate assets on each gridConnection
 startTime = System.currentTimeMillis();
-f_calculateGridConnectionFlows();
+f_calculateGridConnectionFlows(t_h);
 v_gridConnectionsRuntime_ms += (System.currentTimeMillis()-startTime);
 
 // Calculate grid node flows
 startTime = System.currentTimeMillis();
-f_calculateGridnodeFlows();
+f_calculateGridnodeFlows(t_h);
 v_gridNodesRuntime_ms += (System.currentTimeMillis()-startTime);
 
 // Financial accounting of energy flows
 startTime = System.currentTimeMillis();
-f_calculateFinancialFlows();
+f_calculateFinancialFlows(t_h);
 v_financialsRuntime_ms += (System.currentTimeMillis()-startTime);
 
 // Update elektriciteitsprijzen
 startTime = System.currentTimeMillis();
-f_updatePricesForNextTimestep();
+f_updatePricesForNextTimestep(t_h);
 v_incentivesRuntime_ms += (System.currentTimeMillis()-startTime);
 
 if (b_addKpiVisuals) {
@@ -4462,7 +4461,7 @@ v_timeStepsElapsed ++;
 					<Id>1674058522977</Id>
 					<Name><![CDATA[pauseEvent]]></Name>
 					<ExcludeFromBuild>true</ExcludeFromBuild>
-					<X>-1680</X><Y>680</Y>
+					<X>900</X><Y>1215</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -5045,11 +5044,15 @@ return 1;
 					<ReturnType><![CDATA[double]]></ReturnType>
 					<Id>1664894248130</Id>
 					<Name><![CDATA[f_updatePricesForNextTimestep]]></Name>
-					<X>-2110</X><Y>780</Y>
+					<X>900</X><Y>1160</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
-					<PresentationFlag>false</PresentationFlag>
+					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>true</ShowLabel>
+					<Parameter>
+						<Name><![CDATA[t_h]]></Name>
+						<Type><![CDATA[double]]></Type>
+					</Parameter>
 					<Body><![CDATA[// Update the dayaheadprice
 nationalEnergyMarket.f_updateEnergyPrice();
 
@@ -5083,14 +5086,16 @@ if (p_parallelize) {
 					<ReturnType><![CDATA[double]]></ReturnType>
 					<Id>1664952601107</Id>
 					<Name><![CDATA[f_updateTimeseries]]></Name>
-					<X>-2110</X><Y>700</Y>
+					<X>900</X><Y>1080</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
-					<PresentationFlag>false</PresentationFlag>
+					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>true</ShowLabel>
-					<Body><![CDATA[double t_h = (v_timeStepsElapsed * p_timeStep_h + v_hourOfYearStart) % 8760;
-//traceln("Current hour for profiles: " + t_h);
-
+					<Parameter>
+						<Name><![CDATA[t_h]]></Name>
+						<Type><![CDATA[double]]></Type>
+					</Parameter>
+					<Body><![CDATA[
 v_currentHouseHoldOtherElectricityDemand_fr = tf_p_house_e_demand_other(t_h);
 v_currentBuildingOtherElectricityDemand_fr = tf_p_building_e_demand_other(t_h);
 v_currentBuildingHeatDemand_fr = tf_p_building_h_demand(t_h);
@@ -5130,11 +5135,15 @@ v_epexForecast_eurpkWh += (nationalEnergyMarket.tf_dayAheadElectricityPricing_eu
 					<ReturnType><![CDATA[double]]></ReturnType>
 					<Id>1665051878402</Id>
 					<Name><![CDATA[f_calculateGridnodeFlows]]></Name>
-					<X>-2110</X><Y>740</Y>
+					<X>900</X><Y>1120</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
-					<PresentationFlag>false</PresentationFlag>
+					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>true</ShowLabel>
+					<Parameter>
+						<Name><![CDATA[t_h]]></Name>
+						<Type><![CDATA[double]]></Type>
+					</Parameter>
 					<Body><![CDATA[double currentElectricityImport_kW = 0;
 double currentElectricityExport_kW = 0;
 
@@ -5204,11 +5213,15 @@ if (b_storeProfiles) {
 					<ReturnType><![CDATA[double]]></ReturnType>
 					<Id>1665051962956</Id>
 					<Name><![CDATA[f_calculateFinancialFlows]]></Name>
-					<X>-2110</X><Y>760</Y>
+					<X>900</X><Y>1140</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
-					<PresentationFlag>false</PresentationFlag>
+					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>true</ShowLabel>
+					<Parameter>
+						<Name><![CDATA[t_h]]></Name>
+						<Type><![CDATA[double]]></Type>
+					</Parameter>
 					<Body><![CDATA[if (p_parallelize) {
 	c_connectionOwners.parallelStream().forEach(co -> co.f_updateFinances());
 } else {
@@ -5391,11 +5404,15 @@ for(J_EAStorage es : c_storageAssets ) {
 					<ReturnType><![CDATA[double]]></ReturnType>
 					<Id>1668528129020</Id>
 					<Name><![CDATA[f_calculateGridConnectionFlows]]></Name>
-					<X>-2110</X><Y>720</Y>
+					<X>900</X><Y>1100</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
-					<PresentationFlag>false</PresentationFlag>
+					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>true</ShowLabel>
+					<Parameter>
+						<Name><![CDATA[t_h]]></Name>
+						<Type><![CDATA[double]]></Type>
+					</Parameter>
 					<Body><![CDATA[if (p_parallelize) {
 	c_gridConnections.parallelStream().forEach(gc -> gc.f_calculateEnergyBalance());
 } 
@@ -5690,7 +5707,7 @@ for (GridConnection g: c_gridConnections) {
 					<ReturnType><![CDATA[double]]></ReturnType>
 					<Id>1671636439933</Id>
 					<Name><![CDATA[f_initializeForecasts]]></Name>
-					<X>-2107</X><Y>518</Y>
+					<X>1153</X><Y>1238</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -6192,7 +6209,64 @@ t_numberOfRooftopPV.setText(count(Houses, x->x.v_hasPV == true));]]></Body>
 						<Name><![CDATA[v_rooftopPV_kWp]]></Name>
 						<Type><![CDATA[double]]></Type>
 					</Parameter>
-					<Body><![CDATA[/*
+					<Body><![CDATA[//Setting PV Systems
+double PVsystems = count(c_gridConnections, x->x.v_hasPV == true);
+t_numberOfRooftopPV.setText(PVsystems);
+
+JsonNode t=null;
+for(JsonNode assetJson : v_templateAssetsJson) {
+	if (assetJson.required( "name" ).textValue().equals("TEMPLATE: Household PV")) {
+		t = assetJson;
+	}
+}
+
+if( sl_rooftopPVCompanies.getValue()/100.0*c_gridConnections.size() < PVsystems){
+	while ( sl_rooftopPVCompanies.getValue()/100.0*c_gridConnections.size() < PVsystems) { // remove excess PV systems
+		GridConnection h = findFirst(Houses, x->x.v_hasPV==true);
+		
+		J_EA pvAsset = findFirst(h.c_productionAssets, p -> p.energyAssetType == OL_EnergyAssetType.PHOTOVOLTAIC );
+		traceln("Found PV system: " + pvAsset);
+		if (pvAsset!=null) {
+			v_totalInstalledPVPower_kW -= pvAsset.getElectricCapacity_kW();
+			h.c_productionAssets.remove(pvAsset);
+			c_energyAssets.remove(pvAsset);
+			traceln("Removing PV from GridConnection:" + h.p_agentID);
+			h.v_hasPV = false;
+		}
+		PVsystems=count(c_gridConnections, x->x.v_hasPV == true);		
+	}
+ 
+} else { 
+	while ( sl_rooftopPVCompanies.getValue()/100.0 * c_gridConnections.size() > PVsystems) {
+		GridConnection h = findFirst(c_gridConnections, x->x.v_hasPV==false);
+		//traceln("Check presence of solarpanels: " + h.v_hasPV);	
+		
+		OL_EnergyAssetType assetType = OL_EnergyAssetType.valueOf(t.required( "type" ).textValue()) ;
+		String assetName = t.required( "name" ).textValue();	
+				
+		double capacityElectricity_kW = t.required( "capacityElectricity_kW").doubleValue() ;
+		double capacityHeat_kW = 0.0;
+		double yearlyProductionHydrogen_kWh = 0.0;
+		double yearlyProductionMethane_kWh = 0.0;
+		double outputTemperature_degC = 0.0;
+		
+		J_EAProduction productionAsset = new J_EAProduction ( h, assetType, assetName, capacityElectricity_kW, capacityHeat_kW, yearlyProductionMethane_kWh, yearlyProductionHydrogen_kWh, p_timeStep_h, outputTemperature_degC );
+		h.f_connectToJ_EA(productionAsset);
+		
+		c_productionAssets.add(productionAsset);
+		v_totalInstalledPVPower_kW += capacityElectricity_kW;
+	
+		PVsystems=count(c_gridConnections, x->x.v_hasPV == true);	
+		traceln("Added PV to GridConnection: " + h.p_agentID);
+	}
+	
+}	
+
+v_totalInstalledPVPower_kW = sumWhere(c_energyAssets,p->p.getElectricCapacity_kW(),p -> p.energyAssetType == OL_EnergyAssetType.PHOTOVOLTAIC);
+t_numberOfRooftopPV.setText(count(c_gridConnections, x->x.v_hasPV == true));
+
+
+/*
 //ADD PV
 while (sum(pop_EA_UtilityObjects, x->x.v_rooftopPVInstalledCapacity_kW) < v_rooftopPV_kWp){
 	double kWRequired = v_rooftopPV_kWp - sum(pop_EA_UtilityObjects, x->x.v_rooftopPVInstalledCapacity_kW);
@@ -6236,19 +6310,110 @@ while (sum(pop_EA_UtilityObjects, x->x.v_rooftopPVInstalledCapacity_kW) > v_roof
 traceln(sum(pop_EA_UtilityObjects, x->x.v_rooftopPVInstalledCapacity_kW) + " kWp PV installed");
 */
 
-traceln("f_setPVSystem awaiting new implementation after model merge. Currently not functional!");]]></Body>
+]]></Body>
 				</Function>
 				<Function AccessType="default" StaticFunction="false">
 					<ReturnModificator>VOID</ReturnModificator>
 					<ReturnType><![CDATA[double]]></ReturnType>
 					<Id>1696521316832</Id>
 					<Name><![CDATA[f_runRapidSimulation]]></Name>
-					<X>-1880</X><Y>680</Y>
+					<X>1130</X><Y>1060</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>true</ShowLabel>
-					<Body><![CDATA[// tbd...]]></Body>
+					<Body><![CDATA[//Get time and pause simulation
+v_timeInMillis = System.currentTimeMillis();
+pauseSimulation();
+
+//Reset values and time settings
+/*v_storeCurrentHour = v_simulatedHour;
+v_storeHourOfSimulatedDay = v_hourOfSimulatedDay;
+v_storeHourOfWeek = v_hourOfWeek;
+v_storeDayOfWeek = v_dayOfWeek;
+v_hourOfSimulatedDay = 0;
+v_hourOfWeek = v_hourOfWeekStartYear;
+v_dayOfWeek = v_dayOfWeekStartYear;
+*/
+
+v_isRapidRun = true;
+//f_resetAnnualValues();
+
+//Run energy calculations loop
+for(double t_h = 0; t_h < (8760 / p_timeStep_h); t_h = t_h + p_timeStep_h){
+	// Update time-series for model-wide variables (such as temps, wind, etc.)
+	f_updateTimeseries(t_h);
+	
+	// Operate assets on each gridConnection
+	f_calculateGridConnectionFlows(t_h);
+	
+	// Calculate grid node flows
+	f_calculateGridnodeFlows(t_h);
+	
+	// Financial accounting of energy flows
+	f_calculateFinancialFlows(t_h);
+	
+	// Update elektriciteitsprijzen
+	f_updatePricesForNextTimestep(t_h);
+}	
+f_energyAndCostTotals();
+
+traceln("---FINISHED YEAR MODEL RUN----");
+
+//Update settings and reslts
+v_timeInMillis = System.currentTimeMillis() - v_timeInMillis;	
+traceln((v_timeInMillis)/1000 + " computing time in seconds");
+
+v_costsUnknown = false;
+//f_updateResultsGraphs();
+
+//numberOfRuns++;
+
+//Export results to excel
+/*if (v_isExportingToExcel == true){
+	f_exportResultsToExcel();
+}*/
+
+/*//Values back to stored for in time simulation
+v_hourOfSimulatedDay = v_storeHourOfSimulatedDay;
+v_simulatedHour = v_storeCurrentHour;
+v_hourOfWeek = v_storeHourOfWeek;
+v_dayOfWeek = v_storeDayOfWeek;
+
+for (EA_Household h : pop_EA_Households){
+	h.v_requiredHeatBufferCapacity_kWh = h.v_requiredHeatBufferCapacityStoredForRapidRun_kWh;
+	h.v_requiredHeatBufferCapacity_kWh = h.v_storedElectricBoilerCurrentCapacity_kWh;
+	h.v_SOC_kWh = h.v_stored_SOC_kWh;	
+}
+for (EA_ElectricVehicle x : pop_EA_ElectricVehicles){
+	x.v_chargingDemandChargeSession_kWh = x.v_storedChargingDemandChargeSession_kWh;
+	x.v_currentCapacity_kWh = x.v_storedCurrentCapacity_kWh;
+	x.v_soc = x.v_storedSOC;
+	x.v_drivingDemand_km = x.v_storedDrivingDemand_km;
+	x.v_currentlyCharging = x.v_storedCurrentlyCharging;
+	x.v_chargingPower_kW = 0;
+}
+for(EA_SampleCarPattern s : pop_EA_SampleCarPatterns){
+	s.v_timeTillNextTrip = s.v_storedTimeTillNextTrip;
+}
+for (EA_NeighborhoodBattery x : pop_EA_NeighborhoodBatteries){
+	x.v_batteryPower_kW = 0;
+	x.v_batteryCapacity_kWh = 0;
+	x.v_requiredBatteryCapacity_kWh = 0;
+	x.v_requiredDailyBatteryCapacity_kWh = 0;	
+	x.v_requiredChargePower_kW = 0;
+	x.v_requiredDischargePower_kW = 0;
+	x.v_dailyTotal = 0;
+	x.v_dailyTotalPreviousDay = 0;
+	x.v_dailyDischargeRequired_kWh = 0;
+	x.v_dailyChargeRequired_kWh = 0;
+}
+*/
+v_isRapidRun = false;
+runSimulation();
+
+
+]]></Body>
 				</Function>
 				<Function AccessType="default" StaticFunction="false">
 					<ReturnModificator>VOID</ReturnModificator>
@@ -6854,7 +7019,7 @@ traceln("f_setHeatingTypesHoushold awaiting new implementation after model merge
 					<ReturnType><![CDATA[double]]></ReturnType>
 					<Id>1696863329251</Id>
 					<Name><![CDATA[f_selectGISRegion]]></Name>
-					<X>410</X><Y>1090</Y>
+					<X>50</X><Y>1060</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -6926,71 +7091,9 @@ for ( GIS_Building b : pop_GIS_Buildings ){
 				<Function AccessType="default" StaticFunction="false">
 					<ReturnModificator>VOID</ReturnModificator>
 					<ReturnType><![CDATA[double]]></ReturnType>
-					<Id>1696863329254</Id>
-					<Name><![CDATA[f_selectGISRegionBusinessPark]]></Name>
-					<ExcludeFromBuild>true</ExcludeFromBuild>
-					<X>660</X><Y>1090</Y>
-					<Label><X>10</X><Y>0</Y></Label>
-					<PublicFlag>false</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
-					<ShowLabel>true</ShowLabel>
-					<Parameter>
-						<Name><![CDATA[clickx]]></Name>
-						<Type><![CDATA[double]]></Type>
-					</Parameter>
-					<Parameter>
-						<Name><![CDATA[clicky]]></Name>
-						<Type><![CDATA[double]]></Type>
-					</Parameter>
-					<Body><![CDATA[//Set click on building group invisible
-if (gr_clickOnBuildingGroup.isVisible() == true){
-	gr_clickOnBuildingGroup.setVisible(false);
-}
-
-previousClickedBuilding = v_clickedBuilding;
-if( previousClickedBuilding != null){
-	previousClickedBuilding.gisRegion.setFillColor( v_clickedBuildingColor );
-}
-
-
-for ( EA_Building b : pop_EA_Buildings ){
-	
-	if( b.gisRegion != null && b.gisRegion.contains(clickx, clicky) ){
-		v_clickedBuilding = b;
-		v_clickedBuildingColor = b.gisRegion.getFillColor();
-		b.gisRegion.setFillColor( yellow );
-		
-		/*
-		if(v_clickedBuilding.c_householdsInBuilding.size() > 1){
-			gr_nextHouseholdInBuilding.setVisible(true);
-		}
-		else {
-			gr_nextHouseholdInBuilding.setVisible(false);		
-		}
-		*/ 
-		
-		if(v_clickedBuilding.c_utilityObjectsInBuilding.size() > 0){
-			v_utilityObjectInBuildingIndex = 0;
-			v_clickedUtilityObject = v_clickedBuilding.c_householdsInBuilding.get(v_householdInBuildingIndex);
-			
-			v_utilityObjectInBuildingNumber = v_utilityObjectInBuildingIndex + 1;
-		}
-		else {
-			v_utilityObjectInBuildingNumber = 0;
-		}
-		break;
-	}
-}
-
-
-]]></Body>
-				</Function>
-				<Function AccessType="default" StaticFunction="false">
-					<ReturnModificator>VOID</ReturnModificator>
-					<ReturnType><![CDATA[double]]></ReturnType>
 					<Id>1696865756419</Id>
 					<Name><![CDATA[f_setEnergyPrice]]></Name>
-					<X>130</X><Y>1090</Y>
+					<X>2830</X><Y>-920</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -7250,7 +7353,7 @@ gr_businessParkResultTabs.setY(100);
 gr_businessParkDashboard.setX(2180);
 gr_businessParkDashboard.setY(500);
 
-gr_companyDashboard.setX(1650);
+gr_companyDashboard.setX(1665);
 gr_companyDashboard.setY(500);
 
 gr_businessParkLoad.setX(-515);
@@ -7568,6 +7671,285 @@ for (GridConnection GC : c_gridConnections) {
 	}
 
 }]]></Body>
+				</Function>
+				<Function AccessType="default" StaticFunction="false">
+					<ReturnModificator>VOID</ReturnModificator>
+					<ReturnType><![CDATA[double]]></ReturnType>
+					<Id>1697555814346</Id>
+					<Name><![CDATA[f_updateResultsGraphs]]></Name>
+					<X>50</X><Y>1330</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Body><![CDATA[//parametersOfRuns.add( new Object[] { v_totalAnnualCosts/(pow(10,6)) } );
+int numberOfRuns=0;
+
+for (int i=0; i < m_resultsMatrix.length - 1; i++){
+		
+	for (int j=0; j < m_resultsMatrix[i].length; j++){
+		m_resultsMatrix[i][j] = m_resultsMatrix[i+1][j];
+	}
+}
+	
+m_resultsMatrix[columnIndex][0] = numberOfRuns+1;
+m_resultsMatrix[columnIndex][1] = v_householdEnergyLabel;
+m_resultsMatrix[columnIndex][2] = roundToInt(sl_gasBurner.getValue());
+m_resultsMatrix[columnIndex][3] = roundToInt(sl_greenGasBoiler.getValue());
+m_resultsMatrix[columnIndex][4] = roundToInt(sl_electricHeatPump.getValue());
+m_resultsMatrix[columnIndex][5] = roundToInt(sl_hybridHeatPump.getValue());
+m_resultsMatrix[columnIndex][6] = roundToInt(sl_districtHeating.getValue());
+m_resultsMatrix[columnIndex][7] = null;//v_districtHeatingTemperature_string;
+m_resultsMatrix[columnIndex][8] = roundToInt(sl_rooftopPV.getValue());
+m_resultsMatrix[columnIndex][9] = roundToInt(sl_electricCooking.getValue());
+m_resultsMatrix[columnIndex][10] = roundToInt(sl_EV.getValue());
+m_resultsMatrix[columnIndex][11] = roundToInt(sl_homeBattery.getValue());
+m_resultsMatrix[columnIndex][12] = null;//p_EVChargingType;
+
+m_resultsMatrix[columnIndex][13] = roundToDecimal(v_totalAnnualCosts/(pow(10,6)),2);
+m_resultsMatrix[columnIndex][14] = 0;//roundToInt(max(v_numberOfTrafosWithDemandOverload, v_numberOfTrafosWithSupplyOverload));
+m_resultsMatrix[columnIndex][15] = roundToInt(v_modelSelfSufficiency_fr * 100);
+m_resultsMatrix[columnIndex][16] = roundToInt(v_modelSelfConsumption_fr * 100);
+//m_resultsMatrix[columnIndex][17] = roundToDecimal(v_annualCO2Emissions_kg/1000000, 1);
+
+//Update texts
+
+int row = 0;
+int col = 0;
+for( int i = 0; i <c_resultsTexts.size(); i++){
+	c_resultsTexts.get(i).setText(m_resultsMatrix[col][row]);
+	row++;
+	if (row == m_resultsMatrix[0].length){
+		col++;
+		row = 0;
+	}
+}
+
+
+
+Color color = spectrumColor( (numberOfRuns * 4) % 21, 21 );
+/*while ( resultsChartCosts.getCount() >= parametersOfRuns.size() ) {
+	resultsChartCosts.remove( resultsChartCosts.getCount() - 1 );
+}*/
+
+if (numberOfRuns > 3){
+	resultsChartCosts.remove(0);
+	resultsChartTransformers.remove(0);
+	resultsChartRenewableEnergy.remove(0);
+	resultsChartEmissions.remove(0);
+	
+}
+
+//Costs chart
+DataItem resultsChartCosts_item = new DataItem();
+resultsChartCosts_item.setValue( roundToDecimal(v_totalAnnualCosts/(pow(10,6)),2) );
+resultsChartCosts.addDataItem( resultsChartCosts_item, "Run " + (numberOfRuns+1), color );
+
+//Transformers chart
+/*DataItem resultsChartTransformers_item = new DataItem();
+resultsChartTransformers_item.setValue(roundToInt(max(v_numberOfTrafosWithDemandOverload, v_numberOfTrafosWithSupplyOverload)) );
+resultsChartTransformers.addDataItem( resultsChartTransformers_item, "Run " + (numberOfRuns+1), color );
+*/
+
+//Renewable energy chart
+DataItem resultsChartRenewableEnergy_item = new DataItem();
+resultsChartRenewableEnergy_item.setValue( roundToInt(v_modelSelfSufficiency_fr * 100) );
+resultsChartRenewableEnergy.addDataItem( resultsChartRenewableEnergy_item, "Run " + (numberOfRuns+1), color );
+
+//Emissions chart
+//DataItem resultsChartEmissions_item = new DataItem();
+//resultsChartEmissions_item.setValue( roundToDecimal(v_annualCO2Emissions_kg/1000000,1) );
+//resultsChartEmissions.addDataItem( resultsChartEmissions_item, "Run " + (numberOfRuns+1), color );
+]]></Body>
+				</Function>
+				<Function AccessType="default" StaticFunction="false">
+					<ReturnModificator>VOID</ReturnModificator>
+					<ReturnType><![CDATA[double]]></ReturnType>
+					<Id>1697555814349</Id>
+					<Name><![CDATA[f_intantiateResultsMatrix]]></Name>
+					<X>50</X><Y>1310</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Body><![CDATA[if (m_resultsMatrix == null){
+	m_resultsMatrix = new Object [4][18];
+	for (int i=0; i < m_resultsMatrix.length; i++){
+			
+		for (int j=0; j < m_resultsMatrix[i].length; j++){
+			m_resultsMatrix[i][j] = 0;
+		}
+	}
+}
+
+//Set text values to 0
+int row = 0;
+int col = 0;
+for( int i = 0; i <c_resultsTexts.size(); i++){
+	c_resultsTexts.get(i).setText(m_resultsMatrix[col][row]);
+	row++;
+	if (row == m_resultsMatrix[0].length){
+		col++;
+		row = 0;
+	}
+}]]></Body>
+				</Function>
+				<Function AccessType="default" StaticFunction="false">
+					<ReturnModificator>VOID</ReturnModificator>
+					<ReturnType><![CDATA[double]]></ReturnType>
+					<Id>1697556121647</Id>
+					<Name><![CDATA[f_energyAndCostTotals]]></Name>
+					<X>900</X><Y>1360</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Body><![CDATA[//Resetting variables from previous calculation
+
+//f_getEnergyTotals();
+//f_getEmissions();
+//f_setDHSystemCosts();
+//f_getEnergyCosts();
+
+]]></Body>
+				</Function>
+				<Function AccessType="default" StaticFunction="false">
+					<ReturnModificator>VOID</ReturnModificator>
+					<ReturnType><![CDATA[double]]></ReturnType>
+					<Id>1697556251375</Id>
+					<Name><![CDATA[f_getEnergyCosts]]></Name>
+					<ExcludeFromBuild>true</ExcludeFromBuild>
+					<X>900</X><Y>1380</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Body><![CDATA[v_elecHPCapex = 0;
+v_greenGasHRCapex = 0;
+v_hybridHPCapex = 0;
+v_LTCapex = 0;
+v_MTCapex = 0;
+	
+v_elecHPFixedOpex = 0;
+v_greenGasHRFixedOpex = 0;
+v_hybridHPFixedOpex = 0;
+v_LTDistrictHeatingFixedOpex = 0;
+v_MTDistrictHeatingFixedOpex = 0;
+
+for (EA_Household h : pop_EA_Households){
+	h.f_heatSystemCosts();
+	h.f_LCOEHeat();
+	h.f_LCOEElectricity();
+	h.f_LCOEInsulation();
+	h.f_totalCosts();
+}
+
+f_DistrictHeatingLCOE();
+
+
+//-----NEIGHBORHOOD TOTALS------
+
+
+double totalNonDHEnergyConsumption = sumWhere(pop_EA_Households, x->x.v_heatingSystemAnnualEnergyConsumption, x->x.p_householdHeatSupplyMethod != MTDistrictHeating && x.p_householdHeatSupplyMethod != LTDistrictHeating && x.p_householdHeatSupplyMethod != HTDistrictHeating); 
+double totalNonDHNPVOfCosts = sumWhere(pop_EA_Households, x->x.v_NPVOfCostsOverLifetime, x->x.p_householdHeatSupplyMethod != MTDistrictHeating && x.p_householdHeatSupplyMethod != LTDistrictHeating && x.p_householdHeatSupplyMethod != HTDistrictHeating); 
+double totalNonDHNPVOfEnergy = sumWhere(pop_EA_Households, x->x.v_NPVOfEnergyOverLifetime, x->x.p_householdHeatSupplyMethod != MTDistrictHeating && x.p_householdHeatSupplyMethod != LTDistrictHeating && x.p_householdHeatSupplyMethod != HTDistrictHeating); 
+
+double totalNPVOfCosts = v_DHNPVOfCostsOverLifetime + totalNonDHNPVOfCosts;
+double totalNPVOfEnergy = v_DHNPVOfEnergyOverLifetime + totalNonDHNPVOfEnergy;
+
+v_heatingSystemLCOE = totalNPVOfCosts / totalNPVOfEnergy;
+v_heatingSystemAnnualCosts = v_heatingSystemLCOE * v_annualHeatDemand_kWh;
+v_heatingSystemAnnualEnergyConsumption = v_annualHeatDemand_kWh;
+v_heatingSystemLifetimeCosts = sum(pop_EA_Households, x->x.v_heatingSystemLifetimeCosts) + v_districtHeatingSystemLifetimeCosts;
+//v_heatingSystemAnnualCosts = 
+/*
+//Heating system
+//v_heatingSystemLCOE = average(pop_EA_Households, x->x.v_heatingSystemLCOE);
+v_heatingSystemAnnualCosts = sum(pop_EA_Households, x->x.v_heatingSystemAnnualCosts);
+v_heatingSystemAnnualEnergyConsumption = sum(pop_EA_Households, x->x.v_heatingSystemAnnualEnergyConsumption);
+v_heatingSystemLifetimeCosts = sum(pop_EA_Households, x->x.v_heatingSystemLifetimeCosts);
+v_heatingSystemInvestmentCosts = sum(pop_EA_Households, x->x.v_heatingSystemInvestmentCosts);
+v_heatingSystemOperationalCostsFixed = sum(pop_EA_Households, x->x.v_heatingSystemOperationalCostsFixed);
+v_heatingSystemOperationalCostsVariable = sum(pop_EA_Households, x->x.v_heatingSystemOperationalCostsVariable);
+*/
+//Insulation
+v_insulationLCOE = average(pop_EA_Households, x->x.v_insulationLCOE);
+v_insulationAnnualCosts = sum(pop_EA_Households, x->x.v_insulationAnnualCosts);
+v_insulationAnnualEnergySavings = sum(pop_EA_Households, x->x.v_insulationAnnualEnergySavings);
+v_insulationLifetimeCosts = sum(pop_EA_Households, x->x.v_insulationLifetimeCosts);
+v_insulationInvestmentCosts = sum(pop_EA_Households, x->x.v_insulationInvestmentCosts);
+v_insulationOperationalCostsFixed = sum(pop_EA_Households, x->x.v_insulationOperationalCostsFixed);
+v_insulationOperationalCostsVariable = sum(pop_EA_Households, x->x.v_insulationOperationalCostsVariable);
+
+//Electricity
+v_electricityLCOE = average(pop_EA_Households, x->x.v_electricityLCOE);
+v_electricityAnnualCosts = sum(pop_EA_Households, x->x.v_electricityAnnualCosts);
+v_electricityAnnualEnergyConsumption = sum(pop_EA_Households, x->x.v_electricityAnnualEnergyConsumption);
+v_electricityLifetimeCosts = sum(pop_EA_Households, x->x.v_electricityLifetimeCosts);
+v_electricityInvestmentCosts = sum(pop_EA_Households, x->x.v_electricityInvestmentCosts);
+v_electricityOperationalCostsFixed = sum(pop_EA_Households, x->x.v_electricityOperationalCostsFixed);
+v_electricityOperationalCostsVariable = sum(pop_EA_Households, x->x.v_electricityOperationalCostsVariable);
+
+//Total
+v_totalLCOE = (v_electricityLCOE * v_annualHouseholdElectricityDemand_kWh + v_heatingSystemLCOE * v_annualHeatDemand_kWh) / (v_annualHouseholdElectricityDemand_kWh + v_annualHeatDemand_kWh);
+v_totalAnnualCosts = v_electricityAnnualCosts + v_insulationAnnualCosts + v_heatingSystemAnnualCosts;
+v_totalAnnualEnergyConsumption = v_heatingSystemAnnualEnergyConsumption + v_electricityAnnualEnergyConsumption;
+v_totalLifetimeCosts = v_electricityLifetimeCosts + v_insulationLifetimeCosts + v_heatingSystemLifetimeCosts;
+
+/*
+v_totalInvestmentCosts = sum(pop_EA_Households, x->x.v_totalInvestmentCosts);
+v_totalOperationalCostsFixed = sum(pop_EA_Households, x->x.v_totalOperationalCostsFixed);
+v_totalOperationalCostsVariable = sum(pop_EA_Households, x->x.v_totalOperationalCostsFixed);
+*/
+
+//----PER HOUSEHOLD AVERAGES------
+
+//ElectricityGeneration
+v_annualPVGeneration_kWhAveragePerHousehold = average(pop_EA_Households, x->x.v_annualPVGeneration_kWh);
+
+//Mobility
+v_annualEVPrivateCharging_kWhAveragePerCar = v_annualEVPrivateCharging_kWh / sumWhere(pop_EA_Households, x->x.v_EVs, x->x.v_hasHomeCharger == true);
+v_annualEVPublicCharging_kWhAveragePerCar = v_annualEVPublicCharging_kWh / sumWhere(pop_EA_Households, x->x.v_EVs, x->x.v_hasHomeCharger == false);
+
+//Heating system
+v_heatingSystemLCOEPerHousehold = v_heatingSystemLCOE / pop_EA_Households.size();
+v_heatingSystemAnnualCostsPerHousehold = v_heatingSystemAnnualCosts / pop_EA_Households.size();
+v_heatingSystemAnnualEnergyConsumptionPerHousehold = v_heatingSystemAnnualEnergyConsumption / pop_EA_Households.size();
+v_heatingSystemLifetimeCostsPerHousehold = v_heatingSystemLifetimeCosts / pop_EA_Households.size();
+/*
+v_heatingSystemInvestmentCostsPerHousehold = average(pop_EA_Households, x->x.v_heatingSystemInvestmentCosts);
+v_heatingSystemOperationalCostsFixedPerHousehold = average(pop_EA_Households, x->x.v_heatingSystemOperationalCostsFixed);
+v_heatingSystemOperationalCostsVariablePerHousehold = average(pop_EA_Households, x->x.v_heatingSystemOperationalCostsVariable);
+*/
+//Insulation
+v_insulationLCOEPerHousehold = average(pop_EA_Households, x->x.v_insulationLCOE);
+v_insulationAnnualCostsPerHousehold = average(pop_EA_Households, x->x.v_insulationAnnualCosts);
+v_insulationAnnualEnergySavingsPerHousehold = average(pop_EA_Households, x->x.v_insulationAnnualEnergySavings);
+v_insulationLifetimeCostsPerHousehold = average(pop_EA_Households, x->x.v_insulationLifetimeCosts);
+v_insulationInvestmentCostsPerHousehold = average(pop_EA_Households, x->x.v_insulationInvestmentCosts);
+v_insulationOperationalCostsFixedPerHousehold = average(pop_EA_Households, x->x.v_insulationOperationalCostsFixed);
+v_insulationOperationalCostsVariablePerHousehold = average(pop_EA_Households, x->x.v_insulationOperationalCostsVariable);
+
+//Electricity
+v_electricityLCOEPerHousehold = average(pop_EA_Households, x->x.v_electricityLCOE);
+v_electricityAnnualCostsPerHousehold = average(pop_EA_Households, x->x.v_electricityAnnualCosts);
+v_electricityAnnualEnergyConsumptionPerHousehold = average(pop_EA_Households, x->x.v_electricityAnnualEnergyConsumption);
+v_electricityLifetimeCostsPerHousehold = average(pop_EA_Households, x->x.v_electricityLifetimeCosts);
+v_electricityInvestmentCostsPerHousehold = average(pop_EA_Households, x->x.v_electricityInvestmentCosts);
+v_electricityOperationalCostsFixedPerHousehold = average(pop_EA_Households, x->x.v_electricityOperationalCostsFixed);
+v_electricityOperationalCostsVariablePerHousehold = average(pop_EA_Households, x->x.v_electricityOperationalCostsVariable);
+
+//Total
+v_totalLCOEPerHousehold = v_totalLCOE;
+v_totalAnnualCostsPerHousehold = v_totalAnnualCosts / pop_EA_Households.size();
+v_totalAnnualEnergyConsumptionPerHousehold = v_totalAnnualEnergyConsumption / pop_EA_Households.size();
+v_totalLifetimeCostsPerHousehold = v_totalLifetimeCosts / pop_EA_Households.size();
+
+/*
+v_totalInvestmentCostsPerHousehold = average(pop_EA_Households, x->x.v_totalInvestmentCosts);
+v_totalOperationalCostsFixedPerHousehold = average(pop_EA_Households, x->x.v_totalOperationalCostsFixed);
+v_totalOperationalCostsVariablePerHousehold = average(pop_EA_Households, x->x.v_totalOperationalCostsFixed);
+*/]]></Body>
 				</Function>
 			</Functions>
 			<TableFunctions>
@@ -8153,7 +8535,7 @@ for (GridConnection GC : c_gridConnections) {
 				<EmbeddedObject>
 					<Id>1658477403183</Id>
 					<Name><![CDATA[pop_gridNodes]]></Name>
-					<X>-1897</X><Y>58</Y>
+					<X>643</X><Y>1058</Y>
 					<Label><X>15</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -8244,7 +8626,7 @@ for (GridConnection GC : c_gridConnections) {
 				<EmbeddedObject>
 					<Id>1658477403184</Id>
 					<Name><![CDATA[pop_gridConnections]]></Name>
-					<X>-2107</X><Y>51</Y>
+					<X>433</X><Y>1051</Y>
 					<Label><X>15</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -8419,7 +8801,7 @@ for (GridConnection GC : c_gridConnections) {
 				<EmbeddedObject>
 					<Id>1658499722957</Id>
 					<Name><![CDATA[UI_energyAssets]]></Name>
-					<X>-1898</X><Y>180</Y>
+					<X>639</X><Y>1340</Y>
 					<Label><X>15</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -8496,7 +8878,7 @@ for (GridConnection GC : c_gridConnections) {
 
 @since: Sprint 6
 @author: Jorrit]]></Description>
-					<X>-1900</X><Y>210</Y>
+					<X>640</X><Y>1400</Y>
 					<Label><X>15</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -8563,7 +8945,7 @@ for (GridConnection GC : c_gridConnections) {
 				<EmbeddedObject>
 					<Id>1660730126216</Id>
 					<Name><![CDATA[pop_connectionOwners]]></Name>
-					<X>-2107</X><Y>258</Y>
+					<X>433</X><Y>1278</Y>
 					<Label><X>15</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -8681,7 +9063,7 @@ for (GridConnection GC : c_gridConnections) {
 				<EmbeddedObject>
 					<Id>1660731786332</Id>
 					<Name><![CDATA[pop_energySuppliers]]></Name>
-					<X>-2107</X><Y>278</Y>
+					<X>433</X><Y>1298</Y>
 					<Label><X>15</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -8781,7 +9163,7 @@ for (GridConnection GC : c_gridConnections) {
 				<EmbeddedObject>
 					<Id>1660731820965</Id>
 					<Name><![CDATA[pop_energyCoops]]></Name>
-					<X>-2107</X><Y>298</Y>
+					<X>433</X><Y>1318</Y>
 					<Label><X>15</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -8890,7 +9272,7 @@ for (GridConnection GC : c_gridConnections) {
 				<EmbeddedObject>
 					<Id>1660731850501</Id>
 					<Name><![CDATA[pop_gridOperators]]></Name>
-					<X>-2107</X><Y>338</Y>
+					<X>433</X><Y>1358</Y>
 					<Label><X>15</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -8981,7 +9363,7 @@ for (GridConnection GC : c_gridConnections) {
 				<EmbeddedObject>
 					<Id>1660731876775</Id>
 					<Name><![CDATA[nationalEnergyMarket]]></Name>
-					<X>-2110</X><Y>410</Y>
+					<X>430</X><Y>1440</Y>
 					<Label><X>15</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -9058,7 +9440,7 @@ for (GridConnection GC : c_gridConnections) {
 				<EmbeddedObject>
 					<Id>1660731999276</Id>
 					<Name><![CDATA[pop_administrativeCoops]]></Name>
-					<X>-2107</X><Y>318</Y>
+					<X>433</X><Y>1338</Y>
 					<Label><X>15</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -9131,7 +9513,7 @@ for (GridConnection GC : c_gridConnections) {
 				<EmbeddedObject>
 					<Id>1663772677806</Id>
 					<Name><![CDATA[Houses]]></Name>
-					<X>-2107</X><Y>74</Y>
+					<X>433</X><Y>1074</Y>
 					<Label><X>15</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -9318,7 +9700,7 @@ for (GridConnection GC : c_gridConnections) {
 				<EmbeddedObject>
 					<Id>1663774441970</Id>
 					<Name><![CDATA[DistrictHeatingSystems]]></Name>
-					<X>-2107</X><Y>119</Y>
+					<X>433</X><Y>1119</Y>
 					<Label><X>15</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -9496,7 +9878,7 @@ for (GridConnection GC : c_gridConnections) {
 				<EmbeddedObject>
 					<Id>1663774461816</Id>
 					<Name><![CDATA[Windfarms]]></Name>
-					<X>-2107</X><Y>159</Y>
+					<X>433</X><Y>1159</Y>
 					<Label><X>15</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -9671,7 +10053,7 @@ for (GridConnection GC : c_gridConnections) {
 				<EmbeddedObject>
 					<Id>1663774484695</Id>
 					<Name><![CDATA[Solarfarms]]></Name>
-					<X>-2107</X><Y>179</Y>
+					<X>433</X><Y>1179</Y>
 					<Label><X>15</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -9846,7 +10228,7 @@ for (GridConnection GC : c_gridConnections) {
 				<EmbeddedObject>
 					<Id>1663774484696</Id>
 					<Name><![CDATA[UtilityConnections]]></Name>
-					<X>-2107</X><Y>200</Y>
+					<X>433</X><Y>1200</Y>
 					<Label><X>15</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -10021,7 +10403,7 @@ for (GridConnection GC : c_gridConnections) {
 				<EmbeddedObject>
 					<Id>1665480562790</Id>
 					<Name><![CDATA[Industries]]></Name>
-					<X>-2107</X><Y>96</Y>
+					<X>433</X><Y>1096</Y>
 					<Label><X>15</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -10196,7 +10578,7 @@ for (GridConnection GC : c_gridConnections) {
 				<EmbeddedObject>
 					<Id>1666957373353</Id>
 					<Name><![CDATA[GridBatteries]]></Name>
-					<X>-2107</X><Y>139</Y>
+					<X>433</X><Y>1139</Y>
 					<Label><X>15</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -10371,7 +10753,7 @@ for (GridConnection GC : c_gridConnections) {
 				<EmbeddedObject>
 					<Id>1676382641979</Id>
 					<Name><![CDATA[pop_GIS_Buildings]]></Name>
-					<X>-1900</X><Y>260</Y>
+					<X>640</X><Y>1360</Y>
 					<Label><X>15</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -10463,7 +10845,7 @@ for (GridConnection GC : c_gridConnections) {
 				<EmbeddedObject>
 					<Id>1676382641980</Id>
 					<Name><![CDATA[pop_GIS_Area]]></Name>
-					<X>-1900</X><Y>280</Y>
+					<X>640</X><Y>1380</Y>
 					<Label><X>15</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -10727,7 +11109,7 @@ for (GridConnection GC : c_gridConnections) {
 				<Text>
 					<Id>1668602188368</Id>
 					<Name><![CDATA[text4]]></Name>
-					<X>-2117</X><Y>18</Y>
+					<X>423</X><Y>1018</Y>
 					<Label><X>0</X><Y>-10</Y></Label>
 					<PublicFlag>true</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -10748,7 +11130,7 @@ for (GridConnection GC : c_gridConnections) {
 				<Line>
 					<Id>1668602188372</Id>
 					<Name><![CDATA[line2]]></Name>
-					<X>-2137</X><Y>38</Y>
+					<X>403</X><Y>1038</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>true</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -10772,7 +11154,7 @@ for (GridConnection GC : c_gridConnections) {
 				<Text>
 					<Id>1668602207232</Id>
 					<Name><![CDATA[text6]]></Name>
-					<X>-1857</X><Y>18</Y>
+					<X>683</X><Y>1018</Y>
 					<Label><X>0</X><Y>-10</Y></Label>
 					<PublicFlag>true</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -10793,7 +11175,7 @@ for (GridConnection GC : c_gridConnections) {
 				<Line>
 					<Id>1668602207235</Id>
 					<Name><![CDATA[line3]]></Name>
-					<X>-1917</X><Y>38</Y>
+					<X>623</X><Y>1038</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>true</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -10817,7 +11199,7 @@ for (GridConnection GC : c_gridConnections) {
 				<Line>
 					<Id>1668602284894</Id>
 					<Name><![CDATA[line4]]></Name>
-					<X>-2137</X><Y>238</Y>
+					<X>403</X><Y>1258</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>true</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -10841,7 +11223,7 @@ for (GridConnection GC : c_gridConnections) {
 				<Text>
 					<Id>1668602284900</Id>
 					<Name><![CDATA[text7]]></Name>
-					<X>-2067</X><Y>218</Y>
+					<X>473</X><Y>1238</Y>
 					<Label><X>0</X><Y>-10</Y></Label>
 					<PublicFlag>true</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -10862,7 +11244,7 @@ for (GridConnection GC : c_gridConnections) {
 				<Line>
 					<Id>1668602384222</Id>
 					<Name><![CDATA[line5]]></Name>
-					<X>-2137</X><Y>388</Y>
+					<X>403</X><Y>1418</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>true</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -10886,7 +11268,7 @@ for (GridConnection GC : c_gridConnections) {
 				<Text>
 					<Id>1668602384225</Id>
 					<Name><![CDATA[text8]]></Name>
-					<X>-2047</X><Y>368</Y>
+					<X>493</X><Y>1398</Y>
 					<Label><X>0</X><Y>-10</Y></Label>
 					<PublicFlag>true</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -10907,7 +11289,7 @@ for (GridConnection GC : c_gridConnections) {
 				<Line>
 					<Id>1668602513058</Id>
 					<Name><![CDATA[line6]]></Name>
-					<X>-1560</X><Y>40</Y>
+					<X>1447</X><Y>1042</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>true</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -10931,7 +11313,7 @@ for (GridConnection GC : c_gridConnections) {
 				<Text>
 					<Id>1668602513060</Id>
 					<Name><![CDATA[text9]]></Name>
-					<X>-1320</X><Y>20</Y>
+					<X>1687</X><Y>1022</Y>
 					<Label><X>0</X><Y>-10</Y></Label>
 					<PublicFlag>true</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -10952,7 +11334,7 @@ for (GridConnection GC : c_gridConnections) {
 				<Line>
 					<Id>1671703651139</Id>
 					<Name><![CDATA[line7]]></Name>
-					<X>-2140</X><Y>500</Y>
+					<X>1120</X><Y>1220</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>true</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -10976,7 +11358,7 @@ for (GridConnection GC : c_gridConnections) {
 				<Text>
 					<Id>1671703651141</Id>
 					<Name><![CDATA[text10]]></Name>
-					<X>-2050</X><Y>480</Y>
+					<X>1210</X><Y>1200</Y>
 					<Label><X>0</X><Y>-10</Y></Label>
 					<PublicFlag>true</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -11016,7 +11398,7 @@ for (GridConnection GC : c_gridConnections) {
 				<Line>
 					<Id>1690205003572</Id>
 					<Name><![CDATA[line8]]></Name>
-					<X>-2110</X><Y>660</Y>
+					<X>900</X><Y>1040</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>true</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -11040,7 +11422,7 @@ for (GridConnection GC : c_gridConnections) {
 				<Text>
 					<Id>1690205003577</Id>
 					<Name><![CDATA[text11]]></Name>
-					<X>-1900</X><Y>640</Y>
+					<X>1110</X><Y>1020</Y>
 					<Label><X>0</X><Y>-10</Y></Label>
 					<PublicFlag>true</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -11985,7 +12367,7 @@ rectangle_electricitySettings.setVisible(false);]]></OnClickCode>
 				<Text>
 					<Id>1690975123923</Id>
 					<Name><![CDATA[text37]]></Name>
-					<X>-450</X><Y>-880</Y>
+					<X>720</X><Y>89</Y>
 					<Label><X>0</X><Y>-10</Y></Label>
 					<PublicFlag>true</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -12221,7 +12603,7 @@ rectangle_electricitySettings.setVisible(false);]]></OnClickCode>
 				<Line>
 					<Id>1693309354364</Id>
 					<Name><![CDATA[line9]]></Name>
-					<X>-1916</X><Y>158</Y>
+					<X>624</X><Y>1318</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>true</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -12245,7 +12627,7 @@ rectangle_electricitySettings.setVisible(false);]]></OnClickCode>
 				<Text>
 					<Id>1693309354506</Id>
 					<Name><![CDATA[text13]]></Name>
-					<X>-1890</X><Y>140</Y>
+					<X>650</X><Y>1300</Y>
 					<Label><X>0</X><Y>-10</Y></Label>
 					<PublicFlag>true</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -12290,7 +12672,7 @@ rectangle_electricitySettings.setVisible(false);]]></OnClickCode>
 					<Id>1696520897104</Id>
 					<Name><![CDATA[button]]></Name>
 					<ExcludeFromBuild>true</ExcludeFromBuild>
-					<X>1510</X><Y>1600</Y>
+					<X>2260</X><Y>1420</Y>
 					<Label><X>0</X><Y>-10</Y></Label>
 					<PublicFlag>true</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -12379,7 +12761,7 @@ rectangle_electricitySettings.setVisible(false);]]></OnClickCode>
 				 	<EmbeddedIcon>false</EmbeddedIcon>				
 					<Id>1696520897128</Id>
 					<Name><![CDATA[checkbox]]></Name>
-					<X>1510</X><Y>1570</Y>
+					<X>2260</X><Y>1390</Y>
 					<Label><X>0</X><Y>-10</Y></Label>
 					<PublicFlag>true</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -12424,7 +12806,7 @@ rectangle_electricitySettings.setVisible(false);]]></OnClickCode>
 					<Id>1696520897135</Id>
 					<Name><![CDATA[cb_excelSheet]]></Name>
 					<ExcludeFromBuild>true</ExcludeFromBuild>
-					<X>1510</X><Y>1480</Y>
+					<X>2260</X><Y>1300</Y>
 					<Label><X>0</X><Y>-10</Y></Label>
 					<PublicFlag>true</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -22062,7 +22444,7 @@ traceln(eb_scenarioRowNumber.getMax() + " max value editbox scenario row number"
 				 	<EmbeddedIcon>false</EmbeddedIcon>				
 					<Id>1696520897477</Id>
 					<Name><![CDATA[eb_scenarioRowNumber]]></Name>
-					<X>1510</X><Y>1510</Y>
+					<X>2260</X><Y>1330</Y>
 					<Label><X>0</X><Y>-10</Y></Label>
 					<PublicFlag>true</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -22237,31 +22619,10 @@ traceln(eb_scenarioRowNumber.getMax() + " max value editbox scenario row number"
 					<FillColorCode><![CDATA[v_menuFrameColor]]></FillColorCode>
 					<FillMaterial>null</FillMaterial>
 				</Rectangle>
-				<Text>
-					<Id>1696520897541</Id>
-					<Name><![CDATA[t_simpleDate]]></Name>
-					<X>720</X><Y>90</Y>
-					<Label><X>0</X><Y>-10</Y></Label>
-					<PublicFlag>true</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
-					<ShowLabel>false</ShowLabel>
-					<DrawMode>SHAPE_DRAW_2D</DrawMode>
-					<EmbeddedIcon>false</EmbeddedIcon>
-					<Z>0</Z>
-					<Rotation>0.0</Rotation>
-					<Color>-16777216</Color>
-					<Text><![CDATA[Datum]]></Text>
-					<Font>
-						<Name>SansSerif</Name>
-						<Size>18</Size>
-						<Style>0</Style>
-					</Font>
-					<Alignment>LEFT</Alignment>
-				</Text>
 				<Group>
 					<Id>1696520897545</Id>
 					<Name><![CDATA[gr_compareResultsButton]]></Name>
-					<X>1600</X><Y>1280</Y>
+					<X>2350</X><Y>1100</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>true</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -25349,7 +25710,7 @@ kosten te berekenen]]></Text>
 					<Id>1696520899772</Id>
 					<Name><![CDATA[gr_compareResultsButton1]]></Name>
 					<ExcludeFromBuild>true</ExcludeFromBuild>
-					<X>1600</X><Y>1390</Y>
+					<X>2350</X><Y>1210</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>true</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -25436,7 +25797,7 @@ kosten te berekenen]]></Text>
 					<Id>1696520899886</Id>
 					<Name><![CDATA[gr_compareResultsButton2]]></Name>
 					<ExcludeFromBuild>true</ExcludeFromBuild>
-					<X>1601</X><Y>1453</Y>
+					<X>2351</X><Y>1273</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>true</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -25523,7 +25884,7 @@ kosten te berekenen]]></Text>
 					<Id>1696520899962</Id>
 					<Name><![CDATA[gr_compareResultsButton3]]></Name>
 					<ExcludeFromBuild>true</ExcludeFromBuild>
-					<X>1600</X><Y>1680</Y>
+					<X>2350</X><Y>1500</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>true</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -25609,7 +25970,7 @@ kosten te berekenen]]></Text>
 					<Id>1696520900046</Id>
 					<Name><![CDATA[gr_compareResultsButton4]]></Name>
 					<ExcludeFromBuild>true</ExcludeFromBuild>
-					<X>1600</X><Y>1745</Y>
+					<X>2350</X><Y>1565</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>true</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -33327,7 +33688,6 @@ i_assetsCompaniesPopOut.setVisible(true);]]></OnClickCode>
 				 	<EmbeddedIcon>false</EmbeddedIcon>				
 					<Id>1696520903600</Id>
 					<Name><![CDATA[sl_rooftopPVCompanies]]></Name>
-					<ExcludeFromBuild>true</ExcludeFromBuild>
 					<X>70</X><Y>-55</Y>
 					<Label><X>0</X><Y>-10</Y></Label>
 					<PublicFlag>true</PublicFlag>
@@ -33343,7 +33703,7 @@ f_setPVSystem(sl_rooftopPVCompanies.getValue());
 
 //traceln(count(pop_EA_Households, x->x.v_hasPV == true) + " households with PV");
 
-t_numberOfRooftopPVCompanies.setText(sl_rooftopPVCompanies.getValue());
+t_totalRooftopPV_kW.setText(sl_rooftopPVCompanies.getValue());
 f_resetSettings();
 ]]></ActionCode>
 					</BasicProperties>
@@ -33351,8 +33711,8 @@ f_resetSettings();
 						<DefaultValueCode><![CDATA[0]]></DefaultValueCode>
 						<Orientation>HORIZONTAL</Orientation>
 						<MinValue><![CDATA[0]]></MinValue>
-						<MaxValue><![CDATA[v_PVSliderBusinessParkMax]]></MaxValue>
-						<Step><![CDATA[100]]></Step>
+						<MaxValue><![CDATA[100]]></MaxValue>
+						<Step><![CDATA[1]]></Step>
 						<LinkTo>false</LinkTo>
 					</ExtendedProperties>
 				</Control>
@@ -38021,7 +38381,7 @@ if(v_costsUnknown == true){
 					<Rotation>0.0</Rotation>
 					<Color>-16777216</Color>
 					<Text><![CDATA[Percentage duurzame elektriciteit]]></Text>
-					<TextCode><![CDATA[roundToInt(v_clickedGridConnection.v_selfSufficiency_fr * 100) + "% duurzame elektriciteit"]]></TextCode>
+					<TextCode><![CDATA[v_clickedGridConnection != null ? roundToInt(v_clickedGridConnection.v_selfSufficiency_fr * 100) + "% duurzame elektriciteit" : ""]]></TextCode>
 					<Font>
 						<Name>SansSerif</Name>
 						<Size>16</Size>
@@ -38043,7 +38403,7 @@ if(v_costsUnknown == true){
 					<Rotation>0.0</Rotation>
 					<Color>-16777216</Color>
 					<Text><![CDATA[Zelfverbruik elektriciteit]]></Text>
-					<TextCode><![CDATA[roundToInt(v_clickedGridConnection.v_selfConsumption_fr * 100) + "% percentage zelfverbruik elektriciteit"]]></TextCode>
+					<TextCode><![CDATA[v_clickedGridConnection != null ? roundToInt(v_clickedGridConnection.v_selfConsumption_fr * 100) + "% percentage zelfverbruik elektriciteit" : ""]]></TextCode>
 					<Font>
 						<Name>SansSerif</Name>
 						<Size>16</Size>
@@ -38065,7 +38425,7 @@ if(v_costsUnknown == true){
 					<Rotation>0.0</Rotation>
 					<Color>-16777216</Color>
 					<Text><![CDATA[Bedrijf]]></Text>
-					<TextCode><![CDATA[v_clickedGridConnection.p_company_name == null ? v_clickedGridConnection.p_openbareR + " " + v_clickedGridConnection.p_huisnummer : v_clickedGridConnection.p_company_name + " " + v_clickedGridConnection.p_openbareR + " " + v_clickedGridConnection.p_huisnummer]]></TextCode>
+					<TextCode><![CDATA[v_clickedGridConnection != null ? (v_clickedGridConnection.p_company_name == null ? v_clickedGridConnection.p_openbareR + " " + v_clickedGridConnection.p_huisnummer : v_clickedGridConnection.p_company_name + " " + v_clickedGridConnection.p_openbareR + " " + v_clickedGridConnection.p_huisnummer) : ""]]></TextCode>
 					<Font>
 						<Name>SansSerif</Name>
 						<Size>16</Size>
@@ -39349,7 +39709,7 @@ new Thread( () -> {
 				<Text>
 					<Id>1696863329245</Id>
 					<Name><![CDATA[text57]]></Name>
-					<X>400</X><Y>1050</Y>
+					<X>40</X><Y>1020</Y>
 					<Label><X>0</X><Y>-10</Y></Label>
 					<PublicFlag>true</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -39370,7 +39730,7 @@ new Thread( () -> {
 				<Text>
 					<Id>1696865756414</Id>
 					<Name><![CDATA[text56]]></Name>
-					<X>120</X><Y>1050</Y>
+					<X>2820</X><Y>-960</Y>
 					<Label><X>0</X><Y>-10</Y></Label>
 					<PublicFlag>true</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -39388,6 +39748,48 @@ new Thread( () -> {
 					</Font>
 					<Alignment>LEFT</Alignment>
 				</Text>
+				<Text>
+					<Id>1697555814336</Id>
+					<Name><![CDATA[text61]]></Name>
+					<X>40</X><Y>1270</Y>
+					<Label><X>0</X><Y>-10</Y></Label>
+					<PublicFlag>true</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>false</ShowLabel>
+					<DrawMode>SHAPE_DRAW_2D</DrawMode>
+					<EmbeddedIcon>false</EmbeddedIcon>
+					<Z>0</Z>
+					<Rotation>0.0</Rotation>
+					<Color>-16777216</Color>
+					<Text><![CDATA[Compare results screen]]></Text>
+					<Font>
+						<Name>SansSerif</Name>
+						<Size>18</Size>
+						<Style>1</Style>
+					</Font>
+					<Alignment>LEFT</Alignment>
+				</Text>
+				<Control Type="Button">
+				 	<EmbeddedIcon>false</EmbeddedIcon>				
+					<Id>1697557019965</Id>
+					<Name><![CDATA[rapidSimButton]]></Name>
+					<X>900</X><Y>1420</Y>
+					<Label><X>0</X><Y>-10</Y></Label>
+					<PublicFlag>true</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>false</ShowLabel>
+					<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+					<BasicProperties Width="100" Height="30">
+                        <EmbeddedIcon>false</EmbeddedIcon>	
+						<TextColor/>
+						<Enabled>true</Enabled>
+						<ActionCode><![CDATA[f_runRapidSimulation();]]></ActionCode>
+					</BasicProperties>
+					<ExtendedProperties>
+						<Font Name="Dialog" Size="11" Style="0"/>
+						<LabelText><![CDATA[Run Rapid Simulation]]></LabelText>
+					</ExtendedProperties>
+				</Control>
 			</Presentation>
 
 				</Level>
@@ -66944,11 +67346,11 @@ if (gisRegion == null ) {
 			</Parameters>			
 			<PresentationProperties>
 				<EnableZoomAndPanning>true</EnableZoomAndPanning>
-				<ExecutionMode><![CDATA[virtualTime]]></ExecutionMode>
+				<ExecutionMode><![CDATA[realTimeScaled]]></ExecutionMode>
 				<Title><![CDATA[MainModel : Simulation]]></Title>	
 				<EnableDeveloperPanel>true</EnableDeveloperPanel>
 				<ShowDeveloperPanelOnStart>false</ShowDeveloperPanelOnStart>
-				<RealTimeScale>10.0</RealTimeScale>
+				<RealTimeScale>25.0</RealTimeScale>
 			</PresentationProperties>
 			<ModelTimeProperties>
 				<StopOption><![CDATA[Stop at specified time]]></StopOption>
@@ -69957,60 +70359,75 @@ public class J_ActivityTrackerTrips extends J_ActivityTracker implements Seriali
     	}
     }
     
-    public void manageActivities(double time_min) {
-    	//traceln("TripTracker vehicle: " + Vehicle);
-    	if (Vehicle.available) {
-    		if (time_min == roundToInt(starttimes_min.get(v_eventIndex) / (60*main.p_timeStep_h)) * (main.p_timeStep_h*60) ) {
-    			
-    			Vehicle.startTrip();
-    		}
-    	} else {
-    		if (!Vehicle.available && time_min == roundToInt(endtimes_min.get(v_eventIndex)/ (60*main.p_timeStep_h)) * 60*main.p_timeStep_h ) {
-    			Vehicle.endTrip(v_tripDist_km);
-    			starttimes_min.set( v_eventIndex, starttimes_min.get(v_eventIndex) + 10080 );
-    			endtimes_min.set( v_eventIndex, endtimes_min.get(v_eventIndex) + 10080 );
-    			v_eventIndex++;
-    			if ( v_eventIndex > starttimes_min.size() - 1 ) {
-    				v_eventIndex = 0;
-    			}
-    			
-    		    v_nextEventStartTime_min = starttimes_min.get(v_eventIndex);
-    			v_idleTimeToNextTrip_min = v_nextEventStartTime_min - time_min;
-    			v_tripDist_km = distances_km.get( v_eventIndex ); // Update upcoming trip distance
-
-    			
-    			if (Vehicle instanceof J_EAEV) {
-    				J_EAEV EV = (J_EAEV)Vehicle;
-        			v_energyNeedForNextTrip_kWh = EV.energyConsumption_kWhpkm * v_tripDist_km;
-
-        			// Check if more charging is needed for next trip!
-					double nextTripDist_km = 0;
-					double nextTripStartTime_min = 0;
-
-        			if ( v_eventIndex == starttimes_min.size() - 1 ) { 
-						nextTripDist_km = distances_km.get( 0 );
-						nextTripStartTime_min = starttimes_min.get(0);
-	    			} else {		
-	    				nextTripDist_km = distances_km.get( v_eventIndex+1 );
-						nextTripStartTime_min = starttimes_min.get( v_eventIndex+1 );
-					}
-					double additionalChargingNeededForNextTrip_kWh = max(0,nextTripDist_km * EV.energyConsumption_kWhpkm - (nextTripStartTime_min - endtimes_min.get(v_eventIndex))/60*EV.capacityElectric_kW);
-					//if (additionalChargingNeededForNextTrip_kWh>0) {
-					//	traceln("*******Additional charging required to prepare for trip after next trip!*********");
-					//}
-					v_energyNeedForNextTrip_kWh += additionalChargingNeededForNextTrip_kWh;
-    				EV.energyNeedForNextTrip_kWh = v_energyNeedForNextTrip_kWh;
-    				if ( (v_energyNeedForNextTrip_kWh - EV.getCurrentStateOfCharge() * EV.getStorageCapacity_kWh()) / (v_idleTimeToNextTrip_min/60) > EV.capacityElectric_kW ) {    					
-    					traceln("Infeasible trip pattern for EV, not enough time to charge for next trip! Required charging power is: " + (v_energyNeedForNextTrip_kWh - EV.getCurrentStateOfCharge() * EV.getStorageCapacity_kWh()) / (v_idleTimeToNextTrip_min/60) + " kW");
-    					traceln("RowIndex: " + rowIndex + " tripDistance: " + v_tripDist_km + " km, time to next trip: " + v_idleTimeToNextTrip_min + " minutes");
-    				} 
-    			}
-    			//v_nextEventStartTime_min = starttimes_min.get(v_eventIndex);
-    			//v_nextEventEndTime_min = endtimes_min.get(v_eventIndex);    			
-    		}    		
-    	}
-    }
-    
+	   public void manageActivities(double time_min) {
+	    	//traceln("TripTracker vehicle: " + Vehicle);
+	    	if (Vehicle.available) { // at start of timestep! check for multiple 'events' in timestep!
+	    		if (time_min == roundToInt(starttimes_min.get(v_eventIndex) / (60*main.p_timeStep_h)) * (main.p_timeStep_h*60) ) {
+	    			Vehicle.startTrip();
+	    			//main.v_activeTrips.incrementAndGet();
+	    		}
+	    		if (time_min == roundToInt(endtimes_min.get(v_eventIndex) / (60*main.p_timeStep_h)) * (main.p_timeStep_h*60) ) {
+	    			traceln("Vehicle trip ended in the same timestep as it started!");
+	    			Vehicle.endTrip(v_tripDist_km);
+	    			//main.v_activeTrips.decrementAndGet();
+	    			prepareNextActivity(time_min);
+	    		}
+	    	} else {
+	    		if (time_min == roundToInt(endtimes_min.get(v_eventIndex)/ (60*main.p_timeStep_h)) * 60*main.p_timeStep_h ) {
+	    			Vehicle.endTrip(v_tripDist_km);
+	    			//main.v_activeTrips.decrementAndGet();
+	    			prepareNextActivity(time_min);
+	    			//v_nextEventStartTime_min = starttimes_min.get(v_eventIndex);
+	    			//v_nextEventEndTime_min = endtimes_min.get(v_eventIndex);    			
+	    		}  
+	    		if (time_min == roundToInt(starttimes_min.get(v_eventIndex) / (60*main.p_timeStep_h)) * (main.p_timeStep_h*60) ) {
+	    			Vehicle.startTrip();
+	    			//main.v_activeTrips.incrementAndGet();
+	    			traceln("Vehicle trip started in the same timestep as the previous trip ended!!");
+	    		}
+	    	}
+	    }
+	    
+	    private void prepareNextActivity(double time_min) {
+		    starttimes_min.set( v_eventIndex, starttimes_min.get(v_eventIndex) + 10080 );
+			endtimes_min.set( v_eventIndex, endtimes_min.get(v_eventIndex) + 10080 );
+			v_eventIndex++;
+			if ( v_eventIndex >= starttimes_min.size()  ) {
+				v_eventIndex = 0;
+			}
+			
+		    v_nextEventStartTime_min = starttimes_min.get(v_eventIndex);
+			v_idleTimeToNextTrip_min = v_nextEventStartTime_min - time_min;
+			v_tripDist_km = distances_km.get( v_eventIndex ); // Update upcoming trip distance
+		
+			
+			if (Vehicle instanceof J_EAEV) {
+				J_EAEV EV = (J_EAEV)Vehicle;
+				v_energyNeedForNextTrip_kWh = EV.energyConsumption_kWhpkm * v_tripDist_km;
+		
+				// Check if more charging is needed for next trip!
+				double nextTripDist_km = 0;
+				double nextTripStartTime_min = 0;
+		
+				if ( v_eventIndex == starttimes_min.size() - 1 ) { 
+					nextTripDist_km = distances_km.get( 0 );
+					nextTripStartTime_min = starttimes_min.get(0);
+				} else {		
+					nextTripDist_km = distances_km.get( v_eventIndex+1 );
+					nextTripStartTime_min = starttimes_min.get( v_eventIndex+1 );
+				}
+				double additionalChargingNeededForNextTrip_kWh = max(0,nextTripDist_km * EV.energyConsumption_kWhpkm - (nextTripStartTime_min - endtimes_min.get(v_eventIndex))/60*EV.capacityElectric_kW);
+				//if (additionalChargingNeededForNextTrip_kWh>0) {
+				//	traceln("*******Additional charging required to prepare for trip after next trip!*********");
+				//}
+				v_energyNeedForNextTrip_kWh += additionalChargingNeededForNextTrip_kWh;
+				EV.energyNeedForNextTrip_kWh = v_energyNeedForNextTrip_kWh;
+				if ( (v_energyNeedForNextTrip_kWh - EV.getCurrentStateOfCharge() * EV.getStorageCapacity_kWh()) / (v_idleTimeToNextTrip_min/60) > EV.capacityElectric_kW ) {    					
+					traceln("Infeasible trip pattern for EV, not enough time to charge for next trip! Required charging power is: " + (v_energyNeedForNextTrip_kWh - EV.getCurrentStateOfCharge() * EV.getStorageCapacity_kWh()) / (v_idleTimeToNextTrip_min/60) + " kW");
+					traceln("RowIndex: " + rowIndex + " tripDistance: " + v_tripDist_km + " km, time to next trip: " + v_idleTimeToNextTrip_min + " minutes");
+				} 
+			}
+	    }
     
 	@Override
 	public String toString() {
@@ -70124,29 +70541,50 @@ public class J_ActivityTrackerCooking extends J_ActivityTracker implements Seria
     
     public void manageActivities(double time_min) {
     	//traceln("Cooking tracker current time: " + time_min);
-    	if (time_min >= endtimes_min.get(v_eventIndex) & cooking ) {
-    		if (powerFraction_fr == 0) {
-    			traceln("Cooking session ended but none had started!! Rowindex %s, eventIndex %s", rowIndex, v_eventIndex);
-    		}
-    		main.v_activeCookingSessions--;
-    		//traceln("End of cooking session, currently active cooking sessions %s", main.v_activeCookingSessions);
-    		powerFraction_fr = 0;
-    		
-			starttimes_min.set( v_eventIndex, starttimes_min.get(v_eventIndex) + 1440 );
-			endtimes_min.set( v_eventIndex, endtimes_min.get(v_eventIndex) + 1440 );
-			v_eventIndex++;
-			if ( v_eventIndex > starttimes_min.size() - 1 ) {
-				v_eventIndex = 0;
-			}
-			cooking=false;
-    	} else if (time_min >= starttimes_min.get(v_eventIndex) & !cooking) {
+    	if (cooking) {
+	    	if (time_min >= endtimes_min.get(v_eventIndex) ) { // end cooking session. Also check if a new one starts in this timestep!
+
+	    		//main.v_activeCookingSessions.decrementAndGet();
+	    		//traceln("End of cooking session, currently active cooking sessions %s", main.v_activeCookingSessions);
+	    		powerFraction_fr = 0;
+	    		
+				starttimes_min.set( v_eventIndex, starttimes_min.get(v_eventIndex) + 1440 );
+				endtimes_min.set( v_eventIndex, endtimes_min.get(v_eventIndex) + 1440 );
+				v_eventIndex++;
+				if ( v_eventIndex >= starttimes_min.size() ) {
+					v_eventIndex = 0;
+				}
+				cooking=false;
+				
+				if (time_min >= starttimes_min.get(v_eventIndex)) {
+					powerFraction_fr = powerFractions_fr.get(v_eventIndex);	    		
+					//main.v_activeCookingSessions.incrementAndGet();
+					cooking=true;
+					traceln("Starting next cooking session in same timestep as previous session ended!! Rowindex %s, eventIndex %s\", rowIndex, v_eventIndex");
+				}
+	    	}
+    	} else if (time_min >= starttimes_min.get(v_eventIndex) ) { // start cooking session. Also check if it ends within this timestep!
     		/*if (endtimes_min.get(v_eventIndex) - starttimes_min.get(v_eventIndex) > 100) {
 			traceln("Cooking event longer than 100 minutes!! Rowindex %s, eventIndex %s.", rowIndex, v_eventIndex);
-		}*/
-			
+			}*/
+   		
 			powerFraction_fr = powerFractions_fr.get(v_eventIndex);	    		
-			main.v_activeCookingSessions++;
+			//main.v_activeCookingSessions.incrementAndGet();
 			cooking=true;
+			if (time_min >= endtimes_min.get(v_eventIndex) ) { // end cooking session in the same timestep? Still need to fix energy use for this case!! 
+	    	
+	    		//main.v_activeCookingSessions.decrementAndGet();
+	    		//traceln("End of cooking session, currently active cooking sessions %s", main.v_activeCookingSessions);
+	    		powerFraction_fr = 0;
+	    		
+				starttimes_min.set( v_eventIndex, starttimes_min.get(v_eventIndex) + 1440 );
+				endtimes_min.set( v_eventIndex, endtimes_min.get(v_eventIndex) + 1440 );
+				v_eventIndex++;
+				if ( v_eventIndex >= starttimes_min.size() ) {
+					v_eventIndex = 0;
+				}
+				cooking=false;
+			}
     	} 
     	//if (powerFraction_fr > 0 ) { traceln("Cooking event in progress!"); }
     	HOB.f_updateAllFlows(powerFraction_fr);

@@ -1010,12 +1010,13 @@ import java.util.Dictionary.*;
 import java.util.Hashtable.*;
 import java.util.*;
 import java.util.stream.Collectors;
-
+import java.util.concurrent.atomic.AtomicInteger;
 import java.io.*;
 import java.io.File;
 import java.io.IOException;
 //import java.util.Date;  
-import java.text.SimpleDateFormat;]]></Import>
+import java.text.SimpleDateFormat;
+]]></Import>
 			<StartupCode><![CDATA[double startTime = System.currentTimeMillis();
 v_timeOfModelStart_ms = startTime;
 traceln("---------------------------");
@@ -1025,7 +1026,7 @@ traceln("");
 
 // Get input
 f_readConfig();
-f_loadParameters();
+//f_loadParameters();
 
 //Adjust startdate
 /*Date date = new Date();
@@ -1969,12 +1970,12 @@ traceln(" ");
 					<X>570</X><Y>-70</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
+					<PresentationFlag>false</PresentationFlag>
 					<ShowLabel>true</ShowLabel>
 					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
-						<Type><![CDATA[int]]></Type>        
+						<Type><![CDATA[AtomicInteger]]></Type>        
 						<InitialValue Class="CodeValue">
-							<Code><![CDATA[0]]></Code>
+							<Code><![CDATA[new AtomicInteger(0)]]></Code>
 						</InitialValue>
 					</Properties>
 				</Variable>
@@ -1988,6 +1989,21 @@ traceln(" ");
 					<ShowLabel>true</ShowLabel>
 					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
 						<Type><![CDATA[double]]></Type>        
+					</Properties>
+				</Variable>
+				<Variable Class="PlainVariable">
+					<Id>1697542729698</Id>
+					<Name><![CDATA[v_activeTrips]]></Name>
+					<X>570</X><Y>-50</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>false</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
+						<Type><![CDATA[AtomicInteger]]></Type>        
+						<InitialValue Class="CodeValue">
+							<Code><![CDATA[new AtomicInteger(0)]]></Code>
+						</InitialValue>
 					</Properties>
 				</Variable>
 				<Variable Class="Parameter">
@@ -2899,7 +2915,8 @@ if (b_addKpiVisuals) {
 	pl_electricityProductionStack.updateData();
 	UI_energyAssets.f_updateData();	
 }
-
+String eventsCounterText = String.format("Momenteel %s trips en %s cooks actief", v_activeTrips.get(), v_activeCookingSessions.get());
+TripsAndCooksTxt.setText(eventsCounterText);
 v_timeStepsElapsed ++;
 ]]></Action>
 				</Event>
@@ -3262,6 +3279,7 @@ for(GridNode g : c_gridNodesHeat) {
 @return: none
 @since: Sprint 6
 @author: Jorrit]]></Description>
+					<ExcludeFromBuild>true</ExcludeFromBuild>
 					<X>-500</X><Y>112</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
@@ -9890,6 +9908,27 @@ rectangle_electricitySettings.setVisible(false);]]></OnClickCode>
 					<Font>
 						<Name>SansSerif</Name>
 						<Size>11</Size>
+						<Style>0</Style>
+					</Font>
+					<Alignment>LEFT</Alignment>
+				</Text>
+				<Text>
+					<Id>1697547652986</Id>
+					<Name><![CDATA[TripsAndCooksTxt]]></Name>
+					<X>560</X><Y>-30</Y>
+					<Label><X>0</X><Y>-10</Y></Label>
+					<PublicFlag>true</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>false</ShowLabel>
+					<DrawMode>SHAPE_DRAW_2D</DrawMode>
+					<EmbeddedIcon>false</EmbeddedIcon>
+					<Z>0</Z>
+					<Rotation>0.0</Rotation>
+					<Color>-16777216</Color>
+					<Text><![CDATA[Momenteel xx trips en xx kooksessies actief.]]></Text>
+					<Font>
+						<Name>SansSerif</Name>
+						<Size>18</Size>
 						<Style>0</Style>
 					</Font>
 					<Alignment>LEFT</Alignment>
@@ -36900,27 +36939,6 @@ if (p_batteryAsset != null){
 				<Login><![CDATA[]]></Login>
 				<Password><![CDATA[]]></Password>
 			</ExternalConnection>
-			<ExternalConnection>
-				<Id>1658496976208</Id>
-				<Name><![CDATA[database]]></Name>
-				<X>0</X><Y>0</Y>
-				<Label><X>10</X><Y>0</Y></Label>
-				<PublicFlag>false</PublicFlag>
-				<PresentationFlag>true</PresentationFlag>
-				<ShowLabel>true</ShowLabel>
-				<DatabaseType>EXCEL_ACCESS</DatabaseType>
-				<ConnectionURL><![CDATA[]]></ConnectionURL>
-				<ConnectOnStartup>true</ConnectOnStartup>
-				<DatabaseName><![CDATA[]]></DatabaseName>
-				<ResourceReference>
-					<PackageName><![CDATA[zero]]></PackageName>
-					<ClassName><![CDATA[db_backboneParams.xlsx]]></ClassName>
-				</ResourceReference>
-				<Host><![CDATA[localhost]]></Host>
-				<JdbcDriverClassName><![CDATA[net.sourceforge.jtds.jdbc.Driver]]></JdbcDriverClassName>
-				<Login><![CDATA[]]></Login>
-				<Password><![CDATA[]]></Password>
-			</ExternalConnection>
 			<TableImportSettings>
 				<TableReference>
 					<PackageName><![CDATA[zero]]></PackageName>
@@ -36928,15 +36946,6 @@ if (p_batteryAsset != null){
 				</TableReference>
 				<ConnectionIndex>0</ConnectionIndex>
 				<ExternalTableName><![CDATA["profiles"]]></ExternalTableName>
-				<AutoImport>true</AutoImport>
-			</TableImportSettings>
-			<TableImportSettings>
-				<TableReference>
-					<PackageName><![CDATA[zero]]></PackageName>
-					<ClassName><![CDATA[params]]></ClassName>
-				</TableReference>
-				<ConnectionIndex>1</ConnectionIndex>
-				<ExternalTableName><![CDATA["params"]]></ExternalTableName>
 				<AutoImport>true</AutoImport>
 			</TableImportSettings>
 		</ImportSettings>
@@ -40191,58 +40200,73 @@ public class J_ActivityTrackerTrips extends J_ActivityTracker implements Seriali
     
     public void manageActivities(double time_min) {
     	//traceln("TripTracker vehicle: " + Vehicle);
-    	if (Vehicle.available) {
+    	if (Vehicle.available) { // at start of timestep! check for multiple 'events' in timestep!
     		if (time_min == roundToInt(starttimes_min.get(v_eventIndex) / (60*main.p_timeStep_h)) * (main.p_timeStep_h*60) ) {
-    			
     			Vehicle.startTrip();
+    			main.v_activeTrips.incrementAndGet();
+    		}
+    		if (time_min == roundToInt(endtimes_min.get(v_eventIndex) / (60*main.p_timeStep_h)) * (main.p_timeStep_h*60) ) {
+    			traceln("Vehicle trip ended in the same timestep as it started!");
+    			Vehicle.endTrip(v_tripDist_km);
+    			main.v_activeTrips.decrementAndGet();
+    			prepareNextActivity(time_min);
     		}
     	} else {
-    		if (!Vehicle.available && time_min == roundToInt(endtimes_min.get(v_eventIndex)/ (60*main.p_timeStep_h)) * 60*main.p_timeStep_h ) {
+    		if (time_min == roundToInt(endtimes_min.get(v_eventIndex)/ (60*main.p_timeStep_h)) * 60*main.p_timeStep_h ) {
     			Vehicle.endTrip(v_tripDist_km);
-    			starttimes_min.set( v_eventIndex, starttimes_min.get(v_eventIndex) + 10080 );
-    			endtimes_min.set( v_eventIndex, endtimes_min.get(v_eventIndex) + 10080 );
-    			v_eventIndex++;
-    			if ( v_eventIndex > starttimes_min.size() - 1 ) {
-    				v_eventIndex = 0;
-    			}
-    			
-    		    v_nextEventStartTime_min = starttimes_min.get(v_eventIndex);
-    			v_idleTimeToNextTrip_min = v_nextEventStartTime_min - time_min;
-    			v_tripDist_km = distances_km.get( v_eventIndex ); // Update upcoming trip distance
-
-    			
-    			if (Vehicle instanceof J_EAEV) {
-    				J_EAEV EV = (J_EAEV)Vehicle;
-        			v_energyNeedForNextTrip_kWh = EV.energyConsumption_kWhpkm * v_tripDist_km;
-
-        			// Check if more charging is needed for next trip!
-					double nextTripDist_km = 0;
-					double nextTripStartTime_min = 0;
-
-        			if ( v_eventIndex == starttimes_min.size() - 1 ) { 
-						nextTripDist_km = distances_km.get( 0 );
-						nextTripStartTime_min = starttimes_min.get(0);
-	    			} else {		
-	    				nextTripDist_km = distances_km.get( v_eventIndex+1 );
-						nextTripStartTime_min = starttimes_min.get( v_eventIndex+1 );
-					}
-					double additionalChargingNeededForNextTrip_kWh = max(0,nextTripDist_km * EV.energyConsumption_kWhpkm - (nextTripStartTime_min - endtimes_min.get(v_eventIndex))/60*EV.capacityElectric_kW);
-					//if (additionalChargingNeededForNextTrip_kWh>0) {
-					//	traceln("*******Additional charging required to prepare for trip after next trip!*********");
-					//}
-					v_energyNeedForNextTrip_kWh += additionalChargingNeededForNextTrip_kWh;
-    				EV.energyNeedForNextTrip_kWh = v_energyNeedForNextTrip_kWh;
-    				if ( (v_energyNeedForNextTrip_kWh - EV.getCurrentStateOfCharge() * EV.getStorageCapacity_kWh()) / (v_idleTimeToNextTrip_min/60) > EV.capacityElectric_kW ) {    					
-    					traceln("Infeasible trip pattern for EV, not enough time to charge for next trip! Required charging power is: " + (v_energyNeedForNextTrip_kWh - EV.getCurrentStateOfCharge() * EV.getStorageCapacity_kWh()) / (v_idleTimeToNextTrip_min/60) + " kW");
-    					traceln("RowIndex: " + rowIndex + " tripDistance: " + v_tripDist_km + " km, time to next trip: " + v_idleTimeToNextTrip_min + " minutes");
-    				} 
-    			}
+    			main.v_activeTrips.decrementAndGet();
+    			prepareNextActivity(time_min);
     			//v_nextEventStartTime_min = starttimes_min.get(v_eventIndex);
     			//v_nextEventEndTime_min = endtimes_min.get(v_eventIndex);    			
-    		}    		
+    		}  
+    		if (time_min == roundToInt(starttimes_min.get(v_eventIndex) / (60*main.p_timeStep_h)) * (main.p_timeStep_h*60) ) {
+    			Vehicle.startTrip();
+    			main.v_activeTrips.incrementAndGet();
+    			traceln("Vehicle trip started in the same timestep as the previous trip ended!!");
+    		}
     	}
     }
     
+    private void prepareNextActivity(double time_min) {
+	    starttimes_min.set( v_eventIndex, starttimes_min.get(v_eventIndex) + 10080 );
+		endtimes_min.set( v_eventIndex, endtimes_min.get(v_eventIndex) + 10080 );
+		v_eventIndex++;
+		if ( v_eventIndex >= starttimes_min.size()  ) {
+			v_eventIndex = 0;
+		}
+		
+	    v_nextEventStartTime_min = starttimes_min.get(v_eventIndex);
+		v_idleTimeToNextTrip_min = v_nextEventStartTime_min - time_min;
+		v_tripDist_km = distances_km.get( v_eventIndex ); // Update upcoming trip distance
+	
+		
+		if (Vehicle instanceof J_EAEV) {
+			J_EAEV EV = (J_EAEV)Vehicle;
+			v_energyNeedForNextTrip_kWh = EV.energyConsumption_kWhpkm * v_tripDist_km;
+	
+			// Check if more charging is needed for next trip!
+			double nextTripDist_km = 0;
+			double nextTripStartTime_min = 0;
+	
+			if ( v_eventIndex == starttimes_min.size() - 1 ) { 
+				nextTripDist_km = distances_km.get( 0 );
+				nextTripStartTime_min = starttimes_min.get(0);
+			} else {		
+				nextTripDist_km = distances_km.get( v_eventIndex+1 );
+				nextTripStartTime_min = starttimes_min.get( v_eventIndex+1 );
+			}
+			double additionalChargingNeededForNextTrip_kWh = max(0,nextTripDist_km * EV.energyConsumption_kWhpkm - (nextTripStartTime_min - endtimes_min.get(v_eventIndex))/60*EV.capacityElectric_kW);
+			//if (additionalChargingNeededForNextTrip_kWh>0) {
+			//	traceln("*******Additional charging required to prepare for trip after next trip!*********");
+			//}
+			v_energyNeedForNextTrip_kWh += additionalChargingNeededForNextTrip_kWh;
+			EV.energyNeedForNextTrip_kWh = v_energyNeedForNextTrip_kWh;
+			if ( (v_energyNeedForNextTrip_kWh - EV.getCurrentStateOfCharge() * EV.getStorageCapacity_kWh()) / (v_idleTimeToNextTrip_min/60) > EV.capacityElectric_kW ) {    					
+				traceln("Infeasible trip pattern for EV, not enough time to charge for next trip! Required charging power is: " + (v_energyNeedForNextTrip_kWh - EV.getCurrentStateOfCharge() * EV.getStorageCapacity_kWh()) / (v_idleTimeToNextTrip_min/60) + " kW");
+				traceln("RowIndex: " + rowIndex + " tripDistance: " + v_tripDist_km + " km, time to next trip: " + v_idleTimeToNextTrip_min + " minutes");
+			} 
+		}
+    }
     
 	@Override
 	public String toString() {
@@ -40356,29 +40380,52 @@ public class J_ActivityTrackerCooking extends J_ActivityTracker implements Seria
     
     public void manageActivities(double time_min) {
     	//traceln("Cooking tracker current time: " + time_min);
-    	if (time_min >= endtimes_min.get(v_eventIndex) & cooking ) {
-    		if (powerFraction_fr == 0) {
-    			traceln("Cooking session ended but none had started!! Rowindex %s, eventIndex %s", rowIndex, v_eventIndex);
-    		}
-    		main.v_activeCookingSessions--;
-    		//traceln("End of cooking session, currently active cooking sessions %s", main.v_activeCookingSessions);
-    		powerFraction_fr = 0;
-    		
-			starttimes_min.set( v_eventIndex, starttimes_min.get(v_eventIndex) + 1440 );
-			endtimes_min.set( v_eventIndex, endtimes_min.get(v_eventIndex) + 1440 );
-			v_eventIndex++;
-			if ( v_eventIndex > starttimes_min.size() - 1 ) {
-				v_eventIndex = 0;
-			}
-			cooking=false;
-    	} else if (time_min >= starttimes_min.get(v_eventIndex) & !cooking) {
+    	if (cooking) {
+	    	if (time_min >= endtimes_min.get(v_eventIndex) ) { // end cooking session. Also check if a new one starts in this timestep!
+	    		if (cooking == false) {
+	    			traceln("Cooking session ended but none had started!! Rowindex %s, eventIndex %s", rowIndex, v_eventIndex);
+	    		}
+	    		main.v_activeCookingSessions.decrementAndGet();
+	    		//traceln("End of cooking session, currently active cooking sessions %s", main.v_activeCookingSessions);
+	    		powerFraction_fr = 0;
+	    		
+				starttimes_min.set( v_eventIndex, starttimes_min.get(v_eventIndex) + 1440 );
+				endtimes_min.set( v_eventIndex, endtimes_min.get(v_eventIndex) + 1440 );
+				v_eventIndex++;
+				if ( v_eventIndex >= starttimes_min.size() ) {
+					v_eventIndex = 0;
+				}
+				cooking=false;
+				
+				if (time_min >= starttimes_min.get(v_eventIndex)) {
+					powerFraction_fr = powerFractions_fr.get(v_eventIndex);	    		
+					main.v_activeCookingSessions.incrementAndGet();
+					cooking=true;
+					traceln("Starting next cooking session in same timestep as previous session ended!! Rowindex %s, eventIndex %s\", rowIndex, v_eventIndex");
+				}
+	    	}
+    	} else if (time_min >= starttimes_min.get(v_eventIndex) ) { // start cooking session. Also check if it ends within this timestep!
     		/*if (endtimes_min.get(v_eventIndex) - starttimes_min.get(v_eventIndex) > 100) {
 			traceln("Cooking event longer than 100 minutes!! Rowindex %s, eventIndex %s.", rowIndex, v_eventIndex);
-		}*/
-			
+			}*/
+   		
 			powerFraction_fr = powerFractions_fr.get(v_eventIndex);	    		
-			main.v_activeCookingSessions++;
+			main.v_activeCookingSessions.incrementAndGet();
 			cooking=true;
+			if (time_min >= endtimes_min.get(v_eventIndex) ) { // end cooking session. Also check if a new one starts in this timestep!
+	    	
+	    		main.v_activeCookingSessions.decrementAndGet();
+	    		//traceln("End of cooking session, currently active cooking sessions %s", main.v_activeCookingSessions);
+	    		powerFraction_fr = 0;
+	    		
+				starttimes_min.set( v_eventIndex, starttimes_min.get(v_eventIndex) + 1440 );
+				endtimes_min.set( v_eventIndex, endtimes_min.get(v_eventIndex) + 1440 );
+				v_eventIndex++;
+				if ( v_eventIndex >= starttimes_min.size() ) {
+					v_eventIndex = 0;
+				}
+				cooking=false;
+			}
     	} 
     	//if (powerFraction_fr > 0 ) { traceln("Cooking event in progress!"); }
     	HOB.f_updateAllFlows(powerFraction_fr);
@@ -40400,10 +40447,6 @@ public class J_ActivityTrackerCooking extends J_ActivityTracker implements Seria
 		</JavaClass>
 	</JavaClasses>
 	<ModelResources>
-		<Resource>
-			<Path><![CDATA[db_backboneParams.xlsx]]></Path>
-			<ReferencedFromUserCode>false</ReferencedFromUserCode>
-		</Resource>
 		<Resource>
 			<Path><![CDATA[windmill-svgrepo-com.png]]></Path>
 			<ReferencedFromUserCode>false</ReferencedFromUserCode>
