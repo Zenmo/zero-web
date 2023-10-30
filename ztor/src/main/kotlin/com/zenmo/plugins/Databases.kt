@@ -1,10 +1,11 @@
 package com.zenmo.plugins
 
+import com.zenmo.companysurvey.SurveyRepository
+import com.zenmo.companysurvey.dto.*
 import com.zenmo.energieprestatieonline.RawPandTable
-import com.zenmo.models.*
-import com.zenmo.models.companysurvey.CompanySurvey
-import com.zenmo.models.companysurvey.CompanySurveyElectricityConnectionTable
-import com.zenmo.models.companysurvey.CompanySurveyTable
+import com.zenmo.companysurvey.table.CompanySurveyGridConnectionTable
+import com.zenmo.companysurvey.table.CompanySurveyTable
+import com.zenmo.dbutil.createEnumTypeSql
 import io.ktor.http.*
 import io.ktor.server.application.*
 import io.ktor.server.request.*
@@ -19,40 +20,15 @@ import java.util.*
 fun Application.configureDatabases(): Database {
     val db: Database = connectToPostgres(embedded = false)
 
-    transaction(db) {
-        SchemaUtils.create(CompanySurveyTable, CompanySurveyElectricityConnectionTable, RawPandTable)
-    }
+//    createSchema(db)
 
     routing {
         // Create
         post("/company-survey") {
-            val survey = call.receive<CompanySurvey>()
+            val survey = call.receive<Survey>()
 
-            transaction(db) {
-                val surveyId = UUID.randomUUID()
-                CompanySurveyTable.insert {
-                    it[id] = surveyId
-                    it[companyName] = survey.companyName
-                    it[personName] = survey.personName
-                    it[email] = survey.email
-//                    it[usageAssets] = survey.usageAssets
-//                    it[generationAssets] = survey.generationAssets
-//                    it[usagePattern] = survey.usagePattern
-                }
-
-                CompanySurveyElectricityConnectionTable.batchInsert(survey.electricityConnections) {
-                    companyElectricityConnection ->
-//                        this[CompanySurveyElectricityConnectionTable.surveyId] = surveyId
-                        this[CompanySurveyElectricityConnectionTable.street] = companyElectricityConnection.street
-                        this[CompanySurveyElectricityConnectionTable.houseNumber] = companyElectricityConnection.houseNumber
-                        this[CompanySurveyElectricityConnectionTable.houseLetter] = companyElectricityConnection.houseLetter
-                        this[CompanySurveyElectricityConnectionTable.houseNumberSuffix] = companyElectricityConnection.houseNumberSuffix
-//                        this[CompanySurveyElectricityConnectionTable.annualUsageKWh] = companyElectricityConnection.annualUsageKWh
-//                        this[CompanySurveyElectricityConnectionTable.quarterlyValuesFile] = companyElectricityConnection.quarterlyValuesFile
-//                        this[CompanySurveyElectricityConnectionTable.ean] = companyElectricityConnection.ean
-//                        this[CompanySurveyElectricityConnectionTable.description] = companyElectricityConnection.description
-                }
-            }
+            val repository = SurveyRepository(db)
+            repository.save(survey)
 
             // TODO: return entity from database
             call.respond(HttpStatusCode.Created, survey)
@@ -60,6 +36,17 @@ fun Application.configureDatabases(): Database {
     }
 
     return db
+}
+
+fun createSchema(db: Database) {
+    transaction(db) {
+        exec(createEnumTypeSql(KleinverbruikElectricityConnectionCapacity::class.java))
+        exec(createEnumTypeSql(KleinverbruikElectricityConsumptionProfile::class.java))
+        exec(createEnumTypeSql(HeatingType::class.java))
+        exec(createEnumTypeSql(PVOrientation::class.java))
+
+        SchemaUtils.create(CompanySurveyTable, CompanySurveyGridConnectionTable, RawPandTable)
+    }
 }
 
 /**

@@ -1,8 +1,8 @@
 
 plugins {
-    kotlin("jvm") version "1.9.10"
+    kotlin("jvm") version "1.9.20"
     id("io.ktor.plugin") version "2.3.4"
-    id("org.jetbrains.kotlin.plugin.serialization") version "1.9.10"
+    id("org.jetbrains.kotlin.plugin.serialization") version "1.9.20"
 }
 
 group = "com.zenmo"
@@ -40,5 +40,11 @@ dependencies {
     implementation("io.ktor:ktor-server-host-common-jvm:2.3.4")
     implementation("io.ktor:ktor-server-status-pages-jvm:2.3.4")
     testImplementation("io.ktor:ktor-server-tests-jvm")
-    testImplementation("org.jetbrains.kotlin:kotlin-test-junit:1.9.10")
+    testImplementation("org.jetbrains.kotlin:kotlin-test-junit:1.9.20")
+}
+
+tasks.withType<Test> {
+    this.testLogging {
+        this.showStandardStreams = true
+    }
 }
