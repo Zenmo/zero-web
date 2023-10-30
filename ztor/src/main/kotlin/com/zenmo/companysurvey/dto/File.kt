@@ -1,4 +1,4 @@
-package com.zenmo.models.companysurvey
+package com.zenmo.companysurvey.dto
 
 import kotlinx.serialization.Serializable
 

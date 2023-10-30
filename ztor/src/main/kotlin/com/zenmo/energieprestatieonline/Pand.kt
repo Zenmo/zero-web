@@ -1,7 +1,5 @@
 package com.zenmo.energieprestatieonline
 
-import com.zenmo.energieprestatieonline.RawPandTable.nullable
-import com.zenmo.models.companysurvey.CompanySurveyTable.autoGenerate
 import org.jetbrains.exposed.sql.Table
 import org.jetbrains.exposed.sql.kotlin.datetime.date
 

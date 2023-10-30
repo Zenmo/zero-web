@@ -1,10 +1,11 @@
-package com.zenmo.models.companysurvey
+package com.zenmo.companysurvey.dto
 
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class CompanyTransport (
+data class Transport (
     val hasVehicles: Boolean?,
+    val numDailyCarCommutersAndVisitors: Int?,
     val trucks: Trucks,
     val vans: Vans,
     val cars: Cars,
@@ -16,10 +17,10 @@ data class Trucks (
     val numTrucks: Int?, // Total number including electric
     val numElectricTrucks: Int?,
     val numChargePoints: Int?,
-    val powerPerChargePointKw: Int?,
+    val powerPerChargePointKw: Float?,
     val annualTravelDistancePerTruckKm: Int?,
 
-    // Disagreement on whether we should ask specifics about charge points
+    // Disagreement on whether we should ask specifics about planned charge points
     val numPlannedElectricTrucks: Int?,
 )
 
@@ -28,7 +29,7 @@ data class Vans (
     val numVans: Int?,
     val numElectricVans: Int?,
     val numChargePoints: Int?,
-    val powerPerChargePointKw: Int?,
+    val powerPerChargePointKw: Float?,
     val annualTravelDistancePerVanKm: Int?,
 
     val numPlannedElectricVans: Int?,
@@ -36,12 +37,11 @@ data class Vans (
 
 @Serializable
 data class Cars (
-    val numDailyCarCommutersAndVisitors: Int?,
     val numCars: Int?,
     val numElectricCars: Int?,
     val numChargePoints: Int?,
-    val powerPerChargePointKw: Int?,
+    val powerPerChargePointKw: Float?,
     val annualTravelDistancePerCarKm: Int?,
 
-    val numPlannedElectricVans: Int?,
+    val numPlannedElectricCars: Int?,
 )

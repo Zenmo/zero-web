@@ -20,6 +20,21 @@ services:
 #            POSTGRES_USER: postgres
 #            POSTGRES_PASSWORD: welkom123
 
+    ztor-test:
+        image: gradle:8.3.0-jdk20
+        depends_on:
+            - postgres
+        working_dir: /home/gradle/ztor
+        user: gradle
+        volumes:
+            - ./ztor:/home/gradle/ztor
+            - gradle-build-cache:/home/gradle/.gradle
+        command: gradle test
+        environment:
+            POSTGRES_URL: jdbc:postgresql://postgres:5432/test
+            POSTGRES_USER: postgres
+            POSTGRES_PASSWORD: welkom123
+
     ## Recompiles on source code changes.
     ## Do ensure that the two Gradle containers have independent Home directories and Project cache directories.
     ztor-build:
