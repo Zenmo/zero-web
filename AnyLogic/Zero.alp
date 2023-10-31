@@ -1967,6 +1967,7 @@ traceln(" ");
 				<Variable Class="PlainVariable">
 					<Id>1692882842888</Id>
 					<Name><![CDATA[v_activeCookingSessions]]></Name>
+					<ExcludeFromBuild>true</ExcludeFromBuild>
 					<X>570</X><Y>-70</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
@@ -1994,6 +1995,7 @@ traceln(" ");
 				<Variable Class="PlainVariable">
 					<Id>1697542729698</Id>
 					<Name><![CDATA[v_activeTrips]]></Name>
+					<ExcludeFromBuild>true</ExcludeFromBuild>
 					<X>570</X><Y>-50</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
@@ -2915,8 +2917,10 @@ if (b_addKpiVisuals) {
 	pl_electricityProductionStack.updateData();
 	UI_energyAssets.f_updateData();	
 }
-String eventsCounterText = String.format("Momenteel %s trips en %s cooks actief", v_activeTrips.get(), v_activeCookingSessions.get());
-TripsAndCooksTxt.setText(eventsCounterText);
+//String eventsCounterText = String.format("Momenteel %s trips en %s cooks actief", v_activeTrips.get(), v_activeCookingSessions.get());
+//TripsAndCooksTxt.setText(eventsCounterText);
+d_netLoad_kW.add(time(HOUR), c_gridNodesHSMS.get(0).v_currentLoadElectricity_kW);
+
 v_timeStepsElapsed ++;
 ]]></Action>
 				</Event>
@@ -3597,7 +3601,10 @@ traceln("====== RUN FINISHED ======");
 traceln("--------------------------");
 traceln("");
 
+plot.updateData();
+plot.setFixedHorizontalScale(100, 150);
 
+pl_electricityConsumptionStack.set
 //for (EnergyCoop e : pop_energyCoops) {
 //	e.f_returnKPIData();
 //}
@@ -5933,6 +5940,30 @@ t_numberOfRooftopPV.setText(count(Houses, x->x.v_hasPV == true));]]></Body>
 					<Value><![CDATA[0.0]]></Value>
 				</TableFunction>
 			</TableFunctions>
+			<AnalysisData>
+    			<DataSet>
+					<Id>1697627249286</Id>
+					<Name><![CDATA[d_netLoad_kW]]></Name>
+					<X>-920</X><Y>980</Y>
+					<Label><X>15</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<AutoUpdate>false</AutoUpdate>
+					<OccurrenceAtTime>true</OccurrenceAtTime>
+					<OccurrenceDate>1697702400000</OccurrenceDate>
+					<OccurrenceTime Class="CodeUnitValue">
+						<Code><![CDATA[0]]></Code>
+						<Unit Class="TimeUnits"><![CDATA[HOUR]]></Unit>
+					</OccurrenceTime>
+					<RecurrenceCode Class="CodeUnitValue">
+						<Code><![CDATA[1]]></Code>
+						<Unit Class="TimeUnits"><![CDATA[HOUR]]></Unit>
+					</RecurrenceCode>
+					<FreezeXAxis>true</FreezeXAxis>
+					<SamplesToKeep>35040</SamplesToKeep>
+				</DataSet>
+			</AnalysisData>
 			<Connectivity>
 				<TextFile>
 					<Id>1661530848985</Id>
@@ -9933,6 +9964,73 @@ rectangle_electricitySettings.setVisible(false);]]></OnClickCode>
 					</Font>
 					<Alignment>LEFT</Alignment>
 				</Text>
+    			<Plot>
+					<Id>1697627190172</Id>
+					<Name><![CDATA[plot]]></Name>
+					<ExcludeFromBuild>true</ExcludeFromBuild>
+					<X>40</X><Y>400</Y>
+					<Label><X>0</X><Y>-10</Y></Label>
+					<PublicFlag>true</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>false</ShowLabel>
+					<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+					<AutoUpdate>false</AutoUpdate>
+					<OccurrenceAtTime>true</OccurrenceAtTime>
+					<OccurrenceDate>1697702400000</OccurrenceDate>
+					<OccurrenceTime Class="CodeUnitValue">
+						<Code><![CDATA[0]]></Code>
+						<Unit Class="TimeUnits"><![CDATA[HOUR]]></Unit>
+					</OccurrenceTime>
+					<RecurrenceCode Class="CodeUnitValue">
+						<Code><![CDATA[1]]></Code>
+						<Unit Class="TimeUnits"><![CDATA[HOUR]]></Unit>
+					</RecurrenceCode>
+					<EmbeddedIcon>false</EmbeddedIcon>
+					<Width>550</Width>
+					<Height>340</Height>
+					<BackgroundColor/>
+					<BorderColor/>
+					<ChartArea>
+						<XOffset>50</XOffset>
+						<YOffset>30</YOffset>
+						<Width>470</Width>
+						<Height>250</Height>
+						<BackgroundColor>-1</BackgroundColor>
+						<BorderColor>-16777216</BorderColor>
+						<GridColor>-12566464</GridColor>
+					</ChartArea>
+					<Legend>
+						<Place>SOUTH</Place>
+						<TextColor>-16777216</TextColor>
+						<Size>30</Size>
+					</Legend>
+					<Labels>
+						<HorLabelsPosition>DEFAULT</HorLabelsPosition>
+						<VerLabelsPosition>DEFAULT</VerLabelsPosition>
+						<TextColor>-12566464</TextColor>
+					</Labels>
+					<ShowLegend>true</ShowLegend>
+					<VerScaleFromExpression><![CDATA[0]]></VerScaleFromExpression>
+					<VerScaleToExpression><![CDATA[1]]></VerScaleToExpression>
+					<VerScaleType>AUTO</VerScaleType>
+					<DrawLine>true</DrawLine>
+					<Interpolation>LINEAR</Interpolation>
+					<DatasetExpression>  
+						<Title><![CDATA[Title]]></Title>
+					<Id>1697627190948</Id>
+					<Expression><![CDATA[d_netLoad_kW]]></Expression>
+					<Color>-23296</Color>
+					<Expression2><![CDATA[0]]></Expression2>
+					<Expression2Flag>false</Expression2Flag>
+						<PointStyle>CIRCLE</PointStyle>
+						<LineWidth>1.0</LineWidth>
+						<HorizontalAxisExpression><![CDATA[0]]></HorizontalAxisExpression>
+					</DatasetExpression>
+					<SamplesToKeep>100</SamplesToKeep>
+					<HorScaleFromExpression><![CDATA[0]]></HorScaleFromExpression>
+					<HorScaleToExpression><![CDATA[1]]></HorScaleToExpression>
+					<HorScaleType>FIXED</HorScaleType>
+    			</Plot>
 			</Presentation>
 
 				</Level>
@@ -40203,25 +40301,25 @@ public class J_ActivityTrackerTrips extends J_ActivityTracker implements Seriali
     	if (Vehicle.available) { // at start of timestep! check for multiple 'events' in timestep!
     		if (time_min == roundToInt(starttimes_min.get(v_eventIndex) / (60*main.p_timeStep_h)) * (main.p_timeStep_h*60) ) {
     			Vehicle.startTrip();
-    			main.v_activeTrips.incrementAndGet();
+    			//main.v_activeTrips.incrementAndGet();
     		}
     		if (time_min == roundToInt(endtimes_min.get(v_eventIndex) / (60*main.p_timeStep_h)) * (main.p_timeStep_h*60) ) {
     			traceln("Vehicle trip ended in the same timestep as it started!");
     			Vehicle.endTrip(v_tripDist_km);
-    			main.v_activeTrips.decrementAndGet();
+    			//main.v_activeTrips.decrementAndGet();
     			prepareNextActivity(time_min);
     		}
     	} else {
     		if (time_min == roundToInt(endtimes_min.get(v_eventIndex)/ (60*main.p_timeStep_h)) * 60*main.p_timeStep_h ) {
     			Vehicle.endTrip(v_tripDist_km);
-    			main.v_activeTrips.decrementAndGet();
+    			//main.v_activeTrips.decrementAndGet();
     			prepareNextActivity(time_min);
     			//v_nextEventStartTime_min = starttimes_min.get(v_eventIndex);
     			//v_nextEventEndTime_min = endtimes_min.get(v_eventIndex);    			
     		}  
     		if (time_min == roundToInt(starttimes_min.get(v_eventIndex) / (60*main.p_timeStep_h)) * (main.p_timeStep_h*60) ) {
     			Vehicle.startTrip();
-    			main.v_activeTrips.incrementAndGet();
+    			//main.v_activeTrips.incrementAndGet();
     			traceln("Vehicle trip started in the same timestep as the previous trip ended!!");
     		}
     	}
@@ -40385,7 +40483,7 @@ public class J_ActivityTrackerCooking extends J_ActivityTracker implements Seria
 	    		if (cooking == false) {
 	    			traceln("Cooking session ended but none had started!! Rowindex %s, eventIndex %s", rowIndex, v_eventIndex);
 	    		}
-	    		main.v_activeCookingSessions.decrementAndGet();
+	    		//main.v_activeCookingSessions.decrementAndGet();
 	    		//traceln("End of cooking session, currently active cooking sessions %s", main.v_activeCookingSessions);
 	    		powerFraction_fr = 0;
 	    		
@@ -40399,7 +40497,7 @@ public class J_ActivityTrackerCooking extends J_ActivityTracker implements Seria
 				
 				if (time_min >= starttimes_min.get(v_eventIndex)) {
 					powerFraction_fr = powerFractions_fr.get(v_eventIndex);	    		
-					main.v_activeCookingSessions.incrementAndGet();
+					//main.v_activeCookingSessions.incrementAndGet();
 					cooking=true;
 					traceln("Starting next cooking session in same timestep as previous session ended!! Rowindex %s, eventIndex %s\", rowIndex, v_eventIndex");
 				}
@@ -40410,11 +40508,11 @@ public class J_ActivityTrackerCooking extends J_ActivityTracker implements Seria
 			}*/
    		
 			powerFraction_fr = powerFractions_fr.get(v_eventIndex);	    		
-			main.v_activeCookingSessions.incrementAndGet();
+			//main.v_activeCookingSessions.incrementAndGet();
 			cooking=true;
 			if (time_min >= endtimes_min.get(v_eventIndex) ) { // end cooking session. Also check if a new one starts in this timestep!
 	    	
-	    		main.v_activeCookingSessions.decrementAndGet();
+	    		//main.v_activeCookingSessions.decrementAndGet();
 	    		//traceln("End of cooking session, currently active cooking sessions %s", main.v_activeCookingSessions);
 	    		powerFraction_fr = 0;
 	    		

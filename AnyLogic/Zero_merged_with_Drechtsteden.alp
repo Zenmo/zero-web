@@ -4450,7 +4450,7 @@ if (b_addKpiVisuals) {
 	}
 	businessParkEnergyDemandChart.updateData();
 	businessParkEnergySupplyChart.updateData();
-	
+	businessParkNetLoadTimePlot.updateData();
 //}
 }
 
@@ -5534,8 +5534,8 @@ for(JsonNode g : v_gridNodesJson)
 	//traceln("data "+"id= "+nodeID +", nodetype = "+nodetype +", energytype = "+ energytype+", nodeparent = "+ nodeparent+", capacity = "+ nodecapacity+ ", ownerOperator = "+ nodeoperator);
 	//traceln(data.toString());
 
-	//GN = add_pop_gridNodes();
-	GN = add_pop_gridNodes(nodeID, nodeparent, nodetype, energytype, nodecapacity, null, null, nodeoperator, null, false);
+	GN = add_pop_gridNodes();
+	//GN = add_pop_gridNodes(nodeID, nodeparent, nodetype, energytype, nodecapacity, null, null, nodeoperator, null, false);
 	
 	//( nodeID, nodeparent, nodetype, energytype, nodecapacity, null, null, nodeoperator );
 	
@@ -7411,7 +7411,7 @@ for (Tuple row : rows) {
 					<ReturnType><![CDATA[double]]></ReturnType>
 					<Id>1697095071210</Id>
 					<Name><![CDATA[f_generateUtilityObjects]]></Name>
-					<X>-500</X><Y>410</Y>
+					<X>-500</X><Y>430</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -7442,7 +7442,7 @@ for (Tuple row : rows) {
 	GC.set_p_gridConnectionCategory( OL_GridConnectionCategory.UTILITY );
 	//GC.set_p_gridConnectionType( gridConnectionType );
 	GC.set_p_connectionCapacity_kW( 17 );
-	GC.set_p_parentNodeElectricID( c_gridNodesMSLS.get(0).p_agentID );
+	//GC.set_p_parentNodeElectricID( c_gridNodesMSLS.get(0).p_agentID );
 	//GC.set_p_parentNodeHeatID( gridConnectionParentHeat );
 	//GC.set_p_ownerID( ownerActorID );
 	GC.set_p_heatingType( OL_GridConnectionHeatingType.NONE );
@@ -7452,7 +7452,12 @@ for (Tuple row : rows) {
 	GC.set_p_openbareR(row.get(residence_objects.openbare_r));
 	GC.set_p_huisnummer(row.get(residence_objects.huisnummer));
 	//GC.set_p_company_connection_id(row.get(residence_objects.));
-	
+	GC.setLatLon(GC.p_latitude, GC.p_longitude);
+	GridNode nearestLVStation = GC.getNearestAgent(c_gridNodesMSLS);
+	traceln("Nearest MVLV transformer for GC " + GC.p_agentID + " is: " + nearestLVStation.p_agentID)	;
+	//Set nearest agent as trafo
+	//nearestLVStation.c_electricityGridConnections.add(GC);
+	GC.p_parentNodeElectricID = nearestLVStation.p_agentID;
 	
 	//GC.set_p_batteryOperationMode( gridConnectionBatteryMode );
 	//GC.set_p_elektrolyserOperationMode( gridConnectionElektrolyserMode );
@@ -7566,7 +7571,8 @@ for (Tuple row : rows) {
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>true</ShowLabel>
 					<Body><![CDATA[//f_createActors(); 
-f_createGridNodes();
+//f_createGridNodes();
+f_generateMVLVTransformers();
 f_generateUtilityObjects();
 f_instantiateEnergyAssets();
 f_createGISBuildings();
@@ -7582,10 +7588,6 @@ f_initializeForecasts();
 					<ReturnType><![CDATA[double]]></ReturnType>
 					<Id>1697184779060</Id>
 					<Name><![CDATA[f_zinc_init]]></Name>
-					<Description><![CDATA[Functie om handmatig databases te updaten vanuit custom database connection objecten (niet aanwezig als het model is opgeslagen met Gillis' AnyLogic-versie). Gebruikt om mogelijk externe database-connecties (via URLs) te kunnen implementeren, en voor profiling doeleinden.
-
-@since: Sprint 6
-@author: Jorrit]]></Description>
 					<ExcludeFromBuild>true</ExcludeFromBuild>
 					<X>-500</X><Y>20</Y>
 					<Label><X>10</X><Y>0</Y></Label>
@@ -7641,12 +7643,14 @@ for (GridConnection GC : c_gridConnections) {
 					<ReturnType><![CDATA[double]]></ReturnType>
 					<Id>1697186722600</Id>
 					<Name><![CDATA[f_instantiateEnergyAssets]]></Name>
-					<X>-500</X><Y>432</Y>
+					<X>-500</X><Y>452</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>true</ShowLabel>
-					<Body><![CDATA[for (GridConnection GC : c_gridConnections) {
+					<Body><![CDATA[// Add electricity consumption profiles to gridconnections
+
+for (GridConnection GC : c_gridConnections) {
 	// Add consumption profiles
 	//newAsset.yearlyDemandElectricity_kWh=1;
 	if (GC.p_company_connection_id != null) {
@@ -7950,6 +7954,92 @@ v_totalInvestmentCostsPerHousehold = average(pop_EA_Households, x->x.v_totalInve
 v_totalOperationalCostsFixedPerHousehold = average(pop_EA_Households, x->x.v_totalOperationalCostsFixed);
 v_totalOperationalCostsVariablePerHousehold = average(pop_EA_Households, x->x.v_totalOperationalCostsFixed);
 */]]></Body>
+				</Function>
+				<Function AccessType="default" StaticFunction="false">
+					<ReturnModificator>VOID</ReturnModificator>
+					<ReturnType><![CDATA[double]]></ReturnType>
+					<Id>1698752016115</Id>
+					<Name><![CDATA[f_generateMVLVTransformers]]></Name>
+					<X>-500</X><Y>410</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Body><![CDATA[// One 'hardcoded' HVMV gridNode
+GridNode GN_main = add_pop_gridNodes();
+GN_main.p_energyType = OL_EnergyCarrierType.ELECTRICITY;		
+GN_main.p_agentID = "HVMV1";
+GN_main.p_capacity_kW= 1000;
+//x.currentStatus = row.get( mvlv_transformers.currentsta );
+//x.validFrom = row.get( mvlv_transformers.validfrom );
+GN_main.p_nodeType = OL_GridNodeType.HSMS;
+c_gridNodesHSMS.add(GN_main);
+
+// Get trip tuples from this household ID from database
+List<Tuple> rows = selectFrom(mvlv_transformers)
+	//.where(mvlv_transformers.omschrijvi.eq("Netstation"))
+	//.where(mvlv_transformers.currentsta.eq("functional"))
+	//.where(mvlv_transformers.nominal_power.gt(0))
+	.list();
+
+for (Tuple row : rows) {
+	GridNode GN = add_pop_gridNodes();
+	GN.p_energyType = OL_EnergyCarrierType.ELECTRICITY;		
+	GN.p_agentID = row.get( mvlv_transformers.id);
+	GN.p_capacity_kW= row.get( mvlv_transformers.nominal_power);
+	//x.currentStatus = row.get( mvlv_transformers.currentsta );
+	//x.validFrom = row.get( mvlv_transformers.validfrom );
+	GN.p_nodeType = OL_GridNodeType.MSLS;
+	GN.p_longitude = row.get( mvlv_transformers.longitude );
+	GN.p_latitude = row.get( mvlv_transformers.latitude );
+	GN.setLatLon(GN.p_latitude, GN.p_longitude);
+	GN.p_parentNodeID="HVMV1";
+	GN.f_connectToParentNode();
+	c_gridNodesMSLS.add(GN);	
+}
+
+/*
+//connect HVMV-transformers to households
+f_connectHouseholdsToMVLVTransformers();
+f_connectUtilityObjectsToMVLVTransformers();
+
+//Set trafo power if data is missing
+if (sum(pop_EA_TransformersMVLV, x->x.ratedPower) < 1){
+	f_setMVLVTransformerRatedPower();
+}
+
+//Reset connections if they exceed rated power
+else{
+	f_resetIfConnectionsExceedRatedPower();
+}*/]]></Body>
+				</Function>
+				<Function AccessType="default" StaticFunction="false">
+					<ReturnModificator>VOID</ReturnModificator>
+					<ReturnType><![CDATA[double]]></ReturnType>
+					<Id>1698752016120</Id>
+					<Name><![CDATA[f_connectUtilityObjectsToMVLVTransformers]]></Name>
+					<ExcludeFromBuild>true</ExcludeFromBuild>
+					<X>-490</X><Y>470</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Body><![CDATA[for (GridConnection GC : c_gridConnections){
+	GridNode nearestLVStation = GC.getNearestAgent(c_gridNodesMSLS);
+	
+	//Set nearest agent as trafo
+	nearestLVStation.c_electricityGridConnections.add(GC);
+	GC.p_parentNodeElectricID = nearestLVStation.p_agentID;
+}
+/*
+
+for (EA_Building x : pop_EA_Buildings){
+	EA_TransformerMVLV nearestLVStation = x.getNearestAgent(pop_EA_TransformersMVLV);
+	
+	//Set nearest agent as trafo
+	nearestLVStation.c_connectedUtilityObjects.add(x);
+	x.p_connectedMVLVTransformer = nearestLVStation;
+}*/]]></Body>
 				</Function>
 			</Functions>
 			<TableFunctions>
@@ -8581,6 +8671,12 @@ v_totalOperationalCostsVariablePerHousehold = average(pop_EA_Households, x->x.v_
 						</Parameter>
 						<Parameter>
 							<Name><![CDATA[b_transportBufferValid]]></Name>
+						</Parameter>
+						<Parameter>
+							<Name><![CDATA[p_longitude]]></Name>
+						</Parameter>
+						<Parameter>
+							<Name><![CDATA[p_latitude]]></Name>
 						</Parameter>
 					</Parameters>
 					<ReplicationFlag>true</ReplicationFlag>
@@ -37805,7 +37901,7 @@ rectanglePerHouseholdCosts.setFillColor(new Color (255, 255, 255, 100));
 					<Id>1696520907362</Id>
 					<Expression><![CDATA[my_dataset2]]></Expression>
 					<Color>-14774017</Color>
-					<Expression2><![CDATA[10]]></Expression2>
+					<Expression2><![CDATA[c_gridNodesHSMS.get(0).v_currentLoadElectricity_kW]]></Expression2>
 					<Expression2Flag>true</Expression2Flag>
 						<PointStyle>NONE</PointStyle>
 						<LineWidth>2.0</LineWidth>
@@ -39316,7 +39412,7 @@ if(v_costsUnknown == true){
 					<Id>1696520908904</Id>
 					<Expression><![CDATA[my_dataset2]]></Expression>
 					<Color>-14774017</Color>
-					<Expression2><![CDATA[v_businessCollectiveNetLoad_kW]]></Expression2>
+					<Expression2><![CDATA[c_gridNodesHSMS.v_currentLoadElectricity_kW]]></Expression2>
 					<Expression2Flag>true</Expression2Flag>
 						<PointStyle>NONE</PointStyle>
 						<LineWidth>2.0</LineWidth>
@@ -40530,7 +40626,7 @@ geupdate vanuit
 				<Variable Class="Parameter">
 					<Id>1676386542136</Id>
 					<Name><![CDATA[p_energyAssetList]]></Name>
-					<X>50</X><Y>250</Y>
+					<X>50</X><Y>330</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -40566,6 +40662,48 @@ geupdate vanuit
 						<ParameterEditor>
 							<Id>1683816606477</Id>
 							<EditorContolType>CHECK_BOX</EditorContolType>
+							<MinSliderValue><![CDATA[0]]></MinSliderValue>
+							<MaxSliderValue><![CDATA[100]]></MaxSliderValue>
+							<DelimeterType>NO_DELIMETER</DelimeterType>
+						</ParameterEditor>
+					</Properties>                 
+				</Variable>
+				<Variable Class="Parameter">
+					<Id>1698752314374</Id>
+					<Name><![CDATA[p_longitude]]></Name>
+					<X>50</X><Y>240</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" ModificatorType="STATIC">
+						<Type><![CDATA[double]]></Type>
+						<UnitType><![CDATA[NONE]]></UnitType>
+						<SdArray>false</SdArray>
+						<ParameterEditor>
+							<Id>1698752314372</Id>
+							<EditorContolType>TEXT_BOX</EditorContolType>
+							<MinSliderValue><![CDATA[0]]></MinSliderValue>
+							<MaxSliderValue><![CDATA[100]]></MaxSliderValue>
+							<DelimeterType>NO_DELIMETER</DelimeterType>
+						</ParameterEditor>
+					</Properties>                 
+				</Variable>
+				<Variable Class="Parameter">
+					<Id>1698752314385</Id>
+					<Name><![CDATA[p_latitude]]></Name>
+					<X>50</X><Y>260</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" ModificatorType="STATIC">
+						<Type><![CDATA[double]]></Type>
+						<UnitType><![CDATA[NONE]]></UnitType>
+						<SdArray>false</SdArray>
+						<ParameterEditor>
+							<Id>1698752314383</Id>
+							<EditorContolType>TEXT_BOX</EditorContolType>
 							<MinSliderValue><![CDATA[0]]></MinSliderValue>
 							<MaxSliderValue><![CDATA[100]]></MaxSliderValue>
 							<DelimeterType>NO_DELIMETER</DelimeterType>
@@ -41661,10 +41799,62 @@ subConnections.sendToAllConnected(msg);]]></OnReceive>
 					<FillAreaUnderLine>false</FillAreaUnderLine>
 					<LabelFormat>HH_mm</LabelFormat>
     			</TimePlot>
+				<Oval>
+					<Id>1698752442733</Id>
+					<Name><![CDATA[oval]]></Name>
+					<X>0</X><Y>0</Y>
+					<Label><X>0</X><Y>0</Y></Label>
+					<PublicFlag>true</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>false</ShowLabel>
+					<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+					<OnClickCode><![CDATA[//va_LVStation.navigateTo();
+/*
+
+
+Color colorToTrafo = new Color(uniform_discr(0,100), uniform_discr(0,100), uniform_discr(0,100));
+
+for (EA_UtilityObject x : c_connectedUtilityObjects){
+	traceln(x.p_building.gisRegion.getFillColor());
+	x.p_building.v_currentColor = x.p_building.gisRegion.getFillColor();
+	
+	x.p_building.gisRegion.setFillColor(colorToTrafo);
+}
+ 
+traceln("Trafo " + this.getIndex());
+
+*/]]></OnClickCode>
+					<EmbeddedIcon>false</EmbeddedIcon>
+					<Z>0</Z>
+					<ZHeight>10</ZHeight>
+					<LineWidth>2</LineWidth>
+					<LineColor>-16777216</LineColor>
+					<LineMaterial>null</LineMaterial>
+					<LineStyle>SOLID</LineStyle>
+					<RadiusX>6</RadiusX>
+					<RadiusY>40</RadiusY>
+					<Rotation>0.0</Rotation>
+					<FillColor>-16744448</FillColor>
+					<FillMaterial>null</FillMaterial>
+				</Oval>
 			</Presentation>
 
 				</Level>
 			</Presentation>
+			<Areas>
+				<Area>
+					<Id>1698759398568</Id>
+					<Name><![CDATA[va_gridNode]]></Name>
+					<X>0</X><Y>0</Y>
+					<Label><X>0</X><Y>-10</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>false</ShowLabel>
+					<Title><![CDATA[]]></Title>
+					<Width>1920</Width>
+					<Height>980</Height>
+				</Area>
+			</Areas>
 
 		</ActiveObjectClass>
 		<!--   =========   Active Object Class   ========  -->
@@ -66942,6 +67132,27 @@ if (gisRegion == null ) {
 				<Login><![CDATA[]]></Login>
 				<Password><![CDATA[]]></Password>
 			</ExternalConnection>
+			<ExternalConnection>
+				<Id>1698751097050</Id>
+				<Name><![CDATA[database]]></Name>
+				<X>0</X><Y>0</Y>
+				<Label><X>10</X><Y>0</Y></Label>
+				<PublicFlag>false</PublicFlag>
+				<PresentationFlag>true</PresentationFlag>
+				<ShowLabel>true</ShowLabel>
+				<DatabaseType>EXCEL_ACCESS</DatabaseType>
+				<ConnectionURL><![CDATA[]]></ConnectionURL>
+				<ConnectOnStartup>true</ConnectOnStartup>
+				<DatabaseName><![CDATA[]]></DatabaseName>
+				<ResourceReference>
+					<PackageName><![CDATA[zero]]></PackageName>
+					<ClassName><![CDATA[_mvlv_transformers.xlsx]]></ClassName>
+				</ResourceReference>
+				<Host><![CDATA[localhost]]></Host>
+				<JdbcDriverClassName><![CDATA[net.sourceforge.jtds.jdbc.Driver]]></JdbcDriverClassName>
+				<Login><![CDATA[]]></Login>
+				<Password><![CDATA[]]></Password>
+			</ExternalConnection>
 			<TableImportSettings>
 				<TableReference>
 					<PackageName><![CDATA[zero]]></PackageName>
@@ -66994,6 +67205,15 @@ if (gisRegion == null ) {
 				</TableReference>
 				<ConnectionIndex>3</ConnectionIndex>
 				<ExternalTableName><![CDATA["residence_objects"]]></ExternalTableName>
+				<AutoImport>false</AutoImport>
+			</TableImportSettings>
+			<TableImportSettings>
+				<TableReference>
+					<PackageName><![CDATA[zero]]></PackageName>
+					<ClassName><![CDATA[mvlv_transformers]]></ClassName>
+				</TableReference>
+				<ConnectionIndex>4</ConnectionIndex>
+				<ExternalTableName><![CDATA["mvlv_transformers"]]></ExternalTableName>
 				<AutoImport>false</AutoImport>
 			</TableImportSettings>
 			<TableImportSettings>
@@ -70744,6 +70964,10 @@ public class J_ActivityTrackerCooking extends J_ActivityTracker implements Seria
 		</Resource>
 		<Resource>
 			<Path><![CDATA[_residence_objects.xlsx]]></Path>
+			<ReferencedFromUserCode>false</ReferencedFromUserCode>
+		</Resource>
+		<Resource>
+			<Path><![CDATA[_mvlv_transformers.xlsx]]></Path>
 			<ReferencedFromUserCode>false</ReferencedFromUserCode>
 		</Resource>
 	</ModelResources>
