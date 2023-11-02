@@ -4843,10 +4843,10 @@ for(EnergyCoop a : pop_energyCoops) {
 
 // Bereken netvlak-data:
 //f_sumGridNodeLoads();
-traceln("Electricity imported: "+ v_totalElectricityImport_MWh + " MWh");
-traceln("Electricity exported: "+ v_totalElectricityExport_MWh + " MWh");
+//traceln("Electricity imported: "+ v_totalElectricityImport_MWh + " MWh");
+//traceln("Electricity exported: "+ v_totalElectricityExport_MWh + " MWh");
 
-//Total energy consumption and production
+/*//Total energy consumption and production
 //traceln("");
 //traceln("__--** CONSUMPTION PER ASSET **--__");
 double energyProduced_MWh = 0;
@@ -4939,7 +4939,7 @@ traceln( "nett import methane: " + (v_totalMethaneImport_MWh-v_totalMethaneExpor
 traceln( "import diesel: " + v_totalDieselImport_MWh + " MWh");
 
 traceln("MS node peak load: " + v_gridNodePeakLoadElectricityMSLS_kW + " kW at hour: " + c_timesOfNodePeakLoads_h);
-
+*/
 double nbcars = 0;
 double nbevs = 0;
 double shareElectricvehiclesInHouseholds;
@@ -4988,8 +4988,8 @@ j_simulationResults.updateData( roundToDecimal( v_gridNodePeakLoadElectricityHSM
 							//c_globalBatteryChargingProfile_kWhph,
 							v_modelSelfConsumption_fr,
 							v_modelSelfSufficiency_fr,
-							energyConsumed_MWh,
-							energyProduced_MWh,
+							v_totalEnergyUsed_MWh,
+							v_totalEnergyProduced_MWh,
 							v_totalEnergyCurtailed_MWh,
 							shareElectricvehiclesInHouseholds
 							);
@@ -7494,11 +7494,12 @@ for (Tuple row : rows) {
 	GC.set_p_openbareR(row.get(residence_objects.openbare_r));
 	GC.set_p_huisnummer(row.get(residence_objects.huisnummer));
 	//GC.set_p_company_connection_id(row.get(residence_objects.));
+	GC.set_p_floorSurfaceArea_m2(row.get( residence_objects.oppervlakt ));
+	
 	GC.setLatLon(GC.p_latitude, GC.p_longitude);
 	GridNode nearestLVStation = GC.getNearestAgent(c_gridNodesMSLS);
 	traceln("Nearest MVLV transformer for GC " + GC.p_agentID + " is: " + nearestLVStation.p_agentID)	;
 	//Set nearest agent as trafo
-	//nearestLVStation.c_electricityGridConnections.add(GC);
 	GC.p_parentNodeElectricID = nearestLVStation.p_agentID;
 	
 	//GC.set_p_batteryOperationMode( gridConnectionBatteryMode );
@@ -7693,7 +7694,7 @@ for (GridConnection GC : c_gridConnections) {
 					<Body><![CDATA[// Add electricity consumption profiles to gridconnections
 
 for (GridConnection GC : c_gridConnections) {
-	// Add consumption profiles
+	// Add electricity consumption profiles
 	//newAsset.yearlyDemandElectricity_kWh=1;
 	if (GC.p_company_connection_id != null) {
 		J_EAProfile newAsset;
@@ -7706,16 +7707,31 @@ for (GridConnection GC : c_gridConnections) {
 		c_energyAssets.add(newAsset);
 		GC.f_connectToJ_EA(newAsset);
 		
-	} else {
+	} else { // Add regular electricity and gas consumption profiles
+		// Electricity consumption
 		J_EAConsumption newAsset;
 		newAsset = (J_EAConsumption)p_defaultConsumptionAsset.clone();
 		newAsset.parentAgent = GC;
 		newAsset.energyAssetName="INDUSTRY_OTHER_ELECTRICITY_DEMAND";
-		newAsset.yearlyDemandElectricity_kWh = 100000*uniform(0.5,1.5);
+		newAsset.yearlyDemandElectricity_kWh = 100000*uniform(0.5,1.5); // Replace with yearly consumption from database!
 		c_energyAssets.add(newAsset);
 		GC.f_connectToJ_EA(newAsset);
-	}
-
+	}	
+	// Heatdemand		
+	double yearlyHeatDemandPerFloorSurface_kWhpm2=90.9778*9.77;
+	J_EAConsumption newAsset = (J_EAConsumption)p_defaultConsumptionAsset.clone();
+	newAsset.energyAssetType = OL_EnergyAssetType.HEAT_DEMAND;
+	newAsset.parentAgent = GC;
+	newAsset.energyAssetName="Building_heat_demand";
+	newAsset.yearlyDemandHeat_kWh = GC.p_floorSurfaceArea_m2*yearlyHeatDemandPerFloorSurface_kWhpm2;
+	c_energyAssets.add(newAsset);
+	GC.f_connectToJ_EA(newAsset);
+	
+	// Gas burner
+	J_EAConversionGasBurner gasBurner = new J_EAConversionGasBurner(GC, OL_EnergyAssetType.GAS_BURNER, newAsset.yearlyDemandHeat_kWh/8760*10, 0.99, p_timeStep_h, 90);
+	c_energyAssets.add(gasBurner);
+	GC.f_connectToJ_EA(gasBurner);
+		
 }]]></Body>
 				</Function>
 				<Function AccessType="default" StaticFunction="false">
@@ -8263,6 +8279,62 @@ t_numberOfRooftopPV.setText(count(c_gridConnections, x->x.v_hasPV == true));
 */
 
 ]]></Body>
+				</Function>
+				<Function AccessType="default" StaticFunction="false">
+					<ReturnModificator>VOID</ReturnModificator>
+					<ReturnType><![CDATA[double]]></ReturnType>
+					<Id>1698933346068</Id>
+					<Name><![CDATA[f_getGasDemandData]]></Name>
+					<ExcludeFromBuild>true</ExcludeFromBuild>
+					<X>-490</X><Y>490</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Body><![CDATA[if (p_hasGasData != null && p_hasGasData.equals("Yes")){
+	v_hasGasDemandProfile = true;
+	a_gasDemandProfile = new double [8760];
+	
+	traceln(this.getIndex() + " index of UO with gas demand data");
+		
+	//Set string for demand depending on number of connections
+	String idInputValue = "";
+	if ( p_numberOfConnections == 1){
+		idInputValue = p_company_connection_id + "_demand";
+	}
+	else{ 
+		idInputValue = p_company_connection_id + "a_demand";
+	}
+	
+	//Get list
+	List<Double> hourlyGasDemand = selectValues(double.class,
+		"SELECT " + idInputValue + " FROM comp_gas_consumption;");
+	
+	//Iterate over list
+	int iteratedHour = 0;
+	
+	//traceln(hourlyGasDemand.lastIndexOf());
+	for (Double demand : hourlyGasDemand){
+		a_gasDemandProfile[iteratedHour] = demand * main.p_energyDensityGas_kWhpm3;
+		iteratedHour++;
+		if (iteratedHour == 8760){
+			iteratedHour = 0;
+		}
+	}
+	
+	int maxHeatRequired = indexOfMax(a_gasDemandProfile);
+	v_requiredHeatPumpCapacity_kW = a_gasDemandProfile[maxHeatRequired] / 3;
+	traceln(v_requiredHeatPumpCapacity_kW + " required heat pump capacity at UO " + this.getIndex());
+	
+}
+else {
+	v_hasGasDemandProfile = false;
+}
+
+if (p_company_connection_id == null){
+	p_annualHeatingDemand_kWh = main.p_averageGasCompaniesPerM2 * main.p_energyDensityGas_kWhpm3 * p_floorSurfaceArea;
+	p_electricityConsumption_kWhPerYear = main.p_averageElectricityCompaniesPerM2 * p_floorSurfaceArea;
+}]]></Body>
 				</Function>
 			</Functions>
 			<TableFunctions>
@@ -9075,6 +9147,9 @@ t_numberOfRooftopPV.setText(count(c_gridConnections, x->x.v_hasPV == true));
 						</Parameter>
 						<Parameter>
 							<Name><![CDATA[p_energyProfile]]></Name>
+						</Parameter>
+						<Parameter>
+							<Name><![CDATA[p_floorSurfaceArea_m2]]></Name>
 						</Parameter>
 					</Parameters>
 					<ReplicationFlag>true</ReplicationFlag>
@@ -9969,6 +10044,9 @@ t_numberOfRooftopPV.setText(count(c_gridConnections, x->x.v_hasPV == true));
 						<Parameter>
 							<Name><![CDATA[p_energyProfile]]></Name>
 						</Parameter>
+						<Parameter>
+							<Name><![CDATA[p_floorSurfaceArea_m2]]></Name>
+						</Parameter>
 					</Parameters>
 					<ReplicationFlag>true</ReplicationFlag>
 					<Replication Class="CodeValue">
@@ -10146,6 +10224,9 @@ t_numberOfRooftopPV.setText(count(c_gridConnections, x->x.v_hasPV == true));
 						<Parameter>
 							<Name><![CDATA[p_energyProfile]]></Name>
 						</Parameter>
+						<Parameter>
+							<Name><![CDATA[p_floorSurfaceArea_m2]]></Name>
+						</Parameter>
 					</Parameters>
 					<ReplicationFlag>true</ReplicationFlag>
 					<Replication Class="CodeValue">
@@ -10319,6 +10400,9 @@ t_numberOfRooftopPV.setText(count(c_gridConnections, x->x.v_hasPV == true));
 						</Parameter>
 						<Parameter>
 							<Name><![CDATA[p_energyProfile]]></Name>
+						</Parameter>
+						<Parameter>
+							<Name><![CDATA[p_floorSurfaceArea_m2]]></Name>
 						</Parameter>
 					</Parameters>
 					<ReplicationFlag>true</ReplicationFlag>
@@ -10494,6 +10578,9 @@ t_numberOfRooftopPV.setText(count(c_gridConnections, x->x.v_hasPV == true));
 						<Parameter>
 							<Name><![CDATA[p_energyProfile]]></Name>
 						</Parameter>
+						<Parameter>
+							<Name><![CDATA[p_floorSurfaceArea_m2]]></Name>
+						</Parameter>
 					</Parameters>
 					<ReplicationFlag>true</ReplicationFlag>
 					<Replication Class="CodeValue">
@@ -10667,6 +10754,9 @@ t_numberOfRooftopPV.setText(count(c_gridConnections, x->x.v_hasPV == true));
 						</Parameter>
 						<Parameter>
 							<Name><![CDATA[p_energyProfile]]></Name>
+						</Parameter>
+						<Parameter>
+							<Name><![CDATA[p_floorSurfaceArea_m2]]></Name>
 						</Parameter>
 					</Parameters>
 					<ReplicationFlag>true</ReplicationFlag>
@@ -10842,6 +10932,9 @@ t_numberOfRooftopPV.setText(count(c_gridConnections, x->x.v_hasPV == true));
 						<Parameter>
 							<Name><![CDATA[p_energyProfile]]></Name>
 						</Parameter>
+						<Parameter>
+							<Name><![CDATA[p_floorSurfaceArea_m2]]></Name>
+						</Parameter>
 					</Parameters>
 					<ReplicationFlag>true</ReplicationFlag>
 					<Replication Class="CodeValue">
@@ -11015,6 +11108,9 @@ t_numberOfRooftopPV.setText(count(c_gridConnections, x->x.v_hasPV == true));
 						</Parameter>
 						<Parameter>
 							<Name><![CDATA[p_energyProfile]]></Name>
+						</Parameter>
+						<Parameter>
+							<Name><![CDATA[p_floorSurfaceArea_m2]]></Name>
 						</Parameter>
 					</Parameters>
 					<ReplicationFlag>true</ReplicationFlag>
@@ -43909,6 +44005,27 @@ import java.io.*;]]></Import>
 						</ParameterEditor>
 					</Properties>                 
 				</Variable>
+				<Variable Class="Parameter">
+					<Id>1698935198538</Id>
+					<Name><![CDATA[p_floorSurfaceArea_m2]]></Name>
+					<X>50</X><Y>400</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" ModificatorType="STATIC">
+						<Type><![CDATA[double]]></Type>
+						<UnitType><![CDATA[NONE]]></UnitType>
+						<SdArray>false</SdArray>
+						<ParameterEditor>
+							<Id>1698935198536</Id>
+							<EditorContolType>TEXT_BOX</EditorContolType>
+							<MinSliderValue><![CDATA[0]]></MinSliderValue>
+							<MaxSliderValue><![CDATA[100]]></MaxSliderValue>
+							<DelimeterType>NO_DELIMETER</DelimeterType>
+						</ParameterEditor>
+					</Properties>                 
+				</Variable>
 				<Variable Class="CollectionVariable">
 					<Id>1659962626903</Id>
 					<Name><![CDATA[c_energyAssets]]></Name>
@@ -44734,7 +44851,7 @@ for(J_EAConsumption e : c_consumptionAssets) {
 				break;
 				case "Store_other_electricity":
 					e.f_updateAllFlows( main.v_currentBuildingOtherElectricityDemand_fr );
-				break;
+				break;				
 				default:
 					traceln("ConsumptionAsset with unknown type, cannot operate!! Type: " + e.energyAssetType);
 					throw new IllegalStateException("ELECTRICITY_DEMAND with unknown name, cannot operate!! Name: " + e.energyAssetName);
@@ -44975,7 +45092,7 @@ double powerDemand_kW = v_currentPowerHeat_kW;
 if ( p_BuildingThermalAsset == null ) {
 	if ( p_secondaryHeatingAsset == null ) { // Just one heating asset
 		if ( p_primaryHeatingAsset== null ) {
-			//traceln("No heating assets for house " + p_agentID);
+			traceln("No heating assets for GridConnection " + p_agentID);
 		} else {
 			if ( p_primaryHeatingAsset instanceof J_EAConversionGasBurner || p_primaryHeatingAsset instanceof J_EAConversionHeatDeliverySet || p_primaryHeatingAsset instanceof J_EAConversionHydrogenBurner) { // when there is only a gas burner or DH set
 					p_primaryHeatingAsset.v_powerFraction_fr = min(1,powerDemand_kW / p_primaryHeatingAsset.getHeatCapacity_kW());
@@ -45467,6 +45584,8 @@ if (j_ea instanceof J_EAVehicle) {
 		}
 	} else if (j_ea instanceof J_EAConversionCurtailer) {
 		p_curtailer = (J_EAConversionCurtailer)j_ea;
+	} else if (j_ea instanceof J_EAConversionGasBurner) {
+		p_primaryHeatingAsset = (J_EAConversion)j_ea;
 	}
 		
 } else if  (j_ea instanceof J_EAStorage) {
@@ -45607,7 +45726,7 @@ for ( int i = 0; i < copiedVehicleList.size(); i++ ){
 					<ReturnType><![CDATA[double]]></ReturnType>
 					<Id>1697034280311</Id>
 					<Name><![CDATA[f_setColorDetailedObjects]]></Name>
-					<X>50</X><Y>400</Y>
+					<X>50</X><Y>420</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -61413,6 +61532,9 @@ void f_heatWithHybridHeatpump() {
 				<Parameter>
 					<Name><![CDATA[p_energyProfile]]></Name>
 				</Parameter>
+				<Parameter>
+					<Name><![CDATA[p_floorSurfaceArea_m2]]></Name>
+				</Parameter>
 			</Parameters>
 			<Generic>false</Generic>
 			<GenericParameter>
@@ -62999,6 +63121,9 @@ public void f_connectToJ_EA(J_EA j_ea){
 				<Parameter>
 					<Name><![CDATA[p_energyProfile]]></Name>
 				</Parameter>
+				<Parameter>
+					<Name><![CDATA[p_floorSurfaceArea_m2]]></Name>
+				</Parameter>
 			</Parameters>
 			<Generic>false</Generic>
 			<GenericParameter>
@@ -64074,6 +64199,9 @@ public void f_operateFlexAssets(){
 				<Parameter>
 					<Name><![CDATA[p_energyProfile]]></Name>
 				</Parameter>
+				<Parameter>
+					<Name><![CDATA[p_floorSurfaceArea_m2]]></Name>
+				</Parameter>
 			</Parameters>
 			<Generic>false</Generic>
 			<GenericParameter>
@@ -64541,6 +64669,9 @@ if (CurtailerAsset.getElectricCapacity_kW()>0) {
 				<Parameter>
 					<Name><![CDATA[p_energyProfile]]></Name>
 				</Parameter>
+				<Parameter>
+					<Name><![CDATA[p_floorSurfaceArea_m2]]></Name>
+				</Parameter>
 			</Parameters>
 			<Generic>false</Generic>
 			<GenericParameter>
@@ -64822,6 +64953,9 @@ public void f_operateFlexAssets(){
 				</Parameter>
 				<Parameter>
 					<Name><![CDATA[p_energyProfile]]></Name>
+				</Parameter>
+				<Parameter>
+					<Name><![CDATA[p_floorSurfaceArea_m2]]></Name>
 				</Parameter>
 			</Parameters>
 			<Generic>false</Generic>
@@ -65507,6 +65641,9 @@ public void f_calculateEnergyBalance(){
 				</Parameter>
 				<Parameter>
 					<Name><![CDATA[p_energyProfile]]></Name>
+				</Parameter>
+				<Parameter>
+					<Name><![CDATA[p_floorSurfaceArea_m2]]></Name>
 				</Parameter>
 			</Parameters>
 			<Generic>false</Generic>
@@ -66294,6 +66431,10 @@ v_maxConnectionLoad_fr = max(v_maxConnectionLoad_fr, abs(v_currentPowerElectrici
 		<ActiveObjectClass>
 			<Id>1672138285227</Id>
 			<Name><![CDATA[GCUtility]]></Name>
+			<AdditionalClassCode><![CDATA[@Override
+public void f_operateFlexAssets(){
+	f_operateFlexAssets_overwrite();
+}]]></AdditionalClassCode>
 			<ExtendsReference>
 				<PackageName><![CDATA[zero]]></PackageName>
 				<ClassName><![CDATA[GridConnection]]></ClassName>
@@ -66413,6 +66554,9 @@ v_maxConnectionLoad_fr = max(v_maxConnectionLoad_fr, abs(v_currentPowerElectrici
 				<Parameter>
 					<Name><![CDATA[p_energyProfile]]></Name>
 				</Parameter>
+				<Parameter>
+					<Name><![CDATA[p_floorSurfaceArea_m2]]></Name>
+				</Parameter>
 			</Parameters>
 			<Generic>false</Generic>
 			<GenericParameter>
@@ -66505,6 +66649,53 @@ v_maxConnectionLoad_fr = max(v_maxConnectionLoad_fr, abs(v_currentPowerElectrici
 			</ScaleRuler>
 			<CurrentLevel>1672138285226</CurrentLevel>
 			<ConnectionsId>1672138285222</ConnectionsId>
+			<Functions>
+				<Function AccessType="default" StaticFunction="false">
+					<ReturnModificator>VOID</ReturnModificator>
+					<ReturnType><![CDATA[double]]></ReturnType>
+					<Id>1698936515692</Id>
+					<Name><![CDATA[f_operateFlexAssets_overwrite]]></Name>
+					<X>800</X><Y>220</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Body><![CDATA[f_manageHeatingAssets();
+
+for( J_EAConversion v : c_conversionAssets ) {	
+	v_currentPowerElectricity_kW += v.electricityConsumption_kW - v.electricityProduction_kW;
+	v_conversionPowerElectric_kW += v.electricityConsumption_kW - v.electricityProduction_kW;
+	v_currentPowerMethane_kW += v.methaneConsumption_kW - v.methaneProduction_kW;
+	v_currentPowerHydrogen_kW += v.hydrogenConsumption_kW - v.hydrogenProduction_kW;
+	v_currentPowerHeat_kW += v.heatConsumption_kW - v.heatProduction_kW;
+	v_currentPowerDiesel_kW += v.dieselConsumption_kW;
+}
+
+
+for ( J_EAStorage e : c_storageAssets ) {
+	v_currentPowerHeat_kW += e.heatConsumption_kW - e.heatProduction_kW; //peter 13-3-23: ik snap niet waarom dit hier staat. dit komt in de knoop met andere storage assets (zoals batterij)
+}
+
+v_currentLoadLowPassed_kW += v_lowPassFactorLoad_fr * ( v_currentPowerElectricity_kW - v_currentLoadLowPassed_kW ); //you want to do deterine the lowpassLoad BEFORE the using the battery. As this behavior of the battery should nog be dependent on the load of the battery in the previous timesteps
+
+/*if( p_batteryAsset != null){
+	switch (p_batteryOperationMode){
+		case HOUSEHOLD_LOAD:
+			f_batteryManagementBalance(v_batterySOC_fr);
+		break;
+		case PRICE:
+			f_batteryManagementPrice_overwrite(v_batterySOC_fr);
+		break;
+		default:
+		break;
+	}
+	v_batteryPowerElectric_kW =  p_batteryAsset.electricityConsumption_kW - p_batteryAsset.electricityProduction_kW;
+	v_currentPowerElectricity_kW +=v_batteryPowerElectric_kW;
+	v_batterySOC_fr = p_batteryAsset.getCurrentStateOfCharge();
+}*/
+]]></Body>
+				</Function>
+			</Functions>
 			<AgentLinks>
 				<AgentLink>
 					<Id>1672138285222</Id>
