@@ -1026,6 +1026,11 @@ traceln(" ");
 traceln("*** Start up finished *** ");
 traceln("*** Start up duration: "+ v_modelStartUpDuration_s + " s ***");
 traceln(" ");
+
+f_runRapidSimulation(); // Do a full year run to have KPIs right away!
+
+
+
 ]]></StartupCode>
 			<Generic>false</Generic>
 			<GenericParameter>
@@ -1088,7 +1093,7 @@ traceln(" ");
 					<MCode><![CDATA[10]]></MCode>
 			</EnvironmentProperties>
 			<DatasetsCreationProperties>
-				<AutoCreate>true</AutoCreate>
+				<AutoCreate>false</AutoCreate>
 					<OccurrenceAtTime>true</OccurrenceAtTime>
 					<OccurrenceDate>1658563200000</OccurrenceDate>
 					<OccurrenceTime Class="CodeUnitValue">
@@ -1310,7 +1315,7 @@ traceln(" ");
 				<Variable Class="PlainVariable">
 					<Id>1663243393136</Id>
 					<Name><![CDATA[v_timeOfModelStart_ms]]></Name>
-					<X>900</X><Y>1260</Y>
+					<X>900</X><Y>1310</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -1322,7 +1327,7 @@ traceln(" ");
 				<Variable Class="PlainVariable">
 					<Id>1663246198254</Id>
 					<Name><![CDATA[v_modelStartUpDuration_s]]></Name>
-					<X>900</X><Y>1280</Y>
+					<X>900</X><Y>1330</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -1538,7 +1543,7 @@ traceln(" ");
 				<Variable Class="PlainVariable">
 					<Id>1666979598282</Id>
 					<Name><![CDATA[v_totalBatteryChargeAmount_MWh]]></Name>
-					<X>-560</X><Y>810</Y>
+					<X>-560</X><Y>800</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -1550,7 +1555,7 @@ traceln(" ");
 				<Variable Class="PlainVariable">
 					<Id>1666979615893</Id>
 					<Name><![CDATA[v_totalBatteryDischargeAmount_MWh]]></Name>
-					<X>-560</X><Y>830</Y>
+					<X>-560</X><Y>820</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -1562,7 +1567,7 @@ traceln(" ");
 				<Variable Class="PlainVariable">
 					<Id>1666979627442</Id>
 					<Name><![CDATA[v_totalBatteryInstalledCapacity_MWh]]></Name>
-					<X>-560</X><Y>850</Y>
+					<X>-560</X><Y>840</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -1598,7 +1603,7 @@ traceln(" ");
 				<Variable Class="PlainVariable">
 					<Id>1669026980656</Id>
 					<Name><![CDATA[v_totalBatteryEnergyUsed_MWh]]></Name>
-					<X>-560</X><Y>870</Y>
+					<X>-560</X><Y>860</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -1711,7 +1716,7 @@ traceln(" ");
 				<Variable Class="PlainVariable">
 					<Id>1676968233773</Id>
 					<Name><![CDATA[v_totalEnergyCurtailed_MWh]]></Name>
-					<X>-560</X><Y>890</Y>
+					<X>-560</X><Y>880</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -1772,7 +1777,7 @@ traceln(" ");
 				<Variable Class="PlainVariable">
 					<Id>1683718894234</Id>
 					<Name><![CDATA[v_timeSeriesRuntime_ms]]></Name>
-					<X>1130</X><Y>1080</Y>
+					<X>900</X><Y>1350</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -1784,7 +1789,7 @@ traceln(" ");
 				<Variable Class="PlainVariable">
 					<Id>1683718916458</Id>
 					<Name><![CDATA[v_gridNodesRuntime_ms]]></Name>
-					<X>1130</X><Y>1120</Y>
+					<X>900</X><Y>1390</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -1796,7 +1801,7 @@ traceln(" ");
 				<Variable Class="PlainVariable">
 					<Id>1683718921466</Id>
 					<Name><![CDATA[v_gridConnectionsRuntime_ms]]></Name>
-					<X>1130</X><Y>1100</Y>
+					<X>900</X><Y>1370</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -1808,7 +1813,7 @@ traceln(" ");
 				<Variable Class="PlainVariable">
 					<Id>1683718924632</Id>
 					<Name><![CDATA[v_incentivesRuntime_ms]]></Name>
-					<X>1130</X><Y>1160</Y>
+					<X>900</X><Y>1430</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -1820,7 +1825,7 @@ traceln(" ");
 				<Variable Class="PlainVariable">
 					<Id>1683718924634</Id>
 					<Name><![CDATA[v_financialsRuntime_ms]]></Name>
-					<X>1130</X><Y>1140</Y>
+					<X>900</X><Y>1410</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -1832,7 +1837,7 @@ traceln(" ");
 				<Variable Class="PlainVariable">
 					<Id>1690290329895</Id>
 					<Name><![CDATA[hourOfYearPerMonth]]></Name>
-					<X>899</X><Y>1300</Y>
+					<X>899</X><Y>1260</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -1847,7 +1852,7 @@ traceln(" ");
 				<Variable Class="PlainVariable">
 					<Id>1690290329902</Id>
 					<Name><![CDATA[v_hourOfYearStart]]></Name>
-					<X>899</X><Y>1323</Y>
+					<X>899</X><Y>1281</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -1934,7 +1939,7 @@ traceln(" ");
 				<Variable Class="PlainVariable">
 					<Id>1695655479591</Id>
 					<Name><![CDATA[v_totalEnergyChargedOutsideModel_MWh]]></Name>
-					<X>-560</X><Y>910</Y>
+					<X>-560</X><Y>900</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -3372,6 +3377,51 @@ traceln(" ");
 						<Type><![CDATA[Object [][]]]></Type>        
 					</Properties>
 				</Variable>
+				<Variable Class="PlainVariable">
+					<Id>1698924487994</Id>
+					<Name><![CDATA[v_batteryStoredEnergyDeltaSinceStart_MWh]]></Name>
+					<X>-560</X><Y>920</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
+						<Type><![CDATA[double]]></Type>        
+						<InitialValue Class="CodeValue">
+							<Code><![CDATA[0]]></Code>
+						</InitialValue>
+					</Properties>
+				</Variable>
+				<Variable Class="PlainVariable">
+					<Id>1698929539392</Id>
+					<Name><![CDATA[v_totalEnergyUsed_MWh]]></Name>
+					<X>-560</X><Y>1070</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
+						<Type><![CDATA[double]]></Type>        
+						<InitialValue Class="CodeValue">
+							<Code><![CDATA[0]]></Code>
+						</InitialValue>
+					</Properties>
+				</Variable>
+				<Variable Class="PlainVariable">
+					<Id>1698929546080</Id>
+					<Name><![CDATA[v_totalEnergyProduced_MWh]]></Name>
+					<X>-560</X><Y>1090</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
+						<Type><![CDATA[double]]></Type>        
+						<InitialValue Class="CodeValue">
+							<Code><![CDATA[0]]></Code>
+						</InitialValue>
+					</Properties>
+				</Variable>
 				<Variable Class="Parameter">
 					<Id>1658496701675</Id>
 					<Name><![CDATA[p_timeStep_h]]></Name>
@@ -4672,22 +4722,13 @@ traceln("====== RUN FINISHED ======");
 traceln("--------------------------");
 traceln("");
 
-
-//for (EnergyCoop e : pop_energyCoops) {
-//	e.f_returnKPIData();
-//}
+f_calculateKPIs();
 
 ObjectMapper mapper = new ObjectMapper();
 
 //DataOut great_succes = new DataOut();
 j_dataOut.clearData();
 
-f_sumMolecularEnergyFlows();
-f_sumBatteryUse();
-double batteryStoredEnergyDeltaSinceStart_MWh = v_totalBatteryChargeAmount_MWh - v_totalBatteryDischargeAmount_MWh - v_totalBatteryEnergyUsed_MWh;
-if (batteryStoredEnergyDeltaSinceStart_MWh == Double.NaN) {
-	batteryStoredEnergyDeltaSinceStart_MWh = 0;
-}
 // Collect actor data for all relevant actor groups en place in j_dataOut.actorData
 for(ConnectionOwner c : pop_connectionOwners) {
 	try {
@@ -4799,11 +4840,11 @@ for(EnergyCoop a : pop_energyCoops) {
 //});
 }
 
+
 // Bereken netvlak-data:
-f_sumGridNodeLoads();
+//f_sumGridNodeLoads();
 traceln("Electricity imported: "+ v_totalElectricityImport_MWh + " MWh");
 traceln("Electricity exported: "+ v_totalElectricityExport_MWh + " MWh");
-traceln("Electricity delta in batteries: "+ batteryStoredEnergyDeltaSinceStart_MWh + " MWh");
 
 //Total energy consumption and production
 //traceln("");
@@ -4885,7 +4926,7 @@ if ( electricityProduced_MWh > 0 ){
 }
 
 v_modelSelfSufficiency_fr = 1 - (v_totalElectricityImport_MWh + max(0,v_totalMethaneImport_MWh - v_totalMethaneExport_MWh) + 
-max(0,v_totalHydrogenImport_MWh - v_totalHydrogenExport_MWh) + v_totalDieselImport_MWh - batteryStoredEnergyDeltaSinceStart_MWh - deltaThermalEnergySinceStart_MWh) / energyConsumed_MWh;
+max(0,v_totalHydrogenImport_MWh - v_totalHydrogenExport_MWh) + v_totalDieselImport_MWh - v_batteryStoredEnergyDeltaSinceStart_MWh - deltaThermalEnergySinceStart_MWh) / energyConsumed_MWh;
 traceln("Energy selfsufficiency (via import calc): %s %%", v_modelSelfSufficiency_fr*100);
 double totalSelfSufficiency_fr_check = (energyProduced_MWh - (v_totalElectricityExport_MWh + max(0,v_totalMethaneExport_MWh-v_totalMethaneImport_MWh) + 
 max(0,v_totalHydrogenExport_MWh-v_totalHydrogenImport_MWh)))/energyConsumed_MWh;
@@ -4898,8 +4939,6 @@ traceln( "nett import methane: " + (v_totalMethaneImport_MWh-v_totalMethaneExpor
 traceln( "import diesel: " + v_totalDieselImport_MWh + " MWh");
 
 traceln("MS node peak load: " + v_gridNodePeakLoadElectricityMSLS_kW + " kW at hour: " + c_timesOfNodePeakLoads_h);
-
-double modelRunDuration_s = roundToDecimal( ( System.currentTimeMillis() - v_timeOfModelStart_ms ) / 1000 - v_modelStartUpDuration_s, 3);
 
 double nbcars = 0;
 double nbevs = 0;
@@ -4964,7 +5003,7 @@ j_hourlyCurvesData.updateData( c_globalElectricityImportProfile_MW,
 							c_globalBatteryChargingProfile_kW);
 							
 j_dataOut.hourlyCurvesData.add(j_hourlyCurvesData);
-
+double modelRunDuration_s = 0;
 j_experimentSettingsData.updateData( p_timeStep_h+"",
 									v_timeStepsElapsed+"",
 									time(HOUR) + "",
@@ -4976,7 +5015,6 @@ j_experimentSettingsData.updateData( p_timeStep_h+"",
 									pop_connectionOwners.size() + "",
 									pop_energySuppliers.size() + "",
 									pop_energyCoops.size() + "",
-									pop_administrativeCoops.size() + "",
 									pop_gridOperators.size() + "",
 									1 + "", 
 									shareElectricvehiclesInHouseholds  );
@@ -5253,6 +5291,15 @@ for (EnergySupplier e : pop_energySuppliers) {
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>true</ShowLabel>
 					<Body><![CDATA[// Bereken belasting per netvlak in het model (elektriciteit, absolute waarde) voor kosten-berekeningen gebied.
+
+// Reset totals in case a full year simulation was already run before...
+v_gridNodePeakLoadElectricityHSMS_kW = 0;
+v_totalElectricityImport_MWh = 0;
+v_totalElectricityExport_MWh = 0;
+c_timesOfNodePeakLoads_h.clear();
+v_cumulativeGridCapacityHSMS_kW = 0;
+
+
 for(GridNode h : c_gridNodesHSMS ) {
 //	v_gridNodePeakLoadElectricityHSMS_kW = max(v_gridNodePeakLoadElectricityHSMS_kW,abs(h.v_peakLoadFilteredElectricity_kW));
 	if ( p_forceBrownFieldNetload ) {
@@ -5265,6 +5312,10 @@ for(GridNode h : c_gridNodesHSMS ) {
 	c_timesOfNodePeakLoads_h.put(h.p_agentID, h.v_timeOfPeakLoadFiltered_h);
 	v_cumulativeGridCapacityHSMS_kW += h.p_capacity_kW;
 }
+
+v_gridNodePeakLoadElectricityMSLS_kW=0;
+c_timesOfNodePeakLoads_h.clear();
+v_cumulativeGridCapacityMSLS_kW=0;
 
 for(GridNode m : c_gridNodesMSLS ) {
 	if ( p_forceBrownFieldNetload ) {
@@ -5336,7 +5387,13 @@ else {
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>true</ShowLabel>
-					<Body><![CDATA[for(GridConnection g : c_gridConnections ) {
+					<Body><![CDATA[v_totalMethaneImport_MWh = 0;
+v_totalMethaneExport_MWh = 0;
+v_totalHydrogenImport_MWh = 0;
+v_totalHydrogenExport_MWh = 0;
+v_totalDieselImport_MWh = 0;
+
+for(GridConnection g : c_gridConnections ) {
 	v_totalMethaneImport_MWh += g.v_methaneDrawn_kWh / 1000;
 	v_totalMethaneExport_MWh += g.v_methaneDelivered_kWh / 1000;
 	v_totalHydrogenImport_MWh += g.v_hydrogenDrawn_kWh / 1000;
@@ -5381,7 +5438,7 @@ for(J_EAStorage es : c_storageAssets ) {
 		J_EAStorageElectric e = (J_EAStorageElectric)es;
 		//traceln("triggered!!"+e.j_ea.toString());
 
-		c_totalBatteryUnitsInstalled.computeIfPresent( e.energyAssetName, (key, val) ->val + 1.0 );
+		/*c_totalBatteryUnitsInstalled.computeIfPresent( e.energyAssetName, (key, val) ->val + 1.0 );
 		c_totalBatteryUnitsInstalled.computeIfAbsent( e.energyAssetName, k -> 1.0 );
 
 		c_totalBatteryChargeAmount_MWh.computeIfPresent( e.energyAssetName, (key, val) -> roundToDecimal( val + e.getTotalChargeAmount_kWh() / 1000, 2 ));
@@ -5390,14 +5447,21 @@ for(J_EAStorage es : c_storageAssets ) {
 		c_totalBatteryDischargeAmount_MWh.computeIfAbsent( e.energyAssetName, k -> e.getTotalDischargeAmount_kWh() / 1000 );
 		c_totalBatteryInstalledCapacity_MWh.computeIfPresent( e.energyAssetName, (key, val) -> roundToDecimal( val + e.getStorageCapacity_kWh() / 1000, 2 ));
 		c_totalBatteryInstalledCapacity_MWh.computeIfAbsent( e.energyAssetName, k -> e.getStorageCapacity_kWh() / 1000 );
-
+		*/
+		
 		v_totalBatteryDischargeAmount_MWh += e.getTotalDischargeAmount_kWh() / 1000;
 		v_totalBatteryChargeAmount_MWh += e.getTotalChargeAmount_kWh() / 1000;
 		v_totalBatteryInstalledCapacity_MWh += e.getStorageCapacity_kWh() / 1000;
 		v_totalBatteryEnergyUsed_MWh += e.getEnergyUsed_kWh() / 1000;
 		//traceln( ((J_EAStorageElectric)e.j_ea).getStorageCapacity() / 1000 );
 	}
-}]]></Body>
+}
+
+double v_batteryStoredEnergyDeltaSinceStart_MWh = v_totalBatteryChargeAmount_MWh - v_totalBatteryDischargeAmount_MWh - v_totalBatteryEnergyUsed_MWh;
+if (v_batteryStoredEnergyDeltaSinceStart_MWh == Double.NaN) {
+	v_batteryStoredEnergyDeltaSinceStart_MWh = 0;
+}
+traceln("Electricity delta in batteries: "+ v_batteryStoredEnergyDeltaSinceStart_MWh + " MWh");]]></Body>
 				</Function>
 				<Function AccessType="default" StaticFunction="false">
 					<ReturnModificator>VOID</ReturnModificator>
@@ -6222,14 +6286,14 @@ for(JsonNode assetJson : v_templateAssetsJson) {
 
 if( sl_rooftopPVCompanies.getValue()/100.0*c_gridConnections.size() < PVsystems){
 	while ( sl_rooftopPVCompanies.getValue()/100.0*c_gridConnections.size() < PVsystems) { // remove excess PV systems
-		GridConnection h = findFirst(Houses, x->x.v_hasPV==true);
-		
+		GridConnection h = findFirst(c_gridConnections, x->x.v_hasPV==true);
 		J_EA pvAsset = findFirst(h.c_productionAssets, p -> p.energyAssetType == OL_EnergyAssetType.PHOTOVOLTAIC );
 		traceln("Found PV system: " + pvAsset);
 		if (pvAsset!=null) {
 			v_totalInstalledPVPower_kW -= pvAsset.getElectricCapacity_kW();
 			h.c_productionAssets.remove(pvAsset);
 			c_energyAssets.remove(pvAsset);
+			c_productionAssets.remove(pvAsset);
 			traceln("Removing PV from GridConnection:" + h.p_agentID);
 			h.v_hasPV = false;
 		}
@@ -6253,7 +6317,8 @@ if( sl_rooftopPVCompanies.getValue()/100.0*c_gridConnections.size() < PVsystems)
 		J_EAProduction productionAsset = new J_EAProduction ( h, assetType, assetName, capacityElectricity_kW, capacityHeat_kW, yearlyProductionMethane_kWh, yearlyProductionHydrogen_kWh, p_timeStep_h, outputTemperature_degC );
 		h.f_connectToJ_EA(productionAsset);
 		
-		c_productionAssets.add(productionAsset);
+		//c_productionAssets.add(productionAsset);
+		c_energyAssets.add(productionAsset);
 		v_totalInstalledPVPower_kW += capacityElectricity_kW;
 	
 		PVsystems=count(c_gridConnections, x->x.v_hasPV == true);	
@@ -6322,25 +6387,33 @@ traceln(sum(pop_EA_UtilityObjects, x->x.v_rooftopPVInstalledCapacity_kW) + " kWp
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>true</ShowLabel>
-					<Body><![CDATA[//Get time and pause simulation
-v_timeInMillis = System.currentTimeMillis();
-pauseSimulation();
+					<Body><![CDATA[pauseSimulation();
+traceln(" ");
+traceln("*** Running headless simulation *** ");
+traceln(" ");
 
-//Reset values and time settings
-/*v_storeCurrentHour = v_simulatedHour;
-v_storeHourOfSimulatedDay = v_hourOfSimulatedDay;
-v_storeHourOfWeek = v_hourOfWeek;
-v_storeDayOfWeek = v_dayOfWeek;
-v_hourOfSimulatedDay = 0;
-v_hourOfWeek = v_hourOfWeekStartYear;
-v_dayOfWeek = v_dayOfWeekStartYear;
-*/
+double startTime = System.currentTimeMillis();
+
+// Store and reset model states...
+for (J_EA EA : c_energyAssets) {	
+	EA.storeStatesAndReset();		
+}
+
+for (GridConnection GC : c_gridConnections) {
+	GC.f_resetStates();
+}
+
+for (GridNode GN : pop_gridNodes) {
+	GN.f_resetStates();
+}
+
+// When adding actors, also reset their states! Not used yet for Drechtsteden...
 
 v_isRapidRun = true;
 //f_resetAnnualValues();
 
 //Run energy calculations loop
-for(double t_h = 0; t_h < (8760 / p_timeStep_h); t_h = t_h + p_timeStep_h){
+for(double t_h = 0; t_h < 8760 ; t_h += p_timeStep_h){
 	// Update time-series for model-wide variables (such as temps, wind, etc.)
 	f_updateTimeseries(t_h);
 	
@@ -6356,60 +6429,32 @@ for(double t_h = 0; t_h < (8760 / p_timeStep_h); t_h = t_h + p_timeStep_h){
 	// Update elektriciteitsprijzen
 	f_updatePricesForNextTimestep(t_h);
 }	
-f_energyAndCostTotals();
-
+//f_energyAndCostTotals();
+f_calculateKPIs();
 traceln("---FINISHED YEAR MODEL RUN----");
-
-//Update settings and reslts
-v_timeInMillis = System.currentTimeMillis() - v_timeInMillis;	
-traceln((v_timeInMillis)/1000 + " computing time in seconds");
 
 v_costsUnknown = false;
 //f_updateResultsGraphs();
 
 //numberOfRuns++;
 
-//Export results to excel
-/*if (v_isExportingToExcel == true){
-	f_exportResultsToExcel();
+//Return model to previous state to continue simulation run
+
+for (J_EA EA : c_energyAssets) {
+	EA.restoreStates();		
+}
+/*for (GridConnection GC : c_gridConnections){
+	//h.v_requiredHeatBufferCapacity_kWh = h.v_requiredHeatBufferCapacityStoredForRapidRun_kWh;
+	//h.v_requiredHeatBufferCapacity_kWh = h.v_storedElectricBoilerCurrentCapacity_kWh;
+	//h.v_SOC_kWh = h.v_stored_SOC_kWh;	
 }*/
 
-/*//Values back to stored for in time simulation
-v_hourOfSimulatedDay = v_storeHourOfSimulatedDay;
-v_simulatedHour = v_storeCurrentHour;
-v_hourOfWeek = v_storeHourOfWeek;
-v_dayOfWeek = v_storeDayOfWeek;
-
-for (EA_Household h : pop_EA_Households){
-	h.v_requiredHeatBufferCapacity_kWh = h.v_requiredHeatBufferCapacityStoredForRapidRun_kWh;
-	h.v_requiredHeatBufferCapacity_kWh = h.v_storedElectricBoilerCurrentCapacity_kWh;
-	h.v_SOC_kWh = h.v_stored_SOC_kWh;	
-}
-for (EA_ElectricVehicle x : pop_EA_ElectricVehicles){
-	x.v_chargingDemandChargeSession_kWh = x.v_storedChargingDemandChargeSession_kWh;
-	x.v_currentCapacity_kWh = x.v_storedCurrentCapacity_kWh;
-	x.v_soc = x.v_storedSOC;
-	x.v_drivingDemand_km = x.v_storedDrivingDemand_km;
-	x.v_currentlyCharging = x.v_storedCurrentlyCharging;
-	x.v_chargingPower_kW = 0;
-}
-for(EA_SampleCarPattern s : pop_EA_SampleCarPatterns){
-	s.v_timeTillNextTrip = s.v_storedTimeTillNextTrip;
-}
-for (EA_NeighborhoodBattery x : pop_EA_NeighborhoodBatteries){
-	x.v_batteryPower_kW = 0;
-	x.v_batteryCapacity_kWh = 0;
-	x.v_requiredBatteryCapacity_kWh = 0;
-	x.v_requiredDailyBatteryCapacity_kWh = 0;	
-	x.v_requiredChargePower_kW = 0;
-	x.v_requiredDischargePower_kW = 0;
-	x.v_dailyTotal = 0;
-	x.v_dailyTotalPreviousDay = 0;
-	x.v_dailyDischargeRequired_kWh = 0;
-	x.v_dailyChargeRequired_kWh = 0;
-}
-*/
 v_isRapidRun = false;
+
+double duration = System.currentTimeMillis() - startTime;
+
+traceln("*** headless run duration: "+ duration/1000 + " s ***");
+
 runSimulation();
 
 
@@ -6775,12 +6820,9 @@ traceln("f_setInductionStove awaiting new implementation after model merge. Curr
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>true</ShowLabel>
-					<Body><![CDATA[/*v_costsUnknown = true;
+					<Body><![CDATA[v_costsUnknown = true;
 
-for(EA_TransformerMVLV l : pop_EA_TransformersMVLV){
-	l.oval.setFillColor(green);
-}
-for(EA_TransformerHVMV l : pop_EA_TransformersHVMV){
+for(GridNode l : pop_gridNodes){
 	l.oval.setFillColor(green);
 }
 
@@ -6788,7 +6830,7 @@ if (gr_neighborhoodCosts.isVisible() == true){
 	gr_simulateCostsScreen.setVisible(true);
 }
 gr_simulateCostsScreenSmall.setVisible(true);
-*/]]></Body>
+]]></Body>
 				</Function>
 				<Function AccessType="default" StaticFunction="false">
 					<ReturnModificator>VOID</ReturnModificator>
@@ -7301,8 +7343,8 @@ switch( p_simulatedArea ){
 	
 	
 
-gr_heatSettings.setX(-205);
-gr_heatSettings.setY(380);
+//gr_heatSettings.setX(-205);
+//gr_heatSettings.setY(380);
 gr_electricitySettings.setX(-200);
 gr_electricitySettings.setY(350);
 gr_electricitySettings.setVisible(false);
@@ -7344,8 +7386,8 @@ gr_HVMVTrafoSettings.setY(220);
 gr_HSMSTrafoResults.setX(1645);
 gr_HSMSTrafoResults.setY(520);
 
-gr_businessParkSettings.setX(-240);
-gr_businessParkSettings.setY(360);
+gr_businessParkSettings.setX(-260);
+gr_businessParkSettings.setY(340);
 
 gr_businessParkResultTabs.setX(1700);
 gr_businessParkResultTabs.setY(100);
@@ -7572,7 +7614,7 @@ for (Tuple row : rows) {
 					<ShowLabel>true</ShowLabel>
 					<Body><![CDATA[//f_createActors(); 
 //f_createGridNodes();
-f_generateMVLVTransformers();
+f_generateGridNodes();
 f_generateUtilityObjects();
 f_instantiateEnergyAssets();
 f_createGISBuildings();
@@ -7803,7 +7845,8 @@ for( int i = 0; i <c_resultsTexts.size(); i++){
 					<ReturnType><![CDATA[double]]></ReturnType>
 					<Id>1697556121647</Id>
 					<Name><![CDATA[f_energyAndCostTotals]]></Name>
-					<X>900</X><Y>1360</Y>
+					<ExcludeFromBuild>true</ExcludeFromBuild>
+					<X>900</X><Y>1500</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -7823,7 +7866,7 @@ for( int i = 0; i <c_resultsTexts.size(); i++){
 					<Id>1697556251375</Id>
 					<Name><![CDATA[f_getEnergyCosts]]></Name>
 					<ExcludeFromBuild>true</ExcludeFromBuild>
-					<X>900</X><Y>1380</Y>
+					<X>900</X><Y>1520</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -7959,7 +8002,7 @@ v_totalOperationalCostsVariablePerHousehold = average(pop_EA_Households, x->x.v_
 					<ReturnModificator>VOID</ReturnModificator>
 					<ReturnType><![CDATA[double]]></ReturnType>
 					<Id>1698752016115</Id>
-					<Name><![CDATA[f_generateMVLVTransformers]]></Name>
+					<Name><![CDATA[f_generateGridNodes]]></Name>
 					<X>-500</X><Y>410</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
@@ -8040,6 +8083,186 @@ for (EA_Building x : pop_EA_Buildings){
 	nearestLVStation.c_connectedUtilityObjects.add(x);
 	x.p_connectedMVLVTransformer = nearestLVStation;
 }*/]]></Body>
+				</Function>
+				<Function AccessType="default" StaticFunction="false">
+					<ReturnModificator>VOID</ReturnModificator>
+					<ReturnType><![CDATA[double]]></ReturnType>
+					<Id>1698922757486</Id>
+					<Name><![CDATA[f_calculateKPIs]]></Name>
+					<Description><![CDATA[Executed on simulation end to export data.
+
+@author: JorritvandenHouten
+@since: Sprint 6]]></Description>
+					<X>1130</X><Y>1080</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Body><![CDATA[f_sumMolecularEnergyFlows();
+f_sumBatteryUse();
+// Bereken netvlak-data:
+f_sumGridNodeLoads();
+traceln("Electricity imported: "+ v_totalElectricityImport_MWh + " MWh");
+traceln("Electricity exported: "+ v_totalElectricityExport_MWh + " MWh");
+//traceln("Electricity delta in batteries: "+ batteryStoredEnergyDeltaSinceStart_MWh + " MWh");
+
+//Total energy consumption and production
+double electricityProduced_MWh = 0;
+v_totalEnergyCurtailed_MWh = 0;
+v_totalEnergyProduced_MWh = 0;
+v_totalEnergyUsed_MWh = 0;
+
+double totalDistanceTrucks_km = 0;
+double deltaThermalEnergySinceStart_MWh = 0;
+double totalAmbientHeating_MWh = 0;
+
+for (J_EA e : c_energyAssets) {
+	double EnergyUsed_kWh = e.getEnergyUsed_kWh();
+	double electricityProduced_kWh = 0;
+	
+	//energyConsumed_MWh += max(0,EnergyUsed_kWh)/1000;
+	//energyProduced_MWh +=max(0,-EnergyUsed_kWh)/1000;
+	if (EnergyUsed_kWh > 0) {
+	
+		if (e instanceof J_EAConversionCurtailer || e instanceof J_EAConversionCurtailerHeat) {
+			v_totalEnergyProduced_MWh -= EnergyUsed_kWh/1000;
+			v_totalEnergyCurtailed_MWh += EnergyUsed_kWh/1000;
+		} else if( e instanceof J_EAConversionGasCHP ) {
+			v_totalEnergyUsed_MWh += EnergyUsed_kWh/1000;
+			electricityProduced_kWh = ((J_EAConversionGasCHP)e).getElectricityProduced_kWh();
+			electricityProduced_MWh += electricityProduced_kWh/1000;
+		}
+		else {
+			v_totalEnergyUsed_MWh += EnergyUsed_kWh/1000;
+		}		
+		if ( e instanceof J_EABuilding ) {
+			v_totalEnergyProduced_MWh += ((J_EABuilding)e).energyAbsorbed_kWh/1000;
+			deltaThermalEnergySinceStart_MWh += (((J_EABuilding)e).getCurrentTemperature()-20)*((J_EABuilding)e).getHeatCapacity_JpK()/3.6e9;
+		}
+	} else {
+		if( e.energyAssetType == OL_EnergyAssetType.PHOTOVOLTAIC ||  e.energyAssetType == OL_EnergyAssetType.WINDMILL){
+		electricityProduced_MWh -= EnergyUsed_kWh/1000;
+		}
+		v_totalEnergyProduced_MWh -= EnergyUsed_kWh/1000;
+	}
+	if (e instanceof J_EABuilding) {
+		totalAmbientHeating_MWh += ((J_EABuilding)e).energyAbsorbed_kWh/1000;
+	}
+	if (e instanceof J_EAEV) {
+		v_totalEnergyChargedOutsideModel_MWh += ((J_EAEV)e).energyChargedOutsideModelArea_kWh/1000;
+	}
+}
+
+traceln("Total energy absorbed from environment by buildings: %s MWh", totalAmbientHeating_MWh);
+traceln("Delta thermal stored energy since start: %s MWh", deltaThermalEnergySinceStart_MWh);
+//traceln("Trucks have traveled " + totalDistanceTrucks_km + " km");
+
+traceln("");
+traceln("__--** Totals **--__");
+traceln("Energy consumed: "+ v_totalEnergyUsed_MWh + " MWh");
+traceln("Energy produced: "+ v_totalEnergyProduced_MWh + " MWh");
+//traceln("Electricity produced: "+ electricityProduced_MWh + " MWh (only by solar and wind");
+
+traceln("");
+//Total selfconsumption, selfsufficiency
+
+if ( v_totalEnergyProduced_MWh > 0 ){
+	v_modelSelfConsumption_fr = 1 - (v_totalElectricityExport_MWh + max(0,v_totalMethaneExport_MWh-v_totalMethaneImport_MWh) + max(0,v_totalHydrogenExport_MWh-v_totalHydrogenImport_MWh))/v_totalEnergyProduced_MWh;
+}
+traceln("Energy selfconsumption: " + v_modelSelfConsumption_fr*100 + "%");
+double totalElectricitySelfConsumption_fr = 0;
+if ( electricityProduced_MWh > 0 ){
+	totalElectricitySelfConsumption_fr = 1 - v_totalElectricityExport_MWh/electricityProduced_MWh;
+}
+
+v_modelSelfSufficiency_fr = 1 - (v_totalElectricityImport_MWh + max(0,v_totalMethaneImport_MWh - v_totalMethaneExport_MWh) + 
+max(0,v_totalHydrogenImport_MWh - v_totalHydrogenExport_MWh) + v_totalDieselImport_MWh - v_batteryStoredEnergyDeltaSinceStart_MWh - deltaThermalEnergySinceStart_MWh) / v_totalEnergyUsed_MWh;
+traceln("Energy selfsufficiency (via import calc): %s %%", v_modelSelfSufficiency_fr*100);
+double totalSelfSufficiency_fr_check = (v_totalEnergyProduced_MWh - (v_totalElectricityExport_MWh + max(0,v_totalMethaneExport_MWh-v_totalMethaneImport_MWh) + 
+max(0,v_totalHydrogenExport_MWh-v_totalHydrogenImport_MWh)))/v_totalEnergyUsed_MWh;
+traceln("Energy selfsufficiency (via export calc): %s %%", totalSelfSufficiency_fr_check*100);
+// Remaining difference due to different temps of houses start vs end?
+
+traceln( "import electricity: " + v_totalElectricityImport_MWh + " MWh");
+traceln( "export electricity: " + v_totalElectricityExport_MWh + " MWh");
+traceln( "nett import methane: " + (v_totalMethaneImport_MWh-v_totalMethaneExport_MWh) + " MWh");
+traceln( "import diesel: " + v_totalDieselImport_MWh + " MWh");
+
+traceln("MS node peak load: " + v_gridNodePeakLoadElectricityMSLS_kW + " kW at hour: " + c_timesOfNodePeakLoads_h);
+
+double modelRunDuration_s = roundToDecimal( ( System.currentTimeMillis() - v_timeOfModelStart_ms ) / 1000 - v_modelStartUpDuration_s, 3);
+]]></Body>
+				</Function>
+				<Function AccessType="default" StaticFunction="false">
+					<ReturnModificator>VOID</ReturnModificator>
+					<ReturnType><![CDATA[double]]></ReturnType>
+					<Id>1698930892767</Id>
+					<Name><![CDATA[f_setHeatingSystems]]></Name>
+					<X>1590</X><Y>-1000</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Body><![CDATA[/*
+//Setting Heating systems
+double PVsystems = count(c_gridConnections, x->x.v_hasPV == true);
+t_numberOfRooftopPV.setText(PVsystems);
+
+JsonNode t=null;
+for(JsonNode assetJson : v_templateAssetsJson) {
+	if (assetJson.required( "name" ).textValue().equals("TEMPLATE: Household PV")) {
+		t = assetJson;
+	}
+}
+
+if( sl_rooftopPVCompanies.getValue()/100.0*c_gridConnections.size() < PVsystems){
+	while ( sl_rooftopPVCompanies.getValue()/100.0*c_gridConnections.size() < PVsystems) { // remove excess PV systems
+		GridConnection h = findFirst(c_gridConnections, x->x.v_hasPV==true);
+		J_EA pvAsset = findFirst(h.c_productionAssets, p -> p.energyAssetType == OL_EnergyAssetType.PHOTOVOLTAIC );
+		traceln("Found PV system: " + pvAsset);
+		if (pvAsset!=null) {
+			v_totalInstalledPVPower_kW -= pvAsset.getElectricCapacity_kW();
+			h.c_productionAssets.remove(pvAsset);
+			c_energyAssets.remove(pvAsset);
+			c_productionAssets.remove(pvAsset);
+			traceln("Removing PV from GridConnection:" + h.p_agentID);
+			h.v_hasPV = false;
+		}
+		PVsystems=count(c_gridConnections, x->x.v_hasPV == true);		
+	}
+ 
+} else { 
+	while ( sl_rooftopPVCompanies.getValue()/100.0 * c_gridConnections.size() > PVsystems) {
+		GridConnection h = findFirst(c_gridConnections, x->x.v_hasPV==false);
+		//traceln("Check presence of solarpanels: " + h.v_hasPV);	
+		
+		OL_EnergyAssetType assetType = OL_EnergyAssetType.valueOf(t.required( "type" ).textValue()) ;
+		String assetName = t.required( "name" ).textValue();	
+				
+		double capacityElectricity_kW = t.required( "capacityElectricity_kW").doubleValue() ;
+		double capacityHeat_kW = 0.0;
+		double yearlyProductionHydrogen_kWh = 0.0;
+		double yearlyProductionMethane_kWh = 0.0;
+		double outputTemperature_degC = 0.0;
+		
+		J_EAProduction productionAsset = new J_EAProduction ( h, assetType, assetName, capacityElectricity_kW, capacityHeat_kW, yearlyProductionMethane_kWh, yearlyProductionHydrogen_kWh, p_timeStep_h, outputTemperature_degC );
+		h.f_connectToJ_EA(productionAsset);
+		
+		//c_productionAssets.add(productionAsset);
+		c_energyAssets.add(productionAsset);
+		v_totalInstalledPVPower_kW += capacityElectricity_kW;
+	
+		PVsystems=count(c_gridConnections, x->x.v_hasPV == true);	
+		traceln("Added PV to GridConnection: " + h.p_agentID);
+	}
+	
+}	
+
+v_totalInstalledPVPower_kW = sumWhere(c_energyAssets,p->p.getElectricCapacity_kW(),p -> p.energyAssetType == OL_EnergyAssetType.PHOTOVOLTAIC);
+t_numberOfRooftopPV.setText(count(c_gridConnections, x->x.v_hasPV == true));
+*/
+
+]]></Body>
 				</Function>
 			</Functions>
 			<TableFunctions>
@@ -8702,10 +8925,10 @@ for (EA_Building x : pop_EA_Buildings){
 						<Code><![CDATA[0]]></Code>
 					</RowCode>
 					<LatitudeCode Class="CodeValue">
-						<Code><![CDATA[0]]></Code>
+						<Code><![CDATA[p_latitude]]></Code>
 					</LatitudeCode>
 					<LongitudeCode Class="CodeValue">
-						<Code><![CDATA[0]]></Code>
+						<Code><![CDATA[p_longitude]]></Code>
 					</LongitudeCode>
 					<LocationNameCode Class="CodeValue">
 						<Code><![CDATA[""]]></Code>
@@ -8859,7 +9082,6 @@ for (EA_Building x : pop_EA_Buildings){
 						<Code><![CDATA[100]]></Code>
 					</Replication>
 					<CollectionType>ARRAY_LIST_BASED</CollectionType>
-					<InEnvironment>true</InEnvironment>	
 					<InitialLocationType>AT_ANIMATION_POSITION</InitialLocationType>
 					<XCode Class="CodeValue">
 						<Code><![CDATA[0]]></Code>
@@ -8932,7 +9154,6 @@ for (EA_Building x : pop_EA_Buildings){
 						<Code><![CDATA[100]]></Code>
 					</Replication>
 					<CollectionType>ARRAY_LIST_BASED</CollectionType>
-					<InEnvironment>true</InEnvironment>	
 					<InitialLocationType>AT_ANIMATION_POSITION</InitialLocationType>
 					<XCode Class="CodeValue">
 						<Code><![CDATA[0]]></Code>
@@ -9121,7 +9342,6 @@ for (EA_Building x : pop_EA_Buildings){
 						<Code><![CDATA[100]]></Code>
 					</Replication>
 					<CollectionType>ARRAY_LIST_BASED</CollectionType>
-					<InEnvironment>true</InEnvironment>	
 					<InitialLocationType>AT_ANIMATION_POSITION</InitialLocationType>
 					<XCode Class="CodeValue">
 						<Code><![CDATA[0]]></Code>
@@ -9221,7 +9441,6 @@ for (EA_Building x : pop_EA_Buildings){
 						<Code><![CDATA[100]]></Code>
 					</Replication>
 					<CollectionType>ARRAY_LIST_BASED</CollectionType>
-					<InEnvironment>true</InEnvironment>	
 					<InitialLocationType>AT_ANIMATION_POSITION</InitialLocationType>
 					<XCode Class="CodeValue">
 						<Code><![CDATA[0]]></Code>
@@ -9330,7 +9549,6 @@ for (EA_Building x : pop_EA_Buildings){
 						<Code><![CDATA[100]]></Code>
 					</Replication>
 					<CollectionType>ARRAY_LIST_BASED</CollectionType>
-					<InEnvironment>true</InEnvironment>	
 					<InitialLocationType>AT_ANIMATION_POSITION</InitialLocationType>
 					<XCode Class="CodeValue">
 						<Code><![CDATA[0]]></Code>
@@ -9421,7 +9639,6 @@ for (EA_Building x : pop_EA_Buildings){
 						<Code><![CDATA[1]]></Code>
 					</Replication>
 					<CollectionType>ARRAY_LIST_BASED</CollectionType>
-					<InEnvironment>true</InEnvironment>	
 					<InitialLocationType>AT_ANIMATION_POSITION</InitialLocationType>
 					<XCode Class="CodeValue">
 						<Code><![CDATA[0]]></Code>
@@ -9494,7 +9711,6 @@ for (EA_Building x : pop_EA_Buildings){
 						<Code><![CDATA[100]]></Code>
 					</Replication>
 					<CollectionType>ARRAY_LIST_BASED</CollectionType>
-					<InEnvironment>true</InEnvironment>	
 					<InitialSpeedCode Class="CodeUnitValue">
 						<Code><![CDATA[0]]></Code>
 						<Unit Class="SpeedUnits"><![CDATA[MPS]]></Unit>
@@ -9535,7 +9751,8 @@ for (EA_Building x : pop_EA_Buildings){
 				</EmbeddedObject>
 				<EmbeddedObject>
 					<Id>1660731999276</Id>
-					<Name><![CDATA[pop_administrativeCoops]]></Name>
+					<Name><![CDATA[pop_governmentLayer]]></Name>
+					<ExcludeFromBuild>true</ExcludeFromBuild>
 					<X>433</X><Y>1338</Y>
 					<Label><X>15</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
@@ -9758,7 +9975,6 @@ for (EA_Building x : pop_EA_Buildings){
 						<Code><![CDATA[100]]></Code>
 					</Replication>
 					<CollectionType>ARRAY_LIST_BASED</CollectionType>
-					<InEnvironment>true</InEnvironment>	
 					<InitialLocationType>AT_ANIMATION_POSITION</InitialLocationType>
 					<XCode Class="CodeValue">
 						<Code><![CDATA[0]]></Code>
@@ -9936,7 +10152,6 @@ for (EA_Building x : pop_EA_Buildings){
 						<Code><![CDATA[100]]></Code>
 					</Replication>
 					<CollectionType>ARRAY_LIST_BASED</CollectionType>
-					<InEnvironment>true</InEnvironment>	
 					<InitialLocationType>AT_ANIMATION_POSITION</InitialLocationType>
 					<XCode Class="CodeValue">
 						<Code><![CDATA[0]]></Code>
@@ -10111,7 +10326,6 @@ for (EA_Building x : pop_EA_Buildings){
 						<Code><![CDATA[100]]></Code>
 					</Replication>
 					<CollectionType>ARRAY_LIST_BASED</CollectionType>
-					<InEnvironment>true</InEnvironment>	
 					<InitialLocationType>AT_ANIMATION_POSITION</InitialLocationType>
 					<XCode Class="CodeValue">
 						<Code><![CDATA[0]]></Code>
@@ -10286,7 +10500,6 @@ for (EA_Building x : pop_EA_Buildings){
 						<Code><![CDATA[100]]></Code>
 					</Replication>
 					<CollectionType>ARRAY_LIST_BASED</CollectionType>
-					<InEnvironment>true</InEnvironment>	
 					<InitialLocationType>AT_ANIMATION_POSITION</InitialLocationType>
 					<XCode Class="CodeValue">
 						<Code><![CDATA[0]]></Code>
@@ -10461,7 +10674,6 @@ for (EA_Building x : pop_EA_Buildings){
 						<Code><![CDATA[100]]></Code>
 					</Replication>
 					<CollectionType>ARRAY_LIST_BASED</CollectionType>
-					<InEnvironment>true</InEnvironment>	
 					<InitialLocationType>AT_ANIMATION_POSITION</InitialLocationType>
 					<XCode Class="CodeValue">
 						<Code><![CDATA[0]]></Code>
@@ -10636,7 +10848,6 @@ for (EA_Building x : pop_EA_Buildings){
 						<Code><![CDATA[100]]></Code>
 					</Replication>
 					<CollectionType>ARRAY_LIST_BASED</CollectionType>
-					<InEnvironment>true</InEnvironment>	
 					<InitialLocationType>AT_ANIMATION_POSITION</InitialLocationType>
 					<XCode Class="CodeValue">
 						<Code><![CDATA[0]]></Code>
@@ -10811,7 +11022,6 @@ for (EA_Building x : pop_EA_Buildings){
 						<Code><![CDATA[100]]></Code>
 					</Replication>
 					<CollectionType>ARRAY_LIST_BASED</CollectionType>
-					<InEnvironment>true</InEnvironment>	
 					<InitialLocationType>AT_ANIMATION_POSITION</InitialLocationType>
 					<XCode Class="CodeValue">
 						<Code><![CDATA[0]]></Code>
@@ -31080,7 +31290,7 @@ traceln("ra_salderenScenarioInstellingen is awaiting new implementation after mo
 				<Group>
 					<Id>1696520903366</Id>
 					<Name><![CDATA[gr_settingsMenu]]></Name>
-					<X>415</X><Y>0</Y>
+					<X>415</X><Y>-10</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>true</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -31298,7 +31508,7 @@ if (gr_electricitySettings.isVisible() == false){
 					<LineMaterial>null</LineMaterial>
 					<LineStyle>SOLID</LineStyle>
 					<Width>240</Width>
-					<Height>430</Height>
+					<Height>440</Height>
 					<Rotation>0.0</Rotation>
 					<FillColor>-1</FillColor>
 					<FillMaterial>null</FillMaterial>
@@ -31830,7 +32040,7 @@ if (gr_electricitySettings.isVisible() == false){
 				<Group>
 					<Id>1696520903436</Id>
 					<Name><![CDATA[gr_heatDemandLegenda]]></Name>
-					<X>-85</X><Y>470</Y>
+					<X>-105</X><Y>450</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>true</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -32342,7 +32552,7 @@ else {
 				<Group>
 					<Id>1696520903482</Id>
 					<Name><![CDATA[gr_heatSettings]]></Name>
-					<X>-110</X><Y>-1100</Y>
+					<X>-610</X><Y>-2540</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>true</PublicFlag>
 					<PresentationFlag>false</PresentationFlag>
@@ -32356,7 +32566,7 @@ else {
 				<Group>
 					<Id>1696520903484</Id>
 					<Name><![CDATA[gr_heatSupplySliders]]></Name>
-					<X>30</X><Y>55</Y>
+					<X>-84</X><Y>1352</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>true</PublicFlag>
 					<PresentationFlag>false</PresentationFlag>
@@ -32645,7 +32855,7 @@ traceln("rb_controlEBoiler is awaiting new implementation after model merge. Cur
 				<Rectangle>
 					<Id>1696520903506</Id>
 					<Name><![CDATA[rectangle_heatSupplySettings]]></Name>
-					<X>-155</X><Y>-40</Y>
+					<X>-269</X><Y>1257</Y>
 					<Label><X>10</X><Y>10</Y></Label>
 					<PublicFlag>true</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -32667,7 +32877,7 @@ traceln("rb_controlEBoiler is awaiting new implementation after model merge. Cur
 				<Text>
 					<Id>1696520903508</Id>
 					<Name><![CDATA[text74]]></Name>
-					<X>-140</X><Y>5</Y>
+					<X>-254</X><Y>1302</Y>
 					<Label><X>0</X><Y>-10</Y></Label>
 					<PublicFlag>true</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -32688,7 +32898,7 @@ traceln("rb_controlEBoiler is awaiting new implementation after model merge. Cur
 				<Text>
 					<Id>1696520903510</Id>
 					<Name><![CDATA[text75]]></Name>
-					<X>-140</X><Y>155</Y>
+					<X>-254</X><Y>1452</Y>
 					<Label><X>0</X><Y>-10</Y></Label>
 					<PublicFlag>true</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -32709,7 +32919,7 @@ traceln("rb_controlEBoiler is awaiting new implementation after model merge. Cur
 				<Text>
 					<Id>1696520903512</Id>
 					<Name><![CDATA[text76]]></Name>
-					<X>-140</X><Y>95</Y>
+					<X>-254</X><Y>1392</Y>
 					<Label><X>0</X><Y>-10</Y></Label>
 					<PublicFlag>true</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -32730,7 +32940,7 @@ traceln("rb_controlEBoiler is awaiting new implementation after model merge. Cur
 				<Text>
 					<Id>1696520903514</Id>
 					<Name><![CDATA[text79]]></Name>
-					<X>-140</X><Y>35</Y>
+					<X>-254</X><Y>1332</Y>
 					<Label><X>0</X><Y>-10</Y></Label>
 					<PublicFlag>true</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -32751,7 +32961,7 @@ traceln("rb_controlEBoiler is awaiting new implementation after model merge. Cur
 				<Text>
 					<Id>1696520903516</Id>
 					<Name><![CDATA[text80]]></Name>
-					<X>-140</X><Y>65</Y>
+					<X>-254</X><Y>1362</Y>
 					<Label><X>0</X><Y>-10</Y></Label>
 					<PublicFlag>true</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -32772,7 +32982,7 @@ traceln("rb_controlEBoiler is awaiting new implementation after model merge. Cur
 				<Text>
 					<Id>1696520903518</Id>
 					<Name><![CDATA[text81]]></Name>
-					<X>-140</X><Y>125</Y>
+					<X>-254</X><Y>1422</Y>
 					<Label><X>0</X><Y>-10</Y></Label>
 					<PublicFlag>true</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -32793,7 +33003,7 @@ traceln("rb_controlEBoiler is awaiting new implementation after model merge. Cur
 				<Group>
 					<Id>1696520903520</Id>
 					<Name><![CDATA[gr_heatSupplyText]]></Name>
-					<X>-40</X><Y>-15</Y>
+					<X>-154</X><Y>1282</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>true</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -32856,7 +33066,7 @@ i_heatSupplyPopOut.setVisible(false);]]></OnClickCode>
 				<Text>
 					<Id>1696520903526</Id>
 					<Name><![CDATA[t_numberOfGreenGasBoilers]]></Name>
-					<X>65</X><Y>35</Y>
+					<X>-49</X><Y>1332</Y>
 					<Label><X>0</X><Y>-10</Y></Label>
 					<PublicFlag>true</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -32877,7 +33087,7 @@ i_heatSupplyPopOut.setVisible(false);]]></OnClickCode>
 				<Text>
 					<Id>1696520903528</Id>
 					<Name><![CDATA[t_numberOfElectricHeatPumps]]></Name>
-					<X>65</X><Y>65</Y>
+					<X>-49</X><Y>1362</Y>
 					<Label><X>0</X><Y>-10</Y></Label>
 					<PublicFlag>true</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -32898,7 +33108,7 @@ i_heatSupplyPopOut.setVisible(false);]]></OnClickCode>
 				<Text>
 					<Id>1696520903530</Id>
 					<Name><![CDATA[t_numberOfNaturalGasBoilers]]></Name>
-					<X>65</X><Y>5</Y>
+					<X>-49</X><Y>1302</Y>
 					<Label><X>0</X><Y>-10</Y></Label>
 					<PublicFlag>true</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -32919,7 +33129,7 @@ i_heatSupplyPopOut.setVisible(false);]]></OnClickCode>
 				<Text>
 					<Id>1696520903532</Id>
 					<Name><![CDATA[t_numberOfLTDistrictHeating]]></Name>
-					<X>65</X><Y>125</Y>
+					<X>-49</X><Y>1422</Y>
 					<Label><X>0</X><Y>-10</Y></Label>
 					<PublicFlag>true</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -32940,7 +33150,7 @@ i_heatSupplyPopOut.setVisible(false);]]></OnClickCode>
 				<Text>
 					<Id>1696520903534</Id>
 					<Name><![CDATA[t_temperatuurWarmtenet]]></Name>
-					<X>65</X><Y>155</Y>
+					<X>-49</X><Y>1452</Y>
 					<Label><X>0</X><Y>-10</Y></Label>
 					<PublicFlag>true</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -32961,7 +33171,7 @@ i_heatSupplyPopOut.setVisible(false);]]></OnClickCode>
 				<Text>
 					<Id>1696520903536</Id>
 					<Name><![CDATA[t_numberOfHybridHeatPumps]]></Name>
-					<X>65</X><Y>95</Y>
+					<X>-49</X><Y>1392</Y>
 					<Label><X>0</X><Y>-10</Y></Label>
 					<PublicFlag>true</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -32982,7 +33192,7 @@ i_heatSupplyPopOut.setVisible(false);]]></OnClickCode>
 				<Text>
 					<Id>1696520903538</Id>
 					<Name><![CDATA[text91]]></Name>
-					<X>-145</X><Y>-205</Y>
+					<X>-220</X><Y>1050</Y>
 					<Label><X>0</X><Y>-10</Y></Label>
 					<PublicFlag>true</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -33004,7 +33214,7 @@ i_heatSupplyPopOut.setVisible(false);]]></OnClickCode>
 				 	<EmbeddedIcon>false</EmbeddedIcon>				
 					<Id>1696520903540</Id>
 					<Name><![CDATA[ra_warmtevraagOpties]]></Name>
-					<X>-140</X><Y>-185</Y>
+					<X>-230</X><Y>1070</Y>
 					<Label><X>0</X><Y>-10</Y></Label>
 					<PublicFlag>true</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -33576,7 +33786,7 @@ rectangle_electricitySettings.setVisible(false);]]></OnClickCode>
 				<Group>
 					<Id>1696520903586</Id>
 					<Name><![CDATA[gr_businessParkSettings]]></Name>
-					<X>845</X><Y>-1160</Y>
+					<X>825</X><Y>-1180</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>true</PublicFlag>
 					<PresentationFlag>false</PresentationFlag>
@@ -33750,7 +33960,7 @@ traceln("ra_companyAssets is awaiting new implementation after model merge. Curr
 					<LineMaterial>null</LineMaterial>
 					<LineStyle>SOLID</LineStyle>
 					<Width>395</Width>
-					<Height>345</Height>
+					<Height>305</Height>
 					<Rotation>0.0</Rotation>
 					<FillColor>-1</FillColor>
 					<FillMaterial>null</FillMaterial>
@@ -33801,6 +34011,8 @@ f_setPVSystem(sl_rooftopPVCompanies.getValue());
 
 t_totalRooftopPV_kW.setText(sl_rooftopPVCompanies.getValue());
 f_resetSettings();
+
+gr_simulateCostsScreenSmall.setVisible(true);
 ]]></ActionCode>
 					</BasicProperties>
 					<ExtendedProperties>
@@ -33903,6 +34115,7 @@ f_resetSettings();
 				 	<EmbeddedIcon>false</EmbeddedIcon>				
 					<Id>1696520903608</Id>
 					<Name><![CDATA[sl_neighborhoodBattery]]></Name>
+					<ExcludeFromBuild>true</ExcludeFromBuild>
 					<X>70</X><Y>65</Y>
 					<Label><X>0</X><Y>-10</Y></Label>
 					<PublicFlag>true</PublicFlag>
@@ -33997,7 +34210,6 @@ f_resetSettings();
 				 	<EmbeddedIcon>false</EmbeddedIcon>				
 					<Id>1696520903614</Id>
 					<Name><![CDATA[sl_electrificationHeat]]></Name>
-					<ExcludeFromBuild>true</ExcludeFromBuild>
 					<X>70</X><Y>155</Y>
 					<Label><X>0</X><Y>-10</Y></Label>
 					<PublicFlag>true</PublicFlag>
@@ -34007,9 +34219,10 @@ f_resetSettings();
 					<BasicProperties Width="100" Height="30">
                         <EmbeddedIcon>false</EmbeddedIcon>	
 						<Enabled>true</Enabled>
-						<ActionCode><![CDATA[f_electrificationHeat(sl_electrificationHeat.getValue() / 100);
+						<ActionCode><![CDATA[//f_electrificationHeat(sl_electrificationHeat.getValue() / 100);
+f_setHeatingSystems();
 
-t_electrificationHeat.setText(count(UtilityConnections, x->x.p_heatingType == OL_GridConnectionHeatingType.HEATPUMP_AIR));
+t_electrificationHeat.setText(count(c_gridConnections, x->x.p_heatingType == OL_GridConnectionHeatingType.HEATPUMP_AIR));
 f_resetSettings();
 ]]></ActionCode>
 					</BasicProperties>
@@ -34060,7 +34273,7 @@ f_resetSettings();
 					<ExcludeFromBuild>true</ExcludeFromBuild>
 					<X>70</X><Y>215</Y>
 					<Label><X>0</X><Y>-10</Y></Label>
-					<PublicFlag>true</PublicFlag>
+					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>false</ShowLabel>
 					<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
@@ -34459,7 +34672,7 @@ rectangle_assetCompaniesSettings.setVisible(false);]]></OnClickCode>
 					<LineMaterial>null</LineMaterial>
 					<LineStyle>SOLID</LineStyle>
 					<Width>240</Width>
-					<Height>345</Height>
+					<Height>305</Height>
 					<Rotation>0.0</Rotation>
 					<FillColor/>
 					<FillMaterial>null</FillMaterial>
@@ -34554,7 +34767,7 @@ rectangle_assetCompaniesSettings.setVisible(false);]]></OnClickCode>
 					<X>105</X><Y>218</Y>
 					<Label><X>0</X><Y>-10</Y></Label>
 					<PublicFlag>true</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
+					<PresentationFlag>false</PresentationFlag>
 					<ShowLabel>false</ShowLabel>
 					<DrawMode>SHAPE_DRAW_2D</DrawMode>
 					<EmbeddedIcon>false</EmbeddedIcon>
@@ -34575,7 +34788,7 @@ rectangle_assetCompaniesSettings.setVisible(false);]]></OnClickCode>
 					<X>-100</X><Y>218</Y>
 					<Label><X>0</X><Y>-10</Y></Label>
 					<PublicFlag>true</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
+					<PresentationFlag>false</PresentationFlag>
 					<ShowLabel>false</ShowLabel>
 					<DrawMode>SHAPE_DRAW_2D</DrawMode>
 					<EmbeddedIcon>false</EmbeddedIcon>
@@ -37637,7 +37850,7 @@ rectanglePerHouseholdCosts.setFillColor(new Color (255, 255, 255, 100));
 					<Id>1696520907343</Id>
 					<Name><![CDATA[text_gemeentenaam64]]></Name>
 					<ExcludeFromBuild>true</ExcludeFromBuild>
-					<X>-719</X><Y>-280</Y>
+					<X>-720</X><Y>-420</Y>
 					<Label><X>0</X><Y>-10</Y></Label>
 					<PublicFlag>true</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -37680,7 +37893,7 @@ rectanglePerHouseholdCosts.setFillColor(new Color (255, 255, 255, 100));
 				<Text>
 					<Id>1696520907347</Id>
 					<Name><![CDATA[text_gemeentenaam65]]></Name>
-					<X>-719</X><Y>-320</Y>
+					<X>-719</X><Y>-280</Y>
 					<Label><X>0</X><Y>-10</Y></Label>
 					<PublicFlag>true</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -37690,8 +37903,8 @@ rectanglePerHouseholdCosts.setFillColor(new Color (255, 255, 255, 100));
 					<Z>0</Z>
 					<Rotation>0.0</Rotation>
 					<Color>-16777216</Color>
-					<Text><![CDATA[Percentage duurzame elektriciteit]]></Text>
-					<TextCode><![CDATA[roundToInt(-1) + "% duurzame elektriciteit"]]></TextCode>
+					<Text><![CDATA[Zelfvoorzienendheid]]></Text>
+					<TextCode><![CDATA[roundToInt(v_modelSelfSufficiency_fr*100) + "% zelfvoorzienendheid"]]></TextCode>
 					<Font>
 						<Name>SansSerif</Name>
 						<Size>16</Size>
@@ -37724,7 +37937,7 @@ rectanglePerHouseholdCosts.setFillColor(new Color (255, 255, 255, 100));
 				<Text>
 					<Id>1696520907351</Id>
 					<Name><![CDATA[text_gemeentenaam67]]></Name>
-					<X>-719</X><Y>-300</Y>
+					<X>-719</X><Y>-260</Y>
 					<Label><X>0</X><Y>-10</Y></Label>
 					<PublicFlag>true</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -37747,7 +37960,7 @@ rectanglePerHouseholdCosts.setFillColor(new Color (255, 255, 255, 100));
 					<Id>1696520907353</Id>
 					<Name><![CDATA[text212]]></Name>
 					<ExcludeFromBuild>true</ExcludeFromBuild>
-					<X>-719</X><Y>-360</Y>
+					<X>-720</X><Y>-450</Y>
 					<Label><X>0</X><Y>-10</Y></Label>
 					<PublicFlag>true</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -37914,6 +38127,50 @@ rectanglePerHouseholdCosts.setFillColor(new Color (255, 255, 255, 100));
 			</Presentation>
 
 				</Group>
+				<Text>
+					<Id>1698929452391</Id>
+					<Name><![CDATA[text_gemeentenaam68]]></Name>
+					<X>-719</X><Y>-319</Y>
+					<Label><X>0</X><Y>-10</Y></Label>
+					<PublicFlag>true</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>false</ShowLabel>
+					<DrawMode>SHAPE_DRAW_2D</DrawMode>
+					<EmbeddedIcon>false</EmbeddedIcon>
+					<Z>0</Z>
+					<Rotation>0.0</Rotation>
+					<Color>-16777216</Color>
+					<Text><![CDATA[Totaal energieverbruik]]></Text>
+					<TextCode><![CDATA[roundToInt(v_totalEnergyUsed_MWh) + " MWh jaarlijks energieverbruik"]]></TextCode>
+					<Font>
+						<Name>SansSerif</Name>
+						<Size>16</Size>
+						<Style>0</Style>
+					</Font>
+					<Alignment>LEFT</Alignment>
+				</Text>
+				<Text>
+					<Id>1698929452396</Id>
+					<Name><![CDATA[text_gemeentenaam70]]></Name>
+					<X>-719</X><Y>-299</Y>
+					<Label><X>0</X><Y>-10</Y></Label>
+					<PublicFlag>true</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>false</ShowLabel>
+					<DrawMode>SHAPE_DRAW_2D</DrawMode>
+					<EmbeddedIcon>false</EmbeddedIcon>
+					<Z>0</Z>
+					<Rotation>0.0</Rotation>
+					<Color>-16777216</Color>
+					<Text><![CDATA[Totale energieproductie]]></Text>
+					<TextCode><![CDATA[roundToInt(v_totalEnergyProduced_MWh) + " MWh jaarlijkse lokale energieopwek"]]></TextCode>
+					<Font>
+						<Name>SansSerif</Name>
+						<Size>16</Size>
+						<Style>0</Style>
+					</Font>
+					<Alignment>LEFT</Alignment>
+				</Text>
 			</Presentation>
 
 				</Group>
@@ -39516,7 +39773,7 @@ if(v_costsUnknown == true){
 					<X>2455</X><Y>240</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>true</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
+					<PresentationFlag>false</PresentationFlag>
 					<ShowLabel>false</ShowLabel>
 					<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
 					<EmbeddedIcon>false</EmbeddedIcon>
@@ -39869,7 +40126,7 @@ new Thread( () -> {
 				 	<EmbeddedIcon>false</EmbeddedIcon>				
 					<Id>1697557019965</Id>
 					<Name><![CDATA[rapidSimButton]]></Name>
-					<X>900</X><Y>1420</Y>
+					<X>900</X><Y>1560</Y>
 					<Label><X>0</X><Y>-10</Y></Label>
 					<PublicFlag>true</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -40256,6 +40513,9 @@ geupdate vanuit
 					<ShowLabel>true</ShowLabel>
 					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
 						<Type><![CDATA[double]]></Type>        
+						<InitialValue Class="CodeValue">
+							<Code><![CDATA[0]]></Code>
+						</InitialValue>
 					</Properties>
 				</Variable>
 				<Variable Class="PlainVariable">
@@ -40443,6 +40703,9 @@ geupdate vanuit
 					<ShowLabel>true</ShowLabel>
 					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
 						<Type><![CDATA[double]]></Type>        
+						<InitialValue Class="CodeValue">
+							<Code><![CDATA[0]]></Code>
+						</InitialValue>
 					</Properties>
 				</Variable>
 				<Variable Class="Parameter">
@@ -41001,7 +41264,7 @@ for( Agent a : subConnections.getConnections() )
 					<ReturnType><![CDATA[double]]></ReturnType>
 					<Id>1660122738707</Id>
 					<Name><![CDATA[f_sumLoads]]></Name>
-					<X>780</X><Y>200</Y>
+					<X>780</X><Y>180</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -41066,7 +41329,7 @@ for( Agent a : subConnections.getConnections() )
 					<ReturnType><![CDATA[double]]></ReturnType>
 					<Id>1660216693598</Id>
 					<Name><![CDATA[f_nodeMetering]]></Name>
-					<X>780</X><Y>260</Y>
+					<X>780</X><Y>240</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -41091,7 +41354,7 @@ v_loadFactor_fr = v_averageAbsoluteLoadElectricity_kW / abs(v_peakLoadAbsoluteEl
 					<ReturnType><![CDATA[double]]></ReturnType>
 					<Id>1666556555538</Id>
 					<Name><![CDATA[f_setCongestionTariff]]></Name>
-					<X>780</X><Y>160</Y>
+					<X>780</X><Y>140</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -41146,7 +41409,7 @@ for (EnergyCoop e: c_energyCoops){
 					<Id>1666560316436</Id>
 					<Name><![CDATA[f_resetCongestionTariffs]]></Name>
 					<Description><![CDATA[Gridoperator roept deze functie alleen aan als deze node vorige tijdstap congested was maar nu niet meer.]]></Description>
-					<X>780</X><Y>180</Y>
+					<X>780</X><Y>160</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -41227,7 +41490,7 @@ if( p_energyAssetList != null) {
 					<ReturnType><![CDATA[double]]></ReturnType>
 					<Id>1688370981599</Id>
 					<Name><![CDATA[f_calculateEnergyBalance]]></Name>
-					<X>780</X><Y>240</Y>
+					<X>780</X><Y>220</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -41279,7 +41542,7 @@ f_nodeMetering();]]></Body>
 					<Id>1688372319365</Id>
 					<Name><![CDATA[f_addGridBatteryLoad]]></Name>
 					<ExcludeFromBuild>true</ExcludeFromBuild>
-					<X>780</X><Y>220</Y>
+					<X>780</X><Y>200</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -41290,6 +41553,47 @@ for( Agent a : subConnections.getConnections() ) {
 		v_currentLoadElectricity_kW += ((GCGridBattery)a).v_currentPowerElectricity_kW;
 	}	
 }
+]]></Body>
+				</Function>
+				<Function AccessType="default" StaticFunction="false">
+					<ReturnModificator>VOID</ReturnModificator>
+					<ReturnType><![CDATA[double]]></ReturnType>
+					<Id>1698919552330</Id>
+					<Name><![CDATA[f_resetStates]]></Name>
+					<X>780</X><Y>300</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Body><![CDATA[// Current status
+v_currentLoadElectricityLowPassed_kW = 0;
+v_congested = false;
+v_currentCongestionPrice_eurpkWh = 0;
+v_filteredLoadCongestionPricing_kW = 0;
+
+// Performance variables
+v_peakLoadAbsoluteElectricity_kW = 0;
+v_averageAbsoluteLoadElectricity_kW = 0;
+v_loadFactor_fr = 0;
+v_timeOfPeakLoadFiltered_h = 0;
+v_timeOfPeakNegLoadFiltered_h = 0;
+v_timeOfPeakPosLoadFiltered_h = 0;
+v_peakPosLoadElectricity_kW = 0;
+v_peakNegLoadElectricity_kW = 0;
+v_peakLoadFilteredElectricity_kW = 0;
+v_timeOfPeakLoadFiltered_h = 0;
+v_totalTimeOverloaded_h = 0;
+
+// Energy flows
+v_electricityDrawn_kWh = 0;
+v_electricityDelivered_kWh = 0;
+v_methaneDrawn_kWh = 0;
+v_methaneDelivered_kWh = 0;
+v_hydrogenDrawn_kWh = 0;
+v_hydrogenDelivered_kWh = 0;
+v_heatDrawn_kWh = 0;
+v_heatDelivered_kWh = 0;
+
 ]]></Body>
 				</Function>
 			</Functions>
@@ -44048,6 +44352,7 @@ v_electricityDischargedByBattery_kWh += max(-v_batteryPowerElectric_kW,0) * main
 					<ReturnType><![CDATA[double]]></ReturnType>
 					<Id>1668181559833</Id>
 					<Name><![CDATA[f_instantiateEnergyAssets]]></Name>
+					<ExcludeFromBuild>true</ExcludeFromBuild>
 					<X>801</X><Y>73</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
@@ -44327,7 +44632,7 @@ v_electricityTotalsCheck = v_electricityConsumedFixedProfile_kWh + v_electricity
 - v_electricityProducedPV_kWh - v_electricityProducedWind_kWh - v_electricityDrawnFromGrid_kWh - v_xConvertedToElectricity_kWh;
 
 // Total Energy Use and Production -> Run at end of simulation, not every timestep!
-
+/*
 v_totalEnergyUsed_kWh = 0;
 v_totalEnergyProduced_kWh = 0;
 for (J_EA j_ea : c_energyAssets ) {
@@ -44342,6 +44647,7 @@ for (J_EA j_ea : c_energyAssets ) {
 
 v_selfConsumption_fr = 1 - (v_electricityDeliveredToGrid_kWh + v_heatDelivered_kWh + v_methaneDelivered_kWh + v_hydrogenDelivered_kWh + v_dieselDelivered_kWh ) / v_totalEnergyProduced_kWh; // Doesn't make sense to sum different energy carriers!
 v_selfSufficiency_fr = 1 - (v_electricityDrawnFromGrid_kWh + v_heatDrawn_kWh + v_methaneDrawn_kWh + v_hydrogenDrawn_kWh + v_dieselDrawn_kWh) / v_totalEnergyUsed_kWh; // Need to account for energy in storages
+*/
 
 if (main.b_addKpiVisuals) {
 	//pl_SOC.updateData();
@@ -44502,16 +44808,42 @@ for(J_EAConsumption e : c_consumptionAssets) {
 					<ReturnModificator>VOID</ReturnModificator>
 					<ReturnType><![CDATA[double]]></ReturnType>
 					<Id>1668983912731</Id>
-					<Name><![CDATA[f_initialize]]></Name>
-					<X>781</X><Y>53</Y>
+					<Name><![CDATA[f_resetStates]]></Name>
+					<X>1120</X><Y>530</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>true</ShowLabel>
-					<Body><![CDATA[f_instantiateEnergyAssets();
-f_connectToParentNode();
-//f_setAllowedCapacity();
-f_setOperatingSwitches();]]></Body>
+					<Body><![CDATA[v_maxConnectionLoad_fr = 0;
+v_totalEnergyProduced_kWh = 0;
+v_totalEnergyUsed_kWh = 0;
+v_previousPowerElectricity_kW = 0;
+v_electricityPriceLowPassed_eurpkWh = 0;
+v_batterySOC_fr = (p_batteryAsset == null) ? 0 : p_batteryAsset.getCurrentStateOfCharge();
+v_currentElectricityPriceConsumption_eurpkWh  = 0;
+v_currentLoadLowPassed_kW = 0;
+v_currentIndoorTemp_degC = (p_BuildingThermalAsset == null) ? 0 : p_BuildingThermalAsset.getCurrentTemperature();
+
+// Reset energytotals
+v_heatDrawn_kWh = 0;
+v_heatDelivered_kWh = 0;
+v_electricityConsumedFixedProfile_kWh = 0;
+v_electricityProducedPV_kWh = 0;
+v_electricityProducedWind_kWh = 0;
+v_electricityConvertedToX_kWh = 0;
+v_xConvertedToElectricity_kWh = 0;
+v_electricityChargedByEVs_kWh = 0;
+v_electricityDischargedByEVs_kWh = 0;
+v_electricityChargedByBattery_kWh = 0;
+v_electricityDischargedByBattery_kWh = 0;
+v_electricityDrawnFromGrid_kWh = 0;
+v_electricityDeliveredToGrid_kWh = 0;
+v_methaneDrawn_kWh = 0;
+v_methaneDelivered_kWh = 0;
+v_dieselDrawn_kWh = 0;
+v_dieselDelivered_kWh = 0;
+v_hydrogenDrawn_kWh = 0;
+v_hydrogenDelivered_kWh = 0;]]></Body>
 				</Function>
 				<Function AccessType="default" StaticFunction="false">
 					<ReturnModificator>VOID</ReturnModificator>
@@ -45288,6 +45620,20 @@ for ( int i = 0; i < copiedVehicleList.size(); i++ ){
 		p_GISbuilding.gisRegion.setFillColor(main.v_highlightParticipantsColor);
 	}
 }]]></Body>
+				</Function>
+				<Function AccessType="default" StaticFunction="false">
+					<ReturnModificator>VOID</ReturnModificator>
+					<ReturnType><![CDATA[double]]></ReturnType>
+					<Id>1698854861644</Id>
+					<Name><![CDATA[f_initialize]]></Name>
+					<X>790</X><Y>50</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Body><![CDATA[//f_instantiateEnergyAssets();
+f_connectToParentNode();
+f_setOperatingSwitches();]]></Body>
 				</Function>
 			</Functions>
 			<AgentLinks>
@@ -67671,6 +68017,8 @@ public class J_EAStorage extends J_EA implements Serializable {
 	protected OL_EnergyCarrierType storageMedium;
 	protected double storageCapacity_kWh;
 	protected double stateOfCharge_r;
+	protected double initialStateOfCharge_r;
+	protected double stateOfChargeStored_r;
 	protected double lossFactor_r;
 	protected double timestep_h;
 	protected double ambientTemperature_degC;
@@ -67691,7 +68039,8 @@ public class J_EAStorage extends J_EA implements Serializable {
 		this.capacityHeat_kW = chargeCapacityHeat_kW;				// capacity for charging/discharging in kW
 		this.storageMedium = storageMedium;
 		this.storageCapacity_kWh = storageCapacity_kWh;
-		this.stateOfCharge_r = stateOfCharge;
+		this.initialStateOfCharge_r = stateOfCharge;
+		this.stateOfCharge_r = initialStateOfCharge_r;
 		this.lossFactor_r = lossFactor;
 		this.timestep_h = timestep_h;
 		this.ambientTempType = ambientTempType;
@@ -67711,7 +68060,24 @@ public class J_EAStorage extends J_EA implements Serializable {
     public void updateStateOfCharge( double flow_kW ) {
 		stateOfCharge_r = ( (stateOfCharge_r * storageCapacity_kWh) - flow_kW * timestep_h ) / storageCapacity_kWh;
 	}
-
+	
+    @Override
+    public void storeStatesAndReset() {
+    	// Each energy asset that has some states should overwrite this function!
+    	energyUsedStored_kWh = energyUsed_kWh;
+    	energyUsed_kWh = 0.0;
+    	stateOfChargeStored_r = stateOfCharge_r;
+    	stateOfCharge_r = initialStateOfCharge_r;    
+    	resetFlows();    	
+    }
+    
+	@Override
+    public void restoreStates() {
+    	// Each energy asset that has some states should overwrite this function!
+    	energyUsed_kWh = energyUsedStored_kWh;    	
+    	stateOfCharge_r = stateOfChargeStored_r;
+    }
+    
 	// acces current state of charge
 	@Override
 	public double getCurrentStateOfCharge() {
@@ -67872,22 +68238,17 @@ public class J_EAConsumption extends zero.J_EA implements Serializable {
  * J_EA
  */
 public class J_EA implements Cloneable {
-	
-	 // To remove eventually
-	 //protected EnergyAsset ownerAsset;
-	 
-	 	 // From EA agent into J_EA class:
-	 //public String parentAgentId;
+
 	 public Agent parentAgent;
 	 public OL_EnergyAssetType energyAssetType;
 	 public String energyAssetName;
 	 public double v_powerFraction_fr = 0;
-	 // Existing variables
-	 
+ 
 	 protected double capacityElectric_kW;
 	 protected double capacityHeat_kW;
 	 protected double capacityGas_kW;
 	 protected double energyUsed_kWh = 0.0;
+	 protected double energyUsedStored_kWh = 0.0;
   	 protected double timestep_h;
   	 public double eta_r;
 
@@ -67957,10 +68318,23 @@ public class J_EA implements Cloneable {
     	double[] arr = {electricityProduction_kW, methaneProduction_kW, hydrogenProduction_kW, heatProduction_kW, electricityConsumption_kW, methaneConsumption_kW, hydrogenConsumption_kW, heatConsumption_kW, dieselConsumption_kW };    	
     	return arr;
     }
+    
     public double getCurrentStateOfCharge() {
     	return 0;
     }
 
+    public void storeStatesAndReset() {
+    	// Each energy asset that has some states should overwrite this function!
+    	energyUsedStored_kWh = energyUsed_kWh;
+    	energyUsed_kWh = 0.0;
+    	resetFlows();    	
+    }
+    
+    public void restoreStates() {
+    	// Each energy asset that has some states should overwrite this function!
+    	energyUsed_kWh = energyUsedStored_kWh;
+    }
+    
     public double getCurrentTemperature() {
     	return 0;
     }
@@ -68660,11 +69034,13 @@ public class J_EABuilding extends zero.J_EAStorageHeat implements Serializable {
 	private double capacityElectric_kW = 0;
 	//public OL_EnergyCarrierType storageMedium = OL_EnergyCarrierType.HEAT;
 	public OL_EAStorageTypes heatStorageType;
-	private double storageCapacity_kWh;
+	//private double storageCapacity_kWh;
 	private double stateOfCharge_r;
 	public double lossFactor_WpK;
 	private double timestep_h;
 	private double temperature_degC;
+	private double temperatureStored_degC;
+	private double initialTemperature_degC;
 	private double minTemperature_degC;
 	private double maxTemperature_degC;
 	private double setTemperature_degC;
@@ -68673,6 +69049,8 @@ public class J_EABuilding extends zero.J_EAStorageHeat implements Serializable {
 	private double solarAbsorptionFactor_m2;
 	private double solarRadiation_Wpm2=0;
 	public double energyAbsorbed_kWh=0;
+	public double energyAbsorbedStored_kWh=0;
+	
 	//public boolean requiresHeat = false;
 
 
@@ -68691,13 +69069,14 @@ public class J_EABuilding extends zero.J_EAStorageHeat implements Serializable {
 		this.capacityHeat_kW = capacityHeat_kW;
 		this.lossFactor_WpK = lossFactor_WpK;
 		this.timestep_h = timestep_h;
+		this.initialTemperature_degC = initialTemperature_degC;
 		this.temperature_degC = initialTemperature_degC;
 		this.minTemperature_degC = minTemperature_degC;
 		this.maxTemperature_degC = maxTemperature_degC;
 		this.setTemperature_degC = setTemperature_degC;
 		this.heatCapacity_JpK = heatCapacity_JpK;
 		this.ambientTempType = ambientTempType;
-		this.storageCapacity_kWh = ( maxTemperature_degC - minTemperature_degC ) * heatCapacity_JpK / 3.6e+6;
+		//this.storageCapacity_kWh = ( maxTemperature_degC - minTemperature_degC ) * heatCapacity_JpK / 3.6e+6;
 		this.stateOfCharge_r = (( initialTemperature_degC - minTemperature_degC ) / (maxTemperature_degC - minTemperature_degC ) );
 		this.solarAbsorptionFactor_m2 = solarAbsorptionFactor_m2;
 		this.energyAssetType = OL_EnergyAssetType.BUILDINGTHERMALS;
@@ -68707,24 +69086,24 @@ public class J_EABuilding extends zero.J_EAStorageHeat implements Serializable {
 	public void calculateLoss() {
 		double heatLoss_W = lossFactor_WpK * ( temperature_degC - ambientTemperature_degC );
 		double energyLoss_kWh = ( heatLoss_W / 1000 ) * timestep_h;
-		double tempDelta = - energyLoss_kWh / (heatCapacity_JpK / 3.6E6 );
+		double deltaTemp_degC = - energyLoss_kWh / (heatCapacity_JpK / 3.6E6 );
 		energyUsed_kWh += max(0,energyLoss_kWh); // Only heat loss! Not heat gain when outside is hotter than inside!
 		energyAbsorbed_kWh +=max(0,-energyLoss_kWh); // Only heat gain when outside is hotter than inside!
 		//traceln("Ambient temperature " + ambientTemperature_degC);
 		//traceln("heatCapacity JpK " + heatCapacity_JpK );
 		//traceln("tempdelta loss"+tempDelta);
 		//traceln("lossfacter: " + lossFactor_WpK);
-		updateStateOfCharge( tempDelta );
+		updateStateOfCharge( deltaTemp_degC );
 	}
 
 	public void solarHeating() {
 		double solarHeating_W = solarAbsorptionFactor_m2 * solarRadiation_Wpm2;
 		double energyGain_kWh = ( solarHeating_W / 1000 ) * timestep_h;
-		double tempDelta = energyGain_kWh / (heatCapacity_JpK / 3.6E6 );
+		double deltaTemp_degC = energyGain_kWh / (heatCapacity_JpK / 3.6E6 );
 		energyAbsorbed_kWh += energyGain_kWh;
 		//traceln("Solar heating of building! Temp increase this timestep %s degC, solarRadiation %s Wpm2", tempDelta, solarRadiation_Wpm2);
 		//traceln("SolarAbsorptionFactor_m2 is %s, energyGain_kWh is %s", solarAbsorptionFactor_m2, energyAbsorbed_kWh);
-		updateStateOfCharge( tempDelta );
+		updateStateOfCharge( deltaTemp_degC );
 	}
 
 	@Override
@@ -68812,24 +69191,43 @@ public class J_EABuilding extends zero.J_EAStorageHeat implements Serializable {
 	public double getSetTemperature_degC() {
 		return setTemperature_degC;
 	}
-
+	
 	@Override
+    public void storeStatesAndReset() {
+    	// Each energy asset that has some states should overwrite this function!
+    	energyUsedStored_kWh = energyUsed_kWh;
+    	energyAbsorbedStored_kWh = energyAbsorbed_kWh;
+    	energyUsed_kWh = 0.0;
+    	energyAbsorbed_kWh = 0.0;
+    	temperature_degC = temperatureStored_degC;
+    	resetFlows();    	
+    }
+    
+	@Override
+    public void restoreStates() {
+    	// Each energy asset that has some states should overwrite this function!
+    	energyUsed_kWh = energyUsedStored_kWh;
+    	energyAbsorbed_kWh = energyAbsorbedStored_kWh;
+    	temperature_degC = temperatureStored_degC;
+    }
+
+	/*@Override
 	public double getMinTemperature_degC() {
 		return minTemperature_degC;
-	}
+	}*/
 
-	@Override
+	/*@Override
 	public double getMaxTemperature_degC() {
 		return maxTemperature_degC;
-	}
+	}*/
 
-	public double getStorageCapacity() {
+	/*public double getStorageCapacity() {
 		return storageCapacity_kWh;
-	}
+	}*/
 
-	public double getHeatCapacity_JpK() {
+	/*public double getHeatCapacity_JpK() {
 		return heatCapacity_JpK;
-	}
+	}*/
 
 	/*
 	@Override
@@ -69052,10 +69450,12 @@ public class J_EAEV extends J_EAVehicle implements Serializable {
 
 	public OL_EnergyCarrierType storageMedium = OL_EnergyCarrierType.ELECTRICITY;
 	private double stateOfCharge_r;
+	private double initialStateOfCharge_r;
+	private double stateOfChargeStored_r;
+	
 	private double storageCapacity_kWh;
 
-	// Should this be in here?
-	//public double maxSpreadChargingRatio = 0; // the charging ratio of a session if the vehicle needs to be full before departure
+	// Should this be in here?	
 	public double energyNeedForNextTrip_kWh;
 	public OL_EVChargingNeed chargingNeed;
 	public double energyChargedOutsideModelArea_kWh = 0;
@@ -69074,7 +69474,8 @@ public class J_EAEV extends J_EAVehicle implements Serializable {
 		this.parentAgent = parentAgent;
 		this.capacityElectric_kW = capacityElectricity_kW * vehicleScaling; // for EV, this is max charging power.
 		this.storageCapacity_kWh = storageCapacity_kWh * vehicleScaling;
-		this.stateOfCharge_r = stateOfCharge_r;
+		this.initialStateOfCharge_r = stateOfCharge_r;
+		this.stateOfCharge_r = initialStateOfCharge_r;
 		this.timestep_h = timestep_h;
 		this.energyConsumption_kWhpkm = energyConsumption_kWhpkm;
 		this.vehicleScaling = vehicleScaling;
@@ -69179,7 +69580,27 @@ public class J_EAEV extends J_EAVehicle implements Serializable {
 		return chargingTime_min;
 	}
 
-
+	@Override
+    public void storeStatesAndReset() {
+    	// Each energy asset that has some states should overwrite this function!
+    	energyUsedStored_kWh = energyUsed_kWh;
+    	energyUsed_kWh = 0.0;
+    	stateOfChargeStored_r = stateOfCharge_r;
+    	stateOfCharge_r = initialStateOfCharge_r;
+    	availableStored = available;
+    	available = true;
+    	mileage_km = 0;
+    	resetFlows();    	
+    }
+    
+	@Override
+    public void restoreStates() {
+    	// Each energy asset that has some states should overwrite this function!
+    	energyUsed_kWh = energyUsedStored_kWh;    	
+    	stateOfCharge_r = stateOfChargeStored_r;
+    	available = availableStored;
+    }
+	
 	@Override
 	public String toString() {
 		return
@@ -69284,7 +69705,6 @@ public class J_ExperimentSettingsData implements Serializable {
 	public String nConnectionOwners = "";
 	public String nEnergySuppliers = "";
 	public String nEnergyCoops = "";
-	public String nAdministrativeCoops = "";
 	public String nGridOperators = "";
 	public String nNationalEnergyMarket = "";
 	public double shareElectricvehiclesInHouseholds = 0.0;
@@ -69316,14 +69736,13 @@ public class J_ExperimentSettingsData implements Serializable {
 			"nConnectionOwners = " + nConnectionOwners + " " +
 			"nEnergySuppliers = "+ nEnergySuppliers + " " +
 			"nEnergyCoops = " + nEnergyCoops + " " +
-			"nAdministrativeCoops = " + nAdministrativeCoops + " " +
 			"nGridOperators = " + nGridOperators + " " +
 			"nNationalEnergyMarket = " + nNationalEnergyMarket +
 			"shareElectricvehiclesInHouseholds = " + shareElectricvehiclesInHouseholds
 			;
 	}
 
-	public void updateData(String timeStep_h, String timeStepsElapsed, String modelHoursElapsed_h, String modelStartUpDuration_s, String modelRunDuration_s, String nGridNodes,	String nGridConnections, String nEnergyAssets, String nConnectionOwners, String nEnergySuppliers, String nEnergyCoops, String nAdministrativeCoops, String nGridOperators, String nNationalEnergyMarket, double shareElectricvehiclesInHouseholds) {
+	public void updateData(String timeStep_h, String timeStepsElapsed, String modelHoursElapsed_h, String modelStartUpDuration_s, String modelRunDuration_s, String nGridNodes,	String nGridConnections, String nEnergyAssets, String nConnectionOwners, String nEnergySuppliers, String nEnergyCoops, String nGridOperators, String nNationalEnergyMarket, double shareElectricvehiclesInHouseholds) {
 		this.timeStep_h = timeStep_h;
 		this.timeStepsElapsed = timeStepsElapsed;
 		this.modelHoursElapsed_h = modelHoursElapsed_h;
@@ -69335,7 +69754,6 @@ public class J_ExperimentSettingsData implements Serializable {
 		this.nConnectionOwners = nConnectionOwners;
 		this.nEnergySuppliers = nEnergySuppliers;
 		this.nEnergyCoops = nEnergyCoops;
-		this.nAdministrativeCoops = nAdministrativeCoops;
 		this.nGridOperators = nGridOperators;
 		this.nNationalEnergyMarket = nNationalEnergyMarket;
 		this.shareElectricvehiclesInHouseholds = shareElectricvehiclesInHouseholds;
@@ -70009,7 +70427,25 @@ public class J_EADieselVehicle extends J_EAVehicle implements Serializable {
 		return available;
 	}
 
-
+	@Override
+    public void storeStatesAndReset() {
+    	// Each energy asset that has some states should overwrite this function!
+    	energyUsedStored_kWh = energyUsed_kWh;
+    	energyUsed_kWh = 0.0;
+    	availableStored = available;
+    	available = true;
+    	mileage_km = 0;
+    	resetFlows();    	
+    }
+    
+	@Override
+    public void restoreStates() {
+    	// Each energy asset that has some states should overwrite this function!
+    	energyUsed_kWh = energyUsedStored_kWh;    	
+    	available = availableStored;
+    }
+	
+	
 	@Override
 	public String toString() {
 		return
@@ -70497,6 +70933,7 @@ public class J_ActivityTracker implements Serializable {
 	//private ArrayList<Double> eventMagnitude = new ArrayList<>();
     public int nbActivities = 0;
 	public int v_eventIndex = 0;
+	protected int v_eventIndexStored = 0;
 	
     /**
      * Default constructor
@@ -70557,12 +70994,13 @@ public class J_ActivityTrackerTrips extends J_ActivityTracker implements Seriali
 		    	endtimes_min.add(main.inputHouseholdTrips.getCellNumericValue("sheet1", rowIndex + 2, 4 + i * 3));
 		    	distances_km.add(min(350,main.inputHouseholdTrips.getCellNumericValue("sheet1", rowIndex + 2, 5 + i * 3)));
 			    if (rowIndex == 55) {
+				    //Reducing trip lengths on rowIndex 55, they are too long for current-day EVs!
     		    	distances_km.set(i,distances_km.get(i)/2.0);
     		    }
 
 		    }
 	
-		    while ( starttimes_min.get(v_eventIndex) - time_min < 0) {
+		    /*while ( starttimes_min.get(v_eventIndex) - time_min < 0) {
 		    	starttimes_min.set( v_eventIndex, starttimes_min.get(v_eventIndex) + 10080 );
 		    	endtimes_min.set( v_eventIndex, endtimes_min.get(v_eventIndex) + 10080 );
 		    	v_eventIndex++;
@@ -70570,9 +71008,27 @@ public class J_ActivityTrackerTrips extends J_ActivityTracker implements Seriali
 		    		v_eventIndex = 0;
 		    	}
 		    }
-		    v_nextEventStartTime_min = starttimes_min.get(v_eventIndex);
-		    
-		    //Reducing trip lengths on rowIndex 55, they are infeasible!
+		    v_nextEventStartTime_min = starttimes_min.get(v_eventIndex);*/
+		    // Duplicate activities until the end of the year
+		    if (endtimes_min.get(nbActivities-1) < 10080) {
+		    	traceln("Duplicate trips until the end of the year");
+			    for (int weeks = 1; weeks < 52; weeks++) {
+			    	for (int eventIdx = 0; eventIdx < nbActivities; eventIdx++) {
+			    		starttimes_min.add(starttimes_min.get(eventIdx) + 10080*weeks);
+			    		endtimes_min.add(endtimes_min.get(eventIdx) + 10080*weeks);
+			    		distances_km.add(distances_km.get(eventIdx));
+			    	}
+			    }
+		    }
+		    traceln("This EV has %s trips in a year that total %s km.", starttimes_min.size(), distances_km.stream().mapToDouble(f -> f).sum() );
+		    // 'forward' to current activity if tripTracker is instantiated not at the start of the simulation or year
+		    while ( starttimes_min.get(v_eventIndex) < time_min ) {		    	
+		    	v_eventIndex++;		    	
+		    	if ( v_eventIndex > starttimes_min.size() - 1 ) {		    		
+		    		break;
+		    	} 
+		    }
+		    prepareNextActivity(time_min);
 		    
     	} else {
     		traceln("Mobility pattern type not yet implemented! No trips loaded!");
@@ -70582,25 +71038,27 @@ public class J_ActivityTrackerTrips extends J_ActivityTracker implements Seriali
 	   public void manageActivities(double time_min) {
 	    	//traceln("TripTracker vehicle: " + Vehicle);
 	    	if (Vehicle.available) { // at start of timestep! check for multiple 'events' in timestep!
-	    		if (time_min == roundToInt(starttimes_min.get(v_eventIndex) / (60*main.p_timeStep_h)) * (main.p_timeStep_h*60) ) {
+	    		if (time_min == roundToInt(starttimes_min.get(v_eventIndex) / (60*main.p_timeStep_h)) * (main.p_timeStep_h*60) ) { // is a trip starting this timestep?
 	    			Vehicle.startTrip();
 	    			//main.v_activeTrips.incrementAndGet();
 	    		}
-	    		if (time_min == roundToInt(endtimes_min.get(v_eventIndex) / (60*main.p_timeStep_h)) * (main.p_timeStep_h*60) ) {
+	    		if (time_min == roundToInt(endtimes_min.get(v_eventIndex) / (60*main.p_timeStep_h)) * (main.p_timeStep_h*60) ) { // is the trip also ending this timestep?
 	    			traceln("Vehicle trip ended in the same timestep as it started!");
 	    			Vehicle.endTrip(v_tripDist_km);
+	    			v_eventIndex++;
 	    			//main.v_activeTrips.decrementAndGet();
 	    			prepareNextActivity(time_min);
 	    		}
 	    	} else {
-	    		if (time_min == roundToInt(endtimes_min.get(v_eventIndex)/ (60*main.p_timeStep_h)) * 60*main.p_timeStep_h ) {
+	    		if (time_min == roundToInt(endtimes_min.get(v_eventIndex)/ (60*main.p_timeStep_h)) * 60*main.p_timeStep_h ) { // is a trip ending this timestep?
 	    			Vehicle.endTrip(v_tripDist_km);
+	    			v_eventIndex++;
 	    			//main.v_activeTrips.decrementAndGet();
 	    			prepareNextActivity(time_min);
 	    			//v_nextEventStartTime_min = starttimes_min.get(v_eventIndex);
 	    			//v_nextEventEndTime_min = endtimes_min.get(v_eventIndex);    			
 	    		}  
-	    		if (time_min == roundToInt(starttimes_min.get(v_eventIndex) / (60*main.p_timeStep_h)) * (main.p_timeStep_h*60) ) {
+	    		if (time_min == roundToInt(starttimes_min.get(v_eventIndex) / (60*main.p_timeStep_h)) * (main.p_timeStep_h*60) ) { // is the next trip also starting this timestep?
 	    			Vehicle.startTrip();
 	    			//main.v_activeTrips.incrementAndGet();
 	    			traceln("Vehicle trip started in the same timestep as the previous trip ended!!");
@@ -70609,9 +71067,9 @@ public class J_ActivityTrackerTrips extends J_ActivityTracker implements Seriali
 	    }
 	    
 	    private void prepareNextActivity(double time_min) {
-		    starttimes_min.set( v_eventIndex, starttimes_min.get(v_eventIndex) + 10080 );
-			endtimes_min.set( v_eventIndex, endtimes_min.get(v_eventIndex) + 10080 );
-			v_eventIndex++;
+		    //starttimes_min.set( v_eventIndex, starttimes_min.get(v_eventIndex) + 10080 );
+			//endtimes_min.set( v_eventIndex, endtimes_min.get(v_eventIndex) + 10080 );
+			
 			if ( v_eventIndex >= starttimes_min.size()  ) {
 				v_eventIndex = 0;
 			}
@@ -70630,8 +71088,8 @@ public class J_ActivityTrackerTrips extends J_ActivityTracker implements Seriali
 				double nextTripStartTime_min = 0;
 		
 				if ( v_eventIndex == starttimes_min.size() - 1 ) { 
-					nextTripDist_km = distances_km.get( 0 );
-					nextTripStartTime_min = starttimes_min.get(0);
+					nextTripDist_km = 0;//distances_km.get( 0 );
+					nextTripStartTime_min = endtimes_min.get(v_eventIndex);
 				} else {		
 					nextTripDist_km = distances_km.get( v_eventIndex+1 );
 					nextTripStartTime_min = starttimes_min.get( v_eventIndex+1 );
@@ -70671,6 +71129,7 @@ public class J_ActivityTrackerTrips extends J_ActivityTracker implements Seriali
  */	
 public class J_EAVehicle extends J_EA implements Serializable {
 	public boolean available = true;
+	protected boolean availableStored = true;
 	public double energyConsumption_kWhpkm;
 	//private MobilityTracker mobilityTracker = null;
 	public double vehicleScaling;
