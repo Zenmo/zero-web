@@ -315,6 +315,10 @@
 				<Id>1685518641145</Id>
 				<Name><![CDATA[METHANE_DEMAND]]></Name>
 			</Option>
+			<Option>
+				<Id>1699367407696</Id>
+				<Name><![CDATA[DIESEL_TRUCK]]></Name>
+			</Option>
 		</OptionList>
 		<OptionList>
 			<Id>1659525715752</Id>
@@ -4198,7 +4202,7 @@ f_runRapidSimulation(); // Do a full year run to have KPIs right away!
 
 @author: GillisHommen
 @since: 01/03/2023]]></Description>
-					<X>-750</X><Y>570</Y>
+					<X>-750</X><Y>780</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -5018,7 +5022,7 @@ f_runRapidSimulation(); // Do a full year run to have KPIs right away!
 						<Condition><![CDATA[false]]></Condition>
 					</Properties>
 					<Action><![CDATA[// Update tijdreeksen in leesbare variabelen
-t_h = (v_timeStepsElapsed * p_timeStep_h + v_hourOfYearStart) % 8760;
+t_h = (v_timeStepsElapsed * p_timeStep_h + v_hourOfYearStart);// % 8760;
 
 double startTime = System.currentTimeMillis();
 f_updateTimeseries(t_h);
@@ -5849,7 +5853,7 @@ for (EnergySupplier e : pop_energySuppliers) {
 
 @author: Jorrit
 @since: 27-10-2022]]></Description>
-					<X>-750</X><Y>600</Y>
+					<X>-740</X><Y>600</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -5946,7 +5950,7 @@ else {
 
 @author: JorritvandenHouten
 @since: 28-10-2022]]></Description>
-					<X>-750</X><Y>620</Y>
+					<X>-740</X><Y>620</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -5988,7 +5992,7 @@ if (v_totalHydrogenImport_MWh > v_totalHydrogenExport_MWh) {
 					<ReturnType><![CDATA[double]]></ReturnType>
 					<Id>1666978595555</Id>
 					<Name><![CDATA[f_sumBatteryUse]]></Name>
-					<X>-750</X><Y>640</Y>
+					<X>-740</X><Y>640</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -6020,6 +6024,30 @@ for(J_EAStorage es : c_storageAssets ) {
 		//traceln( ((J_EAStorageElectric)e.j_ea).getStorageCapacity() / 1000 );
 	}
 }
+for(J_EAEV ev : c_EVs ) {
+
+	//	J_EAStorageElectric e = (J_EAStorageElectric)es;
+	//traceln("triggered!!"+e.j_ea.toString());
+
+	/*c_totalBatteryUnitsInstalled.computeIfPresent( e.energyAssetName, (key, val) ->val + 1.0 );
+	c_totalBatteryUnitsInstalled.computeIfAbsent( e.energyAssetName, k -> 1.0 );
+
+	c_totalBatteryChargeAmount_MWh.computeIfPresent( e.energyAssetName, (key, val) -> roundToDecimal( val + e.getTotalChargeAmount_kWh() / 1000, 2 ));
+	c_totalBatteryChargeAmount_MWh.computeIfAbsent( e.energyAssetName, k -> e.getTotalChargeAmount_kWh() / 1000 );
+	c_totalBatteryDischargeAmount_MWh.computeIfPresent( e.energyAssetName, (key, val) -> roundToDecimal( val + e.getTotalDischargeAmount_kWh() / 1000, 2 ));
+	c_totalBatteryDischargeAmount_MWh.computeIfAbsent( e.energyAssetName, k -> e.getTotalDischargeAmount_kWh() / 1000 );
+	c_totalBatteryInstalledCapacity_MWh.computeIfPresent( e.energyAssetName, (key, val) -> roundToDecimal( val + e.getStorageCapacity_kWh() / 1000, 2 ));
+	c_totalBatteryInstalledCapacity_MWh.computeIfAbsent( e.energyAssetName, k -> e.getStorageCapacity_kWh() / 1000 );
+	*/
+	
+	v_totalBatteryDischargeAmount_MWh += ev.getTotalDischargeAmount_kWh() / 1000;
+	v_totalBatteryChargeAmount_MWh += ev.getTotalChargeAmount_kWh() / 1000;
+	v_totalBatteryInstalledCapacity_MWh += ev.getStorageCapacity_kWh() / 1000;
+	v_totalBatteryEnergyUsed_MWh += ev.getEnergyUsed_kWh() / 1000;
+	//traceln( ((J_EAStorageElectric)e.j_ea).getStorageCapacity() / 1000 );
+
+}
+
 
 double v_batteryStoredEnergyDeltaSinceStart_MWh = v_totalBatteryChargeAmount_MWh - v_totalBatteryDischargeAmount_MWh - v_totalBatteryEnergyUsed_MWh;
 if (v_batteryStoredEnergyDeltaSinceStart_MWh == Double.NaN) {
@@ -6828,7 +6856,7 @@ t_numberOfRooftopPV.setText(count(Houses, x->x.v_hasPV == true));]]></Body>
 					<ReturnType><![CDATA[double]]></ReturnType>
 					<Id>1696520909206</Id>
 					<Name><![CDATA[f_setPVSystem]]></Name>
-					<X>1590</X><Y>-1150</Y>
+					<X>1590</X><Y>-1230</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -6872,7 +6900,7 @@ if( sl_rooftopPVCompanies.getValue()/100.0*c_gridConnections.size() < PVsystems)
 		OL_EnergyAssetType assetType = OL_EnergyAssetType.valueOf(t.required( "type" ).textValue()) ;
 		String assetName = t.required( "name" ).textValue();	
 				
-		double capacityElectricity_kW = t.required( "capacityElectricity_kW").doubleValue() ;
+		double capacityElectricity_kW = h.p_floorSurfaceArea_m2*0.1;// t.required( "capacityElectricity_kW").doubleValue() ;
 		double capacityHeat_kW = 0.0;
 		double yearlyProductionHydrogen_kWh = 0.0;
 		double yearlyProductionMethane_kWh = 0.0;
@@ -6952,6 +6980,7 @@ traceln(sum(c_gridConnections, x->x.v_rooftopPVInstalledCapacity_kW) + " kWp PV 
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>true</ShowLabel>
 					<Body><![CDATA[pauseSimulation();
+b_addKpiVisuals = false;
 traceln(" ");
 traceln("*** Running headless simulation *** ");
 traceln(" ");
@@ -6965,11 +6994,14 @@ for (J_EA EA : c_energyAssets) {
 
 for (GridConnection GC : c_gridConnections) {
 	GC.f_resetStates();
+	GC.c_tripTrackers.forEach(tt->tt.v_eventIndex=0);
+	GC.c_tripTrackers.forEach(tt->tt.prepareNextActivity(0));
+	
 }
 
 for (GridNode GN : pop_gridNodes) {
 	GN.f_resetStates();
-}
+	}
 
 // When adding actors, also reset their states! Not used yet for Drechtsteden...
 
@@ -7010,6 +7042,14 @@ v_costsUnknown = false;
 for (J_EA EA : c_energyAssets) {
 	EA.restoreStates();		
 }
+for (GridNode GN : pop_gridNodes) {
+	GN.f_resetStates();
+}
+for (GridConnection GC : c_gridConnections) {
+	GC.f_resetStates();
+	GC.c_tripTrackers.forEach(tt->tt.v_eventIndex=0);
+	GC.c_tripTrackers.forEach(tt->tt.prepareNextActivity(time(MINUTE)));
+}
 /*for (GridConnection GC : c_gridConnections){
 	//h.v_requiredHeatBufferCapacity_kWh = h.v_requiredHeatBufferCapacityStoredForRapidRun_kWh;
 	//h.v_requiredHeatBufferCapacity_kWh = h.v_storedElectricBoilerCurrentCapacity_kWh;
@@ -7017,6 +7057,7 @@ for (J_EA EA : c_energyAssets) {
 }*/
 
 v_isRapidRun = false;
+b_addKpiVisuals = true;
 
 double duration = System.currentTimeMillis() - startTime;
 
@@ -8020,30 +8061,41 @@ for (Tuple row : rows) {
 					<ReturnModificator>VOID</ReturnModificator>
 					<ReturnType><![CDATA[double]]></ReturnType>
 					<Id>1697095071210</Id>
-					<Name><![CDATA[f_generateUtilityObjects]]></Name>
+					<Name><![CDATA[f_generateGridConnections]]></Name>
 					<X>-500</X><Y>430</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>true</ShowLabel>
-					<Body><![CDATA[// Get trip tuples from this household ID from database
+					<Body><![CDATA[// Enkele windfarm voor 'centrale' windmolens.
+GCWindfarm windFarm = add_Windfarms();
+windFarm.set_p_agentID( "windFarm0" );
+windFarm.set_p_gridConnectionCategory( OL_GridConnectionCategory.WINDFARM );
+windFarm.set_p_connectionCapacity_kW( 10000 );
+windFarm.set_p_heatingType( OL_GridConnectionHeatingType.NONE );	
+windFarm.p_parentNodeElectricID = c_gridNodesHSMS.get(0).p_agentID;	
+	//Initialize
+windFarm.f_initialize();
+c_gridConnections.add(windFarm);
+
+// Enkel logistiek centrum met trucks (trucks nog niet toegekend aan bedrijven)
+GCUtility logisticsConnection = add_UtilityConnections();
+logisticsConnection.set_p_agentID( "logistics0" );
+logisticsConnection.set_p_gridConnectionCategory( OL_GridConnectionCategory.UTILITY );
+logisticsConnection.set_p_gridConnectionType( OL_GridConnectionType.LOGISTICS );
+logisticsConnection.set_p_connectionCapacity_kW( 10000 );
+	//GC.set_p_ownerID( ownerActorID );
+logisticsConnection.set_p_heatingType( OL_GridConnectionHeatingType.NONE );	
+logisticsConnection.p_parentNodeElectricID = c_gridNodesMSLS.get(0).p_agentID;	
+logisticsConnection.f_initialize();
+c_gridConnections.add(logisticsConnection);
+
+
+// Bedrijven uit excel files
 List<Tuple> rows = selectFrom(residence_objects)
 	.where(residence_objects.gebruiksdo.ne("woonfunctie"))
 	.list();
 	
-//JsonNode t=null;
-/*
-JsonNodeFactory jn = new JsonNodeFactory(false);
-ArrayNode gridConnectionEnergyAssets = new ArrayNode(jn);
-for(JsonNode assetJson : v_templateAssetsJson) {
-	if (assetJson.required( "name" ).textValue().equals("TEMPLATE other electricity demand")) {
-		gridConnectionEnergyAssets.add(assetJson);		
-		traceln("Consumption asset found:" + assetJson);
-	}
-}
-traceln("gridConnectionEnergyAssets: " + gridConnectionEnergyAssets);
-*/
-
 for (Tuple row : rows) {
 	GCUtility GC = add_UtilityConnections();
 
@@ -8052,11 +8104,8 @@ for (Tuple row : rows) {
 	GC.set_p_gridConnectionCategory( OL_GridConnectionCategory.UTILITY );
 	//GC.set_p_gridConnectionType( gridConnectionType );
 	GC.set_p_connectionCapacity_kW( 17 );
-	//GC.set_p_parentNodeElectricID( c_gridNodesMSLS.get(0).p_agentID );
-	//GC.set_p_parentNodeHeatID( gridConnectionParentHeat );
 	//GC.set_p_ownerID( ownerActorID );
-	GC.set_p_heatingType( OL_GridConnectionHeatingType.NONE );
-	//GC.set_p_energyAssetList( gridConnectionEnergyAssets );
+	GC.set_p_heatingType( OL_GridConnectionHeatingType.NONE );	
 	GC.set_p_longitude(row.get(residence_objects.longitude));
 	GC.set_p_latitude(row.get(residence_objects.latitude));
 	GC.set_p_openbareR(row.get(residence_objects.openbare_r));
@@ -8068,19 +8117,10 @@ for (Tuple row : rows) {
 	GridNode nearestLVStation = GC.getNearestAgent(c_gridNodesMSLS);
 	traceln("Nearest MVLV transformer for GC " + GC.p_agentID + " is: " + nearestLVStation.p_agentID)	;
 	//Set nearest agent as trafo
-	GC.p_parentNodeElectricID = nearestLVStation.p_agentID;
-	
+	GC.p_parentNodeElectricID = nearestLVStation.p_agentID;	
 	//GC.set_p_batteryOperationMode( gridConnectionBatteryMode );
 	//GC.set_p_elektrolyserOperationMode( gridConnectionElektrolyserMode );
 	//GC.set_p_chargingAttitudeVehicles( gridConnectionChargingAttitude );
-	//GC.set_p_smartHeatingEnabled( smartAssets );
-	//GC.set_p_pricelevelHighDifFromAvg_eurpkWh( pricelevel_high_dif_from_avg_eurpkWh );
-	//GC.set_p_pricelevelLowDifFromAvg_eurpkWh( pricelevel_low_dif_from_avg_eurpkWh );
-	//GC.set_p_irradianceRecievingSurface_m2( irradianceRecievingSurface_m2 );
-	//GC.v_nightTempSetpoint_degC = tempSetpointNight_degC;
-	//GC.v_heatingOff_time = tempSetpointNight_start_hr;
-	//GC.v_dayTempSetpoint_degC = tempSetpointDay_degC;
-	//GC.v_heatingOn_time = tempSetpointDay_start_hr;
 
 	//Initialize
 	GC.f_initialize();
@@ -8184,7 +8224,7 @@ for (Tuple row : rows) {
 					<Body><![CDATA[//f_createActors(); 
 //f_createGridNodes();
 f_generateGridNodes();
-f_generateUtilityObjects();
+f_generateGridConnections();
 f_instantiateEnergyAssets();
 f_createGISBuildings();
 //f_createAgentLinks();
@@ -8192,6 +8232,8 @@ f_initializeForecasts();
 
 //f_instantiateTemplateEnergyAssets();
 
+// Sliders start values
+sl_electricTrucks.setValue(100,true);
 ]]></Body>
 				</Function>
 				<Function AccessType="default" StaticFunction="false">
@@ -8261,7 +8303,7 @@ for (GridConnection GC : c_gridConnections) {
 					<ShowLabel>true</ShowLabel>
 					<Body><![CDATA[// Add electricity consumption profiles to gridconnections
 
-for (GridConnection GC : c_gridConnections) {
+for (GridConnection GC : UtilityConnections) {
 	// Add electricity consumption profiles
 	//newAsset.yearlyDemandElectricity_kWh=1;
 	if (GC.p_company_connection_id != null) {
@@ -8285,22 +8327,42 @@ for (GridConnection GC : c_gridConnections) {
 		c_energyAssets.add(newAsset);
 		GC.f_connectToJ_EA(newAsset);
 	}	
-	// Heatdemand		
-	double yearlyHeatDemandPerFloorSurface_kWhpm2=90.9778*9.77;
-	J_EAConsumption newAsset = (J_EAConsumption)p_defaultConsumptionAsset.clone();
-	newAsset.energyAssetType = OL_EnergyAssetType.HEAT_DEMAND;
-	newAsset.parentAgent = GC;
-	newAsset.energyAssetName="Building_heat_demand";
-	newAsset.yearlyDemandHeat_kWh = GC.p_floorSurfaceArea_m2*yearlyHeatDemandPerFloorSurface_kWhpm2;
-	c_energyAssets.add(newAsset);
-	GC.f_connectToJ_EA(newAsset);
 	
-	// Gas burner
-	J_EAConversionGasBurner gasBurner = new J_EAConversionGasBurner(GC, OL_EnergyAssetType.GAS_BURNER, newAsset.yearlyDemandHeat_kWh/8760*10, 0.99, p_timeStep_h, 90);
-	c_energyAssets.add(gasBurner);
-	GC.f_connectToJ_EA(gasBurner);
+	if ( GC.p_gridConnectionType==OL_GridConnectionType.LOGISTICS ) { // add dieseltrucks
+		double energyConsumption_kWhpkm = 3.0;//g.required( "energyConsumption_kWhpkm" ).doubleValue();
+		double vehicleScaling = 1.0;//g.hasNonNull("vehicleScaling")? g.required("vehicleScaling").doubleValue() : 1.0;		
+		for (int i=0; i<100; i++) {
+			J_EADieselVehicle dieselVehicle = new J_EADieselVehicle(GC, energyConsumption_kWhpkm, p_timeStep_h, vehicleScaling);	
+			dieselVehicle.energyAssetType = OL_EnergyAssetType.DIESEL_TRUCK;
+			GC.f_connectToJ_EA(dieselVehicle);		
+			c_energyAssets.add(dieselVehicle);
+			
+		}
+	} else {
+		// Heatdemand		
+		double yearlyHeatDemandPerFloorSurface_kWhpm2=90.9778*9.77;
+		J_EAConsumption newAsset = (J_EAConsumption)p_defaultConsumptionAsset.clone();
+		newAsset.energyAssetType = OL_EnergyAssetType.HEAT_DEMAND;
+		newAsset.parentAgent = GC;
+		newAsset.energyAssetName="Building_heat_demand";
+		newAsset.yearlyDemandHeat_kWh = GC.p_floorSurfaceArea_m2*yearlyHeatDemandPerFloorSurface_kWhpm2;
+		c_energyAssets.add(newAsset);
+		GC.f_connectToJ_EA(newAsset);
 		
-}]]></Body>
+		// Gas burner
+		J_EAConversionGasBurner gasBurner = new J_EAConversionGasBurner(GC, OL_EnergyAssetType.GAS_BURNER, newAsset.yearlyDemandHeat_kWh/8760*10, 0.99, p_timeStep_h, 90);
+		c_energyAssets.add(gasBurner);
+		GC.f_connectToJ_EA(gasBurner);	
+	}		
+}
+
+for (GridConnection GC : Windfarms) {
+	// Add 0kW windturbine to windfarm
+	J_EAProduction windTurbine = new J_EAProduction(GC, OL_EnergyAssetType.WINDMILL,null,0,0,0,0,p_timeStep_h,0);
+	c_energyAssets.add(windTurbine);
+	GC.f_connectToJ_EA(windTurbine);
+}
+]]></Body>
 				</Function>
 				<Function AccessType="default" StaticFunction="false">
 					<ReturnModificator>VOID</ReturnModificator>
@@ -8677,7 +8739,7 @@ for (EA_Building x : pop_EA_Buildings){
 
 @author: JorritvandenHouten
 @since: Sprint 6]]></Description>
-					<X>1130</X><Y>1080</Y>
+					<X>-750</X><Y>580</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -8782,7 +8844,7 @@ double modelRunDuration_s = roundToDecimal( ( System.currentTimeMillis() - v_tim
 					<ReturnType><![CDATA[double]]></ReturnType>
 					<Id>1698930892767</Id>
 					<Name><![CDATA[f_setHeatingSystems]]></Name>
-					<X>1590</X><Y>-1000</Y>
+					<X>1590</X><Y>-1020</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -9113,6 +9175,256 @@ if(v_isRapidRun == true){
 		v_dailyBusinessParkNetLoad_kWh = 0;
 	}
 }]]></Body>
+				</Function>
+				<Function AccessType="default" StaticFunction="false">
+					<ReturnModificator>VOID</ReturnModificator>
+					<ReturnType><![CDATA[double]]></ReturnType>
+					<Id>1699355724933</Id>
+					<Name><![CDATA[f_setWindTurbines]]></Name>
+					<X>1590</X><Y>-1200</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Parameter>
+						<Name><![CDATA[nbWindTurbines]]></Name>
+						<Type><![CDATA[double]]></Type>
+					</Parameter>
+					<Body><![CDATA[//Setting windTurbines
+double windTurbinePower = 3000; // Assume standard 3MW windturbine
+
+double installedWindPower_kW = sumWhere(c_energyAssets,p->p.getElectricCapacity_kW(),p -> p.energyAssetType == OL_EnergyAssetType.WINDMILL);
+double nbWindTurbinesInstalled = sum(c_energyAssets, p->p.energyAssetType == OL_EnergyAssetType.WINDMILL ? 1.0 : 0.0);
+traceln("%s wind turbines with a total power of %s MW", nbWindTurbinesInstalled, installedWindPower_kW);
+
+double powerPerWindTurbine_kW = nbWindTurbines * windTurbinePower / nbWindTurbinesInstalled;
+
+for(J_EA j_ea : c_energyAssets) {
+	if (j_ea.energyAssetType == OL_EnergyAssetType.WINDMILL) {
+		((J_EAProduction)j_ea).setCapacityElectric_kW(powerPerWindTurbine_kW);
+	}
+}
+	
+//c_energyAssets.forEach();
+/*
+if( sl_rooftopPVCompanies.getValue()/100.0*c_gridConnections.size() < PVsystems){
+	while ( sl_rooftopPVCompanies.getValue()/100.0*c_gridConnections.size() < PVsystems) { // remove excess PV systems
+		GridConnection h = findFirst(c_gridConnections, x->x.v_hasPV==true);
+		J_EA pvAsset = findFirst(h.c_productionAssets, p -> p.energyAssetType == OL_EnergyAssetType.PHOTOVOLTAIC );
+		traceln("Found PV system: " + pvAsset);
+		if (pvAsset!=null) {
+			v_totalInstalledPVPower_kW -= pvAsset.getElectricCapacity_kW();
+			h.c_productionAssets.remove(pvAsset);
+			c_energyAssets.remove(pvAsset);
+			c_productionAssets.remove(pvAsset);
+			traceln("Removing PV from GridConnection:" + h.p_agentID);
+			h.v_hasPV = false;
+		}
+		PVsystems=count(c_gridConnections, x->x.v_hasPV == true);		
+	}
+ 
+} else { 
+	while ( sl_rooftopPVCompanies.getValue()/100.0 * c_gridConnections.size() > PVsystems) {
+		GridConnection h = findFirst(c_gridConnections, x->x.v_hasPV==false);
+		//traceln("Check presence of solarpanels: " + h.v_hasPV);	
+		
+		OL_EnergyAssetType assetType = OL_EnergyAssetType.valueOf(t.required( "type" ).textValue()) ;
+		String assetName = t.required( "name" ).textValue();	
+				
+		double capacityElectricity_kW = t.required( "capacityElectricity_kW").doubleValue() ;
+		double capacityHeat_kW = 0.0;
+		double yearlyProductionHydrogen_kWh = 0.0;
+		double yearlyProductionMethane_kWh = 0.0;
+		double outputTemperature_degC = 0.0;
+		
+		J_EAProduction productionAsset = new J_EAProduction ( h, assetType, assetName, capacityElectricity_kW, capacityHeat_kW, yearlyProductionMethane_kWh, yearlyProductionHydrogen_kWh, p_timeStep_h, outputTemperature_degC );
+		h.f_connectToJ_EA(productionAsset);
+		
+		//c_productionAssets.add(productionAsset);
+		c_energyAssets.add(productionAsset);
+		v_totalInstalledPVPower_kW += capacityElectricity_kW;
+	
+		PVsystems=count(c_gridConnections, x->x.v_hasPV == true);	
+		traceln("Added PV to GridConnection: " + h.p_agentID);
+	}
+	
+}	
+
+v_totalInstalledPVPower_kW = sumWhere(c_energyAssets,p->p.getElectricCapacity_kW(),p -> p.energyAssetType == OL_EnergyAssetType.PHOTOVOLTAIC);
+t_numberOfRooftopPV.setText(count(c_gridConnections, x->x.v_hasPV == true));
+
+*/
+/*
+//ADD PV
+while (sum(c_gridConnections, x->x.v_rooftopPVInstalledCapacity_kW) < v_rooftopPV_kWp){
+	double kWRequired = v_rooftopPV_kWp - sum(c_gridConnections, x->x.v_rooftopPVInstalledCapacity_kW);
+	
+	EA_UtilityObject UO = randomWhere(c_gridConnections, x->x.v_rooftopPVInstalledCapacity_kW < x.v_PVSliderBusinessParkMax );
+	
+	if (kWRequired > UO.v_PVSliderBusinessParkMax){
+		UO.v_rooftopPVInstalledCapacity_kW = UO.v_PVSliderBusinessParkMax;
+	}
+	else {
+		UO.v_rooftopPVInstalledCapacity_kW = kWRequired;
+	}
+	//traceln( UO.getIndex() + " has " + UO.v_rooftopPVInstalledCapacity_kW + " kWp PV");
+}
+
+//REMOVE PV
+while (sum(c_gridConnections, x->x.v_rooftopPVInstalledCapacity_kW) > v_rooftopPV_kWp){
+	double kWToRemove = sum(c_gridConnections, x->x.v_rooftopPVInstalledCapacity_kW) - v_rooftopPV_kWp;
+	
+	EA_UtilityObject UO = c_gridConnections.get(0);
+	
+	if (count(c_gridConnections, x->x.v_rooftopPVInstalledCapacity_kW > 0 && x.p_PVInstalledCapacity_kW > 0 && x.p_PVInvestmentkW > 0) > 0){
+		UO = randomWhere(c_gridConnections, x->x.v_rooftopPVInstalledCapacity_kW > 0 && x.p_PVInstalledCapacity_kW > 0 && x.p_PVInvestmentkW > 0);
+	}
+	else if (count(c_gridConnections, x->x.v_rooftopPVInstalledCapacity_kW > 0 && x.p_PVInstalledCapacity_kW > 0 ) > 0){
+		UO = randomWhere(c_gridConnections, x->x.v_rooftopPVInstalledCapacity_kW > 0 && x.p_PVInstalledCapacity_kW > 0);
+	}
+	else {
+		UO = randomWhere(c_gridConnections, x->x.v_rooftopPVInstalledCapacity_kW > 0);
+	}
+	
+	//EA_UtilityObject UO = randomWhere(c_gridConnections, x->x.v_rooftopPVInstalledCapacity_kW > 0);
+	if (kWToRemove > UO.v_rooftopPVInstalledCapacity_kW){
+		UO.v_rooftopPVInstalledCapacity_kW = 0;
+	}
+	else {
+		UO.v_rooftopPVInstalledCapacity_kW -= kWToRemove;
+	}
+}
+
+traceln(sum(c_gridConnections, x->x.v_rooftopPVInstalledCapacity_kW) + " kWp PV installed");
+*/
+
+]]></Body>
+				</Function>
+				<Function AccessType="default" StaticFunction="false">
+					<ReturnModificator>VOID</ReturnModificator>
+					<ReturnType><![CDATA[double]]></ReturnType>
+					<Id>1699361308873</Id>
+					<Name><![CDATA[f_setElectricTrucks]]></Name>
+					<X>1590</X><Y>-1150</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Parameter>
+						<Name><![CDATA[nbElectricTrucksGoal]]></Name>
+						<Type><![CDATA[double]]></Type>
+					</Parameter>
+					<Body><![CDATA[//double nbEtruckCurrent = sum(c_energyAssets, p->p.energyAssetType == OL_EnergyAssetType.ELECTRIC_HEAVY_GOODS_VEHICLE ? 1.0 : 0.0);
+//double nvDieseltrucksCurrent = sum(c_energyAssets, p->p.energyAssetType == OL_EnergyAssetType.ELECTRIC_HEAVY_GOODS_VEHICLE ? 1.0 : 0.0);
+
+int nbEtruckCurrent = count(c_energyAssets, p->p.energyAssetType == OL_EnergyAssetType.ELECTRIC_HEAVY_GOODS_VEHICLE);
+int nbDieseltrucksCurrent = count(c_energyAssets, p->p.energyAssetType == OL_EnergyAssetType.DIESEL_TRUCK);
+
+
+traceln("%s diesel trucks and %s eTrucks found", nbDieseltrucksCurrent, nbEtruckCurrent);
+
+/*
+JsonNode t=null;
+JsonNode g=null;
+
+for(JsonNode assetJson : v_templateAssetsJson) {
+
+	if (assetJson.required( "name" ).textValue().equals("TEMPLATE: Private Electric Vehicle")) {
+		t = assetJson;
+	}
+	if (assetJson.required( "name" ).textValue().equals("TEMPLATE: Private Diesel Vehicle")) {
+		g = assetJson;
+	}
+}*/
+
+if( nbEtruckCurrent > nbElectricTrucksGoal){
+	while ( nbEtruckCurrent > nbElectricTrucksGoal && nbEtruckCurrent > 0) { // remove excess EVs systems !!!! Should also add diesel vehicle again!
+		
+		
+		J_EAEV ev = (J_EAEV)findFirst(c_energyAssets, p -> p.energyAssetType == OL_EnergyAssetType.ELECTRIC_HEAVY_GOODS_VEHICLE );
+		traceln("Found eTrucks: " + ev);
+		GridConnection GC = (GridConnection)ev.parentAgent;
+		J_ActivityTrackerTrips tripTracker = ev.tripTracker;
+		boolean available = true;
+		if (ev!=null) {			
+			//h.c_storageAssets.remove(EA);
+			available = ev.getAvailability();
+			GC.c_vehicleAssets.remove(ev);
+			GC.c_vehiclesAvailableForCharging.remove(ev);
+			GC.v_vehicleIndex--;
+			//h.p_householdEV = null;
+			c_EVs.remove(ev);
+			//c_storageAssets.remove(ev);
+			c_energyAssets.remove(ev);
+			//traceln("Removing EV from gridConnection:" + GC.p_agentID);
+		}
+		
+		// Re-add diesel vehicle
+				
+		double energyConsumption_kWhpkm = 3.0;//g.required( "energyConsumption_kWhpkm" ).doubleValue();
+		double vehicleScaling = 1.0;//g.hasNonNull("vehicleScaling")? g.required("vehicleScaling").doubleValue() : 1.0;		
+		J_EADieselVehicle dieselVehicle = new J_EADieselVehicle(GC, energyConsumption_kWhpkm, p_timeStep_h, vehicleScaling);
+		dieselVehicle.available = available;
+		dieselVehicle.energyAssetType = OL_EnergyAssetType.DIESEL_TRUCK;
+		GC.c_dieselVehicles.add(dieselVehicle);		
+		GC.c_vehicleAssets.add(dieselVehicle);
+		c_energyAssets.add(dieselVehicle);
+		GC.v_vehicleIndex++;
+		dieselVehicle.setTripTracker(tripTracker);
+		dieselVehicle.getTripTracker().Vehicle=dieselVehicle;		
+		
+		nbEtruckCurrent = count(c_energyAssets, p->p.energyAssetType == OL_EnergyAssetType.ELECTRIC_HEAVY_GOODS_VEHICLE);
+		nbDieseltrucksCurrent = count(c_energyAssets, p->p.energyAssetType == OL_EnergyAssetType.DIESEL_TRUCK);
+	} 
+} else { 
+	while ( nbEtruckCurrent < nbElectricTrucksGoal && nbDieseltrucksCurrent > 0) {
+		// Remove diesel vehicle
+		J_EADieselVehicle dieselVehicle = (J_EADieselVehicle)findFirst(c_energyAssets, p -> p.energyAssetType == OL_EnergyAssetType.DIESEL_TRUCK );
+		traceln("Found household diesel vehicle: " + dieselVehicle);
+		GridConnection GC = (GridConnection)dieselVehicle.parentAgent;
+		J_ActivityTrackerTrips tripTracker = dieselVehicle.tripTracker;
+		boolean available = true;
+		if (dieselVehicle!=null) {			
+			//h.c_consumptionAssets.remove(dieselVehicle);
+			dieselVehicle.getAvailability();
+			GC.c_vehicleAssets.remove(dieselVehicle);
+			GC.c_dieselVehicles.remove(dieselVehicle);
+			GC.v_vehicleIndex--;
+			c_energyAssets.remove(dieselVehicle);
+			//remove_pop_energyAssets(EA);
+			//traceln("Removing household DIESEL VEHICLE from household:" + GC.p_agentID);
+		}
+		
+		//EnergyAsset storageAsset = add_pop_energyAssets();
+		//storageAsset.set_p_parentAgentID( h.p_agentID );
+		//storageAsset.set_p_energyAssetType( OL_EnergyAssetType.valueOf(t.required( "type" ).textValue() ));
+		//storageAsset.set_p_defaultEnergyAssetPresetName( t.required( "name" ).textValue());
+
+		double capacityElectric_kW = 100;//t.required( "capacityElectricity_kW").doubleValue();
+		double storageCapacity_kWh = 500;//t.required( "storageCapacity_kWh" ).doubleValue();
+		double initialStateOfCharge_r = 1.0;//t.required( "stateOfCharge_r" ).doubleValue();
+		double energyConsumption_kWhpkm = 1.4;//t.required( "energyConsumption_kWhpkm" ).doubleValue();
+		double vehicleScalingElectric = 1.0;//t.hasNonNull("vehicleScaling")? t.required("vehicleScaling").doubleValue() : 1.0;
+		J_EAEV ev = new J_EAEV(GC, capacityElectric_kW, storageCapacity_kWh, initialStateOfCharge_r, p_timeStep_h, energyConsumption_kWhpkm, vehicleScalingElectric );  
+		ev.energyAssetType = OL_EnergyAssetType.ELECTRIC_HEAVY_GOODS_VEHICLE;
+		ev.available = available;
+		GC.c_vehicleAssets.add(ev);
+		GC.c_vehiclesAvailableForCharging.add(ev);				
+		GC.v_vehicleIndex++;
+		c_EVs.add(ev);
+		//c_storageAssets.add(ev);
+		c_energyAssets.add(ev);	
+		ev.setTripTracker(tripTracker);
+		ev.getTripTracker().Vehicle=ev;		
+		
+		nbEtruckCurrent = count(c_energyAssets, p->p.energyAssetType == OL_EnergyAssetType.ELECTRIC_HEAVY_GOODS_VEHICLE);
+		nbDieseltrucksCurrent = count(c_energyAssets, p->p.energyAssetType == OL_EnergyAssetType.DIESEL_TRUCK);
+	}
+	
+}	
+
+traceln("%s diesel trucks and %s eTrucks found", nbDieseltrucksCurrent, nbEtruckCurrent);
+]]></Body>
 				</Function>
 			</Functions>
 			<TableFunctions>
@@ -37209,7 +37521,6 @@ gr_simulateCostsScreenSmall.setVisible(true);
 				 	<EmbeddedIcon>false</EmbeddedIcon>				
 					<Id>1696520903602</Id>
 					<Name><![CDATA[sl_WindTurbines]]></Name>
-					<ExcludeFromBuild>true</ExcludeFromBuild>
 					<X>70</X><Y>-25</Y>
 					<Label><X>0</X><Y>-10</Y></Label>
 					<PublicFlag>true</PublicFlag>
@@ -37220,8 +37531,7 @@ gr_simulateCostsScreenSmall.setVisible(true);
                         <EmbeddedIcon>false</EmbeddedIcon>	
 						<Enabled>true</Enabled>
 						<ActionCode><![CDATA[f_setWindTurbines(sl_WindTurbines.getValue());
-
-t_numberOfWindTurbines.setText(pop_EA_WindTurbines.size());
+t_numberOfWindTurbines.setText(sl_WindTurbines.getValue());
 f_resetSettings();
 ]]></ActionCode>
 					</BasicProperties>
@@ -37267,7 +37577,6 @@ f_resetSettings();
 				 	<EmbeddedIcon>false</EmbeddedIcon>				
 					<Id>1696520903606</Id>
 					<Name><![CDATA[sl_electricTrucks]]></Name>
-					<ExcludeFromBuild>true</ExcludeFromBuild>
 					<X>70</X><Y>35</Y>
 					<Label><X>0</X><Y>-10</Y></Label>
 					<PublicFlag>true</PublicFlag>
@@ -37639,7 +37948,7 @@ rectangle_assetCompaniesSettings.setVisible(false);]]></OnClickCode>
 					<Z>0</Z>
 					<Rotation>0.0</Rotation>
 					<Color>-16777216</Color>
-					<Text><![CDATA[PV op dak (kWp)]]></Text>
+					<Text><![CDATA[PV op dak (%)]]></Text>
 					<Font>
 						<Name>Dialog</Name>
 						<Size>16</Size>
@@ -47142,6 +47451,9 @@ import java.io.*;]]></Import>
 						<Type><![CDATA[OL_ChargingAttitude]]></Type>
 						<UnitType><![CDATA[NONE]]></UnitType>
 						<SdArray>false</SdArray>
+						<DefaultValue Class="CodeValue">
+							<Code><![CDATA[OL_ChargingAttitude.SIMPLE]]></Code>
+						</DefaultValue>
 						<ParameterEditor>
 							<Id>1668693393496</Id>
 							<EditorContolType>TEXT_BOX</EditorContolType>
@@ -47163,6 +47475,9 @@ import java.io.*;]]></Import>
 						<Type><![CDATA[OL_BatteryOperationMode]]></Type>
 						<UnitType><![CDATA[NONE]]></UnitType>
 						<SdArray>false</SdArray>
+						<DefaultValue Class="CodeValue">
+							<Code><![CDATA[OL_BatteryOperationMode.BALANCE]]></Code>
+						</DefaultValue>
 						<ParameterEditor>
 							<Id>1668693418080</Id>
 							<EditorContolType>TEXT_BOX</EditorContolType>
@@ -47279,6 +47594,9 @@ import java.io.*;]]></Import>
 						<Type><![CDATA[OL_ElektrolyserOperationMode]]></Type>
 						<UnitType><![CDATA[NONE]]></UnitType>
 						<SdArray>false</SdArray>
+						<DefaultValue Class="CodeValue">
+							<Code><![CDATA[OL_ElektrolyserOperationMode.BALANCE]]></Code>
+						</DefaultValue>
 						<ParameterEditor>
 							<Id>1671459091952</Id>
 							<EditorContolType>TEXT_BOX</EditorContolType>
@@ -48409,7 +48727,7 @@ v_windProductionElectric_kW = 0;
 v_pvProductionElectric_kW = 0;
 v_conversionPowerElectric_kW = 0;
 
-c_tripTrackers.forEach(t -> t.manageActivities(time(MINUTE)));
+c_tripTrackers.forEach(t -> t.manageActivities(main.t_h*60));
 //c_dieselVehicles.forEach(v -> v.f_updateAllFlows(0));
 for( J_EA v : c_dieselVehicles ){
 //	v_currentPowerElectricity_kW += v.electricityConsumption_kW - v.electricityProduction_kW;
@@ -48790,7 +49108,9 @@ double powerDemand_kW = v_currentPowerHeat_kW;
 if ( p_BuildingThermalAsset == null ) {
 	if ( p_secondaryHeatingAsset == null ) { // Just one heating asset
 		if ( p_primaryHeatingAsset== null ) {
-			traceln("No heating assets for GridConnection " + p_agentID);
+			if (powerDemand_kW > 0) {
+				traceln("No heating assets for GridConnection " + p_agentID);
+			}
 		} else {
 			if ( p_primaryHeatingAsset instanceof J_EAConversionGasBurner || p_primaryHeatingAsset instanceof J_EAConversionHeatDeliverySet || p_primaryHeatingAsset instanceof J_EAConversionHydrogenBurner || p_primaryHeatingAsset instanceof J_EAConversionHeatPump) { // when there is only a gas burner or DH set
 					p_primaryHeatingAsset.v_powerFraction_fr = min(1,powerDemand_kW / p_primaryHeatingAsset.getHeatCapacity_kW());
@@ -49253,10 +49573,15 @@ if (j_ea instanceof J_EAVehicle) {
 		c_vehiclesAvailableForCharging.add((J_EAEV)vehicle);
 		//c_storageAssets.add((J_EAEV)vehicle);
 	}
-	c_vehicleAssets.add(vehicle);	
-	// Hardcoded private vehicle trips for now! Use asset name to switch trip pattern later...
-	int rowIndex = uniform_discr(1, 200);//getIndex() % 200;
-	J_ActivityTrackerTrips tripTracker = new J_ActivityTrackerTrips(main, rowIndex, time(MINUTE), vehicle, OL_MobilityPatternType.PRIVATE_VEHICLE);
+	c_vehicleAssets.add(vehicle);		
+	J_ActivityTrackerTrips tripTracker;
+	if (vehicle.energyAssetType == OL_EnergyAssetType.ELECTRIC_HEAVY_GOODS_VEHICLE || vehicle.energyAssetType == OL_EnergyAssetType. DIESEL_TRUCK) {
+		int rowIndex = uniform_discr(1, 7);//getIndex() % 200;	
+		tripTracker = new J_ActivityTrackerTrips(main, rowIndex, time(MINUTE), vehicle, OL_MobilityPatternType.TRUCK);
+	} else {
+		int rowIndex = uniform_discr(1, 200);//getIndex() % 200;
+		tripTracker = new J_ActivityTrackerTrips(main, rowIndex, time(MINUTE), vehicle, OL_MobilityPatternType.PRIVATE_VEHICLE);
+	}
 	c_tripTrackers.add( tripTracker );
 	vehicle.tripTracker = tripTracker;	
 	v_vehicleIndex ++;
@@ -70375,6 +70700,11 @@ for ( J_EAStorage e : c_storageAssets ) {
 	v_currentPowerHeat_kW += e.heatConsumption_kW - e.heatProduction_kW; //peter 13-3-23: ik snap niet waarom dit hier staat. dit komt in de knoop met andere storage assets (zoals batterij)
 }
 
+f_manageCharging();
+for( J_EAVehicle v: c_vehicleAssets) {
+	v_currentPowerElectricity_kW += v.electricityConsumption_kW - v.electricityProduction_kW;
+}
+
 v_currentLoadLowPassed_kW += v_lowPassFactorLoad_fr * ( v_currentPowerElectricity_kW - v_currentLoadLowPassed_kW ); //you want to do deterine the lowpassLoad BEFORE the using the battery. As this behavior of the battery should nog be dependent on the load of the battery in the previous timesteps
 
 /*if( p_batteryAsset != null){
@@ -71861,6 +72191,10 @@ public class J_EAProduction extends zero.J_EA implements Serializable {
 	    this.timestep_h = timestep_h;
 	    this.outputTemperature_degC = outputTemperature_degC;
 //	    traceln("I am instantiated! "+this+" owned by "+ownerAsset);
+	}
+	
+	public void setCapacityElectric_kW(double capacityElectric_kW) {
+		this.capacityElectric_kW = capacityElectric_kW;
 	}
 
 	@Override
@@ -73465,6 +73799,13 @@ public class J_EAEV extends J_EAVehicle implements Serializable {
 	public double getStorageCapacity_kWh() {
 		return storageCapacity_kWh;
 	}
+	
+	public double getTotalChargeAmount_kWh() {
+		return charged_kWh;
+	}
+	public double getTotalDischargeAmount_kWh() {
+		return discharged_kWh;
+	}
 
 	public double getEnergyConsumption_kWhpkm() {
 		return energyConsumption_kWhpkm * vehicleScaling;
@@ -74899,6 +75240,18 @@ public class J_ActivityTrackerTrips extends J_ActivityTracker implements Seriali
 
 		    }
 	
+    	} else if (mobilityPatternType == OL_MobilityPatternType.TRUCK) {
+		    nbActivities = roundToInt(main.inputTruckTrips.getCellNumericValue("sheet1", rowIndex + 2, 2));
+	
+		    for (int i = 0; i < nbActivities; i++){
+		    	starttimes_min.add(main.inputTruckTrips.getCellNumericValue("sheet1", rowIndex + 2, 3 + i * 3));
+		    	endtimes_min.add(main.inputTruckTrips.getCellNumericValue("sheet1", rowIndex + 2, 4 + i * 3));
+		    	distances_km.add(min(350,main.inputTruckTrips.getCellNumericValue("sheet1", rowIndex + 2, 5 + i * 3)));
+
+		    }
+    	} else {
+    		traceln("Mobility pattern type not yet implemented! No trips loaded!");
+    	}
 		    /*while ( starttimes_min.get(v_eventIndex) - time_min < 0) {
 		    	starttimes_min.set( v_eventIndex, starttimes_min.get(v_eventIndex) + 10080 );
 		    	endtimes_min.set( v_eventIndex, endtimes_min.get(v_eventIndex) + 10080 );
@@ -74906,32 +75259,29 @@ public class J_ActivityTrackerTrips extends J_ActivityTracker implements Seriali
 		    	if ( v_eventIndex > nbActivities - 1 ) {
 		    		v_eventIndex = 0;
 		    	}
+	    }
+	    v_nextEventStartTime_min = starttimes_min.get(v_eventIndex);*/
+	    // Duplicate activities until the end of the year
+    	
+	    if (endtimes_min.get(nbActivities-1) < 10080) {
+	    	traceln("Duplicate trips until the end of the year");
+		    for (int weeks = 1; weeks < 52; weeks++) {
+		    	for (int eventIdx = 0; eventIdx < nbActivities; eventIdx++) {
+		    		starttimes_min.add(starttimes_min.get(eventIdx) + 10080*weeks);
+		    		endtimes_min.add(endtimes_min.get(eventIdx) + 10080*weeks);
+		    		distances_km.add(distances_km.get(eventIdx));
+		    	}
 		    }
-		    v_nextEventStartTime_min = starttimes_min.get(v_eventIndex);*/
-		    // Duplicate activities until the end of the year
-		    if (endtimes_min.get(nbActivities-1) < 10080) {
-		    	traceln("Duplicate trips until the end of the year");
-			    for (int weeks = 1; weeks < 52; weeks++) {
-			    	for (int eventIdx = 0; eventIdx < nbActivities; eventIdx++) {
-			    		starttimes_min.add(starttimes_min.get(eventIdx) + 10080*weeks);
-			    		endtimes_min.add(endtimes_min.get(eventIdx) + 10080*weeks);
-			    		distances_km.add(distances_km.get(eventIdx));
-			    	}
-			    }
-		    }
-		    traceln("This EV has %s trips in a year that total %s km.", starttimes_min.size(), distances_km.stream().mapToDouble(f -> f).sum() );
-		    // 'forward' to current activity if tripTracker is instantiated not at the start of the simulation or year
-		    while ( starttimes_min.get(v_eventIndex) < time_min ) {		    	
-		    	v_eventIndex++;		    	
-		    	if ( v_eventIndex > starttimes_min.size() - 1 ) {		    		
-		    		break;
-		    	} 
-		    }
-		    prepareNextActivity(time_min);
-		    
-    	} else {
-    		traceln("Mobility pattern type not yet implemented! No trips loaded!");
-    	}
+	    }
+	    traceln("This EV has %s trips in a year that total %s km.", starttimes_min.size(), distances_km.stream().mapToDouble(f -> f).sum() );
+	    // 'forward' to current activity if tripTracker is instantiated not at the start of the simulation or year
+	    while ( starttimes_min.get(v_eventIndex) < time_min ) {		    	
+	    	v_eventIndex++;		    	
+	    	if ( v_eventIndex > starttimes_min.size() - 1 ) {		    		
+	    		break;
+	    	} 
+	    }
+	    prepareNextActivity(time_min);    	
     }
     
 	   public void manageActivities(double time_min) {
@@ -74942,7 +75292,7 @@ public class J_ActivityTrackerTrips extends J_ActivityTracker implements Seriali
 	    			//main.v_activeTrips.incrementAndGet();
 	    		}
 	    		if (time_min == roundToInt(endtimes_min.get(v_eventIndex) / (60*main.p_timeStep_h)) * (main.p_timeStep_h*60) ) { // is the trip also ending this timestep?
-	    			traceln("Vehicle trip ended in the same timestep as it started!");
+	    			//traceln("Vehicle trip ended in the same timestep as it started!");
 	    			Vehicle.endTrip(v_tripDist_km);
 	    			v_eventIndex++;
 	    			//main.v_activeTrips.decrementAndGet();
@@ -74960,12 +75310,12 @@ public class J_ActivityTrackerTrips extends J_ActivityTracker implements Seriali
 	    		if (time_min == roundToInt(starttimes_min.get(v_eventIndex) / (60*main.p_timeStep_h)) * (main.p_timeStep_h*60) ) { // is the next trip also starting this timestep?
 	    			Vehicle.startTrip();
 	    			//main.v_activeTrips.incrementAndGet();
-	    			traceln("Vehicle trip started in the same timestep as the previous trip ended!!");
+	    			//traceln("Vehicle trip started in the same timestep as the previous trip ended!!");
 	    		}
 	    	}
 	    }
 	    
-	    private void prepareNextActivity(double time_min) {
+	    public void prepareNextActivity(double time_min) {
 		    //starttimes_min.set( v_eventIndex, starttimes_min.get(v_eventIndex) + 10080 );
 			//endtimes_min.set( v_eventIndex, endtimes_min.get(v_eventIndex) + 10080 );
 			
