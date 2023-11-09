@@ -4,7 +4,7 @@
 	         AnyLogic Project File 
 *************************************************	         
 -->
-<AnyLogicWorkspace WorkspaceVersion="1.9" AnyLogicVersion="8.8.4.202307181708" AlpVersion="8.8.2">
+<AnyLogicWorkspace WorkspaceVersion="1.9" AnyLogicVersion="8.8.5.202310311100" AlpVersion="8.8.2">
 <Model>
 	<Id>1658477103134</Id>
 	<Name><![CDATA[Zero_merged_with_Drechtsteden]]></Name>
@@ -1032,7 +1032,7 @@ traceln("*** Start up duration: "+ v_modelStartUpDuration_s + " s ***");
 traceln(" ");
 
 f_runRapidSimulation(); // Do a full year run to have KPIs right away!
-
+gr_scopeRadioButtons.setVisible(true);
 
 
 ]]></StartupCode>
@@ -3621,7 +3621,7 @@ f_runRapidSimulation(); // Do a full year run to have KPIs right away!
 				<Variable Class="PlainVariable">
 					<Id>1699278542863</Id>
 					<Name><![CDATA[v_dailyBaseloadElectricityDemand_kWh]]></Name>
-					<X>432</X><Y>2936</Y>
+					<X>432</X><Y>2946</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -3633,7 +3633,7 @@ f_runRapidSimulation(); // Do a full year run to have KPIs right away!
 				<Variable Class="PlainVariable">
 					<Id>1699278542868</Id>
 					<Name><![CDATA[v_dailyHeatPumpElectricityDemand_kWh]]></Name>
-					<X>432</X><Y>2956</Y>
+					<X>432</X><Y>2966</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -3645,7 +3645,7 @@ f_runRapidSimulation(); // Do a full year run to have KPIs right away!
 				<Variable Class="PlainVariable">
 					<Id>1699278542872</Id>
 					<Name><![CDATA[v_dailyElectricCarsDemand_kWh]]></Name>
-					<X>432</X><Y>2976</Y>
+					<X>432</X><Y>2986</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -3657,7 +3657,7 @@ f_runRapidSimulation(); // Do a full year run to have KPIs right away!
 				<Variable Class="PlainVariable">
 					<Id>1699278542875</Id>
 					<Name><![CDATA[v_dailyElectricTrucksDemand_kWh]]></Name>
-					<X>432</X><Y>2996</Y>
+					<X>432</X><Y>3006</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -3669,7 +3669,7 @@ f_runRapidSimulation(); // Do a full year run to have KPIs right away!
 				<Variable Class="PlainVariable">
 					<Id>1699278542878</Id>
 					<Name><![CDATA[v_dailyNeighborhoodBatteryDemand_kWh]]></Name>
-					<X>432</X><Y>3016</Y>
+					<X>432</X><Y>3026</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -3681,7 +3681,7 @@ f_runRapidSimulation(); // Do a full year run to have KPIs right away!
 				<Variable Class="PlainVariable">
 					<Id>1699278542881</Id>
 					<Name><![CDATA[v_dailyPVGeneration_kWh]]></Name>
-					<X>432</X><Y>3046</Y>
+					<X>432</X><Y>3056</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -3693,7 +3693,7 @@ f_runRapidSimulation(); // Do a full year run to have KPIs right away!
 				<Variable Class="PlainVariable">
 					<Id>1699278542884</Id>
 					<Name><![CDATA[v_dailyWindGeneration_kWh]]></Name>
-					<X>432</X><Y>3066</Y>
+					<X>432</X><Y>3076</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -3705,7 +3705,7 @@ f_runRapidSimulation(); // Do a full year run to have KPIs right away!
 				<Variable Class="PlainVariable">
 					<Id>1699278542887</Id>
 					<Name><![CDATA[v_dailyNeighborhoodBatterySupply_kWh]]></Name>
-					<X>432</X><Y>3086</Y>
+					<X>432</X><Y>3096</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -3717,7 +3717,7 @@ f_runRapidSimulation(); // Do a full year run to have KPIs right away!
 				<Variable Class="PlainVariable">
 					<Id>1699278542890</Id>
 					<Name><![CDATA[v_dailyV2GSupply_kWh]]></Name>
-					<X>432</X><Y>3106</Y>
+					<X>432</X><Y>3116</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -3729,7 +3729,7 @@ f_runRapidSimulation(); // Do a full year run to have KPIs right away!
 				<Variable Class="PlainVariable">
 					<Id>1699278542893</Id>
 					<Name><![CDATA[v_dailyBusinessParkDemand_kWh]]></Name>
-					<X>432</X><Y>3136</Y>
+					<X>432</X><Y>3146</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -3741,7 +3741,7 @@ f_runRapidSimulation(); // Do a full year run to have KPIs right away!
 				<Variable Class="PlainVariable">
 					<Id>1699278542896</Id>
 					<Name><![CDATA[v_dailyBusinessParkSupply_kWh]]></Name>
-					<X>432</X><Y>3156</Y>
+					<X>432</X><Y>3166</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -3753,7 +3753,7 @@ f_runRapidSimulation(); // Do a full year run to have KPIs right away!
 				<Variable Class="PlainVariable">
 					<Id>1699278542898</Id>
 					<Name><![CDATA[v_dailyBusinessParkNetLoad_kWh]]></Name>
-					<X>432</X><Y>3176</Y>
+					<X>432</X><Y>3186</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -3916,6 +3916,32 @@ f_runRapidSimulation(); // Do a full year run to have KPIs right away!
 					<ShowLabel>true</ShowLabel>
 					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
 						<Type><![CDATA[double]]></Type>        
+					</Properties>
+				</Variable>
+				<Variable Class="PlainVariable">
+					<Id>1699524291319</Id>
+					<Name><![CDATA[a_annualBusinessParkNetLoad_kW]]></Name>
+					<ExcludeFromBuild>true</ExcludeFromBuild>
+					<X>430</X><Y>3260</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
+						<Type><![CDATA[double[]]]></Type>        
+					</Properties>
+				</Variable>
+				<Variable Class="PlainVariable">
+					<Id>1699524331159</Id>
+					<Name><![CDATA[a_t_h]]></Name>
+					<ExcludeFromBuild>true</ExcludeFromBuild>
+					<X>430</X><Y>3240</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
+						<Type><![CDATA[double[]]]></Type>        
 					</Properties>
 				</Variable>
 				<Variable Class="Parameter">
@@ -6981,6 +7007,7 @@ traceln(sum(c_gridConnections, x->x.v_rooftopPVInstalledCapacity_kW) + " kWp PV 
 					<ShowLabel>true</ShowLabel>
 					<Body><![CDATA[pauseSimulation();
 b_addKpiVisuals = false;
+pl_belastingsduurkromme.removeAll();
 traceln(" ");
 traceln("*** Running headless simulation *** ");
 traceln(" ");
@@ -6994,7 +7021,7 @@ for (J_EA EA : c_energyAssets) {
 
 for (GridConnection GC : c_gridConnections) {
 	GC.f_resetStates();
-	GC.c_tripTrackers.forEach(tt->tt.v_eventIndex=0);
+	GC.c_tripTrackers.forEach(tt->tt.storeAndResetState());
 	GC.c_tripTrackers.forEach(tt->tt.prepareNextActivity(0));
 	
 }
@@ -7047,7 +7074,7 @@ for (GridNode GN : pop_gridNodes) {
 }
 for (GridConnection GC : c_gridConnections) {
 	GC.f_resetStates();
-	GC.c_tripTrackers.forEach(tt->tt.v_eventIndex=0);
+	GC.c_tripTrackers.forEach(tt->tt.restoreState());	
 	GC.c_tripTrackers.forEach(tt->tt.prepareNextActivity(time(MINUTE)));
 }
 /*for (GridConnection GC : c_gridConnections){
@@ -7055,6 +7082,8 @@ for (GridConnection GC : c_gridConnections) {
 	//h.v_requiredHeatBufferCapacity_kWh = h.v_storedElectricBoilerCurrentCapacity_kWh;
 	//h.v_SOC_kWh = h.v_stored_SOC_kWh;	
 }*/
+
+gr_simulateCostsScreenSmall.setVisible(false);
 
 v_isRapidRun = false;
 b_addKpiVisuals = true;
@@ -7439,7 +7468,7 @@ if (gr_neighborhoodCosts.isVisible() == true){
 }
 gr_simulateCostsScreenSmall.setVisible(true);
 gr_scopeRadioButtons.setVisible(false);
-]]></Body>
+pl_belastingsduurkromme.setVisible(false);]]></Body>
 				</Function>
 				<Function AccessType="default" StaticFunction="false">
 					<ReturnModificator>VOID</ReturnModificator>
@@ -7954,9 +7983,9 @@ switch( p_simulatedArea ){
 
 //gr_heatSettings.setX(-205);
 //gr_heatSettings.setY(380);
-gr_electricitySettings.setX(-200);
-gr_electricitySettings.setY(350);
-gr_electricitySettings.setVisible(false);
+//gr_electricitySettings.setX(-200);
+//gr_electricitySettings.setY(350);
+gr_electricitySettings.setVisible(true);
 
 gr_heatDemandLegenda.setX(-65);
 gr_heatDemandLegenda.setY(-190);
@@ -8078,17 +8107,30 @@ windFarm.p_parentNodeElectricID = c_gridNodesHSMS.get(0).p_agentID;
 windFarm.f_initialize();
 c_gridConnections.add(windFarm);
 
+// Buurtbatterij
+GCGridBattery gridBattery = add_GridBatteries();
+gridBattery.set_p_agentID( "gridBattery0" );
+gridBattery.set_p_gridConnectionCategory( OL_GridConnectionCategory.GRIDBATTERY );
+gridBattery.set_p_connectionCapacity_kW( 10000 );
+gridBattery.set_p_heatingType( OL_GridConnectionHeatingType.NONE );	
+gridBattery.p_parentNodeElectricID = c_gridNodesHSMS.get(0).p_agentID;	
+gridBattery.f_initialize();
+c_gridConnections.add(gridBattery);
+
 // Enkel logistiek centrum met trucks (trucks nog niet toegekend aan bedrijven)
 GCUtility logisticsConnection = add_UtilityConnections();
 logisticsConnection.set_p_agentID( "logistics0" );
 logisticsConnection.set_p_gridConnectionCategory( OL_GridConnectionCategory.UTILITY );
 logisticsConnection.set_p_gridConnectionType( OL_GridConnectionType.LOGISTICS );
-logisticsConnection.set_p_connectionCapacity_kW( 10000 );
+logisticsConnection.set_p_connectionCapacity_kW( 4000 );
+logisticsConnection.set_p_chargingAttitudeVehicles(OL_ChargingAttitude.MAX_POWER);
 	//GC.set_p_ownerID( ownerActorID );
 logisticsConnection.set_p_heatingType( OL_GridConnectionHeatingType.NONE );	
-logisticsConnection.p_parentNodeElectricID = c_gridNodesMSLS.get(0).p_agentID;	
+logisticsConnection.p_parentNodeElectricID = c_gridNodesHSMS.get(0).p_agentID;	
 logisticsConnection.f_initialize();
 c_gridConnections.add(logisticsConnection);
+
+
 
 
 // Bedrijven uit excel files
@@ -8361,6 +8403,12 @@ for (GridConnection GC : Windfarms) {
 	J_EAProduction windTurbine = new J_EAProduction(GC, OL_EnergyAssetType.WINDMILL,null,0,0,0,0,p_timeStep_h,0);
 	c_energyAssets.add(windTurbine);
 	GC.f_connectToJ_EA(windTurbine);
+}
+
+for (GridConnection GC : GridBatteries) {
+	J_EAStorageElectric gridBattery = new J_EAStorageElectric(GC, 1.0, 0.0, 1.0, p_timeStep_h);
+	c_energyAssets.add(gridBattery);
+	GC.f_connectToJ_EA(gridBattery);
 }
 ]]></Body>
 				</Function>
@@ -8658,7 +8706,7 @@ v_totalOperationalCostsVariablePerHousehold = average(pop_EA_Households, x->x.v_
 GridNode GN_main = add_pop_gridNodes();
 GN_main.p_energyType = OL_EnergyCarrierType.ELECTRICITY;		
 GN_main.p_agentID = "HVMV1";
-GN_main.p_capacity_kW= 1000;
+GN_main.p_capacity_kW= 10000;
 //x.currentStatus = row.get( mvlv_transformers.currentsta );
 //x.validFrom = row.get( mvlv_transformers.validfrom );
 GN_main.p_nodeType = OL_GridNodeType.HSMS;
@@ -8745,9 +8793,10 @@ for (EA_Building x : pop_EA_Buildings){
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>true</ShowLabel>
 					<Body><![CDATA[f_sumMolecularEnergyFlows();
-f_sumBatteryUse();
 // Bereken netvlak-data:
 f_sumGridNodeLoads();
+
+f_sumBatteryUse();
 traceln("Electricity imported: "+ v_totalElectricityImport_MWh + " MWh");
 traceln("Electricity exported: "+ v_totalElectricityExport_MWh + " MWh");
 //traceln("Electricity delta in batteries: "+ batteryStoredEnergyDeltaSinceStart_MWh + " MWh");
@@ -8757,6 +8806,21 @@ double electricityProduced_MWh = 0;
 v_totalEnergyCurtailed_MWh = 0;
 v_totalEnergyProduced_MWh = 0;
 v_totalEnergyUsed_MWh = 0;
+
+// Sorting netload values for belastingsduurkromme
+int arraySize = data_annualBusinessParkNetLoad_kW.size();
+double[] netLoadArray_kW = new double[arraySize];
+for(int i=0; i<arraySize ; i++) {
+	netLoadArray_kW[i]=-data_annualBusinessParkNetLoad_kW.getY(i);
+}
+//Arrays.sort(data_annualBusinessParkNetLoad_kW); Sort is not a thing for datasets...
+Arrays.parallelSort(netLoadArray_kW);
+data_annualBusinessParkNetLoad_kW.reset();
+for(int i=0; i< arraySize; i++) {
+	data_annualBusinessParkNetLoad_kW.add(i*p_timeStep_h, -netLoadArray_kW[i]);
+}
+pl_belastingsduurkromme.addDataSet(data_annualBusinessParkNetLoad_kW,"Netbelastingsduurkromme");
+pl_belastingsduurkromme.setVisible(true);
 
 double totalDistanceTrucks_km = 0;
 double deltaThermalEnergySinceStart_MWh = 0;
@@ -9174,6 +9238,7 @@ if(v_isRapidRun == true){
 		v_dailyBusinessParkSupply_kWh = 0;
 		v_dailyBusinessParkNetLoad_kWh = 0;
 	}
+	data_annualBusinessParkNetLoad_kW.add(t_h,sum(c_gridNodesHSMS, x->x.v_currentLoadElectricity_kW));
 }]]></Body>
 				</Function>
 				<Function AccessType="default" StaticFunction="false">
@@ -9194,10 +9259,10 @@ if(v_isRapidRun == true){
 double windTurbinePower = 3000; // Assume standard 3MW windturbine
 
 double installedWindPower_kW = sumWhere(c_energyAssets,p->p.getElectricCapacity_kW(),p -> p.energyAssetType == OL_EnergyAssetType.WINDMILL);
-double nbWindTurbinesInstalled = sum(c_energyAssets, p->p.energyAssetType == OL_EnergyAssetType.WINDMILL ? 1.0 : 0.0);
+int nbWindTurbinesInstalled = count(c_energyAssets, p->p.energyAssetType == OL_EnergyAssetType.WINDMILL);
 traceln("%s wind turbines with a total power of %s MW", nbWindTurbinesInstalled, installedWindPower_kW);
 
-double powerPerWindTurbine_kW = nbWindTurbines * windTurbinePower / nbWindTurbinesInstalled;
+double powerPerWindTurbine_kW = nbWindTurbines * windTurbinePower / (double)nbWindTurbinesInstalled;
 
 for(J_EA j_ea : c_energyAssets) {
 	if (j_ea.energyAssetType == OL_EnergyAssetType.WINDMILL) {
@@ -9424,6 +9489,129 @@ if( nbEtruckCurrent > nbElectricTrucksGoal){
 }	
 
 traceln("%s diesel trucks and %s eTrucks found", nbDieseltrucksCurrent, nbEtruckCurrent);
+]]></Body>
+				</Function>
+				<Function AccessType="default" StaticFunction="false">
+					<ReturnModificator>VOID</ReturnModificator>
+					<ReturnType><![CDATA[double]]></ReturnType>
+					<Id>1699535988873</Id>
+					<Name><![CDATA[f_setGridBatteries]]></Name>
+					<X>1590</X><Y>-1120</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Parameter>
+						<Name><![CDATA[p_neighborhoodMaxCapacity_MWh]]></Name>
+						<Type><![CDATA[double]]></Type>
+					</Parameter>
+					<Body><![CDATA[// Setting gridbatteries
+
+double installedWindPower_kW = sumWhere(c_energyAssets,p->p.getElectricCapacity_kW(),p -> p.energyAssetType == OL_EnergyAssetType.WINDMILL);
+int nbGridBatteries = count(c_energyAssets, p->p.energyAssetType == OL_EnergyAssetType.STORAGE_ELECTRIC);
+//traceln("%s wind turbines with a total power of %s MW", nbWindTurbinesInstalled, installedWindPower_kW);
+
+for(J_EA j_ea : c_energyAssets) {
+	if (j_ea.energyAssetType == OL_EnergyAssetType.STORAGE_ELECTRIC) {
+		((J_EAStorageElectric)j_ea).storageCapacity_kWh=(1000*p_neighborhoodMaxCapacity_MWh / (double)nbGridBatteries);
+		((J_EAStorageElectric)j_ea).capacityElectric_kW=(1000*p_neighborhoodMaxCapacity_MWh / (double)nbGridBatteries);
+		traceln("Setting battery capacity to %s kWh", ((J_EAStorageElectric)j_ea).storageCapacity_kWh);
+	}
+}
+	
+//c_energyAssets.forEach();
+/*
+if( sl_rooftopPVCompanies.getValue()/100.0*c_gridConnections.size() < PVsystems){
+	while ( sl_rooftopPVCompanies.getValue()/100.0*c_gridConnections.size() < PVsystems) { // remove excess PV systems
+		GridConnection h = findFirst(c_gridConnections, x->x.v_hasPV==true);
+		J_EA pvAsset = findFirst(h.c_productionAssets, p -> p.energyAssetType == OL_EnergyAssetType.PHOTOVOLTAIC );
+		traceln("Found PV system: " + pvAsset);
+		if (pvAsset!=null) {
+			v_totalInstalledPVPower_kW -= pvAsset.getElectricCapacity_kW();
+			h.c_productionAssets.remove(pvAsset);
+			c_energyAssets.remove(pvAsset);
+			c_productionAssets.remove(pvAsset);
+			traceln("Removing PV from GridConnection:" + h.p_agentID);
+			h.v_hasPV = false;
+		}
+		PVsystems=count(c_gridConnections, x->x.v_hasPV == true);		
+	}
+ 
+} else { 
+	while ( sl_rooftopPVCompanies.getValue()/100.0 * c_gridConnections.size() > PVsystems) {
+		GridConnection h = findFirst(c_gridConnections, x->x.v_hasPV==false);
+		//traceln("Check presence of solarpanels: " + h.v_hasPV);	
+		
+		OL_EnergyAssetType assetType = OL_EnergyAssetType.valueOf(t.required( "type" ).textValue()) ;
+		String assetName = t.required( "name" ).textValue();	
+				
+		double capacityElectricity_kW = t.required( "capacityElectricity_kW").doubleValue() ;
+		double capacityHeat_kW = 0.0;
+		double yearlyProductionHydrogen_kWh = 0.0;
+		double yearlyProductionMethane_kWh = 0.0;
+		double outputTemperature_degC = 0.0;
+		
+		J_EAProduction productionAsset = new J_EAProduction ( h, assetType, assetName, capacityElectricity_kW, capacityHeat_kW, yearlyProductionMethane_kWh, yearlyProductionHydrogen_kWh, p_timeStep_h, outputTemperature_degC );
+		h.f_connectToJ_EA(productionAsset);
+		
+		//c_productionAssets.add(productionAsset);
+		c_energyAssets.add(productionAsset);
+		v_totalInstalledPVPower_kW += capacityElectricity_kW;
+	
+		PVsystems=count(c_gridConnections, x->x.v_hasPV == true);	
+		traceln("Added PV to GridConnection: " + h.p_agentID);
+	}
+	
+}	
+
+v_totalInstalledPVPower_kW = sumWhere(c_energyAssets,p->p.getElectricCapacity_kW(),p -> p.energyAssetType == OL_EnergyAssetType.PHOTOVOLTAIC);
+t_numberOfRooftopPV.setText(count(c_gridConnections, x->x.v_hasPV == true));
+
+*/
+/*
+//ADD PV
+while (sum(c_gridConnections, x->x.v_rooftopPVInstalledCapacity_kW) < v_rooftopPV_kWp){
+	double kWRequired = v_rooftopPV_kWp - sum(c_gridConnections, x->x.v_rooftopPVInstalledCapacity_kW);
+	
+	EA_UtilityObject UO = randomWhere(c_gridConnections, x->x.v_rooftopPVInstalledCapacity_kW < x.v_PVSliderBusinessParkMax );
+	
+	if (kWRequired > UO.v_PVSliderBusinessParkMax){
+		UO.v_rooftopPVInstalledCapacity_kW = UO.v_PVSliderBusinessParkMax;
+	}
+	else {
+		UO.v_rooftopPVInstalledCapacity_kW = kWRequired;
+	}
+	//traceln( UO.getIndex() + " has " + UO.v_rooftopPVInstalledCapacity_kW + " kWp PV");
+}
+
+//REMOVE PV
+while (sum(c_gridConnections, x->x.v_rooftopPVInstalledCapacity_kW) > v_rooftopPV_kWp){
+	double kWToRemove = sum(c_gridConnections, x->x.v_rooftopPVInstalledCapacity_kW) - v_rooftopPV_kWp;
+	
+	EA_UtilityObject UO = c_gridConnections.get(0);
+	
+	if (count(c_gridConnections, x->x.v_rooftopPVInstalledCapacity_kW > 0 && x.p_PVInstalledCapacity_kW > 0 && x.p_PVInvestmentkW > 0) > 0){
+		UO = randomWhere(c_gridConnections, x->x.v_rooftopPVInstalledCapacity_kW > 0 && x.p_PVInstalledCapacity_kW > 0 && x.p_PVInvestmentkW > 0);
+	}
+	else if (count(c_gridConnections, x->x.v_rooftopPVInstalledCapacity_kW > 0 && x.p_PVInstalledCapacity_kW > 0 ) > 0){
+		UO = randomWhere(c_gridConnections, x->x.v_rooftopPVInstalledCapacity_kW > 0 && x.p_PVInstalledCapacity_kW > 0);
+	}
+	else {
+		UO = randomWhere(c_gridConnections, x->x.v_rooftopPVInstalledCapacity_kW > 0);
+	}
+	
+	//EA_UtilityObject UO = randomWhere(c_gridConnections, x->x.v_rooftopPVInstalledCapacity_kW > 0);
+	if (kWToRemove > UO.v_rooftopPVInstalledCapacity_kW){
+		UO.v_rooftopPVInstalledCapacity_kW = 0;
+	}
+	else {
+		UO.v_rooftopPVInstalledCapacity_kW -= kWToRemove;
+	}
+}
+
+traceln(sum(c_gridConnections, x->x.v_rooftopPVInstalledCapacity_kW) + " kWp PV installed");
+*/
+
 ]]></Body>
 				</Function>
 			</Functions>
@@ -12148,6 +12336,28 @@ traceln("%s diesel trucks and %s eTrucks found", nbDieseltrucksCurrent, nbEtruck
 					</RecurrenceCode>
 					<FreezeXAxis>false</FreezeXAxis>
 					<SamplesToKeep>365</SamplesToKeep>
+				</DataSet>
+    			<DataSet>
+					<Id>1699524082116</Id>
+					<Name><![CDATA[data_annualBusinessParkNetLoad_kW]]></Name>
+					<X>430</X><Y>2920</Y>
+					<Label><X>15</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<AutoUpdate>false</AutoUpdate>
+					<OccurrenceAtTime>true</OccurrenceAtTime>
+					<OccurrenceDate>1687075200000</OccurrenceDate>
+					<OccurrenceTime Class="CodeUnitValue">
+						<Code><![CDATA[0]]></Code>
+						<Unit Class="TimeUnits"><![CDATA[HOUR]]></Unit>
+					</OccurrenceTime>
+					<RecurrenceCode Class="CodeUnitValue">
+						<Code><![CDATA[1]]></Code>
+						<Unit Class="TimeUnits"><![CDATA[HOUR]]></Unit>
+					</RecurrenceCode>
+					<FreezeXAxis>false</FreezeXAxis>
+					<SamplesToKeep>35040</SamplesToKeep>
 				</DataSet>
 			</AnalysisData>
 			<Connectivity>
@@ -15291,18 +15501,18 @@ traceln("%s diesel trucks and %s eTrucks found", nbDieseltrucksCurrent, nbEtruck
 						<Enabled>true</Enabled>
 						<ActionCode><![CDATA[switch (ra_chargingStrategy.getValue()){
 	case 0:
-		for (GCHouse h: Houses) {
+		for (GridConnection h: c_gridConnections) {
 			h.p_chargingAttitudeVehicles = OL_ChargingAttitude.SIMPLE;
 		}
 	break;
 	case 1:
-		for (GCHouse h: Houses) {
+		for (GridConnection h: c_gridConnections) {
 			h.p_chargingAttitudeVehicles = OL_ChargingAttitude.CHEAP;
 		}
 	break;
 	case 2:
-		for (GCHouse h: Houses) {
-			h.p_chargingAttitudeVehicles = OL_ChargingAttitude.V2G;
+		for (GridConnection h: c_gridConnections) {
+			h.p_chargingAttitudeVehicles = OL_ChargingAttitude.MAX_POWER;
 		}
 	break;
 }
@@ -15314,7 +15524,7 @@ traceln("%s diesel trucks and %s eTrucks found", nbDieseltrucksCurrent, nbEtruck
 						<Orientation>VERTICAL</Orientation>
 						<Button><![CDATA[Gewoon laden]]></Button>
 						<Button><![CDATA[Slim laden]]></Button>
-						<Button><![CDATA[V2G]]></Button>
+						<Button><![CDATA[MAX_POWER]]></Button>
 						<LinkTo>false</LinkTo>
 					</ExtendedProperties>
 				</Control>
@@ -16581,6 +16791,7 @@ rectangle_electricitySettings.setVisible(false);]]></OnClickCode>
 				<Text>
 					<Id>1696520897131</Id>
 					<Name><![CDATA[text14]]></Name>
+					<ExcludeFromBuild>true</ExcludeFromBuild>
 					<X>670</X><Y>-180</Y>
 					<Label><X>0</X><Y>-10</Y></Label>
 					<PublicFlag>true</PublicFlag>
@@ -37605,7 +37816,6 @@ f_resetSettings();
 				 	<EmbeddedIcon>false</EmbeddedIcon>				
 					<Id>1696520903608</Id>
 					<Name><![CDATA[sl_neighborhoodBattery]]></Name>
-					<ExcludeFromBuild>true</ExcludeFromBuild>
 					<X>70</X><Y>65</Y>
 					<Label><X>0</X><Y>-10</Y></Label>
 					<PublicFlag>true</PublicFlag>
@@ -37615,22 +37825,23 @@ f_resetSettings();
 					<BasicProperties Width="100" Height="30">
                         <EmbeddedIcon>false</EmbeddedIcon>	
 						<Enabled>true</Enabled>
-						<ActionCode><![CDATA[/*p_neighborhoodMaxCapacity_MWh = sl_neighborhoodBattery.getValue();
-p_neighborhoodMaxPower_MW = p_neighborhoodMaxCapacity_MWh / 2;
+						<ActionCode><![CDATA[double p_neighborhoodMaxCapacity_MWh = sl_neighborhoodBattery.getValue();
+//p_neighborhoodMaxPower_MW = p_neighborhoodMaxCapacity_MWh / 2;
 //v_batteryDistributionFinished = false;
+f_setGridBatteries(p_neighborhoodMaxCapacity_MWh);
 
 t_neighborhoodBatteryCapacity.setText(roundToDecimal(p_neighborhoodMaxCapacity_MWh,1));
 f_resetSettings();
-*/
-traceln("sl_neighborhoodBattery is awaiting new implementation after model merge! Currently not functional");
+
+//traceln("sl_neighborhoodBattery is awaiting new implementation after model merge! Currently not functional");
 ]]></ActionCode>
 					</BasicProperties>
 					<ExtendedProperties>
 						<DefaultValueCode><![CDATA[0]]></DefaultValueCode>
 						<Orientation>HORIZONTAL</Orientation>
 						<MinValue><![CDATA[0]]></MinValue>
-						<MaxValue><![CDATA[10]]></MaxValue>
-						<Step><![CDATA[0.5]]></Step>
+						<MaxValue><![CDATA[50]]></MaxValue>
+						<Step><![CDATA[5]]></Step>
 						<LinkTo>false</LinkTo>
 					</ExtendedProperties>
 				</Control>
@@ -41472,7 +41683,7 @@ rectanglePerHouseholdCosts.setFillColor(new Color (255, 255, 255, 100));
 				<Group>
 					<Id>1696520907355</Id>
 					<Name><![CDATA[gr_businessParkLoad]]></Name>
-					<X>245</X><Y>103</Y>
+					<X>250</X><Y>90</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>true</PublicFlag>
 					<PresentationFlag>false</PresentationFlag>
@@ -41530,7 +41741,7 @@ rectanglePerHouseholdCosts.setFillColor(new Color (255, 255, 255, 100));
     			<TimePlot>
 					<Id>1696520907365</Id>
 					<Name><![CDATA[businessParkNetLoadTimePlot]]></Name>
-					<X>-225</X><Y>-203</Y>
+					<X>-230</X><Y>40</Y>
 					<Label><X>0</X><Y>-10</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -41584,7 +41795,7 @@ rectanglePerHouseholdCosts.setFillColor(new Color (255, 255, 255, 100));
 					<Id>1696520907360</Id>
 					<Expression><![CDATA[my_dataset]]></Expression>
 					<Color>-8388480</Color>
-					<Expression2><![CDATA[15]]></Expression2>
+					<Expression2><![CDATA[sum(c_energyAssets, x->x.electricityConsumption_kW)]]></Expression2>
 					<Expression2Flag>true</Expression2Flag>
 						<PointStyle>NONE</PointStyle>
 						<LineWidth>2.0</LineWidth>
@@ -41594,7 +41805,7 @@ rectanglePerHouseholdCosts.setFillColor(new Color (255, 255, 255, 100));
 					<Id>1696520907361</Id>
 					<Expression><![CDATA[my_dataset1]]></Expression>
 					<Color>-16744448</Color>
-					<Expression2><![CDATA[5]]></Expression2>
+					<Expression2><![CDATA[-sum(c_energyAssets, x->x.electricityProduction_kW)]]></Expression2>
 					<Expression2Flag>true</Expression2Flag>
 						<PointStyle>NONE</PointStyle>
 						<LineWidth>2.0</LineWidth>
@@ -41609,11 +41820,66 @@ rectanglePerHouseholdCosts.setFillColor(new Color (255, 255, 255, 100));
 						<PointStyle>NONE</PointStyle>
 						<LineWidth>2.0</LineWidth>
 					</DatasetExpression>
-					<SamplesToKeep>196</SamplesToKeep>
-					<TimeWindowExpression><![CDATA[196]]></TimeWindowExpression>
+					<SamplesToKeep>672</SamplesToKeep>
+					<TimeWindowExpression><![CDATA[168]]></TimeWindowExpression>
 					<FillAreaUnderLine>false</FillAreaUnderLine>
 					<LabelFormat>dd_MM</LabelFormat>
     			</TimePlot>
+    			<Plot>
+					<Id>1699525062036</Id>
+					<Name><![CDATA[pl_belastingsduurkromme]]></Name>
+					<X>-230</X><Y>-150</Y>
+					<Label><X>0</X><Y>-10</Y></Label>
+					<PublicFlag>true</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>false</ShowLabel>
+					<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+					<AutoUpdate>false</AutoUpdate>
+					<OccurrenceAtTime>true</OccurrenceAtTime>
+					<OccurrenceDate>1699603200000</OccurrenceDate>
+					<OccurrenceTime Class="CodeUnitValue">
+						<Code><![CDATA[0]]></Code>
+						<Unit Class="TimeUnits"><![CDATA[HOUR]]></Unit>
+					</OccurrenceTime>
+					<RecurrenceCode Class="CodeUnitValue">
+						<Code><![CDATA[1]]></Code>
+						<Unit Class="TimeUnits"><![CDATA[HOUR]]></Unit>
+					</RecurrenceCode>
+					<EmbeddedIcon>false</EmbeddedIcon>
+					<Width>470</Width>
+					<Height>210</Height>
+					<BackgroundColor/>
+					<BorderColor/>
+					<ChartArea>
+						<XOffset>50</XOffset>
+						<YOffset>30</YOffset>
+						<Width>390</Width>
+						<Height>120</Height>
+						<BackgroundColor>-1</BackgroundColor>
+						<BorderColor>-16777216</BorderColor>
+						<GridColor>-12566464</GridColor>
+					</ChartArea>
+					<Legend>
+						<Place>SOUTH</Place>
+						<TextColor>-16777216</TextColor>
+						<Size>30</Size>
+					</Legend>
+					<Labels>
+						<HorLabelsPosition>DEFAULT</HorLabelsPosition>
+						<VerLabelsPosition>DEFAULT</VerLabelsPosition>
+						<TextColor>-12566464</TextColor>
+					</Labels>
+					<ShowLegend>true</ShowLegend>
+					<VerScaleFromExpression><![CDATA[0]]></VerScaleFromExpression>
+					<VerScaleToExpression><![CDATA[1]]></VerScaleToExpression>
+					<VerScaleType>AUTO</VerScaleType>
+					<DrawLine>true</DrawLine>
+					<Interpolation>LINEAR</Interpolation>
+					<SamplesToKeep>1</SamplesToKeep>
+					<HorScaleFromExpression><![CDATA[0]]></HorScaleFromExpression>
+					<HorScaleToExpression><![CDATA[8760]]></HorScaleToExpression>
+					<HorScaleType>FIXED</HorScaleType>
+    			</Plot>
 			</Presentation>
 
 				</Group>
@@ -43521,72 +43787,6 @@ if(v_costsUnknown == true){
 						<LabelText><![CDATA[Run Rapid Simulation]]></LabelText>
 					</ExtendedProperties>
 				</Control>
-				<Text>
-					<Id>1699277583684</Id>
-					<Name><![CDATA[text248]]></Name>
-					<X>1755</X><Y>170</Y>
-					<Label><X>0</X><Y>-10</Y></Label>
-					<PublicFlag>true</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
-					<ShowLabel>false</ShowLabel>
-					<DrawMode>SHAPE_DRAW_2D</DrawMode>
-					<EmbeddedIcon>false</EmbeddedIcon>
-					<Z>0</Z>
-					<Rotation>0.0</Rotation>
-					<Color>-16777216</Color>
-					<Text><![CDATA[Grafiek]]></Text>
-					<Font>
-						<Name>SansSerif</Name>
-						<Size>16</Size>
-						<Style>1</Style>
-					</Font>
-					<Alignment>LEFT</Alignment>
-				</Text>
-				<Text>
-					<Id>1699277583689</Id>
-					<Name><![CDATA[text247]]></Name>
-					<X>1612</X><Y>170</Y>
-					<Label><X>0</X><Y>-10</Y></Label>
-					<PublicFlag>true</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
-					<ShowLabel>false</ShowLabel>
-					<DrawMode>SHAPE_DRAW_2D</DrawMode>
-					<EmbeddedIcon>false</EmbeddedIcon>
-					<Z>0</Z>
-					<Rotation>0.0</Rotation>
-					<Color>-16777216</Color>
-					<Text><![CDATA[Tijd]]></Text>
-					<Font>
-						<Name>SansSerif</Name>
-						<Size>16</Size>
-						<Style>1</Style>
-					</Font>
-					<Alignment>LEFT</Alignment>
-				</Text>
-				<Line>
-					<Id>1699277583704</Id>
-					<Name><![CDATA[line10]]></Name>
-					<X>1603</X><Y>175</Y>
-					<Label><X>10</X><Y>0</Y></Label>
-					<PublicFlag>true</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
-					<ShowLabel>false</ShowLabel>
-					<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
-					<EmbeddedIcon>false</EmbeddedIcon>
-					<Z>0</Z>
-					<ZHeight>10</ZHeight>
-					<LineWidth>1</LineWidth>
-					<LineColor>-8355712</LineColor>
-					<LineMaterial>null</LineMaterial>
-					<LineStyle>SOLID</LineStyle>
-					<BeginArrowSize>1</BeginArrowSize>
-					<BeginArrowStyle>0</BeginArrowStyle>
-					<EndArrowSize>1</EndArrowSize>
-					<EndArrowStyle>0</EndArrowStyle>
-					<Dx>0</Dx>
-					<Dy>120</Dy>
-					<Dz>0</Dz>
-				</Line>
 				<Group>
 					<Id>1699288551374</Id>
 					<Name><![CDATA[gr_businessParkAnnualSupplyAndDemand]]></Name>
@@ -44074,11 +44274,29 @@ rb_graph.setValue(0, true);]]></ActionCode>
 		gr_businessParkAnnualSupplyAndDemand.setVisible(false);
 		gr_businessParkSupplyAndDemand.setVisible(true);	
 	}
+	//businessParkNetLoadTimePlot.setVisible(false);
+	gr_businessParkLoad.setVisible(false);
+	
+	/*
+	if (gr_businessParkSupplyAndDemand.isVisible() == false){
+		gr_businessParkSupplyAndDemand.setVisible(true);
+	}
+	if(gr_neighborhoodCosts.isVisible() == true){
+		gr_neighborhoodCosts.setVisible(false);
+		gr_simulateCostsScreen.setVisible(false);
+	}
+	if (gr_businessParkLoad.isVisible() == true){
+		gr_businessParkLoad.setVisible(false);
+	}
+	*/
+	
 }
 else if (rb_graph.getValue() == 1){
 	//gr_resultsBusinessParkImbalance.setVisible(true);
-	gr_businessParkAnnualSupplyAndDemand.setVisible(false);
+	gr_businessParkAnnualSupplyAndDemand.setVisible(false);	
 	gr_businessParkSupplyAndDemand.setVisible(false);
+	//businessParkNetLoadTimePlot.setVisible(true);
+	gr_businessParkLoad.setVisible(true);
 }
 
 rb_area.setValue(rb_area.getValue(), true);]]></ActionCode>
@@ -49188,7 +49406,8 @@ else {
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>true</ShowLabel>
 					<Body><![CDATA[double availableCapacityFromBatteries = p_batteryAsset == null ? 0 : p_batteryAsset.getCapacityAvailable_kW(); 
-double availableChargingCapacity = v_allowedCapacity_kW + availableCapacityFromBatteries - v_currentPowerElectricity_kW;
+//double availableChargingCapacity = v_allowedCapacity_kW + availableCapacityFromBatteries - v_currentPowerElectricity_kW;
+double availableChargingCapacity = p_connectionCapacity_kW + availableCapacityFromBatteries - v_currentPowerElectricity_kW;
 switch (p_chargingAttitudeVehicles) {
 	case SIMPLE:
 		f_simpleCharging();
@@ -69851,10 +70070,11 @@ traceln("NetConnection connecting to " + numberOfEnergyAssets + " EnergyAssets")
 		f_batteryManagementPrice(v_batterySOC_fr);
 	}
 	
-	p_batteryAsset.f_updateAllFlows(p_batteryAsset.v_powerFraction_fr);
-	
-	v_batteryPowerElectric_kW = p_batteryAsset.electricityConsumption_kW - p_batteryAsset.electricityProduction_kW;
-	v_currentPowerElectricity_kW += v_batteryPowerElectric_kW;
+	if ( p_batteryAsset.getStorageCapacity_kWh() != 0.0) {
+		p_batteryAsset.f_updateAllFlows(p_batteryAsset.v_powerFraction_fr);	
+		v_batteryPowerElectric_kW = p_batteryAsset.electricityConsumption_kW - p_batteryAsset.electricityProduction_kW;
+		v_currentPowerElectricity_kW += v_batteryPowerElectric_kW;
+	}
 }]]></Body>
 				</Function>
 				<Function AccessType="default" StaticFunction="false">
@@ -69975,48 +70195,52 @@ traceln("NetConnection connecting to " + numberOfEnergyAssets + " EnergyAssets")
 						<Name><![CDATA[batterySOC]]></Name>
 						<Type><![CDATA[double]]></Type>
 					</Parameter>
-					<Body><![CDATA[if (p_batteryAsset.getStorageCapacity_kWh() != 0){
+					<Body><![CDATA[if (p_batteryAsset.getStorageCapacity_kWh() != 0){	
+	double currentCoopElectricitySurplus_kW = 0;
+	double CoopConnectionCapacity_kW = 0;
+	double v_previousPowerBattery_kW = p_batteryAsset.electricityConsumption_kW-p_batteryAsset.electricityProduction_kW;
+	//traceln("Previous battery power: " + v_previousPowerElectricity_kW);
 	if(l_ownerActor.getConnectedAgent() instanceof ConnectionOwner) {
-		double currentCoopElectricitySurplus_kW = 0;
-		double CoopConnectionCapacity_kW = 0;
-		double v_previousPowerBattery_kW = p_batteryAsset.electricityConsumption_kW-p_batteryAsset.electricityProduction_kW;
-		//traceln("Previous battery power: " + v_previousPowerElectricity_kW);
 		if(((ConnectionOwner)l_ownerActor.getConnectedAgent()).p_CoopParent instanceof EnergyCoop ) { // get electricity balance from Coop 			
 			currentCoopElectricitySurplus_kW = ((ConnectionOwner)l_ownerActor.getConnectedAgent()).p_CoopParent.v_electricitySurplus_kW + v_previousPowerBattery_kW;
 			CoopConnectionCapacity_kW = 0.9*((ConnectionOwner)l_ownerActor.getConnectedAgent()).p_CoopParent.v_allowedCapacity_kW; // Use only 90% of capacity for robustness against delay			
 		} else { // Get gridload directly from node
 			GridNode node = l_parentNodeElectric.getConnectedAgent();
-			currentCoopElectricitySurplus_kW = node.v_currentLoadElectricity_kW + v_previousPowerBattery_kW;			
+			currentCoopElectricitySurplus_kW = -node.v_currentLoadElectricity_kW + v_previousPowerBattery_kW;			
 			CoopConnectionCapacity_kW = 0.9*node.p_capacity_kW; // Use only 90% of capacity for robustness against delay
 		}
-		
-		double availableChargePower_kW = CoopConnectionCapacity_kW + currentCoopElectricitySurplus_kW; // Max battery charging power within grid capacity
-		double availableDischargePower_kW = currentCoopElectricitySurplus_kW - CoopConnectionCapacity_kW; // Max discharging power within grid capacity
-		
-		double FeedbackGain_kWpSOC = 1.5 * p_batteryAsset.getElectricCapacity_kW(); // How strongly to aim for SOC setpoint
-		double FeedforwardGain_kWpKw = 0.1; // Feedforward based on current surpluss in Coop
-		double chargeOffset_kW = 0; // Charging 'bias', basically increases SOC setpoint slightly during the whole day.
-		double chargeSetpoint_kW = 0;
-		
-		double SOC_setp_fr = 0.5;
-		if (main.v_totalInstalledWindPower_kW > 10000) {
-			SOC_setp_fr = 0.95 - 0.95 * main.v_WindYieldForecast_fr - 0.9*main.v_SolarYieldForecast_fr;
-			traceln("Forecast-based SOC setpoint: " + SOC_setp_fr + " %");
-		} else if (main.v_totalInstalledWindPower_kW == 0 & main.v_totalInstalledPVPower_kW > 50) {		// this logic should activate for the buurtelektrificatie-casus	
-			SOC_setp_fr = (0.7 + 0.2 * Math.sin(2*Math.PI*(time(HOUR)-10)/24))-2*main.v_SolarYieldForecast_fr; // Sinusoidal setpoint: aim for high SOC at 18:00h
-			//traceln("Previous battery power: " + v_previousPowerElectricity_kW + ", previous Coop surpluss: " + currentCoopElectricitySurplus_kW);
-			FeedforwardGain_kWpKw = 0.0; // Feedforward based on current surpluss in Coop			
-		} else { // this logic should activate for the bedrijventerrein-casus	
-			FeedforwardGain_kWpKw = 0.1; // Feedforward based on current surpluss in Coop
-			SOC_setp_fr = (0.5 + 0.35 * Math.sin(2*Math.PI*(time(HOUR)-10)/24))*(1-0.8*main.v_WindYieldForecast_fr); // Sinusoidal setpoint: aim for low SOC at 6:00h, high SOC at 18:00h. 
-		}
-		
-		chargeSetpoint_kW = FeedforwardGain_kWpKw * (currentCoopElectricitySurplus_kW - chargeOffset_kW) + (SOC_setp_fr - batterySOC) * FeedbackGain_kWpSOC;
-		chargeSetpoint_kW = min(max(chargeSetpoint_kW, availableDischargePower_kW),availableChargePower_kW); // Don't allow too much (dis)charging!
-		p_batteryAsset.v_powerFraction_fr = max(-1,min(1, chargeSetpoint_kW / p_batteryAsset.getElectricCapacity_kW())); // Convert to powerFraction and limit power
-		//traceln("Coop surpluss " + currentCoopElectricitySurplus_kW + "kW, Battery charging power " + p_batteryAsset.v_powerFraction_fr*p_batteryAsset.j_ea.getElectricCapacity_kW() + " kW at " + currentBatteryStateOfCharge*100 + " % SOC");
-	
+	} else { // Get gridload directly from node
+		GridNode node = l_parentNodeElectric.getConnectedAgent();
+		currentCoopElectricitySurplus_kW = -node.v_currentLoadElectricity_kW + v_previousPowerBattery_kW;			
+		CoopConnectionCapacity_kW = 0.9*node.p_capacity_kW; // Use only 90% of capacity for robustness against delay
 	}
+	//traceln("Operating buurtbatterij, current local surplus is %s kW.", currentCoopElectricitySurplus_kW);
+	
+	double availableChargePower_kW = CoopConnectionCapacity_kW + currentCoopElectricitySurplus_kW; // Max battery charging power within grid capacity
+	double availableDischargePower_kW = currentCoopElectricitySurplus_kW - CoopConnectionCapacity_kW; // Max discharging power within grid capacity
+	
+	double FeedbackGain_kWpSOC = 1.5 * p_batteryAsset.getElectricCapacity_kW(); // How strongly to aim for SOC setpoint
+	double FeedforwardGain_kWpKw = 0.1; // Feedforward based on current surpluss in Coop
+	double chargeOffset_kW = 0; // Charging 'bias', basically increases SOC setpoint slightly during the whole day.
+	double chargeSetpoint_kW = 0;
+	
+	double SOC_setp_fr = 0.5;
+	/*if (main.v_totalInstalledWindPower_kW > 10000) {
+		SOC_setp_fr = 0.95 - 0.95 * main.v_WindYieldForecast_fr - 0.9*main.v_SolarYieldForecast_fr;
+		traceln("Forecast-based SOC setpoint: " + SOC_setp_fr + " %");
+	} else if (main.v_totalInstalledWindPower_kW == 0 & main.v_totalInstalledPVPower_kW > 50) {		// this logic should activate for the buurtelektrificatie-casus	
+		SOC_setp_fr = (0.7 + 0.2 * Math.sin(2*Math.PI*(time(HOUR)-10)/24))-2*main.v_SolarYieldForecast_fr; // Sinusoidal setpoint: aim for high SOC at 18:00h
+		//traceln("Previous battery power: " + v_previousPowerElectricity_kW + ", previous Coop surpluss: " + currentCoopElectricitySurplus_kW);
+		FeedforwardGain_kWpKw = 0.0; // Feedforward based on current surpluss in Coop			
+	} else { // this logic should activate for the bedrijventerrein-casus	*/
+		FeedforwardGain_kWpKw = 0.1; // Feedforward based on current surpluss in Coop
+		SOC_setp_fr = (0.5 + 0.35 * Math.sin(2*Math.PI*(time(HOUR)-10)/24))*(1-0.8*main.v_WindYieldForecast_fr); // Sinusoidal setpoint: aim for low SOC at 6:00h, high SOC at 18:00h. 
+	//}
+	
+	chargeSetpoint_kW = FeedforwardGain_kWpKw * (currentCoopElectricitySurplus_kW - chargeOffset_kW) + (SOC_setp_fr - batterySOC) * FeedbackGain_kWpSOC;
+	chargeSetpoint_kW = min(max(chargeSetpoint_kW, availableDischargePower_kW),availableChargePower_kW); // Don't allow too much (dis)charging!
+	p_batteryAsset.v_powerFraction_fr = max(-1,min(1, chargeSetpoint_kW / p_batteryAsset.getElectricCapacity_kW())); // Convert to powerFraction and limit power
+	//traceln("Coop surpluss " + currentCoopElectricitySurplus_kW + "kW, Battery charging power " + p_batteryAsset.v_powerFraction_fr*p_batteryAsset.j_ea.getElectricCapacity_kW() + " kW at " + currentBatteryStateOfCharge*100 + " % SOC");
 }]]></Body>
 				</Function>
 				<Function AccessType="default" StaticFunction="false">
@@ -70066,6 +70290,10 @@ v_selfConsumption_fr = 1 - (v_electricityDeliveredToGrid_kWh + v_heatDelivered_k
 v_selfSufficiency_fr = 1 - (v_electricityDrawnFromGrid_kWh + v_heatDrawn_kWh + v_methaneDrawn_kWh + v_hydrogenDrawn_kWh + v_dieselDrawn_kWh) / v_totalEnergyUsed_kWh; // Need to account for energy in storages
 v_maxConnectionLoad_fr = max(v_maxConnectionLoad_fr, abs(v_currentPowerElectricity_kW / v_allowedCapacity_kW ));
 */
+if (main.b_addKpiVisuals) {
+	//pl_SOC.updateData();
+	pl_powerFlows.updateData();
+}
 ]]></Body>
 				</Function>
 			</Functions>
@@ -72849,7 +73077,7 @@ public class J_EAStorageElectric extends zero.J_EAStorage implements Serializabl
 	private double lossFactor_r = 0;
 	protected double discharged_kWh = 0;
 	protected double charged_kWh = 0;
-
+	
     /**
      * Default constructor
      */
@@ -72865,6 +73093,7 @@ public class J_EAStorageElectric extends zero.J_EAStorage implements Serializabl
 		this.storageCapacity_kWh = storageCapacity_kWh;
 		this.stateOfCharge_r = stateOfCharge_r;
 		this.timestep_h = timestep_h;
+		this.energyAssetType = OL_EnergyAssetType.STORAGE_ELECTRIC;
     }
 
 	@Override
@@ -75173,7 +75402,8 @@ public class J_ActivityTracker implements Serializable {
 	//private ArrayList<Double> eventMagnitude = new ArrayList<>();
     public int nbActivities = 0;
 	public int v_eventIndex = 0;
-	protected int v_eventIndexStored = 0;
+	private int v_eventIndexStored =0;
+
 	
     /**
      * Default constructor
@@ -75183,6 +75413,14 @@ public class J_ActivityTracker implements Serializable {
     
     public J_ActivityTracker(Main main, int rowIndex, double time_min) {
     }
+    
+    public void storeAndResetState() {
+    	v_eventIndexStored = v_eventIndex;
+    }
+    
+    public void restoreState() {
+    	v_eventIndex = v_eventIndexStored;
+	}
     
 
 	@Override
@@ -75537,146 +75775,182 @@ public class J_ActivityTrackerCooking extends J_ActivityTracker implements Seria
 		<Resource>
 			<Path><![CDATA[db_backboneParams.xlsx]]></Path>
 			<ReferencedFromUserCode>false</ReferencedFromUserCode>
+			<Location>FILE_SYSTEM</Location>
 		</Resource>
 		<Resource>
 			<Path><![CDATA[windmill-svgrepo-com.png]]></Path>
 			<ReferencedFromUserCode>false</ReferencedFromUserCode>
+			<Location>FILE_SYSTEM</Location>
 		</Resource>
 		<Resource>
 			<Path><![CDATA[solarfarm.png]]></Path>
 			<ReferencedFromUserCode>false</ReferencedFromUserCode>
+			<Location>FILE_SYSTEM</Location>
 		</Resource>
 		<Resource>
 			<Path><![CDATA[db_profiles.xlsx]]></Path>
 			<ReferencedFromUserCode>false</ReferencedFromUserCode>
+			<Location>FILE_SYSTEM</Location>
 		</Resource>
 		<Resource>
 			<Path><![CDATA[AlbatrossProcessedVehicleTrips.xlsx]]></Path>
 			<ReferencedFromUserCode>false</ReferencedFromUserCode>
+			<Location>FILE_SYSTEM</Location>
 		</Resource>
 		<Resource>
 			<Path><![CDATA[inputTruckTripPatterns.xlsx]]></Path>
 			<ReferencedFromUserCode>false</ReferencedFromUserCode>
+			<Location>FILE_SYSTEM</Location>
 		</Resource>
 		<Resource>
 			<Path><![CDATA[image.png]]></Path>
 			<ReferencedFromUserCode>false</ReferencedFromUserCode>
+			<Location>FILE_SYSTEM</Location>
 		</Resource>
 		<Resource>
 			<Path><![CDATA[image1.png]]></Path>
 			<ReferencedFromUserCode>false</ReferencedFromUserCode>
+			<Location>FILE_SYSTEM</Location>
 		</Resource>
 		<Resource>
 			<Path><![CDATA[inputECookerPatterns.xlsx]]></Path>
 			<ReferencedFromUserCode>false</ReferencedFromUserCode>
+			<Location>FILE_SYSTEM</Location>
 		</Resource>
 		<Resource>
 			<Path><![CDATA[icon_arrow.png]]></Path>
 			<ReferencedFromUserCode>false</ReferencedFromUserCode>
+			<Location>FILE_SYSTEM</Location>
 		</Resource>
 		<Resource>
 			<Path><![CDATA[TemplateAssets.json]]></Path>
 			<ReferencedFromUserCode>false</ReferencedFromUserCode>
+			<Location>FILE_SYSTEM</Location>
 		</Resource>
 		<Resource>
 			<Path><![CDATA[BuildingThermalsMap.json]]></Path>
 			<ReferencedFromUserCode>false</ReferencedFromUserCode>
+			<Location>FILE_SYSTEM</Location>
 		</Resource>
 		<Resource>
 			<Path><![CDATA[AssetDepreciation.json]]></Path>
 			<ReferencedFromUserCode>false</ReferencedFromUserCode>
+			<Location>FILE_SYSTEM</Location>
 		</Resource>
 		<Resource>
 			<Path><![CDATA[exampleAnylogicInput.json]]></Path>
 			<ReferencedFromUserCode>false</ReferencedFromUserCode>
+			<Location>FILE_SYSTEM</Location>
 		</Resource>
 		<Resource>
 			<Path><![CDATA[logo_TUe_white.png]]></Path>
 			<ReferencedFromUserCode>false</ReferencedFromUserCode>
+			<Location>FILE_SYSTEM</Location>
 		</Resource>
 		<Resource>
 			<Path><![CDATA[neighborhood_groote_lindt.dbf]]></Path>
 			<ReferencedFromUserCode>false</ReferencedFromUserCode>
+			<Location>FILE_SYSTEM</Location>
 		</Resource>
 		<Resource>
 			<Path><![CDATA[neighborhood_groote_lindt.shp]]></Path>
 			<ReferencedFromUserCode>false</ReferencedFromUserCode>
+			<Location>FILE_SYSTEM</Location>
 		</Resource>
 		<Resource>
 			<Path><![CDATA[buildings.dbf]]></Path>
 			<ReferencedFromUserCode>false</ReferencedFromUserCode>
+			<Location>FILE_SYSTEM</Location>
 		</Resource>
 		<Resource>
 			<Path><![CDATA[buildings.shp]]></Path>
 			<ReferencedFromUserCode>false</ReferencedFromUserCode>
+			<Location>FILE_SYSTEM</Location>
 		</Resource>
 		<Resource>
 			<Path><![CDATA[low_voltage_cables_groote_lindt.dbf]]></Path>
 			<ReferencedFromUserCode>false</ReferencedFromUserCode>
+			<Location>FILE_SYSTEM</Location>
 		</Resource>
 		<Resource>
 			<Path><![CDATA[low_voltage_cables_groote_lindt.shp]]></Path>
 			<ReferencedFromUserCode>false</ReferencedFromUserCode>
+			<Location>FILE_SYSTEM</Location>
 		</Resource>
 		<Resource>
 			<Path><![CDATA[medium_voltage_cables_groote_lindt.dbf]]></Path>
 			<ReferencedFromUserCode>false</ReferencedFromUserCode>
+			<Location>FILE_SYSTEM</Location>
 		</Resource>
 		<Resource>
 			<Path><![CDATA[medium_voltage_cables_groote_lindt.shp]]></Path>
 			<ReferencedFromUserCode>false</ReferencedFromUserCode>
+			<Location>FILE_SYSTEM</Location>
 		</Resource>
 		<Resource>
 			<Path><![CDATA[logo_zenmo.png]]></Path>
 			<ReferencedFromUserCode>false</ReferencedFromUserCode>
+			<Location>FILE_SYSTEM</Location>
 		</Resource>
 		<Resource>
 			<Path><![CDATA[icon_loading.gif]]></Path>
 			<ReferencedFromUserCode>false</ReferencedFromUserCode>
+			<Location>FILE_SYSTEM</Location>
 		</Resource>
 		<Resource>
 			<Path><![CDATA[icon_greater_than.png]]></Path>
 			<ReferencedFromUserCode>false</ReferencedFromUserCode>
+			<Location>FILE_SYSTEM</Location>
 		</Resource>
 		<Resource>
 			<Path><![CDATA[icon_i.png]]></Path>
 			<ReferencedFromUserCode>false</ReferencedFromUserCode>
+			<Location>FILE_SYSTEM</Location>
 		</Resource>
 		<Resource>
 			<Path><![CDATA[drop down arrow.png]]></Path>
 			<ReferencedFromUserCode>false</ReferencedFromUserCode>
+			<Location>FILE_SYSTEM</Location>
 		</Resource>
 		<Resource>
 			<Path><![CDATA[greater-than-icon-4.png]]></Path>
 			<ReferencedFromUserCode>false</ReferencedFromUserCode>
+			<Location>FILE_SYSTEM</Location>
 		</Resource>
 		<Resource>
 			<Path><![CDATA[neighborhood_groote_lindt.shx]]></Path>
 			<ReferencedFromUserCode>false</ReferencedFromUserCode>
+			<Location>FILE_SYSTEM</Location>
 		</Resource>
 		<Resource>
 			<Path><![CDATA[low_voltage_cables_groote_lindt.shx]]></Path>
 			<ReferencedFromUserCode>false</ReferencedFromUserCode>
+			<Location>FILE_SYSTEM</Location>
 		</Resource>
 		<Resource>
 			<Path><![CDATA[buildings.shx]]></Path>
 			<ReferencedFromUserCode>false</ReferencedFromUserCode>
+			<Location>FILE_SYSTEM</Location>
 		</Resource>
 		<Resource>
 			<Path><![CDATA[medium_voltage_cables_groote_lindt.shx]]></Path>
 			<ReferencedFromUserCode>false</ReferencedFromUserCode>
+			<Location>FILE_SYSTEM</Location>
 		</Resource>
 		<Resource>
 			<Path><![CDATA[_companies.xlsx]]></Path>
 			<ReferencedFromUserCode>false</ReferencedFromUserCode>
+			<Location>FILE_SYSTEM</Location>
 		</Resource>
 		<Resource>
 			<Path><![CDATA[_residence_objects.xlsx]]></Path>
 			<ReferencedFromUserCode>false</ReferencedFromUserCode>
+			<Location>FILE_SYSTEM</Location>
 		</Resource>
 		<Resource>
 			<Path><![CDATA[_mvlv_transformers.xlsx]]></Path>
 			<ReferencedFromUserCode>false</ReferencedFromUserCode>
+			<Location>FILE_SYSTEM</Location>
 		</Resource>
 	</ModelResources>
     <RequiredLibraryReference>
