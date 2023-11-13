@@ -7925,9 +7925,44 @@ p_centerLongitude = 4.62081213207812;
 p_centerLatitude = 51.8066803651812;
 map.setCenterLongitude(p_centerLongitude);
 map.setCenterLatitude(p_centerLatitude);
-/*p_EVChargingType = "conventional";
-p_homeBatteryChargeAlgorithm = "Household optimization";
-v_districtHeatingTemperature_string = "HT";
+
+/*double[] testVlakjeCoords = new double[6];
+testVlakjeCoords[0] = p_centerLatitude;
+testVlakjeCoords[2] = p_centerLatitude+0.01;
+testVlakjeCoords[4] = p_centerLatitude;
+
+testVlakjeCoords[1] = p_centerLongitude;
+testVlakjeCoords[3] = p_centerLongitude;
+testVlakjeCoords[5] = p_centerLongitude+0.01;
+
+GISRegion testVlakje = new GISRegion(map,testVlakjeCoords);*/
+
+String buildingCoordsString = "MultiPolygon (((4.62313876 51.80601087, 4.62436639 51.80713517, 4.6252587 51.80676075, 4.62494846 51.80647662, 4.62523075 51.80635817, 4.62500506 51.80615147, 4.62495437 51.80617274, 4.62494348 51.80616276, 4.62482621 51.80621196, 4.62483679 51.80622166, 4.62472437 51.80626884, 4.62461809 51.8061735, 4.62438832 51.80596298, 4.62441943 51.80594993, 4.62433418 51.80587186, 4.62430328 51.80588482, 4.62403176 51.80563615, 4.62313876 51.80601087)))";
+
+buildingCoordsString = buildingCoordsString.replace("MultiPolygon (((","");
+buildingCoordsString = buildingCoordsString.replace(",","");
+buildingCoordsString = buildingCoordsString.replace(")))","");
+String delims = " ";
+String[] tokens = buildingCoordsString.split(delims);
+
+int nbCoords = tokens.length;
+
+traceln("Building coords string with %s coordinates: %s", nbCoords, buildingCoordsString);
+double[] buildingCoords = new double[nbCoords];
+
+for (int i=0; i<nbCoords; i++) {
+	if (i % 2 == 0) { // latitudes
+		buildingCoords[i]=Double.parseDouble(tokens[i+1])+0.01;
+	} else { // longitudes
+		buildingCoords[i]=Double.parseDouble(tokens[i-1]);
+	}
+}
+
+GISRegion testVlakje = new GISRegion(map,buildingCoords);
+
+testVlakje.setFillColor(red);
+
+/*v_districtHeatingTemperature_string = "HT";
 v_householdEnergyLabel = "Huidig";
 v_electricBoilerChargingStrategy = Conventional;
 v_excelSheetNumber = 1;
@@ -7938,7 +7973,6 @@ p_PVPanelSurfaceArea_m2 = 1.65;
 p_PVefficiency = p_PVRatedPower_kWpPanel / p_PVPanelSurfaceArea_m2;
 p_PVCapacityFactor = 0.85;
 p_simulationYear = p_startSimulationYear;
-
 	
 //Initialize agent populations
 f_initializeAgentPopulations();
@@ -8408,6 +8442,7 @@ for (GridConnection GC : Windfarms) {
 for (GridConnection GC : GridBatteries) {
 	J_EAStorageElectric gridBattery = new J_EAStorageElectric(GC, 1.0, 0.0, 1.0, p_timeStep_h);
 	c_energyAssets.add(gridBattery);
+	c_storageAssets.add(gridBattery);
 	GC.f_connectToJ_EA(gridBattery);
 }
 ]]></Body>
