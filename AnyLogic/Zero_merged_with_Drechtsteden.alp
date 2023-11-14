@@ -992,7 +992,7 @@ traceln("---------------------------");
 traceln("");
 
 // Get input
-f_readConfig();
+//f_readConfig();
 //f_zinc_init(); // Zenmo interactive configurator
 
 //f_loadParameters();
@@ -3621,7 +3621,7 @@ gr_scopeRadioButtons.setVisible(true);
 				<Variable Class="PlainVariable">
 					<Id>1699278542863</Id>
 					<Name><![CDATA[v_dailyBaseloadElectricityDemand_kWh]]></Name>
-					<X>432</X><Y>2946</Y>
+					<X>432</X><Y>2986</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -3633,7 +3633,7 @@ gr_scopeRadioButtons.setVisible(true);
 				<Variable Class="PlainVariable">
 					<Id>1699278542868</Id>
 					<Name><![CDATA[v_dailyHeatPumpElectricityDemand_kWh]]></Name>
-					<X>432</X><Y>2966</Y>
+					<X>432</X><Y>3006</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -3645,7 +3645,7 @@ gr_scopeRadioButtons.setVisible(true);
 				<Variable Class="PlainVariable">
 					<Id>1699278542872</Id>
 					<Name><![CDATA[v_dailyElectricCarsDemand_kWh]]></Name>
-					<X>432</X><Y>2986</Y>
+					<X>432</X><Y>3026</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -3657,7 +3657,7 @@ gr_scopeRadioButtons.setVisible(true);
 				<Variable Class="PlainVariable">
 					<Id>1699278542875</Id>
 					<Name><![CDATA[v_dailyElectricTrucksDemand_kWh]]></Name>
-					<X>432</X><Y>3006</Y>
+					<X>432</X><Y>3046</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -3669,7 +3669,7 @@ gr_scopeRadioButtons.setVisible(true);
 				<Variable Class="PlainVariable">
 					<Id>1699278542878</Id>
 					<Name><![CDATA[v_dailyNeighborhoodBatteryDemand_kWh]]></Name>
-					<X>432</X><Y>3026</Y>
+					<X>432</X><Y>3066</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -3681,7 +3681,7 @@ gr_scopeRadioButtons.setVisible(true);
 				<Variable Class="PlainVariable">
 					<Id>1699278542881</Id>
 					<Name><![CDATA[v_dailyPVGeneration_kWh]]></Name>
-					<X>432</X><Y>3056</Y>
+					<X>432</X><Y>3096</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -3693,7 +3693,7 @@ gr_scopeRadioButtons.setVisible(true);
 				<Variable Class="PlainVariable">
 					<Id>1699278542884</Id>
 					<Name><![CDATA[v_dailyWindGeneration_kWh]]></Name>
-					<X>432</X><Y>3076</Y>
+					<X>432</X><Y>3116</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -3705,7 +3705,7 @@ gr_scopeRadioButtons.setVisible(true);
 				<Variable Class="PlainVariable">
 					<Id>1699278542887</Id>
 					<Name><![CDATA[v_dailyNeighborhoodBatterySupply_kWh]]></Name>
-					<X>432</X><Y>3096</Y>
+					<X>432</X><Y>3136</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -3717,7 +3717,7 @@ gr_scopeRadioButtons.setVisible(true);
 				<Variable Class="PlainVariable">
 					<Id>1699278542890</Id>
 					<Name><![CDATA[v_dailyV2GSupply_kWh]]></Name>
-					<X>432</X><Y>3116</Y>
+					<X>432</X><Y>3156</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -3729,7 +3729,7 @@ gr_scopeRadioButtons.setVisible(true);
 				<Variable Class="PlainVariable">
 					<Id>1699278542893</Id>
 					<Name><![CDATA[v_dailyBusinessParkDemand_kWh]]></Name>
-					<X>432</X><Y>3146</Y>
+					<X>432</X><Y>3186</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -3741,7 +3741,7 @@ gr_scopeRadioButtons.setVisible(true);
 				<Variable Class="PlainVariable">
 					<Id>1699278542896</Id>
 					<Name><![CDATA[v_dailyBusinessParkSupply_kWh]]></Name>
-					<X>432</X><Y>3166</Y>
+					<X>432</X><Y>3206</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -3753,7 +3753,7 @@ gr_scopeRadioButtons.setVisible(true);
 				<Variable Class="PlainVariable">
 					<Id>1699278542898</Id>
 					<Name><![CDATA[v_dailyBusinessParkNetLoad_kWh]]></Name>
-					<X>432</X><Y>3186</Y>
+					<X>432</X><Y>3226</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -3922,7 +3922,7 @@ gr_scopeRadioButtons.setVisible(true);
 					<Id>1699524291319</Id>
 					<Name><![CDATA[a_annualBusinessParkNetLoad_kW]]></Name>
 					<ExcludeFromBuild>true</ExcludeFromBuild>
-					<X>430</X><Y>3260</Y>
+					<X>430</X><Y>3280</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -3935,7 +3935,7 @@ gr_scopeRadioButtons.setVisible(true);
 					<Id>1699524331159</Id>
 					<Name><![CDATA[a_t_h]]></Name>
 					<ExcludeFromBuild>true</ExcludeFromBuild>
-					<X>430</X><Y>3240</Y>
+					<X>430</X><Y>3260</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -5930,9 +5930,9 @@ for(GridNode m : c_gridNodesMSLS ) {
 	}
 	
 	//traceln("MSLS node peak load unfiltered: " + m.v_peakLoadAbsoluteElectricity_kW + " kW");
-	traceln("Grid node " + m.p_agentID);
-	traceln("MSLS peak positive load filtered: " + roundToDecimal(m.v_peakPosLoadElectricity_kW/m.p_capacity_kW*100,2) + " % at time: " + m.v_timeOfPeakPosLoadFiltered_h + " h");
-	traceln("MSLS peak negative load filtered: " + roundToDecimal(m.v_peakNegLoadElectricity_kW/m.p_capacity_kW*100,2) + " % at time: " + m.v_timeOfPeakNegLoadFiltered_h + " h");
+	//traceln("Grid node " + m.p_agentID);
+	//traceln("MSLS peak positive load filtered: " + roundToDecimal(m.v_peakPosLoadElectricity_kW/m.p_capacity_kW*100,2) + " % at time: " + m.v_timeOfPeakPosLoadFiltered_h + " h");
+	//traceln("MSLS peak negative load filtered: " + roundToDecimal(m.v_peakNegLoadElectricity_kW/m.p_capacity_kW*100,2) + " % at time: " + m.v_timeOfPeakNegLoadFiltered_h + " h");
 }
 
 for(GridConnection g: c_gridConnections){
@@ -6028,6 +6028,7 @@ if (v_totalHydrogenImport_MWh > v_totalHydrogenExport_MWh) {
 					<Body><![CDATA[v_totalBatteryDischargeAmount_MWh = 0;
 v_totalBatteryChargeAmount_MWh = 0;
 v_totalBatteryInstalledCapacity_MWh = 0;
+v_totalBatteryEnergyUsed_MWh = 0;
 
 for(J_EAStorage es : c_storageAssets ) {
 	if( es instanceof J_EAStorageElectric ) {
@@ -6068,10 +6069,10 @@ for(J_EAEV ev : c_EVs ) {
 	c_totalBatteryInstalledCapacity_MWh.computeIfAbsent( e.energyAssetName, k -> e.getStorageCapacity_kWh() / 1000 );
 	*/
 	
-	v_totalBatteryDischargeAmount_MWh += ev.getTotalDischargeAmount_kWh() / 1000;
-	v_totalBatteryChargeAmount_MWh += ev.getTotalChargeAmount_kWh() / 1000;
-	v_totalBatteryInstalledCapacity_MWh += ev.getStorageCapacity_kWh() / 1000;
-	v_totalBatteryEnergyUsed_MWh += ev.getEnergyUsed_kWh() / 1000;
+	//v_totalBatteryDischargeAmount_MWh += ev.getTotalDischargeAmount_kWh() / 1000;
+	//v_totalBatteryChargeAmount_MWh += ev.getTotalChargeAmount_kWh() / 1000;
+	//v_totalBatteryInstalledCapacity_MWh += ev.getStorageCapacity_kWh() / 1000;
+	//v_totalBatteryEnergyUsed_MWh += ev.getEnergyUsed_kWh() / 1000;
 	//traceln( ((J_EAStorageElectric)e.j_ea).getStorageCapacity() / 1000 );
 
 }
@@ -6399,7 +6400,7 @@ for (GridConnection g: c_gridConnections) {
 					<Body><![CDATA[v_WindYieldForecast_fr = 0;
 v_SolarYieldForecast_fr = 0;
 v_epexForecast_eurpkWh = 0;
-for (double ts_h = v_hourOfYearStart; ts_h<v_hourOfYearStart+p_forecastTime_h; ts_h += p_timeStep_h) {
+for (double ts_h = t_h; ts_h<t_h+p_forecastTime_h; ts_h += p_timeStep_h) {
 	v_WindYieldForecast_fr += tf_p_wind_e_normalized(ts_h)/(p_forecastTime_h/p_timeStep_h);
 	v_SolarYieldForecast_fr += tf_p_solar_e_normalized(ts_h)/(p_forecastTime_h/p_timeStep_h);
 	//v_epexForecast_eurpkWh += nationalEnergyMarket.tf_dayAheadElectricityPricing_eurpMWh(ts_h)/(p_forecastTime_h/p_timeStep_h)/1000;
@@ -6897,12 +6898,12 @@ t_numberOfRooftopPV.setText(count(Houses, x->x.v_hasPV == true));]]></Body>
 double PVsystems = count(c_gridConnections, x->x.v_hasPV == true);
 t_numberOfRooftopPV.setText(PVsystems);
 
-JsonNode t=null;
+/*JsonNode t=null;
 for(JsonNode assetJson : v_templateAssetsJson) {
 	if (assetJson.required( "name" ).textValue().equals("TEMPLATE: Household PV")) {
 		t = assetJson;
 	}
-}
+}*/
 
 if( sl_rooftopPVCompanies.getValue()/100.0*c_gridConnections.size() < PVsystems){
 	while ( sl_rooftopPVCompanies.getValue()/100.0*c_gridConnections.size() < PVsystems) { // remove excess PV systems
@@ -6925,8 +6926,11 @@ if( sl_rooftopPVCompanies.getValue()/100.0*c_gridConnections.size() < PVsystems)
 		GridConnection h = findFirst(c_gridConnections, x->x.v_hasPV==false);
 		//traceln("Check presence of solarpanels: " + h.v_hasPV);	
 		
-		OL_EnergyAssetType assetType = OL_EnergyAssetType.valueOf(t.required( "type" ).textValue()) ;
-		String assetName = t.required( "name" ).textValue();	
+		//OL_EnergyAssetType assetType = OL_EnergyAssetType.valueOf(t.required( "type" ).textValue()) ;
+		//String assetName = t.required( "name" ).textValue();	
+		OL_EnergyAssetType assetType = OL_EnergyAssetType.PHOTOVOLTAIC;
+		String assetName = "Rooftop PV";
+		
 				
 		double capacityElectricity_kW = h.p_floorSurfaceArea_m2*0.1;// t.required( "capacityElectricity_kW").doubleValue() ;
 		double capacityHeat_kW = 0.0;
@@ -7032,10 +7036,12 @@ for (GridNode GN : pop_gridNodes) {
 	GN.f_resetStates();
 	}
 
+t_h=0;
+f_initializeForecasts();
 // When adding actors, also reset their states! Not used yet for Drechtsteden...
 
 v_isRapidRun = true;
-//f_resetAnnualValues();
+f_resetAnnualValues();
 
 //Run energy calculations loop
 for(t_h = 0; t_h < 8760 ; t_h += p_timeStep_h){
@@ -7094,7 +7100,9 @@ double duration = System.currentTimeMillis() - startTime;
 
 traceln("*** headless run duration: "+ duration/1000 + " s ***");
 
-runSimulation();
+t_h = time(HOUR);
+f_initializeForecasts();
+//runSimulation();
 
 
 ]]></Body>
@@ -8090,7 +8098,37 @@ gr_businessCollectiveLoad.setY(103);]]></Body>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>true</ShowLabel>
-					<Body><![CDATA[// Get trip tuples from this household ID from database
+					<Body><![CDATA[// Draw neighborhood
+
+String regionCoordsString = "MultiPolygon (((4.65054507 51.81131591, 4.65054524 51.81131584, 4.65020007 51.81102882, 4.65011152 51.81095778, 4.64863148 51.80973831, 4.64807109 51.80927772, 4.64784749 51.80909394, 4.64731037 51.80865447, 4.64697564 51.80838757, 4.64674021 51.80820648, 4.64599848 51.80765533, 4.64568888 51.80744544, 4.64510797 51.8071035, 4.64481926 51.80694234, 4.64447431 51.80676515, 4.64420464 51.80663673, 4.64327128 51.80620824, 4.64309799 51.80636472, 4.64204452 51.80575972, 4.6419578 51.80570992, 4.64175312 51.80559237, 4.63993744 51.8046885, 4.63833041 51.80399345, 4.63682609 51.80346675, 4.63490739 51.80281451, 4.63217886 51.80213105, 4.63015904 51.80168807, 4.62788799 51.80131312, 4.62603712 51.80102218, 4.62329525 51.80075998, 4.62122158 51.80080368, 4.62098072 51.80084383, 4.62090934 51.80085572, 4.61878013 51.80121055, 4.6187664 51.80121316, 4.61732822 51.80148677, 4.61613468 51.80179326, 4.61590393 51.80184104, 4.61304628 51.80255009, 4.61158071 51.80289708, 4.61115435 51.80301289, 4.61050974 51.80318517, 4.61015205 51.8032827, 4.60992748 51.80334902, 4.60940707 51.80350169, 4.60865007 51.80372514, 4.60772399 51.80399012, 4.60703519 51.80418641, 4.60675683 51.80425847, 4.60595822 51.80446443, 4.60520025 51.80466127, 4.60455687 51.8048269, 4.60289773 51.80524767, 4.6007034 51.80574823, 4.59988345 51.80590551, 4.5990376 51.80610532, 4.59856512 51.80617748, 4.59777559 51.80629581, 4.59771773 51.80630448, 4.59687597 51.8064315, 4.59711052 51.80756856, 4.59716236 51.80788068, 4.59733253 51.80789065, 4.59759443 51.80791458, 4.59784417 51.80795174, 4.59878124 51.80816279, 4.5992409 51.80826566, 4.59989632 51.80842379, 4.60111711 51.80877641, 4.60239248 51.80914564, 4.60374498 51.80953755, 4.60402713 51.80963256, 4.60432796 51.80974988, 4.60459764 51.80987585, 4.60491419 51.81004944, 4.6053879 51.81037485, 4.60644416 51.81107519, 4.60704567 51.8114591, 4.60728649 51.81159966, 4.60750388 51.81171641, 4.60801255 51.81195335, 4.60821804 51.81206854, 4.608344 51.81223198, 4.60837643 51.81242019, 4.61083709 51.81242034, 4.61137582 51.81242036, 4.61489102 51.81244692, 4.61535045 51.8124053, 4.61555157 51.81238708, 4.61625686 51.81225996, 4.61759255 51.81192412, 4.61849123 51.81164284, 4.62013633 51.81105899, 4.62074419 51.81089067, 4.62175934 51.81080946, 4.6224192 51.81078842, 4.62263469 51.81077631, 4.62312094 51.81070853, 4.62361438 51.81053606, 4.62449889 51.81012289, 4.62544469 51.80962901, 4.62577604 51.80937271, 4.62595993 51.80913404, 4.62605342 51.80859916, 4.62606191 51.80825799, 4.62600383 51.80766301, 4.62606297 51.8070654, 4.62620798 51.80654606, 4.62641966 51.8061133, 4.62669791 51.80577219, 4.62715783 51.80548294, 4.62759917 51.805327, 4.62804515 51.8052184, 4.62897349 51.80510616, 4.62954514 51.80514026, 4.63039306 51.80527411, 4.63194548 51.80564392, 4.63268329 51.80584462, 4.63273439 51.80586167, 4.63355585 51.8061357, 4.63442016 51.8064318, 4.63545188 51.80682018, 4.63605914 51.8070082, 4.63704487 51.80725405, 4.63724775 51.80730465, 4.63822418 51.80757948, 4.64016337 51.80813408, 4.6405908 51.8082576, 4.64204014 51.80867643, 4.64286969 51.80893846, 4.64331844 51.80915752, 4.64401937 51.80961806, 4.64467577 51.81013574, 4.64510481 51.81056076, 4.64537293 51.8109468, 4.64549567 51.81115276, 4.64557373 51.81137793, 4.64558786 51.8116787, 4.64550745 51.81192819, 4.64529668 51.81231538, 4.64525823 51.81249927, 4.64531862 51.8128037, 4.64556219 51.81307383, 4.64580575 51.81334395, 4.65054507 51.81131591)))";
+
+regionCoordsString = regionCoordsString.replace("MultiPolygon (((","");
+regionCoordsString = regionCoordsString.replace(",","");
+regionCoordsString = regionCoordsString.replace(")))","");
+if (regionCoordsString.contains(")(")) {
+	regionCoordsString = regionCoordsString.split("\\)")[0];		
+}
+
+String delims = " ";
+String[] tokens = regionCoordsString.split(delims);
+	
+int nbCoords = tokens.length;
+	
+//traceln("Building coords string with %s coordinates: %s", nbCoords, buildingCoordsString);
+double[] regionCoords = new double[nbCoords];
+	
+for (int i=0; i<nbCoords; i++) {
+	if (i % 2 == 0) { // latitudes
+		regionCoords[i]=Double.parseDouble(tokens[i+1]);
+	} else { // longitudes
+		regionCoords[i]=Double.parseDouble(tokens[i-1]);
+	}
+}
+	
+
+
+
+// Get trip tuples from this household ID from database
 List<Tuple> rows = selectFrom(buildings_with_coordinates)
 	//.where(buildings.aantal_ver.gt(0))
 	.list();
@@ -8128,10 +8166,10 @@ for (Tuple row : rows) {
 	}
 	//b.p_GISRegion_coords = b.p_GISRegion_coords.replace(")("," ");
 	
-	String delims = " ";
-	String[] tokens = b.p_GISRegion_coords.split(delims);
+	
+	tokens = b.p_GISRegion_coords.split(delims);
 		
-	int nbCoords = tokens.length;
+	nbCoords = tokens.length;
 		
 	//traceln("Building coords string with %s coordinates: %s", nbCoords, buildingCoordsString);
 	double[] buildingCoords = new double[nbCoords];
@@ -8160,6 +8198,7 @@ for (Tuple row : rows) {
 	
 }		
 
+GISRegion gisregion = new GISRegion(map,regionCoords);
 //Bu06420701.setVisible(false);]]></Body>
 				</Function>
 				<Function AccessType="default" StaticFunction="false">
@@ -8482,7 +8521,8 @@ for (GridConnection GC : Windfarms) {
 }
 
 for (GridConnection GC : GridBatteries) {
-	J_EAStorageElectric gridBattery = new J_EAStorageElectric(GC, 1.0, 0.0, 1.0, p_timeStep_h);
+	//J_EAStorageElectric gridBattery = new J_EAStorageElectric(GC, 25000.0, 25000.0, 1.0, p_timeStep_h);
+	J_EAStorageElectric gridBattery = new J_EAStorageElectric(GC, 0.0, 0.0, 1.0, p_timeStep_h);
 	c_energyAssets.add(gridBattery);
 	c_storageAssets.add(gridBattery);
 	GC.f_connectToJ_EA(gridBattery);
@@ -8783,7 +8823,7 @@ v_totalOperationalCostsVariablePerHousehold = average(pop_EA_Households, x->x.v_
 GridNode GN_main = add_pop_gridNodes();
 GN_main.p_energyType = OL_EnergyCarrierType.ELECTRICITY;		
 GN_main.p_agentID = "HVMV1";
-GN_main.p_capacity_kW= 10000;
+GN_main.p_capacity_kW= 11500;
 //x.currentStatus = row.get( mvlv_transformers.currentsta );
 //x.validFrom = row.get( mvlv_transformers.validfrom );
 GN_main.p_nodeType = OL_GridNodeType.HSMS;
@@ -8874,8 +8914,8 @@ for (EA_Building x : pop_EA_Buildings){
 f_sumGridNodeLoads();
 
 f_sumBatteryUse();
-traceln("Electricity imported: "+ v_totalElectricityImport_MWh + " MWh");
-traceln("Electricity exported: "+ v_totalElectricityExport_MWh + " MWh");
+//traceln("Electricity imported: "+ v_totalElectricityImport_MWh + " MWh");
+//traceln("Electricity exported: "+ v_totalElectricityExport_MWh + " MWh");
 //traceln("Electricity delta in batteries: "+ batteryStoredEnergyDeltaSinceStart_MWh + " MWh");
 
 //Total energy consumption and production
@@ -8885,18 +8925,27 @@ v_totalEnergyProduced_MWh = 0;
 v_totalEnergyUsed_MWh = 0;
 
 // Sorting netload values for belastingsduurkromme
+data_netbelastingDuurkrommeVorige_kW.reset();
+boolean notFirstRun = data_netbelastingDuurkromme_kW.size()>0? true : false;
 int arraySize = data_annualBusinessParkNetLoad_kW.size();
 double[] netLoadArray_kW = new double[arraySize];
 for(int i=0; i<arraySize ; i++) {
 	netLoadArray_kW[i]=-data_annualBusinessParkNetLoad_kW.getY(i);
+	if (notFirstRun) {
+		data_netbelastingDuurkrommeVorige_kW.add(i*p_timeStep_h,data_netbelastingDuurkromme_kW.getY(i));
+	}
 }
 //Arrays.sort(data_annualBusinessParkNetLoad_kW); Sort is not a thing for datasets...
 Arrays.parallelSort(netLoadArray_kW);
-data_annualBusinessParkNetLoad_kW.reset();
+data_netbelastingDuurkromme_kW.reset();
 for(int i=0; i< arraySize; i++) {
-	data_annualBusinessParkNetLoad_kW.add(i*p_timeStep_h, -netLoadArray_kW[i]);
+	data_netbelastingDuurkromme_kW.add(i*p_timeStep_h, -netLoadArray_kW[i]);
 }
-pl_belastingsduurkromme.addDataSet(data_annualBusinessParkNetLoad_kW,"Netbelastingsduurkromme");
+pl_belastingsduurkromme.removeAll();
+pl_belastingsduurkromme.addDataSet(data_netbelastingDuurkromme_kW,"Netbelastingsduurkromme");
+//Chart2DPlot.Appearance appearance = new Chart2DPlot.Appearance();
+pl_belastingsduurkromme.addDataSet(data_netbelastingDuurkrommeVorige_kW,"Vorige Netbelastingsduurkromme");
+pl_belastingsduurkromme.setColor(1,red);
 pl_belastingsduurkromme.setVisible(true);
 
 double totalDistanceTrucks_km = 0;
@@ -8928,7 +8977,7 @@ for (J_EA e : c_energyAssets) {
 		}
 	} else {
 		if( e.energyAssetType == OL_EnergyAssetType.PHOTOVOLTAIC ||  e.energyAssetType == OL_EnergyAssetType.WINDMILL){
-		electricityProduced_MWh -= EnergyUsed_kWh/1000;
+			electricityProduced_MWh -= EnergyUsed_kWh/1000;
 		}
 		v_totalEnergyProduced_MWh -= EnergyUsed_kWh/1000;
 	}
@@ -9522,7 +9571,7 @@ if( nbEtruckCurrent > nbElectricTrucksGoal){
 	while ( nbEtruckCurrent < nbElectricTrucksGoal && nbDieseltrucksCurrent > 0) {
 		// Remove diesel vehicle
 		J_EADieselVehicle dieselVehicle = (J_EADieselVehicle)findFirst(c_energyAssets, p -> p.energyAssetType == OL_EnergyAssetType.DIESEL_TRUCK );
-		traceln("Found household diesel vehicle: " + dieselVehicle);
+		//traceln("Found diesel vehicle: " + dieselVehicle);
 		GridConnection GC = (GridConnection)dieselVehicle.parentAgent;
 		J_ActivityTrackerTrips tripTracker = dieselVehicle.tripTracker;
 		boolean available = true;
@@ -9584,14 +9633,14 @@ traceln("%s diesel trucks and %s eTrucks found", nbDieseltrucksCurrent, nbEtruck
 					</Parameter>
 					<Body><![CDATA[// Setting gridbatteries
 
-double installedWindPower_kW = sumWhere(c_energyAssets,p->p.getElectricCapacity_kW(),p -> p.energyAssetType == OL_EnergyAssetType.WINDMILL);
+//double installedWindPower_kW = sumWhere(c_energyAssets,p->p.getElectricCapacity_kW(),p -> p.energyAssetType == OL_EnergyAssetType.WINDMILL);
 int nbGridBatteries = count(c_energyAssets, p->p.energyAssetType == OL_EnergyAssetType.STORAGE_ELECTRIC);
 //traceln("%s wind turbines with a total power of %s MW", nbWindTurbinesInstalled, installedWindPower_kW);
 
 for(J_EA j_ea : c_energyAssets) {
 	if (j_ea.energyAssetType == OL_EnergyAssetType.STORAGE_ELECTRIC) {
 		((J_EAStorageElectric)j_ea).storageCapacity_kWh=(1000*p_neighborhoodMaxCapacity_MWh / (double)nbGridBatteries);
-		((J_EAStorageElectric)j_ea).capacityElectric_kW=(1000*p_neighborhoodMaxCapacity_MWh / (double)nbGridBatteries);
+		((J_EAStorageElectric)j_ea).capacityElectric_kW=(1000*p_neighborhoodMaxCapacity_MWh / (double)nbGridBatteries / 4);
 		traceln("Setting battery capacity to %s kWh", ((J_EAStorageElectric)j_ea).storageCapacity_kWh);
 	}
 }
@@ -9690,6 +9739,32 @@ traceln(sum(c_gridConnections, x->x.v_rooftopPVInstalledCapacity_kW) + " kWp PV 
 */
 
 ]]></Body>
+				</Function>
+				<Function AccessType="default" StaticFunction="false">
+					<ReturnModificator>VOID</ReturnModificator>
+					<ReturnType><![CDATA[double]]></ReturnType>
+					<Id>1699958741073</Id>
+					<Name><![CDATA[f_resetAnnualValues]]></Name>
+					<X>1130</X><Y>1080</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Body><![CDATA[data_annualBaseloadElectricityDemand_kWh.reset();
+data_annualHeatPumpElectricityDemand_kWh.reset();
+data_annualElectricCarsDemand_kWh.reset();
+data_annualElectricTrucksDemand_kWh.reset();
+data_annualNeighborhoodBatteryDemand_kWh.reset();
+
+data_annualPVGeneration_kWh.reset();
+data_annualWindGeneration_kWh.reset();
+data_annualNeighborhoodBatterySupply_kWh.reset();
+data_annualV2GSupply_kWh.reset();
+
+data_annualBusinessParkDemand_kWh.reset();
+data_annualBusinessParkSupply_kWh.reset();
+data_annualBusinessParkNetLoad_kWh.reset();
+data_annualBusinessParkNetLoad_kW.reset();]]></Body>
 				</Function>
 			</Functions>
 			<TableFunctions>
@@ -12436,6 +12511,50 @@ traceln(sum(c_gridConnections, x->x.v_rooftopPVInstalledCapacity_kW) + " kWp PV 
 					<FreezeXAxis>false</FreezeXAxis>
 					<SamplesToKeep>35040</SamplesToKeep>
 				</DataSet>
+    			<DataSet>
+					<Id>1699893956845</Id>
+					<Name><![CDATA[data_netbelastingDuurkromme_kW]]></Name>
+					<X>430</X><Y>2942</Y>
+					<Label><X>15</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<AutoUpdate>false</AutoUpdate>
+					<OccurrenceAtTime>true</OccurrenceAtTime>
+					<OccurrenceDate>1687075200000</OccurrenceDate>
+					<OccurrenceTime Class="CodeUnitValue">
+						<Code><![CDATA[0]]></Code>
+						<Unit Class="TimeUnits"><![CDATA[HOUR]]></Unit>
+					</OccurrenceTime>
+					<RecurrenceCode Class="CodeUnitValue">
+						<Code><![CDATA[1]]></Code>
+						<Unit Class="TimeUnits"><![CDATA[HOUR]]></Unit>
+					</RecurrenceCode>
+					<FreezeXAxis>false</FreezeXAxis>
+					<SamplesToKeep>35040</SamplesToKeep>
+				</DataSet>
+    			<DataSet>
+					<Id>1699894632947</Id>
+					<Name><![CDATA[data_netbelastingDuurkrommeVorige_kW]]></Name>
+					<X>430</X><Y>2960</Y>
+					<Label><X>15</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<AutoUpdate>false</AutoUpdate>
+					<OccurrenceAtTime>true</OccurrenceAtTime>
+					<OccurrenceDate>1687075200000</OccurrenceDate>
+					<OccurrenceTime Class="CodeUnitValue">
+						<Code><![CDATA[0]]></Code>
+						<Unit Class="TimeUnits"><![CDATA[HOUR]]></Unit>
+					</OccurrenceTime>
+					<RecurrenceCode Class="CodeUnitValue">
+						<Code><![CDATA[1]]></Code>
+						<Unit Class="TimeUnits"><![CDATA[HOUR]]></Unit>
+					</RecurrenceCode>
+					<FreezeXAxis>false</FreezeXAxis>
+					<SamplesToKeep>35040</SamplesToKeep>
+				</DataSet>
 			</AnalysisData>
 			<Connectivity>
 				<TextFile>
@@ -15105,172 +15224,6 @@ traceln(sum(c_gridConnections, x->x.v_rooftopPVInstalledCapacity_kW) + " kWp PV 
 					<AbsolutePrecisionGeneralization>1000</AbsolutePrecisionGeneralization>
 
 			<Presentation>
-				<GISRegion>
-					<FillColor>2144175423</FillColor>
-					<FillMaterial>null</FillMaterial>
-					<Id>1696520909890</Id>
-					<Name><![CDATA[Bu06420701]]></Name>
-					<X>0</X><Y>0</Y>
-					<Label><X>10</X><Y>0</Y></Label>
-					<PublicFlag>true</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
-					<ShowLabel>false</ShowLabel>
-					<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
-					<Z>0</Z>
-					<LineColor>-5952982</LineColor>
-					<LineMaterial>null</LineMaterial>
-					<LineWidth>1</LineWidth>
-					<LineStyle>DASHED</LineStyle>
-					<ReadOnly>false</ReadOnly>
-					<Points>
-						<Point><X>51.811315911587215</X><Y>4.650545068233292</Y></Point>
-						<Point><X>51.81131583629254</X><Y>4.650545244931645</Y></Point>
-						<Point><X>51.81102882083066</X><Y>4.650200069101073</Y></Point>
-						<Point><X>51.81095778434632</X><Y>4.6501115247229485</Y></Point>
-						<Point><X>51.80973831235809</X><Y>4.648631477643729</Y></Point>
-						<Point><X>51.809277718566975</X><Y>4.648071087979019</Y></Point>
-						<Point><X>51.809093937371365</X><Y>4.647847491032344</Y></Point>
-						<Point><X>51.80865447417429</X><Y>4.647310371816111</Y></Point>
-						<Point><X>51.80838757400012</X><Y>4.6469756413020935</Y></Point>
-						<Point><X>51.80820647642101</X><Y>4.64674021151571</Y></Point>
-						<Point><X>51.8076553254921</X><Y>4.645998478814267</Y></Point>
-						<Point><X>51.80744544283837</X><Y>4.6456888827148815</Y></Point>
-						<Point><X>51.807103498644686</X><Y>4.645107974735072</Y></Point>
-						<Point><X>51.80694233864662</X><Y>4.644819262001558</Y></Point>
-						<Point><X>51.80676514565501</X><Y>4.644474308717757</Y></Point>
-						<Point><X>51.80663673362847</X><Y>4.644204635786367</Y></Point>
-						<Point><X>51.80620824289265</X><Y>4.643271278299386</Y></Point>
-						<Point><X>51.80636471611293</X><Y>4.643097989328808</Y></Point>
-						<Point><X>51.805759724562726</X><Y>4.642044519383008</Y></Point>
-						<Point><X>51.805709920174614</X><Y>4.641957796053035</Y></Point>
-						<Point><X>51.80559237356418</X><Y>4.641753115502737</Y></Point>
-						<Point><X>51.80468849735604</X><Y>4.639937437959632</Y></Point>
-						<Point><X>51.80399344691106</X><Y>4.638330414249089</Y></Point>
-						<Point><X>51.80346675141339</X><Y>4.636826089255708</Y></Point>
-						<Point><X>51.802814513565565</X><Y>4.634907385629416</Y></Point>
-						<Point><X>51.80213104927525</X><Y>4.632178861780704</Y></Point>
-						<Point><X>51.80168806785659</X><Y>4.630159035134982</Y></Point>
-						<Point><X>51.80131312450962</X><Y>4.627887992201968</Y></Point>
-						<Point><X>51.80102218459229</X><Y>4.626037118287243</Y></Point>
-						<Point><X>51.800759979250536</X><Y>4.623295247921132</Y></Point>
-						<Point><X>51.800803681803664</X><Y>4.621221575591646</Y></Point>
-						<Point><X>51.8008438258036</X><Y>4.620980717056641</Y></Point>
-						<Point><X>51.80085571917566</X><Y>4.620909343446205</Y></Point>
-						<Point><X>51.801210547298886</X><Y>4.618780126587259</Y></Point>
-						<Point><X>51.80121316297827</X><Y>4.618766395630012</Y></Point>
-						<Point><X>51.80148677218692</X><Y>4.6173282204506485</Y></Point>
-						<Point><X>51.80179326154954</X><Y>4.616134678129876</Y></Point>
-						<Point><X>51.801841039108126</X><Y>4.615903929535701</Y></Point>
-						<Point><X>51.80255009072713</X><Y>4.61304628179636</Y></Point>
-						<Point><X>51.80289707577181</X><Y>4.611580712007563</Y></Point>
-						<Point><X>51.803012889897545</X><Y>4.611154352272771</Y></Point>
-						<Point><X>51.803185172354034</X><Y>4.610509736927321</Y></Point>
-						<Point><X>51.80328270489029</X><Y>4.610152049359254</Y></Point>
-						<Point><X>51.80334901946401</X><Y>4.609927477196969</Y></Point>
-						<Point><X>51.80350168725477</X><Y>4.609407070463031</Y></Point>
-						<Point><X>51.80372514246743</X><Y>4.60865007427426</Y></Point>
-						<Point><X>51.80399012120258</X><Y>4.607723988181592</Y></Point>
-						<Point><X>51.80418640565927</X><Y>4.607035185995663</Y></Point>
-						<Point><X>51.80425846890574</X><Y>4.6067568288083525</Y></Point>
-						<Point><X>51.80446442561225</X><Y>4.605958221042198</Y></Point>
-						<Point><X>51.80466127246865</X><Y>4.605200246285347</Y></Point>
-						<Point><X>51.80482689698888</X><Y>4.604556874204622</Y></Point>
-						<Point><X>51.8052476736149</X><Y>4.602897731672423</Y></Point>
-						<Point><X>51.805748229359686</X><Y>4.600703401454212</Y></Point>
-						<Point><X>51.80590550756693</X><Y>4.599883447772967</Y></Point>
-						<Point><X>51.80610532066682</X><Y>4.599037602038597</Y></Point>
-						<Point><X>51.8061774806945</X><Y>4.598565122343589</Y></Point>
-						<Point><X>51.80629581168603</X><Y>4.5977755889990535</Y></Point>
-						<Point><X>51.80630448304346</X><Y>4.597717727337371</Y></Point>
-						<Point><X>51.806431497474115</X><Y>4.596875967770632</Y></Point>
-						<Point><X>51.80756856422084</X><Y>4.597110519307157</Y></Point>
-						<Point><X>51.80788068072146</X><Y>4.597162361896367</Y></Point>
-						<Point><X>51.80789065238311</X><Y>4.597332531495039</Y></Point>
-						<Point><X>51.80791458126675</X><Y>4.597594426022194</Y></Point>
-						<Point><X>51.80795174015633</X><Y>4.597844169810294</Y></Point>
-						<Point><X>51.808162785780546</X><Y>4.5987812424758</Y></Point>
-						<Point><X>51.808265657361765</X><Y>4.599240896029432</Y></Point>
-						<Point><X>51.80842379123311</X><Y>4.59989631668477</Y></Point>
-						<Point><X>51.80877640642441</X><Y>4.601117111892237</Y></Point>
-						<Point><X>51.80914564342618</X><Y>4.602392478979936</Y></Point>
-						<Point><X>51.809537547700586</X><Y>4.603744980679511</Y></Point>
-						<Point><X>51.80963256346314</X><Y>4.604027129206909</Y></Point>
-						<Point><X>51.809749878400176</X><Y>4.604327960611838</Y></Point>
-						<Point><X>51.80987584769211</X><Y>4.604597640005227</Y></Point>
-						<Point><X>51.81004943654078</X><Y>4.604914188927551</Y></Point>
-						<Point><X>51.81037484874131</X><Y>4.605387896495417</Y></Point>
-						<Point><X>51.81107519139703</X><Y>4.606444163640099</Y></Point>
-						<Point><X>51.81145910071674</X><Y>4.607045669295715</Y></Point>
-						<Point><X>51.811599658305404</X><Y>4.607286487799287</Y></Point>
-						<Point><X>51.811716410379226</X><Y>4.607503878697493</Y></Point>
-						<Point><X>51.81195335224391</X><Y>4.608012548932673</Y></Point>
-						<Point><X>51.812068540786974</X><Y>4.608218035428327</Y></Point>
-						<Point><X>51.81223198215718</X><Y>4.608344003851932</Y></Point>
-						<Point><X>51.81242018765944</X><Y>4.6083764286460225</Y></Point>
-						<Point><X>51.81242033657031</X><Y>4.6108370946487485</Y></Point>
-						<Point><X>51.81242036243372</X><Y>4.611375824221755</Y></Point>
-						<Point><X>51.81244692049185</X><Y>4.614891023175216</Y></Point>
-						<Point><X>51.812405298921014</X><Y>4.61535044865493</Y></Point>
-						<Point><X>51.81238707650335</X><Y>4.615551566891509</Y></Point>
-						<Point><X>51.81225995549359</X><Y>4.616256863478299</Y></Point>
-						<Point><X>51.8119241222898</X><Y>4.617592547892049</Y></Point>
-						<Point><X>51.81164284104455</X><Y>4.618491231086419</Y></Point>
-						<Point><X>51.81105899320742</X><Y>4.620136326764467</Y></Point>
-						<Point><X>51.81089066928264</X><Y>4.620744189097178</Y></Point>
-						<Point><X>51.81080945859035</X><Y>4.621759344986551</Y></Point>
-						<Point><X>51.810788421703556</X><Y>4.622419196854508</Y></Point>
-						<Point><X>51.810776306895875</X><Y>4.622634688162748</Y></Point>
-						<Point><X>51.81070852608147</X><Y>4.623120937926607</Y></Point>
-						<Point><X>51.81053606161504</X><Y>4.623614381162639</Y></Point>
-						<Point><X>51.81012288572156</X><Y>4.624498886817621</Y></Point>
-						<Point><X>51.8096290139092</X><Y>4.62544468671297</Y></Point>
-						<Point><X>51.80937271188948</X><Y>4.625776041358185</Y></Point>
-						<Point><X>51.80913404102016</X><Y>4.625959925667788</Y></Point>
-						<Point><X>51.808599162650246</X><Y>4.626053422321937</Y></Point>
-						<Point><X>51.80825798797647</X><Y>4.626061907684423</Y></Point>
-						<Point><X>51.807663007495975</X><Y>4.626003828397599</Y></Point>
-						<Point><X>51.80706539862254</X><Y>4.626062970817142</Y></Point>
-						<Point><X>51.80654606306618</X><Y>4.626207978999359</Y></Point>
-						<Point><X>51.80611329851084</X><Y>4.626419657937071</Y></Point>
-						<Point><X>51.80577219157308</X><Y>4.626697906652425</Y></Point>
-						<Point><X>51.80548293929879</X><Y>4.627157827589827</Y></Point>
-						<Point><X>51.80532700251832</X><Y>4.627599170406172</Y></Point>
-						<Point><X>51.805218401723245</X><Y>4.628045150580416</Y></Point>
-						<Point><X>51.80510615859922</X><Y>4.628973486346459</Y></Point>
-						<Point><X>51.80514026005267</X><Y>4.629545137381586</Y></Point>
-						<Point><X>51.80527410897861</X><Y>4.63039305710388</Y></Point>
-						<Point><X>51.80564392097473</X><Y>4.6319454814131396</Y></Point>
-						<Point><X>51.80584462162928</X><Y>4.632683289875769</Y></Point>
-						<Point><X>51.805861669228705</X><Y>4.6327343918102635</Y></Point>
-						<Point><X>51.80613570177191</X><Y>4.633555849198609</Y></Point>
-						<Point><X>51.80643180105628</X><Y>4.6344201579427375</Y></Point>
-						<Point><X>51.80682018402424</X><Y>4.635451879468696</Y></Point>
-						<Point><X>51.80700819769876</X><Y>4.636059142613596</Y></Point>
-						<Point><X>51.80725405453521</X><Y>4.637044873572819</Y></Point>
-						<Point><X>51.80730465259861</X><Y>4.637247746943695</Y></Point>
-						<Point><X>51.80757948075457</X><Y>4.638224180285685</Y></Point>
-						<Point><X>51.80813407708302</X><Y>4.640163370076723</Y></Point>
-						<Point><X>51.808257602081326</X><Y>4.640590803124128</Y></Point>
-						<Point><X>51.80867643357305</X><Y>4.642040137581864</Y></Point>
-						<Point><X>51.80893846078841</X><Y>4.64286968707543</Y></Point>
-						<Point><X>51.809157520671675</X><Y>4.643318438239711</Y></Point>
-						<Point><X>51.80961805769905</X><Y>4.64401937167149</Y></Point>
-						<Point><X>51.81013573748133</X><Y>4.644675773470085</Y></Point>
-						<Point><X>51.81056075856839</X><Y>4.645104812451535</Y></Point>
-						<Point><X>51.81094680066911</X><Y>4.645372927680204</Y></Point>
-						<Point><X>51.81115276246177</X><Y>4.645495672539058</Y></Point>
-						<Point><X>51.81137792829071</X><Y>4.645573727976005</Y></Point>
-						<Point><X>51.8116786985514</X><Y>4.645587864671624</Y></Point>
-						<Point><X>51.81192819297976</X><Y>4.645507452770628</Y></Point>
-						<Point><X>51.81231537908008</X><Y>4.645296679919177</Y></Point>
-						<Point><X>51.8124992694158</X><Y>4.645258225752501</Y></Point>
-						<Point><X>51.81280370288697</X><Y>4.645318619711134</Y></Point>
-						<Point><X>51.81307383367302</X><Y>4.645562187527359</Y></Point>
-						<Point><X>51.813343954880196</X><Y>4.645805745354553</Y></Point>
-						<Point><X>51.811315911587215</X><Y>4.650545068233292</Y></Point>
-						<Point><X>51.811315911587215</X><Y>4.650545068233292</Y></Point>
-					</Points>
-				</GISRegion>
 				<GISPoint>
 					<Id>1696520909222</Id>
 					<Name><![CDATA[gp_centerOfUtrecht]]></Name>
@@ -38059,7 +38012,7 @@ import java.io.*;]]></Import>
 				</Variable>
 				<Variable Class="PlainVariable">
 					<Id>1677495410857</Id>
-					<Name><![CDATA[v_electricityTotalsCheck]]></Name>
+					<Name><![CDATA[v_electricityTotalsCheck_kWh]]></Name>
 					<Description><![CDATA[Should always be zero]]></Description>
 					<X>150</X><Y>1570</Y>
 					<Label><X>10</X><Y>0</Y></Label>
@@ -39709,7 +39662,6 @@ for( J_EA v : c_dieselVehicles ){
 	v.f_updateAllFlows(0);
 }
 
-
 f_operateFixedAssets();
 for( J_EAProduction v : c_productionAssets ){
 	v_currentPowerElectricity_kW += v.electricityConsumption_kW - v.electricityProduction_kW;
@@ -39732,8 +39684,10 @@ f_connectionMetering();
 
 v_maxConnectionLoad_fr = max(v_maxConnectionLoad_fr, abs(v_currentPowerElectricity_kW / v_allowedCapacity_kW ));
 
-v_electricityTotalsCheck = v_electricityConsumedFixedProfile_kWh + v_electricityConvertedToX_kWh + v_electricityChargedByEVs_kWh  + v_electricityDeliveredToGrid_kWh 
+v_electricityTotalsCheck_kWh = v_electricityConsumedFixedProfile_kWh + v_electricityConvertedToX_kWh + v_electricityChargedByEVs_kWh  + v_electricityDeliveredToGrid_kWh 
 - v_electricityProducedPV_kWh - v_electricityProducedWind_kWh - v_electricityDrawnFromGrid_kWh - v_xConvertedToElectricity_kWh;
+
+
 
 // Total Energy Use and Production -> Run at end of simulation, not every timestep!
 /*
@@ -39774,7 +39728,7 @@ if (main.b_addKpiVisuals) {
 
 if (p_energyProfile != null & p_company_connection_id != null) {
 	if (p_company_connection_id == p_energyProfile.energyAssetName) {
-		p_energyProfile.f_updateAllFlows( time(HOUR) );
+		p_energyProfile.f_updateAllFlows( main.t_h );
 		v_currentPowerElectricity_kW += p_energyProfile.electricityConsumption_kW - p_energyProfile.electricityProduction_kW;
 		v_fixedConsumptionElectric_kW += p_energyProfile.electricityConsumption_kW;		
 	}
@@ -60897,7 +60851,7 @@ traceln("NetConnection connecting to " + numberOfEnergyAssets + " EnergyAssets")
 			SOC_setp_fr = 0.9 - 0.8 * main.v_SolarYieldForecast_fr;
 		
 		} else {
-			SOC_setp_fr = 0.6 + 0.25 * Math.sin(2*Math.PI*(time(HOUR)-12)/24); // Sinusoidal setpoint: aim for low SOC at 6:00h, high SOC at 18:00h. 
+			SOC_setp_fr = 0.6 + 0.25 * Math.sin(2*Math.PI*(main.t_h-12)/24); // Sinusoidal setpoint: aim for low SOC at 6:00h, high SOC at 18:00h. 
 		}*/
 		double SOC_deficit_fr = SOC_setp_fr - currentBatteryStateOfCharge_fr;
 		
@@ -60965,14 +60919,14 @@ traceln("NetConnection connecting to " + numberOfEnergyAssets + " EnergyAssets")
 	} else { // Get gridload directly from node
 		GridNode node = l_parentNodeElectric.getConnectedAgent();
 		currentCoopElectricitySurplus_kW = -node.v_currentLoadElectricity_kW + v_previousPowerBattery_kW;			
-		CoopConnectionCapacity_kW = 0.9*node.p_capacity_kW; // Use only 90% of capacity for robustness against delay
+		CoopConnectionCapacity_kW = 0.95*node.p_capacity_kW; // Use only 90% of capacity for robustness against delay
 	}
 	//traceln("Operating buurtbatterij, current local surplus is %s kW.", currentCoopElectricitySurplus_kW);
 	
 	double availableChargePower_kW = CoopConnectionCapacity_kW + currentCoopElectricitySurplus_kW; // Max battery charging power within grid capacity
 	double availableDischargePower_kW = currentCoopElectricitySurplus_kW - CoopConnectionCapacity_kW; // Max discharging power within grid capacity
 	
-	double FeedbackGain_kWpSOC = 1.5 * p_batteryAsset.getElectricCapacity_kW(); // How strongly to aim for SOC setpoint
+	double FeedbackGain_kWpSOC = 2*1.5 * p_batteryAsset.getElectricCapacity_kW(); // How strongly to aim for SOC setpoint
 	double FeedforwardGain_kWpKw = 0.1; // Feedforward based on current surpluss in Coop
 	double chargeOffset_kW = 0; // Charging 'bias', basically increases SOC setpoint slightly during the whole day.
 	double chargeSetpoint_kW = 0;
@@ -60986,8 +60940,13 @@ traceln("NetConnection connecting to " + numberOfEnergyAssets + " EnergyAssets")
 		//traceln("Previous battery power: " + v_previousPowerElectricity_kW + ", previous Coop surpluss: " + currentCoopElectricitySurplus_kW);
 		FeedforwardGain_kWpKw = 0.0; // Feedforward based on current surpluss in Coop			
 	} else { // this logic should activate for the bedrijventerrein-casus	*/
+	if (main.v_totalInstalledWindPower_kW > 0) {
 		FeedforwardGain_kWpKw = 0.1; // Feedforward based on current surpluss in Coop
-		SOC_setp_fr = (0.5 + 0.35 * Math.sin(2*Math.PI*(time(HOUR)-10)/24))*(1-0.8*main.v_WindYieldForecast_fr); // Sinusoidal setpoint: aim for low SOC at 6:00h, high SOC at 18:00h. 
+		SOC_setp_fr = (0.5 + 0.35 * Math.sin(2*Math.PI*(main.t_h-10)/24))*(1-0.8*main.v_WindYieldForecast_fr); // Sinusoidal setpoint: aim for low SOC at 6:00h, high SOC at 18:00h. 
+	} else {
+		FeedforwardGain_kWpKw = 0.0; // Feedforward based on current surpluss in Coop
+		SOC_setp_fr = (0.8 + 0.2 * Math.sin(2*Math.PI*(main.t_h-10)/24)); // Sinusoidal setpoint: aim for low SOC at 6:00h, high SOC at 18:00h. 
+	}
 	//}
 	
 	chargeSetpoint_kW = FeedforwardGain_kWpKw * (currentCoopElectricitySurplus_kW - chargeOffset_kW) + (SOC_setp_fr - batterySOC) * FeedbackGain_kWpSOC;
@@ -61023,8 +60982,9 @@ v_conversionPowerElectric_kW = 0;
 f_operateFlexAssets();
 f_connectionMetering();
 
-v_electricityTotalsCheck = v_electricityConsumedFixedProfile_kWh + v_electricityConvertedToX_kWh + v_electricityChargedByEVs_kWh  + v_electricityDeliveredToGrid_kWh 
-- v_electricityProducedPV_kWh - v_electricityProducedWind_kWh - v_electricityDrawnFromGrid_kWh ;
+v_electricityTotalsCheck_kWh = v_electricityConsumedFixedProfile_kWh + v_electricityConvertedToX_kWh + v_electricityChargedByEVs_kWh  + v_electricityDeliveredToGrid_kWh 
+- v_electricityProducedPV_kWh - v_electricityProducedWind_kWh - v_electricityDrawnFromGrid_kWh - v_xConvertedToElectricity_kWh + v_electricityChargedByBattery_kWh - v_electricityDischargedByBattery_kWh;
+
 /*
 // Total Energy Use and Production
 v_totalEnergyUsed_kWh = 0;
@@ -63289,6 +63249,8 @@ public class J_EAStorage extends J_EA implements Serializable {
 	protected double timestep_h;
 	protected double ambientTemperature_degC;
 	protected String ambientTempType;
+	protected double discharged_kWh = 0;
+	protected double charged_kWh = 0;
 
     /**
      * Default constructor
@@ -63334,6 +63296,8 @@ public class J_EAStorage extends J_EA implements Serializable {
     	energyUsed_kWh = 0.0;
     	stateOfChargeStored_r = stateOfCharge_r;
     	stateOfCharge_r = initialStateOfCharge_r;    
+    	charged_kWh = 0;
+    	discharged_kWh = 0;
     	resetFlows();    	
     }
     
@@ -63880,8 +63844,6 @@ public class J_EAStorageElectric extends zero.J_EAStorage implements Serializabl
 
 	private OL_EnergyCarrierType storageMedium = OL_EnergyCarrierType.ELECTRICITY;
 	private double lossFactor_r = 0;
-	protected double discharged_kWh = 0;
-	protected double charged_kWh = 0;
 	
     /**
      * Default constructor
@@ -63994,8 +63956,7 @@ public class J_EAStorageGas extends zero.J_EAStorage implements Serializable {
 
 	private OL_EnergyCarrierType storageMedium = OL_EnergyCarrierType.METHANE;
 	private double lossFactor_r = 0;
-	protected double discharged_kWh = 0;
-	protected double charged_kWh = 0;
+
 	//public double capacityGas_kW = 0;
 
     /**
@@ -66221,6 +66182,7 @@ public class J_ActivityTracker implements Serializable {
     
     public void storeAndResetState() {
     	v_eventIndexStored = v_eventIndex;
+    	v_eventIndex = 0;
     }
     
     public void restoreState() {
