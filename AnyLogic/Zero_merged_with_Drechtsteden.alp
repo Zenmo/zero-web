@@ -4544,7 +4544,7 @@ gr_scopeRadioButtons.setVisible(true);
 						<UnitType><![CDATA[NONE]]></UnitType>
 						<SdArray>false</SdArray>
 						<DefaultValue Class="CodeValue">
-							<Code><![CDATA[new J_EAProfile(null, null, p_timeStep_h)]]></Code>
+							<Code><![CDATA[new J_EAProfile(null, OL_EnergyCarrierType.ELECTRICITY, null, p_timeStep_h)]]></Code>
 						</DefaultValue>
 						<ParameterEditor>
 							<Id>1697449583236</Id>
@@ -8470,7 +8470,7 @@ for (GridConnection GC : UtilityConnections) {
 		newAsset.energyAssetName=GC.p_company_connection_id;
 		
 		List<Double> quarterlyEnergyDemand_kWh = selectValues(double.class, "SELECT " + GC.p_company_connection_id + "_demand FROM comp_elec_consumption;");			
-		((J_EAProfile)newAsset).a_electricityProfile_kWh = quarterlyEnergyDemand_kWh.stream().mapToDouble(d -> d).toArray();
+		((J_EAProfile)newAsset).a_energyProfile_kWh = quarterlyEnergyDemand_kWh.stream().mapToDouble(d -> d).toArray();
 		c_energyAssets.add(newAsset);
 		GC.f_connectToJ_EA(newAsset);
 		
@@ -8496,20 +8496,47 @@ for (GridConnection GC : UtilityConnections) {
 			
 		}
 	} else {
-		// Heatdemand		
-		double yearlyHeatDemandPerFloorSurface_kWhpm2=90.9778*9.77;
-		J_EAConsumption newAsset = (J_EAConsumption)p_defaultConsumptionAsset.clone();
-		newAsset.energyAssetType = OL_EnergyAssetType.HEAT_DEMAND;
-		newAsset.parentAgent = GC;
-		newAsset.energyAssetName="Building_heat_demand";
-		newAsset.yearlyDemandHeat_kWh = GC.p_floorSurfaceArea_m2*yearlyHeatDemandPerFloorSurface_kWhpm2;
-		c_energyAssets.add(newAsset);
-		GC.f_connectToJ_EA(newAsset);
+		// Heatdemand
+		double[] a_energyProfile_kWh = {};
+		if (GC.p_company_connection_id != null) {
+			String columnName = GC.p_company_connection_id.toUpperCase() + "_DEMAND";
+			List<String> containsColumn = selectValues(String.class, "SELECT column_name FROM information_schema.columns WHERE table_name='COMP_GAS_CONSUMPTION';");// and column_name='" + GC.p_company_connection_id + "_demand';");
+			//traceln("Result of sql query: " + containsColumn);			
+			if (containsColumn.contains(columnName)) {
+				List<Double> hourlyGasDemand_kWh = selectValues(double.class, "SELECT " + GC.p_company_connection_id + "_demand FROM comp_gas_consumption;");			
+				a_energyProfile_kWh = hourlyGasDemand_kWh.stream().mapToDouble(d -> d*9.77).toArray();
+				traceln("Gas consumption array length: " + a_energyProfile_kWh.length + " for grid connection: " + GC);
+			}
+		}
 		
+		if ( a_energyProfile_kWh.length > 0) {
+			J_EAProfile newAsset = new J_EAProfile(GC, OL_EnergyCarrierType.HEAT, a_energyProfile_kWh, 1.0);
+			newAsset.energyAssetName=GC.p_company_connection_id;			
+			c_energyAssets.add(newAsset);
+			GC.f_connectToJ_EA(newAsset);
+			
+			// Get peak heat demand from energyprofile
+		
+			double peakHeatDemand_kW = Arrays.stream(a_energyProfile_kWh).max().orElseThrow(() -> new RuntimeException());
+			J_EAConversionGasBurner gasBurner = new J_EAConversionGasBurner(GC, OL_EnergyAssetType.GAS_BURNER, peakHeatDemand_kW, 0.99, p_timeStep_h, 90);
+			c_energyAssets.add(gasBurner);
+			GC.f_connectToJ_EA(gasBurner);	
+		} else {
+			double yearlyHeatDemandPerFloorSurface_kWhpm2=90.9778*9.77;
+			J_EAConsumption newAsset = (J_EAConsumption)p_defaultConsumptionAsset.clone();
+			newAsset.energyAssetType = OL_EnergyAssetType.HEAT_DEMAND;
+			newAsset.parentAgent = GC;
+			newAsset.energyAssetName="Building_heat_demand";
+			newAsset.yearlyDemandHeat_kWh = GC.p_floorSurfaceArea_m2*yearlyHeatDemandPerFloorSurface_kWhpm2;
+			c_energyAssets.add(newAsset);
+			GC.f_connectToJ_EA(newAsset);		
+			
+			J_EAConversionGasBurner gasBurner = new J_EAConversionGasBurner(GC, OL_EnergyAssetType.GAS_BURNER, newAsset.yearlyDemandHeat_kWh/8760*10, 0.99, p_timeStep_h, 90);
+			c_energyAssets.add(gasBurner);
+			GC.f_connectToJ_EA(gasBurner);	
+		}
 		// Gas burner
-		J_EAConversionGasBurner gasBurner = new J_EAConversionGasBurner(GC, OL_EnergyAssetType.GAS_BURNER, newAsset.yearlyDemandHeat_kWh/8760*10, 0.99, p_timeStep_h, 90);
-		c_energyAssets.add(gasBurner);
-		GC.f_connectToJ_EA(gasBurner);	
+	
 	}		
 }
 
@@ -38924,7 +38951,8 @@ import java.io.*;]]></Import>
 				<Variable Class="Parameter">
 					<Id>1697450310305</Id>
 					<Name><![CDATA[p_energyProfile]]></Name>
-					<X>630</X><Y>160</Y>
+					<ExcludeFromBuild>true</ExcludeFromBuild>
+					<X>630</X><Y>140</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -39097,6 +39125,21 @@ import java.io.*;]]></Import>
 					<Properties SaveInSnapshot="true" AccessType="public" StaticVariable="false">
 						<CollectionClass><![CDATA[ArrayList]]></CollectionClass>
 						<ElementClass><![CDATA[J_ActivityTrackerTrips]]></ElementClass>
+						<ValueElementClass><![CDATA[String]]></ValueElementClass>
+					</Properties>
+
+				</Variable>
+				<Variable Class="CollectionVariable">
+					<Id>1700044359363</Id>
+					<Name><![CDATA[c_profileAssets]]></Name>
+					<X>630</X><Y>160</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" AccessType="public" StaticVariable="false">
+						<CollectionClass><![CDATA[ArrayList]]></CollectionClass>
+						<ElementClass><![CDATA[J_EAProfile]]></ElementClass>
 						<ValueElementClass><![CDATA[String]]></ValueElementClass>
 					</Properties>
 
@@ -39726,12 +39769,18 @@ if (main.b_addKpiVisuals) {
 					<Body><![CDATA[//v_heatRecievingFromSun_kW = p_irradianceRecievingSurface_m2 * main.v_currentSolarPowerNormalized_r * main.p_solarAbsorptionCoefficient;
 //v_totalHeatRecievedSun_kWh += v_heatRecievingFromSun_kW;
 
-if (p_energyProfile != null & p_company_connection_id != null) {
-	if (p_company_connection_id == p_energyProfile.energyAssetName) {
-		p_energyProfile.f_updateAllFlows( main.t_h );
-		v_currentPowerElectricity_kW += p_energyProfile.electricityConsumption_kW - p_energyProfile.electricityProduction_kW;
-		v_fixedConsumptionElectric_kW += p_energyProfile.electricityConsumption_kW;		
-	}
+//if (p_energyProfile != null & p_company_connection_id != null) {
+for(J_EAProfile e : c_profileAssets) {
+	//if (p_company_connection_id == p_energyProfile.energyAssetName) {
+		e.f_updateAllFlows( main.t_h );		
+		v_fixedConsumptionElectric_kW += e.electricityConsumption_kW;		
+		
+		v_currentPowerElectricity_kW += e.electricityConsumption_kW - e.electricityProduction_kW;
+		v_currentPowerMethane_kW += e.methaneConsumption_kW - e.methaneProduction_kW;
+		v_currentPowerHydrogen_kW += e.hydrogenConsumption_kW - e.hydrogenProduction_kW;
+		v_currentPowerHeat_kW += e.heatConsumption_kW - e.heatProduction_kW;
+		v_currentPowerDiesel_kW += e.dieselConsumption_kW;		
+	//}
 }
 
 for(J_EAProduction e : c_productionAssets) {
@@ -40560,7 +40609,8 @@ if (j_ea instanceof J_EAVehicle) {
 		p_batteryAsset = (J_EAStorageElectric)j_ea;
 	}
 } else if  (j_ea instanceof J_EAProfile) {
-	p_energyProfile = (J_EAProfile)j_ea;
+	//p_energyProfile = (J_EAProfile)j_ea;
+	c_profileAssets.add((J_EAProfile)j_ea);
 } else {
 	traceln("Unrecognized energy asset %s in gridconnection %s", j_ea, this);
 }
@@ -63771,9 +63821,9 @@ public class J_EAConversionBiogasMethane extends zero.J_EAConversion implements 
 public class J_EAProfile extends zero.J_EA implements Serializable {
 
 	//private OL_EnergyCarrierType energyCarrierProduced = OL_EnergyCarrierType.METHANE;
-	//private OL_EnergyCarrierType energyCarrierConsumed = OL_EnergyCarrierType.METHANE;
+	private OL_EnergyCarrierType energyCarrierConsumed = OL_EnergyCarrierType.ELECTRICITY;
 	//public double capacityMethane_kW;
-	public double[] a_electricityProfile_kWh;
+	public double[] a_energyProfile_kWh;
 	//protected double outputTemperature_degC;
     /**
      * Default constructor
@@ -63784,9 +63834,10 @@ public class J_EAProfile extends zero.J_EA implements Serializable {
     /**
      * Constructor initializing the fields
      */
-    public J_EAProfile(Agent parentAgent, double[] profile_kWh, double timestep_h) {
+    public J_EAProfile(Agent parentAgent, OL_EnergyCarrierType energyCarrier, double[] profile_kWh, double timestep_h) {
 	    this.parentAgent= parentAgent;
-	    this.a_electricityProfile_kWh = profile_kWh;
+	    this.energyCarrierConsumed = energyCarrier;
+	    this.a_energyProfile_kWh = profile_kWh;
 	    this.timestep_h = timestep_h;
 	}
 
@@ -63799,14 +63850,28 @@ public class J_EAProfile extends zero.J_EA implements Serializable {
     @Override
     public double[] operate(double time_h) {
 		//traceln("I convert now! GasBurner @ " + (ratioOfCapacity * 100) + " %");
-    	if ( (int)round(time_h/timestep_h) >= a_electricityProfile_kWh.length ) {
-    		traceln("Time out of bounds for evaluating J_EAProfile power!");
-    		time_h = a_electricityProfile_kWh.length * timestep_h - 1;
+    	if ( (int)floor(time_h/timestep_h) >= a_energyProfile_kWh.length ) {
+    		traceln("Time out of bounds for evaluating J_EAProfile power in profile asset %s!", this.energyAssetName);
+    		time_h = a_energyProfile_kWh.length * timestep_h - 1;
     	}
-		this.electricityConsumption_kW = max(0,a_electricityProfile_kWh[(int)round(time_h/timestep_h)]/timestep_h);
-    	this.electricityProduction_kW = -min(0,a_electricityProfile_kWh[(int)round(time_h/timestep_h)]/timestep_h);
-    	//traceln("Running custom demand profile for " + energyAssetName + " with current timestep demand " + (electricityConsumption_kW - electricityProduction_kW) + " kW. Array index is " + (int)round(time_h/timestep_h) + ", time is: " + time_h + " hours, array size is " + a_electricityProfile_kWh.length);	
-		this.energyUsed_kWh += timestep_h * (electricityConsumption_kW - electricityProduction_kW); // This represents losses!
+    	if (energyCarrierConsumed == OL_EnergyCarrierType.ELECTRICITY) {
+    		this.electricityConsumption_kW = max(0,a_energyProfile_kWh[(int)floor(time_h/timestep_h)]/timestep_h);
+        	this.electricityProduction_kW = -min(0,a_energyProfile_kWh[(int)floor(time_h/timestep_h)]/timestep_h);        	
+    	} else if (energyCarrierConsumed == OL_EnergyCarrierType.METHANE) {
+    		this.methaneConsumption_kW = max(0,a_energyProfile_kWh[(int)floor(time_h/timestep_h)]/timestep_h);
+        	this.methaneProduction_kW = -min(0,a_energyProfile_kWh[(int)floor(time_h/timestep_h)]/timestep_h);    		    		
+    	} else if (energyCarrierConsumed == OL_EnergyCarrierType.HYDROGEN) {
+    		this.hydrogenConsumption_kW = max(0,a_energyProfile_kWh[(int)floor(time_h/timestep_h)]/timestep_h);
+        	this.hydrogenProduction_kW = -min(0,a_energyProfile_kWh[(int)floor(time_h/timestep_h)]/timestep_h);
+    	} else if  (energyCarrierConsumed == OL_EnergyCarrierType.HEAT) {
+    		this.heatConsumption_kW = max(0,a_energyProfile_kWh[(int)floor(time_h/timestep_h)]/timestep_h);
+        	this.heatProduction_kW = -min(0,a_energyProfile_kWh[(int)floor(time_h/timestep_h)]/timestep_h);
+        	//traceln("Current heat consumption: %s", this.heatConsumption_kW);
+    	} else if  (energyCarrierConsumed == OL_EnergyCarrierType.DIESEL) {
+    		this.dieselConsumption_kW = max(0,a_energyProfile_kWh[(int)floor(time_h/timestep_h)]/timestep_h);
+    	}
+		//traceln("Running custom demand profile for " + energyAssetName + " with current timestep demand " + (electricityConsumption_kW - electricityProduction_kW) + " kW. Array index is " + (int)floor(time_h/timestep_h) + ", time is: " + time_h + " hours, array size is " + a_electricityProfile_kWh.length);	
+		this.energyUsed_kWh += timestep_h * (electricityConsumption_kW + methaneConsumption_kW + hydrogenConsumption_kW + heatConsumption_kW + dieselConsumption_kW - electricityProduction_kW - methaneProduction_kW - hydrogenProduction_kW - heatProduction_kW); // This represents losses!
 		//double[] arr = {this.electricityProduction_kW, this.methaneProduction_kW, this.hydrogenProduction_kW, this.heatProduction_kW, this.electricityConsumption_kW, this.methaneConsumption_kW, this.hydrogenConsumption_kW, this.heatConsumption_kW };
     	//return arr;
 		return returnEnergyFlows();
@@ -63820,7 +63885,7 @@ public class J_EAProfile extends zero.J_EA implements Serializable {
 	public String toString() {
 		return
 			"parentAgent = " + parentAgent +", Energy consumed = " + this.energyUsed_kWh +
-			"current power = " + (electricityConsumption_kW - electricityProduction_kW) +" "+
+			"current power = " + (electricityConsumption_kW + methaneConsumption_kW + hydrogenConsumption_kW + heatConsumption_kW + dieselConsumption_kW - electricityProduction_kW - methaneProduction_kW - hydrogenProduction_kW - heatProduction_kW) +" "+
 			"eta_r = " + this.eta_r+" " +
 			"energyUsed_kWh (losses) = " + this.energyUsed_kWh + " ";
 	}
