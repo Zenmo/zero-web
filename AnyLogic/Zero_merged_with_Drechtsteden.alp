@@ -9082,6 +9082,37 @@ pl_belastingsduurkromme.addDataSet(data_netbelastingDuurkrommeVorige_kW,"Vorige 
 pl_belastingsduurkromme.setColor(1,red);
 pl_belastingsduurkromme.setVisible(true);
 
+//Netbelastingduurkromme winter
+arraySize = data_winterWeekBusinessParkNetLoad_kW.size();
+double[] netLoadArrayWinter_kW = new double[arraySize];
+for(int i=0; i<arraySize ; i++) {
+	netLoadArrayWinter_kW[i]=-data_winterWeekBusinessParkNetLoad_kW.getY(i);
+	/*if (notFirstRun) {
+		data_netbelastingDuurkrommeVorige_kW.add(i*p_timeStep_h,data_netbelastingDuurkromme_kW.getY(i));
+	}*/
+}
+Arrays.parallelSort(netLoadArrayWinter_kW);
+data_winterWeekBusinessParkNetbelastingDuurkromme_kW.reset();
+for(int i=0; i< arraySize; i++) {
+	data_winterWeekBusinessParkNetbelastingDuurkromme_kW.add(i*p_timeStep_h, -netLoadArrayWinter_kW[i]);
+}
+
+//Netbelastingduurkromme summer
+arraySize = data_summerWeekBusinessParkNetLoad_kW.size();
+double[] netLoadArraySummer_kW = new double[arraySize];
+for(int i=0; i<arraySize ; i++) {
+	netLoadArraySummer_kW[i]=-data_summerWeekBusinessParkNetLoad_kW.getY(i);
+	/*if (notFirstRun) {
+		data_netbelastingDuurkrommeVorige_kW.add(i*p_timeStep_h,data_netbelastingDuurkromme_kW.getY(i));
+	}*/
+}
+Arrays.parallelSort(netLoadArraySummer_kW);
+data_summerWeekBusinessParkNetbelastingDuurkromme_kW.reset();
+for(int i=0; i< arraySize; i++) {
+	data_summerWeekBusinessParkNetbelastingDuurkromme_kW.add(i*p_timeStep_h, -netLoadArraySummer_kW[i]);
+}
+
+
 double totalDistanceTrucks_km = 0;
 double deltaThermalEnergySinceStart_MWh = 0;
 double totalAmbientHeating_MWh = 0;
@@ -9159,6 +9190,11 @@ traceln( "nett import methane: " + (v_totalMethaneImport_MWh-v_totalMethaneExpor
 traceln( "import diesel: " + v_totalDieselImport_MWh + " MWh");
 
 traceln("MS node peak load: " + v_gridNodePeakLoadElectricityMSLS_kW + " kW at hour: " + c_timesOfNodePeakLoads_h);
+
+pie_selfsufficiency.updateData();
+bar_energyUseAndProduction.updateData();
+pie_selfconsumption.updateData();
+pie_overloadedTransformers.updateData();
 
 double modelRunDuration_s = roundToDecimal( ( System.currentTimeMillis() - v_timeOfModelStart_ms ) / 1000 - v_modelStartUpDuration_s, 3);
 ]]></Body>
@@ -9351,6 +9387,12 @@ else if (rb_area.getValue() == 0 && rb_timePeriod.getValue() == 1){ //Business p
 	businessParkEnergySupplyChart.addDataSet(data_summerWeekWindGeneration_kW, "Windturbines", v_windGenerationColor);
 	businessParkEnergySupplyChart.addDataSet(data_summerWeekNeighborhoodBatterySupply_kW, "Batterij ontladen", v_neighborhoodBatterySupplyColor);
 	businessParkEnergySupplyChart.addDataSet(data_summerWeekV2GSupply_kW, "V2G ontladen", v_V2GSupplyColor);
+	
+	//Netbelastingduurkromme
+	pl_belastingsduurkromme.removeAll();
+	pl_belastingsduurkromme.addDataSet(data_summerWeekBusinessParkNetbelastingDuurkromme_kW,"Netbelastingsduurkromme");
+	pl_belastingsduurkromme.setFixedHorizontalScale(0, 24*7);
+	//pl_belastingsduurkromme.setScaleX(24*7/p_timeStep_h);
 }
 
 //Business park and winter week
@@ -9370,6 +9412,12 @@ else if (rb_area.getValue() == 0 && rb_timePeriod.getValue() == 2){ //Business p
 	businessParkEnergySupplyChart.addDataSet(data_winterWeekWindGeneration_kW, "Windturbines", v_windGenerationColor);
 	businessParkEnergySupplyChart.addDataSet(data_winterWeekNeighborhoodBatterySupply_kW, "Batterij ontladen", v_neighborhoodBatterySupplyColor);
 	businessParkEnergySupplyChart.addDataSet(data_winterWeekV2GSupply_kW, "V2G ontladen", v_V2GSupplyColor);
+	
+	//Netbelastingduurkromme
+	pl_belastingsduurkromme.removeAll();
+	pl_belastingsduurkromme.addDataSet(data_winterWeekBusinessParkNetbelastingDuurkromme_kW,"Netbelastingsduurkromme");
+	pl_belastingsduurkromme.setFixedHorizontalScale(0, 24*7);
+	//pl_belastingsduurkromme.setScaleX(24*7/p_timeStep_h);
 }
 
 //Business park and year
@@ -9389,6 +9437,14 @@ else if (rb_area.getValue() == 0 && rb_timePeriod.getValue() == 3){ //Business p
 	businessParkAnnualEnergySupplyChart.addDataSet(data_annualWindGeneration_kWh, "Windturbines", v_windGenerationColor);
 	businessParkAnnualEnergySupplyChart.addDataSet(data_annualNeighborhoodBatterySupply_kWh, "Batterij ontladen", v_neighborhoodBatterySupplyColor);
 	businessParkAnnualEnergySupplyChart.addDataSet(data_annualV2GSupply_kWh, "V2G ontladen", v_V2GSupplyColor);
+	
+	//
+	pl_belastingsduurkromme.removeAll();
+	pl_belastingsduurkromme.addDataSet(data_netbelastingDuurkromme_kW,"Netbelastingsduurkromme");
+	pl_belastingsduurkromme.addDataSet(data_netbelastingDuurkrommeVorige_kW,"Vorige netbelastingsduurkromme");
+	pl_belastingsduurkromme.setColor(1,red);
+	pl_belastingsduurkromme.setFixedHorizontalScale(0, 8760);
+	//pl_belastingsduurkromme.setScaleX(8760/p_timeStep_h);	
 }
 
 //businessParkEnergyDemandChart.addDataSet(data_neighborhoodBatteryDemand_kW, "Buurtbatterij laden", v_neighborhoodBatteryDemandColor, true, false, Chart.InterpolationType.INTERPOLATION_LINEAR, 1, Chart.PointStyle.POINT_NONE);
@@ -10802,7 +10858,7 @@ data_annualBusinessParkNetLoad_kW.reset();]]></Body>
     			<DataSet>
 					<Id>1699275048551</Id>
 					<Name><![CDATA[data_summerWeekBusinessParkDemand_kW]]></Name>
-					<X>430</X><Y>2260</Y>
+					<X>430</X><Y>2249</Y>
 					<Label><X>15</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -10890,7 +10946,7 @@ data_annualBusinessParkNetLoad_kW.reset();]]></Body>
     			<DataSet>
 					<Id>1699275048605</Id>
 					<Name><![CDATA[data_summerWeekBusinessParkSupply_kW]]></Name>
-					<X>430</X><Y>2280</Y>
+					<X>430</X><Y>2269</Y>
 					<Label><X>15</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -10912,7 +10968,7 @@ data_annualBusinessParkNetLoad_kW.reset();]]></Body>
     			<DataSet>
 					<Id>1699275048618</Id>
 					<Name><![CDATA[data_summerWeekBusinessParkNetLoad_kW]]></Name>
-					<X>430</X><Y>2300</Y>
+					<X>430</X><Y>2289</Y>
 					<Label><X>15</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -11066,7 +11122,7 @@ data_annualBusinessParkNetLoad_kW.reset();]]></Body>
     			<DataSet>
 					<Id>1699275048713</Id>
 					<Name><![CDATA[data_winterWeekBusinessParkDemand_kW]]></Name>
-					<X>430</X><Y>2555</Y>
+					<X>430</X><Y>2545</Y>
 					<Label><X>15</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -11154,7 +11210,7 @@ data_annualBusinessParkNetLoad_kW.reset();]]></Body>
     			<DataSet>
 					<Id>1699275048768</Id>
 					<Name><![CDATA[data_winterWeekBusinessParkSupply_kW]]></Name>
-					<X>430</X><Y>2575</Y>
+					<X>430</X><Y>2565</Y>
 					<Label><X>15</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -11176,7 +11232,7 @@ data_annualBusinessParkNetLoad_kW.reset();]]></Body>
     			<DataSet>
 					<Id>1699275048782</Id>
 					<Name><![CDATA[data_winterWeekBusinessParkNetLoad_kW]]></Name>
-					<X>430</X><Y>2595</Y>
+					<X>430</X><Y>2585</Y>
 					<Label><X>15</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -12700,6 +12756,50 @@ data_annualBusinessParkNetLoad_kW.reset();]]></Body>
 					</RecurrenceCode>
 					<FreezeXAxis>false</FreezeXAxis>
 					<SamplesToKeep>35040</SamplesToKeep>
+				</DataSet>
+    			<DataSet>
+					<Id>1700147597435</Id>
+					<Name><![CDATA[data_summerWeekBusinessParkNetbelastingDuurkromme_kW]]></Name>
+					<X>430</X><Y>2310</Y>
+					<Label><X>15</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<AutoUpdate>false</AutoUpdate>
+					<OccurrenceAtTime>true</OccurrenceAtTime>
+					<OccurrenceDate>1687075200000</OccurrenceDate>
+					<OccurrenceTime Class="CodeUnitValue">
+						<Code><![CDATA[0]]></Code>
+						<Unit Class="TimeUnits"><![CDATA[HOUR]]></Unit>
+					</OccurrenceTime>
+					<RecurrenceCode Class="CodeUnitValue">
+						<Code><![CDATA[1]]></Code>
+						<Unit Class="TimeUnits"><![CDATA[HOUR]]></Unit>
+					</RecurrenceCode>
+					<FreezeXAxis>false</FreezeXAxis>
+					<SamplesToKeep>672</SamplesToKeep>
+				</DataSet>
+    			<DataSet>
+					<Id>1700147657392</Id>
+					<Name><![CDATA[data_winterWeekBusinessParkNetbelastingDuurkromme_kW]]></Name>
+					<X>430</X><Y>2606</Y>
+					<Label><X>15</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<AutoUpdate>false</AutoUpdate>
+					<OccurrenceAtTime>true</OccurrenceAtTime>
+					<OccurrenceDate>1687075200000</OccurrenceDate>
+					<OccurrenceTime Class="CodeUnitValue">
+						<Code><![CDATA[0]]></Code>
+						<Unit Class="TimeUnits"><![CDATA[HOUR]]></Unit>
+					</OccurrenceTime>
+					<RecurrenceCode Class="CodeUnitValue">
+						<Code><![CDATA[1]]></Code>
+						<Unit Class="TimeUnits"><![CDATA[HOUR]]></Unit>
+					</RecurrenceCode>
+					<FreezeXAxis>false</FreezeXAxis>
+					<SamplesToKeep>672</SamplesToKeep>
 				</DataSet>
 			</AnalysisData>
 			<Connectivity>
@@ -32730,7 +32830,7 @@ rectanglePerHouseholdCosts.setFillColor(new Color (255, 255, 255, 100));
 					<SamplesToKeep>1</SamplesToKeep>
 					<HorScaleFromExpression><![CDATA[0]]></HorScaleFromExpression>
 					<HorScaleToExpression><![CDATA[8760]]></HorScaleToExpression>
-					<HorScaleType>FIXED</HorScaleType>
+					<HorScaleType>AUTO</HorScaleType>
     			</Plot>
 			</Presentation>
 
@@ -35073,6 +35173,7 @@ if (rb_area.getValue() == 0){
 
 if (rb_area.getValue() == 1){
 	//f_setChartToDatasetCollective();
+	
 }
 
 //Run simulation in continues mode
@@ -35089,8 +35190,7 @@ else {
 	gr_businessParkAnnualSupplyAndDemand.setVisible(false);
 	gr_businessParkSupplyAndDemand.setVisible(true);
 }
-
-rb_graph.setValue(0, true);]]></ActionCode>
+rb_graph.setValue(rb_graph.getValue(), true);]]></ActionCode>
 					</BasicProperties>
 					<ExtendedProperties>
 						<Font Name="Dialog" Size="14" Style="0"/>
@@ -35149,6 +35249,7 @@ else if (rb_graph.getValue() == 1){
 	gr_businessParkSupplyAndDemand.setVisible(false);
 	//businessParkNetLoadTimePlot.setVisible(true);
 	gr_businessParkLoad.setVisible(true);
+	//pl_belastingsduurkromme.setVisible(true);
 }
 
 rb_area.setValue(rb_area.getValue(), true);]]></ActionCode>
@@ -35302,6 +35403,242 @@ new Thread( () -> {
 			</Presentation>
 
 				</Group>
+    			<PieChart>
+					<Id>1700144601416</Id>
+					<Name><![CDATA[pie_selfsufficiency]]></Name>
+					<X>560</X><Y>-630</Y>
+					<Label><X>0</X><Y>-10</Y></Label>
+					<PublicFlag>true</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>false</ShowLabel>
+					<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+					<AutoUpdate>false</AutoUpdate>
+					<OccurrenceAtTime>true</OccurrenceAtTime>
+					<OccurrenceDate>1700208000000</OccurrenceDate>
+					<OccurrenceTime Class="CodeUnitValue">
+						<Code><![CDATA[0]]></Code>
+						<Unit Class="TimeUnits"><![CDATA[HOUR]]></Unit>
+					</OccurrenceTime>
+					<RecurrenceCode Class="CodeUnitValue">
+						<Code><![CDATA[1]]></Code>
+						<Unit Class="TimeUnits"><![CDATA[HOUR]]></Unit>
+					</RecurrenceCode>
+					<EmbeddedIcon>false</EmbeddedIcon>
+					<Width>260</Width>
+					<Height>210</Height>
+					<BackgroundColor/>
+					<BorderColor/>
+					<ChartArea>
+						<XOffset>50</XOffset>
+						<YOffset>10</YOffset>
+						<Width>140</Width>
+						<Height>140</Height>
+						<BorderColor/>
+						<GridColor>-12566464</GridColor>
+					</ChartArea>
+					<Legend>
+						<Place>SOUTH</Place>
+						<TextColor>-16777216</TextColor>
+						<Size>40</Size>
+					</Legend>
+					<Labels>
+						<HorLabelsPosition>DEFAULT</HorLabelsPosition>
+						<VerLabelsPosition>DEFAULT</VerLabelsPosition>
+						<TextColor>-12566464</TextColor>
+					</Labels>
+					<ShowLegend>true</ShowLegend>
+					<DataItem>
+					<Id>1700144602958</Id>
+					<Expression><![CDATA[max(0,v_modelSelfSufficiency_fr)]]></Expression>
+					<Color>-6632142</Color>
+						<Title><![CDATA[% energievebruik lokaal opgewekt]]></Title>
+					</DataItem>
+					<DataItem>
+					<Id>1700144602959</Id>
+					<Expression><![CDATA[1-v_modelSelfSufficiency_fr]]></Expression>
+					<Color>-3308225</Color>
+						<Title><![CDATA[% energieverbruik geïmporteerd]]></Title>
+					</DataItem>
+    			</PieChart>
+    			<BarChart>
+					<Id>1700145360596</Id>
+					<Name><![CDATA[bar_energyUseAndProduction]]></Name>
+					<X>290</X><Y>-640</Y>
+					<Label><X>0</X><Y>-10</Y></Label>
+					<PublicFlag>true</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>false</ShowLabel>
+					<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+					<AutoUpdate>false</AutoUpdate>
+					<OccurrenceAtTime>true</OccurrenceAtTime>
+					<OccurrenceDate>1700208000000</OccurrenceDate>
+					<OccurrenceTime Class="CodeUnitValue">
+						<Code><![CDATA[0]]></Code>
+						<Unit Class="TimeUnits"><![CDATA[HOUR]]></Unit>
+					</OccurrenceTime>
+					<RecurrenceCode Class="CodeUnitValue">
+						<Code><![CDATA[1]]></Code>
+						<Unit Class="TimeUnits"><![CDATA[HOUR]]></Unit>
+					</RecurrenceCode>
+					<EmbeddedIcon>false</EmbeddedIcon>
+					<Width>260</Width>
+					<Height>210</Height>
+					<BackgroundColor/>
+					<BorderColor/>
+					<ChartArea>
+						<XOffset>50</XOffset>
+						<YOffset>30</YOffset>
+						<Width>180</Width>
+						<Height>120</Height>
+						<BackgroundColor>-1</BackgroundColor>
+						<BorderColor>-16777216</BorderColor>
+						<GridColor>-12566464</GridColor>
+					</ChartArea>
+					<Legend>
+						<Place>SOUTH</Place>
+						<TextColor>-16777216</TextColor>
+						<Size>30</Size>
+					</Legend>
+					<Labels>
+						<HorLabelsPosition>DEFAULT</HorLabelsPosition>
+						<VerLabelsPosition>DEFAULT</VerLabelsPosition>
+						<TextColor>-12566464</TextColor>
+					</Labels>
+					<ShowLegend>true</ShowLegend>
+					<DataItem>
+					<Id>1700145362780</Id>
+					<Expression><![CDATA[v_totalEnergyUsed_MWh]]></Expression>
+					<Color>-8097537</Color>
+						<Title><![CDATA[Totaal energieverbruik [MWh]]]></Title>
+					</DataItem>
+					<DataItem>
+					<Id>1700145375358</Id>
+					<Expression><![CDATA[v_totalEnergyProduced_MWh]]></Expression>
+					<Color>-6632142</Color>
+						<Title><![CDATA[Totale energieopwek [MWh]]]></Title>
+					</DataItem>
+					<ScaleFromExpression><![CDATA[0]]></ScaleFromExpression>
+					<ScaleToExpression><![CDATA[1]]></ScaleToExpression>
+					<ScaleType>AUTO</ScaleType>
+					<Bars>
+						<Direction>UP</Direction>
+						<RelativeWidth>0.8</RelativeWidth>
+					</Bars>
+    			</BarChart>
+    			<PieChart>
+					<Id>1700145450426</Id>
+					<Name><![CDATA[pie_selfconsumption]]></Name>
+					<X>840</X><Y>-630</Y>
+					<Label><X>0</X><Y>-10</Y></Label>
+					<PublicFlag>true</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>false</ShowLabel>
+					<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+					<AutoUpdate>false</AutoUpdate>
+					<OccurrenceAtTime>true</OccurrenceAtTime>
+					<OccurrenceDate>1700208000000</OccurrenceDate>
+					<OccurrenceTime Class="CodeUnitValue">
+						<Code><![CDATA[0]]></Code>
+						<Unit Class="TimeUnits"><![CDATA[HOUR]]></Unit>
+					</OccurrenceTime>
+					<RecurrenceCode Class="CodeUnitValue">
+						<Code><![CDATA[1]]></Code>
+						<Unit Class="TimeUnits"><![CDATA[HOUR]]></Unit>
+					</RecurrenceCode>
+					<EmbeddedIcon>false</EmbeddedIcon>
+					<Width>260</Width>
+					<Height>210</Height>
+					<BackgroundColor/>
+					<BorderColor/>
+					<ChartArea>
+						<XOffset>50</XOffset>
+						<YOffset>10</YOffset>
+						<Width>140</Width>
+						<Height>140</Height>
+						<BorderColor/>
+						<GridColor>-12566464</GridColor>
+					</ChartArea>
+					<Legend>
+						<Place>SOUTH</Place>
+						<TextColor>-16777216</TextColor>
+						<Size>40</Size>
+					</Legend>
+					<Labels>
+						<HorLabelsPosition>DEFAULT</HorLabelsPosition>
+						<VerLabelsPosition>DEFAULT</VerLabelsPosition>
+						<TextColor>-12566464</TextColor>
+					</Labels>
+					<ShowLegend>true</ShowLegend>
+					<DataItem>
+					<Id>1700145450422</Id>
+					<Expression><![CDATA[max(0,v_modelSelfConsumption_fr)]]></Expression>
+					<Color>-6632142</Color>
+						<Title><![CDATA[% energieproductie lokaal gebruikt]]></Title>
+					</DataItem>
+					<DataItem>
+					<Id>1700145450423</Id>
+					<Expression><![CDATA[1-v_modelSelfConsumption_fr]]></Expression>
+					<Color>-3308225</Color>
+						<Title><![CDATA[% energieproductie geëxporteerd]]></Title>
+					</DataItem>
+    			</PieChart>
+    			<PieChart>
+					<Id>1700145968066</Id>
+					<Name><![CDATA[pie_overloadedTransformers]]></Name>
+					<X>1110</X><Y>-630</Y>
+					<Label><X>0</X><Y>-10</Y></Label>
+					<PublicFlag>true</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>false</ShowLabel>
+					<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+					<AutoUpdate>false</AutoUpdate>
+					<OccurrenceAtTime>true</OccurrenceAtTime>
+					<OccurrenceDate>1700208000000</OccurrenceDate>
+					<OccurrenceTime Class="CodeUnitValue">
+						<Code><![CDATA[0]]></Code>
+						<Unit Class="TimeUnits"><![CDATA[HOUR]]></Unit>
+					</OccurrenceTime>
+					<RecurrenceCode Class="CodeUnitValue">
+						<Code><![CDATA[1]]></Code>
+						<Unit Class="TimeUnits"><![CDATA[HOUR]]></Unit>
+					</RecurrenceCode>
+					<EmbeddedIcon>false</EmbeddedIcon>
+					<Width>260</Width>
+					<Height>210</Height>
+					<BackgroundColor/>
+					<BorderColor/>
+					<ChartArea>
+						<XOffset>50</XOffset>
+						<YOffset>10</YOffset>
+						<Width>140</Width>
+						<Height>140</Height>
+						<BorderColor/>
+						<GridColor>-12566464</GridColor>
+					</ChartArea>
+					<Legend>
+						<Place>SOUTH</Place>
+						<TextColor>-16777216</TextColor>
+						<Size>40</Size>
+					</Legend>
+					<Labels>
+						<HorLabelsPosition>DEFAULT</HorLabelsPosition>
+						<VerLabelsPosition>DEFAULT</VerLabelsPosition>
+						<TextColor>-12566464</TextColor>
+					</Labels>
+					<ShowLegend>true</ShowLegend>
+					<DataItem>
+					<Id>1700145968062</Id>
+					<Expression><![CDATA[count(pop_gridNodes, x->x.v_totalTimeOverloaded_h > 1) / (double)pop_gridNodes.size()]]></Expression>
+					<Color>-47872</Color>
+						<Title><![CDATA[% transformators met overbelasting]]></Title>
+					</DataItem>
+					<DataItem>
+					<Id>1700145968063</Id>
+					<Expression><![CDATA[1-count(pop_gridNodes, x->x.v_totalTimeOverloaded_h > 1) / (double)pop_gridNodes.size()]]></Expression>
+					<Color>-6632142</Color>
+						<Title><![CDATA[% transformators binnen capaciteit]]></Title>
+					</DataItem>
+    			</PieChart>
 			</Presentation>
 
 				</Level>
@@ -36519,7 +36856,7 @@ v_hydrogenDelivered_kWh += max(-v_currentLoadHydrogen_kW, 0)*main.p_timeStep_h;
 v_heatDrawn_kWh += max(v_currentLoadHeat_kW, 0)*main.p_timeStep_h;
 v_heatDelivered_kWh += max(-v_currentLoadHeat_kW, 0)*main.p_timeStep_h;
 
-v_averageAbsoluteLoadElectricity_kW = ( v_electricityDrawn_kWh + v_electricityDelivered_kWh ) / time(HOUR);
+v_averageAbsoluteLoadElectricity_kW = ( v_electricityDrawn_kWh + v_electricityDelivered_kWh ) / main.t_h;
 v_loadFactor_fr = v_averageAbsoluteLoadElectricity_kW / abs(v_peakLoadAbsoluteElectricity_kW);]]></Body>
 				</Function>
 				<Function AccessType="default" StaticFunction="false">
@@ -36672,6 +37009,9 @@ if( p_energyAssetList != null) {
 // Low-pass filtered grid load
 //double lowPassFraction = min(1,1*1.2*main.p_timeStep_h); // smaller value results in more filtering
 v_currentLoadElectricityLowPassed_kW += v_lowPassFactor_fr * ( v_currentLoadElectricity_kW - v_currentLoadElectricityLowPassed_kW );
+if (v_currentLoadElectricityLowPassed_kW > p_capacity_kW) {
+	v_totalTimeOverloaded_h	+= main.p_timeStep_h;
+}
 
 v_filteredLoadCongestionPricing_kW += v_lowPassFactorCongestionPricing_fr * ( v_currentLoadElectricity_kW - v_filteredLoadCongestionPricing_kW);
 
