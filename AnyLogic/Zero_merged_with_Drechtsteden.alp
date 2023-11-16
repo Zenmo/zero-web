@@ -319,6 +319,10 @@
 				<Id>1699367407696</Id>
 				<Name><![CDATA[DIESEL_TRUCK]]></Name>
 			</Option>
+			<Option>
+				<Id>1700138621293</Id>
+				<Name><![CDATA[DIESEL_VAN]]></Name>
+			</Option>
 		</OptionList>
 		<OptionList>
 			<Id>1659525715752</Id>
@@ -4655,6 +4659,34 @@ gr_scopeRadioButtons.setVisible(true);
 						</ParameterEditor>
 					</Properties>                 
 				</Variable>
+				<Variable Class="Parameter">
+					<Id>1700136363693</Id>
+					<Name><![CDATA[p_buurtcode]]></Name>
+					<Description><![CDATA[Niet gebruikt in model zelf, kan vrij gewijzigd worden om uncached cloud experiments te forceren
+
+@author: JorritvandenHouten
+@since: Sprint 7]]></Description>
+					<X>-740</X><Y>360</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" ModificatorType="STATIC">
+						<Type><![CDATA[String]]></Type>
+						<UnitType><![CDATA[NONE]]></UnitType>
+						<SdArray>false</SdArray>
+						<DefaultValue Class="CodeValue">
+							<Code><![CDATA["BU06420701"]]></Code>
+						</DefaultValue>
+						<ParameterEditor>
+							<Id>1700136363691</Id>
+							<EditorContolType>TEXT_BOX</EditorContolType>
+							<MinSliderValue><![CDATA[0]]></MinSliderValue>
+							<MaxSliderValue><![CDATA[100]]></MaxSliderValue>
+							<DelimeterType>NO_DELIMETER</DelimeterType>
+						</ParameterEditor>
+					</Properties>                 
+				</Variable>
 				<Variable Class="CollectionVariable">
 					<Id>1663238323139</Id>
 					<Name><![CDATA[c_connectionOwners]]></Name>
@@ -8300,7 +8332,7 @@ for (Tuple row : rows) {
 	
 	GC.setLatLon(GC.p_latitude, GC.p_longitude);
 	GridNode nearestLVStation = GC.getNearestAgent(c_gridNodesMSLS);
-	traceln("Nearest MVLV transformer for GC " + GC.p_agentID + " is: " + nearestLVStation.p_agentID)	;
+	//traceln("Nearest MVLV transformer for GC " + GC.p_agentID + " is: " + nearestLVStation.p_agentID)	;
 	//Set nearest agent as trafo
 	GC.p_parentNodeElectricID = nearestLVStation.p_agentID;	
 	//GC.set_p_batteryOperationMode( gridConnectionBatteryMode );
@@ -8493,6 +8525,14 @@ double totalBusinessParkMethaneDelivery_kWh = 0; // No data for Groote Lindt, ta
 double profileMethaneDelivery_kWh = 0;
 double profileElectricityDelivery_kWh = 0;
 
+// Get number of vehicles on business park
+int nbVans = (int)selectFrom(voertuigdata_drechtsteden).where(voertuigdata_drechtsteden.buurtcode.eq(p_buurtcode)).firstResult(voertuigdata_drechtsteden.aantal_bestelautos);
+int nbTrucks = (int)selectFrom(voertuigdata_drechtsteden).where(voertuigdata_drechtsteden.buurtcode.eq(p_buurtcode)).firstResult(voertuigdata_drechtsteden.aantal_trucks);
+int nbCars = 0;
+//List<String> columns = selectFrom(voertuigdata_drechtsteden).getResults(voertuigdata_drechtsteden.getColumns());
+//String columns = voertuigdata_drechtsteden.getColumns().toString();
+
+traceln("Aantal bestelbusjes op bedrijventerrein: %s, aantal trucks: %s", nbVans, nbTrucks);
 // Add electricity consumption profiles to gridconnections
 
 for (GridConnection GC : UtilityConnections) {
@@ -8525,21 +8565,27 @@ for (GridConnection GC : UtilityConnections) {
 	if ( GC.p_gridConnectionType==OL_GridConnectionType.LOGISTICS ) { // add dieseltrucks
 		double energyConsumption_kWhpkm = 3.0;//g.required( "energyConsumption_kWhpkm" ).doubleValue();
 		double vehicleScaling = 1.0;//g.hasNonNull("vehicleScaling")? g.required("vehicleScaling").doubleValue() : 1.0;		
-		for (int i=0; i<100; i++) {
+		for (int i=0; i<nbTrucks; i++) {
 			J_EADieselVehicle dieselVehicle = new J_EADieselVehicle(GC, energyConsumption_kWhpkm, p_timeStep_h, vehicleScaling);	
 			dieselVehicle.energyAssetType = OL_EnergyAssetType.DIESEL_TRUCK;
 			GC.f_connectToJ_EA(dieselVehicle);		
-			c_energyAssets.add(dieselVehicle);
-			
+			c_energyAssets.add(dieselVehicle);			
 		}
+		for (int i=0; i<nbVans; i++) {
+			energyConsumption_kWhpkm = 1.0;
+			J_EADieselVehicle dieselVehicle = new J_EADieselVehicle(GC, energyConsumption_kWhpkm, p_timeStep_h, vehicleScaling);	
+			dieselVehicle.energyAssetType = OL_EnergyAssetType.DIESEL_VAN;
+			GC.f_connectToJ_EA(dieselVehicle);		
+			c_energyAssets.add(dieselVehicle);	
+		}		
 	} else {
 		// Heatdemand
 		double[] a_energyProfile_kWh = {};
 		if (GC.p_company_connection_id != null) {
 			String columnName = GC.p_company_connection_id.toUpperCase() + "_DEMAND";
-			List<String> containsColumn = selectValues(String.class, "SELECT column_name FROM information_schema.columns WHERE table_name='COMP_GAS_CONSUMPTION';");// and column_name='" + GC.p_company_connection_id + "_demand';");
-			//traceln("Result of sql query: " + containsColumn);			
-			if (containsColumn.contains(columnName)) {
+			//List<String> table_columns = selectValues(String.class, "SELECT column_name FROM information_schema.columns WHERE table_name='COMP_GAS_CONSUMPTION';");// and column_name='" + GC.p_company_connection_id + "_demand';");
+			String table_columns = comp_gas_consumption.getColumns().toString();
+			if (table_columns.contains(columnName)) {
 				List<Double> hourlyGasDemand_kWh = selectValues(double.class, "SELECT " + GC.p_company_connection_id + "_demand FROM comp_gas_consumption;");			
 				a_energyProfile_kWh = hourlyGasDemand_kWh.stream().mapToDouble(d -> d*9.77).toArray();
 				traceln("Gas consumption array length: " + a_energyProfile_kWh.length + " for grid connection: " + GC);
@@ -40623,12 +40669,15 @@ if (j_ea instanceof J_EAVehicle) {
 	}
 	c_vehicleAssets.add(vehicle);		
 	J_ActivityTrackerTrips tripTracker;
-	if (vehicle.energyAssetType == OL_EnergyAssetType.ELECTRIC_HEAVY_GOODS_VEHICLE || vehicle.energyAssetType == OL_EnergyAssetType. DIESEL_TRUCK) {
+	if (vehicle.energyAssetType == OL_EnergyAssetType.ELECTRIC_HEAVY_GOODS_VEHICLE || vehicle.energyAssetType == OL_EnergyAssetType.DIESEL_TRUCK) {
 		int rowIndex = uniform_discr(1, 7);//getIndex() % 200;	
-		tripTracker = new J_ActivityTrackerTrips(main, rowIndex, time(MINUTE), vehicle, OL_MobilityPatternType.TRUCK);
+		tripTracker = new J_ActivityTrackerTrips(main, rowIndex, main.t_h*60, vehicle, OL_MobilityPatternType.TRUCK);
+	} else if (vehicle.energyAssetType == OL_EnergyAssetType.DIESEL_VAN) {// No mobility pattern for business vans available yet!! Falling back to private-vehicle mobility pattern
+		int rowIndex = uniform_discr(1, 7);//getIndex() % 200;	
+		tripTracker = new J_ActivityTrackerTrips(main, rowIndex, main.t_h*60, vehicle, OL_MobilityPatternType.TRUCK);
 	} else {
 		int rowIndex = uniform_discr(1, 200);//getIndex() % 200;
-		tripTracker = new J_ActivityTrackerTrips(main, rowIndex, time(MINUTE), vehicle, OL_MobilityPatternType.PRIVATE_VEHICLE);
+		tripTracker = new J_ActivityTrackerTrips(main, rowIndex, main.t_h*60, vehicle, OL_MobilityPatternType.PRIVATE_VEHICLE);
 	}
 	c_tripTrackers.add( tripTracker );
 	vehicle.tripTracker = tripTracker;	
@@ -62764,6 +62813,27 @@ if (gisRegion == null ) {
 				<Password><![CDATA[]]></Password>
 			</ExternalConnection>
 			<ExternalConnection>
+				<Id>1699885843471</Id>
+				<Name><![CDATA[database]]></Name>
+				<X>0</X><Y>0</Y>
+				<Label><X>10</X><Y>0</Y></Label>
+				<PublicFlag>false</PublicFlag>
+				<PresentationFlag>true</PresentationFlag>
+				<ShowLabel>true</ShowLabel>
+				<DatabaseType>EXCEL_ACCESS</DatabaseType>
+				<ConnectionURL><![CDATA[]]></ConnectionURL>
+				<ConnectOnStartup>true</ConnectOnStartup>
+				<DatabaseName><![CDATA[]]></DatabaseName>
+				<ResourceReference>
+					<PackageName><![CDATA[zero]]></PackageName>
+					<ClassName><![CDATA[buildings with coordinates.xlsx]]></ClassName>
+				</ResourceReference>
+				<Host><![CDATA[localhost]]></Host>
+				<JdbcDriverClassName><![CDATA[net.sourceforge.jtds.jdbc.Driver]]></JdbcDriverClassName>
+				<Login><![CDATA[]]></Login>
+				<Password><![CDATA[]]></Password>
+			</ExternalConnection>
+			<ExternalConnection>
 				<Id>1697095214801</Id>
 				<Name><![CDATA[database]]></Name>
 				<X>0</X><Y>0</Y>
@@ -62785,7 +62855,7 @@ if (gisRegion == null ) {
 				<Password><![CDATA[]]></Password>
 			</ExternalConnection>
 			<ExternalConnection>
-				<Id>1699885843471</Id>
+				<Id>1700133164390</Id>
 				<Name><![CDATA[database]]></Name>
 				<X>0</X><Y>0</Y>
 				<Label><X>10</X><Y>0</Y></Label>
@@ -62798,7 +62868,7 @@ if (gisRegion == null ) {
 				<DatabaseName><![CDATA[]]></DatabaseName>
 				<ResourceReference>
 					<PackageName><![CDATA[zero]]></PackageName>
-					<ClassName><![CDATA[buildings with coordinates.xlsx]]></ClassName>
+					<ClassName><![CDATA[_neighborhoods_vehicles.xlsx]]></ClassName>
 				</ResourceReference>
 				<Host><![CDATA[localhost]]></Host>
 				<JdbcDriverClassName><![CDATA[net.sourceforge.jtds.jdbc.Driver]]></JdbcDriverClassName>
@@ -62874,27 +62944,36 @@ if (gisRegion == null ) {
 			<TableImportSettings>
 				<TableReference>
 					<PackageName><![CDATA[zero]]></PackageName>
-					<ClassName><![CDATA[residence_objects]]></ClassName>
-				</TableReference>
-				<ConnectionIndex>3</ConnectionIndex>
-				<ExternalTableName><![CDATA["residence_objects"]]></ExternalTableName>
-				<AutoImport>false</AutoImport>
-			</TableImportSettings>
-			<TableImportSettings>
-				<TableReference>
-					<PackageName><![CDATA[zero]]></PackageName>
 					<ClassName><![CDATA[buildings_with_coordinates]]></ClassName>
 				</TableReference>
-				<ConnectionIndex>4</ConnectionIndex>
+				<ConnectionIndex>3</ConnectionIndex>
 				<ExternalTableName><![CDATA["buildings with coordinates"]]></ExternalTableName>
 				<AutoImport>true</AutoImport>
 			</TableImportSettings>
 			<TableImportSettings>
 				<TableReference>
 					<PackageName><![CDATA[zero]]></PackageName>
-					<ClassName><![CDATA[mvlv_transformers]]></ClassName>
+					<ClassName><![CDATA[residence_objects]]></ClassName>
+				</TableReference>
+				<ConnectionIndex>4</ConnectionIndex>
+				<ExternalTableName><![CDATA["residence_objects"]]></ExternalTableName>
+				<AutoImport>false</AutoImport>
+			</TableImportSettings>
+			<TableImportSettings>
+				<TableReference>
+					<PackageName><![CDATA[zero]]></PackageName>
+					<ClassName><![CDATA[voertuigdata_drechtsteden]]></ClassName>
 				</TableReference>
 				<ConnectionIndex>5</ConnectionIndex>
+				<ExternalTableName><![CDATA["data_selectie"]]></ExternalTableName>
+				<AutoImport>false</AutoImport>
+			</TableImportSettings>
+			<TableImportSettings>
+				<TableReference>
+					<PackageName><![CDATA[zero]]></PackageName>
+					<ClassName><![CDATA[mvlv_transformers]]></ClassName>
+				</TableReference>
+				<ConnectionIndex>6</ConnectionIndex>
 				<ExternalTableName><![CDATA["mvlv_transformers"]]></ExternalTableName>
 				<AutoImport>false</AutoImport>
 			</TableImportSettings>
@@ -63256,6 +63335,9 @@ if (gisRegion == null ) {
 				</Parameter>
 				<Parameter>
 					<ParameterName><![CDATA[b_scaleElecMethaneConsumption]]></ParameterName>
+				</Parameter>
+				<Parameter>
+					<ParameterName><![CDATA[p_buurtcode]]></ParameterName>
 				</Parameter>
 			</Parameters>			
 			<PresentationProperties>
@@ -66410,7 +66492,7 @@ public class J_ActivityTrackerTrips extends J_ActivityTracker implements Seriali
 	    // Duplicate activities until the end of the year
     	
 	    if (endtimes_min.get(nbActivities-1) < 10080) {
-	    	traceln("Duplicate trips until the end of the year");
+	    	//traceln("Duplicate trips until the end of the year");
 		    for (int weeks = 1; weeks < 52; weeks++) {
 		    	for (int eventIdx = 0; eventIdx < nbActivities; eventIdx++) {
 		    		starttimes_min.add(starttimes_min.get(eventIdx) + 10080*weeks);
@@ -66419,7 +66501,7 @@ public class J_ActivityTrackerTrips extends J_ActivityTracker implements Seriali
 		    	}
 		    }
 	    }
-	    traceln("This EV has %s trips in a year that total %s km.", starttimes_min.size(), distances_km.stream().mapToDouble(f -> f).sum() );
+	    //traceln("This vehicle has %s trips in a year that total %s km.", starttimes_min.size(), distances_km.stream().mapToDouble(f -> f).sum() );
 	    // 'forward' to current activity if tripTracker is instantiated not at the start of the simulation or year
 	    while ( starttimes_min.get(v_eventIndex) < time_min ) {		    	
 	    	v_eventIndex++;		    	
@@ -66847,6 +66929,11 @@ public class J_ActivityTrackerCooking extends J_ActivityTracker implements Seria
 		</Resource>
 		<Resource>
 			<Path><![CDATA[buildings with coordinates.xlsx]]></Path>
+			<ReferencedFromUserCode>false</ReferencedFromUserCode>
+			<Location>FILE_SYSTEM</Location>
+		</Resource>
+		<Resource>
+			<Path><![CDATA[_neighborhoods_vehicles.xlsx]]></Path>
 			<ReferencedFromUserCode>false</ReferencedFromUserCode>
 			<Location>FILE_SYSTEM</Location>
 		</Resource>
