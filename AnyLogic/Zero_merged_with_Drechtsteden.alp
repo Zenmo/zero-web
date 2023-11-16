@@ -4420,7 +4420,7 @@ gr_scopeRadioButtons.setVisible(true);
 
 @author: JorritvandenHouten
 @since: Sprint 7]]></Description>
-					<X>-740</X><Y>270</Y>
+					<X>-740</X><Y>280</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -4444,7 +4444,7 @@ gr_scopeRadioButtons.setVisible(true);
 				<Variable Class="Parameter">
 					<Id>1696926175869</Id>
 					<Name><![CDATA[p_centerLatitude]]></Name>
-					<X>-740</X><Y>290</Y>
+					<X>-740</X><Y>300</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -4465,7 +4465,7 @@ gr_scopeRadioButtons.setVisible(true);
 				<Variable Class="Parameter">
 					<Id>1696926175877</Id>
 					<Name><![CDATA[p_centerLongitude]]></Name>
-					<X>-740</X><Y>310</Y>
+					<X>-740</X><Y>320</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -4486,7 +4486,7 @@ gr_scopeRadioButtons.setVisible(true);
 				<Variable Class="Parameter">
 					<Id>1696926273936</Id>
 					<Name><![CDATA[p_simulatedArea]]></Name>
-					<X>-740</X><Y>330</Y>
+					<X>-740</X><Y>340</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -4621,6 +4621,34 @@ gr_scopeRadioButtons.setVisible(true);
 						<ParameterEditor>
 							<Id>1699290370681</Id>
 							<EditorContolType>TEXT_BOX</EditorContolType>
+							<MinSliderValue><![CDATA[0]]></MinSliderValue>
+							<MaxSliderValue><![CDATA[100]]></MaxSliderValue>
+							<DelimeterType>NO_DELIMETER</DelimeterType>
+						</ParameterEditor>
+					</Properties>                 
+				</Variable>
+				<Variable Class="Parameter">
+					<Id>1700129272566</Id>
+					<Name><![CDATA[b_scaleElecMethaneConsumption]]></Name>
+					<Description><![CDATA[Schakelaar om optionele visualisatie-agent te creëren.
+
+@since: Sprint 6
+@author: Jorrit]]></Description>
+					<X>-740</X><Y>250</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" ModificatorType="STATIC">
+						<Type><![CDATA[boolean]]></Type>
+						<UnitType><![CDATA[NONE]]></UnitType>
+						<SdArray>false</SdArray>
+						<DefaultValue Class="CodeValue">
+							<Code><![CDATA[true]]></Code>
+						</DefaultValue>
+						<ParameterEditor>
+							<Id>1700129272564</Id>
+							<EditorContolType>CHECK_BOX</EditorContolType>
 							<MinSliderValue><![CDATA[0]]></MinSliderValue>
 							<MaxSliderValue><![CDATA[100]]></MaxSliderValue>
 							<DelimeterType>NO_DELIMETER</DelimeterType>
@@ -8549,27 +8577,29 @@ for (GridConnection GC : UtilityConnections) {
 	
 	}		
 }
-traceln("totalBusinessParkElectricityDelivery_MWh: " + totalBusinessParkElectricityDelivery_kWh/1000 + " MWh, profile delivery: " + profileElectricityDelivery_kWh/1000);
-traceln("totalBusinessParkMethaneDelivery_MWh: " + totalBusinessParkMethaneDelivery_kWh/1000);
 
-double methaneDeliveryCorrectionFactor_fr = (klimaatmonitorMethaneDelivery_kWh - profileMethaneDelivery_kWh) / (totalBusinessParkMethaneDelivery_kWh - profileMethaneDelivery_kWh);
-double electricityDeliveryCorrectionFactor_fr = (klimaatmonitorElectricityDelivery_kWh - profileElectricityDelivery_kWh) / (totalBusinessParkElectricityDelivery_kWh - profileElectricityDelivery_kWh);
-
-traceln("methaneDeliveryCorrectionFactor_fr: " + methaneDeliveryCorrectionFactor_fr + ", klimaatmonitor gaslevering: " + klimaatmonitorMethaneDelivery_kWh );
-traceln("electricityDeliveryCorrectionFactor_fr: " + electricityDeliveryCorrectionFactor_fr + ", klimaatmonitor elektriciteitslevering: " + klimaatmonitorElectricityDelivery_kWh );
-
-for (J_EA e : c_energyAssets) {
-	if ( e instanceof J_EAConsumption ) {
-		if ( ((J_EAConsumption)e).yearlyDemandElectricity_kWh > 0 ) { // correct electricity consumption for non-profile connections.
-			((J_EAConsumption)e).yearlyDemandElectricity_kWh = ((J_EAConsumption)e).yearlyDemandElectricity_kWh * electricityDeliveryCorrectionFactor_fr;
-		} else if ( ((J_EAConsumption)e).yearlyDemandHeat_kWh > 0 ) {
-			((J_EAConsumption)e).yearlyDemandHeat_kWh = ((J_EAConsumption)e).yearlyDemandHeat_kWh * methaneDeliveryCorrectionFactor_fr;
-			J_EAConversionGasBurner gasBurner = (J_EAConversionGasBurner)((GridConnection)e.parentAgent).p_primaryHeatingAsset;
-			gasBurner.capacityHeat_kW = gasBurner.capacityHeat_kW * methaneDeliveryCorrectionFactor_fr;		
+if (b_scaleElecMethaneConsumption) {
+	traceln("totalBusinessParkElectricityDelivery_MWh: " + totalBusinessParkElectricityDelivery_kWh/1000 + " MWh, profile delivery: " + profileElectricityDelivery_kWh/1000);
+	traceln("totalBusinessParkMethaneDelivery_MWh: " + totalBusinessParkMethaneDelivery_kWh/1000);
+	
+	double methaneDeliveryCorrectionFactor_fr = (klimaatmonitorMethaneDelivery_kWh - profileMethaneDelivery_kWh) / (totalBusinessParkMethaneDelivery_kWh - profileMethaneDelivery_kWh);
+	double electricityDeliveryCorrectionFactor_fr = (klimaatmonitorElectricityDelivery_kWh - profileElectricityDelivery_kWh) / (totalBusinessParkElectricityDelivery_kWh - profileElectricityDelivery_kWh);
+	
+	traceln("methaneDeliveryCorrectionFactor_fr: " + methaneDeliveryCorrectionFactor_fr + ", klimaatmonitor gaslevering: " + klimaatmonitorMethaneDelivery_kWh );
+	traceln("electricityDeliveryCorrectionFactor_fr: " + electricityDeliveryCorrectionFactor_fr + ", klimaatmonitor elektriciteitslevering: " + klimaatmonitorElectricityDelivery_kWh );
+	
+	for (J_EA e : c_energyAssets) {
+		if ( e instanceof J_EAConsumption ) {
+			if ( ((J_EAConsumption)e).yearlyDemandElectricity_kWh > 0 ) { // correct electricity consumption for non-profile connections.
+				((J_EAConsumption)e).yearlyDemandElectricity_kWh = ((J_EAConsumption)e).yearlyDemandElectricity_kWh * electricityDeliveryCorrectionFactor_fr;
+			} else if ( ((J_EAConsumption)e).yearlyDemandHeat_kWh > 0 ) {
+				((J_EAConsumption)e).yearlyDemandHeat_kWh = ((J_EAConsumption)e).yearlyDemandHeat_kWh * methaneDeliveryCorrectionFactor_fr;
+				J_EAConversionGasBurner gasBurner = (J_EAConversionGasBurner)((GridConnection)e.parentAgent).p_primaryHeatingAsset;
+				gasBurner.capacityHeat_kW = gasBurner.capacityHeat_kW * methaneDeliveryCorrectionFactor_fr;		
+			}
 		}
 	}
 }
-
 
 for (GridConnection GC : Windfarms) {
 	// Add 0kW windturbine to windfarm
@@ -63223,6 +63253,9 @@ if (gisRegion == null ) {
 				</Parameter>
 				<Parameter>
 					<ParameterName><![CDATA[p_plotInterval_h]]></ParameterName>
+				</Parameter>
+				<Parameter>
+					<ParameterName><![CDATA[b_scaleElecMethaneConsumption]]></ParameterName>
 				</Parameter>
 			</Parameters>			
 			<PresentationProperties>
