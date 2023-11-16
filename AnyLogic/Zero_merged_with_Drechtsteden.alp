@@ -8390,7 +8390,7 @@ f_initializeForecasts();
 //f_instantiateTemplateEnergyAssets();
 
 // Sliders start values
-sl_electricTrucks.setValue(100,true);
+//sl_electricTrucks.setValue(100,true);
 ]]></Body>
 				</Function>
 				<Function AccessType="default" StaticFunction="false">
@@ -8458,7 +8458,14 @@ for (GridConnection GC : c_gridConnections) {
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
 					<ShowLabel>true</ShowLabel>
-					<Body><![CDATA[// Add electricity consumption profiles to gridconnections
+					<Body><![CDATA[double klimaatmonitorElectricityDelivery_kWh = 70e6; // Groote Lindt data from klimaatmonitor.databank.nl
+double klimaatmonitorMethaneDelivery_kWh = 406e6; // No data for Groote Lindt, taken value from neighboring park.
+double totalBusinessParkElectricityDelivery_kWh = 0; // Groote Lindt data from klimaatmonitor.databank.nl
+double totalBusinessParkMethaneDelivery_kWh = 0; // No data for Groote Lindt, taken value from neighboring park.
+double profileMethaneDelivery_kWh = 0;
+double profileElectricityDelivery_kWh = 0;
+
+// Add electricity consumption profiles to gridconnections
 
 for (GridConnection GC : UtilityConnections) {
 	// Add electricity consumption profiles
@@ -8473,7 +8480,8 @@ for (GridConnection GC : UtilityConnections) {
 		((J_EAProfile)newAsset).a_energyProfile_kWh = quarterlyEnergyDemand_kWh.stream().mapToDouble(d -> d).toArray();
 		c_energyAssets.add(newAsset);
 		GC.f_connectToJ_EA(newAsset);
-		
+		totalBusinessParkElectricityDelivery_kWh += Arrays.stream( ((J_EAProfile)newAsset).a_energyProfile_kWh ).sum();
+		profileElectricityDelivery_kWh += Arrays.stream( ((J_EAProfile)newAsset).a_energyProfile_kWh ).sum();
 	} else { // Add regular electricity and gas consumption profiles
 		// Electricity consumption
 		J_EAConsumption newAsset;
@@ -8483,6 +8491,7 @@ for (GridConnection GC : UtilityConnections) {
 		newAsset.yearlyDemandElectricity_kWh = 100000*uniform(0.5,1.5); // Replace with yearly consumption from database!
 		c_energyAssets.add(newAsset);
 		GC.f_connectToJ_EA(newAsset);
+		totalBusinessParkElectricityDelivery_kWh += newAsset.yearlyDemandElectricity_kWh;
 	}	
 	
 	if ( GC.p_gridConnectionType==OL_GridConnectionType.LOGISTICS ) { // add dieseltrucks
@@ -8514,7 +8523,8 @@ for (GridConnection GC : UtilityConnections) {
 			newAsset.energyAssetName=GC.p_company_connection_id;			
 			c_energyAssets.add(newAsset);
 			GC.f_connectToJ_EA(newAsset);
-			
+			totalBusinessParkMethaneDelivery_kWh += Arrays.stream( ((J_EAProfile)newAsset).a_energyProfile_kWh ).sum();
+			profileMethaneDelivery_kWh += Arrays.stream( ((J_EAProfile)newAsset).a_energyProfile_kWh ).sum();
 			// Get peak heat demand from energyprofile
 		
 			double peakHeatDemand_kW = Arrays.stream(a_energyProfile_kWh).max().orElseThrow(() -> new RuntimeException());
@@ -8530,7 +8540,7 @@ for (GridConnection GC : UtilityConnections) {
 			newAsset.yearlyDemandHeat_kWh = GC.p_floorSurfaceArea_m2*yearlyHeatDemandPerFloorSurface_kWhpm2;
 			c_energyAssets.add(newAsset);
 			GC.f_connectToJ_EA(newAsset);		
-			
+			totalBusinessParkMethaneDelivery_kWh += newAsset.yearlyDemandHeat_kWh;
 			J_EAConversionGasBurner gasBurner = new J_EAConversionGasBurner(GC, OL_EnergyAssetType.GAS_BURNER, newAsset.yearlyDemandHeat_kWh/8760*10, 0.99, p_timeStep_h, 90);
 			c_energyAssets.add(gasBurner);
 			GC.f_connectToJ_EA(gasBurner);	
@@ -8539,6 +8549,27 @@ for (GridConnection GC : UtilityConnections) {
 	
 	}		
 }
+traceln("totalBusinessParkElectricityDelivery_MWh: " + totalBusinessParkElectricityDelivery_kWh/1000 + " MWh, profile delivery: " + profileElectricityDelivery_kWh/1000);
+traceln("totalBusinessParkMethaneDelivery_MWh: " + totalBusinessParkMethaneDelivery_kWh/1000);
+
+double methaneDeliveryCorrectionFactor_fr = (klimaatmonitorMethaneDelivery_kWh - profileMethaneDelivery_kWh) / (totalBusinessParkMethaneDelivery_kWh - profileMethaneDelivery_kWh);
+double electricityDeliveryCorrectionFactor_fr = (klimaatmonitorElectricityDelivery_kWh - profileElectricityDelivery_kWh) / (totalBusinessParkElectricityDelivery_kWh - profileElectricityDelivery_kWh);
+
+traceln("methaneDeliveryCorrectionFactor_fr: " + methaneDeliveryCorrectionFactor_fr + ", klimaatmonitor gaslevering: " + klimaatmonitorMethaneDelivery_kWh );
+traceln("electricityDeliveryCorrectionFactor_fr: " + electricityDeliveryCorrectionFactor_fr + ", klimaatmonitor elektriciteitslevering: " + klimaatmonitorElectricityDelivery_kWh );
+
+for (J_EA e : c_energyAssets) {
+	if ( e instanceof J_EAConsumption ) {
+		if ( ((J_EAConsumption)e).yearlyDemandElectricity_kWh > 0 ) { // correct electricity consumption for non-profile connections.
+			((J_EAConsumption)e).yearlyDemandElectricity_kWh = ((J_EAConsumption)e).yearlyDemandElectricity_kWh * electricityDeliveryCorrectionFactor_fr;
+		} else if ( ((J_EAConsumption)e).yearlyDemandHeat_kWh > 0 ) {
+			((J_EAConsumption)e).yearlyDemandHeat_kWh = ((J_EAConsumption)e).yearlyDemandHeat_kWh * methaneDeliveryCorrectionFactor_fr;
+			J_EAConversionGasBurner gasBurner = (J_EAConversionGasBurner)((GridConnection)e.parentAgent).p_primaryHeatingAsset;
+			gasBurner.capacityHeat_kW = gasBurner.capacityHeat_kW * methaneDeliveryCorrectionFactor_fr;		
+		}
+	}
+}
+
 
 for (GridConnection GC : Windfarms) {
 	// Add 0kW windturbine to windfarm
@@ -9078,8 +9109,8 @@ for(JsonNode assetJson : v_templateAssetsJson) {
 }*/
 
 
-if( sl_electrificationHeat.getValue()/100.0*c_gridConnections.size() < nbHeatPumps){
-	while ( sl_electrificationHeat.getValue()/100.0*c_gridConnections.size() < nbHeatPumps) { // remove excess heatpumps, replace with gasburners.
+if( sl_electrificationHeat.getValue()/100.0*(UtilityConnections.size()-1) < nbHeatPumps){
+	while ( sl_electrificationHeat.getValue()/100.0*(UtilityConnections.size()-1) < nbHeatPumps) { // remove excess heatpumps, replace with gasburners.
 		traceln("While loop for removing heatpumps");
 		GridConnection GC = findFirst(c_gridConnections, x->x.p_primaryHeatingAsset instanceof J_EAConversionHeatPump);
 		if (GC!=null) {
@@ -9093,7 +9124,14 @@ if( sl_electrificationHeat.getValue()/100.0*c_gridConnections.size() < nbHeatPum
 			//c_productionAssets.remove(pvAsset);
 			traceln("Removing heatpump from GridConnection:" + GC.p_agentID);
 			J_EAConsumption heatDemandAsset = findFirst(GC.c_consumptionAssets, j_ea->j_ea.energyAssetType == OL_EnergyAssetType.HEAT_DEMAND);
-			J_EAConversionGasBurner gasBurner = new J_EAConversionGasBurner(GC, OL_EnergyAssetType.GAS_BURNER, heatDemandAsset.yearlyDemandHeat_kWh/8760*10, 0.99, p_timeStep_h, 90);
+			J_EAConversionGasBurner gasBurner;
+			if (heatDemandAsset != null) {
+				gasBurner = new J_EAConversionGasBurner(GC, OL_EnergyAssetType.GAS_BURNER, heatDemandAsset.yearlyDemandHeat_kWh/8760*10, 0.99, p_timeStep_h, 90);
+			} else {
+				J_EAProfile heatDemandProfile = (J_EAProfile)findFirst(GC.c_profileAssets, x->x instanceof J_EAProfile && x.energyCarrierConsumed == OL_EnergyCarrierType.HEAT);
+				double peakHeatDemand_kW = Arrays.stream(heatDemandProfile.a_energyProfile_kWh).max().orElseThrow(() -> new RuntimeException());
+				gasBurner = new J_EAConversionGasBurner(GC, OL_EnergyAssetType.GAS_BURNER, peakHeatDemand_kW, 0.99, p_timeStep_h, 90);
+			}			
 			c_energyAssets.add(gasBurner);			
 			GC.f_connectToJ_EA(gasBurner);			
 		}
@@ -9102,7 +9140,7 @@ if( sl_electrificationHeat.getValue()/100.0*c_gridConnections.size() < nbHeatPum
 	}
  
 } else { 
-	while ( sl_electrificationHeat.getValue()/100.0*c_gridConnections.size() > nbHeatPumps) { // remove gasburners, add heatpumps.
+	while ( sl_electrificationHeat.getValue()/100.0*(UtilityConnections.size()-1) > nbHeatPumps) { // remove gasburners, add heatpumps.
 		traceln("While loop for adding heatpumps");
 		GridConnection GC = findFirst(c_gridConnections, x->x.p_primaryHeatingAsset instanceof J_EAConversionGasBurner);
 		//traceln("Check presence of solarpanels: " + h.v_hasPV);	
@@ -9112,10 +9150,15 @@ if( sl_electrificationHeat.getValue()/100.0*c_gridConnections.size() < nbHeatPum
 			GC.c_energyAssets.remove(gasBurner);
 			GC.c_conversionAssets.remove(gasBurner);
 			c_energyAssets.remove(gasBurner);
-					 
+			J_EAConversionHeatPump heatPump;
 			J_EAConsumption heatDemandAsset = findFirst(GC.c_consumptionAssets, j_ea->j_ea.energyAssetType == OL_EnergyAssetType.HEAT_DEMAND);
-			J_EAConversionHeatPump heatPump = new J_EAConversionHeatPump(GC, p_timeStep_h, heatDemandAsset.yearlyDemandHeat_kWh/8760*10 / 3, 0.5, v_currentAmbientTemperature_degC, 60, "AIR", 0, 1);
-			
+			if (heatDemandAsset != null) {
+				heatPump = new J_EAConversionHeatPump(GC, p_timeStep_h, heatDemandAsset.yearlyDemandHeat_kWh/8760*10 / 3, 0.5, v_currentAmbientTemperature_degC, 60, "AIR", 0, 1);
+			} else {
+				J_EAProfile heatDemandProfile = (J_EAProfile)findFirst(GC.c_profileAssets, x->x instanceof J_EAProfile && x.energyCarrierConsumed == OL_EnergyCarrierType.HEAT);
+				double peakHeatDemand_kW = Arrays.stream(heatDemandProfile.a_energyProfile_kWh).max().orElseThrow(() -> new RuntimeException());
+				heatPump = new J_EAConversionHeatPump(GC, p_timeStep_h, peakHeatDemand_kW / 3, 0.5, v_currentAmbientTemperature_degC, 60, "AIR", 0, 1);
+			}
 			c_ambientAirDependentAssets.add(heatPump);
 			c_energyAssets.add(heatPump);
 			GC.f_connectToJ_EA(heatPump);					 
@@ -63821,7 +63864,7 @@ public class J_EAConversionBiogasMethane extends zero.J_EAConversion implements 
 public class J_EAProfile extends zero.J_EA implements Serializable {
 
 	//private OL_EnergyCarrierType energyCarrierProduced = OL_EnergyCarrierType.METHANE;
-	private OL_EnergyCarrierType energyCarrierConsumed = OL_EnergyCarrierType.ELECTRICITY;
+	public OL_EnergyCarrierType energyCarrierConsumed = OL_EnergyCarrierType.ELECTRICITY;
 	//public double capacityMethane_kW;
 	public double[] a_energyProfile_kWh;
 	//protected double outputTemperature_degC;
