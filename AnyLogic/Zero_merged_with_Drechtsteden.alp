@@ -3625,7 +3625,7 @@ gr_scopeRadioButtons.setVisible(true);
 				<Variable Class="PlainVariable">
 					<Id>1699278542863</Id>
 					<Name><![CDATA[v_dailyBaseloadElectricityDemand_kWh]]></Name>
-					<X>432</X><Y>2986</Y>
+					<X>432</X><Y>3006</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -3637,7 +3637,7 @@ gr_scopeRadioButtons.setVisible(true);
 				<Variable Class="PlainVariable">
 					<Id>1699278542868</Id>
 					<Name><![CDATA[v_dailyHeatPumpElectricityDemand_kWh]]></Name>
-					<X>432</X><Y>3006</Y>
+					<X>432</X><Y>3026</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -3649,7 +3649,7 @@ gr_scopeRadioButtons.setVisible(true);
 				<Variable Class="PlainVariable">
 					<Id>1699278542872</Id>
 					<Name><![CDATA[v_dailyElectricCarsDemand_kWh]]></Name>
-					<X>432</X><Y>3026</Y>
+					<X>432</X><Y>3046</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -3661,7 +3661,7 @@ gr_scopeRadioButtons.setVisible(true);
 				<Variable Class="PlainVariable">
 					<Id>1699278542875</Id>
 					<Name><![CDATA[v_dailyElectricTrucksDemand_kWh]]></Name>
-					<X>432</X><Y>3046</Y>
+					<X>432</X><Y>3066</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -3673,7 +3673,7 @@ gr_scopeRadioButtons.setVisible(true);
 				<Variable Class="PlainVariable">
 					<Id>1699278542878</Id>
 					<Name><![CDATA[v_dailyNeighborhoodBatteryDemand_kWh]]></Name>
-					<X>432</X><Y>3066</Y>
+					<X>432</X><Y>3086</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -3685,7 +3685,7 @@ gr_scopeRadioButtons.setVisible(true);
 				<Variable Class="PlainVariable">
 					<Id>1699278542881</Id>
 					<Name><![CDATA[v_dailyPVGeneration_kWh]]></Name>
-					<X>432</X><Y>3096</Y>
+					<X>432</X><Y>3116</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -3697,7 +3697,7 @@ gr_scopeRadioButtons.setVisible(true);
 				<Variable Class="PlainVariable">
 					<Id>1699278542884</Id>
 					<Name><![CDATA[v_dailyWindGeneration_kWh]]></Name>
-					<X>432</X><Y>3116</Y>
+					<X>432</X><Y>3136</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -3709,7 +3709,7 @@ gr_scopeRadioButtons.setVisible(true);
 				<Variable Class="PlainVariable">
 					<Id>1699278542887</Id>
 					<Name><![CDATA[v_dailyNeighborhoodBatterySupply_kWh]]></Name>
-					<X>432</X><Y>3136</Y>
+					<X>432</X><Y>3156</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -3721,7 +3721,7 @@ gr_scopeRadioButtons.setVisible(true);
 				<Variable Class="PlainVariable">
 					<Id>1699278542890</Id>
 					<Name><![CDATA[v_dailyV2GSupply_kWh]]></Name>
-					<X>432</X><Y>3156</Y>
+					<X>432</X><Y>3176</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -3733,7 +3733,7 @@ gr_scopeRadioButtons.setVisible(true);
 				<Variable Class="PlainVariable">
 					<Id>1699278542893</Id>
 					<Name><![CDATA[v_dailyBusinessParkDemand_kWh]]></Name>
-					<X>432</X><Y>3186</Y>
+					<X>432</X><Y>3206</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -3745,7 +3745,7 @@ gr_scopeRadioButtons.setVisible(true);
 				<Variable Class="PlainVariable">
 					<Id>1699278542896</Id>
 					<Name><![CDATA[v_dailyBusinessParkSupply_kWh]]></Name>
-					<X>432</X><Y>3206</Y>
+					<X>432</X><Y>3226</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -3757,7 +3757,7 @@ gr_scopeRadioButtons.setVisible(true);
 				<Variable Class="PlainVariable">
 					<Id>1699278542898</Id>
 					<Name><![CDATA[v_dailyBusinessParkNetLoad_kWh]]></Name>
-					<X>432</X><Y>3226</Y>
+					<X>432</X><Y>3246</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -3926,7 +3926,7 @@ gr_scopeRadioButtons.setVisible(true);
 					<Id>1699524291319</Id>
 					<Name><![CDATA[a_annualBusinessParkNetLoad_kW]]></Name>
 					<ExcludeFromBuild>true</ExcludeFromBuild>
-					<X>430</X><Y>3280</Y>
+					<X>430</X><Y>3300</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -3939,7 +3939,7 @@ gr_scopeRadioButtons.setVisible(true);
 					<Id>1699524331159</Id>
 					<Name><![CDATA[a_t_h]]></Name>
 					<ExcludeFromBuild>true</ExcludeFromBuild>
-					<X>430</X><Y>3260</Y>
+					<X>430</X><Y>3280</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -9075,12 +9075,15 @@ data_netbelastingDuurkromme_kW.reset();
 for(int i=0; i< arraySize; i++) {
 	data_netbelastingDuurkromme_kW.add(i*p_timeStep_h, -netLoadArray_kW[i]);
 }
+data_HSMScapacity_kW.add(0, c_gridNodesHSMS.get(0).p_capacity_kW);
+data_HSMScapacity_kW.add(data_netbelastingDuurkromme_kW.getX(arraySize-1), c_gridNodesHSMS.get(0).p_capacity_kW);
 pl_belastingsduurkromme.removeAll();
 pl_belastingsduurkromme.addDataSet(data_netbelastingDuurkromme_kW,"Netbelastingsduurkromme");
 //Chart2DPlot.Appearance appearance = new Chart2DPlot.Appearance();
 pl_belastingsduurkromme.addDataSet(data_netbelastingDuurkrommeVorige_kW,"Vorige Netbelastingsduurkromme");
 pl_belastingsduurkromme.setColor(1,red);
 pl_belastingsduurkromme.setVisible(true);
+pl_belastingsduurkromme.addDataSet(data_HSMScapacity_kW,"Netcapaciteit op HSMS-niveau");
 
 //Netbelastingduurkromme winter
 arraySize = data_winterWeekBusinessParkNetLoad_kW.size();
@@ -12800,6 +12803,28 @@ data_annualBusinessParkNetLoad_kW.reset();]]></Body>
 					</RecurrenceCode>
 					<FreezeXAxis>false</FreezeXAxis>
 					<SamplesToKeep>672</SamplesToKeep>
+				</DataSet>
+    			<DataSet>
+					<Id>1700478038239</Id>
+					<Name><![CDATA[data_HSMScapacity_kW]]></Name>
+					<X>430</X><Y>2980</Y>
+					<Label><X>15</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<AutoUpdate>false</AutoUpdate>
+					<OccurrenceAtTime>true</OccurrenceAtTime>
+					<OccurrenceDate>1687075200000</OccurrenceDate>
+					<OccurrenceTime Class="CodeUnitValue">
+						<Code><![CDATA[0]]></Code>
+						<Unit Class="TimeUnits"><![CDATA[HOUR]]></Unit>
+					</OccurrenceTime>
+					<RecurrenceCode Class="CodeUnitValue">
+						<Code><![CDATA[1]]></Code>
+						<Unit Class="TimeUnits"><![CDATA[HOUR]]></Unit>
+					</RecurrenceCode>
+					<FreezeXAxis>false</FreezeXAxis>
+					<SamplesToKeep>2</SamplesToKeep>
 				</DataSet>
 			</AnalysisData>
 			<Connectivity>
