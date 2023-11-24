@@ -23,7 +23,7 @@ class SurveyRepository(
                 it[email] = survey.email
 
                 it[hasVehicles] = survey.transport.hasVehicles
-                it[numDailyCarCommutersAndVisitors] = survey.transport.numDailyCarCommutersAndVisitors?.toUInt()
+                it[numDailyCarCommuters] = survey.transport.numDailyCarCommuters?.toUInt()
 
                 it[numTrucks] = survey.transport.trucks.numTrucks?.toUInt()
                 it[numElectricTrucks] = survey.transport.trucks.numElectricTrucks?.toUInt()
@@ -69,7 +69,7 @@ class SurveyRepository(
                 }
                 this[CompanySurveyGridConnectionTable.annualElectricityDemandKwh] = gridConnection.electricity.annualElectricityDemandKwh?.toUInt()
                 this[CompanySurveyGridConnectionTable.annualElectricityProductionKwh] = gridConnection.electricity.annualElectricityProductionKwh?.toUInt()
-                this[CompanySurveyGridConnectionTable.kleinverbruikElectricityConnectionCapacity] = gridConnection.electricity.kleinverbruik?.kleinverbruikElectricityConnectionCapacity
+                this[CompanySurveyGridConnectionTable.kleinverbruikElectricityConnectionCapacity] = gridConnection.electricity.kleinverbruik?.connectionCapacity
                 this[CompanySurveyGridConnectionTable.kleinverbuikElectricityConsumptionProfile] = gridConnection.electricity.kleinverbruik?.consumptionProfile
                 this[CompanySurveyGridConnectionTable.grootverbruikContractedDemandCapacityKw] = gridConnection.electricity.grootverbruik?.contractedConnectionDemandCapacityKw?.toUInt()
                 this[CompanySurveyGridConnectionTable.grootverbruikContractedSupplyCapacityKw] = gridConnection.electricity.grootverbruik?.contractedConnectionSupplyCapacityKw?.toUInt()

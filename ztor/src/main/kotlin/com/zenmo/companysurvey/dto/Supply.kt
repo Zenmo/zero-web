@@ -19,7 +19,5 @@ data class Supply (
 
 enum class PVOrientation {
     SOUTH,
-    EASTWEST,
-    OTHER,
-    UNKNOWN,
+    EAST_WEST,
 }

@@ -45,6 +45,9 @@ private infix fun <T : Serializable> Expression<T>.eqAny(other: Expression<Array
 
 /**
  * Implementation of PostgreSQL enum arrays.
+ *
+ * TODO: this can probably be generalized to any array type.
+ * The serialization of the element would then be delegated to another [ColumnType].
  */
 public class EnumArrayColumnType<T : Enum<T>>(
     private val enumClass: KClass<T>,

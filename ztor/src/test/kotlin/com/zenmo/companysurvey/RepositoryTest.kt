@@ -1,7 +1,6 @@
 package com.zenmo.companysurvey
 
 import com.zenmo.companysurvey.dto.*
-import com.zenmo.plugins.createSchema
 import org.jetbrains.exposed.sql.Database
 import org.junit.BeforeClass
 import kotlin.test.Test
@@ -34,7 +33,7 @@ class RepositoryTest {
             gridConnections = emptyList(),
             transport = Transport(
                 hasVehicles = false,
-                numDailyCarCommutersAndVisitors = null,
+                numDailyCarCommuters = null,
                 cars = Cars(
                     numCars = null,
                     numElectricCars = 0,
@@ -74,7 +73,7 @@ class RepositoryTest {
             email = "john@example.com",
             transport = Transport(
                 hasVehicles = false,
-                numDailyCarCommutersAndVisitors = null,
+                numDailyCarCommuters = null,
                 cars = Cars(
                     numCars = null,
                     numElectricCars = 0,
@@ -120,7 +119,7 @@ class RepositoryTest {
                             contractedConnectionSupplyCapacityKw = 200,
                         ),
                         kleinverbruik = CompanyKleinverbruik(
-                            kleinverbruikElectricityConnectionCapacity = KleinverbruikElectricityConnectionCapacity.`3x63A`,
+                            connectionCapacity = KleinverbruikElectricityConnectionCapacity.`3x63A`,
                             consumptionProfile = KleinverbruikElectricityConsumptionProfile.TWO,
                         ),
                     ),

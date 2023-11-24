@@ -5,7 +5,7 @@ import kotlinx.serialization.Serializable
 @Serializable
 data class Transport (
     val hasVehicles: Boolean?,
-    val numDailyCarCommutersAndVisitors: Int?,
+    val numDailyCarCommuters: Int?,
     val trucks: Trucks,
     val vans: Vans,
     val cars: Cars,

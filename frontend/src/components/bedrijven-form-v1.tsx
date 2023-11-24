@@ -6,7 +6,7 @@ import {FunctionComponent, useRef, useState} from 'react'
 
 const {TextArea} = Input
 
-export const BedrijvenForm: FunctionComponent = () => {
+export const BedrijvenFormV1: FunctionComponent = () => {
     const [form] = useForm()
     const [error, setError] = useState("")
     const [success, setSuccess] = useState("")
@@ -90,13 +90,12 @@ export const BedrijvenForm: FunctionComponent = () => {
                 zodat dit verwerkt kan worden in de simulatie van een bedrijventerrein.
             </p>
             <p>
+                Het aantal vrije invulvelden is beperkt zodat de gegevens direct in de simulatie gebruikt kunnen worden.
+            </p>
+            <p>
                 Dit valt onder het project "Digital twins energiesysteem Drechtsteden".
                 Dit project heeft tot doel om het energiesysteem te verduurzamen en oplossingen te zoeken voor netcongestie.
                 De opdrachtgever is XXXXXXX en de uitvoerder is ZEnMo Simulations. ZEnMo staat voor Zero emission Energy and Mobility.
-            </p>
-            <h2>Dataverwerking</h2>
-            <p>
-                Scope enkel dit project? Gaan we anonimiseren d.m.v. aggregatie? Hoe lang bewaren we de brondata?
             </p>
             {error && <Alert
                 message={error}

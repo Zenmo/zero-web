@@ -18,7 +18,7 @@ object CompanySurveyTable: Table("company_survey") {
      * [com.zenmo.companysurvey.dto.Transport]
      */
     val hasVehicles = bool("has_vehicles").nullable()
-    val numDailyCarCommutersAndVisitors = uinteger("num_daily_car_commuters_and_visitors").nullable()
+    val numDailyCarCommuters = uinteger("num_daily_car_commuters").nullable()
 
     /**
      * [com.zenmo.companysurvey.dto.Trucks]

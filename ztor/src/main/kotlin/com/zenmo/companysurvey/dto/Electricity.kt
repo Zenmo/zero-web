@@ -17,7 +17,8 @@ data class Electricity (
 
 @Serializable
 data class CompanyKleinverbruik (
-    val kleinverbruikElectricityConnectionCapacity: KleinverbruikElectricityConnectionCapacity?,
+    val connectionCapacity: KleinverbruikElectricityConnectionCapacity?,
+    // If no kwartierwaarden
     val consumptionProfile: KleinverbruikElectricityConsumptionProfile?,
 )
 
