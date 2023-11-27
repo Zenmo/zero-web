@@ -17,7 +17,7 @@ export const GridConnections = ({form}: { form: UseFormReturn }) => {
             <button>Extra netaansluiting</button>
             {fields.map((item, index) => {
                 return (
-                    <GridConnection key={index} form={form} prefix={`${name}.${index}.`} />
+                    <GridConnection key={index} form={form} prefix={`${name}.${index}`} />
                 )
             })}
         </>

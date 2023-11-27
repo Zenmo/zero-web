@@ -74,12 +74,12 @@ object CompanySurveyGridConnectionTable: Table("company_survey_grid_connection")
      * [com.zenmo.companysurvey.dto.Heat]
      */
     val heatingTypes = enumArray("heating_types", HeatingType::class)
-    val combinedGasBoilerKw = float("combined_gas_boiler_kw").nullable()
-    val combinedHeatPumpKw = float("combined_heat_pump_kw").nullable()
-    // Does this mean only the electricity component? Suggestion: make it a checkbox "uses hybrid setup"
-    val combinedHybridHeatPumpKw = float("combined_hybrid_heat_pump_kw").nullable()
+    val sumGasBoilerKw = float("combined_gas_boiler_kw").nullable()
+    val sumHeatPumpKw = float("combined_heat_pump_kw").nullable()
+    val sumHybridHeatPumpElectricKw = float("combined_hybrid_heat_pump_electric_kw").nullable()
     val annualDistrictHeatingDemandGj = float("annual_district_heating_demand_gj").nullable()
     val localHeatExchangeDescription = varchar("local_heat_exchange_description", 1000)
+    val hasUnusedResidualHeat = bool("has_unused_residual_heat").nullable()
 
     /**
      * [com.zenmo.companysurvey.dto.Storage]

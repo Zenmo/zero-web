@@ -1,6 +1,7 @@
 import {css} from '@emotion/react'
 import {FunctionComponent} from 'react'
 import {useForm, UseFormReturn} from 'react-hook-form'
+import {FormRow} from './form-row'
 import {GridConnections} from './grid-connections'
 import {Intro} from './intro'
 import {LabelRow} from './label-row'
@@ -9,11 +10,18 @@ import {Transport} from './transport'
 export const Survey: FunctionComponent = () => {
     // @ts-ignore
     const form: UseFormReturn = useForm({
+        shouldUseNativeValidation: true,
         defaultValues: {
             gridConnections: [{}],
         }
     })
-    const { register, handleSubmit, formState: { errors } } = form
+    const {
+        register,
+        handleSubmit,
+        formState: { errors }
+    } = form
+
+    console.log('errors', errors)
     const onSubmit = (data: any) => console.log(data)
 
     return (
@@ -30,12 +38,14 @@ export const Survey: FunctionComponent = () => {
                 backgroundColor: 'white',
                 padding: '2rem',
                 marginTop: '2rem',
+                '& input:invalid': {
+                    backgroundColor: '#fcc',
+                    borderColor: 'red',
+                },
             }}>
                 <Intro />
+                <FormRow label="Naam bedrijf" InputComponent="input" name="companyName" form={form} options={{required: true}} />
 
-                <LabelRow label="Naam bedrijf">
-                    <input type="text" {...register("companyName", {required: true})} />
-                </LabelRow>
                 <LabelRow label="Naam contactpersoon">
                     <input type="text" {...register("personName", {required: true})} />
                 </LabelRow>
@@ -44,6 +54,7 @@ export const Survey: FunctionComponent = () => {
                 </LabelRow>
                 <Transport form={form} />
                 <GridConnections form={form} />
+                <button type="submit">Verstuur</button>
             </form>
         </div>
     )

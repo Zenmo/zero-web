@@ -97,11 +97,12 @@ class SurveyRepository(
 
                 // heat
                 this[CompanySurveyGridConnectionTable.heatingTypes] = gridConnection.heat.heatingTypes
-                this[CompanySurveyGridConnectionTable.combinedGasBoilerKw] = gridConnection.heat.combinedGasBoilerKw
-                this[CompanySurveyGridConnectionTable.combinedHeatPumpKw] = gridConnection.heat.combinedHeatPumpKw
-                this[CompanySurveyGridConnectionTable.combinedHybridHeatPumpKw] = gridConnection.heat.combinedHybridHeatPumpKw
+                this[CompanySurveyGridConnectionTable.sumGasBoilerKw] = gridConnection.heat.sumGasBoilerKw
+                this[CompanySurveyGridConnectionTable.sumHeatPumpKw] = gridConnection.heat.sumHeatPumpKw
+                this[CompanySurveyGridConnectionTable.sumHybridHeatPumpElectricKw] = gridConnection.heat.sumHybridHeatPumpElectricKw
                 this[CompanySurveyGridConnectionTable.annualDistrictHeatingDemandGj] = gridConnection.heat.annualDistrictHeatingDemandGj
                 this[CompanySurveyGridConnectionTable.localHeatExchangeDescription] = gridConnection.heat.localHeatExchangeDescription
+                this[CompanySurveyGridConnectionTable.hasUnusedResidualHeat] = gridConnection.heat.hasUnusedResidualHeat
 
                 // storage
                 this[CompanySurveyGridConnectionTable.hasBattery] = gridConnection.storage.hasBattery

@@ -10,7 +10,7 @@ export const Trucks = ({form}: { form: UseFormReturn }) => {
     return (
         <>
             <h3>Vrachtwagens</h3>
-            <LabelRow label="Hoeveel elektrische vrachtwagens hebben jullie?">
+            <LabelRow label="Hoeveel vrachtwagens hebben jullie?">
                 <NumberInput {...register('numTrucks')} />
             </LabelRow>
             {numTrucks > 0 && (

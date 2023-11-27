@@ -5,15 +5,15 @@ import {Heat} from './heat'
 import {LabelRow} from './label-row'
 import {NaturalGas} from './natural-gas'
 import {OpenQuestions} from './open-questions'
-import {Storage} from './Storage'
+import {Storage} from './storage'
 
 export const GridConnection = ({form, prefix}: { form: UseFormReturn, prefix: string }) => {
     return (
         <>
             <Address form={form} prefix={prefix} />
             <Electricity form={form} prefix={prefix} />
-            <NaturalGas form={form} prefix={prefix} />
             <Heat form={form} prefix={prefix} />
+            <NaturalGas form={form} prefix={prefix} />
             <Storage form={form} prefix={prefix} />
             <OpenQuestions form={form} prefix={prefix} />
         </>

@@ -13,7 +13,7 @@ export const Transport = ({form}: { form: UseFormReturn }) => {
 
     return (
         <>
-            <h2>Transport</h2>
+            <h2>Mobiliteit</h2>
             <LabelRow label="Hoeveel personenauto's van werknemers komen dagelijks richting jullie bedrijf?">
                 <NumberInput {...register('numDailyCarCommuters')} />
             </LabelRow>
