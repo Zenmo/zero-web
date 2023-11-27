@@ -3770,7 +3770,7 @@ gr_scopeRadioButtons.setVisible(true);
 					<Id>1699278542901</Id>
 					<Name><![CDATA[v_dailyBaseloadElectricityDemandCollective_kWh]]></Name>
 					<ExcludeFromBuild>true</ExcludeFromBuild>
-					<X>932</X><Y>2936</Y>
+					<X>1052</X><Y>2936</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -3783,7 +3783,7 @@ gr_scopeRadioButtons.setVisible(true);
 					<Id>1699278542905</Id>
 					<Name><![CDATA[v_dailyHeatPumpElectricityDemandCollective_kWh]]></Name>
 					<ExcludeFromBuild>true</ExcludeFromBuild>
-					<X>932</X><Y>2956</Y>
+					<X>1052</X><Y>2956</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -3796,7 +3796,7 @@ gr_scopeRadioButtons.setVisible(true);
 					<Id>1699278542908</Id>
 					<Name><![CDATA[v_dailyElectricCarsDemandCollective_kWh]]></Name>
 					<ExcludeFromBuild>true</ExcludeFromBuild>
-					<X>932</X><Y>2976</Y>
+					<X>1052</X><Y>2976</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -3809,7 +3809,7 @@ gr_scopeRadioButtons.setVisible(true);
 					<Id>1699278542910</Id>
 					<Name><![CDATA[v_dailyElectricTrucksDemandCollective_kWh]]></Name>
 					<ExcludeFromBuild>true</ExcludeFromBuild>
-					<X>932</X><Y>2996</Y>
+					<X>1052</X><Y>2996</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -3822,7 +3822,7 @@ gr_scopeRadioButtons.setVisible(true);
 					<Id>1699278542913</Id>
 					<Name><![CDATA[v_dailyNeighborhoodBatteryDemandCollective_kWh]]></Name>
 					<ExcludeFromBuild>true</ExcludeFromBuild>
-					<X>932</X><Y>3016</Y>
+					<X>1052</X><Y>3016</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -3835,7 +3835,7 @@ gr_scopeRadioButtons.setVisible(true);
 					<Id>1699278542916</Id>
 					<Name><![CDATA[v_dailyPVGenerationCollective_kWh]]></Name>
 					<ExcludeFromBuild>true</ExcludeFromBuild>
-					<X>932</X><Y>3046</Y>
+					<X>1052</X><Y>3046</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -3848,7 +3848,7 @@ gr_scopeRadioButtons.setVisible(true);
 					<Id>1699278542919</Id>
 					<Name><![CDATA[v_dailyWindGenerationCollective_kWh]]></Name>
 					<ExcludeFromBuild>true</ExcludeFromBuild>
-					<X>932</X><Y>3066</Y>
+					<X>1052</X><Y>3066</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -3861,7 +3861,7 @@ gr_scopeRadioButtons.setVisible(true);
 					<Id>1699278542922</Id>
 					<Name><![CDATA[v_dailyNeighborhoodBatterySupplyCollective_kWh]]></Name>
 					<ExcludeFromBuild>true</ExcludeFromBuild>
-					<X>932</X><Y>3086</Y>
+					<X>1052</X><Y>3086</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -3874,7 +3874,7 @@ gr_scopeRadioButtons.setVisible(true);
 					<Id>1699278542925</Id>
 					<Name><![CDATA[v_dailyV2GSupplyCollective_kWh]]></Name>
 					<ExcludeFromBuild>true</ExcludeFromBuild>
-					<X>932</X><Y>3106</Y>
+					<X>1052</X><Y>3106</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -3887,7 +3887,7 @@ gr_scopeRadioButtons.setVisible(true);
 					<Id>1699278542928</Id>
 					<Name><![CDATA[v_dailyBusinessParkDemandCollective_kWh]]></Name>
 					<ExcludeFromBuild>true</ExcludeFromBuild>
-					<X>932</X><Y>3136</Y>
+					<X>1052</X><Y>3136</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -3900,7 +3900,7 @@ gr_scopeRadioButtons.setVisible(true);
 					<Id>1699278542930</Id>
 					<Name><![CDATA[v_dailyBusinessParkSupplyCollective_kWh]]></Name>
 					<ExcludeFromBuild>true</ExcludeFromBuild>
-					<X>932</X><Y>3156</Y>
+					<X>1052</X><Y>3156</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -3913,7 +3913,7 @@ gr_scopeRadioButtons.setVisible(true);
 					<Id>1699278542934</Id>
 					<Name><![CDATA[v_dailyBusinessParkNetLoadCollective_kWh]]></Name>
 					<ExcludeFromBuild>true</ExcludeFromBuild>
-					<X>932</X><Y>3176</Y>
+					<X>1052</X><Y>3176</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -3991,6 +3991,162 @@ gr_scopeRadioButtons.setVisible(true);
 						<InitialValue Class="CodeValue">
 							<Code><![CDATA[0]]></Code>
 						</InitialValue>
+					</Properties>
+				</Variable>
+				<Variable Class="PlainVariable">
+					<Id>1700668441384</Id>
+					<Name><![CDATA[v_summerWeekTotalImport_MWh]]></Name>
+					<X>780</X><Y>2160</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
+						<Type><![CDATA[double]]></Type>        
+					</Properties>
+				</Variable>
+				<Variable Class="PlainVariable">
+					<Id>1700668461882</Id>
+					<Name><![CDATA[v_summerWeekTotalExport_MWh]]></Name>
+					<X>780</X><Y>2180</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
+						<Type><![CDATA[double]]></Type>        
+					</Properties>
+				</Variable>
+				<Variable Class="PlainVariable">
+					<Id>1700668472639</Id>
+					<Name><![CDATA[v_summerWeekEnergyUsed_MWh]]></Name>
+					<X>780</X><Y>2200</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
+						<Type><![CDATA[double]]></Type>        
+					</Properties>
+				</Variable>
+				<Variable Class="PlainVariable">
+					<Id>1700668495328</Id>
+					<Name><![CDATA[v_summerWeekEnergyProduced_MWh]]></Name>
+					<X>780</X><Y>2220</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
+						<Type><![CDATA[double]]></Type>        
+					</Properties>
+				</Variable>
+				<Variable Class="PlainVariable">
+					<Id>1700669484040</Id>
+					<Name><![CDATA[v_summerWeekSelfConsumedEnergy_MWh]]></Name>
+					<X>780</X><Y>2240</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
+						<Type><![CDATA[double]]></Type>        
+					</Properties>
+				</Variable>
+				<Variable Class="PlainVariable">
+					<Id>1700670131980</Id>
+					<Name><![CDATA[v_winterWeekTotalImport_MWh]]></Name>
+					<X>780</X><Y>2450</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
+						<Type><![CDATA[double]]></Type>        
+					</Properties>
+				</Variable>
+				<Variable Class="PlainVariable">
+					<Id>1700670131982</Id>
+					<Name><![CDATA[v_winterWeekTotalExport_MWh]]></Name>
+					<X>780</X><Y>2470</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
+						<Type><![CDATA[double]]></Type>        
+					</Properties>
+				</Variable>
+				<Variable Class="PlainVariable">
+					<Id>1700670131984</Id>
+					<Name><![CDATA[v_winterWeekEnergyUsed_MWh]]></Name>
+					<X>780</X><Y>2490</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
+						<Type><![CDATA[double]]></Type>        
+					</Properties>
+				</Variable>
+				<Variable Class="PlainVariable">
+					<Id>1700670131986</Id>
+					<Name><![CDATA[v_winterWeekEnergyProduced_MWh]]></Name>
+					<X>780</X><Y>2510</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
+						<Type><![CDATA[double]]></Type>        
+					</Properties>
+				</Variable>
+				<Variable Class="PlainVariable">
+					<Id>1700670131988</Id>
+					<Name><![CDATA[v_winterWeekSelfConsumedEnergy_MWh]]></Name>
+					<X>780</X><Y>2530</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
+						<Type><![CDATA[double]]></Type>        
+					</Properties>
+				</Variable>
+				<Variable Class="PlainVariable">
+					<Id>1700725227193</Id>
+					<Name><![CDATA[v_currentEnergyConsumption_kW]]></Name>
+					<X>900</X><Y>1460</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
+						<Type><![CDATA[double]]></Type>        
+					</Properties>
+				</Variable>
+				<Variable Class="PlainVariable">
+					<Id>1700725244568</Id>
+					<Name><![CDATA[v_currentEnergyProduction_kW]]></Name>
+					<X>900</X><Y>1480</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
+						<Type><![CDATA[double]]></Type>        
+					</Properties>
+				</Variable>
+				<Variable Class="PlainVariable">
+					<Id>1700725502196</Id>
+					<Name><![CDATA[v_currentEnergyCurtailed_kW]]></Name>
+					<X>900</X><Y>1500</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
+						<Type><![CDATA[double]]></Type>        
 					</Properties>
 				</Variable>
 				<Variable Class="Parameter">
@@ -5190,6 +5346,12 @@ if (b_addKpiVisuals) {
 	UI_energyAssets.f_updateData();
 	//if (v_isRapidRun == false){
 	//f_neighborhoodEnergyTotalsCurrentHour();
+	
+	
+	data_businessParkDemand_kW.update();
+	data_businessParkSupply_kW.update();
+	data_businessParkNetLoad_kW.update();
+	
 	energyDemandChart.updateData();
 	energySupplyChart.updateData();
 	if (v_clickedGridConnection != null) {
@@ -5200,7 +5362,53 @@ if (b_addKpiVisuals) {
 	}
 	businessParkEnergyDemandChart.updateData();
 	businessParkEnergySupplyChart.updateData();
-	businessParkNetLoadTimePlot.updateData();
+
+	
+	if (rb_graph.getValue() == 1 && t_h % 1 == 0 && rb_timePeriod.getValue()==0) { // Update every hour
+		v_currentEnergyProduction_kW=0;
+		v_currentEnergyCurtailed_kW=0;
+		v_currentEnergyConsumption_kW=0;
+		for (J_EA e : c_energyAssets) {
+			double currentPower_kW = e.electricityConsumption_kW + e.methaneConsumption_kW + e.hydrogenConsumption_kW + e.dieselConsumption_kW + e.heatConsumption_kW - e.electricityProduction_kW - e.methaneProduction_kW - e.hydrogenProduction_kW - e.heatProduction_kW;
+			if (currentPower_kW > 0) {			
+				if (e instanceof J_EAConversionCurtailer || e instanceof J_EAConversionCurtailerHeat) {
+					v_currentEnergyProduction_kW -= currentPower_kW;
+					v_currentEnergyCurtailed_kW += currentPower_kW;
+				} else {
+					v_currentEnergyConsumption_kW += currentPower_kW;
+				}		
+			} else {				
+				v_currentEnergyProduction_kW -= currentPower_kW;
+			}
+		}
+		
+		//data_annualBusinessParkDemand_kW.ad
+		
+		double currentImport_kW = max(0,v_currentEnergyConsumption_kW-v_currentEnergyProduction_kW);
+		double currentExport_kW = max(0,-v_currentEnergyConsumption_kW+v_currentEnergyProduction_kW);
+		double currentSelfConsumption_kW = min(v_currentEnergyProduction_kW,v_currentEnergyConsumption_kW);
+		gr_zelfverbruikImportExport.setVisible(false);
+		DataItem d1 = new DataItem();
+		d1.setValue(currentSelfConsumption_kW);
+		DataItem d2 = new DataItem();
+		d2.setValue(currentImport_kW);
+		DataItem d3 = new DataItem();
+		d3.setValue(currentExport_kW);
+		pl_productionStack.removeAll();
+		pl_consumptionStack.removeAll();
+	
+		pl_consumptionStack.addDataItem(d1,"Zelfconsumptie [MWh]",yellowGreen);
+		pl_consumptionStack.addDataItem(d2,"Import [MWh]",brown);
+		pl_productionStack.addDataItem(d1,"Zelfconsumptie [MWh]",yellowGreen);
+		pl_productionStack.addDataItem(d3,"Export {MWh]",navy);
+		
+		pl_consumptionStack.setFixedScale(max(currentSelfConsumption_kW+currentExport_kW, currentSelfConsumption_kW+currentImport_kW));
+		pl_productionStack.setFixedScale(max(currentSelfConsumption_kW+currentExport_kW, currentSelfConsumption_kW+currentImport_kW));
+	
+		gr_zelfverbruikImportExport.setVisible(true);
+	
+	}
+	//businessParkNetLoadTimePlot.updateData();
 //}
 }
 
@@ -6210,6 +6418,8 @@ else {
 		gc.f_calculateEnergyBalance();
 	}
 }
+
+// Current consumption and production
 
 ]]></Body>
 				</Function>
@@ -7589,6 +7799,9 @@ pie_selfconsumption.setVisible(false);
 //pl_productionStack.setVisible(false);
 //pl_consumptionStack.setVisible(false);
 gr_zelfverbruikImportExport.setVisible(false);
+rb_graph.setValue(0);
+rb_timePeriod.setValue(0, true);
+runSimulation();
 //pie_selfsufficiency.setVisible(false);]]></Body>
 				</Function>
 				<Function AccessType="default" StaticFunction="false">
@@ -9499,6 +9712,7 @@ if (rb_area.getValue() == 0 && rb_timePeriod.getValue() == 0){
 	businessParkEnergySupplyChart.addDataSet(data_neighborhoodBatterySupply_kW, "Batterij ontladen", v_neighborhoodBatterySupplyColor);
 	businessParkEnergySupplyChart.addDataSet(data_V2GSupply_kW, "V2G ontladen", v_V2GSupplyColor);
 	
+	// Businesspark load
 	businessParkNetLoadTimePlot.removeAll();
 	businessParkNetLoadTimePlot.addDataSet(data_businessParkDemand_kW,"Vraag");
 	businessParkNetLoadTimePlot.addDataSet(data_businessParkSupply_kW,"Aanbod");
@@ -9510,6 +9724,7 @@ if (rb_area.getValue() == 0 && rb_timePeriod.getValue() == 0){
 	businessParkNetLoadTimePlot.setVisible(true);
 	gr_zelfverbruikImportExport.setVisible(false);
 	pl_belastingsduurkromme.setVisible(false);
+	
 }
 
 //Business park and summer week
@@ -9544,9 +9759,29 @@ else if (rb_area.getValue() == 0 && rb_timePeriod.getValue() == 1){ //Business p
 	businessParkNetLoadTimePlot.setColor(1,green);
 	businessParkNetLoadTimePlot.setColor(2,blue);
 	
-	businessParkNetLoadTimePlot.setVisible(true);
+	//pl_productionStack.set
 	gr_zelfverbruikImportExport.setVisible(false);
-	pl_belastingsduurkromme.setVisible(true);
+	DataItem d1 = new DataItem();
+	d1.setValue(v_summerWeekSelfConsumedEnergy_MWh);
+	DataItem d2 = new DataItem();
+	d2.setValue(v_summerWeekTotalImport_MWh);
+	DataItem d3 = new DataItem();
+	d3.setValue(v_summerWeekTotalExport_MWh);
+	pl_productionStack.removeAll();
+	pl_consumptionStack.removeAll();
+
+	pl_consumptionStack.addDataItem(d1,"Zelfconsumptie [MWh]",yellowGreen);
+	pl_consumptionStack.addDataItem(d2,"Import [MWh]",brown);
+	pl_productionStack.addDataItem(d1,"Zelfconsumptie [MWh]",yellowGreen);
+	pl_productionStack.addDataItem(d3,"Export {MWh]",navy);
+	
+	pl_consumptionStack.setFixedScale(max(v_summerWeekSelfConsumedEnergy_MWh+v_summerWeekTotalExport_MWh, v_summerWeekSelfConsumedEnergy_MWh+v_summerWeekTotalImport_MWh));
+	pl_productionStack.setFixedScale(max(v_summerWeekSelfConsumedEnergy_MWh+v_summerWeekTotalExport_MWh, v_summerWeekSelfConsumedEnergy_MWh+v_summerWeekTotalImport_MWh));
+
+	gr_zelfverbruikImportExport.setVisible(true);
+	businessParkNetLoadTimePlot.setVisible(true);
+	//gr_zelfverbruikImportExport.setVisible(true);
+	pl_belastingsduurkromme.setVisible(false);
 }
 
 //Business park and winter week
@@ -9580,9 +9815,27 @@ else if (rb_area.getValue() == 0 && rb_timePeriod.getValue() == 2){ //Business p
 	businessParkNetLoadTimePlot.setColor(1,green);
 	businessParkNetLoadTimePlot.setColor(2,blue);
 	
-	businessParkNetLoadTimePlot.setVisible(true);
 	gr_zelfverbruikImportExport.setVisible(false);
-	pl_belastingsduurkromme.setVisible(true);
+	DataItem d1 = new DataItem();
+	d1.setValue(v_winterWeekSelfConsumedEnergy_MWh);
+	DataItem d2 = new DataItem();
+	d2.setValue(v_winterWeekTotalImport_MWh);
+	DataItem d3 = new DataItem();
+	d3.setValue(v_winterWeekTotalExport_MWh);
+	pl_productionStack.removeAll();
+	pl_consumptionStack.removeAll();
+
+	pl_consumptionStack.addDataItem(d1,"Zelfconsumptie [MWh]",yellowGreen);
+	pl_consumptionStack.addDataItem(d2,"Import [MWh]",brown);
+	pl_productionStack.addDataItem(d1,"Zelfconsumptie [MWh]",yellowGreen);
+	pl_productionStack.addDataItem(d3,"Export {MWh]",navy);
+	
+	pl_consumptionStack.setFixedScale(max(v_winterWeekSelfConsumedEnergy_MWh+v_winterWeekTotalExport_MWh, v_winterWeekSelfConsumedEnergy_MWh+v_winterWeekTotalImport_MWh));
+	pl_productionStack.setFixedScale(max(v_winterWeekSelfConsumedEnergy_MWh+v_winterWeekTotalExport_MWh, v_winterWeekSelfConsumedEnergy_MWh+v_winterWeekTotalImport_MWh));
+	gr_zelfverbruikImportExport.setVisible(true);
+	businessParkNetLoadTimePlot.setVisible(true);
+	//gr_zelfverbruikImportExport.setVisible(true);
+	pl_belastingsduurkromme.setVisible(false);
 }
 
 //Business park and year
@@ -9618,9 +9871,26 @@ else if (rb_area.getValue() == 0 && rb_timePeriod.getValue() == 3){ //Business p
 	businessParkNetLoadTimePlot.setColor(1,green);
 	businessParkNetLoadTimePlot.setColor(2,blue);
 	
+	gr_zelfverbruikImportExport.setVisible(false);
+	DataItem d1 = new DataItem();
+	d1.setValue(v_totalSelfConsumedEnergy_MWh);
+	DataItem d2 = new DataItem();
+	d2.setValue(v_totalImportedEnergy_MWh);
+	DataItem d3 = new DataItem();
+	d3.setValue(v_totalExportedEnergy_MWh);
+	pl_productionStack.removeAll();
+	pl_consumptionStack.removeAll();
+	//pl_productionStack.updateData();
+	//pl_consumptionStack.updateData();
+	pl_consumptionStack.addDataItem(d1,"Zelfconsumptie [MWh]",yellowGreen);
+	pl_consumptionStack.addDataItem(d2,"Import [MWh]",brown);
+	pl_productionStack.addDataItem(d1,"Zelfconsumptie [MWh]",yellowGreen);
+	pl_productionStack.addDataItem(d3,"Export {MWh]",navy);
+	pl_consumptionStack.setFixedScale(max(v_totalSelfConsumedEnergy_MWh+v_totalExportedEnergy_MWh, v_totalSelfConsumedEnergy_MWh+v_totalImportedEnergy_MWh));
+	pl_productionStack.setFixedScale(max(v_totalSelfConsumedEnergy_MWh+v_totalExportedEnergy_MWh, v_totalSelfConsumedEnergy_MWh+v_totalImportedEnergy_MWh));
 	
-	businessParkNetLoadTimePlot.setVisible(false);
 	gr_zelfverbruikImportExport.setVisible(true);
+	businessParkNetLoadTimePlot.setVisible(false);	
 	pl_belastingsduurkromme.setVisible(true);
 }
 
@@ -9675,6 +9945,73 @@ if (t_h >= p_startHourSummerWeek && t_h < p_startHourSummerWeek + 24*7+1 && v_is
 	data_summerWeekBusinessParkSupply_kW.add(t_h, -sum(c_energyAssets, x->x.electricityProduction_kW)); 
 	data_summerWeekBusinessParkNetLoad_kW.add(t_h, sum(c_gridNodesHSMS, x->x.v_currentLoadElectricity_kW));
 	v_summerWeekHour++;
+	if (t_h == p_startHourSummerWeek) {
+		f_sumMolecularEnergyFlows();
+		f_sumGridNodeLoads();	
+		v_summerWeekTotalImport_MWh=v_totalElectricityImport_MWh + max(0,v_totalMethaneImport_MWh-v_totalMethaneExport_MWh) + max(0,v_totalHydrogenImport_MWh-v_totalHydrogenExport_MWh) + v_totalDieselImport_MWh;
+		v_summerWeekTotalExport_MWh=v_totalElectricityExport_MWh + max(0,v_totalMethaneExport_MWh-v_totalMethaneImport_MWh) + max(0,v_totalHydrogenExport_MWh-v_totalHydrogenImport_MWh);
+		double totalEnergyProduced_MWh=0;
+		double totalEnergyUsed_MWh=0;
+		double totalEnergyCurtailed_MWh=0;
+		for (J_EA e : c_energyAssets) {
+			double EnergyUsed_kWh = e.getEnergyUsed_kWh();			
+			if (EnergyUsed_kWh > 0) {			
+				if (e instanceof J_EAConversionCurtailer || e instanceof J_EAConversionCurtailerHeat) {
+					totalEnergyProduced_MWh -= EnergyUsed_kWh/1000;
+					totalEnergyCurtailed_MWh += EnergyUsed_kWh/1000;
+				} else if( e instanceof J_EAConversionGasCHP ) {
+					totalEnergyUsed_MWh += EnergyUsed_kWh/1000;					
+				} else {
+					totalEnergyUsed_MWh += EnergyUsed_kWh/1000;
+				}		
+				if ( e instanceof J_EABuilding ) {
+					totalEnergyProduced_MWh += ((J_EABuilding)e).energyAbsorbed_kWh/1000;
+					//deltaThermalEnergySinceStart_MWh += (((J_EABuilding)e).getCurrentTemperature()-20)*((J_EABuilding)e).getHeatCapacity_JpK()/3.6e9;
+				}
+			} else {				
+				totalEnergyProduced_MWh -= EnergyUsed_kWh/1000;
+			}
+		}
+		v_summerWeekEnergyUsed_MWh = totalEnergyUsed_MWh;
+		v_summerWeekEnergyProduced_MWh = totalEnergyProduced_MWh-totalEnergyCurtailed_MWh;		
+	}
+	if (t_h == p_startHourSummerWeek + 24*7) {
+		f_sumMolecularEnergyFlows();
+		f_sumGridNodeLoads();	
+		v_summerWeekTotalImport_MWh=v_totalElectricityImport_MWh + max(0,v_totalMethaneImport_MWh-v_totalMethaneExport_MWh) + max(0,v_totalHydrogenImport_MWh-v_totalHydrogenExport_MWh) + v_totalDieselImport_MWh-v_summerWeekTotalImport_MWh;
+		v_summerWeekTotalExport_MWh=v_totalElectricityExport_MWh + max(0,v_totalMethaneExport_MWh-v_totalMethaneImport_MWh) + max(0,v_totalHydrogenExport_MWh-v_totalHydrogenImport_MWh) - v_summerWeekTotalExport_MWh;
+		double totalEnergyProduced_MWh=0;
+		double totalEnergyUsed_MWh=0;
+		double totalEnergyCurtailed_MWh=0;
+		for (J_EA e : c_energyAssets) {
+			double EnergyUsed_kWh = e.getEnergyUsed_kWh();			
+			if (EnergyUsed_kWh > 0) {			
+				if (e instanceof J_EAConversionCurtailer || e instanceof J_EAConversionCurtailerHeat) {
+					totalEnergyProduced_MWh -= EnergyUsed_kWh/1000;
+					totalEnergyCurtailed_MWh += EnergyUsed_kWh/1000;
+				} else if( e instanceof J_EAConversionGasCHP ) {
+					totalEnergyUsed_MWh += EnergyUsed_kWh/1000;					
+				} else {
+					totalEnergyUsed_MWh += EnergyUsed_kWh/1000;
+				}		
+				if ( e instanceof J_EABuilding ) {
+					totalEnergyProduced_MWh += ((J_EABuilding)e).energyAbsorbed_kWh/1000;
+					//deltaThermalEnergySinceStart_MWh += (((J_EABuilding)e).getCurrentTemperature()-20)*((J_EABuilding)e).getHeatCapacity_JpK()/3.6e9;
+				}
+			} else {				
+				totalEnergyProduced_MWh -= EnergyUsed_kWh/1000;
+			}
+		}
+		v_summerWeekEnergyUsed_MWh = totalEnergyUsed_MWh-v_summerWeekEnergyUsed_MWh;
+		v_summerWeekEnergyProduced_MWh = totalEnergyProduced_MWh-totalEnergyCurtailed_MWh-v_summerWeekEnergyProduced_MWh;	
+		
+		// Calc selfConsumedEnergy for summerweek
+		v_summerWeekSelfConsumedEnergy_MWh = v_summerWeekEnergyUsed_MWh - v_summerWeekTotalImport_MWh; // Putting positive delta-stored energy here assumes this energy was imported as opposed to self-produced. Putting negative delta-stored energy here assumes this energy was self-consumed, as opposed to exported.	
+		double v_summerWeekSelfConsumedEnergyCheck_MWh = v_summerWeekEnergyProduced_MWh - v_summerWeekTotalExport_MWh;
+		traceln("Summerweek selfconsumed use/import based: %s, production/export based: %s", v_summerWeekSelfConsumedEnergy_MWh, v_summerWeekSelfConsumedEnergyCheck_MWh);
+		
+	}
+	
 }
 
 //Winter week
@@ -9694,6 +10031,72 @@ if (t_h >= p_startHourWinterWeek && t_h < p_startHourWinterWeek + 24*7+1 && v_is
 	data_winterWeekBusinessParkSupply_kW.add(t_h, -sum(c_energyAssets, x->x.electricityProduction_kW)); 
 	data_winterWeekBusinessParkNetLoad_kW.add(t_h, sum(c_gridNodesHSMS, x->x.v_currentLoadElectricity_kW));
 	v_winterWeekHour++;
+	if (t_h == p_startHourWinterWeek) {
+		f_sumMolecularEnergyFlows();
+		f_sumGridNodeLoads();	
+		v_winterWeekTotalImport_MWh=v_totalElectricityImport_MWh + max(0,v_totalMethaneImport_MWh-v_totalMethaneExport_MWh) + max(0,v_totalHydrogenImport_MWh-v_totalHydrogenExport_MWh) + v_totalDieselImport_MWh;
+		v_winterWeekTotalExport_MWh=v_totalElectricityExport_MWh + max(0,v_totalMethaneExport_MWh-v_totalMethaneImport_MWh) + max(0,v_totalHydrogenExport_MWh-v_totalHydrogenImport_MWh);
+		double totalEnergyProduced_MWh=0;
+		double totalEnergyUsed_MWh=0;
+		double totalEnergyCurtailed_MWh=0;
+		for (J_EA e : c_energyAssets) {
+			double EnergyUsed_kWh = e.getEnergyUsed_kWh();			
+			if (EnergyUsed_kWh > 0) {			
+				if (e instanceof J_EAConversionCurtailer || e instanceof J_EAConversionCurtailerHeat) {
+					totalEnergyProduced_MWh -= EnergyUsed_kWh/1000;
+					totalEnergyCurtailed_MWh += EnergyUsed_kWh/1000;
+				} else if( e instanceof J_EAConversionGasCHP ) {
+					totalEnergyUsed_MWh += EnergyUsed_kWh/1000;					
+				} else {
+					totalEnergyUsed_MWh += EnergyUsed_kWh/1000;
+				}		
+				if ( e instanceof J_EABuilding ) {
+					totalEnergyProduced_MWh += ((J_EABuilding)e).energyAbsorbed_kWh/1000;
+					//deltaThermalEnergySinceStart_MWh += (((J_EABuilding)e).getCurrentTemperature()-20)*((J_EABuilding)e).getHeatCapacity_JpK()/3.6e9;
+				}
+			} else {				
+				totalEnergyProduced_MWh -= EnergyUsed_kWh/1000;
+			}
+		}
+		v_winterWeekEnergyUsed_MWh = totalEnergyUsed_MWh;
+		v_winterWeekEnergyProduced_MWh = totalEnergyProduced_MWh-totalEnergyCurtailed_MWh;		
+	}
+	if (t_h == p_startHourWinterWeek + 24*7) {
+		f_sumMolecularEnergyFlows();
+		f_sumGridNodeLoads();	
+		v_winterWeekTotalImport_MWh=v_totalElectricityImport_MWh + max(0,v_totalMethaneImport_MWh-v_totalMethaneExport_MWh) + max(0,v_totalHydrogenImport_MWh-v_totalHydrogenExport_MWh) + v_totalDieselImport_MWh-v_winterWeekTotalImport_MWh;
+		v_winterWeekTotalExport_MWh=v_totalElectricityExport_MWh + max(0,v_totalMethaneExport_MWh-v_totalMethaneImport_MWh) + max(0,v_totalHydrogenExport_MWh-v_totalHydrogenImport_MWh) - v_winterWeekTotalExport_MWh;
+		double totalEnergyProduced_MWh=0;
+		double totalEnergyUsed_MWh=0;
+		double totalEnergyCurtailed_MWh=0;
+		for (J_EA e : c_energyAssets) {
+			double EnergyUsed_kWh = e.getEnergyUsed_kWh();			
+			if (EnergyUsed_kWh > 0) {			
+				if (e instanceof J_EAConversionCurtailer || e instanceof J_EAConversionCurtailerHeat) {
+					totalEnergyProduced_MWh -= EnergyUsed_kWh/1000;
+					totalEnergyCurtailed_MWh += EnergyUsed_kWh/1000;
+				} else if( e instanceof J_EAConversionGasCHP ) {
+					totalEnergyUsed_MWh += EnergyUsed_kWh/1000;					
+				} else {
+					totalEnergyUsed_MWh += EnergyUsed_kWh/1000;
+				}		
+				if ( e instanceof J_EABuilding ) {
+					totalEnergyProduced_MWh += ((J_EABuilding)e).energyAbsorbed_kWh/1000;
+					//deltaThermalEnergySinceStart_MWh += (((J_EABuilding)e).getCurrentTemperature()-20)*((J_EABuilding)e).getHeatCapacity_JpK()/3.6e9;
+				}
+			} else {				
+				totalEnergyProduced_MWh -= EnergyUsed_kWh/1000;
+			}
+		}
+		v_winterWeekEnergyUsed_MWh = totalEnergyUsed_MWh-v_winterWeekEnergyUsed_MWh;
+		v_winterWeekEnergyProduced_MWh = totalEnergyProduced_MWh-totalEnergyCurtailed_MWh-v_winterWeekEnergyProduced_MWh;	
+		
+		// Calc selfConsumedEnergy for winterweek
+		v_winterWeekSelfConsumedEnergy_MWh = v_winterWeekEnergyUsed_MWh - v_winterWeekTotalImport_MWh; // Putting positive delta-stored energy here assumes this energy was imported as opposed to self-produced. Putting negative delta-stored energy here assumes this energy was self-consumed, as opposed to exported.	
+		double v_winterWeekSelfConsumedEnergyCheck_MWh = v_winterWeekEnergyProduced_MWh - v_winterWeekTotalExport_MWh;
+		traceln("winterweek selfconsumed use/import based: %s, production/export based: %s", v_winterWeekSelfConsumedEnergy_MWh, v_winterWeekSelfConsumedEnergyCheck_MWh);
+		
+	}
 }
 
 if(v_isRapidRun == true){
@@ -9776,6 +10179,7 @@ for(J_EA j_ea : c_energyAssets) {
 		((J_EAProduction)j_ea).setCapacityElectric_kW(AllocatedWindPower_kW);
 	}
 }
+v_totalInstalledWindPower_kW=AllocatedWindPower_kW;
 	
 //c_energyAssets.forEach();
 /*
@@ -10855,7 +11259,7 @@ for(int i=0; i< arraySize; i++) {
 					</RecurrenceCode>
 					<FreezeXAxis>false</FreezeXAxis>
 					<HorizontalAxisExpression><![CDATA[t_h]]></HorizontalAxisExpression>
-					<VerticalAxisExpression><![CDATA[0]]></VerticalAxisExpression>
+					<VerticalAxisExpression><![CDATA[v_currentEnergyConsumption_kW]]></VerticalAxisExpression>
 					<SamplesToKeep>672</SamplesToKeep>
 				</DataSet>
     			<DataSet>
@@ -10952,7 +11356,7 @@ for(int i=0; i< arraySize; i++) {
 					</RecurrenceCode>
 					<FreezeXAxis>false</FreezeXAxis>
 					<HorizontalAxisExpression><![CDATA[t_h]]></HorizontalAxisExpression>
-					<VerticalAxisExpression><![CDATA[0]]></VerticalAxisExpression>
+					<VerticalAxisExpression><![CDATA[v_currentEnergyProduction_kW]]></VerticalAxisExpression>
 					<SamplesToKeep>672</SamplesToKeep>
 				</DataSet>
     			<DataSet>
@@ -11799,7 +12203,7 @@ for(int i=0; i< arraySize; i++) {
 					<Id>1699275048960</Id>
 					<Name><![CDATA[data_naturalGasDemand_kW2]]></Name>
 					<ExcludeFromBuild>true</ExcludeFromBuild>
-					<X>930</X><Y>1710</Y>
+					<X>1050</X><Y>1710</Y>
 					<Label><X>15</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -11823,7 +12227,7 @@ for(int i=0; i< arraySize; i++) {
 					<Id>1699275048973</Id>
 					<Name><![CDATA[data_heatPumpElectricityDemandCollective_kW]]></Name>
 					<ExcludeFromBuild>true</ExcludeFromBuild>
-					<X>930</X><Y>1750</Y>
+					<X>1050</X><Y>1750</Y>
 					<Label><X>15</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -11848,7 +12252,7 @@ for(int i=0; i< arraySize; i++) {
 					<Id>1699275048987</Id>
 					<Name><![CDATA[data_windGenerationCollective_kW]]></Name>
 					<ExcludeFromBuild>true</ExcludeFromBuild>
-					<X>930</X><Y>1870</Y>
+					<X>1050</X><Y>1870</Y>
 					<Label><X>15</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -11873,7 +12277,7 @@ for(int i=0; i< arraySize; i++) {
 					<Id>1699275049000</Id>
 					<Name><![CDATA[data_V2GSupplyCollective_kW]]></Name>
 					<ExcludeFromBuild>true</ExcludeFromBuild>
-					<X>930</X><Y>1910</Y>
+					<X>1050</X><Y>1910</Y>
 					<Label><X>15</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -11898,7 +12302,7 @@ for(int i=0; i< arraySize; i++) {
 					<Id>1699275049014</Id>
 					<Name><![CDATA[data_PVGenerationCollective_kW]]></Name>
 					<ExcludeFromBuild>true</ExcludeFromBuild>
-					<X>930</X><Y>1850</Y>
+					<X>1050</X><Y>1850</Y>
 					<Label><X>15</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -11923,7 +12327,7 @@ for(int i=0; i< arraySize; i++) {
 					<Id>1699275049028</Id>
 					<Name><![CDATA[data_neighborhoodBatteryDemandCollective_kW]]></Name>
 					<ExcludeFromBuild>true</ExcludeFromBuild>
-					<X>930</X><Y>1810</Y>
+					<X>1050</X><Y>1810</Y>
 					<Label><X>15</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -11948,7 +12352,7 @@ for(int i=0; i< arraySize; i++) {
 					<Id>1699275049042</Id>
 					<Name><![CDATA[data_baseloadElectricityDemandCollective_kW]]></Name>
 					<ExcludeFromBuild>true</ExcludeFromBuild>
-					<X>930</X><Y>1730</Y>
+					<X>1050</X><Y>1730</Y>
 					<Label><X>15</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -11973,7 +12377,7 @@ for(int i=0; i< arraySize; i++) {
 					<Id>1699275049055</Id>
 					<Name><![CDATA[data_businessParkDemandCollective_kW]]></Name>
 					<ExcludeFromBuild>true</ExcludeFromBuild>
-					<X>930</X><Y>1950</Y>
+					<X>1050</X><Y>1950</Y>
 					<Label><X>15</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -11998,7 +12402,7 @@ for(int i=0; i< arraySize; i++) {
 					<Id>1699275049069</Id>
 					<Name><![CDATA[data_electricCarsDemandCollective_kW]]></Name>
 					<ExcludeFromBuild>true</ExcludeFromBuild>
-					<X>930</X><Y>1770</Y>
+					<X>1050</X><Y>1770</Y>
 					<Label><X>15</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -12023,7 +12427,7 @@ for(int i=0; i< arraySize; i++) {
 					<Id>1699275049083</Id>
 					<Name><![CDATA[data_electricTrucksDemandCollective_kW]]></Name>
 					<ExcludeFromBuild>true</ExcludeFromBuild>
-					<X>930</X><Y>1790</Y>
+					<X>1050</X><Y>1790</Y>
 					<Label><X>15</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -12048,7 +12452,7 @@ for(int i=0; i< arraySize; i++) {
 					<Id>1699275049097</Id>
 					<Name><![CDATA[data_neighborhoodBatterySupplyCollective_kW]]></Name>
 					<ExcludeFromBuild>true</ExcludeFromBuild>
-					<X>930</X><Y>1890</Y>
+					<X>1050</X><Y>1890</Y>
 					<Label><X>15</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -12073,7 +12477,7 @@ for(int i=0; i< arraySize; i++) {
 					<Id>1699275049110</Id>
 					<Name><![CDATA[data_businessParkSupplyCollective_kW]]></Name>
 					<ExcludeFromBuild>true</ExcludeFromBuild>
-					<X>930</X><Y>1970</Y>
+					<X>1050</X><Y>1970</Y>
 					<Label><X>15</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -12098,7 +12502,7 @@ for(int i=0; i< arraySize; i++) {
 					<Id>1699275049124</Id>
 					<Name><![CDATA[data_businessParkNetLoadCollective_kW]]></Name>
 					<ExcludeFromBuild>true</ExcludeFromBuild>
-					<X>930</X><Y>1990</Y>
+					<X>1050</X><Y>1990</Y>
 					<Label><X>15</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -12123,7 +12527,7 @@ for(int i=0; i< arraySize; i++) {
 					<Id>1699275049138</Id>
 					<Name><![CDATA[data_naturalGasDemand_kW3]]></Name>
 					<ExcludeFromBuild>true</ExcludeFromBuild>
-					<X>930</X><Y>2020</Y>
+					<X>1050</X><Y>2020</Y>
 					<Label><X>15</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -12147,7 +12551,7 @@ for(int i=0; i< arraySize; i++) {
 					<Id>1699275049152</Id>
 					<Name><![CDATA[data_summerWeekHeatPumpElectricityDemandCollective_kW]]></Name>
 					<ExcludeFromBuild>true</ExcludeFromBuild>
-					<X>930</X><Y>2060</Y>
+					<X>1050</X><Y>2060</Y>
 					<Label><X>15</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -12170,7 +12574,7 @@ for(int i=0; i< arraySize; i++) {
 					<Id>1699275049166</Id>
 					<Name><![CDATA[data_summerWeekWindGenerationCollective_kW]]></Name>
 					<ExcludeFromBuild>true</ExcludeFromBuild>
-					<X>930</X><Y>2180</Y>
+					<X>1050</X><Y>2180</Y>
 					<Label><X>15</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -12193,7 +12597,7 @@ for(int i=0; i< arraySize; i++) {
 					<Id>1699275049179</Id>
 					<Name><![CDATA[data_summerWeekV2GSupplyCollective_kW]]></Name>
 					<ExcludeFromBuild>true</ExcludeFromBuild>
-					<X>930</X><Y>2220</Y>
+					<X>1050</X><Y>2220</Y>
 					<Label><X>15</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -12216,7 +12620,7 @@ for(int i=0; i< arraySize; i++) {
 					<Id>1699275049193</Id>
 					<Name><![CDATA[data_summerWeekPVGenerationCollective_kW]]></Name>
 					<ExcludeFromBuild>true</ExcludeFromBuild>
-					<X>930</X><Y>2160</Y>
+					<X>1050</X><Y>2160</Y>
 					<Label><X>15</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -12239,7 +12643,7 @@ for(int i=0; i< arraySize; i++) {
 					<Id>1699275049206</Id>
 					<Name><![CDATA[data_summerWeekNeighborhoodBatteryDemandCollective_kW]]></Name>
 					<ExcludeFromBuild>true</ExcludeFromBuild>
-					<X>930</X><Y>2120</Y>
+					<X>1050</X><Y>2120</Y>
 					<Label><X>15</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -12262,7 +12666,7 @@ for(int i=0; i< arraySize; i++) {
 					<Id>1699275049221</Id>
 					<Name><![CDATA[data_summerWeekBaseloadElectricityDemandCollective_kW]]></Name>
 					<ExcludeFromBuild>true</ExcludeFromBuild>
-					<X>930</X><Y>2040</Y>
+					<X>1050</X><Y>2040</Y>
 					<Label><X>15</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -12285,7 +12689,7 @@ for(int i=0; i< arraySize; i++) {
 					<Id>1699275049234</Id>
 					<Name><![CDATA[data_summerWeekBusinessParkDemandCollective_kW]]></Name>
 					<ExcludeFromBuild>true</ExcludeFromBuild>
-					<X>930</X><Y>2260</Y>
+					<X>1050</X><Y>2260</Y>
 					<Label><X>15</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -12308,7 +12712,7 @@ for(int i=0; i< arraySize; i++) {
 					<Id>1699275049248</Id>
 					<Name><![CDATA[data_summerWeekElectricCarsDemandCollective_kW]]></Name>
 					<ExcludeFromBuild>true</ExcludeFromBuild>
-					<X>930</X><Y>2080</Y>
+					<X>1050</X><Y>2080</Y>
 					<Label><X>15</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -12331,7 +12735,7 @@ for(int i=0; i< arraySize; i++) {
 					<Id>1699275049262</Id>
 					<Name><![CDATA[data_summerWeekElectricTrucksDemandCollective_kW]]></Name>
 					<ExcludeFromBuild>true</ExcludeFromBuild>
-					<X>930</X><Y>2100</Y>
+					<X>1050</X><Y>2100</Y>
 					<Label><X>15</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -12354,7 +12758,7 @@ for(int i=0; i< arraySize; i++) {
 					<Id>1699275049277</Id>
 					<Name><![CDATA[data_summerWeekNeighborhoodBatterySupplyCollective_kW]]></Name>
 					<ExcludeFromBuild>true</ExcludeFromBuild>
-					<X>930</X><Y>2200</Y>
+					<X>1050</X><Y>2200</Y>
 					<Label><X>15</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -12377,7 +12781,7 @@ for(int i=0; i< arraySize; i++) {
 					<Id>1699275049291</Id>
 					<Name><![CDATA[data_summerWeekBusinessParkSupplyCollective_kW]]></Name>
 					<ExcludeFromBuild>true</ExcludeFromBuild>
-					<X>930</X><Y>2280</Y>
+					<X>1050</X><Y>2280</Y>
 					<Label><X>15</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -12400,7 +12804,7 @@ for(int i=0; i< arraySize; i++) {
 					<Id>1699275049304</Id>
 					<Name><![CDATA[data_summerWeekBusinessParkNetLoadCollective_kW]]></Name>
 					<ExcludeFromBuild>true</ExcludeFromBuild>
-					<X>930</X><Y>2300</Y>
+					<X>1050</X><Y>2300</Y>
 					<Label><X>15</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -12423,7 +12827,7 @@ for(int i=0; i< arraySize; i++) {
 					<Id>1699275049318</Id>
 					<Name><![CDATA[data_winterWeekHeatPumpElectricityDemandCollective_kW]]></Name>
 					<ExcludeFromBuild>true</ExcludeFromBuild>
-					<X>930</X><Y>2355</Y>
+					<X>1050</X><Y>2355</Y>
 					<Label><X>15</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -12446,7 +12850,7 @@ for(int i=0; i< arraySize; i++) {
 					<Id>1699275049331</Id>
 					<Name><![CDATA[data_winterWeekWindGenerationCollective_kW]]></Name>
 					<ExcludeFromBuild>true</ExcludeFromBuild>
-					<X>930</X><Y>2475</Y>
+					<X>1050</X><Y>2475</Y>
 					<Label><X>15</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -12469,7 +12873,7 @@ for(int i=0; i< arraySize; i++) {
 					<Id>1699275049345</Id>
 					<Name><![CDATA[data_winterWeekV2GSupplyCollective_kW]]></Name>
 					<ExcludeFromBuild>true</ExcludeFromBuild>
-					<X>930</X><Y>2515</Y>
+					<X>1050</X><Y>2515</Y>
 					<Label><X>15</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -12492,7 +12896,7 @@ for(int i=0; i< arraySize; i++) {
 					<Id>1699275049359</Id>
 					<Name><![CDATA[data_winterWeekPVGenerationCollective_kW]]></Name>
 					<ExcludeFromBuild>true</ExcludeFromBuild>
-					<X>930</X><Y>2455</Y>
+					<X>1050</X><Y>2455</Y>
 					<Label><X>15</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -12515,7 +12919,7 @@ for(int i=0; i< arraySize; i++) {
 					<Id>1699275049373</Id>
 					<Name><![CDATA[data_winterWeekNeighborhoodBatteryDemandCollective_kW]]></Name>
 					<ExcludeFromBuild>true</ExcludeFromBuild>
-					<X>930</X><Y>2415</Y>
+					<X>1050</X><Y>2415</Y>
 					<Label><X>15</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -12538,7 +12942,7 @@ for(int i=0; i< arraySize; i++) {
 					<Id>1699275049386</Id>
 					<Name><![CDATA[data_winterWeekBaseloadElectricityDemandCollective_kW]]></Name>
 					<ExcludeFromBuild>true</ExcludeFromBuild>
-					<X>930</X><Y>2335</Y>
+					<X>1050</X><Y>2335</Y>
 					<Label><X>15</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -12561,7 +12965,7 @@ for(int i=0; i< arraySize; i++) {
 					<Id>1699275049400</Id>
 					<Name><![CDATA[data_winterWeekBusinessParkDemandCollective_kW]]></Name>
 					<ExcludeFromBuild>true</ExcludeFromBuild>
-					<X>930</X><Y>2555</Y>
+					<X>1050</X><Y>2555</Y>
 					<Label><X>15</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -12584,7 +12988,7 @@ for(int i=0; i< arraySize; i++) {
 					<Id>1699275049414</Id>
 					<Name><![CDATA[data_winterWeekElectricCarsDemandCollective_kW]]></Name>
 					<ExcludeFromBuild>true</ExcludeFromBuild>
-					<X>930</X><Y>2375</Y>
+					<X>1050</X><Y>2375</Y>
 					<Label><X>15</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -12607,7 +13011,7 @@ for(int i=0; i< arraySize; i++) {
 					<Id>1699275049428</Id>
 					<Name><![CDATA[data_winterWeekElectricTrucksDemandCollective_kW]]></Name>
 					<ExcludeFromBuild>true</ExcludeFromBuild>
-					<X>930</X><Y>2395</Y>
+					<X>1050</X><Y>2395</Y>
 					<Label><X>15</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -12630,7 +13034,7 @@ for(int i=0; i< arraySize; i++) {
 					<Id>1699275049442</Id>
 					<Name><![CDATA[data_winterWeekNeighborhoodBatterySupplyCollective_kW]]></Name>
 					<ExcludeFromBuild>true</ExcludeFromBuild>
-					<X>930</X><Y>2495</Y>
+					<X>1050</X><Y>2495</Y>
 					<Label><X>15</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -12653,7 +13057,7 @@ for(int i=0; i< arraySize; i++) {
 					<Id>1699275049455</Id>
 					<Name><![CDATA[data_winterWeekBusinessParkSupplyCollective_kW]]></Name>
 					<ExcludeFromBuild>true</ExcludeFromBuild>
-					<X>930</X><Y>2575</Y>
+					<X>1050</X><Y>2575</Y>
 					<Label><X>15</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -12676,7 +13080,7 @@ for(int i=0; i< arraySize; i++) {
 					<Id>1699275049470</Id>
 					<Name><![CDATA[data_winterWeekBusinessParkNetLoadCollective_kW]]></Name>
 					<ExcludeFromBuild>true</ExcludeFromBuild>
-					<X>930</X><Y>2595</Y>
+					<X>1050</X><Y>2595</Y>
 					<Label><X>15</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -12699,7 +13103,7 @@ for(int i=0; i< arraySize; i++) {
 					<Id>1699275049483</Id>
 					<Name><![CDATA[data_annualHeatPumpElectricityDemandCollective_kWh]]></Name>
 					<ExcludeFromBuild>true</ExcludeFromBuild>
-					<X>930</X><Y>2660</Y>
+					<X>1050</X><Y>2660</Y>
 					<Label><X>15</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -12722,7 +13126,7 @@ for(int i=0; i< arraySize; i++) {
 					<Id>1699275049497</Id>
 					<Name><![CDATA[data_annualWindGenerationCollective_kWh]]></Name>
 					<ExcludeFromBuild>true</ExcludeFromBuild>
-					<X>930</X><Y>2780</Y>
+					<X>1050</X><Y>2780</Y>
 					<Label><X>15</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -12745,7 +13149,7 @@ for(int i=0; i< arraySize; i++) {
 					<Id>1699275049511</Id>
 					<Name><![CDATA[data_annualV2GSupplyCollective_kWh]]></Name>
 					<ExcludeFromBuild>true</ExcludeFromBuild>
-					<X>930</X><Y>2820</Y>
+					<X>1050</X><Y>2820</Y>
 					<Label><X>15</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -12768,7 +13172,7 @@ for(int i=0; i< arraySize; i++) {
 					<Id>1699275049525</Id>
 					<Name><![CDATA[data_annualPVGenerationCollective_kWh]]></Name>
 					<ExcludeFromBuild>true</ExcludeFromBuild>
-					<X>930</X><Y>2760</Y>
+					<X>1050</X><Y>2760</Y>
 					<Label><X>15</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -12791,7 +13195,7 @@ for(int i=0; i< arraySize; i++) {
 					<Id>1699275049549</Id>
 					<Name><![CDATA[data_annualNeighborhoodBatteryDemandCollective_kWh]]></Name>
 					<ExcludeFromBuild>true</ExcludeFromBuild>
-					<X>930</X><Y>2720</Y>
+					<X>1050</X><Y>2720</Y>
 					<Label><X>15</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -12814,7 +13218,7 @@ for(int i=0; i< arraySize; i++) {
 					<Id>1699275049563</Id>
 					<Name><![CDATA[data_annualBaseloadElectricityDemandCollective_kWh]]></Name>
 					<ExcludeFromBuild>true</ExcludeFromBuild>
-					<X>930</X><Y>2640</Y>
+					<X>1050</X><Y>2640</Y>
 					<Label><X>15</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -12837,7 +13241,7 @@ for(int i=0; i< arraySize; i++) {
 					<Id>1699275049577</Id>
 					<Name><![CDATA[data_annualBusinessParkDemandCollective_kWh]]></Name>
 					<ExcludeFromBuild>true</ExcludeFromBuild>
-					<X>930</X><Y>2860</Y>
+					<X>1050</X><Y>2860</Y>
 					<Label><X>15</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -12860,7 +13264,7 @@ for(int i=0; i< arraySize; i++) {
 					<Id>1699275049591</Id>
 					<Name><![CDATA[data_annualElectricCarsDemandCollective_kWh]]></Name>
 					<ExcludeFromBuild>true</ExcludeFromBuild>
-					<X>930</X><Y>2680</Y>
+					<X>1050</X><Y>2680</Y>
 					<Label><X>15</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -12883,7 +13287,7 @@ for(int i=0; i< arraySize; i++) {
 					<Id>1699275049605</Id>
 					<Name><![CDATA[data_annualElectricTrucksDemandCollective_kWh]]></Name>
 					<ExcludeFromBuild>true</ExcludeFromBuild>
-					<X>930</X><Y>2700</Y>
+					<X>1050</X><Y>2700</Y>
 					<Label><X>15</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -12906,7 +13310,7 @@ for(int i=0; i< arraySize; i++) {
 					<Id>1699275049618</Id>
 					<Name><![CDATA[data_annualNeighborhoodBatterySupplyCollective_kWh]]></Name>
 					<ExcludeFromBuild>true</ExcludeFromBuild>
-					<X>930</X><Y>2800</Y>
+					<X>1050</X><Y>2800</Y>
 					<Label><X>15</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -12929,7 +13333,7 @@ for(int i=0; i< arraySize; i++) {
 					<Id>1699275049632</Id>
 					<Name><![CDATA[data_annualBusinessParkSupplyCollective_kWh]]></Name>
 					<ExcludeFromBuild>true</ExcludeFromBuild>
-					<X>930</X><Y>2880</Y>
+					<X>1050</X><Y>2880</Y>
 					<Label><X>15</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -12952,7 +13356,7 @@ for(int i=0; i< arraySize; i++) {
 					<Id>1699275049645</Id>
 					<Name><![CDATA[data_annualBusinessParkNetLoadCollective_kWh]]></Name>
 					<ExcludeFromBuild>true</ExcludeFromBuild>
-					<X>930</X><Y>2900</Y>
+					<X>1050</X><Y>2900</Y>
 					<Label><X>15</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -13154,6 +13558,8 @@ for(int i=0; i< arraySize; i++) {
 						<Unit Class="TimeUnits"><![CDATA[HOUR]]></Unit>
 					</RecurrenceCode>
 					<FreezeXAxis>false</FreezeXAxis>
+					<HorizontalAxisExpression><![CDATA[t_h]]></HorizontalAxisExpression>
+					<VerticalAxisExpression><![CDATA[v_currentEnergyConsumption_kW]]></VerticalAxisExpression>
 					<SamplesToKeep>35040</SamplesToKeep>
 				</DataSet>
     			<DataSet>
@@ -13176,6 +13582,8 @@ for(int i=0; i< arraySize; i++) {
 						<Unit Class="TimeUnits"><![CDATA[HOUR]]></Unit>
 					</RecurrenceCode>
 					<FreezeXAxis>false</FreezeXAxis>
+					<HorizontalAxisExpression><![CDATA[t_h]]></HorizontalAxisExpression>
+					<VerticalAxisExpression><![CDATA[v_currentEnergyProduction_kW]]></VerticalAxisExpression>
 					<SamplesToKeep>35040</SamplesToKeep>
 				</DataSet>
 			</AnalysisData>
@@ -26495,7 +26903,7 @@ if (gr_electricitySettings.isVisible() == false){
 					<X>-220</X><Y>1080</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>true</PublicFlag>
-					<PresentationFlag>true</PresentationFlag>
+					<PresentationFlag>false</PresentationFlag>
 					<ShowLabel>false</ShowLabel>
 					<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
 					<EmbeddedIcon>false</EmbeddedIcon>
@@ -33030,7 +33438,7 @@ rectanglePerHouseholdCosts.setFillColor(new Color (255, 255, 255, 100));
     			<TimePlot>
 					<Id>1696520907365</Id>
 					<Name><![CDATA[businessParkNetLoadTimePlot]]></Name>
-					<X>-230</X><Y>-290</Y>
+					<X>-230</X><Y>-10</Y>
 					<Label><X>0</X><Y>-10</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -33084,7 +33492,7 @@ rectanglePerHouseholdCosts.setFillColor(new Color (255, 255, 255, 100));
 					<Id>1696520907360</Id>
 					<Expression><![CDATA[my_dataset]]></Expression>
 					<Color>-8388480</Color>
-					<Expression2><![CDATA[sum(c_energyAssets, x->x.electricityConsumption_kW)]]></Expression2>
+					<Expression2><![CDATA[v_currentEnergyConsumption_kW]]></Expression2>
 					<Expression2Flag>true</Expression2Flag>
 						<PointStyle>NONE</PointStyle>
 						<LineWidth>2.0</LineWidth>
@@ -33094,7 +33502,7 @@ rectanglePerHouseholdCosts.setFillColor(new Color (255, 255, 255, 100));
 					<Id>1696520907361</Id>
 					<Expression><![CDATA[my_dataset1]]></Expression>
 					<Color>-16744448</Color>
-					<Expression2><![CDATA[-sum(c_energyAssets, x->x.electricityProduction_kW)]]></Expression2>
+					<Expression2><![CDATA[v_currentEnergyProduction_kW]]></Expression2>
 					<Expression2Flag>true</Expression2Flag>
 						<PointStyle>NONE</PointStyle>
 						<LineWidth>2.0</LineWidth>
@@ -33117,7 +33525,7 @@ rectanglePerHouseholdCosts.setFillColor(new Color (255, 255, 255, 100));
     			<Plot>
 					<Id>1699525062036</Id>
 					<Name><![CDATA[pl_belastingsduurkromme]]></Name>
-					<X>-230</X><Y>10</Y>
+					<X>-230</X><Y>20</Y>
 					<Label><X>0</X><Y>-10</Y></Label>
 					<PublicFlag>true</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -35674,19 +36082,24 @@ else {
 						<Enabled>true</Enabled>
 						<ActionCode><![CDATA[
 //Run year if non continues mode
-if( rb_timePeriod.getValue() > 0 && v_costsUnknown == true){
+if( rb_timePeriod.getValue() > 0) {
 
 	pauseSimulation();
-	gr_simulateCostsScreenSmall.setVisible(false);		
-	gr_loadIconCostsSmall.setVisible(true);
-			
 	
-	new Thread( () -> {	
-		f_runRapidSimulation();
-		gr_loadIconCostsSmall.setVisible(false);
-		gr_simulateCostsScreen.setVisible(false);
-	}).start();
-	//f_setResultsText();
+	if (v_costsUnknown == true){
+		gr_simulateCostsScreenSmall.setVisible(false);		
+		gr_loadIconCostsSmall.setVisible(true);
+				
+		
+		new Thread( () -> {	
+			f_runRapidSimulation();
+			gr_loadIconCostsSmall.setVisible(false);
+			gr_simulateCostsScreen.setVisible(false);
+		}).start();
+		//f_setResultsText();
+	}
+} else {
+	runSimulation();
 }
 
 //Set charts based on datasets and areea
@@ -35697,11 +36110,6 @@ if (rb_area.getValue() == 0){
 if (rb_area.getValue() == 1){
 	//f_setChartToDatasetCollective();
 	
-}
-
-//Run simulation in continues mode
-if( rb_timePeriod.getValue() == 0){
-	runSimulation();
 }
 
 //Show annual graphs
@@ -62008,11 +62416,14 @@ traceln("NetConnection connecting to " + numberOfEnergyAssets + " EnergyAssets")
 	} else { // this logic should activate for the bedrijventerrein-casus	*/
 	//if (main.v_totalInstalledWindPower_kW > 0) {
 	
-		FeedforwardGain_kWpKw = 0.1; // Feedforward based on current surpluss in Coop
-		//SOC_setp_fr = (0.5 + 0.35 * Math.sin(2*Math.PI*(main.t_h-10)/24))*(1-0.8*main.v_WindYieldForecast_fr); // Sinusoidal setpoint: aim for low SOC at 6:00h, high SOC at 18:00h. 
-		FeedforwardGain_kWpKw = 0.4; // Feedforward based on current surpluss in Coop
-		FeedbackGain_kWpSOC = 1.5 * p_batteryAsset.getElectricCapacity_kW();
-		SOC_setp_fr = (0.8)*(1-0.8*main.v_WindYieldForecast_fr); 
+	FeedforwardGain_kWpKw = 0.1; // Feedforward based on current surpluss in Coop
+	//SOC_setp_fr = (0.5 + 0.35 * Math.sin(2*Math.PI*(main.t_h-10)/24))*(1-0.8*main.v_WindYieldForecast_fr); // Sinusoidal setpoint: aim for low SOC at 6:00h, high SOC at 18:00h. 
+	FeedforwardGain_kWpKw = 0.6; // Feedforward based on current surpluss in Coop
+	FeedbackGain_kWpSOC = 0.2 * p_batteryAsset.getElectricCapacity_kW();
+	SOC_setp_fr = (0.8);
+	if (main.v_totalInstalledWindPower_kW > 0) {
+		SOC_setp_fr=SOC_setp_fr*(1-0.8*main.v_WindYieldForecast_fr); 
+	}
 	//} else {
 	//	FeedforwardGain_kWpKw = 0.0; // Feedforward based on current surpluss in Coop
 	//	SOC_setp_fr = (0.8 + 0.2 * Math.sin(2*Math.PI*(main.t_h-10)/24)); // Sinusoidal setpoint: aim for low SOC at 6:00h, high SOC at 18:00h. 
@@ -67722,11 +68133,6 @@ public class J_ActivityTrackerCooking extends J_ActivityTracker implements Seria
 		</Resource>
 		<Resource>
 			<Path><![CDATA[_neighborhoods_vehicles.xlsx]]></Path>
-			<ReferencedFromUserCode>false</ReferencedFromUserCode>
-			<Location>FILE_SYSTEM</Location>
-		</Resource>
-		<Resource>
-			<Path><![CDATA[C:/Users/gilli/Documents/ZEnMo Zero/zero/AnyLogic/PandenPolygonsOudTonge.xlsx]]></Path>
 			<ReferencedFromUserCode>false</ReferencedFromUserCode>
 			<Location>FILE_SYSTEM</Location>
 		</Resource>
