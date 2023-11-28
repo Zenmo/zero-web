@@ -15,7 +15,7 @@ export const Supply = ({form, prefix, hasSupply}: {form: UseFormReturn, prefix: 
             <h3>Opwek</h3>
             {hasSupply && (
                 <>
-                    <LabelRow label="Hoe veel opgesteld vermogen zonnepanelen heb je?">
+                    <LabelRow label="Hoe veel opgesteld vermogen zonnepanelen heeft uw bedrijf?">
                         <NumberInput {...register(`${prefix}.pvInstalledKwp`)} /> kWp
                     </LabelRow>
                     {pvInstalledKwp > 0 && (
@@ -30,7 +30,7 @@ export const Supply = ({form, prefix, hasSupply}: {form: UseFormReturn, prefix: 
                     )}
                 </>
             )}
-            <LabelRow label="Zijn jullie van plan de komende jaren zonnepanelen te plaatsen?">
+            <LabelRow label="Zijn jullie van plan de komende 5 jaar zonnepanelen (bij) te plaatsen?">
                 <BooleanInput form={form} name={`${prefix}.pvPlanned`} />
             </LabelRow>
             {pvPlanned && (
@@ -51,7 +51,7 @@ export const Supply = ({form, prefix, hasSupply}: {form: UseFormReturn, prefix: 
                     <LabelRow label="Heeft u (kleine) windmolens?">
                         <NumberInput {...register(`${prefix}.windInstalledKw`)} /> kW
                     </LabelRow>
-                    <LabelRow label="Heeft u naast zon en wind nog andere methoden van elektriciteitsproductie? Zo ja, welke en hoeveel geïnstalleerd vermogen?">
+                    <LabelRow label="Heeft u  andere elektriciteitsproductie (dieselgenerator, waterstof, enz)? Zo ja, welke, wat is het vermogen, en wat is ongeveer de jaarlijkse productie/consumptie?">
                         <input type="text" {...register(`${prefix}.otherSupply`)} />
                     </LabelRow>
                 </>
