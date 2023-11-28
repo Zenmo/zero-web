@@ -142,11 +142,12 @@ class RepositoryTest {
                     ),
                     heat = Heat(
                         heatingTypes = listOf(HeatingType.GAS_BOILER, HeatingType.DISTRICT_HEATING),
-                        combinedGasBoilerKw = 28.8f,
-                        combinedHeatPumpKw = 0f,
-                        combinedHybridHeatPumpKw = 0f,
+                        sumGasBoilerKw = 28.8f,
+                        sumHeatPumpKw = 0f,
+                        sumHybridHeatPumpElectricKw = 0f,
                         annualDistrictHeatingDemandGj = 300f,
                         localHeatExchangeDescription = "Local heat exchange description",
+                        hasUnusedResidualHeat = false,
                     ),
                     storage = Storage(
                         hasBattery = false,

@@ -10,25 +10,24 @@ export const Cars = ({form}: { form: UseFormReturn }) => {
     return (
         <>
             <h3>Bedrijfsauto's</h3>
-            <LabelRow label="Hoeveel auto's hebben jullie?">
+            <LabelRow label="Hoeveel bedrijfsauto's hebben jullie in gebruik?">
                 <NumberInput {...register('numCars')} />
             </LabelRow>
             {numCars > 0 && (
                 <>
-                    <LabelRow label="Hoeveel elektrische auto's hebben jullie?">
+                    <LabelRow label="Hoeveel van die bedrijfsauto's zijn elektrisch?">
                         <NumberInput {...register('numElectricCars')} />
                     </LabelRow>
-                    <LabelRow label={<span>Hoeveel <b>laadpunten</b> voor elektrische auto's hebben jullie?</span>}>
+                    <LabelRow label={<span>Hoeveel <b>laadpunten</b> voor elektrische bedrijfsauto's hebben jullie?</span>}>
                         <NumberInput {...register('numChargePoints')} />
                     </LabelRow>
-                    <LabelRow label="Wat is het maximale laadvermogen van deze laadpunten?">
+                    <LabelRow label="Wat is het maximale laadvermogen per laadpunt?">
                         <NumberInput {...register('powerPerChargePointKw')} /> kW
                     </LabelRow>
-                    <LabelRow label="Hoeveel rijden jullie auto's gemiddeld per jaar?">
+                    <LabelRow label="Hoeveel rijden de bedrijfsauto's gemiddeld per jaar (grove inschatting)?">
                         <NumberInput {...register('annualTravelDistancePerCarKm')} /> km
                     </LabelRow>
-                    <LabelRow label="Zijn jullie van plan de bedrijfsvloot (deels) te elektrificeren de komende jaren?
-                        Wat is het geplande aantal auto's?">
+                    <LabelRow label="Hoeveel van de brandstof bedrijfsauto's zijn jullie van plan te elektrificeren de komende 5 jaar?">
                         <NumberInput {...register('numPlannedElectricCars')} />
                     </LabelRow>
                 </>

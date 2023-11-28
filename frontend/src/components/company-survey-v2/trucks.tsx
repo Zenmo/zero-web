@@ -10,25 +10,24 @@ export const Trucks = ({form}: { form: UseFormReturn }) => {
     return (
         <>
             <h3>Vrachtwagens</h3>
-            <LabelRow label="Hoeveel elektrische vrachtwagens hebben jullie?">
+            <LabelRow label="Hoeveel vrachtwagens hebben jullie in gebruik?">
                 <NumberInput {...register('numTrucks')} />
             </LabelRow>
             {numTrucks > 0 && (
                 <>
-                    <LabelRow label="Hoeveel elektrische vrachtwagens hebben jullie?">
+                    <LabelRow label="Hoeveel van die vrachtwagens zijn elektrisch?">
                         <NumberInput {...register('numElectricTrucks')} />
                     </LabelRow>
                     <LabelRow label="Hoeveel laadpunten voor elektrische vrachtwagens hebben jullie?">
                         <NumberInput {...register('numChargePoints')} />
                     </LabelRow>
-                    <LabelRow label="Wat is het maximale laadvermogen van deze laadpunten?">
+                    <LabelRow label="Wat is het maximale laadvermogen van per laadpunt?">
                         <NumberInput {...register('powerPerChargePointKw')} /> kW
                     </LabelRow>
-                    <LabelRow label="Hoeveel rijden jullie vrachtwagens gemiddeld per jaar?">
+                    <LabelRow label="Hoeveel rijden jullie vrachtwagens gemiddeld per jaar (grove inschatting)?">
                         <NumberInput {...register('annualTravelDistancePerTruckKm')} /> km
                     </LabelRow>
-                    <LabelRow label="Zijn jullie van plan de bedrijfsvloot (deels) te elektrificeren de komende jaren?
-                        Wat is het geplande aantal elektrische vrachtwagens?">
+                    <LabelRow label="Hoeveel van de brandstof vrachtwagens zijn jullie van plan te elektrificeren de komende 5 jaar?">
                         <NumberInput {...register('numPlannedElectricTrucks')} />
                     </LabelRow>
                 </>
