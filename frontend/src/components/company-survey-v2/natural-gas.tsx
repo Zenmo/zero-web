@@ -1,7 +1,10 @@
 import {UseFormReturn} from 'react-hook-form'
-import {BooleanInput} from './boolean-input'
-import {LabelRow} from './label-row'
-import {NumberInput} from './number-input'
+import {BooleanInput} from './generic/boolean-input'
+import {FormRow} from './generic/form-row'
+import {LabelRow} from './generic/label-row'
+import {NumberInput} from './generic/number-input'
+import {NumberRow} from './generic/number-row'
+import {OldNumberInput} from './generic/old-number-input'
 
 export const NaturalGas =  ({form, prefix}: { form: UseFormReturn , prefix: string }) => {
     const {watch, register} = form
@@ -11,20 +14,27 @@ export const NaturalGas =  ({form, prefix}: { form: UseFormReturn , prefix: stri
     return (
         <>
             <h2>4. Aardgas</h2>
-            <LabelRow label={"Heeft u een gasaansluiting op ditzelfde adres?"}>
-                <BooleanInput form={form} name={`${prefix}.hasConnection`} />
-            </LabelRow>
+            <FormRow
+                label="Heeft u een gasaansluiting op ditzelfde adres?"
+                name={`${prefix}.hasConnection`}
+                form={form}
+                WrappedInput={BooleanInput}/>
             {hasConnection && (
                 <>
-                    <LabelRow label={"Wat is het jaarlijkse verbruik?"}>
-                        <input type="number" {...register(`${prefix}.annualDemandM3`)} /> m3
-                    </LabelRow>
+                    <NumberRow
+                        label="Wat is het jaarlijkse verbruik?"
+                        name={`${prefix}.annualDemandM3`}
+                        form={form}
+                        suffix="m3" />
                     <LabelRow label={"Kun je een excel of csv met het uurverbruik van gas uploaden?"}>
-                        <input type="file" />
+                        <input type="file" multiple={true} {...register(`${prefix}.testtest`)} />
                     </LabelRow>
-                    <LabelRow label="Welk deel wordt gebruikt voor verwarming van ruimtes? (De rest voor andere processen)">
-                        <NumberInput form={form} {...register(`${prefix}.percentageUsedForHeating`, {min: 0, max: 100})} /> %
-                    </LabelRow>
+                    <NumberRow
+                        label="Welk deel wordt gebruikt voor verwarming van ruimtes? (De rest voor andere processen)"
+                        name={`${prefix}.percentageUsedForHeating`}
+                        form={form}
+                        options={{min: 0, max: 100}}
+                        suffix="%" />
                 </>
             )}
         </>

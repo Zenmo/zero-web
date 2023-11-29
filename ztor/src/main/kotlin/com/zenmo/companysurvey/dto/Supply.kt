@@ -4,17 +4,18 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class Supply (
-    val hasSupply: Boolean?,
+    val hasSupply: Boolean? = null,
 
-    val pvInstalledKwp: Int?,
-    val pvOrientation: PVOrientation?,
+    val pvInstalledKwp: Int? = null,
+    val pvOrientation: PVOrientation? = null,
 
-    val pvPlanned: Boolean?,
-    val pvPlannedCapacityKwp: Int?,
-    val pvPlannedYear: Int?,
+    val pvPlanned: Boolean? = null,
+    val pvPlannedCapacityKwp: Int? = null,
+    val pvPlannedOrientation: PVOrientation? = null,
+    val pvPlannedYear: Int? = null,
 
-    val windInstalledKw: Float?,
-    val otherSupply: String,
+    val windInstalledKw: Float? = null,
+    val otherSupply: String = "",
 )
 
 enum class PVOrientation {

@@ -1,30 +1,49 @@
 import {UseFormReturn} from 'react-hook-form'
-import {LabelRow} from './label-row'
-import {NumberInput} from './number-input'
+import {FormRow} from './generic/form-row'
+import {LabelRow} from './generic/label-row'
+import {NumberInput} from './generic/number-input'
+import {NumberRow} from './generic/number-row'
+import {OldNumberInput} from './generic/old-number-input'
+import {TextInput} from './generic/text-input'
 
 export const Address = ({form, prefix}: { form: UseFormReturn , prefix: string }) => {
     const {register} = form
 
     return (
         <>
-            <LabelRow label="Straat">
-                <input type="text" {...register(`${prefix}.street`, {required: true})} />
-            </LabelRow>
-            <LabelRow label="Huisnummer">
-                <NumberInput {...register(`${prefix}.houseNumber`, {required: true})} />
-            </LabelRow>
-            <LabelRow label="Huisletter">
-                <input type="text" {...register(`${prefix}.houseLetter`, {maxLength: 1, pattern: /^[a-z]$/i})} />
-            </LabelRow>
-            <LabelRow label="Toevoeging">
-                <input type="text" {...register(`${prefix}.houseNumberSuffix`, {required: false})} />
-            </LabelRow>
-            <LabelRow label="Postcode">
-                <input type="text" {...register(`${prefix}.postalCode`, {required: false})} />
-            </LabelRow>
-            <LabelRow label="Plaats">
-                <input type="text" {...register(`${prefix}.city`, {required: true})} />
-            </LabelRow>
+            <FormRow
+                label="Straat"
+                name={`${prefix}.street`}
+                form={form}
+                InputComponent={TextInput}
+                options={{required: true}} />
+            <NumberRow
+                label="Huisnummer"
+                name={`${prefix}.houseNumber`}
+                form={form}
+                options={{required: true}} />
+            <FormRow
+                label="Huisletter"
+                name={`${prefix}.houseLetter`}
+                form={form}
+                InputComponent={TextInput}
+                options={{maxLength: 1, pattern: /^[a-z]$/i}} />
+            <FormRow
+                label="Toevoeging"
+                name={`${prefix}.houseNumberSuffix`}
+                form={form}
+                InputComponent={TextInput} />
+            <FormRow
+                label="Postcode"
+                name={`${prefix}.postalCode`}
+                form={form}
+                InputComponent={TextInput} />
+            <FormRow
+                label="Plaats"
+                name={`${prefix}.city`}
+                form={form}
+                InputComponent={TextInput}
+                options={{required: true}}/>
         </>
     )
 }

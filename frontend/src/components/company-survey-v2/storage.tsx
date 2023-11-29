@@ -1,7 +1,10 @@
 import {UseFormReturn} from 'react-hook-form'
-import {BooleanInput} from './boolean-input'
-import {LabelRow} from './label-row'
-import {NumberInput} from './number-input'
+import {BooleanInput} from './generic/boolean-input'
+import {FormRow} from './generic/form-row'
+import {LabelRow} from './generic/label-row'
+import {NumberRow} from './generic/number-row'
+import {OldNumberInput} from './generic/old-number-input'
+import {TextInput} from './generic/text-input'
 
 export const Storage = ({form, prefix}: { form: UseFormReturn, prefix: string }) => {
     const {watch} = form
@@ -12,41 +15,59 @@ export const Storage = ({form, prefix}: { form: UseFormReturn, prefix: string })
     return (
         <>
             <h2>5. Opslag</h2>
-            <LabelRow label="Heeft u een batterij voor elektriciteitsopslag in het bedrijf?">
-                <BooleanInput form={form} name={`${prefix}.hasBattery`}/>
-            </LabelRow>
+            <FormRow
+                label="Heeft u een batterij voor elektriciteitsopslag in het bedrijf?"
+                name={`${prefix}.hasBattery`}
+                form={form}
+                WrappedInput={BooleanInput}/>
             {hasBattery && (
                 <>
-                    <LabelRow label="Wat is de capaciteit van deze batterij?">
-                        <NumberInput {...form.register(`${prefix}.batteryCapacityKWh`)} /> kWh
-                    </LabelRow>
-                    <LabelRow label="Wat is het vermogen van deze batterij?">
-                        <NumberInput {...form.register(`${prefix}.batteryPowerKw`)} /> kW
-                    </LabelRow>
-                    <LabelRow label="Hoe gebruik je deze batterij of hoe wordt die aangestuurd?">
-                        <input type="text" {...form.register(`${prefix}.batterySchedule`)} />
-                    </LabelRow>
+                    <NumberRow
+                        label="Wat is de capaciteit van deze batterij?"
+                        name={`${prefix}.batteryCapacityKwh`}
+                        form={form}
+                        suffix="kWh" />
+                    <NumberRow
+                        label="Wat is het vermogen van deze batterij?"
+                        name={`${prefix}.batteryPowerKw`}
+                        form={form}
+                        suffix="kW" />
+                    <FormRow
+                        label="Hoe gebruik je deze batterij of hoe wordt die aangestuurd?"
+                        name={`${prefix}.batterySchedule`}
+                        form={form}
+                        InputComponent={TextInput} />
                 </>
             )}
-            <LabelRow label="Ben je geïnteresseerd in een batterij in de toekomst?">
-                <BooleanInput form={form} name={`${prefix}.hasPlannedBattery`}/>
-            </LabelRow>
+            <FormRow
+                label="Ben je geïnteresseerd in een batterij in de toekomst?"
+                name={`${prefix}.hasPlannedBattery`}
+                form={form}
+                WrappedInput={BooleanInput}/>
             {hasPlannedBattery && (
                 <>
-                    <LabelRow label="Wat is de capaciteit in kWh van deze toekomstige batterij?">
-                        <NumberInput {...form.register(`${prefix}.plannedBatteryCapacityKWh`)} /> kWh
-                    </LabelRow>
-                    <LabelRow label="Wat is het vermogen in kW van deze toekomstige batterij?">
-                        <NumberInput {...form.register(`${prefix}.plannedBatteryPowerKw`)} /> kW
-                    </LabelRow>
-                    <LabelRow label="Hoe gebruik je deze batterij of hoe wordt die aangestuurd?">
-                        <input type="text" {...form.register(`${prefix}.batterySchedule`)} />
-                    </LabelRow>
+                    <NumberRow
+                        label="Wat is de capaciteit in kWh van deze toekomstige batterij?"
+                        name={`${prefix}.plannedBatteryCapacityKwh`}
+                        form={form}
+                        suffix="kWh" />
+                    <NumberRow
+                        label="Wat is het vermogen in kW van deze toekomstige batterij?"
+                        name={`${prefix}.plannedBatteryCapacityKwh`}
+                        form={form}
+                        suffix="kW" />
+                    <FormRow
+                        label="Hoe gebruik je deze batterij of hoe wordt die aangestuurd?"
+                        name={`${prefix}.plannedBatterySchedule`}
+                        form={form}
+                        InputComponent={TextInput} />
                 </>
             )}
-            <LabelRow label="Maak je gebruik van opslag voor warmte of koude?">
-                <BooleanInput form={form} name={`${prefix}.hasThermalStorage`}/>
-            </LabelRow>
+            <FormRow
+                label="Maak je gebruik van opslag voor warmte of koude?"
+                name={`${prefix}.hasThermalStorage`}
+                form={form}
+                WrappedInput={BooleanInput} />
         </>
     )
 }

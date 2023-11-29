@@ -57,6 +57,11 @@ object CompanySurveyGridConnectionTable: Table("company_survey_grid_connection")
         toDb = { PGEnum(PVOrientation::class.simpleName!!, it) }).nullable()
     val pvPlanned = bool("pv_planned").nullable()
     val pvPlannedCapacityKwp = uinteger("pv_planned_capacity_kwp").nullable()
+    val pvPlannedOrientation = customEnumeration(
+        "pv_planned_orientation",
+        PVOrientation::class.simpleName,
+        fromDb = { PVOrientation.valueOf(it as String) },
+        toDb = { PGEnum(PVOrientation::class.simpleName!!, it) }).nullable()
     val pvPlannedYear = uinteger("pv_planned_year").nullable()
     val windInstalledKw = float("wind_installed_kw").nullable()
     val otherSupply = varchar("other_supply", 1000)

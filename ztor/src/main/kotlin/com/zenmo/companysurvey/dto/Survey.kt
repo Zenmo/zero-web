@@ -12,7 +12,7 @@ data class Survey(
     val created: Instant = Clock.System.now(),
     val companyName: String,
     val personName: String,
-    val email: String,
+    val email: String = "",
 
     val transport: Transport,
     val gridConnections: List<SurveyGridConnection>,

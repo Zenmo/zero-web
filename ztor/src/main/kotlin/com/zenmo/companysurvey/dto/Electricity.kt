@@ -4,22 +4,22 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class Electricity (
-    val ean: String,
+    val ean: String = "",
 
-    val quarterHourlyValuesFiles: List<File>,
+    val quarterHourlyValuesFiles: List<File> = emptyList(),
     // If no kwartierwaarden, ask for annual values.
-    val annualElectricityDemandKwh: Int?,
-    val annualElectricityProductionKwh: Int?,
+    val annualElectricityDemandKwh: Int? = null,
+    val annualElectricityProductionKwh: Int? = null,
 
-    val kleinverbruik: CompanyKleinverbruik?,
-    val grootverbruik: CompanyGrootverbruik?,
+    val kleinverbruik: CompanyKleinverbruik? = null,
+    val grootverbruik: CompanyGrootverbruik? = null,
 )
 
 @Serializable
 data class CompanyKleinverbruik (
-    val connectionCapacity: KleinverbruikElectricityConnectionCapacity?,
+    val connectionCapacity: KleinverbruikElectricityConnectionCapacity? = null,
     // If no kwartierwaarden
-    val consumptionProfile: KleinverbruikElectricityConsumptionProfile?,
+    val consumptionProfile: KleinverbruikElectricityConsumptionProfile? = null,
 )
 
 @Serializable

@@ -4,9 +4,9 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class NaturalGas (
-    val hasConnection: Boolean?,
-    val ean: String,
-    val annualDemandM3: Int?,
-    val hourlyValuesFile: List<File>,
-    val percentageUsedForHeating: Int?,
+    val hasConnection: Boolean? = null,
+    val ean: String = "",
+    val annualDemandM3: Int? = null,
+    val hourlyValuesFile: List<File> = emptyList(),
+    val percentageUsedForHeating: Int? = null,
 )

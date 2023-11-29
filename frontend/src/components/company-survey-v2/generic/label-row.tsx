@@ -13,12 +13,12 @@ export const LabelRow = ({label, children}: PropsWithChildren<{label: any}>) => 
         <label css={css`
             display: flex;
           
-            & > *:first-child {
+            & > *:nth-of-type(1) {
                 text-align: right;
                 width: 50%;
                 padding: 0.3rem;
             }
-            & > *:nth-child(2) {
+            & > *:nth-of-type(2) {
                 width: 50%;
                 padding: 0.3rem;
             }

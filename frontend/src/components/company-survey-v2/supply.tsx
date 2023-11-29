@@ -1,8 +1,11 @@
 import {UseFormReturn} from 'react-hook-form'
-import {BooleanInput} from './boolean-input'
+import {BooleanInput} from './generic/boolean-input'
+import {FormRow} from './generic/form-row'
+import {NumberRow} from './generic/number-row'
+import {TextInput} from './generic/text-input'
 import {PVOrientation} from './pv-orientation'
-import {LabelRow} from './label-row'
-import {NumberInput} from './number-input'
+import {LabelRow} from './generic/label-row'
+import {OldNumberInput} from './generic/old-number-input'
 
 export const Supply = ({form, prefix, hasSupply}: {form: UseFormReturn, prefix: string, hasSupply: boolean | undefined}) => {
     const { register, watch } = form
@@ -15,45 +18,58 @@ export const Supply = ({form, prefix, hasSupply}: {form: UseFormReturn, prefix: 
             <h3>Energie opwek op deze netaansluiting</h3>
             {hasSupply && (
                 <>
-                    <LabelRow label="Hoe veel opgesteld vermogen zonnepanelen heeft uw bedrijf?">
-                        <NumberInput {...register(`${prefix}.pvInstalledKwp`)} /> kWp
-                    </LabelRow>
+                    <NumberRow
+                        label="Hoe veel opgesteld vermogen zonnepanelen heeft uw bedrijf?"
+                        name={`${prefix}.pvInstalledKwp`}
+                        form={form}
+                        suffix="kWp" />
                     {pvInstalledKwp > 0 && (
                         <>
-                            <LabelRow label="Wat is de orientatie van dit opgesteld vermogen zonnepanelen?">
-                                <PVOrientation form={form} name={`${prefix}.pvOrientation`} />
-                            </LabelRow>
-                            <LabelRow label="Hoe veel opgesteld vermogen zonnepanelen heb je?">
-                                <NumberInput {...register(`${prefix}.pvPlanned`)} />
-                            </LabelRow>
+                            <FormRow
+                                label="Wat is de orientatie van dit opgesteld vermogen zonnepanelen?"
+                                name={`${prefix}.pvOrientation`}
+                                form={form}
+                                WrappedInput={PVOrientation} />
                         </>
                     )}
                 </>
             )}
-            <LabelRow label="Zijn jullie van plan de komende 5 jaar zonnepanelen (bij) te plaatsen?">
-                <BooleanInput form={form} name={`${prefix}.pvPlanned`} />
-            </LabelRow>
+            <FormRow
+                label="Zijn jullie van plan de komende 5 jaar zonnepanelen (bij) te plaatsen?"
+                name={`${prefix}.pvPlanned`}
+                form={form}
+                WrappedInput={BooleanInput} />
             {pvPlanned && (
                 <>
-                    <LabelRow label="Hoe veel vermogen zonnepanelen heb je gepland?">
-                        <NumberInput {...register(`${prefix}.pvPlannedKwp`)} /> kWp
-                    </LabelRow>
-                    <LabelRow label="Welk jaar verwacht je deze zonnepanelen te plaatsen?">
-                        <NumberInput {...register(`${prefix}.pvPlannedYear`)} min={2023} max={2050} />
-                    </LabelRow>
-                    <LabelRow label="Wat is de orientatie van deze zonnepanelen?">
-                        <PVOrientation form={form} name={`${prefix}.pvOrientation`} />
-                    </LabelRow>
+                    <NumberRow
+                        label="Hoe veel vermogen zonnepanelen heb je gepland?"
+                        name={`${prefix}.pvPlannedKwp`}
+                        form={form}
+                        suffix="kWp" />
+                    <NumberRow
+                        label="Welk jaar verwacht je deze zonnepanelen te plaatsen?"
+                        name={`${prefix}.pvPlannedYear`}
+                        form={form}
+                        options={{min: 2023, max: 2050}}/>
+                    <FormRow
+                        label="Wat is de orientatie van deze zonnepanelen?"
+                        name={`${prefix}.pvPlannedOrientation`}
+                        form={form}
+                        WrappedInput={PVOrientation} />
                 </>
             )}
             {hasSupply && (
                 <>
-                    <LabelRow label="Heeft u (kleine) windmolens?">
-                        <NumberInput {...register(`${prefix}.windInstalledKw`)} /> kW
-                    </LabelRow>
-                    <LabelRow label="Heeft u  andere elektriciteitsproductie (dieselgenerator, waterstof, enz)? Zo ja, welke, wat is het vermogen, en wat is ongeveer de jaarlijkse productie/consumptie?">
-                        <input type="text" {...register(`${prefix}.otherSupply`)} />
-                    </LabelRow>
+                    <NumberRow
+                        label="Heeft u (kleine) windmolens?"
+                        name={`${prefix}.windInstalledKw`}
+                        form={form}
+                        suffix="kW" />
+                    <FormRow
+                        label="Heeft u  andere elektriciteitsproductie (dieselgenerator, waterstof, enz)? Zo ja, welke, wat is het vermogen, en wat is ongeveer de jaarlijkse productie/consumptie?"
+                        name={`${prefix}.otherSupply`}
+                        form={form}
+                        InputComponent={TextInput} />
                 </>
             )}
         </>
