@@ -10,7 +10,7 @@ export const NaturalGas =  ({form, prefix}: { form: UseFormReturn , prefix: stri
 
     return (
         <>
-            <h2>Aardgas</h2>
+            <h2>4. Aardgas</h2>
             <LabelRow label={"Heeft u een gasaansluiting op ditzelfde adres?"}>
                 <BooleanInput form={form} name={`${prefix}.hasConnection`} />
             </LabelRow>

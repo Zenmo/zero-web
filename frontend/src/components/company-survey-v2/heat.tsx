@@ -13,7 +13,7 @@ export const Heat = ({form, prefix}: { form: UseFormReturn, prefix: string }) =>
 
     return (
         <>
-            <h2>Warmte</h2>
+            <h2>3. Warmte</h2>
             <HeatingTypeCheckboxes form={form} prefix={prefix}/>
             {heatingTypes.includes(HeatingType.GAS_BOILER) && (
                 <LabelRow label="combinedGasBoilerKw">

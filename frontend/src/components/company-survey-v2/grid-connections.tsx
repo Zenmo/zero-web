@@ -13,7 +13,7 @@ export const GridConnections = ({form}: { form: UseFormReturn }) => {
 
     return (
         <>
-            <h2>Netaansluiting</h2>
+            <h2>2. Netaansluiting(en), elektriciteitsverbruik, en -productie</h2>
             <button>Extra netaansluiting</button>
             {fields.map((item, index) => {
                 return (

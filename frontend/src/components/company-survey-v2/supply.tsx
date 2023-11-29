@@ -12,7 +12,7 @@ export const Supply = ({form, prefix, hasSupply}: {form: UseFormReturn, prefix: 
 
     return (
         <>
-            <h3>Opwek</h3>
+            <h3>Energie opwek op deze netaansluiting</h3>
             {hasSupply && (
                 <>
                     <LabelRow label="Hoe veel opgesteld vermogen zonnepanelen heeft uw bedrijf?">
