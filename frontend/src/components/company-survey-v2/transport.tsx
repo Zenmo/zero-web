@@ -13,10 +13,8 @@ export const Transport = ({form}: { form: UseFormReturn }) => {
 
     return (
         <>
-            <h2>Mobiliteit</h2>
-            <LabelRow label="Hoeveel personenauto's van werknemers komen dagelijks richting jullie bedrijf?">
-                <NumberInput {...register('numDailyCarCommuters')} />
-            </LabelRow>
+            <h2>6. Mobiliteit</h2>
+
             <LabelRow label="Hebben jullie bedrijfsauto's, -busjes, of -vrachtwagens?">
                 <BooleanInput form={form} name="hasVehicles"/>
             </LabelRow>
@@ -27,6 +25,9 @@ export const Transport = ({form}: { form: UseFormReturn }) => {
                     <Cars form={form} />
                 </>
             )}
+            <LabelRow label="Aantal personenauto's voor woon-werk verkeer per dag?">
+                <NumberInput {...register('numDailyCarCommuters')} />
+            </LabelRow>
         </>
     )
 }

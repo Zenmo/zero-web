@@ -40,14 +40,14 @@ export const Electricity = ({form, prefix}: { form: UseFormReturn , prefix: stri
                     <Radio value={ConnectionType.KLEINVERBRUIK} css={{display: 'block'}}>Kleinverbruik</Radio>
                 </Radio.Group>
             </LabelRow>
-            <LabelRow label="Hoe wilt u het verbruik opgeven?">
+            <LabelRow label="Hoe wilt u het elektriciteitsprofiel van deze netaansluiting doorgeven?">
                 <Radio.Group onChange={e => setConsumptionSpec(e.target.value)} value={consumptionSpec}>
-                    <Radio value={ConsumptionSpec.UPLOAD_QUARTER_HOURLY_VALUES} css={{display: 'block'}}>Kwartierwaarden uploaden (voorkeur)</Radio>
-                    <Radio value={ConsumptionSpec.AUTHORIZATION} css={{display: 'block'}}>Machting geven</Radio>
+                    <Radio value={ConsumptionSpec.AUTHORIZATION} css={{display: 'block'}}>Machting ophalen meetdata invullen (voorkeur)</Radio>
+                    <Radio value={ConsumptionSpec.UPLOAD_QUARTER_HOURLY_VALUES} css={{display: 'block'}}>Kwartierwaarden uploaden</Radio>
                     <Radio value={ConsumptionSpec.ANNUAL_VALUES} css={{display: 'block'}}>Jaarverbruik invullen</Radio>
                 </Radio.Group>
             </LabelRow>
-            <LabelRow label="Heeft u energieopwek (bv. zon-op-dak)?">
+            <LabelRow label="Is er ook elektriciteitsopwek op deze netaansluiting?">
                 <BooleanInput form={form} name={hasSupplyName} />
             </LabelRow>
             {consumptionSpec === ConsumptionSpec.UPLOAD_QUARTER_HOURLY_VALUES && (

@@ -11,7 +11,7 @@ export const Storage = ({form, prefix}: { form: UseFormReturn, prefix: string })
 
     return (
         <>
-            <h2>Opslag</h2>
+            <h2>5. Opslag</h2>
             <LabelRow label="Heeft u een batterij voor elektriciteitsopslag in het bedrijf?">
                 <BooleanInput form={form} name={`${prefix}.hasBattery`}/>
             </LabelRow>
