@@ -7,12 +7,15 @@ import com.zenmo.companysurvey.table.CompanySurveyGridConnectionTable
 import com.zenmo.companysurvey.table.CompanySurveyTable
 import com.zenmo.dbutil.createEnumTypeSql
 import io.ktor.http.*
+import io.ktor.serialization.*
 import io.ktor.server.application.*
+import io.ktor.server.plugins.*
 import io.ktor.server.request.*
 import io.ktor.server.response.*
 import io.ktor.server.routing.*
 import java.sql.*
 import kotlinx.coroutines.*
+import kotlinx.serialization.SerializationException
 import org.jetbrains.exposed.sql.*
 import org.jetbrains.exposed.sql.transactions.transaction
 import java.util.*
@@ -25,7 +28,17 @@ fun Application.configureDatabases(): Database {
     routing {
         // Create
         post("/company-survey") {
-            val survey = call.receive<Survey>()
+            var survey: Survey? = null
+            try {
+                survey = call.receive<Survey>()
+            } catch (e: BadRequestException) {
+                if (e.cause is JsonConvertException) {
+                    call.respond(HttpStatusCode.BadRequest, errorMessageToJson(e.cause?.message))
+                    return@post
+                }
+                call.respond(HttpStatusCode.BadRequest,  errorMessageToJson(e.message))
+                return@post
+            }
 
             val repository = SurveyRepository(db)
             repository.save(survey)
@@ -36,6 +49,14 @@ fun Application.configureDatabases(): Database {
     }
 
     return db
+}
+
+fun errorMessageToJson(message: String?): Any {
+    return mapOf(
+        "error" to mapOf(
+            "message" to message
+        )
+    )
 }
 
 fun createSchema(db: Database) {

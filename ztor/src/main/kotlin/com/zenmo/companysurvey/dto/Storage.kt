@@ -4,13 +4,13 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 class Storage(
-    val hasBattery: Boolean?,
-    val batteryCapacityKwh: Float?,
-    val batteryPowerKw: Float?,
-    val batterySchedule: String,
+    val hasBattery: Boolean? = null,
+    val batteryCapacityKwh: Float? = null,
+    val batteryPowerKw: Float? = null,
+    val batterySchedule: String = "",
 
-    val hasPlannedBattery: Boolean?,
-    val plannedBatteryCapacityKwh: Float?,
-    val plannedBatteryPowerKw: Float?,
-    val plannedBatterySchedule: String,
+    val hasPlannedBattery: Boolean? = null,
+    val plannedBatteryCapacityKwh: Float? = null,
+    val plannedBatteryPowerKw: Float? = null,
+    val plannedBatterySchedule: String = "",
 )

@@ -1,7 +1,7 @@
 import {UseFormReturn} from 'react-hook-form'
-import {LabelRow} from './label-row'
+import {LabelRow} from './generic/label-row'
 
-export const OpenQuestions =  ({form, prefix}: { form: UseFormReturn , prefix: string }) => {
+export const OpenQuestions = ({form, prefix}: { form: UseFormReturn , prefix: string }) => {
     return (
         <>
         <h2>7. Open vragen</h2>

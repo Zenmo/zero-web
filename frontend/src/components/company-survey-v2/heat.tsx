@@ -1,47 +1,65 @@
 import {UseFormReturn} from 'react-hook-form'
-import {BooleanInput} from './boolean-input'
+import {BooleanInput} from './generic/boolean-input'
+import {FormRow} from './generic/form-row'
+import {NumberRow} from './generic/number-row'
+import {TextInput} from './generic/text-input'
 import {HeatingType, HeatingTypeCheckboxes} from './heating-type-checkboxes'
-import {LabelRow} from './label-row'
-import {NumberInput} from './number-input'
+import {LabelRow} from './generic/label-row'
+import {OldNumberInput} from './generic/old-number-input'
 
 export const Heat = ({form, prefix}: { form: UseFormReturn, prefix: string }) => {
     const {watch, register} = form
 
     const heatingTypes: HeatingType[] = watch(`${prefix}.heatingTypes`, [])
 
-    console.log('heatingTypes', heatingTypes)
-
     return (
         <>
             <h2>3. Warmte</h2>
             <HeatingTypeCheckboxes form={form} prefix={prefix}/>
+
             {heatingTypes.includes(HeatingType.GAS_BOILER) && (
-                <LabelRow label="combinedGasBoilerKw">
-                    <NumberInput {...register(`${prefix}.sumGasBoilerKw`)} /> kW
-                </LabelRow>
+                <NumberRow
+                    label="Wat is het totaal opgeteld vermogen van jullie gasketels?"
+                    name={`${prefix}.sumGasBoilerKw`}
+                    form={form}
+                    suffix="kW" />
             )}
             {heatingTypes.includes(HeatingType.ELECTRIC_HEATPUMP) && (
-                <LabelRow label="Wat is het totaal opgeteld vermogen van jullie elektrische warmtepompen?">
-                    <NumberInput {...register(`${prefix}.sumHeatPumpKw`)} /> kW
-                </LabelRow>
+                <NumberRow
+                    label="Wat is het totaal opgeteld vermogen van jullie elektrische warmtepompen?"
+                    name={`${prefix}.sumHeatPumpKw`}
+                    form={form}
+                    suffix="kW" />
             )}
+            <NumberRow
+                label="Wat is het totaal opgeteld elektrisch vermogen van jullie hybride warmtepompen?"
+                name={`${prefix}.sumHybridHeatPumpElectricKw`}
+                form={form}
+                suffix="kW" />
             {heatingTypes.includes(HeatingType.HYBRID_HEATPUMP) && (
-                <LabelRow label="Wat is het totaal opgeteld elektrisch vermogen van jullie hybride warmtepompen?">
-                    <NumberInput {...register(`${prefix}.sumHybridHeatPumpElectricKw`)} /> kW
-                </LabelRow>
+                <NumberRow
+                    label="Wat is het totaal opgeteld elektrisch vermogen van jullie hybride warmtepompen?"
+                    name={`${prefix}.sumHybridHeatPumpElectricKw`}
+                    form={form}
+                    suffix="kW" />
             )}
             {heatingTypes.includes(HeatingType.DISTRICT_HEATING) && (
-                <LabelRow label="Wat is het jaarlijkse warmteverbruik van het warmtenet?">
-                    <NumberInput {...register(`${prefix}.annualDistrictHeatingDemandGj`)} /> GJ
-                </LabelRow>
+                <NumberRow
+                    label="Wat is het jaarlijkse warmteverbruik van het warmtenet?"
+                    name={`${prefix}.annualDistrictHeatingDemandGj`}
+                    form={form}
+                    suffix="GJ" />
             )}
-            <LabelRow
-                label="Wisselen jullie op een andere manier lokaal warmte uit (bijv. met naastgelegen bedrijven)? Zo ja, hoe?">
-                <input type="text" {...form.register(`${prefix}.localHeatExchangeDescription`)} />
-            </LabelRow>
-            <LabelRow label="Heeft u ongebruikte restwarmte?">
-                <BooleanInput form={form} name={`${prefix}.hasUnusedResidualHeat`}/>
-            </LabelRow>
+            <FormRow
+                label="Wisselen jullie op een andere manier lokaal warmte uit (bijv. met naastgelegen bedrijven)? Zo ja, hoe?"
+                name={`${prefix}.localHeatExchangeDescription`}
+                form={form}
+                InputComponent={TextInput} />
+            <FormRow
+                label="Heeft u ongebruikte restwarmte?"
+                name={`${prefix}.hasUnusedResidualHeat`}
+                form={form}
+                WrappedInput={BooleanInput} />
         </>
     )
 }

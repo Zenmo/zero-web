@@ -1,5 +1,5 @@
 import {UseFormReturn} from 'react-hook-form'
-import {LabelRow} from './label-row'
+import {LabelRow} from './generic/label-row'
 
 export enum HeatingType {
     GAS_BOILER = "GAS_BOILER",

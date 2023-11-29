@@ -129,6 +129,7 @@ class RepositoryTest {
                         pvOrientation = PVOrientation.SOUTH,
                         pvPlanned = true,
                         pvPlannedCapacityKwp = 200,
+                        pvPlannedOrientation = PVOrientation.EAST_WEST,
                         pvPlannedYear = 2022,
                         windInstalledKw = 300f,
                         otherSupply = "Other supply",

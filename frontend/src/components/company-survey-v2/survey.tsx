@@ -1,10 +1,12 @@
 import {css} from '@emotion/react'
-import {FunctionComponent} from 'react'
+import {Alert} from 'antd'
+import {createElement, forwardRef, FunctionComponent, useState} from 'react'
 import {useForm, UseFormReturn} from 'react-hook-form'
-import {FormRow} from './form-row'
+import {FormRow} from './generic/form-row'
+import {TextInput} from './generic/text-input'
 import {GridConnections} from './grid-connections'
 import {Intro} from './intro'
-import {LabelRow} from './label-row'
+import {LabelRow} from './generic/label-row'
 import {Transport} from './transport'
 
 export const Survey: FunctionComponent = () => {
@@ -21,8 +23,49 @@ export const Survey: FunctionComponent = () => {
         formState: { errors }
     } = form
 
-    console.log('errors', errors)
-    const onSubmit = (data: any) => console.log(data)
+    const [isSuccess, setSuccess] = useState(false)
+    const [submissionError, setSubmissionError] = useState("")
+
+    let errorMessage = submissionError
+    if (Object.keys(errors).length > 0) {
+        errorMessage = "Het formulier bevat fouten"
+    }
+
+    const onSubmit = async (data: any) => {
+        console.log('submit', data)
+        setSubmissionError("")
+
+        const url = process.env.ZTOR_URL + '/company-survey'
+        try {
+            const response = await fetch(url, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json',
+                },
+                body: JSON.stringify(data)
+            })
+
+            if (response.status !== 201) {
+                let message = "Er is iets misgegaan."
+                setSubmissionError(message)
+                const body = await response.json()
+                if (body?.error?.message) {
+                    message += " Details: " + body.error.message
+                    setSubmissionError(message)
+                }
+            }
+        } catch (e) {
+            let message = "Er is iets misgegaan."
+            // @ts-ignore
+            if ('message' in e) {
+                message += " Details: " + e.message
+            }
+            setSubmissionError(message)
+            return
+        }
+    }
+
 
     return (
         <div css={{
@@ -34,7 +77,7 @@ export const Survey: FunctionComponent = () => {
             alignItems: 'flex-start',
         }}>
             <form onSubmit={handleSubmit(onSubmit)} css={{
-                maxWidth: '40rem',
+                maxWidth: '50rem',
                 backgroundColor: 'white',
                 padding: '2rem',
                 marginTop: '2rem',
@@ -44,19 +87,41 @@ export const Survey: FunctionComponent = () => {
                 },
             }}>
                 <Intro />
-                <FormRow label="Naam bedrijf" InputComponent="input" name="companyName" form={form} options={{required: true}} />
-
-                <LabelRow label="Naam contactpersoon">
-                    <input type="text" {...register("personName", {required: true})} />
-                </LabelRow>
-                <LabelRow label="E-mailadres">
-                    <input type="email" {...register("email")} />
-                </LabelRow>
-                <Transport form={form} />
+                {errorMessage && <Alert
+                    message={errorMessage}
+                    type="error"
+                    showIcon
+                />}
+                {isSuccess && <Alert
+                    message="Antwoorden opgeslagen. Bedankt voor het invullen."
+                    type="success"
+                    showIcon
+                />}
+                <FormRow
+                    label="Naam bedrijf"
+                    InputComponent={TextInput}
+                    name="companyName"
+                    form={form}
+                    options={{required: true}} />
+                <FormRow
+                    label="Naam contactpersoon"
+                    InputComponent={TextInput}
+                    name="personName"
+                    form={form}
+                    options={{required: true}} />
+                <FormRow
+                    label="E-mailadres"
+                    name="email"
+                    form={form}
+                    InputComponent={forwardRef((props: any, ref) =>
+                        <input type="email" {...props} />)}
+                />
+                <Transport form={form} prefix="transport" />
                 <GridConnections form={form} />
-                <button type="submit">Verstuur</button>
+                <div css={{textAlign: 'right'}}>
+                    <button type="submit">Verstuur</button>
+                </div>
             </form>
         </div>
     )
 }
-

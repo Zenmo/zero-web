@@ -1,24 +1,34 @@
 import {css} from '@emotion/react'
 import {get} from 'lodash'
-import {FunctionComponent} from 'react'
+import {FunctionComponent, ReactNode} from 'react'
 import {FieldError, UseFormReturn} from 'react-hook-form'
 import {RegisterOptions} from 'react-hook-form/dist/types/validator'
 
-type FormRowProps = {
-    label: string,
-    InputComponent: FunctionComponent | 'input' | 'textarea',
-    suffix?: string,
+export type WrappedInputProps = {
     name: string,
-    options?: RegisterOptions,
     form: UseFormReturn,
+    options?: RegisterOptions
 }
 
-export const FormRow = ({label, InputComponent, suffix, name, options, form}: FormRowProps) => {
+export type FormRowProps = {
+    label: string | ReactNode,
+    name: string,
+    form: UseFormReturn,
+
+    // pick one of either InputComponent or WrappedInput
+    InputComponent?: FunctionComponent | 'input' | 'textarea',
+    WrappedInput?: FunctionComponent<WrappedInputProps>
+
+    suffix?: string, // like a unit to put after a number input
+    options?: RegisterOptions,
+}
+
+export const FormRow = ({label, InputComponent, WrappedInput, suffix, name, options, form}: FormRowProps) => {
     const errors = form.formState.errors
     // @ts-ignore
     const error: FieldError | undefined = get(errors, name)
     const errorMessage = getErrorMessage(error)
-    setValidationMessage(options)
+    options = setValidationMessage(options)
 
     return (
         <label css={css`
@@ -35,10 +45,15 @@ export const FormRow = ({label, InputComponent, suffix, name, options, form}: Fo
                 padding: 0.3rem;
             }
         `}>
-            <div>{label}</div>
+            <div>
+                {options?.required && <span css={{color: 'red'}}>* </span>}
+                {label}
+            </div>
             <div>
                 <div>
-                    <InputComponent {...form.register(name, options)} />
+
+                    {InputComponent && <InputComponent {...form.register(name, options)} />}
+                    {WrappedInput && <WrappedInput name={name} form={form} />}
                     {suffix}
                 </div>
                 {errorMessage && <div css={{color: 'red'}}>{errorMessage}</div>}
@@ -51,27 +66,43 @@ export const FormRow = ({label, InputComponent, suffix, name, options, form}: Fo
  * We need to do this to use the native validation of the browser.
  * See https://react-hook-form.com/docs/useform#shouldUseNativeValidation
  */
-function setValidationMessage(options?: RegisterOptions) {
+function setValidationMessage(options?: RegisterOptions): RegisterOptions | undefined {
     if (!options) {
-        return
+        return options
     }
 
     if (options.required === true) {
-        options.required = defaultErrorMessages.required
+        options = {
+            ...options,
+            required: defaultErrorMessages.required,
+        }
     }
 
     for (const [key, message] of Object.entries(defaultErrorMessages)) {
+        if (key === 'required') {
+            continue
+        }
+
         // @ts-ignore
         const value = options[key]
+        if (value === undefined) {
+            continue
+        }
 
-        if (value !== undefined) {
-            // @ts-ignore
-            options[key] = {
+        if (typeof value === 'object' && value.message) {
+            continue
+        }
+
+        options = {
+            ...options,
+            [key]: {
                 value,
                 message,
             }
         }
     }
+
+    return options
 }
 
 function getErrorMessage(error: FieldError | undefined): string | undefined {

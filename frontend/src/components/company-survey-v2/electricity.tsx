@@ -1,12 +1,13 @@
 import {Radio} from 'antd'
 import {useState} from 'react'
 import {Controller, UseFormReturn} from 'react-hook-form'
-import {BooleanInput} from './boolean-input'
+import {BooleanInput} from './generic/boolean-input'
 import {ConsumptionProfileSelect} from './consumption-profile-select'
-// import {ConsumptionProfile} from './consumption-profile'
+import {FormRow} from './generic/form-row'
+import {NumberRow} from './generic/number-row'
 import {KleinverbruikCapacityInput} from './kleinverbruik-capacity-input'
-import {LabelRow} from './label-row'
-import {NumberInput} from './number-input'
+import {LabelRow} from './generic/label-row'
+import {OldNumberInput} from './generic/old-number-input'
 import {Supply} from './supply'
 
 enum ConsumptionSpec {
@@ -20,20 +21,21 @@ enum ConnectionType {
     KLEINVERBRUIK = "KLEINVERBRUIK",
 }
 
-export const Electricity = ({form, prefix}: { form: UseFormReturn , prefix: string }) => {
+export const Electricity = ({form, prefix, hasSupplyName}: {
+    form: UseFormReturn,
+    prefix: string,
+    hasSupplyName: string
+}) => {
     const {register} = form
+
+    const hasSupply = form.watch(hasSupplyName)
 
     const [consumptionSpec, setConsumptionSpec] = useState<ConsumptionSpec>()
     const [connectionType, setConnectionType] = useState<ConnectionType>()
 
-    const hasSupplyName = `${prefix}.supply.hasSupply`
-    const hasSupply = form.watch(hasSupplyName)
-
     return (
         <>
-            <LabelRow label="EAN">
-                <input type="text" {...register(`${prefix}.ean`, {required: false})} />
-            </LabelRow>
+            {/*<FormRow label="EAN" name={`${prefix}.ean`} form={form} />*/}
             <LabelRow label="Type aansluiting">
                 <Radio.Group onChange={e => setConnectionType(e.target.value)} value={connectionType}>
                     <Radio value={ConnectionType.GROOTVERBRUIK} css={{display: 'block'}}>Grootverbruik</Radio>
@@ -47,12 +49,14 @@ export const Electricity = ({form, prefix}: { form: UseFormReturn , prefix: stri
                     <Radio value={ConsumptionSpec.ANNUAL_VALUES} css={{display: 'block'}}>Jaarverbruik invullen</Radio>
                 </Radio.Group>
             </LabelRow>
-            <LabelRow label="Is er ook elektriciteitsopwek op deze netaansluiting?">
-                <BooleanInput form={form} name={hasSupplyName} />
-            </LabelRow>
+            <FormRow
+                label="Is er ook elektriciteitsopwek op deze netaansluiting?"
+                name={hasSupplyName}
+                form={form}
+                WrappedInput={BooleanInput} />
             {consumptionSpec === ConsumptionSpec.UPLOAD_QUARTER_HOURLY_VALUES && (
                 <LabelRow label="Kwartierwaarden">
-                    <input type="file" {...register(`${prefix}.houseNumber`)} />
+                    <input type="file" {...register(`${prefix}.quarterHourlyValuesFiles`)} />
                 </LabelRow>
             )}
             {consumptionSpec === ConsumptionSpec.AUTHORIZATION && (
@@ -60,41 +64,52 @@ export const Electricity = ({form, prefix}: { form: UseFormReturn , prefix: stri
             )}
             {consumptionSpec === ConsumptionSpec.ANNUAL_VALUES && (
                 <>
-                    <LabelRow label="Jaarverbruik">
-                        <NumberInput {...register(`${prefix}.annualElectricityDemandKwh`, {required: false})} /> kWh
-                    </LabelRow>
+                    <NumberRow
+                        label="Jaarverbruik"
+                        name={`${prefix}.annualElectricityDemandKwh`}
+                        form={form}
+                        suffix="kWh" />
                     {hasSupply && (
-                        <LabelRow label="Jaaropwek">
-                            <NumberInput {...register(`${prefix}.annualElectricityProductionKwh`)} /> kWh
-                        </LabelRow>
+                        <NumberRow
+                            label="Jaaropwek"
+                            name={`${prefix}.annualElectricityProductionKwh`}
+                            form={form}
+                            suffix="kWh" />
                     )}
                 </>
             )}
             {connectionType === ConnectionType.KLEINVERBRUIK && (
                 <>
-                    <LabelRow label="Aansluitwaarde">
-                        <KleinverbruikCapacityInput form={form} name={`${prefix}.kleinverbruik.connectionCapacity`} />
-                    </LabelRow>
+                    <FormRow
+                        label="Aansluitwaarde"
+                        name={`${prefix}.kleinverbruik.connectionCapacity`}
+                        WrappedInput={KleinverbruikCapacityInput}
+                        form={form} />
                     {consumptionSpec === ConsumptionSpec.ANNUAL_VALUES && (
-                        <LabelRow label="Profiel verbruik">
-                            <ConsumptionProfileSelect form={form} name={`${prefix}.kleinverbruik.consumptionProfile`} />
-                        </LabelRow>
+                        <FormRow
+                            label="Profiel verbruik"
+                            name={`${prefix}.kleinverbruik.consumptionProfile`}
+                            WrappedInput={ConsumptionProfileSelect}
+                            form={form} />
                     )}
                 </>
             )}
             {connectionType === ConnectionType.GROOTVERBRUIK && (
                 <>
-                    <LabelRow label="Wat is uw gecontracteerde vermogen voor elektriciteitsafname?">
-                        <NumberInput {...register(`${prefix}.grootverbruik.contractedConnectionDemandCapacityKw`)} /> kWh
-                    </LabelRow>
+                    <NumberRow
+                        label="Wat is uw gecontracteerde vermogen voor elektriciteitsafname?"
+                        name={`${prefix}.grootverbruik.contractedConnectionDemandCapacityKw`}
+                        form={form}
+                        suffix="kW" />
                     {hasSupply && (
-                        <LabelRow label="Wat is uw gecontracteerde vermogen voor elektriciteitsteruglevering?">
-                            <NumberInput {...register(`${prefix}.grootverbruik.contractedConnectionSupplyCapacityKw`)} /> kWh
-                        </LabelRow>
+                        <NumberRow
+                            label="Wat is uw gecontracteerde vermogen voor elektriciteitsteruglevering?"
+                            name={`${prefix}.grootverbruik.contractedConnectionSupplyCapacityKw`}
+                            form={form}
+                            suffix="kW" />
                     )}
                 </>
             )}
-            <Supply form={form} prefix={`${prefix}.supply.`} hasSupply={hasSupply} />
         </>
     )
 }

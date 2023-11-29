@@ -4,44 +4,44 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class Transport (
-    val hasVehicles: Boolean?,
-    val numDailyCarCommuters: Int?,
-    val trucks: Trucks,
-    val vans: Vans,
-    val cars: Cars,
+    val hasVehicles: Boolean? = null,
+    val numDailyCarCommuters: Int? = null,
+    val trucks: Trucks = Trucks(),
+    val vans: Vans = Vans(),
+    val cars: Cars = Cars(),
 )
 
 @Serializable
 data class Trucks (
     // Current situation
-    val numTrucks: Int?, // Total number including electric
-    val numElectricTrucks: Int?,
-    val numChargePoints: Int?,
-    val powerPerChargePointKw: Float?,
-    val annualTravelDistancePerTruckKm: Int?,
+    val numTrucks: Int? = null, // Total number including electric
+    val numElectricTrucks: Int? = null,
+    val numChargePoints: Int? = null,
+    val powerPerChargePointKw: Float? = null,
+    val annualTravelDistancePerTruckKm: Int? = null,
 
     // Disagreement on whether we should ask specifics about planned charge points
-    val numPlannedElectricTrucks: Int?,
+    val numPlannedElectricTrucks: Int? = null,
 )
 
 @Serializable
 data class Vans (
-    val numVans: Int?,
-    val numElectricVans: Int?,
-    val numChargePoints: Int?,
-    val powerPerChargePointKw: Float?,
-    val annualTravelDistancePerVanKm: Int?,
+    val numVans: Int? = null,
+    val numElectricVans: Int? = null,
+    val numChargePoints: Int? = null,
+    val powerPerChargePointKw: Float? = null,
+    val annualTravelDistancePerVanKm: Int? = null,
 
-    val numPlannedElectricVans: Int?,
+    val numPlannedElectricVans: Int? = null,
 )
 
 @Serializable
 data class Cars (
-    val numCars: Int?,
-    val numElectricCars: Int?,
-    val numChargePoints: Int?,
-    val powerPerChargePointKw: Float?,
-    val annualTravelDistancePerCarKm: Int?,
+    val numCars: Int? = null,
+    val numElectricCars: Int? = null,
+    val numChargePoints: Int? = null,
+    val powerPerChargePointKw: Float? = null,
+    val annualTravelDistancePerCarKm: Int? = null,
 
-    val numPlannedElectricCars: Int?,
+    val numPlannedElectricCars: Int? = null,
 )

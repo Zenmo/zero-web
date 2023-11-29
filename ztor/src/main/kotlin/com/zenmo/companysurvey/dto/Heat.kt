@@ -4,17 +4,17 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class Heat (
-    val heatingTypes: List<HeatingType>,
+    val heatingTypes: List<HeatingType> = emptyList(),
 
-    val sumGasBoilerKw: Float?,
-    val sumHeatPumpKw: Float?,
+    val sumGasBoilerKw: Float? = null,
+    val sumHeatPumpKw: Float? = null,
     // Only the electricity component of hybrid setup
-    val sumHybridHeatPumpElectricKw: Float?,
+    val sumHybridHeatPumpElectricKw: Float? = null,
 
-    val annualDistrictHeatingDemandGj: Float?,
+    val annualDistrictHeatingDemandGj: Float? = null,
 
-    val localHeatExchangeDescription: String,
-    val hasUnusedResidualHeat: Boolean?,
+    val localHeatExchangeDescription: String = "",
+    val hasUnusedResidualHeat: Boolean? = null,
 )
 
 enum class HeatingType {
