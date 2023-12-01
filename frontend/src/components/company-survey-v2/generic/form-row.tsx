@@ -53,7 +53,7 @@ export const FormRow = ({label, InputComponent, WrappedInput, suffix, name, opti
                 <div>
 
                     {InputComponent && <InputComponent {...form.register(name, options)} />}
-                    {WrappedInput && <WrappedInput name={name} form={form} />}
+                    {WrappedInput && <WrappedInput name={name} form={form} options={options} />}
                     &nbsp;&nbsp;{suffix}
                 </div>
                 {errorMessage && <div css={{color: 'red'}}>{errorMessage}</div>}

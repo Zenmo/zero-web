@@ -21,7 +21,7 @@ export const Address = ({form, prefix}: { form: UseFormReturn , prefix: string }
                 label="Huisnummer"
                 name={`${prefix}.houseNumber`}
                 form={form}
-                options={{required: true}} />
+                options={{required: true, min: 1}} />
             <FormRow
                 label="Huisletter"
                 name={`${prefix}.houseLetter`}

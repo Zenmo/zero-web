@@ -8,15 +8,21 @@ import {LabelRow} from './generic/label-row'
 import {OldNumberInput} from './generic/old-number-input'
 import {TextAreaRow} from "./generic/text-area-row";
 
-export const Supply = ({form, prefix, hasSupply}: {form: UseFormReturn, prefix: string, hasSupply: boolean | undefined}) => {
+export const Supply = ({form, prefix, hasSupplyName}: {form: UseFormReturn, prefix: string, hasSupplyName: string}) => {
     const { register, watch } = form
 
     const pvInstalledKwp = watch(`${prefix}.pvInstalledKwp`)
     const pvPlanned = watch(`${prefix}.pvPlanned`)
+    const hasSupply = watch(hasSupplyName)
 
     return (
         <>
-            <h3>Energie opwek op deze netaansluiting</h3>
+            <h3>Electriciteitsopwek op deze netaansluiting</h3>
+            <FormRow
+                label="Is er ook elektriciteitsopwek op deze netaansluiting?"
+                name={hasSupplyName}
+                form={form}
+                WrappedInput={BooleanInput} />
             {hasSupply && (
                 <>
                     <NumberRow

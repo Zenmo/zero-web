@@ -85,6 +85,10 @@ export const Survey: FunctionComponent = () => {
                     backgroundColor: '#fcc',
                     borderColor: 'red',
                 },
+                '& h2, & h3': {
+                    padding: '.2rem 1rem',
+                    backgroundColor: 'lightgrey',
+                },
             }}>
                 <Intro />
                 {errorMessage && <Alert
