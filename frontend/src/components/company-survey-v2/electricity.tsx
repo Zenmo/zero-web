@@ -19,11 +19,8 @@ export const Electricity = ({form, prefix, hasSupplyName}: {
     prefix: string,
     hasSupplyName: string
 }) => {
-    const {register} = form
-
     const hasSupply = form.watch(hasSupplyName)
 
-    const [consumptionSpec, setConsumptionSpec] = useState<ConsumptionSpec|null|undefined>()
     const [connectionType, setConnectionType] = useState<ConnectionType>()
 
     return (
@@ -35,38 +32,6 @@ export const Electricity = ({form, prefix, hasSupplyName}: {
                     <Radio value={ConnectionType.KLEINVERBRUIK} css={{display: 'block'}}>Kleinverbruik</Radio>
                 </Radio.Group>
             </LabelRow>
-            <LabelRow label="Hoe wilt u het elektriciteitsprofiel van deze netaansluiting doorgeven?">
-                <ElectricityConsumptionRadios onChange={setConsumptionSpec} consumptionSpec={consumptionSpec} />
-            </LabelRow>
-            <FormRow
-                label="Is er ook elektriciteitsopwek op deze netaansluiting?"
-                name={hasSupplyName}
-                form={form}
-                WrappedInput={BooleanInput} />
-            {consumptionSpec === ConsumptionSpec.UPLOAD_QUARTER_HOURLY_VALUES && (
-                <LabelRow label="Kwartierwaarden">
-                    <input type="file" {...register(`${prefix}.quarterHourlyValuesFiles`)} />
-                </LabelRow>
-            )}
-            {consumptionSpec === ConsumptionSpec.SPECTRAL_AUTHORIZATION && (
-                <p>Spectral machtiging TODO</p>
-            )}
-            {/*{consumptionSpec === ConsumptionSpec.ANNUAL_VALUES && (*/}
-            {/*    <>*/}
-            {/*        <NumberRow*/}
-            {/*            label="Jaarverbruik"*/}
-            {/*            name={`${prefix}.annualElectricityDemandKwh`}*/}
-            {/*            form={form}*/}
-            {/*            suffix="kWh" />*/}
-            {/*        {hasSupply && (*/}
-            {/*            <NumberRow*/}
-            {/*                label="Jaaropwek"*/}
-            {/*                name={`${prefix}.annualElectricityProductionKwh`}*/}
-            {/*                form={form}*/}
-            {/*                suffix="kWh" />*/}
-            {/*        )}*/}
-            {/*    </>*/}
-            {/*)}*/}
             {connectionType === ConnectionType.KLEINVERBRUIK && (
                 <>
                     <FormRow
