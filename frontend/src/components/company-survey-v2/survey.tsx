@@ -4,10 +4,10 @@ import {createElement, forwardRef, FunctionComponent, useState} from 'react'
 import {useForm, UseFormReturn} from 'react-hook-form'
 import {FormRow} from './generic/form-row'
 import {TextInput} from './generic/text-input'
-import {GridConnections} from './grid-connections'
 import {Intro} from './intro'
 import {LabelRow} from './generic/label-row'
 import {Transport} from './transport'
+import {SurveyTabs} from "./survey-tabs";
 
 export const Survey: FunctionComponent = () => {
     // @ts-ignore
@@ -68,7 +68,6 @@ export const Survey: FunctionComponent = () => {
         }
     }
 
-
     return (
         <div css={{
             width: '100%',
@@ -122,8 +121,7 @@ export const Survey: FunctionComponent = () => {
                     InputComponent={forwardRef((props: any, ref) =>
                         <input type="email" {...props} />)}
                 />
-                <Transport form={form} prefix="transport" />
-                <GridConnections form={form} />
+                <SurveyTabs form={form} />
                 <div css={{textAlign: 'right'}}>
                     <button type="submit">Verstuur</button>
                 </div>
