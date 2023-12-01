@@ -11,7 +11,7 @@ import {OldNumberInput} from './generic/old-number-input'
 import {Supply} from './supply'
 
 enum ConsumptionSpec {
-    AUTHORIZATION = "AUTHORIZATION",
+    SPECTRAL_AUTHORIZATION = "SPECTRAL_AUTHORIZATION",
     UPLOAD_QUARTER_HOURLY_VALUES = "UPLOAD_QUARTER_HOURLY_VALUES",
     ANNUAL_VALUES = "ANNUAL_VALUES",
 }
@@ -44,7 +44,7 @@ export const Electricity = ({form, prefix, hasSupplyName}: {
             </LabelRow>
             <LabelRow label="Hoe wilt u het elektriciteitsprofiel van deze netaansluiting doorgeven?">
                 <Radio.Group onChange={e => setConsumptionSpec(e.target.value)} value={consumptionSpec}>
-                    <Radio value={ConsumptionSpec.AUTHORIZATION} css={{display: 'block'}}>Machting ophalen meetdata invullen (voorkeur)</Radio>
+                    <Radio value={ConsumptionSpec.SPECTRAL_AUTHORIZATION} css={{display: 'block'}}>Machting voor het ophalen van de meetdata bij Spectral</Radio>
                     <Radio value={ConsumptionSpec.UPLOAD_QUARTER_HOURLY_VALUES} css={{display: 'block'}}>Kwartierwaarden uploaden</Radio>
                     <Radio value={ConsumptionSpec.ANNUAL_VALUES} css={{display: 'block'}}>Jaarverbruik invullen</Radio>
                 </Radio.Group>
@@ -59,8 +59,8 @@ export const Electricity = ({form, prefix, hasSupplyName}: {
                     <input type="file" {...register(`${prefix}.quarterHourlyValuesFiles`)} />
                 </LabelRow>
             )}
-            {consumptionSpec === ConsumptionSpec.AUTHORIZATION && (
-                <p>Machtiging TODO</p>
+            {consumptionSpec === ConsumptionSpec.SPECTRAL_AUTHORIZATION && (
+                <p>Spectral machtiging TODO</p>
             )}
             {consumptionSpec === ConsumptionSpec.ANNUAL_VALUES && (
                 <>
