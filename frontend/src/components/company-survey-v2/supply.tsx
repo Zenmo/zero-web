@@ -6,6 +6,7 @@ import {TextInput} from './generic/text-input'
 import {PVOrientation} from './pv-orientation'
 import {LabelRow} from './generic/label-row'
 import {OldNumberInput} from './generic/old-number-input'
+import {TextAreaRow} from "./generic/text-area-row";
 
 export const Supply = ({form, prefix, hasSupply}: {form: UseFormReturn, prefix: string, hasSupply: boolean | undefined}) => {
     const { register, watch } = form
@@ -65,11 +66,10 @@ export const Supply = ({form, prefix, hasSupply}: {form: UseFormReturn, prefix: 
                         name={`${prefix}.windInstalledKw`}
                         form={form}
                         suffix="kW" />
-                    <FormRow
+                    <TextAreaRow
                         label="Heeft u  andere elektriciteitsproductie (dieselgenerator, waterstof, enz)? Zo ja, welke, wat is het vermogen, en wat is ongeveer de jaarlijkse productie/consumptie?"
-                        name={`${prefix}.otherSupply`}
                         form={form}
-                        InputComponent={TextInput} />
+                        name={`${prefix}.otherSupply`} />
                 </>
             )}
         </>

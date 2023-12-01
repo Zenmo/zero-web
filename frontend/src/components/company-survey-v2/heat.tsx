@@ -6,6 +6,7 @@ import {TextInput} from './generic/text-input'
 import {HeatingType, HeatingTypeCheckboxes} from './heating-type-checkboxes'
 import {LabelRow} from './generic/label-row'
 import {OldNumberInput} from './generic/old-number-input'
+import {TextAreaRow} from "./generic/text-area-row";
 
 export const Heat = ({form, prefix}: { form: UseFormReturn, prefix: string }) => {
     const {watch, register} = form
@@ -50,11 +51,10 @@ export const Heat = ({form, prefix}: { form: UseFormReturn, prefix: string }) =>
                     form={form}
                     suffix="GJ" />
             )}
-            <FormRow
+            <TextAreaRow
                 label="Wisselen jullie op een andere manier lokaal warmte uit (bijv. met naastgelegen bedrijven)? Zo ja, hoe?"
-                name={`${prefix}.localHeatExchangeDescription`}
                 form={form}
-                InputComponent={TextInput} />
+                name={`${prefix}.localHeatExchangeDescription`} />
             <FormRow
                 label="Heeft u ongebruikte restwarmte?"
                 name={`${prefix}.hasUnusedResidualHeat`}

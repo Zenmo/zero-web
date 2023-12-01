@@ -5,6 +5,7 @@ import {LabelRow} from './generic/label-row'
 import {NumberRow} from './generic/number-row'
 import {OldNumberInput} from './generic/old-number-input'
 import {TextInput} from './generic/text-input'
+import {TextAreaRow} from "./generic/text-area-row";
 
 export const Storage = ({form, prefix}: { form: UseFormReturn, prefix: string }) => {
     const {watch} = form
@@ -32,11 +33,10 @@ export const Storage = ({form, prefix}: { form: UseFormReturn, prefix: string })
                         name={`${prefix}.batteryPowerKw`}
                         form={form}
                         suffix="kW" />
-                    <FormRow
+                    <TextAreaRow
                         label="Hoe gebruik je deze batterij of hoe wordt die aangestuurd?"
-                        name={`${prefix}.batterySchedule`}
                         form={form}
-                        InputComponent={TextInput} />
+                        name={`${prefix}.batterySchedule`} />
                 </>
             )}
             <FormRow
@@ -56,11 +56,10 @@ export const Storage = ({form, prefix}: { form: UseFormReturn, prefix: string })
                         name={`${prefix}.plannedBatteryCapacityKwh`}
                         form={form}
                         suffix="kW" />
-                    <FormRow
+                    <TextAreaRow
                         label="Hoe gebruik je deze batterij of hoe wordt die aangestuurd?"
-                        name={`${prefix}.plannedBatterySchedule`}
                         form={form}
-                        InputComponent={TextInput} />
+                        name={`${prefix}.plannedBatterySchedule`} />
                 </>
             )}
             <FormRow

@@ -9,6 +9,6 @@ export const NumberInput = ({form, name, options}: WrappedInputProps) => {
     }
 
     return (
-        <input type="number" {...form.register(name, options)} css={{width: '5rem'}}/>
+        <input type="number" {...form.register(name, options)} css={{width: '4rem'}}/>
     )
 }
