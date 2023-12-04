@@ -13,6 +13,13 @@ object CompanySurveyGridConnectionTable: Table("company_survey_grid_connection")
     val surveyId = uuid("survey_id").references(CompanySurveyTable.id)
 
     /**
+     * Open questions
+     */
+    val mainConsumptionProcess = varchar("main_consumption_process", 1000)
+    val consumptionFlexibility = varchar("consumption_flexibility", 1000)
+    val electrificationPlans = varchar("electrification_plans", 1000)
+
+    /**
      * [com.zenmo.companysurvey.dto.Address]
      */
     val street = varchar("street", 50)

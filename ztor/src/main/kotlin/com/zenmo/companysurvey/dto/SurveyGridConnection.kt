@@ -13,6 +13,7 @@ data class SurveyGridConnection(
     val storage: Storage,
 
     // open questions
+    val energyOrBuildingManagementSystemSupplier: String,
     val mainConsumptionProcess: String,
     val consumptionFlexibility: String,
     val electrificationPlans: String,

@@ -1,4 +1,4 @@
-package com.zenmo.companysurvey
+package com.zenmo.blob
 
 import com.azure.storage.blob.BlobServiceClientBuilder
 import com.azure.storage.blob.sas.BlobSasPermission
@@ -7,19 +7,8 @@ import com.azure.storage.common.sas.SasProtocol
 import java.time.Instant
 import java.time.OffsetDateTime
 import java.time.ZoneId
-import java.time.ZoneOffset
 import java.time.format.DateTimeFormatter
 import kotlin.streams.asSequence
-
-enum class BlobPurpose {
-    NATURAL_GAS_VALUES,
-    ELECTRICITY_VALUES,
-    ELECTRICITY_AUTHORIZATION;
-
-    fun toNamePart(): String {
-        return this.toString().lowercase().replace("_", "-")
-    }
-}
 
 class BlobStorage(
     private val azureAccountName: String = System.getenv("AZURE_STORAGE_ACCOUNT_NAME"),
@@ -32,14 +21,15 @@ class BlobStorage(
 
     /**
      * You can use the result of this function to directly upload a file to Azure Blob Storage.
+     * This is similar to S3's pre-signed URLs.
      * You only need to set the `x-ms-blob-type` header to `BlockBlob`.
      */
-    fun getBlobSasUrl(
+    fun getUploadUrl(
         blobPurpose: BlobPurpose,
         project: String,
         company: String,
         fileName: String,
-    ): String {
+    ): UploadAuthorization {
         if (project === "") {
             throw Exception("Company name cannot be empty")
         }
@@ -67,11 +57,16 @@ class BlobStorage(
         val expiryTime = OffsetDateTime.now().plusDays(1)
 
         val sasSignatureValues = BlobServiceSasSignatureValues(expiryTime, permissions)
-            .setProtocol(SasProtocol.HTTPS_HTTP)
+            .setProtocol(SasProtocol.HTTPS_ONLY)
 
         val sasToken = blobClient.generateSas(sasSignatureValues)
 
-        return "${blobClient.blobUrl}?$sasToken"
+        return UploadAuthorization(
+            uploadUrl = "${blobClient.blobUrl}?$sasToken",
+            blobName = blobName,
+            originalName = fileName,
+            sas = sasToken,
+        )
     }
 }
 

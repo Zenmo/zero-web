@@ -1,10 +1,12 @@
 package com.zenmo.plugins
 
+import com.zenmo.blob.BlobPurpose
 import com.zenmo.companysurvey.SurveyRepository
 import com.zenmo.companysurvey.dto.*
 import com.zenmo.energieprestatieonline.RawPandTable
 import com.zenmo.companysurvey.table.CompanySurveyGridConnectionTable
 import com.zenmo.companysurvey.table.CompanySurveyTable
+import com.zenmo.companysurvey.table.FileTable
 import com.zenmo.dbutil.createEnumTypeSql
 import com.zenmo.errorMessageToJson
 import io.ktor.http.*
@@ -57,8 +59,9 @@ fun createSchema(db: Database) {
         exec(createEnumTypeSql(KleinverbruikElectricityConsumptionProfile::class.java))
         exec(createEnumTypeSql(HeatingType::class.java))
         exec(createEnumTypeSql(PVOrientation::class.java))
+        exec(createEnumTypeSql(BlobPurpose::class.java))
 
-        SchemaUtils.create(CompanySurveyTable, CompanySurveyGridConnectionTable, RawPandTable)
+        SchemaUtils.create(CompanySurveyTable, CompanySurveyGridConnectionTable, FileTable, RawPandTable)
     }
 }
 

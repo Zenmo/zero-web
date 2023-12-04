@@ -18,10 +18,12 @@ class SurveyRepository(
         transaction(db) {
             CompanySurveyTable.insert {
                 it[id] = surveyId
-                it[project] = survey.project
+                it[created] = survey.created
+                it[project] = survey.zenmoProject
                 it[companyName] = survey.companyName
                 it[personName] = survey.personName
                 it[email] = survey.email
+                it[surveyFeedback] = survey.surveyFeedback
 
                 it[hasVehicles] = survey.transport.hasVehicles
                 it[numDailyCarCommuters] = survey.transport.numDailyCarCommuters?.toUInt()
@@ -52,6 +54,11 @@ class SurveyRepository(
                     gridConnection ->
                 this[CompanySurveyGridConnectionTable.surveyId] = surveyId
 
+                // open questions
+                this[CompanySurveyGridConnectionTable.mainConsumptionProcess] = gridConnection.mainConsumptionProcess
+                this[CompanySurveyGridConnectionTable.consumptionFlexibility] = gridConnection.consumptionFlexibility
+                this[CompanySurveyGridConnectionTable.electrificationPlans] = gridConnection.electrificationPlans
+
                 // address
                 this[CompanySurveyGridConnectionTable.street] = gridConnection.address.street
                 this[CompanySurveyGridConnectionTable.houseNumber] = gridConnection.address.houseNumber.toUInt()
@@ -64,7 +71,7 @@ class SurveyRepository(
                 this[CompanySurveyGridConnectionTable.electricityEan] = gridConnection.electricity.ean
                 try {
                     this[CompanySurveyGridConnectionTable.quarterHourlyElectricityObjectKey] =
-                        gridConnection.electricity.quarterHourlyValuesFiles.first().remoteName
+                        gridConnection.electricity.quarterHourlyValuesFiles.first().url
                 } catch (_: NoSuchElementException) {
                     this[CompanySurveyGridConnectionTable.quarterHourlyElectricityObjectKey] = ""
                 }
@@ -81,6 +88,7 @@ class SurveyRepository(
                 this[CompanySurveyGridConnectionTable.pvOrientation] = gridConnection.supply.pvOrientation
                 this[CompanySurveyGridConnectionTable.pvPlanned] = gridConnection.supply.pvPlanned
                 this[CompanySurveyGridConnectionTable.pvPlannedCapacityKwp] = gridConnection.supply.pvPlannedCapacityKwp?.toUInt()
+                this[CompanySurveyGridConnectionTable.pvPlannedOrientation] = gridConnection.supply.pvPlannedOrientation
                 this[CompanySurveyGridConnectionTable.pvPlannedYear] = gridConnection.supply.pvPlannedYear?.toUInt()
                 this[CompanySurveyGridConnectionTable.windInstalledKw] = gridConnection.supply.windInstalledKw
                 this[CompanySurveyGridConnectionTable.otherSupply] = gridConnection.supply.otherSupply
@@ -90,7 +98,7 @@ class SurveyRepository(
                 this[CompanySurveyGridConnectionTable.naturalGasEan] = gridConnection.naturalGas.ean
                 this[CompanySurveyGridConnectionTable.naturalGasAnnualDemandM3] = gridConnection.naturalGas.annualDemandM3?.toUInt()
                 try {
-                    this[CompanySurveyGridConnectionTable.hourlyNaturalGasObjectKey] = gridConnection.naturalGas.hourlyValuesFile.first().remoteName
+                    this[CompanySurveyGridConnectionTable.hourlyNaturalGasObjectKey] = gridConnection.naturalGas.hourlyValuesFile.first().url
                 } catch (_: NoSuchElementException) {
                     this[CompanySurveyGridConnectionTable.hourlyNaturalGasObjectKey] = ""
                 }

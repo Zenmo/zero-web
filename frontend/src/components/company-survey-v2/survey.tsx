@@ -35,6 +35,8 @@ export const Survey: FunctionComponent = () => {
         console.log('submit', data)
         setSubmissionError("")
 
+        data.zenmoProject = "Hessenpoort"
+
         const url = process.env.ZTOR_URL + '/company-survey'
         try {
             const response = await fetch(url, {

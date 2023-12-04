@@ -1,12 +1,15 @@
 package com.zenmo.companysurvey.table
 
 import org.jetbrains.exposed.sql.*
+import org.jetbrains.exposed.sql.kotlin.datetime.CurrentTimestamp
+import org.jetbrains.exposed.sql.kotlin.datetime.timestamp
 
 /**
  * [com.zenmo.companysurvey.dto.Survey]
  */
 object CompanySurveyTable: Table("company_survey") {
     val id = uuid("id").autoGenerate()
+    val created = timestamp("created_at").defaultExpression(CurrentTimestamp())
     // Can be fetched at https://energiekeregio.nl/api/v1/zenmo?details=15989
     val energiekeRegioId = uinteger("energieke_regio_id").nullable()
     // ZEnMo project name
@@ -15,6 +18,8 @@ object CompanySurveyTable: Table("company_survey") {
     val companyName = varchar("company_name", 50)
     val personName = varchar("person_name", 50)
     val email = varchar("email", 50)
+
+    val surveyFeedback = varchar("survey_feedback", 1000)
 
     /**
      * [com.zenmo.companysurvey.dto.Transport]
@@ -54,10 +59,3 @@ object CompanySurveyTable: Table("company_survey") {
 
     override val primaryKey = PrimaryKey(id)
 }
-
-//object QuarterHourlyValuesFileTable: Table("quarter_hourly_values_file") {
-//    val id = uuid("id").autoGenerate()
-//
-//    val name = varchar("name", 100)
-//    val url = varchar("url", 100)
-//}

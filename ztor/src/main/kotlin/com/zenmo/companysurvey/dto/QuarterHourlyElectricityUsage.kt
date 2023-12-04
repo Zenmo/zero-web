@@ -1,11 +1,14 @@
 package com.zenmo.companysurvey.dto
 
+import kotlinx.serialization.Serializable
+
 /**
  * This contains values parsed from the CSV/excel.
  * Not implemented yet.
  */
-class ElectricityUsage (
+@Serializable
+class QuarterHourlyElectricityUsage (
     // should be every 15 minutes
     val timestamp: kotlinx.datetime.Instant,
-    val kwh: Double,
+    val kwh: Float,
 )

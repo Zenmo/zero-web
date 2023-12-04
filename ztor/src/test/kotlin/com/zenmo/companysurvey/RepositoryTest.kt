@@ -1,6 +1,7 @@
 package com.zenmo.companysurvey
 
 import com.zenmo.companysurvey.dto.*
+import com.zenmo.plugins.createSchema
 import org.jetbrains.exposed.sql.Database
 import org.junit.BeforeClass
 import kotlin.test.Test
@@ -18,7 +19,7 @@ class RepositoryTest {
         @JvmStatic
         @BeforeClass
         fun setupClass() {
-//            createSchema(connectToDb())
+            createSchema(connectToDb())
         }
     }
 
@@ -28,10 +29,10 @@ class RepositoryTest {
         val repo = SurveyRepository(db)
         val survey = Survey(
             companyName = "Zenmo",
-            project = "Project",
+            zenmoProject = "Project",
             personName = "John Doe",
             email = "john@example.com",
-            gridConnections = emptyList(),
+            surveyFeedback = "Survey feedback",
             transport = Transport(
                 hasVehicles = false,
                 numDailyCarCommuters = null,
@@ -59,7 +60,8 @@ class RepositoryTest {
                     annualTravelDistancePerVanKm = 0,
                     numPlannedElectricVans = 0,
                 ),
-            )
+            ),
+            gridConnections = emptyList(),
         )
         repo.save(survey)
     }
@@ -70,9 +72,10 @@ class RepositoryTest {
         val repo = SurveyRepository(db)
         val survey = Survey(
             companyName = "Zenmo",
-            project = "Project",
+            zenmoProject = "Project",
             personName = "John Doe",
             email = "john@example.com",
+            surveyFeedback = "Survey feedback",
             transport = Transport(
                 hasVehicles = false,
                 numDailyCarCommuters = null,
@@ -165,6 +168,7 @@ class RepositoryTest {
                     mainConsumptionProcess = "Main consumption process",
                     electrificationPlans = "Electrification plans",
                     consumptionFlexibility = "Consumption flexibility",
+                    energyOrBuildingManagementSystemSupplier = "EnergyBrothers",
                 )
             )
         )

@@ -7,6 +7,8 @@ data class Electricity (
     val ean: String = "",
 
     val quarterHourlyValuesFiles: List<File> = emptyList(),
+    val quarterHourlyUsage: List<QuarterHourlyElectricityUsage> = emptyList(),
+
     // If no kwartierwaarden, ask for annual values.
     val annualElectricityDemandKwh: Int? = null,
     val annualElectricityProductionKwh: Int? = null,

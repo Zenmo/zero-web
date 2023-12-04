@@ -8,5 +8,6 @@ data class NaturalGas (
     val ean: String = "",
     val annualDemandM3: Int? = null,
     val hourlyValuesFile: List<File> = emptyList(),
+    val hourlyUsage: List<HourlyGasUsage> = emptyList(),
     val percentageUsedForHeating: Int? = null,
 )
