@@ -84,11 +84,6 @@ class SurveyRepository(
 
                 // electricity
                 this[CompanySurveyGridConnectionTable.electricityEan] = gridConnection.electricity.ean
-                try {
-                    this[CompanySurveyGridConnectionTable.quarterHourlyElectricityObjectKey] = gridConnection.electricity.quarterHourlyValuesFiles.first().url
-                } catch (_: NoSuchElementException) {
-                    this[CompanySurveyGridConnectionTable.quarterHourlyElectricityObjectKey] = ""
-                }
                 this[CompanySurveyGridConnectionTable.annualElectricityDemandKwh] = gridConnection.electricity.annualElectricityDemandKwh?.toUInt()
                 this[CompanySurveyGridConnectionTable.annualElectricityProductionKwh] = gridConnection.electricity.annualElectricityProductionKwh?.toUInt()
                 this[CompanySurveyGridConnectionTable.kleinverbruikElectricityConnectionCapacity] = gridConnection.electricity.kleinverbruik?.connectionCapacity
@@ -111,11 +106,6 @@ class SurveyRepository(
                 this[CompanySurveyGridConnectionTable.hasNaturalGasConnection] = gridConnection.naturalGas.hasConnection
                 this[CompanySurveyGridConnectionTable.naturalGasEan] = gridConnection.naturalGas.ean
                 this[CompanySurveyGridConnectionTable.naturalGasAnnualDemandM3] = gridConnection.naturalGas.annualDemandM3?.toUInt()
-                try {
-                    this[CompanySurveyGridConnectionTable.hourlyNaturalGasObjectKey] = gridConnection.naturalGas.hourlyValuesFiles.first().url
-                } catch (_: NoSuchElementException) {
-                    this[CompanySurveyGridConnectionTable.hourlyNaturalGasObjectKey] = ""
-                }
                 this[CompanySurveyGridConnectionTable.percentageNaturalGasForHeating] = gridConnection.naturalGas.percentageUsedForHeating?.toUInt()
 
                 // heat

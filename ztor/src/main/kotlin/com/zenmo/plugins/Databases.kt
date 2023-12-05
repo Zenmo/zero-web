@@ -61,7 +61,6 @@ fun createSchema(db: Database) {
         exec(createEnumTypeSql(PVOrientation::class.java))
         exec(createEnumTypeSql(BlobPurpose::class.java))
 
-//        SchemaUtils.create(CompanySurveyTable, CompanySurveyGridConnectionTable, FileTable, RawPandTable)
         SchemaUtils.createMissingTablesAndColumns(CompanySurveyTable, CompanySurveyGridConnectionTable, FileTable, RawPandTable)
     }
 }

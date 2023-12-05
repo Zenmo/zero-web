@@ -3,7 +3,7 @@ package com.zenmo.companysurvey.dto
 import kotlinx.serialization.Serializable
 
 /**
- * This contains values parsed from the CSV/excel.
+ * This contains values parsed from the CSV/excel or fetched from an API.
  * Not implemented yet.
  */
 @Serializable

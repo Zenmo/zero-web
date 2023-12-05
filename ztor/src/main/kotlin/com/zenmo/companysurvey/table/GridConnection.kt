@@ -24,7 +24,6 @@ object CompanySurveyGridConnectionTable: Table("company_survey_grid_connection")
      * [com.zenmo.companysurvey.dto.Electricity]
      */
     val electricityEan = varchar("electricity_ean", 18)
-    val quarterHourlyElectricityObjectKey = varchar("quarter_hourly_electricity_object_key", 100) // is this sufficient?
     val annualElectricityDemandKwh = uinteger("annual_electricity_demand_kwh").nullable()
     val annualElectricityProductionKwh = uinteger("annual_electricity_production_kwh").nullable()
 
@@ -70,7 +69,6 @@ object CompanySurveyGridConnectionTable: Table("company_survey_grid_connection")
     val hasNaturalGasConnection = bool("has_natural_gas_connection").nullable()
     val naturalGasEan = varchar("natural_gas_ean", 18)
     val naturalGasAnnualDemandM3 = uinteger("natural_gas_annual_demand_m3").nullable()
-    val hourlyNaturalGasObjectKey = varchar("hourly_natural_gas_object_key", 100)
     val percentageNaturalGasForHeating = uinteger("percentage_natural_gas_for_heating").nullable()
 
     /**
