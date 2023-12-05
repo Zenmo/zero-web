@@ -43,6 +43,8 @@ dependencies {
     implementation("org.jetbrains.exposed:exposed-dao:$exposed_version")
     implementation("org.jetbrains.exposed:exposed-jdbc:$exposed_version")
     implementation("org.jetbrains.exposed:exposed-kotlin-datetime:$exposed_version")
+    // We are using Kotlin datetimes because they support serialization out-of-the-box.
+    // If convenient for AnyLogic we can switch to Java datetimes.
 //    implementation("org.jetbrains.exposed:exposed-java-time:$exposed_version")
 
     testImplementation("io.ktor:ktor-server-tests-jvm")

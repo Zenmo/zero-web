@@ -10,7 +10,8 @@ import org.jetbrains.exposed.sql.Table
 
 object CompanySurveyGridConnectionTable: Table("company_survey_grid_connection") {
     val id = uuid("id").autoGenerate()
-    val surveyId = uuid("survey_id").references(CompanySurveyTable.id)
+    override val primaryKey = PrimaryKey(id)
+    val addressId = uuid("address_id").references(AddressTable.id)
 
     /**
      * Open questions
@@ -18,16 +19,6 @@ object CompanySurveyGridConnectionTable: Table("company_survey_grid_connection")
     val mainConsumptionProcess = varchar("main_consumption_process", 1000)
     val consumptionFlexibility = varchar("consumption_flexibility", 1000)
     val electrificationPlans = varchar("electrification_plans", 1000)
-
-    /**
-     * [com.zenmo.companysurvey.dto.Address]
-     */
-    val street = varchar("street", 50)
-    val houseNumber = uinteger("house_number")
-    val houseLetter = varchar("house_letter", 1)
-    val houseNumberSuffix = varchar("house_number_addition", 50)
-    val postalCode = varchar("postal_code", 8)
-    val city = varchar("city", 50)
 
     /**
      * [com.zenmo.companysurvey.dto.Electricity]
@@ -106,5 +97,39 @@ object CompanySurveyGridConnectionTable: Table("company_survey_grid_connection")
     val plannedBatteryPowerKw = float("planned_battery_power_kw").nullable()
     val plannedBatterySchedule = varchar("planned_battery_schedule", 1000)
 
-    override val primaryKey = PrimaryKey(id)
+    /**
+     * [com.zenmo.companysurvey.dto.Transport]
+     */
+    val hasVehicles = bool("has_vehicles").nullable()
+    val numDailyCarCommuters = uinteger("num_daily_car_commuters").nullable()
+
+    /**
+     * [com.zenmo.companysurvey.dto.Trucks]
+     */
+    val numTrucks = uinteger("num_trucks").nullable()
+    val numElectricTrucks = uinteger("num_electric_trucks").nullable()
+    val numTruckChargePoints = uinteger("num_truck_charge_points").nullable()
+    val powerPerTruckChargePointKw = float("power_per_truck_charge_point_kw").nullable()
+    val annualTravelDistancePerTruckKm = uinteger("annual_travel_distance_per_truck_km").nullable()
+    val numPlannedElectricTrucks = uinteger("num_planned_electric_trucks").nullable()
+
+    /**
+     * [com.zenmo.companysurvey.dto.Vans]
+     */
+    val numVans = uinteger("num_vans").nullable()
+    val numElectricVans = uinteger("num_electric_vans").nullable()
+    val numVanChargePoints = uinteger("num_electric_van_charge_points").nullable()
+    val powerPerVanChargePointKw = float("power_per_van_charge_point_kw").nullable()
+    val annualTravelDistancePerVanKm = uinteger("annual_travel_distance_per_van_km").nullable()
+    val numPlannedElectricVans = uinteger("num_planned_electric_vans").nullable()
+
+    /**
+     * [com.zenmo.companysurvey.dto.Cars]
+     */
+    val numCars = uinteger("num_cars").nullable()
+    val numElectricCars = uinteger("num_electric_cars").nullable()
+    val numCarChargePoints = uinteger("num_car_charge_points").nullable()
+    val powerPerCarChargePointKw = float("power_per_car_charge_point_kw").nullable()
+    val annualTravelDistancePerCarKm = uinteger("annual_travel_distance_per_car_km").nullable()
+    val numPlannedElectricCars = uinteger("num_planned_electric_cars").nullable()
 }

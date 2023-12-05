@@ -15,8 +15,7 @@ data class Survey(
     val personName: String,
     val email: String = "",
 
-    val transport: Transport,
-    val gridConnections: List<SurveyGridConnection>,
+    val addresses: List<Address>,
 
     val surveyFeedback: String,
 )

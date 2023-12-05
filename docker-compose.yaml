@@ -29,7 +29,7 @@ services:
         volumes:
             - ./ztor:/home/gradle/ztor
             - gradle-build-cache:/home/gradle/.gradle
-        command: gradle test
+        command: gradle test --no-daemon
         environment:
             POSTGRES_URL: jdbc:postgresql://postgres:5432/test
             POSTGRES_USER: postgres

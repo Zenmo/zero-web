@@ -1,6 +1,9 @@
 package com.zenmo.companysurvey
 
+import com.zenmo.companysurvey.dto.Address
+import com.zenmo.companysurvey.dto.GridConnection
 import com.zenmo.companysurvey.dto.Survey
+import com.zenmo.companysurvey.table.AddressTable
 import com.zenmo.companysurvey.table.CompanySurveyGridConnectionTable
 import com.zenmo.companysurvey.table.CompanySurveyTable
 import org.jetbrains.exposed.sql.Database
@@ -24,54 +27,65 @@ class SurveyRepository(
                 it[personName] = survey.personName
                 it[email] = survey.email
                 it[surveyFeedback] = survey.surveyFeedback
-
-                it[hasVehicles] = survey.transport.hasVehicles
-                it[numDailyCarCommuters] = survey.transport.numDailyCarCommuters?.toUInt()
-
-                it[numTrucks] = survey.transport.trucks.numTrucks?.toUInt()
-                it[numElectricTrucks] = survey.transport.trucks.numElectricTrucks?.toUInt()
-                it[numTruckChargePoints] = survey.transport.trucks.numChargePoints?.toUInt()
-                it[powerPerTruckChargePointKw] = survey.transport.trucks.powerPerChargePointKw
-                it[annualTravelDistancePerTruckKm] = survey.transport.trucks.annualTravelDistancePerTruckKm?.toUInt()
-                it[numPlannedElectricTrucks] = survey.transport.trucks.numPlannedElectricTrucks?.toUInt()
-
-                it[numVans] = survey.transport.vans.numVans?.toUInt()
-                it[numElectricVans] = survey.transport.vans.numElectricVans?.toUInt()
-                it[numVanChargePoints] = survey.transport.vans.numChargePoints?.toUInt()
-                it[powerPerVanChargePointKw] = survey.transport.vans.powerPerChargePointKw
-                it[annualTravelDistancePerVanKm] = survey.transport.vans.annualTravelDistancePerVanKm?.toUInt()
-                it[numPlannedElectricVans] = survey.transport.vans.numPlannedElectricVans?.toUInt()
-
-                it[numCars] = survey.transport.cars.numCars?.toUInt()
-                it[numElectricCars] = survey.transport.cars.numElectricCars?.toUInt()
-                it[numCarChargePoints] = survey.transport.cars.numChargePoints?.toUInt()
-                it[powerPerCarChargePointKw] = survey.transport.cars.powerPerChargePointKw
-                it[annualTravelDistancePerCarKm] = survey.transport.cars.annualTravelDistancePerCarKm?.toUInt()
-                it[numPlannedElectricCars] = survey.transport.cars.numPlannedElectricCars?.toUInt()
             }
 
-            CompanySurveyGridConnectionTable.batchInsert(survey.gridConnections) {
-                    gridConnection ->
-                this[CompanySurveyGridConnectionTable.surveyId] = surveyId
+            AddressTable.batchInsert(survey.addresses) {
+                address ->
+                this[AddressTable.id] = address.id
+                this[AddressTable.surveyId] = surveyId
+                this[AddressTable.street] = address.street
+                this[AddressTable.houseNumber] = address.houseNumber.toUInt()
+                this[AddressTable.houseLetter] = address.houseLetter
+                this[AddressTable.houseNumberSuffix] = address.houseNumberSuffix
+                this[AddressTable.postalCode] = address.postalCode
+                this[AddressTable.city] = address.city
+            }
+
+            CompanySurveyGridConnectionTable.batchInsert(survey.addresses.flatMap { address ->
+                address.gridConnections.map { gridConnection ->
+                    Pair(
+                        address.id,
+                        gridConnection,
+                    )
+                }
+            }) { pair: Pair<UUID, GridConnection> ->
+                val (addressId, gridConnection) = pair
+
+                this[CompanySurveyGridConnectionTable.addressId] = addressId
 
                 // open questions
                 this[CompanySurveyGridConnectionTable.mainConsumptionProcess] = gridConnection.mainConsumptionProcess
                 this[CompanySurveyGridConnectionTable.consumptionFlexibility] = gridConnection.consumptionFlexibility
                 this[CompanySurveyGridConnectionTable.electrificationPlans] = gridConnection.electrificationPlans
 
-                // address
-                this[CompanySurveyGridConnectionTable.street] = gridConnection.address.street
-                this[CompanySurveyGridConnectionTable.houseNumber] = gridConnection.address.houseNumber.toUInt()
-                this[CompanySurveyGridConnectionTable.houseLetter] = gridConnection.address.houseLetter
-                this[CompanySurveyGridConnectionTable.houseNumberSuffix] = gridConnection.address.houseNumberSuffix
-                this[CompanySurveyGridConnectionTable.postalCode] = gridConnection.address.postalCode
-                this[CompanySurveyGridConnectionTable.city] = gridConnection.address.city
+                this[CompanySurveyGridConnectionTable.hasVehicles] = gridConnection.transport.hasVehicles
+                this[CompanySurveyGridConnectionTable.numDailyCarCommuters] = gridConnection.transport.numDailyCarCommuters?.toUInt()
+
+                this[CompanySurveyGridConnectionTable.numTrucks] = gridConnection.transport.trucks.numTrucks?.toUInt()
+                this[CompanySurveyGridConnectionTable.numElectricTrucks] = gridConnection.transport.trucks.numElectricTrucks?.toUInt()
+                this[CompanySurveyGridConnectionTable.numTruckChargePoints] = gridConnection.transport.trucks.numChargePoints?.toUInt()
+                this[CompanySurveyGridConnectionTable.powerPerTruckChargePointKw] = gridConnection.transport.trucks.powerPerChargePointKw
+                this[CompanySurveyGridConnectionTable.annualTravelDistancePerTruckKm] = gridConnection.transport.trucks.annualTravelDistancePerTruckKm?.toUInt()
+                this[CompanySurveyGridConnectionTable.numPlannedElectricTrucks] = gridConnection.transport.trucks.numPlannedElectricTrucks?.toUInt()
+
+                this[CompanySurveyGridConnectionTable.numVans] = gridConnection.transport.vans.numVans?.toUInt()
+                this[CompanySurveyGridConnectionTable.numElectricVans] = gridConnection.transport.vans.numElectricVans?.toUInt()
+                this[CompanySurveyGridConnectionTable.numVanChargePoints] = gridConnection.transport.vans.numChargePoints?.toUInt()
+                this[CompanySurveyGridConnectionTable.powerPerVanChargePointKw] = gridConnection.transport.vans.powerPerChargePointKw
+                this[CompanySurveyGridConnectionTable.annualTravelDistancePerVanKm] = gridConnection.transport.vans.annualTravelDistancePerVanKm?.toUInt()
+                this[CompanySurveyGridConnectionTable.numPlannedElectricVans] = gridConnection.transport.vans.numPlannedElectricVans?.toUInt()
+
+                this[CompanySurveyGridConnectionTable.numCars] = gridConnection.transport.cars.numCars?.toUInt()
+                this[CompanySurveyGridConnectionTable.numElectricCars] = gridConnection.transport.cars.numElectricCars?.toUInt()
+                this[CompanySurveyGridConnectionTable.numCarChargePoints] = gridConnection.transport.cars.numChargePoints?.toUInt()
+                this[CompanySurveyGridConnectionTable.powerPerCarChargePointKw] = gridConnection.transport.cars.powerPerChargePointKw
+                this[CompanySurveyGridConnectionTable.annualTravelDistancePerCarKm] = gridConnection.transport.cars.annualTravelDistancePerCarKm?.toUInt()
+                this[CompanySurveyGridConnectionTable.numPlannedElectricCars] = gridConnection.transport.cars.numPlannedElectricCars?.toUInt()
 
                 // electricity
                 this[CompanySurveyGridConnectionTable.electricityEan] = gridConnection.electricity.ean
                 try {
-                    this[CompanySurveyGridConnectionTable.quarterHourlyElectricityObjectKey] =
-                        gridConnection.electricity.quarterHourlyValuesFiles.first().url
+                    this[CompanySurveyGridConnectionTable.quarterHourlyElectricityObjectKey] = gridConnection.electricity.quarterHourlyValuesFiles.first().url
                 } catch (_: NoSuchElementException) {
                     this[CompanySurveyGridConnectionTable.quarterHourlyElectricityObjectKey] = ""
                 }
@@ -98,7 +112,7 @@ class SurveyRepository(
                 this[CompanySurveyGridConnectionTable.naturalGasEan] = gridConnection.naturalGas.ean
                 this[CompanySurveyGridConnectionTable.naturalGasAnnualDemandM3] = gridConnection.naturalGas.annualDemandM3?.toUInt()
                 try {
-                    this[CompanySurveyGridConnectionTable.hourlyNaturalGasObjectKey] = gridConnection.naturalGas.hourlyValuesFile.first().url
+                    this[CompanySurveyGridConnectionTable.hourlyNaturalGasObjectKey] = gridConnection.naturalGas.hourlyValuesFiles.first().url
                 } catch (_: NoSuchElementException) {
                     this[CompanySurveyGridConnectionTable.hourlyNaturalGasObjectKey] = ""
                 }

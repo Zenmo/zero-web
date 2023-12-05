@@ -3,14 +3,13 @@ package com.zenmo.companysurvey.dto
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class SurveyGridConnection(
-    val address: Address,
-
+data class GridConnection(
     val electricity: Electricity,
     val supply: Supply,
     val naturalGas: NaturalGas,
     val heat: Heat,
     val storage: Storage,
+    val transport: Transport,
 
     // open questions
     val energyOrBuildingManagementSystemSupplier: String,

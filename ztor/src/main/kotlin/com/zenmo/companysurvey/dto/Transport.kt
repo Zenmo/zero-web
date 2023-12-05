@@ -2,6 +2,9 @@ package com.zenmo.companysurvey.dto
 
 import kotlinx.serialization.Serializable
 
+/**
+ * Mobiliteit
+ */
 @Serializable
 data class Transport (
     val hasVehicles: Boolean? = null,
@@ -19,6 +22,7 @@ data class Trucks (
     val numChargePoints: Int? = null,
     val powerPerChargePointKw: Float? = null,
     val annualTravelDistancePerTruckKm: Int? = null,
+    // Nice to have: ask possible charge times.
 
     // Disagreement on whether we should ask specifics about planned charge points
     val numPlannedElectricTrucks: Int? = null,
