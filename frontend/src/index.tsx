@@ -21,7 +21,11 @@ const router = createBrowserRouter([
     },
     {
         path: "/bedrijven-hessenpoort",
-        element: <Survey />,
+        element: <Survey project={{name: 'Hessenpoort', email: 'info@ondernemersvereniginghessenpoort.nl'}} />,
+    },
+    {
+        path: "/bedrijven-de-wieken",
+        element: <Survey project={{name: 'De Wieken', email: 'info@zenmo.com'}} />,
     }
 ]);
 

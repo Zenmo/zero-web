@@ -10,11 +10,12 @@ import {GridConnection} from './grid-connection'
 import {HasMultipleConnections} from './has-multiple-connections'
 import {Intro} from './intro'
 import {LabelRow} from './generic/label-row'
+import {Project} from './project'
 import {Transport} from './transport'
 import {SurveyTabs} from "./survey-tabs";
 import {cloneDeep} from "lodash";
 
-export const Survey: FunctionComponent = () => {
+export const Survey: FunctionComponent<{project: Project}> = ({project}) => {
     // @ts-ignore
     const form: UseFormReturn = useForm({
         shouldUseNativeValidation: true,
@@ -46,7 +47,7 @@ export const Survey: FunctionComponent = () => {
         surveyData = cloneDeep(surveyData)
         setSubmissionError("")
 
-        surveyData.zenmoProject = "Hessenpoort"
+        surveyData.zenmoProject = project
         surveyData.addresses = []
 
         for (const tab of surveyData.tabs) {
@@ -118,7 +119,7 @@ export const Survey: FunctionComponent = () => {
                     padding: '.2rem 1rem',
                 }
             }}>
-                <Intro />
+                <Intro project={project} />
                 {errorMessage && <Alert
                     message={errorMessage}
                     type="error"

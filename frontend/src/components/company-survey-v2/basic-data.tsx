@@ -5,6 +5,7 @@ import {TextInput} from './generic/text-input'
 
 export const BasicData = ({form}: { form: UseFormReturn }) => (
     <>
+        <h2>1. Bedrijfsgegevens</h2>
         <FormRow
             label="Naam bedrijf"
             InputComponent={TextInput}
