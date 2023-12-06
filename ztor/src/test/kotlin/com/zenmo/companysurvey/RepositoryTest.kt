@@ -33,7 +33,6 @@ class RepositoryTest {
             zenmoProject = "Project",
             personName = "John Doe",
             email = "john@example.com",
-            surveyFeedback = "Survey feedback",
             addresses = emptyList(),
         )
         repo.save(survey)
@@ -51,7 +50,6 @@ class RepositoryTest {
             zenmoProject = "Project",
             personName = "John Doe",
             email = "john@example.com",
-            surveyFeedback = "Survey feedback",
             addresses = listOf(
                 Address(
                     id = addressId,
@@ -118,6 +116,7 @@ class RepositoryTest {
                             electrificationPlans = "Electrification plans",
                             consumptionFlexibility = "Consumption flexibility",
                             energyOrBuildingManagementSystemSupplier = "EnergyBrothers",
+                            surveyFeedback = "Survey feedback",
                             transport = Transport(
                                 hasVehicles = false,
                                 numDailyCarCommuters = null,

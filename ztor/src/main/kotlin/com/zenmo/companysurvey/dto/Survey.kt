@@ -16,7 +16,5 @@ data class Survey(
     val email: String = "",
 
     val addresses: List<Address>,
-
-    val surveyFeedback: String,
 )
 

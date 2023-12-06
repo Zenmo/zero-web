@@ -2,19 +2,29 @@ import {css} from '@emotion/react'
 import {Alert} from 'antd'
 import {createElement, forwardRef, FunctionComponent, useState} from 'react'
 import {useForm, UseFormReturn} from 'react-hook-form'
+import {Address} from './address'
+import {BasicData} from './basic-data'
 import {FormRow} from './generic/form-row'
 import {TextInput} from './generic/text-input'
+import {GridConnection} from './grid-connection'
+import {HasMultipleConnections} from './has-multiple-connections'
 import {Intro} from './intro'
 import {LabelRow} from './generic/label-row'
 import {Transport} from './transport'
 import {SurveyTabs} from "./survey-tabs";
+import {cloneDeep} from "lodash";
 
 export const Survey: FunctionComponent = () => {
     // @ts-ignore
     const form: UseFormReturn = useForm({
         shouldUseNativeValidation: true,
         defaultValues: {
-            gridConnections: [{}],
+            tabs: [
+                {
+                    address: {},
+                    gridConnection: {},
+                }
+            ],
         }
     })
     const {
@@ -31,11 +41,27 @@ export const Survey: FunctionComponent = () => {
         errorMessage = "Het formulier bevat fouten"
     }
 
-    const onSubmit = async (data: any) => {
-        console.log('submit', data)
+    const onSubmit = async (surveyData: any) => {
+        console.log('submit', surveyData)
+        surveyData = cloneDeep(surveyData)
         setSubmissionError("")
 
-        data.zenmoProject = "Hessenpoort"
+        surveyData.zenmoProject = "Hessenpoort"
+        surveyData.addresses = []
+
+        for (const tab of surveyData.tabs) {
+            if (tab.address.isSameAddress) {
+                surveyData.addresses[surveyData.address.length - 1].gridConnections.push(tab.gridConnection)
+            } else {
+                surveyData.addresses.push({
+                    ...tab.address,
+                    gridConnections: [tab.gridConnection]
+                })
+            }
+        }
+
+        delete surveyData.tabs
+
 
         const url = process.env.ZTOR_URL + '/company-survey'
         try {
@@ -45,7 +71,7 @@ export const Survey: FunctionComponent = () => {
                     'Content-Type': 'application/json',
                     'Accept': 'application/json',
                 },
-                body: JSON.stringify(data)
+                body: JSON.stringify(surveyData)
             })
 
             if (response.status !== 201) {
@@ -68,6 +94,8 @@ export const Survey: FunctionComponent = () => {
         }
     }
 
+    const [hasMultipleConnections, setMultipleConnections] = useState()
+
     return (
         <div css={{
             width: '100%',
@@ -88,8 +116,7 @@ export const Survey: FunctionComponent = () => {
                 },
                 '& h2, & h3': {
                     padding: '.2rem 1rem',
-                    backgroundColor: 'lightgrey',
-                },
+                }
             }}>
                 <Intro />
                 {errorMessage && <Alert
@@ -102,26 +129,22 @@ export const Survey: FunctionComponent = () => {
                     type="success"
                     showIcon
                 />}
-                <FormRow
-                    label="Naam bedrijf"
-                    InputComponent={TextInput}
-                    name="companyName"
-                    form={form}
-                    options={{required: true}} />
-                <FormRow
-                    label="Naam contactpersoon"
-                    InputComponent={TextInput}
-                    name="personName"
-                    form={form}
-                    options={{required: true}} />
-                <FormRow
-                    label="E-mailadres"
-                    name="email"
-                    form={form}
-                    InputComponent={forwardRef((props: any, ref) =>
-                        <input type="email" {...props} />)}
-                />
-                <SurveyTabs form={form} />
+                <BasicData form={form} />
+                <br />
+                <HasMultipleConnections hasMultipleConnections={hasMultipleConnections} setMultipleConnections={setMultipleConnections} />
+                <br />
+                {hasMultipleConnections === false && (
+                    <>
+                        <Address form={form} prefix="tabs.0.address" />
+                        <GridConnection form={form} prefix="tabs.0.gridConnection" />
+                    </>
+                )}
+                {hasMultipleConnections === true && (
+                    <>
+                        <SurveyTabs form={form} />
+                    </>
+                )}
+
                 <div css={{textAlign: 'right'}}>
                     <button type="submit">Verstuur</button>
                 </div>

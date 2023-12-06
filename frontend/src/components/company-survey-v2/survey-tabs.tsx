@@ -1,4 +1,5 @@
 import {Tabs, TabsProps} from "antd";
+import {SurveyTab} from './survey-tab'
 import {Transport} from "./transport";
 import {useFieldArray, UseFormReturn} from "react-hook-form";
 import {GridConnection} from "./grid-connection";
@@ -7,11 +8,10 @@ import React from "react";
 
 export const SurveyTabs = ({form}: {form: UseFormReturn}) => {
     const {register, control} = form
-    const name = "gridConnections"
 
     const { fields, append, prepend, remove, swap, move, insert } = useFieldArray({
         control,
-        name,
+        name: 'tabs',
     })
 
     const onEdit = (
@@ -19,28 +19,24 @@ export const SurveyTabs = ({form}: {form: UseFormReturn}) => {
         action: 'add' | 'remove',
     ) => {
         if (action === 'add') {
-            append({});
+            append({
+                address: {},
+                gridConnection: {},
+            });
         } else {
             // @ts-ignore
             remove(parseInt(targetKey));
         }
     };
 
-    const items: TabsProps['items'] = [
-        {
-            key: 'transport',
-            label: 'Mobiliteit',
-            children: <Transport form={form} prefix="transport" />,
-        },
-        ...fields.map((item, index) => {
-            return {
-                key: index.toString(),
-                label: fields.length == 1 ? `Netaansluiting` : `${index + 1}e netaansluiting`,
-                children: <GridConnection key={index} form={form} prefix={`${name}.${index}`}/>,
-                closable: index > 0,
-            }
-        })
-    ];
+    const items: TabsProps['items'] = fields.map((field, index) => {
+        return {
+            key: index.toString(),
+            label: `${index + 1}e netaansluiting`,
+            children: <SurveyTab form={form} prefix={`tabs.${index}`} isFirst={index === 0} />,
+            closable: index > 0,
+        }
+    })
 
     return (
         <Tabs type="editable-card" items={items} addIcon={<><PlusOutlined /> extra aansluiting</>} onEdit={onEdit}/>

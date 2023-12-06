@@ -5,7 +5,7 @@ import {NumberInput} from './number-input'
 type TextAreaRowProps = Omit<FormRowProps, "InputComponent" | "WrappedInput">
 
 const TextArea = forwardRef(
-    (props: any) => <textarea rows={3} {...props} css={{width: '100%'}}/>
+    (props: any, ref) => <textarea rows={3} ref={ref} {...props} css={{width: '100%'}}/>
 )
 
 export const TextAreaRow: FunctionComponent<TextAreaRowProps> = (props) => {

@@ -51,7 +51,6 @@ export const FormRow = ({label, InputComponent, WrappedInput, suffix, name, opti
             </div>
             <div>
                 <div>
-
                     {InputComponent && <InputComponent {...form.register(name, options)} />}
                     {WrappedInput && <WrappedInput name={name} form={form} options={options} />}
                     &nbsp;&nbsp;{suffix}
