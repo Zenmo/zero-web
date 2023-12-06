@@ -4,7 +4,7 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class File (
-    val url: String,
+    val blobName: String,
     val originalName: String,
     val contentType: String?,
     val size: Int,

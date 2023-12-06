@@ -13,10 +13,10 @@ object FileTable: Table("file") {
         fromDb = { BlobPurpose.valueOf(it as String) },
         toDb = { PGEnum(BlobPurpose::class.simpleName!!, it) })
 
-    val remoteName = varchar("remote_name", 1000)
+    val blobName = varchar("remote_name", 1000)
     val originalName = varchar("original_name", 100)
     val contentType = varchar("content_type", 100)
     val size = integer("size")
 
-    override val primaryKey = PrimaryKey(remoteName)
+    override val primaryKey = PrimaryKey(blobName)
 }

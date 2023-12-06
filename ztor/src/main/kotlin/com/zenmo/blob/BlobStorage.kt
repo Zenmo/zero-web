@@ -24,7 +24,7 @@ class BlobStorage(
      * This is similar to S3's pre-signed URLs.
      * You only need to set the `x-ms-blob-type` header to `BlockBlob`.
      */
-    fun getUploadUrl(
+    fun authorizeUpload(
         blobPurpose: BlobPurpose,
         project: String,
         company: String,

@@ -47,7 +47,7 @@ export const Survey: FunctionComponent<{project: Project}> = ({project}) => {
         surveyData = cloneDeep(surveyData)
         setSubmissionError("")
 
-        surveyData.zenmoProject = project
+        surveyData.zenmoProject = project.name
         surveyData.addresses = []
 
         for (const tab of surveyData.tabs) {
@@ -62,7 +62,6 @@ export const Survey: FunctionComponent<{project: Project}> = ({project}) => {
         }
 
         delete surveyData.tabs
-
 
         const url = process.env.ZTOR_URL + '/company-survey'
         try {
@@ -137,7 +136,7 @@ export const Survey: FunctionComponent<{project: Project}> = ({project}) => {
                 {hasMultipleConnections === false && (
                     <>
                         <Address form={form} prefix="tabs.0.address" />
-                        <GridConnection form={form} prefix="tabs.0.gridConnection" />
+                        <GridConnection form={form} prefix="tabs.0.gridConnection" project={project.name} />
                     </>
                 )}
                 {hasMultipleConnections === true && (

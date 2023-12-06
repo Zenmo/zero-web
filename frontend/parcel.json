@@ -12,5 +12,6 @@
             "@parcel/transformer-js",
             "@parcel/transformer-react-refresh-wrap"
         ]
-    }
+    },
+    "reporters": ["...", "parcel-reporter-static-files-copy"]
 }

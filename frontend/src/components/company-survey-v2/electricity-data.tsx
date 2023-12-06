@@ -4,12 +4,14 @@ import {FormRow} from "./generic/form-row";
 import {BooleanInput} from "./generic/boolean-input";
 import {useState} from "react";
 import {UseFormReturn} from "react-hook-form";
+import {Purpose, Upload} from './generic/upload'
 
 
-export const ElectricityData = ({form, prefix, hasSupplyName}: {
+export const ElectricityData = ({form, prefix, hasSupplyName, project}: {
     form: UseFormReturn,
     prefix: string,
     hasSupplyName: string
+    project: string
 }) => {
     const {register} = form
 
@@ -23,11 +25,23 @@ export const ElectricityData = ({form, prefix, hasSupplyName}: {
             </LabelRow>
             {consumptionSpec === ConsumptionSpec.UPLOAD_QUARTER_HOURLY_VALUES && (
                 <LabelRow label="Kwartierwaarden">
-                    <input type="file" {...register(`${prefix}.quarterHourlyValuesFiles`)} />
+                    <Upload
+                        multiple={true}
+                        setFormValue={files => form.setValue(`${prefix}.quarterHourlyValuesFiles`, files)}
+                        company={form.watch('companyName')}
+                        project={project}
+                        purpose={Purpose.ELECTRICITY_VALUES} />
                 </LabelRow>
             )}
             {consumptionSpec === ConsumptionSpec.SPECTRAL_AUTHORIZATION && (
-                <p>Spectral machtiging TODO</p>
+                <LabelRow label={<div>Download <a href="/spectral-machtiging.pdf" target="_blank">dit formulier</a> en scan het in</div>}>
+                    <Upload
+                        multiple={false}
+                        setFormValue={file => form.setValue(`${prefix}.authorizationFile`, file)}
+                        company={form.watch('companyName')}
+                        project={project}
+                        purpose={Purpose.ELECTRICITY_AUTHORIZATION} />
+                </LabelRow>
             )}
             {/*{consumptionSpec === ConsumptionSpec.ANNUAL_VALUES && (*/}
             {/*    <>*/}

@@ -10,7 +10,7 @@ import {Supply} from './supply'
 import {ElectricityData} from "./electricity-data";
 import {Transport} from './transport'
 
-export const GridConnection = ({form, prefix}: { form: UseFormReturn, prefix: string }) => {
+export const GridConnection = ({form, prefix, project}: { form: UseFormReturn, prefix: string, project: string }) => {
     const supplyPrefix = `${prefix}.supply`
     const hasSupplyName = `${supplyPrefix}.hasSupply`
 
@@ -18,9 +18,9 @@ export const GridConnection = ({form, prefix}: { form: UseFormReturn, prefix: st
         <>
             <Electricity form={form} prefix={`${prefix}.electricity`}  hasSupplyName={hasSupplyName} />
             <Supply form={form} prefix={supplyPrefix} hasSupplyName={hasSupplyName} />
-            <ElectricityData form={form} prefix={`${prefix}.electricity`}  hasSupplyName={hasSupplyName} />
+            <ElectricityData form={form} prefix={`${prefix}.electricity`}  hasSupplyName={hasSupplyName} project={project} />
             <Heat form={form} prefix={`${prefix}.heat`} />
-            <NaturalGas form={form} prefix={`${prefix}.naturalGas`} />
+            <NaturalGas form={form} prefix={`${prefix}.naturalGas`} project={project} />
             <Storage form={form} prefix={`${prefix}.storage`} />
             <Transport form={form} prefix={`${prefix}.transport`} />
             <OpenQuestions form={form} prefix={prefix} />

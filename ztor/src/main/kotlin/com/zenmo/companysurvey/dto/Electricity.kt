@@ -6,6 +6,7 @@ import kotlinx.serialization.Serializable
 data class Electricity (
     val ean: String = "",
 
+    val authorizationFile: File? = null,
     val quarterHourlyValuesFiles: List<File> = emptyList(),
     val quarterHourlyUsage: List<QuarterHourlyElectricityUsage> = emptyList(),
 

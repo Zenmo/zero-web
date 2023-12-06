@@ -23,14 +23,14 @@ fun Application.configureUpload() {
                 return@get
             }
 
-            val url = blobStorage.getUploadUrl(
+            val authorization = blobStorage.authorizeUpload(
                 BlobPurpose.valueOf(queryParams["purpose"]!!),
                 queryParams["project"]!!,
                 queryParams["company"]!!,
                 queryParams["fileName"]!!,
             )
 
-            call.respond(url);
+            call.respond(authorization);
         }
     }
 }
