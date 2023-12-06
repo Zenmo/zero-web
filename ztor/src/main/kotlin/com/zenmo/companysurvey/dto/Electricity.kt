@@ -26,8 +26,8 @@ data class CompanyKleinverbruik (
 
 @Serializable
 data class CompanyGrootverbruik (
-    val contractedConnectionDemandCapacityKw: Int?,
-    val contractedConnectionSupplyCapacityKw: Int?,
+    val contractedConnectionDemandCapacityKw: Int? = null,
+    val contractedConnectionSupplyCapacityKw: Int? = null,
 )
 
 enum class KleinverbruikElectricityConnectionCapacity {

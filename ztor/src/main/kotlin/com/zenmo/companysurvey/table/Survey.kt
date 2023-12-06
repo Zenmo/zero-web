@@ -19,6 +19,4 @@ object CompanySurveyTable: Table("company_survey") {
     val companyName = varchar("company_name", 50)
     val personName = varchar("person_name", 50)
     val email = varchar("email", 50)
-
-    val surveyFeedback = varchar("survey_feedback", 1000)
 }

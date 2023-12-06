@@ -4,7 +4,7 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class GridConnection(
-    val electricity: Electricity,
+    val electricity: Electricity = Electricity(),
     val supply: Supply,
     val naturalGas: NaturalGas,
     val heat: Heat,
@@ -16,4 +16,5 @@ data class GridConnection(
     val mainConsumptionProcess: String,
     val consumptionFlexibility: String,
     val electrificationPlans: String,
+    val surveyFeedback: String,
 )

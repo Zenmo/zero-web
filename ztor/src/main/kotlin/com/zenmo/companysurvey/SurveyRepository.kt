@@ -26,7 +26,6 @@ class SurveyRepository(
                 it[companyName] = survey.companyName
                 it[personName] = survey.personName
                 it[email] = survey.email
-                it[surveyFeedback] = survey.surveyFeedback
             }
 
             AddressTable.batchInsert(survey.addresses) {
@@ -54,9 +53,11 @@ class SurveyRepository(
                 this[CompanySurveyGridConnectionTable.addressId] = addressId
 
                 // open questions
+                this[CompanySurveyGridConnectionTable.energyOrBuildingManagementSystemSupplier] = gridConnection.energyOrBuildingManagementSystemSupplier
                 this[CompanySurveyGridConnectionTable.mainConsumptionProcess] = gridConnection.mainConsumptionProcess
                 this[CompanySurveyGridConnectionTable.consumptionFlexibility] = gridConnection.consumptionFlexibility
                 this[CompanySurveyGridConnectionTable.electrificationPlans] = gridConnection.electrificationPlans
+                this[CompanySurveyGridConnectionTable.surveyFeedback] = gridConnection.surveyFeedback
 
                 this[CompanySurveyGridConnectionTable.hasVehicles] = gridConnection.transport.hasVehicles
                 this[CompanySurveyGridConnectionTable.numDailyCarCommuters] = gridConnection.transport.numDailyCarCommuters?.toUInt()

@@ -25,12 +25,12 @@ import java.util.*
 fun Application.configureDatabases(): Database {
     val db: Database = connectToPostgres(embedded = false)
 
-//    createSchema(db)
+    createSchema(db)
 
     routing {
         // Create
         post("/company-survey") {
-            var survey: Survey? = null
+            val survey: Survey?
             try {
                 survey = call.receive<Survey>()
             } catch (e: BadRequestException) {
@@ -55,11 +55,11 @@ fun Application.configureDatabases(): Database {
 
 fun createSchema(db: Database) {
     transaction(db) {
-        exec(createEnumTypeSql(KleinverbruikElectricityConnectionCapacity::class.java))
-        exec(createEnumTypeSql(KleinverbruikElectricityConsumptionProfile::class.java))
-        exec(createEnumTypeSql(HeatingType::class.java))
-        exec(createEnumTypeSql(PVOrientation::class.java))
-        exec(createEnumTypeSql(BlobPurpose::class.java))
+//        exec(createEnumTypeSql(KleinverbruikElectricityConnectionCapacity::class.java))
+//        exec(createEnumTypeSql(KleinverbruikElectricityConsumptionProfile::class.java))
+//        exec(createEnumTypeSql(HeatingType::class.java))
+//        exec(createEnumTypeSql(PVOrientation::class.java))
+//        exec(createEnumTypeSql(BlobPurpose::class.java))
 
         SchemaUtils.createMissingTablesAndColumns(CompanySurveyTable, CompanySurveyGridConnectionTable, FileTable, RawPandTable)
     }

@@ -8,6 +8,7 @@ import {OpenQuestions} from './open-questions'
 import {Storage} from './storage'
 import {Supply} from './supply'
 import {ElectricityData} from "./electricity-data";
+import {Transport} from './transport'
 
 export const GridConnection = ({form, prefix}: { form: UseFormReturn, prefix: string }) => {
     const supplyPrefix = `${prefix}.supply`
@@ -15,14 +16,14 @@ export const GridConnection = ({form, prefix}: { form: UseFormReturn, prefix: st
 
     return (
         <>
-            <Address form={form} prefix={`${prefix}.address`} />
             <Electricity form={form} prefix={`${prefix}.electricity`}  hasSupplyName={hasSupplyName} />
             <Supply form={form} prefix={supplyPrefix} hasSupplyName={hasSupplyName} />
             <ElectricityData form={form} prefix={`${prefix}.electricity`}  hasSupplyName={hasSupplyName} />
             <Heat form={form} prefix={`${prefix}.heat`} />
             <NaturalGas form={form} prefix={`${prefix}.naturalGas`} />
             <Storage form={form} prefix={`${prefix}.storage`} />
-            <OpenQuestions form={form} prefix={`${prefix}`} />
+            <Transport form={form} prefix={`${prefix}.transport`} />
+            <OpenQuestions form={form} prefix={prefix} />
         </>
     )
 }
