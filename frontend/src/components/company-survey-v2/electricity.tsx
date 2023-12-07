@@ -1,13 +1,10 @@
 import {Radio} from 'antd'
 import {useState} from 'react'
 import {UseFormReturn} from 'react-hook-form'
-import {BooleanInput} from './generic/boolean-input'
-import {ConsumptionProfileSelect} from './consumption-profile-select'
 import {FormRow} from './generic/form-row'
 import {NumberRow} from './generic/number-row'
 import {KleinverbruikCapacityInput} from './kleinverbruik-capacity-input'
 import {LabelRow} from './generic/label-row'
-import {ConsumptionSpec, ElectricityConsumptionRadios} from "./electricity-consumption-radios";
 
 enum ConnectionType {
     GROOTVERBRUIK = "GROOTVERBRUIK",

@@ -1,8 +1,9 @@
-import {css} from '@emotion/react'
+import {css, Interpolation} from '@emotion/react'
 import {get} from 'lodash'
 import {FunctionComponent, ReactElement, ReactNode} from 'react'
 import {FieldError, UseFormReturn} from 'react-hook-form'
 import {RegisterOptions} from 'react-hook-form/dist/types/validator'
+import {flash} from '../flash'
 import {LabelRow} from './label-row'
 
 export type WrappedInputProps = {
@@ -46,9 +47,9 @@ export const FormRow = ({label, InputComponent, WrappedInput, suffix, name, opti
     }
 
     return (
-        <label css={css`
+        <label css={[css`
             display: flex;
-        `}>
+        `, flash]}>
             <div css={css`
                 text-align: right;
                 width: 50%;

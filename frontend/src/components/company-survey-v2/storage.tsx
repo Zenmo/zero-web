@@ -1,8 +1,11 @@
+import {css} from '@emotion/react'
 import {UseFormReturn} from 'react-hook-form'
 import {BooleanInput} from './generic/boolean-input'
 import {FormRow} from './generic/form-row'
 import {NumberRow} from './generic/number-row'
 import {TextAreaRow} from "./generic/text-area-row"
+
+
 
 export const Storage = ({form, prefix}: { form: UseFormReturn, prefix: string }) => {
     const {watch} = form
@@ -19,7 +22,9 @@ export const Storage = ({form, prefix}: { form: UseFormReturn, prefix: string })
                 form={form}
                 WrappedInput={BooleanInput}/>
             {hasBattery && (
-                <>
+                <div css={css`
+                            animation: flash 1s;
+`}>
                     <NumberRow
                         label="Wat is de capaciteit van deze batterij?"
                         name={`${prefix}.batteryCapacityKwh`}
@@ -34,7 +39,7 @@ export const Storage = ({form, prefix}: { form: UseFormReturn, prefix: string })
                         label="Hoe gebruik je deze batterij of hoe wordt die aangestuurd?"
                         form={form}
                         name={`${prefix}.batterySchedule`} />
-                </>
+                </div>
             )}
             <FormRow
                 label="Heeft u plannen om een batterij toe te voegen?"

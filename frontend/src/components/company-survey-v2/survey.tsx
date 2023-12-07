@@ -4,6 +4,7 @@ import {createElement, forwardRef, FunctionComponent, useState} from 'react'
 import {useForm, UseFormReturn} from 'react-hook-form'
 import {Address} from './address'
 import {BasicData} from './basic-data'
+import {defineFlash} from './flash'
 import {FormRow} from './generic/form-row'
 import {TextInput} from './generic/text-input'
 import {GridConnection} from './grid-connection'
@@ -97,14 +98,14 @@ export const Survey: FunctionComponent<{project: Project}> = ({project}) => {
     const [hasMultipleConnections, setMultipleConnections] = useState()
 
     return (
-        <div css={{
+        <div css={[{
             width: '100%',
             minHeight: '100vh',
             backgroundColor: 'grey',
             display: 'flex',
             justifyContent: 'center',
             alignItems: 'flex-start',
-        }}>
+        }, defineFlash]}>
             <form onSubmit={handleSubmit(onSubmit)} css={{
                 maxWidth: '50rem',
                 backgroundColor: 'white',
@@ -123,7 +124,9 @@ export const Survey: FunctionComponent<{project: Project}> = ({project}) => {
                     padding: '.3rem',
                 }
             }}>
-                <Intro project={project} />
+                <Intro project={project} css={css`
+                    
+                `}/>
                 {errorMessage && <Alert
                     message={errorMessage}
                     type="error"
