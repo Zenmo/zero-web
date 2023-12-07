@@ -8,6 +8,7 @@ import App from './App'
 import './index.css'
 import {BedrijvenFormV1} from './components/bedrijven-form-v1'
 import {Survey} from './components/company-survey-v2/survey'
+import {ThankYou} from './components/thank-you'
 import reportWebVitals from './reportWebVitals'
 
 const router = createBrowserRouter([
@@ -26,6 +27,10 @@ const router = createBrowserRouter([
     {
         path: "/bedrijven-de-wieken",
         element: <Survey project={{name: 'De Wieken', email: 'info@zenmo.com'}} />,
+    },
+    {
+        path: "/bedankt",
+        element: <ThankYou />,
     }
 ]);
 

@@ -2,6 +2,7 @@ import {css} from '@emotion/react'
 import {Alert} from 'antd'
 import {createElement, forwardRef, FunctionComponent, useState} from 'react'
 import {useForm, UseFormReturn} from 'react-hook-form'
+import {useNavigate} from 'react-router-dom'
 import {Address} from './address'
 import {BasicData} from './basic-data'
 import {defineFlash} from './flash'
@@ -17,6 +18,7 @@ import {SurveyTabs} from "./survey-tabs";
 import {cloneDeep} from "lodash";
 
 export const Survey: FunctionComponent<{project: Project}> = ({project}) => {
+    let navigate = useNavigate()
     // @ts-ignore
     const form: UseFormReturn = useForm({
         shouldUseNativeValidation: true,
@@ -93,6 +95,8 @@ export const Survey: FunctionComponent<{project: Project}> = ({project}) => {
             setSubmissionError(message)
             return
         }
+
+        navigate('/bedankt')
     }
 
     const [hasMultipleConnections, setMultipleConnections] = useState()
@@ -124,9 +128,7 @@ export const Survey: FunctionComponent<{project: Project}> = ({project}) => {
                     padding: '.3rem',
                 }
             }}>
-                <Intro project={project} css={css`
-                    
-                `}/>
+                <Intro project={project}/>
                 {errorMessage && <Alert
                     message={errorMessage}
                     type="error"
