@@ -2,10 +2,7 @@ import {UseFormReturn} from 'react-hook-form'
 import {BooleanInput} from './generic/boolean-input'
 import {FormRow} from './generic/form-row'
 import {NumberRow} from './generic/number-row'
-import {TextInput} from './generic/text-input'
 import {HeatingType, HeatingTypeCheckboxes} from './heating-type-checkboxes'
-import {LabelRow} from './generic/label-row'
-import {OldNumberInput} from './generic/old-number-input'
 import {TextAreaRow} from "./generic/text-area-row";
 
 export const Heat = ({form, prefix}: { form: UseFormReturn, prefix: string }) => {

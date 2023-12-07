@@ -1,8 +1,9 @@
 import {css} from '@emotion/react'
 import {get} from 'lodash'
-import {FunctionComponent, ReactNode} from 'react'
+import {FunctionComponent, ReactElement, ReactNode} from 'react'
 import {FieldError, UseFormReturn} from 'react-hook-form'
 import {RegisterOptions} from 'react-hook-form/dist/types/validator'
+import {LabelRow} from './label-row'
 
 export type WrappedInputProps = {
     name: string,
@@ -30,30 +31,47 @@ export const FormRow = ({label, InputComponent, WrappedInput, suffix, name, opti
     const errorMessage = getErrorMessage(error)
     options = setValidationMessage(options)
 
-    return (
-        <label css={css`
-            display: flex;
-
-            & > div:nth-of-type(1) {
-                text-align: right;
-                width: 50%;
-                padding: 0.3rem;
-            }
-
-            & > div:nth-of-type(2) {
-                width: 50%;
-                padding: 0.3rem;
-            }
-        `}>
+    let labelElement: ReactNode
+    if (options?.required) {
+        labelElement = (
             <div>
                 {options?.required && <span css={{color: 'red'}}>* </span>}
                 {label}
             </div>
-            <div>
+        )
+    } else if (typeof label === 'string') {
+        labelElement = <div>{label}</div>
+    } else {
+        labelElement = label
+    }
+
+    return (
+        <label css={css`
+            display: flex;
+        `}>
+            <div css={css`
+                text-align: right;
+                width: 50%;
+                padding: 0.3rem;
+
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+            `}>
+                {labelElement}
+            </div>
+            <div css={css`
+                width: 50%;
+                padding: 0.3rem;
+
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+            `}>
                 <div>
                     {InputComponent && <InputComponent {...form.register(name, options)} />}
                     {WrappedInput && <WrappedInput name={name} form={form} options={options} />}
-                    &nbsp;&nbsp;{suffix}
+                    {suffix && <>&nbsp;&nbsp;{suffix}</>}
                 </div>
                 {errorMessage && <div css={{color: 'red'}}>{errorMessage}</div>}
             </div>

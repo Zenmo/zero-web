@@ -1,7 +1,5 @@
 import {UseFormReturn} from 'react-hook-form'
-import {LabelRow} from './generic/label-row'
 import {NumberRow} from './generic/number-row'
-import {OldNumberInput} from './generic/old-number-input'
 
 export const Vans = ({form, prefix}: { form: UseFormReturn, prefix: string}) => {
     const {register, watch} = form

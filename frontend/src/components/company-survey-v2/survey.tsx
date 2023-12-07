@@ -116,6 +116,9 @@ export const Survey: FunctionComponent<{project: Project}> = ({project}) => {
                 },
                 '& h2, & h3': {
                     padding: '.2rem 1rem',
+                },
+                'input[type="text"], input[type="email"], input[type="number"], textarea': {
+                    padding: '.3rem',
                 }
             }}>
                 <Intro project={project} />

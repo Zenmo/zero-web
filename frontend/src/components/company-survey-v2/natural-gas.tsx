@@ -2,9 +2,7 @@ import {UseFormReturn} from 'react-hook-form'
 import {BooleanInput} from './generic/boolean-input'
 import {FormRow} from './generic/form-row'
 import {LabelRow} from './generic/label-row'
-import {NumberInput} from './generic/number-input'
 import {NumberRow} from './generic/number-row'
-import {OldNumberInput} from './generic/old-number-input'
 import {Purpose, Upload} from './generic/upload'
 
 export const NaturalGas =  ({form, prefix, project}: { form: UseFormReturn , prefix: string, project: string }) => {

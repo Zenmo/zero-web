@@ -1,9 +1,6 @@
 import {UseFormReturn} from 'react-hook-form'
 import {FormRow} from './generic/form-row'
-import {LabelRow} from './generic/label-row'
-import {NumberInput} from './generic/number-input'
 import {NumberRow} from './generic/number-row'
-import {OldNumberInput} from './generic/old-number-input'
 import {TextInput} from './generic/text-input'
 
 export const Address = ({form, prefix}: { form: UseFormReturn , prefix: string }) => {
