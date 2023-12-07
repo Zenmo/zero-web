@@ -1,10 +1,12 @@
 package com.zenmo.companysurvey
 
+import com.zenmo.blob.BlobPurpose
 import com.zenmo.companysurvey.dto.GridConnection
 import com.zenmo.companysurvey.dto.Survey
 import com.zenmo.companysurvey.table.AddressTable
 import com.zenmo.companysurvey.table.CompanySurveyGridConnectionTable
 import com.zenmo.companysurvey.table.CompanySurveyTable
+import com.zenmo.companysurvey.table.FileTable
 import org.jetbrains.exposed.sql.Database
 import org.jetbrains.exposed.sql.batchInsert
 import org.jetbrains.exposed.sql.insert
@@ -49,6 +51,7 @@ class SurveyRepository(
             }) { pair: Pair<UUID, GridConnection> ->
                 val (addressId, gridConnection) = pair
 
+                this[CompanySurveyGridConnectionTable.id] = gridConnection.id
                 this[CompanySurveyGridConnectionTable.addressId] = addressId
 
                 // open questions
@@ -127,6 +130,44 @@ class SurveyRepository(
                 this[CompanySurveyGridConnectionTable.plannedBatteryPowerKw] = gridConnection.storage.plannedBatteryPowerKw
                 this[CompanySurveyGridConnectionTable.plannedBatterySchedule] = gridConnection.storage.plannedBatterySchedule
                 this[CompanySurveyGridConnectionTable.hasThermalStorage] = gridConnection.storage.hasThermalStorage
+            }
+
+            for (address in survey.addresses) {
+                for (gridConnection in address.gridConnections) {
+                    for (electricityFile in gridConnection.electricity.quarterHourlyValuesFiles) {
+                        FileTable.insert {
+                            it[gridConnectionId] = gridConnection.id
+                            it[purpose] = BlobPurpose.ELECTRICITY_VALUES
+                            it[blobName] = electricityFile.blobName
+                            it[originalName] = electricityFile.originalName
+                            it[size] = electricityFile.size
+                            it[contentType] = electricityFile.contentType
+                        }
+                    }
+
+                    val authorizationFile = gridConnection.electricity.authorizationFile
+                    if (authorizationFile != null) {
+                        FileTable.insert {
+                            it[gridConnectionId] = gridConnection.id
+                            it[purpose] = BlobPurpose.ELECTRICITY_AUTHORIZATION
+                            it[blobName] = authorizationFile.blobName
+                            it[originalName] = authorizationFile.originalName
+                            it[size] = authorizationFile.size
+                            it[contentType] = authorizationFile.contentType
+                        }
+                    }
+
+                    for (gasFile in gridConnection.naturalGas.hourlyValuesFiles) {
+                        FileTable.insert {
+                            it[gridConnectionId] = gridConnection.id
+                            it[purpose] = BlobPurpose.NATURAL_GAS_VALUES
+                            it[blobName] = gasFile.blobName
+                            it[originalName] = gasFile.originalName
+                            it[size] = gasFile.size
+                            it[contentType] = gasFile.contentType
+                        }
+                    }
+                }
             }
         }
 

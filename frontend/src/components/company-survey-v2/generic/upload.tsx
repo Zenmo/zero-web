@@ -43,8 +43,8 @@ export const Upload: FunctionComponent<{
     const getUploadUrl = async (file: RcFile) => {
         const queryParmas = new URLSearchParams({
             fileName: file.name,
-            project: 'Hessenpoort',
-            company: 'Spectral',
+            project: project,
+            company: company,
             purpose: Purpose.ELECTRICITY_VALUES,
         })
         const response = await fetch(process.env.ZTOR_URL + '/upload-url?' + queryParmas.toString())

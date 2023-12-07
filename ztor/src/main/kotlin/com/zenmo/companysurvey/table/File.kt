@@ -15,7 +15,7 @@ object FileTable: Table("file") {
 
     val blobName = varchar("remote_name", 1000)
     val originalName = varchar("original_name", 100)
-    val contentType = varchar("content_type", 100)
+    val contentType = varchar("content_type", 100).nullable()
     val size = integer("size")
 
     override val primaryKey = PrimaryKey(blobName)

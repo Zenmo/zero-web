@@ -4,6 +4,8 @@ import {Controller, UseFormReturn} from 'react-hook-form'
 enum ConnectionCapacity {
     // The total number of kleinverbruik postal code regions is 359.299.
     // This statistic includes residential connections.
+    _1x25 = "1x25A", // majority of connections in 52.042 postalcodes
+    _1x35 = "1x35A", // majority of connections in 170.736 postalcodes
     _1x40A = "1x40A", // majority of connections in 6.491 postalcodes
     _1x50A = "1x50A", // majority of connections in 2.226 postalcodes
     _3x25A = "3x25A", // majority of connections in 125.261 postalcodes
