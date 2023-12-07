@@ -4,9 +4,9 @@ import {Transport} from "./transport";
 import {useFieldArray, UseFormReturn} from "react-hook-form";
 import {GridConnection} from "./grid-connection";
 import {PlusOutlined} from "@ant-design/icons";
-import React from "react";
+import React, {FunctionComponent} from 'react'
 
-export const SurveyTabs = ({form}: {form: UseFormReturn}) => {
+export const SurveyTabs: FunctionComponent<{form: UseFormReturn, project: string}> = ({form, project}) => {
     const {register, control} = form
 
     const { fields, append, prepend, remove, swap, move, insert } = useFieldArray({
@@ -33,7 +33,7 @@ export const SurveyTabs = ({form}: {form: UseFormReturn}) => {
         return {
             key: index.toString(),
             label: `${index + 1}e netaansluiting`,
-            children: <SurveyTab form={form} prefix={`tabs.${index}`} isFirst={index === 0} />,
+            children: <SurveyTab form={form} prefix={`tabs.${index}`} isFirst={index === 0} project={project}/>,
             closable: index > 0,
         }
     })

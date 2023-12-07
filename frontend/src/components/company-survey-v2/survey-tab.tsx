@@ -10,9 +10,10 @@ type SurveyTabProps = {
     form: UseFormReturn
     isFirst: boolean
     prefix: string
+    project: string
 }
 
-export const SurveyTab = ({form, prefix, isFirst}: SurveyTabProps) => {
+export const SurveyTab = ({form, prefix, isFirst, project}: SurveyTabProps) => {
     const isSameAddressName = `${prefix}.address.isSameAddress`
     const isSameAddress = form.watch(isSameAddressName)
 
@@ -26,7 +27,7 @@ export const SurveyTab = ({form, prefix, isFirst}: SurveyTabProps) => {
                     WrappedInput={BooleanInput} />
             )}
             {!isSameAddress && <Address form={form} prefix={`${prefix}.adress`} />}
-            <GridConnection form={form} prefix={`${prefix}.gridConnection`} />
+            <GridConnection form={form} prefix={`${prefix}.gridConnection`} project={project} />
         </>
     )
 }

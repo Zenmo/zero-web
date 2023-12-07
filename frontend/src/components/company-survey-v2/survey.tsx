@@ -141,7 +141,7 @@ export const Survey: FunctionComponent<{project: Project}> = ({project}) => {
                 )}
                 {hasMultipleConnections === true && (
                     <>
-                        <SurveyTabs form={form} />
+                        <SurveyTabs form={form} project={project.name} />
                     </>
                 )}
 
