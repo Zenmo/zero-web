@@ -11,8 +11,8 @@ import java.time.format.DateTimeFormatter
 import kotlin.streams.asSequence
 
 class BlobStorage(
-    private val azureAccountName: String = System.getenv("AZURE_STORAGE_ACCOUNT_NAME"),
-    private val azureAccountKey: String = System.getenv("AZURE_STORAGE_ACCOUNT_KEY"),
+    azureAccountName: String = System.getenv("AZURE_STORAGE_ACCOUNT_NAME"),
+    azureAccountKey: String = System.getenv("AZURE_STORAGE_ACCOUNT_KEY"),
     private val containerName: String = System.getenv("AZURE_STORAGE_CONTAINER"),
 ) {
     val blobServiceClient = BlobServiceClientBuilder()

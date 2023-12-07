@@ -55,7 +55,7 @@ object CompanySurveyGridConnectionTable: Table("company_survey_grid_connection")
         fromDb = { PVOrientation.valueOf(it as String) },
         toDb = { PGEnum(PVOrientation::class.simpleName!!, it) }).nullable()
     val pvPlanned = bool("pv_planned").nullable()
-    val pvPlannedCapacityKwp = uinteger("pv_planned_capacity_kwp").nullable()
+    val pvPlannedKwp = uinteger("pv_planned_kwp").nullable()
     val pvPlannedOrientation = customEnumeration(
         "pv_planned_orientation",
         PVOrientation::class.simpleName,
@@ -96,6 +96,8 @@ object CompanySurveyGridConnectionTable: Table("company_survey_grid_connection")
     val plannedBatteryCapacityKwh = float("planned_battery_capacity_kwh").nullable()
     val plannedBatteryPowerKw = float("planned_battery_power_kw").nullable()
     val plannedBatterySchedule = varchar("planned_battery_schedule", 1000)
+
+    val hasThermalStorage = bool("has_thermal_storage").nullable()
 
     /**
      * [com.zenmo.companysurvey.dto.Transport]

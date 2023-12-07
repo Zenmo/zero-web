@@ -10,7 +10,7 @@ data class Supply (
     val pvOrientation: PVOrientation? = null,
 
     val pvPlanned: Boolean? = null,
-    val pvPlannedCapacityKwp: Int? = null,
+    val pvPlannedKwp: Int? = null,
     val pvPlannedOrientation: PVOrientation? = null,
     val pvPlannedYear: Int? = null,
 

@@ -1,6 +1,5 @@
 package com.zenmo.companysurvey
 
-import com.zenmo.companysurvey.dto.Address
 import com.zenmo.companysurvey.dto.GridConnection
 import com.zenmo.companysurvey.dto.Survey
 import com.zenmo.companysurvey.table.AddressTable
@@ -97,7 +96,7 @@ class SurveyRepository(
                 this[CompanySurveyGridConnectionTable.pvInstalledKwp] = gridConnection.supply.pvInstalledKwp?.toUInt()
                 this[CompanySurveyGridConnectionTable.pvOrientation] = gridConnection.supply.pvOrientation
                 this[CompanySurveyGridConnectionTable.pvPlanned] = gridConnection.supply.pvPlanned
-                this[CompanySurveyGridConnectionTable.pvPlannedCapacityKwp] = gridConnection.supply.pvPlannedCapacityKwp?.toUInt()
+                this[CompanySurveyGridConnectionTable.pvPlannedKwp] = gridConnection.supply.pvPlannedKwp?.toUInt()
                 this[CompanySurveyGridConnectionTable.pvPlannedOrientation] = gridConnection.supply.pvPlannedOrientation
                 this[CompanySurveyGridConnectionTable.pvPlannedYear] = gridConnection.supply.pvPlannedYear?.toUInt()
                 this[CompanySurveyGridConnectionTable.windInstalledKw] = gridConnection.supply.windInstalledKw
@@ -127,6 +126,7 @@ class SurveyRepository(
                 this[CompanySurveyGridConnectionTable.plannedBatteryCapacityKwh] = gridConnection.storage.plannedBatteryCapacityKwh
                 this[CompanySurveyGridConnectionTable.plannedBatteryPowerKw] = gridConnection.storage.plannedBatteryPowerKw
                 this[CompanySurveyGridConnectionTable.plannedBatterySchedule] = gridConnection.storage.plannedBatterySchedule
+                this[CompanySurveyGridConnectionTable.hasThermalStorage] = gridConnection.storage.hasThermalStorage
             }
         }
 

@@ -13,4 +13,6 @@ class Storage(
     val plannedBatteryCapacityKwh: Float? = null,
     val plannedBatteryPowerKw: Float? = null,
     val plannedBatterySchedule: String = "",
+
+    val hasThermalStorage: Boolean? = null,
 )

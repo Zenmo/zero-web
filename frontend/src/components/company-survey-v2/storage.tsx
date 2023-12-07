@@ -27,7 +27,7 @@ export const Storage = ({form, prefix}: { form: UseFormReturn, prefix: string })
                         suffix="kWh" />
                     <NumberRow
                         label="Wat is het vermogen van deze batterij?"
-                        name={`${prefix}.batteryPowerKw`}
+                        name={`${prefix}.plannedBatteryPowerKw`}
                         form={form}
                         suffix="kW" />
                     <TextAreaRow
