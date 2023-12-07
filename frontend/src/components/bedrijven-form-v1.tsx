@@ -176,7 +176,7 @@ const Netaansluitingen: FunctionComponent = () => {
                 Als u geen volledige informatie heeft, vul dan in wat u wel weet.
             </p>
             <Form.Item
-                label="Hoeveel aansluitingen heeft u op het electriciteitsnet"
+                label="Hoeveel aansluitingen heeft u op het elektriciteitsnet"
                 name="numberOfElectricityConnections"
                 required
                 rules={[{required: true}]}>

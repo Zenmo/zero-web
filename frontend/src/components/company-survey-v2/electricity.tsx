@@ -25,6 +25,7 @@ export const Electricity = ({form, prefix, hasSupplyName}: {
 
     return (
         <>
+            <h2>2. Elektriciteit</h2>
             {/*<FormRow label="EAN" name={`${prefix}.ean`} form={form} />*/}
             <LabelRow label="Type aansluiting">
                 <Radio.Group onChange={e => setConnectionType(e.target.value)} value={connectionType}>

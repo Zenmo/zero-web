@@ -19,10 +19,10 @@ export const ElectricityConsumptionRadios = ({onChange, consumptionSpec}: {
 }) => {
     return (
         <Radio.Group onChange={e => onChange(e.target.value)} value={consumptionSpec}>
-            <Radio value={ConsumptionSpec.SPECTRAL_AUTHORIZATION} css={{display: 'block'}}>
+            <Radio value={ConsumptionSpec.SPECTRAL_AUTHORIZATION}>
                 Machting voor het ophalen van de meetdata bij Spectral
             </Radio>
-            <Radio value={ConsumptionSpec.UPLOAD_QUARTER_HOURLY_VALUES} css={{display: 'block'}}>
+            <Radio value={ConsumptionSpec.UPLOAD_QUARTER_HOURLY_VALUES}>
                 Kwartierwaarden uploaden
             </Radio>
         </Radio.Group>

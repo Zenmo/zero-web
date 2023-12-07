@@ -1,3 +1,4 @@
+import {css} from '@emotion/react'
 import {Tabs, TabsProps} from "antd";
 import {SurveyTab} from './survey-tab'
 import {Transport} from "./transport";
@@ -33,7 +34,7 @@ export const SurveyTabs: FunctionComponent<{form: UseFormReturn, project: string
         return {
             key: index.toString(),
             label: `${index + 1}e netaansluiting`,
-            children: <SurveyTab form={form} prefix={`tabs.${index}`} isFirst={index === 0} project={project}/>,
+            children: <SurveyTab form={form} prefix={`tabs.${index}`} isFirst={index === 0} project={project} />,
             closable: index > 0,
         }
     })

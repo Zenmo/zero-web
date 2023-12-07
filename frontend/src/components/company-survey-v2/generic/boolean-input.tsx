@@ -8,8 +8,8 @@ export const BooleanInput = ({form, name}: { form: UseFormReturn, name: string }
             name={name}
             render={({field: {onChange, value, ref}}) => (
                 <Radio.Group onChange={e => onChange(e.target.value)} value={value}>
-                    <Radio value={true} css={{display: 'block'}}>Ja</Radio>
-                    <Radio value={false} css={{display: 'block'}}>Nee</Radio>
+                    <Radio value={true}>Ja</Radio>
+                    <Radio value={false}>Nee</Radio>
                 </Radio.Group>
             )}
         />

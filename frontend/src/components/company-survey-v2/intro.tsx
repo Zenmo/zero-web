@@ -4,7 +4,7 @@ import {Project} from './project'
 export const Intro: FunctionComponent<{project: Project}> = ({project}) => {
     return (
         <>
-            <h1>Data formulier energie en mobiliteit {project.name}</h1>
+            <h1>Dataformulier energie en mobiliteit {project.name}</h1>
             <p>
                 Met dit formulier halen we de energie- en mobiliteitsdynamieken op van {project.name}, zowel in de
                 huidige als in toekomstige situatie. Samen met gegevens van de netbeheerder worden deze dynamieken

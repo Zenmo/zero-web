@@ -110,12 +110,14 @@ export const Survey: FunctionComponent<{project: Project}> = ({project}) => {
                 backgroundColor: 'white',
                 padding: '2rem',
                 marginTop: '2rem',
+                boxShadow: '0 0 .15rem .15em white',
                 '& input:invalid': {
                     backgroundColor: '#fcc',
                     borderColor: 'red',
                 },
-                '& h2, & h3': {
+                '& h1, & h2, & h3': {
                     padding: '.2rem 1rem',
+                    borderBottom: '1px solid #ccc',
                 },
                 'input[type="text"], input[type="email"], input[type="number"], textarea': {
                     padding: '.3rem',

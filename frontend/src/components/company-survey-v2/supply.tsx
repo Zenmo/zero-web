@@ -14,7 +14,7 @@ export const Supply = ({form, prefix, hasSupplyName}: {form: UseFormReturn, pref
 
     return (
         <>
-            <h3>Electriciteitsopwek op deze netaansluiting</h3>
+            <h3>Elektriciteitsopwek op deze netaansluiting</h3>
             <FormRow
                 label="Is er ook elektriciteitsopwek op deze netaansluiting?"
                 name={hasSupplyName}
