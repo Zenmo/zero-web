@@ -70,6 +70,7 @@ class SurveyRepository(
                 this[GridConnectionTable.powerPerTruckChargePointKw] = gridConnection.transport.trucks.powerPerChargePointKw
                 this[GridConnectionTable.annualTravelDistancePerTruckKm] = gridConnection.transport.trucks.annualTravelDistancePerTruckKm?.toUInt()
                 this[GridConnectionTable.numPlannedElectricTrucks] = gridConnection.transport.trucks.numPlannedElectricTrucks?.toUInt()
+                this[GridConnectionTable.numPlannedHydgrogenTrucks] = gridConnection.transport.trucks.numPlannedHydrogenTrucks?.toUInt()
 
                 this[GridConnectionTable.numVans] = gridConnection.transport.vans.numVans?.toUInt()
                 this[GridConnectionTable.numElectricVans] = gridConnection.transport.vans.numElectricVans?.toUInt()
@@ -77,6 +78,7 @@ class SurveyRepository(
                 this[GridConnectionTable.powerPerVanChargePointKw] = gridConnection.transport.vans.powerPerChargePointKw
                 this[GridConnectionTable.annualTravelDistancePerVanKm] = gridConnection.transport.vans.annualTravelDistancePerVanKm?.toUInt()
                 this[GridConnectionTable.numPlannedElectricVans] = gridConnection.transport.vans.numPlannedElectricVans?.toUInt()
+                this[GridConnectionTable.numPlannedHydgrogenVans] = gridConnection.transport.vans.numPlannedHydrogenVans?.toUInt()
 
                 this[GridConnectionTable.numCars] = gridConnection.transport.cars.numCars?.toUInt()
                 this[GridConnectionTable.numElectricCars] = gridConnection.transport.cars.numElectricCars?.toUInt()
@@ -84,6 +86,7 @@ class SurveyRepository(
                 this[GridConnectionTable.powerPerCarChargePointKw] = gridConnection.transport.cars.powerPerChargePointKw
                 this[GridConnectionTable.annualTravelDistancePerCarKm] = gridConnection.transport.cars.annualTravelDistancePerCarKm?.toUInt()
                 this[GridConnectionTable.numPlannedElectricCars] = gridConnection.transport.cars.numPlannedElectricCars?.toUInt()
+                this[GridConnectionTable.numPlannedHydgrogenCars] = gridConnection.transport.cars.numPlannedHydrogenCars?.toUInt()
 
                 // electricity
                 this[GridConnectionTable.electricityEan] = gridConnection.electricity.ean

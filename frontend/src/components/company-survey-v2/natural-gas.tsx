@@ -4,8 +4,9 @@ import {FormRow} from './generic/form-row'
 import {LabelRow} from './generic/label-row'
 import {NumberRow} from './generic/number-row'
 import {Purpose, Upload} from './generic/upload'
+import {ProjectName} from './project'
 
-export const NaturalGas =  ({form, prefix, project}: { form: UseFormReturn , prefix: string, project: string }) => {
+export const NaturalGas =  ({form, prefix, project}: { form: UseFormReturn , prefix: string, project: ProjectName }) => {
     const {watch, register} = form
 
     const hasConnection = watch(`${prefix}.hasConnection`)

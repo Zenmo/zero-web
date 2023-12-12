@@ -114,6 +114,7 @@ object GridConnectionTable: Table("grid_connection") {
     val powerPerTruckChargePointKw = float("power_per_truck_charge_point_kw").nullable()
     val annualTravelDistancePerTruckKm = uinteger("annual_travel_distance_per_truck_km").nullable()
     val numPlannedElectricTrucks = uinteger("num_planned_electric_trucks").nullable()
+    val numPlannedHydgrogenTrucks = uinteger("num_planned_hydrogen_trucks").nullable()
 
     /**
      * [com.zenmo.companysurvey.dto.Vans]
@@ -124,6 +125,7 @@ object GridConnectionTable: Table("grid_connection") {
     val powerPerVanChargePointKw = float("power_per_van_charge_point_kw").nullable()
     val annualTravelDistancePerVanKm = uinteger("annual_travel_distance_per_van_km").nullable()
     val numPlannedElectricVans = uinteger("num_planned_electric_vans").nullable()
+    val numPlannedHydgrogenVans = uinteger("num_planned_hydrogen_vans").nullable()
 
     /**
      * [com.zenmo.companysurvey.dto.Cars]
@@ -134,4 +136,5 @@ object GridConnectionTable: Table("grid_connection") {
     val powerPerCarChargePointKw = float("power_per_car_charge_point_kw").nullable()
     val annualTravelDistancePerCarKm = uinteger("annual_travel_distance_per_car_km").nullable()
     val numPlannedElectricCars = uinteger("num_planned_electric_cars").nullable()
+    val numPlannedHydgrogenCars = uinteger("num_planned_hydrogen_cars").nullable()
 }

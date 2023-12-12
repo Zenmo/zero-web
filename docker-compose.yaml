@@ -101,7 +101,7 @@ services:
 #            - gradle-cmd-cache:/home/gradle/.gradle
 #        command: gradle --project-cache-dir=/tmp/gradle -Dep-online-csv=poepie run --args=echo-schema-sql
 #        environment:
-#            POSTGRES_URL: jdbc:postgresql://postgres:5432/postgres
+#            POSTGRES_URL: jdbc:postgresql://postgres:5432/gen
 #            POSTGRES_USER: postgres
 #            POSTGRES_PASSWORD: welkom123
 

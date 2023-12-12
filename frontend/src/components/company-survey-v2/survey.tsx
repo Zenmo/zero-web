@@ -12,12 +12,12 @@ import {GridConnection} from './grid-connection'
 import {HasMultipleConnections} from './has-multiple-connections'
 import {Intro} from './intro'
 import {LabelRow} from './generic/label-row'
-import {Project} from './project'
+import {ProjectConfiguration} from './project'
 import {Transport} from './transport'
 import {SurveyTabs} from "./survey-tabs";
 import {cloneDeep} from "lodash";
 
-export const Survey: FunctionComponent<{project: Project}> = ({project}) => {
+export const Survey: FunctionComponent<{project: ProjectConfiguration}> = ({project}) => {
     let navigate = useNavigate()
     // @ts-ignore
     const form: UseFormReturn = useForm({
