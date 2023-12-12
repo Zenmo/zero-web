@@ -85,7 +85,10 @@ export const Survey: FunctionComponent<{project: Project}> = ({project}) => {
                     message += " Details: " + body.error.message
                     setSubmissionError(message)
                 }
+                return
             }
+
+            navigate('/bedankt')
         } catch (e) {
             let message = "Er is iets misgegaan."
             // @ts-ignore
@@ -95,8 +98,6 @@ export const Survey: FunctionComponent<{project: Project}> = ({project}) => {
             setSubmissionError(message)
             return
         }
-
-        navigate('/bedankt')
     }
 
     const [hasMultipleConnections, setMultipleConnections] = useState()
