@@ -167,9 +167,51 @@ jobs:
                     cache-from: type=gha
                     cache-to: type=gha,mode=max
 
+    migrate-test:
+        if: github.event_name == 'pull_request'
+        runs-on: ubuntu-latest
+        container:
+            image: redgate/flyway:10.2.0
+            env:
+                FLYWAY_URL: jdbc:postgresql://holon-webapp-database.postgres.database.azure.com:5432/zero_test
+                FLYWAY_USER: zero_test
+                FLYWAY_PASSWORD: ${{ secrets.ZERO_TEST_POSTGRES_PASSWORD }}
+                FLYWAY_LOCATIONS: filesystem:./migrations
+                FLYWAY_BASELINE_ON_MIGRATE: true
+        steps:
+            -   name: Checkout
+                uses: actions/checkout@v4
+                with:
+                    sparse-checkout: migrations
+            -   name: migrate
+                run: flyway migrate
+
+    migrate-main:
+        if: github.event_name == 'push' && github.ref_name == 'main'
+        needs:
+            - build-ztor
+        runs-on: ubuntu-latest
+        container:
+            image: redgate/flyway:10.2.0
+            env:
+                FLYWAY_URL: jdbc:postgresql://holon-webapp-database.postgres.database.azure.com:5432/zero_prod
+                FLYWAY_USER: zero_prod
+                FLYWAY_PASSWORD: ${{ secrets.ZERO_PROD_POSTGRES_PASSWORD }}
+                FLYWAY_LOCATIONS: filesystem:./migrations
+                FLYWAY_BASELINE_ON_MIGRATE: true
+        steps:
+            -   name: Checkout
+                uses: actions/checkout@v4
+                with:
+                    sparse-checkout: migrations
+            -   name: migrate
+                run: flyway migrate
+
+
     deploy-ztor-test:
         if: github.event_name == 'pull_request'
         needs:
+            - migrate-test
             - build-ztor
             - image-tag
         runs-on: ubuntu-latest
@@ -195,6 +237,9 @@ jobs:
                         POSTGRES_URL=jdbc:postgresql://holon-webapp-database.postgres.database.azure.com:5432/zero_test
                         POSTGRES_USER=zero_test
                         POSTGRES_PASSWORD=${{ secrets.ZERO_TEST_POSTGRES_PASSWORD }}
+                        AZURE_STORAGE_ACCOUNT_NAME=zerostore
+                        AZURE_STORAGE_ACCOUNT_KEY=${{ secrets.AZURE_STORAGE_ACCOUNT_KEY }}
+                        AZURE_STORAGE_CONTAINER=test
                         --ingress external
                         --tags branch=${{ github.head_ref }}
                         --image ghcr.io/erikvv/ztor:${{ needs.image-tag.outputs.IMAGE_TAG }}
@@ -208,6 +253,7 @@ jobs:
     deploy-ztor-main:
         if: github.event_name == 'push' && github.ref_name == 'main'
         needs:
+            - migrate-main
             - build-ztor
             - image-tag
         runs-on: ubuntu-latest
@@ -233,6 +279,9 @@ jobs:
                         POSTGRES_URL=jdbc:postgresql://holon-webapp-database.postgres.database.azure.com:5432/zero_prod
                         POSTGRES_USER=zero_prod
                         POSTGRES_PASSWORD=${{ secrets.ZERO_PROD_POSTGRES_PASSWORD }}
+                        AZURE_STORAGE_ACCOUNT_NAME=zerostore
+                        AZURE_STORAGE_ACCOUNT_KEY=${{ secrets.AZURE_STORAGE_ACCOUNT_KEY }}
+                        AZURE_STORAGE_CONTAINER=prod
                         --ingress external
                         --tags branch=${{ github.ref_name }}
                         --image ghcr.io/erikvv/ztor:${{ needs.image-tag.outputs.IMAGE_TAG }}

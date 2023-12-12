@@ -13,5 +13,5 @@ class PGEnum<T : Enum<T>>(enumTypeName: String, enumValue: T?) : PGobject() {
 }
 
 fun createEnumTypeSql(enumClass: Class<*>): String {
-    return "CREATE TYPE ${enumClass.simpleName} AS ENUM (${enumClass.enumConstants.joinToString { "'${it}'" }});"
+    return "CREATE TYPE ${enumClass.simpleName} AS ENUM (${enumClass.enumConstants.joinToString { "'${it}'" }})"
 }

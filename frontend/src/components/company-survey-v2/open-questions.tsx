@@ -18,7 +18,7 @@ export const OpenQuestions = ({form, prefix}: { form: UseFormReturn , prefix: st
                 form={form}
                 name={`${prefix}.mainConsumptionProcess`} />
             <TextAreaRow
-                label="Wat voor flexibiliteit is er in het verschuiven in de tijd van jullie primaire energiebehoefte? M.a.w. kan het snachts, kan het altijd een uur later of eerder, etc."
+                label="Wat voor flexibiliteit is er in het verschuiven in de tijd van jullie primaire energiebehoefte? M.a.w. kan het 's nachts, kan het altijd een uur later of eerder, etc."
                 form={form}
                 name={`${prefix}.consumptionFlexibility`} />
             <TextAreaRow

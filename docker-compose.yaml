@@ -2,6 +2,16 @@
 # TODO: it would be more user-friendly and more prod-like if we put a Traefik proxy in the network.
 
 services:
+    migrate:
+        image: redgate/flyway:10.2.0
+        volumes:
+            - ./migrations:/flyway/sql
+        command: migrate
+        environment:
+            FLYWAY_URL: jdbc:postgresql://postgres:5432/postgres
+            FLYWAY_USER: postgres
+            FLYWAY_PASSWORD: welkom123
+
     kleinverbruik:
         build:
             context: ./kleinverbruik
@@ -89,7 +99,7 @@ services:
 #        volumes:
 #            - ./ztor:/home/gradle/ztor
 #            - gradle-cmd-cache:/home/gradle/.gradle
-#        command: gradle --project-cache-dir=/tmp/gradle -Dep-online-csv=poepie run
+#        command: gradle --project-cache-dir=/tmp/gradle -Dep-online-csv=poepie run --args=echo-schema-sql
 #        environment:
 #            POSTGRES_URL: jdbc:postgresql://postgres:5432/postgres
 #            POSTGRES_USER: postgres
