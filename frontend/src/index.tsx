@@ -7,6 +7,7 @@ import {
 import App from './App'
 import './index.css'
 import {BedrijvenFormV1} from './components/bedrijven-form-v1'
+import {DE_WIEKEN, HESSENPOORT} from './components/company-survey-v2/project'
 import {Survey} from './components/company-survey-v2/survey'
 import {ThankYou} from './components/thank-you'
 import reportWebVitals from './reportWebVitals'
@@ -22,11 +23,11 @@ const router = createBrowserRouter([
     },
     {
         path: "/bedrijven-hessenpoort",
-        element: <Survey project={{name: 'Hessenpoort', email: 'info@ondernemersvereniginghessenpoort.nl'}} />,
+        element: <Survey project={HESSENPOORT} />,
     },
     {
         path: "/bedrijven-de-wieken",
-        element: <Survey project={{name: 'De Wieken', email: 'info@zenmo.com'}} />,
+        element: <Survey project={DE_WIEKEN} />,
     },
     {
         path: "/bedankt",

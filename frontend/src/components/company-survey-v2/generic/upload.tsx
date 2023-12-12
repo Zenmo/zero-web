@@ -3,6 +3,7 @@ import {Button, Upload as AntdUpload, UploadProps} from 'antd'
 import {RcFile} from 'antd/es/upload'
 import {FunctionComponent} from 'react'
 import {UseFormReturn} from 'react-hook-form'
+import {ProjectName} from '../project'
 
 type UploadAuthorization = {
     uploadUrl: string
@@ -31,13 +32,13 @@ export const Upload: FunctionComponent<{
     multiple: true
     setFormValue: (files: UploadedFile[]) => void
     company: string
-    project: string
+    project: ProjectName
     purpose: Purpose
 } | {
     multiple: false
     setFormValue: (file: UploadedFile) => void
     company: string
-    project: string
+    project: ProjectName
     purpose: Purpose
 }> = ({multiple, setFormValue, project, company}) => {
     const getUploadUrl = async (file: RcFile) => {

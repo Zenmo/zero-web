@@ -3,10 +3,15 @@ import {BooleanInput} from './generic/boolean-input'
 import {Cars} from './cars'
 import {FormRow} from './generic/form-row'
 import {NumberInput} from './generic/number-input'
+import {ProjectName} from './project'
 import {Trucks} from './trucks'
 import {Vans} from './vans'
 
-export const Transport = ({form, prefix}: { form: UseFormReturn, prefix: string }) => {
+export const Transport = ({form, prefix, project}: {
+    form: UseFormReturn,
+    prefix: string,
+    project: ProjectName
+}) => {
     const {register, watch} = form
 
     const hasVehicles = watch(`${prefix}.hasVehicles`)
@@ -26,9 +31,9 @@ export const Transport = ({form, prefix}: { form: UseFormReturn, prefix: string 
                 form={form} />
             {hasVehicles && (
                 <>
-                    <Trucks form={form} prefix={`${prefix}.trucks`} />
-                    <Vans form={form} prefix={`${prefix}.vans`} />
-                    <Cars form={form} prefix={`${prefix}.cars`} />
+                    <Trucks form={form} prefix={`${prefix}.trucks`} project={project} />
+                    <Vans form={form} prefix={`${prefix}.vans`} project={project} />
+                    <Cars form={form} prefix={`${prefix}.cars`} project={project} />
                 </>
             )}
         </>

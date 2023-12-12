@@ -26,6 +26,8 @@ data class Trucks (
 
     // Disagreement on whether we should ask specifics about planned charge points
     val numPlannedElectricTrucks: Int? = null,
+    // Only for bedrijventerrein De Wieken
+    val numPlannedHydrogenTrucks: Int? = null,
 )
 
 @Serializable
@@ -37,6 +39,8 @@ data class Vans (
     val annualTravelDistancePerVanKm: Int? = null,
 
     val numPlannedElectricVans: Int? = null,
+    // Only for bedrijventerrein De Wieken
+    val numPlannedHydrogenVans: Int? = null,
 )
 
 @Serializable
@@ -48,4 +52,6 @@ data class Cars (
     val annualTravelDistancePerCarKm: Int? = null,
 
     val numPlannedElectricCars: Int? = null,
+    // Only for bedrijventerrein De Wieken
+    val numPlannedHydrogenCars: Int? = null,
 )

@@ -1,7 +1,7 @@
 import {FunctionComponent} from 'react'
-import {Project} from './project'
+import {ProjectConfiguration} from './project'
 
-export const Intro: FunctionComponent<{project: Project}> = ({project}) => {
+export const Intro: FunctionComponent<{project: ProjectConfiguration}> = ({project}) => {
     return (
         <>
             <h1>Dataformulier energie en mobiliteit {project.name}</h1>

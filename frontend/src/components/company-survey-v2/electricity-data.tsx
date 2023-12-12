@@ -5,13 +5,14 @@ import {BooleanInput} from "./generic/boolean-input";
 import {useState} from "react";
 import {UseFormReturn} from "react-hook-form";
 import {Purpose, Upload} from './generic/upload'
+import {ProjectName} from './project'
 
 
 export const ElectricityData = ({form, prefix, hasSupplyName, project}: {
     form: UseFormReturn,
     prefix: string,
     hasSupplyName: string
-    project: string
+    project: ProjectName
 }) => {
     const {register} = form
 
