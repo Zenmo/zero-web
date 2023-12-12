@@ -1,12 +1,11 @@
 package com.zenmo.companysurvey.table
 
 import com.zenmo.blob.BlobPurpose
-import com.zenmo.companysurvey.dto.KleinverbruikElectricityConsumptionProfile
 import com.zenmo.dbutil.PGEnum
 import org.jetbrains.exposed.sql.Table
 
 object FileTable: Table("file") {
-    val gridConnectionId = uuid("grid_connection_id").references(CompanySurveyGridConnectionTable.id)
+    val gridConnectionId = uuid("grid_connection_id").references(GridConnectionTable.id)
     val purpose = customEnumeration(
         "purpose",
         BlobPurpose::class.simpleName,

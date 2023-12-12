@@ -1,6 +1,5 @@
 package com.zenmo.companysurvey.table
 
-import com.zenmo.companysurvey.table.CompanySurveyGridConnectionTable.references
 import org.jetbrains.exposed.sql.Table
 
 /**

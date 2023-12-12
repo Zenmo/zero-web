@@ -8,7 +8,7 @@ import com.zenmo.dbutil.PGEnum
 import com.zenmo.dbutil.enumArray
 import org.jetbrains.exposed.sql.Table
 
-object CompanySurveyGridConnectionTable: Table("company_survey_grid_connection") {
+object GridConnectionTable: Table("grid_connection") {
     val id = uuid("id").autoGenerate()
     override val primaryKey = PrimaryKey(id)
     val addressId = uuid("address_id").references(AddressTable.id)
