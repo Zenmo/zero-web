@@ -22,7 +22,7 @@ export const ElectricityData = ({form, prefix, hasSupplyName, project}: {
         <>
             <h3>Data</h3>
             <LabelRow label="Hoe wilt u het elektriciteitsprofiel van deze netaansluiting doorgeven?">
-                <ElectricityConsumptionRadios onChange={setConsumptionSpec} consumptionSpec={consumptionSpec}/>
+                <ElectricityConsumptionRadios onChange={setConsumptionSpec} consumptionSpec={consumptionSpec} project={project}/>
             </LabelRow>
             {consumptionSpec === ConsumptionSpec.UPLOAD_QUARTER_HOURLY_VALUES && (
                 <LabelRow label="Kwartierwaarden">
@@ -36,6 +36,16 @@ export const ElectricityData = ({form, prefix, hasSupplyName, project}: {
             )}
             {consumptionSpec === ConsumptionSpec.SPECTRAL_AUTHORIZATION && (
                 <LabelRow label={<div>Download <a href="/spectral-machtiging.pdf" target="_blank">dit formulier</a> en scan het in</div>}>
+                    <Upload
+                        multiple={false}
+                        setFormValue={file => form.setValue(`${prefix}.authorizationFile`, file)}
+                        company={form.watch('companyName')}
+                        project={project}
+                        purpose={Purpose.ELECTRICITY_AUTHORIZATION} />
+                </LabelRow>
+            )}
+            {consumptionSpec === ConsumptionSpec.PLACEHOLDER_AUTHORIZATION && (
+                <LabelRow label={<div>Download <a href="/placeholder-machtiging.pdf" target="_blank">dit formulier</a> en scan het in</div>}>
                     <Upload
                         multiple={false}
                         setFormValue={file => form.setValue(`${prefix}.authorizationFile`, file)}
