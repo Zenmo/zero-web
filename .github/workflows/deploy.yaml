@@ -76,6 +76,11 @@ jobs:
             #            --name zero
             #            --location westeurope
             #            --resource-group Zenmo_Zero
+            #          inlineScript: >
+            #            az containerapp env create
+            #            --name ZeroDE
+            #            --location germanywestcentral
+            #            --resource-group Zenmo_Zero
             -   name: Deploy
                 uses: azure/CLI@v1
                 with:
@@ -86,7 +91,7 @@ jobs:
                         az containerapp create
                         --resource-group Zenmo_Zero
                         --name kleinverbruik-${{ needs.image-tag.outputs.IMAGE_TAG }}
-                        --environment zero 
+                        --environment ZeroDE 
                         --env-vars PORT=80 
                         --target-port 80
                         --ingress external
@@ -111,15 +116,6 @@ jobs:
                 with:
                     ## https://github.com/Azure/login#configure-a-service-principal-with-a-secret
                     creds: ${{ secrets.ZERO_AZURE_CREDENTIALS }}
-            #      - name: Create app environment
-            #        uses: azure/CLI@v1
-            #        with:
-            #          azcliversion: 2.51.0
-            #          inlineScript: >
-            #            az containerapp env create
-            #            --name zero
-            #            --location westeurope
-            #            --resource-group Zenmo_Zero
             -   name: Deploy
                 uses: azure/CLI@v1
                 with:
@@ -130,7 +126,7 @@ jobs:
                         az containerapp create
                         --resource-group Zenmo_Zero
                         --name kleinverbruik
-                        --environment zero 
+                        --environment ZeroDE 
                         --env-vars PORT=80 
                         --target-port 80
                         --ingress external
@@ -231,7 +227,7 @@ jobs:
                         az containerapp create
                         --resource-group Zenmo_Zero
                         --name ztor-${{ needs.image-tag.outputs.IMAGE_TAG }}
-                        --environment zero 
+                        --environment ZeroDE 
                         --target-port 8082
                         --env-vars
                         POSTGRES_URL=jdbc:postgresql://holon-webapp-database.postgres.database.azure.com:5432/zero_test
@@ -273,7 +269,7 @@ jobs:
                         az containerapp create
                         --resource-group Zenmo_Zero
                         --name ztor
-                        --environment zero 
+                        --environment ZeroDE 
                         --target-port 8082
                         --env-vars
                         POSTGRES_URL=jdbc:postgresql://holon-webapp-database.postgres.database.azure.com:5432/zero_prod
@@ -301,7 +297,7 @@ jobs:
             -   name: set domain suffix
                 id: domain
                 ## This will become a custom domain like zero.zenmo.com
-                run: echo "DOMAIN_SUFFIX=thankfulbay-feb62349.westeurope.azurecontainerapps.io" >> $GITHUB_OUTPUT
+                run: echo "DOMAIN_SUFFIX=bravesky-71f0cbc2.germanywestcentral.azurecontainerapps.io" >> $GITHUB_OUTPUT
             -   if: github.event_name == 'pull_request'
                 name: set backend URL's for pull request test environment
                 run: |
