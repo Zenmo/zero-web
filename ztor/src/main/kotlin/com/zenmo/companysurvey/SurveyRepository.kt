@@ -16,6 +16,10 @@ import java.util.*
 class SurveyRepository(
     private val db: Database
 ) {
+    fun getHessenpoortSurveys(): List<Survey> {
+        return listOf(mockSurvey, mockSurvey)
+    }
+
     fun save(survey: Survey): UUID {
         val surveyId = UUID.randomUUID()
 
