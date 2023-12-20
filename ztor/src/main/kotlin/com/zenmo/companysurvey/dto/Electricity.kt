@@ -16,7 +16,12 @@ data class Electricity (
 
     val kleinverbruik: CompanyKleinverbruik? = null,
     val grootverbruik: CompanyGrootverbruik? = null,
-)
+) {
+    fun getConnectionCapacityKw(): Int? {
+        return kleinverbruik?.connectionCapacity?.toKw() ?: grootverbruik?.contractedConnectionDemandCapacityKw
+    }
+}
+
 
 @Serializable
 data class CompanyKleinverbruik (
@@ -49,7 +54,22 @@ enum class KleinverbruikElectricityConnectionCapacity {
     `3x50A`, // majority of connections in 180 postalcodes
     `3x63A`, // majority of connections in 261 postalcodes
     `3x80A`, // majority of connections in 613 postalcodes
-    // Unknown in 39 postalcodes
+    ;// Unknown in 39 postalcodes
+
+    fun toKw(): Int {
+        return when (this) {
+            `1x25A` -> 1 * 25
+            `1x35A` -> 1 * 35
+            `1x40A` -> 1 * 40
+            `1x50A` -> 1 * 50
+            `3x25A` -> 3 * 25
+            `3x35A` -> 3 * 35
+            `3x50A` -> 3 * 50
+            `3x63A` -> 3 * 63
+            `3x80A` -> 3 * 80
+            else -> throw IllegalArgumentException("Unknown KleinverbruikElectricityConnectionCapacity: $this")
+        }
+    }
 }
 
 // TODO: create profile names
