@@ -1,42 +1,71 @@
 import {css} from '@emotion/react'
 import {Alert} from 'antd'
-import {createElement, forwardRef, FunctionComponent, useState} from 'react'
+import {FunctionComponent, useEffect, useState} from 'react'
 import {useForm, UseFormReturn} from 'react-hook-form'
 import {useNavigate} from 'react-router-dom'
 import {Address} from './address'
 import {BasicData} from './basic-data'
 import {defineFlash} from './flash'
-import {FormRow} from './generic/form-row'
-import {TextInput} from './generic/text-input'
 import {GridConnection} from './grid-connection'
 import {HasMultipleConnections} from './has-multiple-connections'
 import {Intro} from './intro'
-import {LabelRow} from './generic/label-row'
 import {ProjectConfiguration} from './project'
-import {Transport} from './transport'
 import {SurveyTabs} from "./survey-tabs";
 import {cloneDeep} from "lodash";
 
 export const Survey: FunctionComponent<{project: ProjectConfiguration}> = ({project}) => {
+    const [key, setKey] = useState(1)
+
+    return (
+        <SurveyWithReset key={key} project={project} remount={() => setKey(key + 1)} />
+    )
+}
+
+const SurveyWithReset: FunctionComponent<{ project: ProjectConfiguration, remount: () => void }> = ({
+    project,
+    remount,
+}) => {
     let navigate = useNavigate()
+
+    const emptyFormData = {
+        tabs: [
+            {
+                address: {},
+                gridConnection: {},
+            },
+        ],
+    }
+
+    const localStorageKey = `survey-${project.name}`
+    const previousData = localStorage.getItem(localStorageKey)
+    const defaultValues = previousData ? JSON.parse(previousData) : emptyFormData
+
     // @ts-ignore
     const form: UseFormReturn = useForm({
         shouldUseNativeValidation: true,
-        defaultValues: {
-            tabs: [
-                {
-                    address: {},
-                    gridConnection: {},
-                }
-            ],
-        }
+        defaultValues
     })
     const {
-        register,
         handleSubmit,
-        formState: { errors }
+        formState: { errors },
+        watch
     } = form
 
+    const clear = () => {
+        if(confirm("Formulier wissen?")) {
+            localStorage.removeItem(localStorageKey)
+            remount()
+        }
+    }
+
+    useEffect(() => {
+        const subscription = watch((value, { name, type }) =>
+            localStorage.setItem(localStorageKey, JSON.stringify(value))
+        )
+        return () => subscription.unsubscribe()
+    }, [watch])
+
+    const [hasMultipleConnections, setMultipleConnections] = useState(previousData ? defaultValues.tabs > 1 : null)
     const [isSuccess, setSuccess] = useState(false)
     const [submissionError, setSubmissionError] = useState("")
 
@@ -100,8 +129,6 @@ export const Survey: FunctionComponent<{project: ProjectConfiguration}> = ({proj
         }
     }
 
-    const [hasMultipleConnections, setMultipleConnections] = useState()
-
     return (
         <div css={[{
             width: '100%',
@@ -156,7 +183,16 @@ export const Survey: FunctionComponent<{project: ProjectConfiguration}> = ({proj
                     </>
                 )}
 
-                <div css={{textAlign: 'right'}}>
+                <div css={css`
+                    padding: 1rem 0;
+                    display: flex;
+                    justify-content: flex-end;
+                    & > * {
+                        margin-left: 1rem;
+                        font-size: 1rem;
+                    }
+                `}>
+                    <button type="button" onClick={clear}>Leegmaken</button>
                     <button type="submit">Verstuur</button>
                 </div>
             </form>
