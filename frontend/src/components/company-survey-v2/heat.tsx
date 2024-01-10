@@ -29,11 +29,6 @@ export const Heat = ({form, prefix}: { form: UseFormReturn, prefix: string }) =>
                     form={form}
                     suffix="kW" />
             )}
-            <NumberRow
-                label="Wat is het totaal opgeteld elektrisch vermogen van jullie hybride warmtepompen?"
-                name={`${prefix}.sumHybridHeatPumpElectricKw`}
-                form={form}
-                suffix="kW" />
             {heatingTypes.includes(HeatingType.HYBRID_HEATPUMP) && (
                 <NumberRow
                     label="Wat is het totaal opgeteld elektrisch vermogen van jullie hybride warmtepompen?"
