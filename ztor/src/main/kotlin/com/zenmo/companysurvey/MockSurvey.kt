@@ -20,6 +20,7 @@ val mockSurvey = Survey(
             gridConnections = listOf(
                 GridConnection(
                     electricity = Electricity(
+                        hasConnection = true,
                         annualElectricityDemandKwh = 1000,
                         annualElectricityProductionKwh = 2000,
                         ean = "123456789012345678",

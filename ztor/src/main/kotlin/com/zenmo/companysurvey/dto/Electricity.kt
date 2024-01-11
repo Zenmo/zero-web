@@ -4,6 +4,8 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class Electricity (
+    val hasConnection: Boolean? = null,
+
     val ean: String = "",
 
     val authorizationFile: File? = null,

@@ -15,7 +15,7 @@ export const NaturalGas =  ({form, prefix, project}: { form: UseFormReturn , pre
         <>
             <h2>4. Aardgas</h2>
             <FormRow
-                label="Heeft u een gasaansluiting op ditzelfde adres?"
+                label="Heeft uw bedrijf op dit adres een aansluitcontract voor gas met een gasleverancier?"
                 name={`${prefix}.hasConnection`}
                 form={form}
                 WrappedInput={BooleanInput}/>

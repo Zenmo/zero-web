@@ -94,6 +94,7 @@ class SurveyRepository(
                 this[GridConnectionTable.numPlannedHydgrogenCars] = gridConnection.transport.cars.numPlannedHydrogenCars?.toUInt()
 
                 // electricity
+                this[GridConnectionTable.hasElectricityConnection] = gridConnection.electricity.hasConnection
                 this[GridConnectionTable.electricityEan] = gridConnection.electricity.ean
                 this[GridConnectionTable.annualElectricityDemandKwh] = gridConnection.electricity.annualElectricityDemandKwh?.toUInt()
                 this[GridConnectionTable.annualElectricityProductionKwh] = gridConnection.electricity.annualElectricityProductionKwh?.toUInt()

@@ -22,6 +22,7 @@ object GridConnectionTable: Table("grid_connection") {
     /**
      * [com.zenmo.companysurvey.dto.Electricity]
      */
+    val hasElectricityConnection = bool("has_electricity_connection").nullable()
     val electricityEan = varchar("electricity_ean", 18)
     val annualElectricityDemandKwh = uinteger("annual_electricity_demand_kwh").nullable()
     val annualElectricityProductionKwh = uinteger("annual_electricity_production_kwh").nullable()
