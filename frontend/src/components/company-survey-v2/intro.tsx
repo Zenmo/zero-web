@@ -1,9 +1,21 @@
+import {css} from '@emotion/react'
 import {FunctionComponent} from 'react'
 import {ProjectConfiguration} from './project'
 
 export const Intro: FunctionComponent<{project: ProjectConfiguration}> = ({project}) => {
     return (
         <>
+            <div css={css`
+                display: flex;
+                height: 3rem;
+                justify-content: space-between;
+                flex-direction: row-reverse;
+            `}>
+                <img src="/logo-zenmo.png" alt="logo-zenmo" />
+                {project.logo && <img src={project.logo} alt="logo-project" />}
+            </div>
+            <br />
+            <br />
             <h1>Dataformulier energie en mobiliteit {project.name}</h1>
             <p>
                 Met dit formulier halen we de energie- en mobiliteitsdynamieken op van {project.name}, zowel in de
