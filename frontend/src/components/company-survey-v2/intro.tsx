@@ -7,15 +7,15 @@ export const Intro: FunctionComponent<{project: ProjectConfiguration}> = ({proje
             <h1>Dataformulier energie en mobiliteit {project.name}</h1>
             <p>
                 Met dit formulier halen we de energie- en mobiliteitsdynamieken op van {project.name}, zowel in de
-                huidige als in toekomstige situatie. Samen met gegevens van de netbeheerder worden deze dynamieken
-                nagespeeld in de digital twin. Het doel is om daarmee gezamelijk te verkennen welke congestie-
-                problemen zich voordoen, welke oplossingen er mogelijk zijn en welke uitbreidingsplannen de komende
+                huidige als de toekomstige situatie. Samen met gegevens van de netbeheerder worden deze dynamieken
+                nagespeeld in de digital twin. Het doel is om daarmee gezamenlijk te verkennen welke congestieproblemen
+                zich voordoen, welke oplossingen er mogelijk zijn en welke uitbreidingsplannen de komende
                 jaren wel of niet doorgezet kunnen worden.
             </p>
             <p>
-                Alle ingevulde gegevens worden vertrouwlijk behandeld en blijven eigendom van de bedrijven zelf. 
+                Alle ingevulde gegevens worden vertrouwelijk behandeld en blijven eigendom van de bedrijven zelf.
                 Parkmanagement {project.name} beheert de gegevens tijdens het project en Zenmo Simulations laadt ze
-                in de digtial twin.
+                in de digital twin.
             </p>
             <p>
                 Het invullen zal circa 5 tot 15 minuten duren. Echter, het is mogelijk dat het één en ander 

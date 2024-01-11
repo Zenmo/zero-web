@@ -35,7 +35,7 @@ export const Electricity = ({form, prefix, hasSupplyName}: {
                 name={`${prefix}.hasConnection`}
                 form={form}
                 WrappedInput={BooleanInput}/>
-            {hasConnection && 
+            {hasConnection &&
                 <>
                     {/*<FormRow label="EAN" name={`${prefix}.ean`} form={form} />*/}
                     <LabelRow label="Type aansluiting">
