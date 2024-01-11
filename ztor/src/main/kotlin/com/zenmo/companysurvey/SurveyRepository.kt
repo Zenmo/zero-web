@@ -67,6 +67,7 @@ class SurveyRepository(
 
                 this[GridConnectionTable.hasVehicles] = gridConnection.transport.hasVehicles
                 this[GridConnectionTable.numDailyCarCommuters] = gridConnection.transport.numDailyCarCommuters?.toUInt()
+                this[GridConnectionTable.numCommuterChargePoints] = gridConnection.transport.numCommuterChargePoints
 
                 this[GridConnectionTable.numTrucks] = gridConnection.transport.trucks.numTrucks?.toUInt()
                 this[GridConnectionTable.numElectricTrucks] = gridConnection.transport.trucks.numElectricTrucks?.toUInt()

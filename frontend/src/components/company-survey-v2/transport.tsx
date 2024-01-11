@@ -3,6 +3,7 @@ import {BooleanInput} from './generic/boolean-input'
 import {Cars} from './cars'
 import {FormRow} from './generic/form-row'
 import {NumberInput} from './generic/number-input'
+import {NumberRow} from './generic/number-row'
 import {ProjectName} from './project'
 import {Trucks} from './trucks'
 import {Vans} from './vans'
@@ -24,11 +25,6 @@ export const Transport = ({form, prefix, project}: {
                 WrappedInput={BooleanInput}
                 name={`${prefix}.hasVehicles`}
                 form={form} />
-            <FormRow
-                label="Aantal personenauto's voor woon-werk verkeer per dag?"
-                WrappedInput={NumberInput}
-                name={`${prefix}.numDailyCarCommuters`}
-                form={form} />
             {hasVehicles && (
                 <>
                     <Trucks form={form} prefix={`${prefix}.trucks`} project={project} />
@@ -36,6 +32,15 @@ export const Transport = ({form, prefix, project}: {
                     <Cars form={form} prefix={`${prefix}.cars`} project={project} />
                 </>
             )}
+            <FormRow
+                label="Aantal personenauto's voor woon-werk verkeer per dag?"
+                WrappedInput={NumberInput}
+                name={`${prefix}.numDailyCarCommuters`}
+                form={form} />
+            <NumberRow
+                label="Hoeveel laadpunten voor woon-werk verkeer hebben jullie?"
+                name={`${prefix}.numCommuterChargePoints`}
+                form={form} />
         </>
     )
 }

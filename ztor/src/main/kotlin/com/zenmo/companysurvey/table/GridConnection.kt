@@ -106,6 +106,7 @@ object GridConnectionTable: Table("grid_connection") {
      */
     val hasVehicles = bool("has_vehicles").nullable()
     val numDailyCarCommuters = uinteger("num_daily_car_commuters").nullable()
+    val numCommuterChargePoints = uinteger("num_commuter_charge_points").nullable()
 
     /**
      * [com.zenmo.companysurvey.dto.Trucks]

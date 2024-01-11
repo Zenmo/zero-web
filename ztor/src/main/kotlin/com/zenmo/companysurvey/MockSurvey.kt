@@ -80,6 +80,7 @@ val mockSurvey = Survey(
                     transport = Transport(
                         hasVehicles = false,
                         numDailyCarCommuters = null,
+                        numCommuterChargePoints = 2u,
                         cars = Cars(
                             numCars = null,
                             numElectricCars = 0,
