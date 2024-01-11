@@ -67,7 +67,6 @@ enum class KleinverbruikElectricityConnectionCapacity {
             `3x50A` -> 3 * 50
             `3x63A` -> 3 * 63
             `3x80A` -> 3 * 80
-            else -> throw IllegalArgumentException("Unknown KleinverbruikElectricityConnectionCapacity: $this")
         }
     }
 }

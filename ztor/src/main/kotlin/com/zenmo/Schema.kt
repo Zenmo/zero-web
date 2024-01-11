@@ -1,10 +1,7 @@
 package com.zenmo
 
 import com.zenmo.blob.BlobPurpose
-import com.zenmo.companysurvey.dto.HeatingType
-import com.zenmo.companysurvey.dto.KleinverbruikElectricityConnectionCapacity
-import com.zenmo.companysurvey.dto.KleinverbruikElectricityConsumptionProfile
-import com.zenmo.companysurvey.dto.PVOrientation
+import com.zenmo.companysurvey.dto.*
 import com.zenmo.companysurvey.table.GridConnectionTable
 import com.zenmo.companysurvey.table.CompanySurveyTable
 import com.zenmo.companysurvey.table.FileTable
@@ -20,6 +17,7 @@ val enums = listOf(
     HeatingType::class.java,
     PVOrientation::class.java,
     BlobPurpose::class.java,
+    MissingPvReason::class.java,
 )
 
 val tables = arrayOf(

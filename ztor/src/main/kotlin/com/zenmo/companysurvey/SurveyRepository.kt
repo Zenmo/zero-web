@@ -109,6 +109,7 @@ class SurveyRepository(
                 this[GridConnectionTable.pvPlannedKwp] = gridConnection.supply.pvPlannedKwp?.toUInt()
                 this[GridConnectionTable.pvPlannedOrientation] = gridConnection.supply.pvPlannedOrientation
                 this[GridConnectionTable.pvPlannedYear] = gridConnection.supply.pvPlannedYear?.toUInt()
+                this[GridConnectionTable.missingPvReason] = gridConnection.supply.missingPvReason
                 this[GridConnectionTable.windInstalledKw] = gridConnection.supply.windInstalledKw
                 this[GridConnectionTable.otherSupply] = gridConnection.supply.otherSupply
 

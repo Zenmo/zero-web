@@ -2,6 +2,7 @@ import {UseFormReturn} from 'react-hook-form'
 import {BooleanInput} from './generic/boolean-input'
 import {FormRow} from './generic/form-row'
 import {NumberRow} from './generic/number-row'
+import {MissingPvReason} from './missing-pv-reason'
 import {PVOrientation} from './pv-orientation'
 import {TextAreaRow} from "./generic/text-area-row";
 
@@ -61,6 +62,13 @@ export const Supply = ({form, prefix, hasSupplyName}: {form: UseFormReturn, pref
                         form={form}
                         WrappedInput={PVOrientation} />
                 </>
+            )}
+            {hasSupply === false && pvPlanned === false && (
+                <FormRow
+                    label="Waarom niet?"
+                    name={`${prefix}.noPvReason`}
+                    form={form}
+                    WrappedInput={MissingPvReason} />
             )}
             {hasSupply && (
                 <>

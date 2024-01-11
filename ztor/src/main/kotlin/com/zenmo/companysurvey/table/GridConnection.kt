@@ -1,9 +1,6 @@
 package com.zenmo.companysurvey.table
 
-import com.zenmo.companysurvey.dto.KleinverbruikElectricityConnectionCapacity
-import com.zenmo.companysurvey.dto.KleinverbruikElectricityConsumptionProfile
-import com.zenmo.companysurvey.dto.HeatingType
-import com.zenmo.companysurvey.dto.PVOrientation
+import com.zenmo.companysurvey.dto.*
 import com.zenmo.dbutil.PGEnum
 import com.zenmo.dbutil.enumArray
 import org.jetbrains.exposed.sql.Table
@@ -62,6 +59,11 @@ object GridConnectionTable: Table("grid_connection") {
         fromDb = { PVOrientation.valueOf(it as String) },
         toDb = { PGEnum(PVOrientation::class.simpleName!!, it) }).nullable()
     val pvPlannedYear = uinteger("pv_planned_year").nullable()
+    val missingPvReason = customEnumeration(
+        "missing_pv_reason",
+        MissingPvReason::class.simpleName,
+        fromDb = { MissingPvReason.valueOf(it as String) },
+        toDb = { PGEnum(MissingPvReason::class.simpleName!!, it) }).nullable()
     val windInstalledKw = float("wind_installed_kw").nullable()
     val otherSupply = varchar("other_supply", 1000)
 

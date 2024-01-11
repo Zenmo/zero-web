@@ -43,6 +43,7 @@ val mockSurvey = Survey(
                         pvPlannedYear = 2022,
                         windInstalledKw = 300f,
                         otherSupply = "Other supply",
+                        missingPvReason = MissingPvReason.OTHER,
                     ),
                     naturalGas = NaturalGas(
                         ean = "123456789012345678",

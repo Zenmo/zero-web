@@ -14,6 +14,8 @@ data class Supply (
     val pvPlannedOrientation: PVOrientation? = null,
     val pvPlannedYear: Int? = null,
 
+    val missingPvReason: MissingPvReason? = null,
+
     val windInstalledKw: Float? = null,
     val otherSupply: String = "",
 )
@@ -21,4 +23,11 @@ data class Supply (
 enum class PVOrientation {
     SOUTH,
     EAST_WEST,
+}
+
+enum class MissingPvReason {
+    NO_SUITABLE_ROOF,
+    NO_BACKFEED_CAPACITY,
+    NOT_INTERESTED,
+    OTHER,
 }
