@@ -278,6 +278,9 @@ jobs:
                         AZURE_STORAGE_ACCOUNT_NAME=zerostore
                         AZURE_STORAGE_ACCOUNT_KEY=${{ secrets.AZURE_STORAGE_ACCOUNT_KEY }}
                         AZURE_STORAGE_CONTAINER=prod
+                        ORY_OAUTH_CLIENT_ID=b4428f12-9fba-44ab-b810-8ca1a271e67c
+                        ORY_OAUTH_CLIENT_SECRET=${{ secrets.ORY_OAUTH_CLIENT_SECRET_PROD }}
+                        BASE_URL=https://ztor.bravesky-71f0cbc2.germanywestcentral.azurecontainerapps.io
                         --ingress external
                         --tags branch=${{ github.ref_name }}
                         --image ghcr.io/erikvv/ztor:${{ needs.image-tag.outputs.IMAGE_TAG }}

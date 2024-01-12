@@ -87,6 +87,7 @@ services:
             POSTGRES_USER: postgres
             # TODO: security risk, make developer set it in local.env
             POSTGRES_PASSWORD: welkom123
+            BASE_URL: http://localhost:8082
 #        depends_on:
 #            - ztor-build
 

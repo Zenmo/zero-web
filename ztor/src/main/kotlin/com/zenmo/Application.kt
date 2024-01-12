@@ -1,6 +1,8 @@
 package com.zenmo
 
 import com.zenmo.plugins.*
+import io.ktor.client.*
+import io.ktor.client.engine.cio.*
 import io.ktor.server.application.*
 import io.ktor.server.engine.*
 import io.ktor.server.netty.*
@@ -43,4 +45,5 @@ fun Application.module() {
     configureRouting()
     configureStatusPages()
     configureUpload()
+    configureAuthentication()
 }
