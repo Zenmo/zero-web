@@ -8,14 +8,11 @@ import {Purpose, Upload} from './generic/upload'
 import {ProjectName} from './project'
 
 
-export const ElectricityData = ({form, prefix, hasSupplyName, project}: {
+export const ElectricityData = ({form, prefix, project}: {
     form: UseFormReturn,
     prefix: string,
-    hasSupplyName: string
     project: ProjectName
 }) => {
-    const {register} = form
-
     const [consumptionSpec, setConsumptionSpec] = useState<ConsumptionSpec | null | undefined>()
 
     return (
@@ -25,7 +22,7 @@ export const ElectricityData = ({form, prefix, hasSupplyName, project}: {
                 <ElectricityConsumptionRadios onChange={setConsumptionSpec} consumptionSpec={consumptionSpec} project={project}/>
             </LabelRow>
             {consumptionSpec === ConsumptionSpec.UPLOAD_QUARTER_HOURLY_VALUES && (
-                <LabelRow label="Kwartierwaarden">
+                <LabelRow label="Kwartierwaarden (upload een heel kalenderjaar)">
                     <Upload
                         multiple={true}
                         setFormValue={files => form.setValue(`${prefix}.quarterHourlyValuesFiles`, files)}

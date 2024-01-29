@@ -1,6 +1,6 @@
 import {UseFormReturn} from 'react-hook-form'
-import {NumberRow} from './generic/number-row'
-import {ProjectName} from './project'
+import {NumberRow} from '../generic/number-row'
+import {ProjectName} from '../project'
 
 export const Cars = ({form, prefix, project}: { form: UseFormReturn, prefix: string, project: ProjectName}) => {
     const {register, watch} = form
@@ -11,7 +11,7 @@ export const Cars = ({form, prefix, project}: { form: UseFormReturn, prefix: str
         <>
             <h3>Bedrijfsauto's</h3>
             <NumberRow
-                label="Hoeveel bedrijfsauto's hebben jullie in gebruik?"
+                label="Hoeveel bedrijfsauto's (die niet mee naar huis gaan) hebben jullie in gebruik?"
                 name={`${prefix}.numCars`}
                 form={form} />
             {numCars > 0 && (

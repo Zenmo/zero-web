@@ -26,7 +26,7 @@ export const NaturalGas =  ({form, prefix, project}: { form: UseFormReturn , pre
                         name={`${prefix}.annualDemandM3`}
                         form={form}
                         suffix="m3" />
-                    <LabelRow label="Kun je een excel of csv met het uurverbruik van gas uploaden?">
+                    <LabelRow label="Kun je een excel of csv met het uurverbruik van gas uploaden (upload minimaal één jaar)?">
                         <Upload
                             multiple={true}
                             setFormValue={files => form.setValue(`${prefix}.hourlyValuesFiles`, files)}

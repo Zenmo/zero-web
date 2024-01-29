@@ -12,12 +12,10 @@ enum ConnectionType {
     KLEINVERBRUIK = "KLEINVERBRUIK",
 }
 
-export const Electricity = ({form, prefix, hasSupplyName}: {
+export const Electricity = ({form, prefix}: {
     form: UseFormReturn,
     prefix: string,
-    hasSupplyName: string
 }) => {
-    const hasSupply = form.watch(hasSupplyName)
     const hasConnection = form.watch(`${prefix}.hasConnection`)
 
     const [connectionType, setConnectionType] = useState<ConnectionType>()
@@ -67,13 +65,11 @@ export const Electricity = ({form, prefix, hasSupplyName}: {
                                 name={`${prefix}.grootverbruik.contractedConnectionDemandCapacityKw`}
                                 form={form}
                                 suffix="kW" />
-                            {hasSupply && (
-                                <NumberRow
-                                    label="Wat is uw gecontracteerde vermogen voor elektriciteitsteruglevering?"
-                                    name={`${prefix}.grootverbruik.contractedConnectionSupplyCapacityKw`}
-                                    form={form}
-                                    suffix="kW" />
-                            )}
+                            <NumberRow
+                                label="Wat is uw gecontracteerde vermogen voor elektriciteitsteruglevering?"
+                                name={`${prefix}.grootverbruik.contractedConnectionSupplyCapacityKw`}
+                                form={form}
+                                suffix="kW" />
                         </>
                     )}
                 </>

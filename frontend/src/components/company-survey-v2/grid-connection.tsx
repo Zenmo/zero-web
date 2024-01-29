@@ -9,7 +9,7 @@ import {ProjectConfiguration, ProjectName} from './project'
 import {Storage} from './storage'
 import {Supply} from './supply'
 import {ElectricityData} from "./electricity-data";
-import {Transport} from './transport'
+import {Transport} from './transport/transport'
 
 export const GridConnection = ({form, prefix, project}: { form: UseFormReturn, prefix: string, project: ProjectName }) => {
     const supplyPrefix = `${prefix}.supply`
@@ -18,11 +18,11 @@ export const GridConnection = ({form, prefix, project}: { form: UseFormReturn, p
 
     return (
         <>
-            <Electricity form={form} prefix={`${prefix}.electricity`}  hasSupplyName={hasSupplyName} />
+            <Electricity form={form} prefix={`${prefix}.electricity`} />
             {hasElectricityConnection &&
                 <>
                     <Supply form={form} prefix={supplyPrefix} hasSupplyName={hasSupplyName} />
-                    <ElectricityData form={form} prefix={`${prefix}.electricity`}  hasSupplyName={hasSupplyName} project={project} />
+                    <ElectricityData form={form} prefix={`${prefix}.electricity`}  project={project} />
                 </>
             }
             <Heat form={form} prefix={`${prefix}.heat`} />

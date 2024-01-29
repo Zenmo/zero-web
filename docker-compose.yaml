@@ -78,7 +78,7 @@ services:
         volumes:
             - ./ztor:/home/gradle/ztor
             - gradle-run-cache:/home/gradle/.gradle
-        restart: on-failure
+        restart: unless-stopped
         command: gradle --project-cache-dir=/tmp/gradle run
         env_file:
             - ./ztor/local.env

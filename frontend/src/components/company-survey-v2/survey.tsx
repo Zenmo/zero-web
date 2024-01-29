@@ -169,7 +169,10 @@ const SurveyWithReset: FunctionComponent<{ project: ProjectConfiguration, remoun
                 />}
                 <BasicData form={form} />
                 <br />
-                <HasMultipleConnections hasMultipleConnections={hasMultipleConnections} setMultipleConnections={setMultipleConnections} />
+                <HasMultipleConnections
+                    hasMultipleConnections={hasMultipleConnections}
+                    setMultipleConnections={setMultipleConnections}
+                    businessParkname={project.name} />
                 <br />
                 {hasMultipleConnections === false && (
                     <>

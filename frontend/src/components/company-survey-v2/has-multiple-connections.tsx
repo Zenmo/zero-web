@@ -3,13 +3,13 @@ import {useState} from 'react';
 import {BooleanInput} from './generic/boolean-input'
 import {LabelRow} from './generic/label-row'
 
-export const HasMultipleConnections = ({hasMultipleConnections, setMultipleConnections}: any) => {
+export const HasMultipleConnections = ({hasMultipleConnections, setMultipleConnections, businessParkname}: any) => {
     return (
         <>
-            <LabelRow label="Heeft uw bedrijf meerdere locaties op het bedrijventerrien of meerdere aansluitingen op het elektriciteitsnet?">
+            <LabelRow label={`Heeft uw bedrijf meerdere locaties of meerdere elektriciteitsaansluitingen op ${businessParkname}?`}>
                 <Radio.Group onChange={e => setMultipleConnections(e.target.value)} value={hasMultipleConnections}>
-                    <Radio value={false} css={{display: 'block'}}>Eén netaansluiting</Radio>
-                    <Radio value={true} css={{display: 'block'}}>Meerdere netaansluitingen</Radio>
+                    <Radio value={true} css={{display: 'block'}}>Ja</Radio>
+                    <Radio value={false} css={{display: 'block'}}>Nee</Radio>
                 </Radio.Group>
             </LabelRow>
             {hasMultipleConnections &&

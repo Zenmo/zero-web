@@ -2,7 +2,7 @@ import {css} from '@emotion/react'
 import {Tabs, TabsProps} from "antd";
 import {ProjectName} from './project'
 import {SurveyTab} from './survey-tab'
-import {Transport} from "./transport";
+import {Transport} from "./transport/transport";
 import {useFieldArray, UseFormReturn} from "react-hook-form";
 import {GridConnection} from "./grid-connection";
 import {PlusOutlined} from "@ant-design/icons";
