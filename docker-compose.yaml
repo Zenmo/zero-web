@@ -12,6 +12,8 @@ services:
         environment:
             FLYWAY_URL: jdbc:postgresql://postgres:5432/postgres
             FLYWAY_USER: postgres
+        depends_on:
+            - postgres
 
     kleinverbruik:
         build:
@@ -40,7 +42,7 @@ services:
         user: gradle
         volumes:
             - ./ztor:/home/gradle/ztor
-            - gradle-build-cache:/home/gradle/.gradle
+            - gradle-test-cache:/home/gradle/.gradle
         command: gradle test --no-daemon
         env_file:
             -   ./docker/ztor.env
@@ -133,6 +135,7 @@ services:
 volumes:
     gradle-build-cache:
     gradle-build-once-cache:
+    gradle-test-cache:
     gradle-run-cache:
     gradle-cmd-cache:
     postgres:

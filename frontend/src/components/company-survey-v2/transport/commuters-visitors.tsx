@@ -10,12 +10,15 @@ export const CommutersVisitors: FunctionComponent<{ form: UseFormReturn, prefix:
         <FormRow
             label="Aantal auto’s/busjes voor woon-werkverkeer per dag?"
             WrappedInput={NumberInput}
-            name={`${prefix}.numDailyCarCommuters`}
+            name={`${prefix}.numDailyCarAndVanCommuters`}
             form={form}/>
-        {/* TODO: Aantal personenauto’s van bezoekers per dag */}
+        <NumberRow
+            label="Aantal personenauto’s van bezoekers per dag?"
+            name={`${prefix}.numDailyCarVisitors`}
+            form={form}/>
         <NumberRow
             label="Hoeveel laadpunten zijn er specifiek voor woon-werkverkeer en bezoekers?"
-            name={`${prefix}.numCommuterChargePoints`}
+            name={`${prefix}.numCommuterAndVisitorChargePoints`}
             form={form}/>
     </>
 )
