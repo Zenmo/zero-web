@@ -19,4 +19,5 @@ object CompanySurveyTable: Table("company_survey") {
     val companyName = varchar("company_name", 50)
     val personName = varchar("person_name", 50)
     val email = varchar("email", 50)
+    val dataSharingAgreed = bool("data_sharing_agreed").default(false)
 }

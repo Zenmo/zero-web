@@ -31,6 +31,7 @@ class SurveyRepository(
                 it[companyName] = survey.companyName
                 it[personName] = survey.personName
                 it[email] = survey.email
+                it[dataSharingAgreed] = survey.dataSharingAgreed
             }
 
             AddressTable.batchInsert(survey.addresses) {

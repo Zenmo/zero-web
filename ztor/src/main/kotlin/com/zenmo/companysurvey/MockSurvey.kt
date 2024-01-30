@@ -8,6 +8,7 @@ val mockSurvey = Survey(
     zenmoProject = "Project",
     personName = "John Doe",
     email = "john@example.com",
+    dataSharingAgreed = true,
     addresses = listOf(
         Address(
             id = UUID.randomUUID(),

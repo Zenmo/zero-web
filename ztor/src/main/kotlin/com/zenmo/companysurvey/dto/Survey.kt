@@ -18,6 +18,7 @@ data class Survey(
     val companyName: String,
     val personName: String,
     val email: String = "",
+    val dataSharingAgreed: Boolean = false,
 
     val addresses: List<Address>,
 )
