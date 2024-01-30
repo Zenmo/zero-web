@@ -12,6 +12,7 @@ import {Intro} from './intro'
 import {ProjectConfiguration} from './project'
 import {SurveyTabs} from "./survey-tabs";
 import {cloneDeep} from "lodash";
+import {LabelRow} from "./generic/label-row";
 
 export const Survey: FunctionComponent<{project: ProjectConfiguration}> = ({project}) => {
     const [key, setKey] = useState(1)
@@ -186,10 +187,19 @@ const SurveyWithReset: FunctionComponent<{ project: ProjectConfiguration, remoun
                     </>
                 )}
 
+                <LabelRow
+                    label="Mijn ingevulde gegevens mogen openlijk toegangelijk zijn t.b.v. de energietransitie en voor gesprekken met gemeenten, provincies en andere bedrijventerreinen">
+                    <input
+                        css={{alignSelf: 'flex-start'}}
+                        type="checkbox"
+                        {...form.register('dataSharingAgreed')} />
+                </LabelRow>
+
                 <div css={css`
                     padding: 1rem 0;
                     display: flex;
                     justify-content: flex-end;
+
                     & > * {
                         margin-left: 1rem;
                         font-size: 1rem;
