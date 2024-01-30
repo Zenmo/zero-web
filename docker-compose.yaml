@@ -7,10 +7,11 @@ services:
         volumes:
             - ./migrations:/flyway/sql
         command: migrate
+        env_file:
+            -   ./docker/flyway.env
         environment:
             FLYWAY_URL: jdbc:postgresql://postgres:5432/postgres
             FLYWAY_USER: postgres
-            FLYWAY_PASSWORD: welkom123
 
     kleinverbruik:
         build:
@@ -25,10 +26,11 @@ services:
 #        user: 1000:1000
 #        ports:
 #            - 127.0.0.1:8082:8082
+#        env_file:
+#            - ./docker/ztor.env
 #        environment:
 #            POSTGRES_URL: jdbc:postgresql://postgres:5432/postgres
 #            POSTGRES_USER: postgres
-#            POSTGRES_PASSWORD: welkom123
 
     ztor-test:
         image: gradle:8.3.0-jdk20
@@ -40,10 +42,11 @@ services:
             - ./ztor:/home/gradle/ztor
             - gradle-build-cache:/home/gradle/.gradle
         command: gradle test --no-daemon
+        env_file:
+            -   ./docker/ztor.env
         environment:
             POSTGRES_URL: jdbc:postgresql://postgres:5432/test
             POSTGRES_USER: postgres
-            POSTGRES_PASSWORD: welkom123
 
     ## Recompiles on source code changes.
     ## Do ensure that the two Gradle containers have independent Home directories and Project cache directories.
@@ -81,15 +84,14 @@ services:
         restart: unless-stopped
         command: gradle --project-cache-dir=/tmp/gradle run
         env_file:
-            - ./ztor/local.env
+            - ./docker/ztor.env
         environment:
             POSTGRES_URL: jdbc:postgresql://postgres:5432/postgres
             POSTGRES_USER: postgres
-            # TODO: security risk, make developer set it in local.env
-            POSTGRES_PASSWORD: welkom123
             BASE_URL: http://localhost:8082
-#        depends_on:
-#            - ztor-build
+        depends_on:
+            - ztor-build
+            - postgres
 
 #    ztor-cmd:
 #        image: gradle:8.3.0-jdk20
@@ -101,10 +103,11 @@ services:
 #            - ./ztor:/home/gradle/ztor
 #            - gradle-cmd-cache:/home/gradle/.gradle
 #        command: gradle --project-cache-dir=/tmp/gradle -Dep-online-csv=poepie run --args=echo-schema-sql
+#        env_file:
+#           - ./ztor/ztor.env
 #        environment:
 #            POSTGRES_URL: jdbc:postgresql://postgres:5432/gen
 #            POSTGRES_USER: postgres
-#            POSTGRES_PASSWORD: welkom123
 
     frontend:
         image: node:20.4.0
@@ -124,8 +127,8 @@ services:
             - 127.0.0.1:5432:5432
         volumes:
             - postgres:/var/lib/postgresql/data
-        environment:
-            POSTGRES_PASSWORD: welkom123
+        env_file:
+            - ./docker/postgres.env
 
 volumes:
     gradle-build-cache:
