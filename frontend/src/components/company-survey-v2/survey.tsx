@@ -41,9 +41,21 @@ const SurveyWithReset: FunctionComponent<{ project: ProjectConfiguration, remoun
         ],
     }
 
+    let defaultValues = emptyFormData
+
     const localStorageKey = `survey-${project.name}`
     const previousData = localStorage.getItem(localStorageKey)
-    const defaultValues = previousData ? JSON.parse(previousData) : emptyFormData
+    if (previousData) {
+        const previous = JSON.parse(previousData)
+
+        for (const tab of previous.tabs) {
+            // these fields were renamed and are now unknown in the back-end
+            delete tab.gridConnection.transport.numDailyCarCommuters
+            delete tab.gridConnection.transport.numCommuterChargePoints
+        }
+
+        defaultValues = previous
+    }
 
     // @ts-ignore
     const form: UseFormReturn = useForm({
@@ -70,7 +82,7 @@ const SurveyWithReset: FunctionComponent<{ project: ProjectConfiguration, remoun
         return () => subscription.unsubscribe()
     }, [watch])
 
-    const [hasMultipleConnections, setMultipleConnections] = useState(previousData ? defaultValues.tabs > 1 : null)
+    const [hasMultipleConnections, setMultipleConnections] = useState(previousData ? defaultValues.tabs.length > 1 : null)
     const [isSuccess, setSuccess] = useState(false)
     const [submissionError, setSubmissionError] = useState("")
 
