@@ -23,7 +23,7 @@ export const BasicData = ({form}: { form: UseFormReturn }) => (
             name="email"
             form={form}
             InputComponent={forwardRef((props: any, ref) =>
-                <input type="email" {...props} />)}
+                <input type="email" {...props} ref={ref} />)}
         />
     </>
 )
