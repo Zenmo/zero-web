@@ -1,6 +1,7 @@
 import {css} from '@emotion/react'
 import {Tabs, TabsProps} from "antd";
 import {ProjectName} from './project'
+import {emptyGridConnection} from './survey'
 import {SurveyTab} from './survey-tab'
 import {Transport} from "./transport/transport";
 import {useFieldArray, UseFormReturn} from "react-hook-form";
@@ -23,7 +24,7 @@ export const SurveyTabs: FunctionComponent<{form: UseFormReturn, project: Projec
         if (action === 'add') {
             append({
                 address: {},
-                gridConnection: {},
+                gridConnection: emptyGridConnection,
             });
         } else {
             // @ts-ignore

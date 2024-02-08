@@ -10,16 +10,16 @@ data class GridConnection(
     val id: UUID = UUID.randomUUID(),
 
     val electricity: Electricity = Electricity(),
-    val supply: Supply,
-    val naturalGas: NaturalGas,
-    val heat: Heat,
-    val storage: Storage,
-    val transport: Transport,
+    val supply: Supply = Supply(),
+    val naturalGas: NaturalGas = NaturalGas(),
+    val heat: Heat = Heat(),
+    val storage: Storage = Storage(),
+    val transport: Transport = Transport(),
 
     // open questions
-    val energyOrBuildingManagementSystemSupplier: String,
-    val mainConsumptionProcess: String,
-    val consumptionFlexibility: String,
-    val electrificationPlans: String,
-    val surveyFeedback: String,
+    val energyOrBuildingManagementSystemSupplier: String = "",
+    val mainConsumptionProcess: String = "",
+    val consumptionFlexibility: String = "",
+    val electrificationPlans: String = "",
+    val surveyFeedback: String = "",
 )

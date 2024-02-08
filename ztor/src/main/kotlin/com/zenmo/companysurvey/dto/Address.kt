@@ -11,10 +11,10 @@ data class Address(
 
     val street: String,
     val houseNumber: Int,
-    val houseLetter: String, // A-Z allowed
-    val houseNumberSuffix: String,
-    val postalCode: String,
+    val houseLetter: String = "", // A-Z allowed
+    val houseNumberSuffix: String = "",
+    val postalCode: String = "",
     val city: String,
 
-    val gridConnections: List<GridConnection>,
+    val gridConnections: List<GridConnection> = emptyList(),
 )

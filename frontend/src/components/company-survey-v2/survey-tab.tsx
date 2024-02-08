@@ -27,7 +27,7 @@ export const SurveyTab = ({form, prefix, isFirst, project}: SurveyTabProps) => {
                     form={form}
                     WrappedInput={BooleanInput} />
             )}
-            {!isSameAddress && <Address form={form} prefix={`${prefix}.adress`} />}
+            {!isSameAddress && <Address form={form} prefix={`${prefix}.address`} />}
             <GridConnection form={form} prefix={`${prefix}.gridConnection`} project={project} />
         </>
     )

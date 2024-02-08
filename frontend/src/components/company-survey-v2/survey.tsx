@@ -22,6 +22,10 @@ export const Survey: FunctionComponent<{project: ProjectConfiguration}> = ({proj
     )
 }
 
+export const emptyGridConnection = {
+    supply: {}
+}
+
 const SurveyWithReset: FunctionComponent<{ project: ProjectConfiguration, remount: () => void }> = ({
     project,
     remount,
@@ -32,7 +36,7 @@ const SurveyWithReset: FunctionComponent<{ project: ProjectConfiguration, remoun
         tabs: [
             {
                 address: {},
-                gridConnection: {},
+                gridConnection: emptyGridConnection,
             },
         ],
     }
