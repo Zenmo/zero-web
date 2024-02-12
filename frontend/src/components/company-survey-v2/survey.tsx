@@ -1,18 +1,18 @@
 import {css} from '@emotion/react'
 import {Alert} from 'antd'
+import {cloneDeep} from 'lodash'
 import {FunctionComponent, useEffect, useState} from 'react'
 import {useForm, UseFormReturn} from 'react-hook-form'
 import {useNavigate} from 'react-router-dom'
 import {Address} from './address'
 import {BasicData} from './basic-data'
 import {defineFlash} from './flash'
+import {LabelRow} from './generic/label-row'
 import {GridConnection} from './grid-connection'
 import {HasMultipleConnections} from './has-multiple-connections'
 import {Intro} from './intro'
 import {ProjectConfiguration} from './project'
-import {SurveyTabs} from "./survey-tabs";
-import {cloneDeep} from "lodash";
-import {LabelRow} from "./generic/label-row";
+import {SurveyTabs} from './survey-tabs'
 
 export const Survey: FunctionComponent<{project: ProjectConfiguration}> = ({project}) => {
     const [key, setKey] = useState(1)

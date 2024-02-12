@@ -1,11 +1,10 @@
-import React, {useState} from 'react'
+import React from 'react'
 import {UseFormReturn} from 'react-hook-form'
 import {Address} from './address'
 import {BooleanInput} from './generic/boolean-input'
 import {FormRow} from './generic/form-row'
-import {LabelRow} from './generic/label-row'
 import {GridConnection} from './grid-connection'
-import {ProjectConfiguration, ProjectName} from './project'
+import {ProjectConfiguration} from './project'
 
 type SurveyTabProps = {
     form: UseFormReturn

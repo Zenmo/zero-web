@@ -1,13 +1,10 @@
-import {css} from '@emotion/react'
-import {Tabs, TabsProps} from "antd";
-import {ProjectConfiguration, ProjectName} from './project'
+import {PlusOutlined} from '@ant-design/icons'
+import {Tabs, TabsProps} from 'antd'
+import React, {FunctionComponent} from 'react'
+import {useFieldArray, UseFormReturn} from 'react-hook-form'
+import {ProjectConfiguration} from './project'
 import {emptyGridConnection} from './survey'
 import {SurveyTab} from './survey-tab'
-import {Transport} from "./transport/transport";
-import {useFieldArray, UseFormReturn} from "react-hook-form";
-import {GridConnection} from "./grid-connection";
-import {PlusOutlined} from "@ant-design/icons";
-import React, {FunctionComponent} from 'react'
 
 export const SurveyTabs: FunctionComponent<{form: UseFormReturn, project: ProjectConfiguration }> = ({form, project}) => {
     const {register, control} = form

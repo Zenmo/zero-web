@@ -1,5 +1,5 @@
-import {Radio} from "antd";
-import {ProjectConfiguration, ProjectName} from './project'
+import {Radio} from 'antd'
+import {ProjectConfiguration} from './project'
 
 export enum ConsumptionSpec {
     PLACEHOLDER_AUTHORIZATION = "PLACEHOLDER_AUTHORIZATION",

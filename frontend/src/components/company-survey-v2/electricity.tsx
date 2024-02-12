@@ -3,9 +3,9 @@ import {useState} from 'react'
 import {UseFormReturn} from 'react-hook-form'
 import {BooleanInput} from './generic/boolean-input'
 import {FormRow} from './generic/form-row'
+import {LabelRow} from './generic/label-row'
 import {NumberRow} from './generic/number-row'
 import {KleinverbruikCapacityInput} from './kleinverbruik-capacity-input'
-import {LabelRow} from './generic/label-row'
 
 enum ConnectionType {
     GROOTVERBRUIK = "GROOTVERBRUIK",

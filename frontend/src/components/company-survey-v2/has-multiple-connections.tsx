@@ -1,6 +1,4 @@
 import {Radio} from 'antd'
-import {useState} from 'react';
-import {BooleanInput} from './generic/boolean-input'
 import {LabelRow} from './generic/label-row'
 
 export const HasMultipleConnections = ({hasMultipleConnections, setMultipleConnections, businessParkname}: any) => {

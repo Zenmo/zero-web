@@ -2,7 +2,6 @@ import {UploadOutlined} from '@ant-design/icons'
 import {Button, Upload as AntdUpload, UploadProps} from 'antd'
 import {RcFile} from 'antd/es/upload'
 import {FunctionComponent} from 'react'
-import {UseFormReturn} from 'react-hook-form'
 import {ProjectName} from '../project'
 
 type UploadAuthorization = {

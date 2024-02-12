@@ -1,12 +1,9 @@
-import {LabelRow} from "./generic/label-row";
-import {ConsumptionSpec, ElectricityConsumptionRadios} from "./electricity-consumption-radios";
-import {FormRow} from "./generic/form-row";
-import {BooleanInput} from "./generic/boolean-input";
-import {useState} from "react";
-import {UseFormReturn} from "react-hook-form";
+import {useState} from 'react'
+import {UseFormReturn} from 'react-hook-form'
+import {ConsumptionSpec, ElectricityConsumptionRadios} from './electricity-consumption-radios'
+import {LabelRow} from './generic/label-row'
 import {Purpose, Upload} from './generic/upload'
-import {ProjectConfiguration, ProjectName} from './project'
-
+import {ProjectConfiguration} from './project'
 
 export const ElectricityData = ({form, prefix, project}: {
     form: UseFormReturn,

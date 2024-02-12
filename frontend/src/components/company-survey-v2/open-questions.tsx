@@ -1,7 +1,6 @@
 import {UseFormReturn} from 'react-hook-form'
 import {FormRow} from './generic/form-row'
-import {LabelRow} from './generic/label-row'
-import {TextAreaRow} from "./generic/text-area-row";
+import {TextAreaRow} from './generic/text-area-row'
 import {TextInput} from './generic/text-input'
 
 export const OpenQuestions = ({form, prefix}: { form: UseFormReturn , prefix: string }) => {

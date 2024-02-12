@@ -1,4 +1,3 @@
-
 import {WrappedInputProps} from './form-row'
 
 export const NumberInput = ({form, name, options}: WrappedInputProps) => {

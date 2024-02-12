@@ -3,9 +3,7 @@ import {UseFormReturn} from 'react-hook-form'
 import {BooleanInput} from './generic/boolean-input'
 import {FormRow} from './generic/form-row'
 import {NumberRow} from './generic/number-row'
-import {TextAreaRow} from "./generic/text-area-row"
-
-
+import {TextAreaRow} from './generic/text-area-row'
 
 export const Storage = ({form, prefix}: { form: UseFormReturn, prefix: string }) => {
     const {watch} = form

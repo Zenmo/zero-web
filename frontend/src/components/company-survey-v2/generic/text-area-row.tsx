@@ -1,6 +1,5 @@
 import {forwardRef, FunctionComponent} from 'react'
 import {FormRow, FormRowProps} from './form-row'
-import {NumberInput} from './number-input'
 
 type TextAreaRowProps = Omit<FormRowProps, "InputComponent" | "WrappedInput">
 
