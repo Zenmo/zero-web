@@ -194,14 +194,15 @@ const SurveyWithReset: FunctionComponent<{ project: ProjectConfiguration, remoun
                 {hasMultipleConnections === false && (
                     <>
                         <Address form={form} prefix="tabs.0.address" />
-                        <GridConnection form={form} prefix="tabs.0.gridConnection" project={project.name} />
+                        <GridConnection form={form} prefix="tabs.0.gridConnection" project={project} />
                     </>
                 )}
                 {hasMultipleConnections === true && (
                     <>
-                        <SurveyTabs form={form} project={project.name} />
+                        <SurveyTabs form={form} project={project} />
                     </>
                 )}
+
 
                 <LabelRow
                     label="Mijn ingevulde gegevens mogen openlijk toegangelijk zijn t.b.v. de energietransitie en voor gesprekken met gemeenten, provincies en andere bedrijventerreinen">

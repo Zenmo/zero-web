@@ -11,7 +11,7 @@ import {Supply} from './supply'
 import {ElectricityData} from "./electricity-data";
 import {Transport} from './transport/transport'
 
-export const GridConnection = ({form, prefix, project}: { form: UseFormReturn, prefix: string, project: ProjectName }) => {
+export const GridConnection = ({form, prefix, project}: { form: UseFormReturn, prefix: string, project: ProjectConfiguration }) => {
     const supplyPrefix = `${prefix}.supply`
     const hasSupplyName = `${supplyPrefix}.hasSupply`
     const hasElectricityConnection = form.watch(`${prefix}.electricity.hasConnection`)
@@ -26,9 +26,9 @@ export const GridConnection = ({form, prefix, project}: { form: UseFormReturn, p
                 </>
             }
             <Heat form={form} prefix={`${prefix}.heat`} />
-            <NaturalGas form={form} prefix={`${prefix}.naturalGas`} project={project} />
+            <NaturalGas form={form} prefix={`${prefix}.naturalGas`} project={project.name} />
             <Storage form={form} prefix={`${prefix}.storage`} />
-            <Transport form={form} prefix={`${prefix}.transport`} project={project}/>
+            <Transport form={form} prefix={`${prefix}.transport`} project={project.name}/>
             <OpenQuestions form={form} prefix={prefix} />
         </>
     )

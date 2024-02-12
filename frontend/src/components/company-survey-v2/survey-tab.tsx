@@ -5,13 +5,13 @@ import {BooleanInput} from './generic/boolean-input'
 import {FormRow} from './generic/form-row'
 import {LabelRow} from './generic/label-row'
 import {GridConnection} from './grid-connection'
-import {ProjectName} from './project'
+import {ProjectConfiguration, ProjectName} from './project'
 
 type SurveyTabProps = {
     form: UseFormReturn
     isFirst: boolean
     prefix: string
-    project: ProjectName
+    project: ProjectConfiguration
 }
 
 export const SurveyTab = ({form, prefix, isFirst, project}: SurveyTabProps) => {

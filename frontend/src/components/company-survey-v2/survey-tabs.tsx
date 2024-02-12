@@ -1,6 +1,6 @@
 import {css} from '@emotion/react'
 import {Tabs, TabsProps} from "antd";
-import {ProjectName} from './project'
+import {ProjectConfiguration, ProjectName} from './project'
 import {emptyGridConnection} from './survey'
 import {SurveyTab} from './survey-tab'
 import {Transport} from "./transport/transport";
@@ -9,7 +9,7 @@ import {GridConnection} from "./grid-connection";
 import {PlusOutlined} from "@ant-design/icons";
 import React, {FunctionComponent} from 'react'
 
-export const SurveyTabs: FunctionComponent<{form: UseFormReturn, project: ProjectName }> = ({form, project}) => {
+export const SurveyTabs: FunctionComponent<{form: UseFormReturn, project: ProjectConfiguration }> = ({form, project}) => {
     const {register, control} = form
 
     const { fields, append, prepend, remove, swap, move, insert } = useFieldArray({

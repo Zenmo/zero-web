@@ -32,7 +32,7 @@ export const NaturalGas =  ({form, prefix, project}: { form: UseFormReturn , pre
                             setFormValue={files => form.setValue(`${prefix}.hourlyValuesFiles`, files)}
                             company={form.watch('companyName')}
                             project={project}
-                            purpose={Purpose.ELECTRICITY_VALUES} />
+                            purpose={Purpose.NATURAL_GAS_VALUES} />
                     </LabelRow>
                     <NumberRow
                         label="Welk deel wordt gebruikt voor verwarming van ruimtes? (De rest voor andere processen)"
