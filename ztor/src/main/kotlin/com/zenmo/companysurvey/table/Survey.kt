@@ -13,7 +13,7 @@ object CompanySurveyTable: Table("company_survey") {
     val created = timestamp("created_at").defaultExpression(CurrentTimestamp())
     // Can be fetched at https://energiekeregio.nl/api/v1/zenmo?details=15989
     val energiekeRegioId = uinteger("energieke_regio_id").nullable()
-    // ZEnMo project name
+    // Zenmo project name
     val project = varchar("project", 50)
 
     val companyName = varchar("company_name", 50)

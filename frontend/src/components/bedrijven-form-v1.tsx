@@ -95,7 +95,7 @@ export const BedrijvenFormV1: FunctionComponent = () => {
             <p>
                 Dit valt onder het project "Digital twins energiesysteem Drechtsteden".
                 Dit project heeft tot doel om het energiesysteem te verduurzamen en oplossingen te zoeken voor netcongestie.
-                De opdrachtgever is XXXXXXX en de uitvoerder is ZEnMo Simulations. ZEnMo staat voor Zero emission Energy and Mobility.
+                De opdrachtgever is XXXXXXX en de uitvoerder is Zenmo Simulations. Zenmo staat voor Zero emission Energy and Mobility.
             </p>
             {error && <Alert
                 message={error}
