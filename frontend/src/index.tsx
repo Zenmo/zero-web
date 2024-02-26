@@ -4,22 +4,22 @@ import {
     createBrowserRouter,
     RouterProvider,
 } from "react-router-dom";
-import App from './App'
 import './index.css'
-import {BedrijvenFormV1} from './components/bedrijven-form-v1'
 import {DE_WIEKEN, HESSENPOORT} from './components/company-survey-v2/project'
 import {Survey} from './components/company-survey-v2/survey'
 import {ThankYou} from './components/thank-you'
 import reportWebVitals from './reportWebVitals'
+import {ZeroHeader} from "./components/zero-header";
+import App from "./App";
 
 const router = createBrowserRouter([
     {
         path: "/",
-        element: <App/>,
+        element: <ZeroHeader />,
     },
     {
-        path: "/bedrijven-drechtsteden",
-        element: <BedrijvenFormV1 />,
+        path: "/proof-of-concept",
+        element: <App />,
     },
     {
         path: "/bedrijven-hessenpoort",
