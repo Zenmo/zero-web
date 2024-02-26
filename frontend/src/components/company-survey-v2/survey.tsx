@@ -46,15 +46,19 @@ const SurveyWithReset: FunctionComponent<{ project: ProjectConfiguration, remoun
     const localStorageKey = `survey-${project.name}`
     const previousData = localStorage.getItem(localStorageKey)
     if (previousData) {
-        const previous = JSON.parse(previousData)
+        try {
+            const previous = JSON.parse(previousData)
 
-        for (const tab of previous.tabs) {
-            // these fields were renamed and are now unknown in the back-end
-            delete tab.gridConnection.transport.numDailyCarCommuters
-            delete tab.gridConnection.transport.numCommuterChargePoints
+            for (const tab of previous.tabs) {
+                // these fields were renamed and are now unknown in the back-end
+                delete tab.gridConnection?.transport?.numDailyCarCommuters
+                delete tab.gridConnection?.transport?.numCommuterChargePoints
+            }
+
+            defaultValues = previous
+        } catch (e) {
+            console.error("Deserialization of previous data failed, falling back to default values. Details: ", e)
         }
-
-        defaultValues = previous
     }
 
     // @ts-ignore
