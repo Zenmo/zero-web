@@ -104,6 +104,9 @@ class SurveyRepository(
                 this[GridConnectionTable.kleinverbuikElectricityConsumptionProfile] = gridConnection.electricity.kleinverbruik?.consumptionProfile
                 this[GridConnectionTable.grootverbruikContractedDemandCapacityKw] = gridConnection.electricity.grootverbruik?.contractedConnectionDemandCapacityKw?.toUInt()
                 this[GridConnectionTable.grootverbruikContractedSupplyCapacityKw] = gridConnection.electricity.grootverbruik?.contractedConnectionSupplyCapacityKw?.toUInt()
+                this[GridConnectionTable.hasExpansionRequestAtGridOperator] = gridConnection.electricity.gridExpansion.hasRequestAtGridOperator
+                this[GridConnectionTable.expansionRequestKW] = gridConnection.electricity.gridExpansion.requestedKW
+                this[GridConnectionTable.expansionRequestReason] = gridConnection.electricity.gridExpansion.reason
 
                 // supply
                 this[GridConnectionTable.hasSupply] = gridConnection.supply.hasSupply

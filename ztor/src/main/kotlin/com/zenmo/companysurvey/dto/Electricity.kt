@@ -18,12 +18,19 @@ data class Electricity (
 
     val kleinverbruik: CompanyKleinverbruik? = null,
     val grootverbruik: CompanyGrootverbruik? = null,
+    val gridExpansion: GridExpansion = GridExpansion(),
 ) {
     fun getConnectionCapacityKw(): Int? {
         return kleinverbruik?.connectionCapacity?.toKw() ?: grootverbruik?.contractedConnectionDemandCapacityKw
     }
 }
 
+@Serializable
+data class GridExpansion (
+    val hasRequestAtGridOperator: Boolean? = null,
+    val requestedKW: UInt? = null,
+    val reason: String = "",
+)
 
 @Serializable
 data class CompanyKleinverbruik (
