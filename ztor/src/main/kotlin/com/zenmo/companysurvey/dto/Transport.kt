@@ -14,6 +14,7 @@ data class Transport (
     val trucks: Trucks = Trucks(),
     val vans: Vans = Vans(),
     val cars: Cars = Cars(),
+    val otherVehicles: OtherVehicles = OtherVehicles(),
 )
 
 @Serializable
@@ -56,4 +57,10 @@ data class Cars (
     val numPlannedElectricCars: Int? = null,
     // Only for bedrijventerrein De Wieken
     val numPlannedHydrogenCars: Int? = null,
+)
+
+@Serializable
+data class OtherVehicles (
+    val hasOtherVehicles: Boolean? = null,
+    val electricRatio: Float? = null,
 )

@@ -6,6 +6,7 @@ import {Cars} from './cars'
 import {CommutersVisitors} from './commuters-visitors'
 import {Trucks} from './trucks'
 import {Vans} from './vans'
+import {OtherVehicles} from "./other-vehicles";
 
 export const Transport = ({form, prefix, project}: {
     form: UseFormReturn,
@@ -30,6 +31,7 @@ export const Transport = ({form, prefix, project}: {
                     <Trucks form={form} prefix={`${prefix}.trucks`} project={project}/>
                     <Vans form={form} prefix={`${prefix}.vans`} project={project}/>
                     <Cars form={form} prefix={`${prefix}.cars`} project={project}/>
+                    <OtherVehicles form={form} prefix={`${prefix}.otherVehicles`} />
                 </>
             )}
         </>

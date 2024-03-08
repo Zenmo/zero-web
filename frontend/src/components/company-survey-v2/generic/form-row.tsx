@@ -17,7 +17,7 @@ export type FormRowProps = {
     form: UseFormReturn,
 
     // pick one of either InputComponent or WrappedInput
-    InputComponent?: FunctionComponent | 'input' | 'textarea',
+    InputComponent?: FunctionComponent | 'input' | 'textarea', // use forwardRef if not a native input
     WrappedInput?: FunctionComponent<WrappedInputProps>
 
     suffix?: string, // like a unit to put after a number input

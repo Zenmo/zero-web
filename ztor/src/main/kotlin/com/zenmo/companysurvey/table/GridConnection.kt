@@ -150,4 +150,10 @@ object GridConnectionTable: Table("grid_connection") {
     val annualTravelDistancePerCarKm = uinteger("annual_travel_distance_per_car_km").nullable()
     val numPlannedElectricCars = uinteger("num_planned_electric_cars").nullable()
     val numPlannedHydgrogenCars = uinteger("num_planned_hydrogen_cars").nullable()
+
+    /**
+     * [com.zenmo.companysurvey.dto.OtherVehicles]
+     */
+    val hasOtherVehicles = bool("has_other_vehicles").nullable()
+    val otherVehiclesElectricRatio = float("other_vehicles_electric_ratio").nullable()
 }
