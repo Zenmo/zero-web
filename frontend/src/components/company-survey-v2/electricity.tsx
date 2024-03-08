@@ -70,6 +70,11 @@ export const Electricity = ({form, prefix}: {
                                 name={`${prefix}.grootverbruik.contractedConnectionSupplyCapacityKw`}
                                 form={form}
                                 suffix="kW" />
+                            <NumberRow
+                                label="Wat is de fysieke capaciteit van de netaansluiting?"
+                                name={`${prefix}.grootverbruik.physicalCapacityKw`}
+                                form={form}
+                                suffix="kW" />
                         </>
                     )}
                 </>

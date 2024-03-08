@@ -20,7 +20,7 @@ data class Electricity (
     val grootverbruik: CompanyGrootverbruik? = null,
     val gridExpansion: GridExpansion = GridExpansion(),
 ) {
-    fun getConnectionCapacityKw(): Int? {
+    fun getContractedConnectionCapacityKw(): Int? {
         return kleinverbruik?.connectionCapacity?.toKw() ?: grootverbruik?.contractedConnectionDemandCapacityKw
     }
 }
@@ -43,6 +43,7 @@ data class CompanyKleinverbruik (
 data class CompanyGrootverbruik (
     val contractedConnectionDemandCapacityKw: Int? = null,
     val contractedConnectionSupplyCapacityKw: Int? = null,
+    val physicalCapacityKw: UInt? = null,
 )
 
 enum class KleinverbruikElectricityConnectionCapacity {
