@@ -77,6 +77,11 @@ export const Supply = ({form, prefix, hasSupplyName}: {form: UseFormReturn, pref
                         name={`${prefix}.windInstalledKw`}
                         form={form}
                         suffix="kW" />
+                    <NumberRow
+                        label="Bent u van plan windmolens te plaatsen?"
+                        name={`${prefix}.windPlannedKw`}
+                        form={form}
+                        suffix="kW" />
                     <TextAreaRow
                         label="Heeft u  andere elektriciteitsproductie (dieselgenerator, waterstof, enz)? Zo ja, welke, wat is het vermogen, en wat is ongeveer de jaarlijkse productie/consumptie?"
                         form={form}

@@ -120,6 +120,7 @@ class SurveyRepository(
                 this[GridConnectionTable.pvPlannedYear] = gridConnection.supply.pvPlannedYear?.toUInt()
                 this[GridConnectionTable.missingPvReason] = gridConnection.supply.missingPvReason
                 this[GridConnectionTable.windInstalledKw] = gridConnection.supply.windInstalledKw
+                this[GridConnectionTable.windPlannedKw] = gridConnection.supply.windPlannedKw
                 this[GridConnectionTable.otherSupply] = gridConnection.supply.otherSupply
 
                 // natural gas

@@ -17,6 +17,7 @@ data class Supply (
     val missingPvReason: MissingPvReason? = null,
 
     val windInstalledKw: Float? = null,
+    val windPlannedKw: Float? = null,
     val otherSupply: String = "",
 )
 

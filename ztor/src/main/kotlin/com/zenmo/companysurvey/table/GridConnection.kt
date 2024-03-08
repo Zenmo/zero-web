@@ -71,6 +71,7 @@ object GridConnectionTable: Table("grid_connection") {
         fromDb = { MissingPvReason.valueOf(it as String) },
         toDb = { PGEnum(MissingPvReason::class.simpleName!!, it) }).nullable()
     val windInstalledKw = float("wind_installed_kw").nullable()
+    val windPlannedKw = float("wind_planned_kw").nullable()
     val otherSupply = varchar("other_supply", 1000)
 
     /**
