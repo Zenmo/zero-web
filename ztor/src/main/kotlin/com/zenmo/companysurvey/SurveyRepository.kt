@@ -63,6 +63,7 @@ class SurveyRepository(
                 this[GridConnectionTable.energyOrBuildingManagementSystemSupplier] = gridConnection.energyOrBuildingManagementSystemSupplier
                 this[GridConnectionTable.mainConsumptionProcess] = gridConnection.mainConsumptionProcess
                 this[GridConnectionTable.consumptionFlexibility] = gridConnection.consumptionFlexibility
+                this[GridConnectionTable.expansionPlans] = gridConnection.expansionPlans
                 this[GridConnectionTable.electrificationPlans] = gridConnection.electrificationPlans
                 this[GridConnectionTable.surveyFeedback] = gridConnection.surveyFeedback
 

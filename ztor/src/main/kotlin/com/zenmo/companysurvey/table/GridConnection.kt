@@ -16,6 +16,7 @@ object GridConnectionTable: Table("grid_connection") {
     val energyOrBuildingManagementSystemSupplier = varchar("energy_or_building_management_system_supplier", 1000)
     val mainConsumptionProcess = varchar("main_consumption_process", 1000)
     val consumptionFlexibility = varchar("consumption_flexibility", 1000)
+    val expansionPlans = varchar("expansion_plans", 1000)
     val electrificationPlans = varchar("electrification_plans", 1000)
     val surveyFeedback = varchar("survey_feedback", 1000)
 

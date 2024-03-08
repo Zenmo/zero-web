@@ -20,6 +20,7 @@ data class GridConnection(
     val energyOrBuildingManagementSystemSupplier: String = "",
     val mainConsumptionProcess: String = "",
     val consumptionFlexibility: String = "",
+    val expansionPlans: String = "",
     val electrificationPlans: String = "",
     val surveyFeedback: String = "",
 )
