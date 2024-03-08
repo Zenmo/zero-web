@@ -44,7 +44,7 @@ object GridConnectionTable: Table("grid_connection") {
     val grootverbruikContractedSupplyCapacityKw = uinteger("grootverbruik_contracted_supply_capacity_kw").nullable()
     val grootverbruikPhysicalCapacityKw = uinteger("grootverbruik_physical_capacity_kw").nullable()
     val hasExpansionRequestAtGridOperator = bool("has_expansion_request_at_grid_operator").nullable()
-    val expansionRequestKW = uinteger("requested_kw").nullable()
+    val expansionRequestKW = uinteger("expansion_request_kw").nullable()
     val expansionRequestReason = varchar("expansion_request_reason", 1000)
 
     /**
