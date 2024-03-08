@@ -148,6 +148,7 @@ class SurveyRepository(
                 this[GridConnectionTable.plannedBatteryPowerKw] = gridConnection.storage.plannedBatteryPowerKw
                 this[GridConnectionTable.plannedBatterySchedule] = gridConnection.storage.plannedBatterySchedule
                 this[GridConnectionTable.hasThermalStorage] = gridConnection.storage.hasThermalStorage
+                this[GridConnectionTable.thermalStorageKw] = gridConnection.storage.thermalStorageKw
             }
 
             for (address in survey.addresses) {

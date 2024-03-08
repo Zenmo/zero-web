@@ -63,10 +63,17 @@ export const Storage = ({form, prefix}: { form: UseFormReturn, prefix: string })
                 </>
             )}
             <FormRow
-                label="Maak je gebruik van opslag voor warmte of koude?"
+                label="Maakt u gebruik van opslag voor warmte of koude?"
                 name={`${prefix}.hasThermalStorage`}
                 form={form}
                 WrappedInput={BooleanInput} />
+            {watch(`${prefix}.hasThermalStorage`) && (
+                <NumberRow
+                    label="Wat is het vermogen van de warmte- of koude opslag??"
+                    name={`${prefix}.thermalStorageKw`}
+                    form={form}
+                    suffix="kW" />
+            )}
         </>
     )
 }

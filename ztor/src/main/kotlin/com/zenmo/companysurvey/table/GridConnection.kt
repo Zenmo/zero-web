@@ -107,6 +107,7 @@ object GridConnectionTable: Table("grid_connection") {
     val plannedBatterySchedule = varchar("planned_battery_schedule", 1000)
 
     val hasThermalStorage = bool("has_thermal_storage").nullable()
+    val thermalStorageKw = float("thermal_storage_kw").nullable()
 
     /**
      * [com.zenmo.companysurvey.dto.Transport]
