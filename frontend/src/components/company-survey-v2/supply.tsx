@@ -17,7 +17,7 @@ export const Supply = ({form, prefix, hasSupplyName}: {form: UseFormReturn, pref
         <>
             <h3>Elektriciteitsopwek op deze netaansluiting</h3>
             <FormRow
-                label="Is er ook elektriciteitsopwek op deze netaansluiting?"
+                label="Is er elektriciteitsopwek op deze netaansluiting?"
                 name={hasSupplyName}
                 form={form}
                 WrappedInput={BooleanInput} />
@@ -40,19 +40,19 @@ export const Supply = ({form, prefix, hasSupplyName}: {form: UseFormReturn, pref
                 </>
             )}
             <FormRow
-                label="Zijn jullie van plan de komende 5 jaar zonnepanelen (bij) te plaatsen?"
+                label="Bent u van plan de komende 5 jaar zonnepanelen (bij) te plaatsen?"
                 name={`${prefix}.pvPlanned`}
                 form={form}
                 WrappedInput={BooleanInput} />
             {pvPlanned && (
                 <>
                     <NumberRow
-                        label="Hoe veel vermogen zonnepanelen heb je gepland?"
+                        label="Hoe veel vermogen zonnepanelen heeft u gepland?"
                         name={`${prefix}.pvPlannedKwp`}
                         form={form}
                         suffix="kWp" />
                     <NumberRow
-                        label="Welk jaar verwacht je deze zonnepanelen te plaatsen?"
+                        label="Welk jaar verwacht u deze zonnepanelen te plaatsen?"
                         name={`${prefix}.pvPlannedYear`}
                         form={form}
                         options={{min: 2023, max: 2050}}/>
@@ -83,7 +83,7 @@ export const Supply = ({form, prefix, hasSupplyName}: {form: UseFormReturn, pref
                         form={form}
                         suffix="kW" />
                     <TextAreaRow
-                        label="Heeft u  andere elektriciteitsproductie (dieselgenerator, waterstof, enz)? Zo ja, welke, wat is het vermogen, en wat is ongeveer de jaarlijkse productie/consumptie?"
+                        label="Heeft u andere vormen elektriciteitsproductie (bijv. dieselgenerator of waterstof)? Zo ja, kunt u kort beschrijven welke, hoeveel het ingezet wordt, en wat het vermogen is?"
                         form={form}
                         name={`${prefix}.otherSupply`} />
                 </>

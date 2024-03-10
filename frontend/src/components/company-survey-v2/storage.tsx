@@ -15,7 +15,7 @@ export const Storage = ({form, prefix}: { form: UseFormReturn, prefix: string })
         <>
             <h2>5. Opslag</h2>
             <FormRow
-                label="Heeft u een batterij voor elektriciteitsopslag in het bedrijf?"
+                label="Heeft u batterijopslag?"
                 name={`${prefix}.hasBattery`}
                 form={form}
                 WrappedInput={BooleanInput}/>
@@ -24,40 +24,40 @@ export const Storage = ({form, prefix}: { form: UseFormReturn, prefix: string })
                             animation: flash 1s;
 `}>
                     <NumberRow
-                        label="Wat is de capaciteit van deze batterij?"
+                        label="Wat is de totale opslagcapaciteit?"
                         name={`${prefix}.batteryCapacityKwh`}
                         form={form}
                         suffix="kWh" />
                     <NumberRow
-                        label="Wat is het vermogen van deze batterij?"
+                        label="Wat is het totale batterijvermogen?"
                         name={`${prefix}.plannedBatteryPowerKw`}
                         form={form}
                         suffix="kW" />
                     <TextAreaRow
-                        label="Hoe gebruik je deze batterij of hoe wordt die aangestuurd?"
+                        label="Hoe en waarvoor wordt de batterijopslag ingezet?"
                         form={form}
                         name={`${prefix}.batterySchedule`} />
                 </div>
             )}
             <FormRow
-                label="Heeft u plannen om een batterij toe te voegen?"
+                label="Heeft u plannen om batterijopslag toe te voegen de komende jaren?"
                 name={`${prefix}.hasPlannedBattery`}
                 form={form}
                 WrappedInput={BooleanInput}/>
             {hasPlannedBattery && (
                 <>
                     <NumberRow
-                        label="Wat is de capaciteit in kWh van deze toekomstige batterij?"
+                        label="Wat is de capaciteit in kWh van de toekomstige batterijen (inschatting is voldoende)?"
                         name={`${prefix}.plannedBatteryCapacityKwh`}
                         form={form}
                         suffix="kWh" />
                     <NumberRow
-                        label="Wat is het vermogen in kW van deze toekomstige batterij?"
+                        label="Wat is het vermogen in kW van de toekomstige batterijen?"
                         name={`${prefix}.plannedBatteryCapacityKwh`}
                         form={form}
                         suffix="kW" />
                     <TextAreaRow
-                        label="Hoe ga je deze batterij gebruiken of aansturen?"
+                        label="Hoe en waarvoor gaat u de batterijopslag waarschijnlijk inzetten?"
                         form={form}
                         name={`${prefix}.plannedBatterySchedule`} />
                 </>
@@ -69,7 +69,7 @@ export const Storage = ({form, prefix}: { form: UseFormReturn, prefix: string })
                 WrappedInput={BooleanInput} />
             {watch(`${prefix}.hasThermalStorage`) && (
                 <NumberRow
-                    label="Wat is het vermogen van de warmte- of koude opslag??"
+                    label="Wat is het vermogen van de warmte- of koude opslag?"
                     name={`${prefix}.thermalStorageKw`}
                     form={form}
                     suffix="kW" />

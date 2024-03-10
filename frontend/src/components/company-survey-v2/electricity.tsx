@@ -27,7 +27,6 @@ export const Electricity = ({form, prefix}: {
                 label={
                     <>
                         <div>Heeft uw bedrijf op dit adres een aansluitcontract voor elektriciteit met een netbeheerder?</div>
-                        <div>(als u onderhuurder bent hoeft dit niet zo te zijn)</div>
                     </>
                 }
                 name={`${prefix}.hasConnection`}
@@ -36,7 +35,7 @@ export const Electricity = ({form, prefix}: {
             {hasConnection &&
                 <>
                     {/*<FormRow label="EAN" name={`${prefix}.ean`} form={form} />*/}
-                    <LabelRow label="Type aansluiting">
+                    <LabelRow label="Heeft u een groot- of kleinverbruik aansluiting?">
                         <Radio.Group onChange={e => setConnectionType(e.target.value)} value={connectionType}>
                             <Radio value={ConnectionType.GROOTVERBRUIK} css={{display: 'block'}}>Grootverbruik</Radio>
                             <Radio value={ConnectionType.KLEINVERBRUIK} css={{display: 'block'}}>Kleinverbruik</Radio>
@@ -61,12 +60,12 @@ export const Electricity = ({form, prefix}: {
                     {connectionType === ConnectionType.GROOTVERBRUIK && (
                         <>
                             <NumberRow
-                                label="Wat is uw gecontracteerde vermogen voor elektriciteitsafname?"
+                                label="Wat is uw gecontracteerd vermogen voor elektriciteitsafname?"
                                 name={`${prefix}.grootverbruik.contractedConnectionDemandCapacityKw`}
                                 form={form}
                                 suffix="kW" />
                             <NumberRow
-                                label="Wat is uw gecontracteerde vermogen voor elektriciteitsteruglevering?"
+                                label="Wat is uw gecontracteerd vermogen voor elektriciteitsteruglevering?"
                                 name={`${prefix}.grootverbruik.contractedConnectionSupplyCapacityKw`}
                                 form={form}
                                 suffix="kW" />
