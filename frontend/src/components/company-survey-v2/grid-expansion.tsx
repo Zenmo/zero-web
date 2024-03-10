@@ -12,18 +12,18 @@ export const GridExpansion: FunctionComponent<{
     <>
         <h3>Uitbreiding</h3>
         <FormRow
-            label="Heeft u een aanvraag uit staan bij de netbeheerder voor het uitbreiden van de aansluiting?"
+            label="Heeft u een aanvraag uitstaan bij de netbeheerder voor het uitbreiden van de aansluiting?"
             name={`${prefix}.hasRequestAtGridOperator`}
             form={form}
             WrappedInput={BooleanInput} />
         {form.watch(`${prefix}.hasRequestAtGridOperator`) && (
             <>
                 <NumberRow
-                    label="Met hoeveel kW of kVA?"
+                    label="Hoeveel extra kW (ofwel kVA) heeft u aangevraagd?"
                     name={`${prefix}.requestedKW`}
                     form={form} />
                 <TextAreaRow
-                    label="Waarvoor is de uitbreiding?"
+                    label="Wat is de reden van de netuitbreiding?"
                     name={`${prefix}.reason`}
                     form={form} />
             </>

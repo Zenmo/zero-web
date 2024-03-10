@@ -17,21 +17,21 @@ export const Heat = ({form, prefix}: { form: UseFormReturn, prefix: string }) =>
 
             {heatingTypes.includes(HeatingType.GAS_BOILER) && (
                 <NumberRow
-                    label="Wat is het totaal opgeteld vermogen van jullie gasketels?"
+                    label="Wat is het totaal opgeteld vermogen van uw gasketels?"
                     name={`${prefix}.sumGasBoilerKw`}
                     form={form}
                     suffix="kW" />
             )}
             {heatingTypes.includes(HeatingType.ELECTRIC_HEATPUMP) && (
                 <NumberRow
-                    label="Wat is het totaal opgeteld vermogen van jullie elektrische warmtepompen?"
+                    label="Wat is het totaal opgeteld vermogen van uw elektrische warmtepompen?"
                     name={`${prefix}.sumHeatPumpKw`}
                     form={form}
                     suffix="kW" />
             )}
             {heatingTypes.includes(HeatingType.HYBRID_HEATPUMP) && (
                 <NumberRow
-                    label="Wat is het totaal opgeteld elektrisch vermogen van jullie hybride warmtepompen?"
+                    label="Wat is het totaal opgeteld elektrisch vermogen van uw hybride warmtepompen?"
                     name={`${prefix}.sumHybridHeatPumpElectricKw`}
                     form={form}
                     suffix="kW" />
@@ -44,11 +44,11 @@ export const Heat = ({form, prefix}: { form: UseFormReturn, prefix: string }) =>
                     suffix="GJ" />
             )}
             <TextAreaRow
-                label="Wisselen jullie op een andere manier lokaal warmte uit (bijv. met naastgelegen bedrijven)? Zo ja, hoe?"
+                label="Wisselt u lokaal warmte uit (bijv. met naastgelegen bedrijven)? Zo ja, hoe?"
                 form={form}
                 name={`${prefix}.localHeatExchangeDescription`} />
             <FormRow
-                label="Heeft u ongebruikte restwarmte?"
+                label="Heeft u een significante hoeveelheid ongebruikte restwarmte?"
                 name={`${prefix}.hasUnusedResidualHeat`}
                 form={form}
                 WrappedInput={BooleanInput} />
