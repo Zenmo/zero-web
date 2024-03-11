@@ -26,6 +26,7 @@ jobs:
                         // Azure Container Apps name can be max 32 characters
                         const maxBranchLength = 32 - shortCommit.length - 'kleinverbruik'.length - 2 * '-'.length
                         const shortBranch = branch
+                            .toLowerCase()
                             .substr(0, maxBranchLength)
                             .replaceAll(/-*$/g, '') // remove trailing dashes because it would lead to an invalid name
                         
