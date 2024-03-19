@@ -61,6 +61,16 @@ services:
             - gradle-build-once-cache:/home/gradle/.gradle
         command: gradle buildFatJar --no-daemon
 
+    ## compile with older version for AnyLogic
+    ztor-build-once-11:
+        image: gradle:8.6.0-jdk11
+        working_dir: /home/gradle/ztor
+        user: gradle
+        volumes:
+            - ./ztor:/home/gradle/ztor
+            - gradle-build-once-cache:/home/gradle/.gradle
+        command: gradle buildFatJar --no-daemon
+
     ## Recompiles on source code changes.
     ## Do ensure that the two Gradle containers have independent Home directories and Project cache directories.
     ztor-build:

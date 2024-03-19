@@ -66,8 +66,7 @@ class RepositoryTest {
         repo.save(survey)
         val storedSurveys = repo.getSurveys(CompanySurveyTable.id eq survey.id)
         assertEquals(1, storedSurveys.size)
-        // TODO: this assertion fails but it seems alright, need better tooling to diagnose.
-        //assertEquals(survey, storedSurveys.first())
+        assertEquals(survey, storedSurveys.first())
     }
 
     /**

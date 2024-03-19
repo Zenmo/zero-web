@@ -187,6 +187,7 @@ class SurveyRepository(
                 pvPlanned = row[GridConnectionTable.pvPlanned],
                 pvPlannedKwp = row[GridConnectionTable.pvPlannedKwp]?.toInt(),
                 pvPlannedOrientation = row[GridConnectionTable.pvPlannedOrientation]?.let { PVOrientation.valueOf(it.name) },
+                pvPlannedYear = row[GridConnectionTable.pvPlannedYear]?.toInt(),
                 missingPvReason = row[GridConnectionTable.missingPvReason],
                 windInstalledKw = row[GridConnectionTable.windInstalledKw],
                 windPlannedKw = row[GridConnectionTable.windPlannedKw],

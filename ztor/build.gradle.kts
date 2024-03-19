@@ -20,6 +20,11 @@ repositories {
     mavenCentral()
 }
 
+// for AnyLogic build
+//kotlin {
+//    jvmToolchain(11)
+//}
+
 val ktor_version = "2.3.7"
 val exposed_version = "0.48.0"
 
