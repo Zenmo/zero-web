@@ -104,8 +104,11 @@ const SurveyWithReset: FunctionComponent<{ project: ProjectConfiguration, remoun
         surveyData.addresses = []
 
         for (const tab of surveyData.tabs) {
-            if (tab.address.isSameAddress) {
-                surveyData.addresses[surveyData.address.length - 1].gridConnections.push(tab.gridConnection)
+            const isSameAddress = tab.address.isSameAddress
+            delete tab.address.isSameAddress
+
+            if (isSameAddress) {
+                surveyData.addresses[surveyData.addresses.length - 1].gridConnections.push(tab.gridConnection)
             } else {
                 surveyData.addresses.push({
                     ...tab.address,

@@ -66,7 +66,7 @@ export const Supply = ({form, prefix, hasSupplyName}: {form: UseFormReturn, pref
             {hasSupply === false && pvPlanned === false && (
                 <FormRow
                     label="Waarom niet?"
-                    name={`${prefix}.noPvReason`}
+                    name={`${prefix}.missingPvReason`}
                     form={form}
                     WrappedInput={MissingPvReason} />
             )}
