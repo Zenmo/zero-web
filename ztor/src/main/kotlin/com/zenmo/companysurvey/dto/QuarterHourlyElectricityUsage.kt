@@ -7,7 +7,7 @@ import kotlinx.serialization.Serializable
  * Not implemented yet.
  */
 @Serializable
-class QuarterHourlyElectricityUsage (
+data class QuarterHourlyElectricityUsage (
     // should be every 15 minutes
     val timestamp: kotlinx.datetime.Instant,
     val kwh: Float,

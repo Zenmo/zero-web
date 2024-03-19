@@ -66,7 +66,7 @@ fun Application.configureAuthentication() {
                 }
                 call.respondText(currentPrincipal.accessToken)
                 // redirects home if the url is not found before authorization
-                currentPrincipal?.let { principal ->
+                currentPrincipal.let { principal ->
                     principal.state?.let { state ->
                         call.sessions.set(UserSession(state, principal.accessToken))
                         redirects[state]?.let { redirect ->

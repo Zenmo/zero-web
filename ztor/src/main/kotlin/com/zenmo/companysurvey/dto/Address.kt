@@ -10,7 +10,7 @@ data class Address(
     val id: UUID = UUID.randomUUID(),
 
     val street: String,
-    val houseNumber: Int,
+    val houseNumber: UInt,
     val houseLetter: String = "", // A-Z allowed
     val houseNumberSuffix: String = "",
     val postalCode: String = "",

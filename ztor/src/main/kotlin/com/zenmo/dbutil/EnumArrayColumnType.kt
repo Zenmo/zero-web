@@ -87,7 +87,6 @@ public class EnumArrayColumnType<T : Enum<T>>(
     }
 
     override fun setParameter(stmt: PreparedStatementApi, index: Int, value: Any?) {
-        println("setParameter: $value")
         if (value == null) {
             stmt.setNull(index, this)
         } else {

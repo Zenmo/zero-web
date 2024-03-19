@@ -13,7 +13,7 @@ val mockSurvey = Survey(
         Address(
             id = UUID.randomUUID(),
             street = "Kerkstraat",
-            houseNumber = 1,
+            houseNumber = 1u,
             houseLetter = "A",
             houseNumberSuffix = "100",
             postalCode = "1234AB",
