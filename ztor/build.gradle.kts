@@ -21,7 +21,7 @@ repositories {
 }
 
 val ktor_version = "2.3.7"
-val exposed_version = "0.45.0"
+val exposed_version = "0.48.0"
 
 dependencies {
     // for file upload

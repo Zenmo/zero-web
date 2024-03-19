@@ -7,7 +7,7 @@ import kotlinx.serialization.Serializable
  * or data fetched through an API for which the Company gave us permission to access.
  */
 @Serializable
-class HourlyGasUsage(
+data class HourlyGasUsage(
     val timestamp: kotlinx.datetime.Instant,
     val m3: Float,
 )

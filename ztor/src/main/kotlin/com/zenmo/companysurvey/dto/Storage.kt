@@ -3,7 +3,7 @@ package com.zenmo.companysurvey.dto
 import kotlinx.serialization.Serializable
 
 @Serializable
-class Storage(
+data class Storage(
     val hasBattery: Boolean? = null,
     val batteryCapacityKwh: Float? = null,
     val batteryPowerKw: Float? = null,
