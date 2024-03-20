@@ -22,28 +22,44 @@ services:
             - 127.0.0.1:80:80
 
     ## Production version
-#    ztor-production:
-#        build:
-#            context: ./ztor
-#        user: 1000:1000
-#        ports:
-#            - 127.0.0.1:8082:8082
-#        env_file:
-#            - ./docker/ztor.env
-#        environment:
-#            POSTGRES_URL: jdbc:postgresql://postgres:5432/postgres
-#            POSTGRES_USER: postgres
+    ztor-production:
+        build:
+            context: .
+        user: 1000:1000
+        ports:
+            - 127.0.0.1:8082:8082
+        env_file:
+            - ./docker/ztor.env
+        environment:
+            POSTGRES_URL: jdbc:postgresql://postgres:5432/postgres
+            POSTGRES_USER: postgres
+
+    zorm-test:
+        image: gradle:8.3.0-jdk20
+        depends_on:
+            - postgres
+        working_dir: /home/gradle/zorm
+        user: gradle
+        volumes:
+            - ./zorm:/home/gradle/zorm
+            - gradle-test-cache:/home/gradle/.gradle
+        command: gradle test --no-daemon
+        env_file:
+            - ./docker/ztor.env
+        environment:
+            POSTGRES_URL: jdbc:postgresql://postgres:5432/test
+            POSTGRES_USER: postgres
 
     ztor-test:
         image: gradle:8.3.0-jdk20
         depends_on:
             - postgres
-        working_dir: /home/gradle/ztor
+        working_dir: /home/gradle/zero
         user: gradle
         volumes:
-            - ./ztor:/home/gradle/ztor
+            - .:/home/gradle/zero
             - gradle-test-cache:/home/gradle/.gradle
-        command: gradle test --no-daemon
+        command: gradle ztor:test --no-daemon
         env_file:
             -   ./docker/ztor.env
         environment:
@@ -61,13 +77,13 @@ services:
             - gradle-build-once-cache:/home/gradle/.gradle
         command: gradle buildFatJar --no-daemon
 
-    ## compile with older version for AnyLogic
-    ztor-build-once-11:
+    ## compile with Java 11 for AnyLogic
+    zorm-fatjar-11:
         image: gradle:8.6.0-jdk11
-        working_dir: /home/gradle/ztor
+        working_dir: /home/gradle/zorm
         user: gradle
         volumes:
-            - ./ztor:/home/gradle/ztor
+            - ./zorm:/home/gradle/zorm
             - gradle-build-once-cache:/home/gradle/.gradle
         command: gradle buildFatJar --no-daemon
 
@@ -75,12 +91,12 @@ services:
     ## Do ensure that the two Gradle containers have independent Home directories and Project cache directories.
     ztor-build:
         image: gradle:8.3.0-jdk20
-        working_dir: /home/gradle/ztor
+        working_dir: /home/gradle/zero
         user: gradle
         volumes:
-            - ./ztor:/home/gradle/ztor
+            - .:/home/gradle/zero
             - gradle-build-cache:/home/gradle/.gradle
-        command: gradle --continuous classes
+        command: gradle --continuous ztor:classes
 
     ## Runs Ktor web server and reloads classes if the compiled .class file changes.
     ## Do ensure that the two Gradle containers have independent Home directories and Project cache directories.
@@ -88,13 +104,13 @@ services:
         image: gradle:8.3.0-jdk20
         ports:
             - 127.0.0.1:8082:8082
-        working_dir: /home/gradle/ztor
+        working_dir: /home/gradle/zero
         user: gradle
         volumes:
-            - ./ztor:/home/gradle/ztor
+            - .:/home/gradle/zero
             - gradle-run-cache:/home/gradle/.gradle
         restart: unless-stopped
-        command: gradle --project-cache-dir=/tmp/gradle run
+        command: gradle --project-cache-dir=/tmp/gradle ztor:run
         env_file:
             - ./docker/ztor.env
         environment:
@@ -105,16 +121,16 @@ services:
             - ztor-build
             - postgres
 
-    ztor-cmd:
+    ztor-echo-schema-sql:
         image: gradle:8.3.0-jdk20
         ports:
             - 127.0.0.1:8082:8082
-        working_dir: /home/gradle/ztor
+        working_dir: /home/gradle/zero
         user: gradle
         volumes:
-            - ./ztor:/home/gradle/ztor
+            - .:/home/gradle/zero
             - gradle-cmd-cache:/home/gradle/.gradle
-        command: gradle --project-cache-dir=/tmp/gradle -Dep-online-csv=poepie run --args=echo-schema-sql
+        command: gradle --project-cache-dir=/tmp/gradle -Dep-online-csv=poepie ztor:run --args=echo-schema-sql
         env_file:
            - ./docker/ztor.env
         environment:
