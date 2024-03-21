@@ -13,7 +13,7 @@ val mockSurvey = Survey(
         Address(
             id = UUID.randomUUID(),
             street = "Kerkstraat",
-            houseNumber = 1u,
+            houseNumber = 35,
             houseLetter = "A",
             houseNumberSuffix = "100",
             postalCode = "1234AB",
@@ -42,7 +42,7 @@ val mockSurvey = Survey(
                         grootverbruik = CompanyGrootverbruik(
                             contractedConnectionDemandCapacityKw = 100,
                             contractedConnectionSupplyCapacityKw = 200,
-                            physicalCapacityKw = 300u,
+                            physicalCapacityKw = 300,
                         ),
                         kleinverbruik = CompanyKleinverbruik(
                             connectionCapacity = KleinverbruikElectricityConnectionCapacity.`3x63A`,
@@ -56,7 +56,7 @@ val mockSurvey = Survey(
                         ),
                         gridExpansion = GridExpansion(
                             hasRequestAtGridOperator = true,
-                            requestedKW = 200u,
+                            requestedKW = 200,
                             reason = "Mooaar power!",
                         ),
                     ),
@@ -115,8 +115,8 @@ val mockSurvey = Survey(
                     transport = Transport(
                         hasVehicles = false,
                         numDailyCarAndVanCommuters = 14,
-                        numDailyCarVisitors = 5u,
-                        numCommuterAndVisitorChargePoints = 2u,
+                        numDailyCarVisitors = 5,
+                        numCommuterAndVisitorChargePoints = 2,
                         cars = Cars(
                             numCars = 2,
                             numElectricCars = 0,

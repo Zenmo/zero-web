@@ -57,6 +57,6 @@ fun schemaSql(db: Database): List<String> {
 }
 
 fun echoSchemaSql(db: Database) {
-    val sql = schemaSql(db).reduce() { acc, s -> acc + ";\n" + s } + ";"
+    val sql = schemaSql(db).reduce { acc, s -> acc + ";\n" + s } + ";"
     println(sql)
 }

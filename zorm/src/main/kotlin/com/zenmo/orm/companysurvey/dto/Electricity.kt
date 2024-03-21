@@ -28,7 +28,7 @@ data class Electricity (
 @Serializable
 data class GridExpansion (
     val hasRequestAtGridOperator: Boolean? = null,
-    val requestedKW: UInt? = null,
+    val requestedKW: Int? = null,
     val reason: String = "",
 )
 
@@ -43,7 +43,7 @@ data class CompanyKleinverbruik (
 data class CompanyGrootverbruik (
     val contractedConnectionDemandCapacityKw: Int? = null,
     val contractedConnectionSupplyCapacityKw: Int? = null,
-    val physicalCapacityKw: UInt? = null,
+    val physicalCapacityKw: Int? = null,
 )
 
 enum class KleinverbruikElectricityConnectionCapacity {

@@ -14,7 +14,7 @@ import kotlin.Array
 import kotlin.reflect.KClass
 import java.sql.Array as SQLArray
 
-public fun <T : Enum<T>> Table.enumArray(
+fun <T : Enum<T>> Table.enumArray(
     name: String,
     enumClass: KClass<T>,
 ) =
@@ -31,13 +31,13 @@ public fun <T : Enum<T>> Table.enumArray(
  *
  * @see any
  */
-public infix fun String.equalsAny(other: Expression<Array<String>>): EqOp =
+infix fun String.equalsAny(other: Expression<Array<String>>): EqOp =
     stringLiteral(this) eqAny other
 
 /**
  * Invokes the `ANY` function on [expression].
  */
-public fun <T : Serializable> any(
+fun <T : Serializable> any(
     expression: Expression<Array<T>>,
 ): ExpressionWithColumnType<String?> = CustomStringFunction("ANY", expression)
 
@@ -49,7 +49,7 @@ private infix fun <T : Serializable> Expression<T>.eqAny(other: Expression<Array
  * TODO: this can probably be generalized to any array type.
  * The serialization of the element would then be delegated to another [ColumnType].
  */
-public class EnumArrayColumnType<T : Enum<T>>(
+class EnumArrayColumnType<T : Enum<T>>(
     private val enumClass: KClass<T>,
     private val size: Int? = null,
     private val databaseType: String = enumClass.simpleName!!,

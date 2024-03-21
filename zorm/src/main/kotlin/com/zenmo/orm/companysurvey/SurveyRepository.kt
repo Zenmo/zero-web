@@ -122,7 +122,7 @@ class SurveyRepository(
         return Address(
             id = row[AddressTable.id],
             street = row[AddressTable.street],
-            houseNumber = row[AddressTable.houseNumber],
+            houseNumber = row[AddressTable.houseNumber].toInt(),
             houseNumberSuffix = row[AddressTable.houseNumberSuffix],
             houseLetter = row[AddressTable.houseLetter],
             postalCode = row[AddressTable.postalCode],
@@ -172,11 +172,11 @@ class SurveyRepository(
                 grootverbruik = CompanyGrootverbruik(
                     contractedConnectionDemandCapacityKw = row[GridConnectionTable.grootverbruikContractedDemandCapacityKw]?.toInt(),
                     contractedConnectionSupplyCapacityKw = row[GridConnectionTable.grootverbruikContractedSupplyCapacityKw]?.toInt(),
-                    physicalCapacityKw = row[GridConnectionTable.grootverbruikPhysicalCapacityKw]?.toUInt(),
+                    physicalCapacityKw = row[GridConnectionTable.grootverbruikPhysicalCapacityKw]?.toInt(),
                 ),
                 gridExpansion = GridExpansion(
                     hasRequestAtGridOperator = row[GridConnectionTable.hasExpansionRequestAtGridOperator],
-                    requestedKW = row[GridConnectionTable.expansionRequestKW]?.toUInt(),
+                    requestedKW = row[GridConnectionTable.expansionRequestKW]?.toInt(),
                     reason = row[GridConnectionTable.expansionRequestReason],
                 ),
             ),
@@ -223,8 +223,8 @@ class SurveyRepository(
             transport = Transport(
                 hasVehicles = row[GridConnectionTable.hasVehicles],
                 numDailyCarAndVanCommuters = row[GridConnectionTable.numDailyCarAndVanCommuters]?.toInt(),
-                numDailyCarVisitors = row[GridConnectionTable.numDailyCarVisitors],
-                numCommuterAndVisitorChargePoints = row[GridConnectionTable.numCommuterAndVisitorChargePoints],
+                numDailyCarVisitors = row[GridConnectionTable.numDailyCarVisitors]?.toInt(),
+                numCommuterAndVisitorChargePoints = row[GridConnectionTable.numCommuterAndVisitorChargePoints]?.toInt(),
                 trucks = Trucks(
                     numTrucks = row[GridConnectionTable.numTrucks]?.toInt(),
                     numElectricTrucks = row[GridConnectionTable.numElectricTrucks]?.toInt(),
@@ -277,7 +277,7 @@ class SurveyRepository(
                 this[AddressTable.id] = address.id
                 this[AddressTable.surveyId] = survey.id
                 this[AddressTable.street] = address.street
-                this[AddressTable.houseNumber] = address.houseNumber
+                this[AddressTable.houseNumber] = address.houseNumber.toUInt()
                 this[AddressTable.houseLetter] = address.houseLetter
                 this[AddressTable.houseNumberSuffix] = address.houseNumberSuffix
                 this[AddressTable.postalCode] = address.postalCode
@@ -308,8 +308,8 @@ class SurveyRepository(
                 // transport
                 this[GridConnectionTable.hasVehicles] = gridConnection.transport.hasVehicles
                 this[GridConnectionTable.numDailyCarAndVanCommuters] = gridConnection.transport.numDailyCarAndVanCommuters?.toUInt()
-                this[GridConnectionTable.numDailyCarVisitors] = gridConnection.transport.numDailyCarVisitors
-                this[GridConnectionTable.numCommuterAndVisitorChargePoints] = gridConnection.transport.numCommuterAndVisitorChargePoints
+                this[GridConnectionTable.numDailyCarVisitors] = gridConnection.transport.numDailyCarVisitors?.toUInt()
+                this[GridConnectionTable.numCommuterAndVisitorChargePoints] = gridConnection.transport.numCommuterAndVisitorChargePoints?.toUInt()
 
                 // trucks
                 this[GridConnectionTable.numTrucks] = gridConnection.transport.trucks.numTrucks?.toUInt()
@@ -351,9 +351,9 @@ class SurveyRepository(
                 this[GridConnectionTable.kleinverbuikElectricityConsumptionProfile] = gridConnection.electricity.kleinverbruik?.consumptionProfile
                 this[GridConnectionTable.grootverbruikContractedDemandCapacityKw] = gridConnection.electricity.grootverbruik?.contractedConnectionDemandCapacityKw?.toUInt()
                 this[GridConnectionTable.grootverbruikContractedSupplyCapacityKw] = gridConnection.electricity.grootverbruik?.contractedConnectionSupplyCapacityKw?.toUInt()
-                this[GridConnectionTable.grootverbruikPhysicalCapacityKw] = gridConnection.electricity.grootverbruik?.physicalCapacityKw;
+                this[GridConnectionTable.grootverbruikPhysicalCapacityKw] = gridConnection.electricity.grootverbruik?.physicalCapacityKw?.toUInt()
                 this[GridConnectionTable.hasExpansionRequestAtGridOperator] = gridConnection.electricity.gridExpansion.hasRequestAtGridOperator
-                this[GridConnectionTable.expansionRequestKW] = gridConnection.electricity.gridExpansion.requestedKW
+                this[GridConnectionTable.expansionRequestKW] = gridConnection.electricity.gridExpansion.requestedKW?.toUInt()
                 this[GridConnectionTable.expansionRequestReason] = gridConnection.electricity.gridExpansion.reason
 
                 // supply

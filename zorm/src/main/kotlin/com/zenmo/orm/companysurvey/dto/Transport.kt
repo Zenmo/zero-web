@@ -9,8 +9,8 @@ import kotlinx.serialization.Serializable
 data class Transport (
     val hasVehicles: Boolean? = null,
     val numDailyCarAndVanCommuters: Int? = null,
-    val numDailyCarVisitors: UInt? = null,
-    val numCommuterAndVisitorChargePoints: UInt? = null,
+    val numDailyCarVisitors: Int? = null,
+    val numCommuterAndVisitorChargePoints: Int? = null,
     val trucks: Trucks = Trucks(),
     val vans: Vans = Vans(),
     val cars: Cars = Cars(),
