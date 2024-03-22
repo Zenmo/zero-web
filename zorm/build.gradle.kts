@@ -1,12 +1,14 @@
+import java.net.URI
 
 plugins {
     id("com.github.johnrengelman.shadow") version "8.1.1"
+    `maven-publish`
     kotlin("jvm") version "1.9.23"
     kotlin("plugin.serialization") version "1.9.23"
 }
 
 group = "com.zenmo.orm"
-version = "0.0.1"
+version = "dev"
 
 repositories {
     mavenCentral()
@@ -43,5 +45,28 @@ tasks.withType<Test> {
 tasks {
     shadowJar {
 
+    }
+}
+
+publishing {
+    publications {
+        create<MavenPublication>("maven") {
+            groupId = "com.zenmo"
+            artifactId = "libzorm"
+            // TODO: include java version
+            version = System.getenv("GITHUB_RUN_NUMBER") ?: "dev"
+
+            artifact(tasks["shadowJar"])
+        }
+    }
+    repositories {
+        maven {
+            name = "GitHubPackages"
+            url = URI("https://maven.pkg.github.com/zenmo/zero")
+            credentials {
+                username = System.getenv("GITHUB_ACTOR")
+                password = System.getenv("GITHUB_TOKEN")
+            }
+        }
     }
 }
