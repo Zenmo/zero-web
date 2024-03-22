@@ -10,4 +10,8 @@ data class NaturalGas (
     val hourlyValuesFiles: List<File> = emptyList(),
     val hourlyUsage: List<HourlyGasUsage> = emptyList(),
     val percentageUsedForHeating: Int? = null,
-)
+) {
+    fun getHasConnection(): Boolean {
+        return hasConnection ?: false
+    }
+}

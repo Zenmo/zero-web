@@ -20,6 +20,10 @@ data class Electricity (
     val grootverbruik: CompanyGrootverbruik? = null,
     val gridExpansion: GridExpansion = GridExpansion(),
 ) {
+    fun getHasConnection(): Boolean {
+        return hasConnection ?: false
+    }
+    
     fun getContractedConnectionCapacityKw(): Int? {
         return kleinverbruik?.connectionCapacity?.toKw() ?: grootverbruik?.contractedConnectionDemandCapacityKw
     }
