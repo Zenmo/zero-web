@@ -146,7 +146,6 @@ val mockSurvey = Survey(
                         ),
                         otherVehicles = OtherVehicles(
                             hasOtherVehicles = true,
-                            electricRatio = .4f,
                         )
                     ),
                 )

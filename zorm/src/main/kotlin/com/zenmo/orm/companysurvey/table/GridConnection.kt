@@ -155,5 +155,4 @@ object GridConnectionTable: Table("grid_connection") {
      * [com.zenmo.companysurvey.dto.OtherVehicles]
      */
     val hasOtherVehicles = bool("has_other_vehicles").nullable()
-    val otherVehiclesElectricRatio = float("other_vehicles_electric_ratio").nullable()
 }
