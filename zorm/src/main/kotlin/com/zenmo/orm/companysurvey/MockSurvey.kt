@@ -146,6 +146,7 @@ val mockSurvey = Survey(
                         ),
                         otherVehicles = OtherVehicles(
                             hasOtherVehicles = true,
+                            description = "Other vehicles description",
                         )
                     ),
                 )

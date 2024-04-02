@@ -254,6 +254,7 @@ class SurveyRepository(
                 ),
                 otherVehicles = OtherVehicles(
                     hasOtherVehicles = row[GridConnectionTable.hasOtherVehicles],
+                    description = row[GridConnectionTable.otherVehiclesDescription],
                 ),
             ),
         )
@@ -339,6 +340,7 @@ class SurveyRepository(
 
                 // other vehicles
                 this[GridConnectionTable.hasOtherVehicles] = gridConnection.transport.otherVehicles.hasOtherVehicles
+                this[GridConnectionTable.otherVehiclesDescription] = gridConnection.transport.otherVehicles.description
 
                 // electricity
                 this[GridConnectionTable.hasElectricityConnection] = gridConnection.electricity.hasConnection

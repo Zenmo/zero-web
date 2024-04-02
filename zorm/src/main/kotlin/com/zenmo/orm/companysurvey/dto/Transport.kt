@@ -62,4 +62,6 @@ data class Cars (
 @Serializable
 data class OtherVehicles (
     val hasOtherVehicles: Boolean? = null,
+    // which vehicles, usage patterns, how many, electrification.
+    val description: String = "",
 )
