@@ -63,7 +63,19 @@ class RepositoryTest {
         repo.save(survey)
         val storedSurveys = repo.getSurveys(CompanySurveyTable.id eq survey.id)
         assertEquals(1, storedSurveys.size)
-        assertEquals(survey, storedSurveys.first())
+
+        val expectedSurvey = survey.copy(
+            addresses = survey.addresses.map {
+                it.copy(
+                    gridConnections = it.gridConnections.map {
+                        it.copy(
+                            sequence = 1,
+                        )
+                    }
+                )
+             },
+        )
+        assertEquals(expectedSurvey, storedSurveys.first())
     }
 
     /**

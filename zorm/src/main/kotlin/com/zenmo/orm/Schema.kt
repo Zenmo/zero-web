@@ -5,6 +5,7 @@ import com.zenmo.orm.companysurvey.dto.*
 import com.zenmo.orm.companysurvey.table.GridConnectionTable
 import com.zenmo.orm.companysurvey.table.CompanySurveyTable
 import com.zenmo.orm.companysurvey.table.FileTable
+import com.zenmo.orm.companysurvey.table.gridConnectionSequence
 import com.zenmo.orm.dbutil.createEnumTypeSql
 import com.zenmo.orm.energieprestatieonline.RawPandTable
 import org.jetbrains.exposed.sql.Database
@@ -50,6 +51,7 @@ fun schemaSql(db: Database): List<String> {
     }
 
     transaction(db) {
+        statements.addAll(gridConnectionSequence.createStatement())
         statements.addAll(SchemaUtils.createStatements(*tables))
     }
 
