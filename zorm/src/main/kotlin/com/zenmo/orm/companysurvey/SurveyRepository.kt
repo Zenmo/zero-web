@@ -16,7 +16,15 @@ class SurveyRepository(
         private val db: Database
 ) {
     fun getHessenpoortSurveys(): List<Survey> {
-        return getSurveys(CompanySurveyTable.project eq "Hessenpoort")
+        return getSurveyByProject("Hessenpoort")
+    }
+
+    fun getDeWiekenSurveys(): List<Survey> {
+        return getSurveyByProject("De Wieken")
+    }
+
+    fun getSurveyByProject(project: String): List<Survey> {
+        return getSurveys(CompanySurveyTable.project eq project)
     }
 
     fun getSurveys(filter: Op<Boolean> = Op.TRUE): List<Survey> {
