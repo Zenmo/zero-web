@@ -1,10 +1,10 @@
-import {Controller, UseFormReturn} from "react-hook-form";
+import {UseFormReturn} from "react-hook-form";
 import {BooleanRow} from "../generic/boolean-row";
-import {LabelRow} from "../generic/label-row";
 import {FunctionComponent} from "react";
+import {TextAreaRow} from "../generic/text-area-row";
 
 export const OtherVehicles: FunctionComponent<{ form: UseFormReturn, prefix: string}> = ({form, prefix}: { form: UseFormReturn, prefix: string}) => {
-    const {register, watch} = form
+    const { watch} = form
 
     return (
         <>
@@ -14,7 +14,10 @@ export const OtherVehicles: FunctionComponent<{ form: UseFormReturn, prefix: str
                 name={`${prefix}.hasOtherVehicles`}
                 form={form} />
             {watch(`${prefix}.hasOtherVehicles`) && (
-                <span>(placeholder)</span>
+                <TextAreaRow
+                    label="Kunt u kort toelichten wat voor voertuigen dat zijn, hoe ze ongeveer ingezet worden, hoeveel, en de elektrificatie(plannen)?"
+                    form={form}
+                    name={`${prefix}.description`} />
             )}
         </>
     )

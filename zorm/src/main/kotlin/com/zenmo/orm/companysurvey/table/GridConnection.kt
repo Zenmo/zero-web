@@ -155,4 +155,5 @@ object GridConnectionTable: Table("grid_connection") {
      * [com.zenmo.companysurvey.dto.OtherVehicles]
      */
     val hasOtherVehicles = bool("has_other_vehicles").nullable()
+    val otherVehiclesDescription = varchar("other_vehicles_description", 5000)
 }
