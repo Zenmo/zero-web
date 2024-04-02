@@ -9,6 +9,9 @@ data class GridConnection(
     @Serializable(with = UUIDSerializer::class)
     val id: UUID = UUID.randomUUID(),
 
+    // Is always set when object comes from the database.
+    val sequence: Int? = null,
+
     val electricity: Electricity = Electricity(),
     val supply: Supply = Supply(),
     val naturalGas: NaturalGas = NaturalGas(),

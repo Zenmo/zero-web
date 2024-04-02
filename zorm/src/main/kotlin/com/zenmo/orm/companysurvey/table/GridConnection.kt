@@ -4,11 +4,20 @@ import com.zenmo.orm.companysurvey.dto.*
 import com.zenmo.orm.dbutil.PGEnum
 import com.zenmo.orm.dbutil.enumArray
 import org.jetbrains.exposed.sql.Table
+import org.jetbrains.exposed.sql.Sequence
+import org.jetbrains.exposed.sql.nextIntVal
+
+/**
+ * This is to have a human-readable id for grid connections.
+ */
+val gridConnectionSequence = Sequence("grid_connection_sequence")
 
 object GridConnectionTable: Table("grid_connection") {
     val id = uuid("id").autoGenerate()
     override val primaryKey = PrimaryKey(id)
     val addressId = uuid("address_id").references(AddressTable.id)
+
+    val sequence = integer("sequence").defaultExpression(gridConnectionSequence.nextIntVal())
 
     /**
      * Open questions

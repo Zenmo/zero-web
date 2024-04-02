@@ -2,10 +2,7 @@ package com.zenmo.orm.companysurvey
 
 import com.zenmo.orm.blob.BlobPurpose
 import com.zenmo.orm.companysurvey.dto.*
-import com.zenmo.orm.companysurvey.table.AddressTable
-import com.zenmo.orm.companysurvey.table.CompanySurveyTable
-import com.zenmo.orm.companysurvey.table.FileTable
-import com.zenmo.orm.companysurvey.table.GridConnectionTable
+import com.zenmo.orm.companysurvey.table.*
 import org.jetbrains.exposed.sql.*
 import org.jetbrains.exposed.sql.SqlExpressionBuilder.eq
 import org.jetbrains.exposed.sql.transactions.transaction
@@ -154,6 +151,7 @@ class SurveyRepository(
     protected fun hydrateGridConnection(row: ResultRow): GridConnection {
         return GridConnection(
             id = row[GridConnectionTable.id],
+            sequence = row[GridConnectionTable.sequence],
             energyOrBuildingManagementSystemSupplier = row[GridConnectionTable.energyOrBuildingManagementSystemSupplier],
             mainConsumptionProcess = row[GridConnectionTable.mainConsumptionProcess],
             consumptionFlexibility = row[GridConnectionTable.consumptionFlexibility],
