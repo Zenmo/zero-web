@@ -62,5 +62,4 @@ data class Cars (
 @Serializable
 data class OtherVehicles (
     val hasOtherVehicles: Boolean? = null,
-    val electricRatio: Float? = null,
 )
