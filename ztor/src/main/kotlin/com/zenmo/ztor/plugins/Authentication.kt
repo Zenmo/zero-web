@@ -1,5 +1,7 @@
 package com.zenmo.ztor.plugins;
 
+import com.zenmo.ztor.user.UserSession
+import com.zenmo.ztor.user.decodeAccesstoken
 import io.ktor.client.*
 import io.ktor.client.engine.cio.*
 import io.ktor.serialization.kotlinx.json.*
@@ -15,6 +17,8 @@ import io.ktor.util.*
 import kotlinx.html.a
 import kotlinx.html.body
 import kotlinx.html.p
+import kotlinx.serialization.encodeToString
+import kotlinx.serialization.json.Json
 
 val applicationHttpClient = HttpClient(CIO) {
     install(ContentNegotiation) {
@@ -22,24 +26,28 @@ val applicationHttpClient = HttpClient(CIO) {
     }
 }
 
+/**
+ * After https://ktor.io/docs/server-oauth.html
+ */
 fun Application.configureAuthentication() {
     install(Sessions) {
         cookie<UserSession>("user_session")
     }
     val redirects = mutableMapOf<String, String>()
     install(Authentication) {
-        oauth("auth-oauth-ory") {
+        oauth("keycloak") {
             // We could make a call here to register the base url in Ory Hydra
             // for the test enviroment which has a dynamic domain.
             urlProvider = { System.getenv("BASE_URL") + "/callback" }
             providerLookup = {
                 OAuthServerSettings.OAuth2ServerSettings(
                     name = "ory",
-                    authorizeUrl = "https://auth.zenmo.com/oauth2/auth",
-                    accessTokenUrl = "https://auth.zenmo.com/oauth2/token",
+                    // https://keycloak.zenmo.com/realms/zenmo/.well-known/openid-configuration
+                    authorizeUrl = "https://keycloak.zenmo.com/realms/zenmo/protocol/openid-connect/auth",
+                    accessTokenUrl = "https://keycloak.zenmo.com/realms/zenmo/protocol/openid-connect/token",
                     requestMethod = HttpMethod.Post,
-                    clientId = System.getenv("ORY_OAUTH_CLIENT_ID"),
-                    clientSecret = System.getenv("ORY_OAUTH_CLIENT_SECRET"),
+                    clientId = System.getenv("OAUTH_CLIENT_ID"),
+                    clientSecret = System.getenv("OAUTH_CLIENT_SECRET"),
                     defaultScopes = listOf("openid", "profile", "email"),
                     onStateCreated = { call, state ->
                         //saves new state with redirect url value
@@ -53,7 +61,7 @@ fun Application.configureAuthentication() {
         }
     }
     routing {
-        authenticate("auth-oauth-ory") {
+        authenticate("keycloak") {
             get("/login") {
                 // Redirects to 'authorizeUrl' automatically
             }
@@ -64,7 +72,6 @@ fun Application.configureAuthentication() {
                     call.respondText("No principal")
                     return@get
                 }
-                call.respondText(currentPrincipal.accessToken)
                 // redirects home if the url is not found before authorization
                 currentPrincipal.let { principal ->
                     principal.state?.let { state ->
@@ -78,15 +85,25 @@ fun Application.configureAuthentication() {
                 call.respondRedirect("/home")
             }
         }
+        get("/user-info") {
+            val userSession: UserSession? = call.sessions.get()
+            if (userSession == null) {
+                // frontend can show login button
+                call.respondText("Not logged in", status=HttpStatusCode.Unauthorized)
+            } else {
+                call.respond(userSession.getDecodedAccessToken())
+            }
+        }
         get("/home") {
             val userSession: UserSession? = call.sessions.get()
             if (userSession != null) {
-                call.respondText("Hello, user! Welcome home!")
+                val token = decodeAccesstoken(userSession.token)
+                call.respondText("Hello, ${token.preferred_username}! Welcome home!")
             } else {
                 call.respondHtml {
                     body {
                         p {
-                            a("/login") { +"Login with Ory" }
+                            a("/login") { +"Login with Keycloak" }
                         }
                     }
                 }
@@ -94,5 +111,3 @@ fun Application.configureAuthentication() {
         }
     }
 }
-
-data class UserSession(val state: String, val token: String)
