@@ -14,6 +14,7 @@ import io.ktor.server.routing.*
 import java.sql.*
 import kotlinx.coroutines.*
 import org.jetbrains.exposed.sql.Database
+import org.jetbrains.exposed.sql.transactions.TransactionManager
 import java.util.*
 
 fun Application.configureDatabases(): Database {

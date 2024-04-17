@@ -52,6 +52,11 @@ dependencies {
     implementation("io.ktor:ktor-client-cio:$ktor_version")
     implementation("io.ktor:ktor-client-content-negotiation:$ktor_version")
 
+    // https://mvnrepository.com/artifact/com.auth0/java-jwt
+    implementation("com.auth0:java-jwt:4.4.0")
+
+    implementation("org.jetbrains.kotlinx:kotlinx-datetime:0.6.0-RC.2")
+
     testImplementation("io.ktor:ktor-server-tests-jvm")
     testImplementation("org.jetbrains.kotlin:kotlin-test-junit:1.9.20")
 }
