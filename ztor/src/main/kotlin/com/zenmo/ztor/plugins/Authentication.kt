@@ -13,12 +13,9 @@ import io.ktor.server.response.*
 import io.ktor.server.routing.*
 import io.ktor.server.sessions.*
 import io.ktor.server.html.*
-import io.ktor.util.*
 import kotlinx.html.a
 import kotlinx.html.body
 import kotlinx.html.p
-import kotlinx.serialization.encodeToString
-import kotlinx.serialization.json.Json
 
 val applicationHttpClient = HttpClient(CIO) {
     install(ContentNegotiation) {
@@ -31,7 +28,9 @@ val applicationHttpClient = HttpClient(CIO) {
  */
 fun Application.configureAuthentication() {
     install(Sessions) {
-        cookie<UserSession>("user_session")
+        cookie<UserSession>("user_session") {
+            // optional cookie config
+        }
     }
     val redirects = mutableMapOf<String, String>()
     install(Authentication) {

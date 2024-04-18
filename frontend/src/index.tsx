@@ -11,7 +11,7 @@ import {ThankYou} from './components/thank-you'
 import reportWebVitals from './reportWebVitals'
 import {ZeroHeader} from "./components/zero-header";
 import App from "./App";
-import {Login} from "./components/login";
+import {LoginWidget} from "./user/login";
 
 const router = createBrowserRouter([
     {
@@ -36,7 +36,7 @@ const router = createBrowserRouter([
     },
     {
         path: "/login",
-        element: <Login />
+        element: <LoginWidget />
     }
 ]);
 
