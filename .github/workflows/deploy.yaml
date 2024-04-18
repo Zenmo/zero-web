@@ -148,6 +148,10 @@ jobs:
                         AZURE_STORAGE_ACCOUNT_NAME=zerostore
                         AZURE_STORAGE_ACCOUNT_KEY=${{ secrets.AZURE_STORAGE_ACCOUNT_KEY }}
                         AZURE_STORAGE_CONTAINER=test
+                        CORS_ALLOW_ORIGIN_PATTERN=https://gray-hill-0e1d72903-\\d+.westeurope.3.azurestaticapps.net
+                        OAUTH_CLIENT_ID=zero-configurator-test
+                        OAUTH_CLIENT_SECRET=${{ secrets.OAUTH_CLIENT_SECRET_TEST }}
+                        BASE_URL=https://ztor-${{ needs.image-tag.outputs.IMAGE_TAG }}.bravesky-71f0cbc2.germanywestcentral.azurecontainerapps.io
                         --ingress external
                         --tags branch=${{ github.head_ref }}
                         --image ghcr.io/erikvv/ztor:${{ needs.image-tag.outputs.IMAGE_TAG }}
@@ -190,9 +194,10 @@ jobs:
                         AZURE_STORAGE_ACCOUNT_NAME=zerostore
                         AZURE_STORAGE_ACCOUNT_KEY=${{ secrets.AZURE_STORAGE_ACCOUNT_KEY }}
                         AZURE_STORAGE_CONTAINER=prod
-                        ORY_OAUTH_CLIENT_ID=b4428f12-9fba-44ab-b810-8ca1a271e67c
-                        ORY_OAUTH_CLIENT_SECRET=${{ secrets.ORY_OAUTH_CLIENT_SECRET_PROD }}
+                        OAUTH_CLIENT_ID=zero-configurator-prod
+                        OAUTH_CLIENT_SECRET=${{ secrets.OAUTH_CLIENT_SECRET_PROD }}
                         BASE_URL=https://ztor.bravesky-71f0cbc2.germanywestcentral.azurecontainerapps.io
+                        CORS_ALLOW_ORIGIN_PATTERN=https://zero.zenmo.com
                         --ingress external
                         --tags branch=${{ github.ref_name }}
                         --image ghcr.io/erikvv/ztor:${{ needs.image-tag.outputs.IMAGE_TAG }}

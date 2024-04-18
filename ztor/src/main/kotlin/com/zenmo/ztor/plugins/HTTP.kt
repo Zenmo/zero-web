@@ -12,7 +12,14 @@ fun Application.configureHTTP() {
         allowMethod(HttpMethod.Patch)
         allowHeader(HttpHeaders.Authorization)
         allowHeader(HttpHeaders.ContentType)
-        hosts.add(System.getenv("CORS_ALLOW_ORIGIN"))
+        allowOrigins {
+            it.matches(
+                Regex(
+                    // e.g. "https://gray-hill-0e1d72903-\\d+.westeurope.3.azurestaticapps.net"
+                    System.getenv("CORS_ALLOW_ORIGIN_PATTERN")
+                )
+            )
+        }
         allowCredentials = true
     }
 }
