@@ -12,6 +12,7 @@ fun Application.configureHTTP() {
         allowMethod(HttpMethod.Patch)
         allowHeader(HttpHeaders.Authorization)
         allowHeader(HttpHeaders.ContentType)
-        anyHost() // @TODO: Don't do this in production if possible. Try to limit it.
+        hosts.add(System.getenv("CORS_ALLOW_ORIGIN"))
+        allowCredentials = true
     }
 }
