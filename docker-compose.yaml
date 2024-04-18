@@ -117,7 +117,7 @@ services:
             POSTGRES_URL: jdbc:postgresql://postgres:5432/postgres
             POSTGRES_USER: postgres
             BASE_URL: http://localhost:8082
-            CORS_ALLOW_ORIGIN: 'http://localhost:1234'
+            CORS_ALLOW_ORIGIN_PATTERN: 'http://localhost:1234'
         depends_on:
             - ztor-build
             - postgres
