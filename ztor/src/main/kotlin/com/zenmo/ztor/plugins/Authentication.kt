@@ -13,6 +13,7 @@ import io.ktor.server.response.*
 import io.ktor.server.routing.*
 import io.ktor.server.sessions.*
 import io.ktor.server.html.*
+import io.ktor.server.plugins.forwardedheaders.*
 import kotlinx.html.a
 import kotlinx.html.body
 import kotlinx.html.p
@@ -27,6 +28,9 @@ val applicationHttpClient = HttpClient(CIO) {
  * After https://ktor.io/docs/server-oauth.html
  */
 fun Application.configureAuthentication() {
+    // This reads the X-Forwarded-Proto header.
+    // This allows us to set the secure cookie below.
+    install(XForwardedHeaders)
     install(Sessions) {
         cookie<UserSession>("user_session", SessionStorageMemory()) {
             if (System.getenv("BASE_URL").startsWith("https")) {

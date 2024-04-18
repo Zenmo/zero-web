@@ -47,6 +47,9 @@ dependencies {
     implementation("io.ktor:ktor-server-status-pages-jvm:$ktor_version")
     implementation("io.ktor:ktor-server-auth:$ktor_version")
     implementation("io.ktor:ktor-server-html-builder:$ktor_version")
+    // kinda need this to run in Azure Container Apps
+    // https://learn.microsoft.com/en-us/azure/container-apps/ingress-overview#http-headers
+    implementation("io.ktor:ktor-server-forwarded-header:$ktor_version")
 
     implementation("io.ktor:ktor-client-core:$ktor_version")
     implementation("io.ktor:ktor-client-cio:$ktor_version")
