@@ -28,8 +28,12 @@ val applicationHttpClient = HttpClient(CIO) {
  */
 fun Application.configureAuthentication() {
     install(Sessions) {
-        cookie<UserSession>("user_session") {
-            // optional cookie config
+        cookie<UserSession>("user_session", SessionStorageMemory()) {
+            if (System.getenv("BASE_URL").startsWith("https")) {
+                // The frontend and backend may be hosted on different domains
+                cookie.extensions["SameSite"] = "None"
+                cookie.secure = true
+            }
         }
     }
     val redirects = mutableMapOf<String, String>()
