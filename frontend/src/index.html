@@ -19,7 +19,10 @@
     <script src="https://engine.holontool.nl/assets/js-client-8.5.0/cloud-client.js"></script>
     <script type="module" src="index.tsx"></script>
   </head>
-  <body style="display: flex; justify-content: center;">
-    <noscript>You need to enable JavaScript to run this app.</noscript>
+  <body>
+    <div id="react-root"  style="display: flex; justify-content: center;">
+      <!-- it is not recommended to mount react on the body element -->
+      <noscript>You need to enable JavaScript to run this app.</noscript>
+    </div>
   </body>
 </html>
