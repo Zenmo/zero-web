@@ -1,4 +1,7 @@
 .idea
-scratch.txt
 gradle
 .gradle
+build
+
+# unsure if this should be ignored
+kotlin-js-store

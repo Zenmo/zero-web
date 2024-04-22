@@ -39,13 +39,13 @@ export const Upload: FunctionComponent<{
     company: string
     project: ProjectName
     purpose: Purpose
-}> = ({multiple, setFormValue, project, company}) => {
+}> = ({multiple, setFormValue, project, company, purpose }) => {
     const getUploadUrl = async (file: RcFile) => {
         const queryParmas = new URLSearchParams({
             fileName: file.name,
             project: project,
             company: company,
-            purpose: Purpose.ELECTRICITY_VALUES,
+            purpose: purpose,
         })
         const response = await fetch(process.env.ZTOR_URL + '/upload-url?' + queryParmas.toString())
         const uploadAuthorization: UploadAuthorization = await response.json()

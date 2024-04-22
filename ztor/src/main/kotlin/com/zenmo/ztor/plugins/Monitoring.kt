@@ -8,12 +8,12 @@ import org.slf4j.event.*
 
 fun Application.configureMonitoring() {
     install(CallLogging)
-//    {
-// Uncomment to log more
-//        format {
-//            extendedFormat(it)
-//        }
-//    }
+    {
+ //Uncomment to log more
+        format {
+            extendedFormat(it)
+        }
+    }
 }
 
 fun extendedFormat(it: ApplicationCall): String = buildString {
