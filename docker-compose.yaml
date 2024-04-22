@@ -140,9 +140,9 @@ services:
 
     frontend:
         image: node:20.4.0
-        working_dir: /app
+        working_dir: /app/frontend
         volumes:
-            - ./frontend:/app
+            - .:/app
         command: npm run start
         environment:
             KLEINVERBRUIK_URL: http://127.0.0.1:80

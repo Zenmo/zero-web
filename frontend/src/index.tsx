@@ -12,6 +12,7 @@ import reportWebVitals from './reportWebVitals'
 import {ZeroHeader} from "./components/zero-header";
 import App from "./App";
 import {LoginWidget} from "./user/login";
+import {Zummon} from "./Zummon";
 
 const router = createBrowserRouter([
     {
@@ -37,6 +38,10 @@ const router = createBrowserRouter([
     {
         path: "/login",
         element: <LoginWidget />
+    },
+    {
+        path: "/zummon-test",
+        element: <Zummon />
     }
 ]);
 

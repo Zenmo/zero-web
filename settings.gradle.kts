@@ -1,3 +1,3 @@
 
 rootProject.name = "zero"
-include("zorm", "ztor")
+include("zorm", "ztor", "zummon")

@@ -3,8 +3,8 @@ import java.net.URI
 plugins {
     id("com.github.johnrengelman.shadow") version "8.1.1"
     `maven-publish`
-    kotlin("jvm") version "1.9.23"
-    kotlin("plugin.serialization") version "1.9.23"
+    kotlin("jvm")
+    kotlin("plugin.serialization")
 }
 
 group = "com.zenmo.orm"
@@ -13,11 +13,6 @@ version = "dev"
 repositories {
     mavenCentral()
 }
-
-// for AnyLogic build
-//kotlin {
-//    jvmToolchain(11)
-//}
 
 val exposed_version = "0.48.0"
 

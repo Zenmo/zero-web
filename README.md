@@ -22,9 +22,17 @@ Graphical user interface. The company survey form is here.
 Stedin, Liander and Enexis publish usage data of natural gas and electricity anually.
 This is a small webservice which wraps this data so the frontend can request small parts of the data.
 
+(this is partly defunct and this approach will be discontinued in favor of a database import).
+
 ### [Ztor](ztor)
 
-This is the base backend built on Ktor framework. Like AnyLogic it leans on the Java ecosystem.
+This is the base backend built on Ktor framework. 
+Like AnyLogic it leans on the Java ecosystem.
+
+### [Zummon](zummon)
+
+Contains code to share between the front-end and other components. 
+Builds to both an NPM package and JVM artifact. 
 
 ### [Zorm](zorm)
 
