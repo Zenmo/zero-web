@@ -14,6 +14,7 @@ import io.ktor.server.routing.*
 import io.ktor.server.sessions.*
 import io.ktor.server.html.*
 import io.ktor.server.plugins.forwardedheaders.*
+import kotlinx.html.A
 import kotlinx.html.a
 import kotlinx.html.body
 import kotlinx.html.p
@@ -68,7 +69,7 @@ fun Application.configureAuthentication() {
         }
     }
     routing {
-        authenticate("keycloak") {
+        authenticate("keycloak", strategy = AuthenticationStrategy.Required) {
             get("/login") {
                 // Redirects to 'authorizeUrl' automatically
             }

@@ -42,9 +42,9 @@ fun Application.module() {
     configureHTTP()
     configureMonitoring()
     configureSerialization()
+    configureAuthentication()
     configureDatabases()
     configureRouting()
     configureStatusPages()
     configureUpload()
-    configureAuthentication()
 }

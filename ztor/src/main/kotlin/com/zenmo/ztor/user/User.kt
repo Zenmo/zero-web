@@ -54,4 +54,6 @@ data class UserSession(
      * Contains user info
      */
     fun getDecodedAccessToken() = decodeAccesstoken(token)
+
+    fun getUserId() = getDecodedAccessToken().sub
 }
