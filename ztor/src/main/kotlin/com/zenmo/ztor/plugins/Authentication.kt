@@ -69,7 +69,7 @@ fun Application.configureAuthentication() {
         }
     }
     routing {
-        authenticate("keycloak", strategy = AuthenticationStrategy.Required) {
+        authenticate("keycloak") {
             get("/login") {
                 // Redirects to 'authorizeUrl' automatically
             }

@@ -14,7 +14,7 @@ import {useLeafletContext} from '@react-leaflet/core'
 import {SetGeometryFn} from '../services/appState'
 import {Bag2DPand} from '../services/bag2d'
 import {map} from '../services/iterable'
-import {useOnce} from '../services/use-once'
+import {useOnce} from '../hooks/use-once'
 import {Buurt, getBuurtCenter} from '../services/wijken-buurten'
 
 const disruptorBuildingLocation = new LatLng(51.44971831403754, 5.4947035381928035)

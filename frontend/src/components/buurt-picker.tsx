@@ -1,5 +1,5 @@
 import {useEffect, useState} from 'react'
-import {useOnce} from '../services/use-once'
+import {useOnce} from '../hooks/use-once'
 import {fetchGemeenteList, fetchBuurtList, fetchBuurt, Buurt} from '../services/wijken-buurten'
 import {Select} from 'antd'
 

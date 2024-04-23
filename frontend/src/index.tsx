@@ -13,6 +13,8 @@ import {ZeroHeader} from "./components/zero-header";
 import App from "./App";
 import {LoginWidget} from "./user/login";
 import {Zummon} from "./Zummon";
+import {BedrijvenFormV1} from "./components/bedrijven-form-v1";
+import {Admin} from "./admin/admin";
 
 const router = createBrowserRouter([
     {
@@ -22,6 +24,10 @@ const router = createBrowserRouter([
     {
         path: "/proof-of-concept",
         element: <App />,
+    },
+    {
+        path: "/bedrijven-v1",
+        element: <BedrijvenFormV1 />
     },
     {
         path: "/bedrijven-hessenpoort",
@@ -34,6 +40,10 @@ const router = createBrowserRouter([
     {
         path: "/bedankt",
         element: <ThankYou />,
+    },
+    {
+        path: "/admin",
+        element: <Admin />,
     },
     {
         path: "/login",
