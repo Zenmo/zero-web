@@ -14,7 +14,7 @@ repositories {
     mavenCentral()
 }
 
-val exposed_version = "0.48.0"
+val exposed_version = "0.49.0"
 
 dependencies {
     implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.6.0")

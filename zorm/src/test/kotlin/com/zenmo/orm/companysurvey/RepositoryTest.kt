@@ -4,12 +4,15 @@ import com.zenmo.orm.companysurvey.dto.*
 import com.zenmo.orm.companysurvey.table.CompanySurveyTable
 import com.zenmo.orm.createSchema
 import com.zenmo.orm.connectToPostgres
+import com.zenmo.orm.user.table.UserTable
 import kotlinx.datetime.Instant
 import org.jetbrains.exposed.sql.Schema
 import org.jetbrains.exposed.sql.SchemaUtils
 import org.jetbrains.exposed.sql.SqlExpressionBuilder.eq
+import org.jetbrains.exposed.sql.insert
 import org.jetbrains.exposed.sql.transactions.transaction
 import org.junit.BeforeClass
+import java.util.UUID
 import kotlin.test.Test
 import kotlin.test.assertEquals
 
@@ -83,5 +86,37 @@ class RepositoryTest {
      */
     fun roundInstant(instant: Instant): Instant {
         return Instant.fromEpochMilliseconds(instant.toEpochMilliseconds())
+    }
+
+    @Test
+    fun testUserAccess() {
+        val db = connectToPostgres()
+        val userId = UUID.randomUUID()
+        transaction(db) {
+            UserTable.insert {
+                it[id] = userId
+                it[projects] = listOf("Middelkaap")
+            }
+        }
+
+        val repo = SurveyRepository(db)
+        repo.save(Survey(
+            companyName = "Zenmo",
+            zenmoProject = "Middelkaap",
+            personName = "John Doe",
+            email = "john@example.com",
+            addresses = emptyList(),
+        ))
+        repo.save(Survey(
+            companyName = "Zenmo",
+            zenmoProject = "Bovenkaap",
+            personName = "John Doe",
+            email = "john@example.com",
+            addresses = emptyList(),
+        ))
+
+        val surveys = repo.getSurveysByUser(userId)
+        assertEquals(1, surveys.size)
+        assertEquals("Middelkaap", surveys[0].zenmoProject)
     }
 }

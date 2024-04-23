@@ -22,4 +22,3 @@ data class Survey(
 
     val addresses: List<Address>,
 )
-

@@ -8,6 +8,7 @@ import com.zenmo.orm.companysurvey.table.FileTable
 import com.zenmo.orm.companysurvey.table.gridConnectionSequence
 import com.zenmo.orm.dbutil.createEnumTypeSql
 import com.zenmo.orm.energieprestatieonline.RawPandTable
+import com.zenmo.orm.user.table.UserTable
 import org.jetbrains.exposed.sql.Database
 import org.jetbrains.exposed.sql.SchemaUtils
 import org.jetbrains.exposed.sql.transactions.transaction
@@ -26,6 +27,7 @@ val tables = arrayOf(
     GridConnectionTable,
     FileTable,
     RawPandTable,
+    UserTable,
 )
 
 fun createSchema(db: Database) {
