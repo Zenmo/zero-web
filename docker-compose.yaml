@@ -38,12 +38,12 @@ services:
         image: gradle:8.3.0-jdk20
         depends_on:
             - postgres
-        working_dir: /home/gradle/zorm
+        working_dir: /home/gradle/zero
         user: gradle
         volumes:
-            - ./zorm:/home/gradle/zorm
-            - gradle-test-cache:/home/gradle/.gradle
-        command: gradle test --no-daemon
+            - .:/home/gradle/zero
+            - gradle-zorm-test-home:/home/gradle/.gradle
+        command: gradle zorm:test --no-daemon
         env_file:
             - ./docker/ztor.env
         environment:
@@ -156,12 +156,14 @@ services:
             - 127.0.0.1:5432:5432
         volumes:
             - postgres:/var/lib/postgresql/data
+        command: "-c log_statement=all"
         env_file:
             - ./docker/postgres.env
 
 volumes:
     gradle-build-cache:
     gradle-build-once-cache:
+    gradle-zorm-test-home:
     gradle-test-cache:
     gradle-run-cache:
     gradle-cmd-cache:

@@ -3,8 +3,11 @@ package com.zenmo.orm.companysurvey
 import com.zenmo.orm.blob.BlobPurpose
 import com.zenmo.orm.companysurvey.dto.*
 import com.zenmo.orm.companysurvey.table.*
+import com.zenmo.orm.dbutil.any
+import com.zenmo.orm.user.table.UserTable
 import org.jetbrains.exposed.sql.*
 import org.jetbrains.exposed.sql.SqlExpressionBuilder.eq
+import org.jetbrains.exposed.sql.SqlExpressionBuilder.inSubQuery
 import org.jetbrains.exposed.sql.transactions.transaction
 import java.sql.ResultSet
 import java.util.*
@@ -18,6 +21,20 @@ class SurveyRepository(
 
     fun getDeWiekenSurveys(): List<Survey> {
         return getSurveyByProject("De Wieken")
+    }
+
+    /**
+     * Get all the Surveys a (project) administrator has access to.
+     */
+    fun getSurveysByUser(userId: UUID): List<Survey> {
+        val unnestProjects = UserTable.projects.function("unnest")
+
+        return getSurveys(
+            CompanySurveyTable.project eq anyFrom(
+                UserTable.select(unnestProjects)
+                    .where(UserTable.id eq userId)
+            )
+        )
     }
 
     fun getSurveyByProject(project: String): List<Survey> {
