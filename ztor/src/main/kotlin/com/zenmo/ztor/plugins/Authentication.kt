@@ -1,7 +1,7 @@
-package com.zenmo.ztor.plugins;
+package com.zenmo.ztor.plugins
 
 import com.zenmo.ztor.user.UserSession
-import com.zenmo.ztor.user.decodeAccesstoken
+import com.zenmo.ztor.user.decodeAccessToken
 import io.ktor.client.*
 import io.ktor.client.engine.cio.*
 import io.ktor.serialization.kotlinx.json.*
@@ -14,7 +14,6 @@ import io.ktor.server.routing.*
 import io.ktor.server.sessions.*
 import io.ktor.server.html.*
 import io.ktor.server.plugins.forwardedheaders.*
-import kotlinx.html.A
 import kotlinx.html.a
 import kotlinx.html.body
 import kotlinx.html.p
@@ -45,7 +44,7 @@ fun Application.configureAuthentication() {
     install(Authentication) {
         oauth("keycloak") {
             // We could make a call here to register the base url in Ory Hydra
-            // for the test enviroment which has a dynamic domain.
+            // for the test environment which has a dynamic domain.
             urlProvider = { System.getenv("BASE_URL") + "/callback" }
             providerLookup = {
                 OAuthServerSettings.OAuth2ServerSettings(
@@ -105,7 +104,7 @@ fun Application.configureAuthentication() {
         get("/home") {
             val userSession: UserSession? = call.sessions.get()
             if (userSession != null) {
-                val token = decodeAccesstoken(userSession.token)
+                val token = decodeAccessToken(userSession.token)
                 call.respondText("Hello, ${token.preferred_username}! Welcome home!")
             } else {
                 call.respondHtml {

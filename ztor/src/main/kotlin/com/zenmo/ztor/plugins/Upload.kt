@@ -30,7 +30,7 @@ fun Application.configureUpload() {
                 queryParams["fileName"]!!,
             )
 
-            call.respond(authorization);
+            call.respond(authorization)
         }
     }
 }

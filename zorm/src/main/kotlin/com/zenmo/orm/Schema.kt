@@ -1,20 +1,20 @@
 package com.zenmo.orm
 
 import com.zenmo.orm.blob.BlobPurpose
-import com.zenmo.orm.companysurvey.dto.*
 import com.zenmo.orm.companysurvey.table.GridConnectionTable
 import com.zenmo.orm.companysurvey.table.CompanySurveyTable
 import com.zenmo.orm.companysurvey.table.FileTable
 import com.zenmo.orm.companysurvey.table.gridConnectionSequence
 import com.zenmo.orm.dbutil.createEnumTypeSql
+import com.zenmo.orm.dbutil.createKleinverbruikEnumTypeSql
 import com.zenmo.orm.energieprestatieonline.RawPandTable
 import com.zenmo.orm.user.table.UserTable
+import com.zenmo.zummon.companysurvey.*
 import org.jetbrains.exposed.sql.Database
 import org.jetbrains.exposed.sql.SchemaUtils
 import org.jetbrains.exposed.sql.transactions.transaction
 
 val enums = listOf(
-    KleinverbruikElectricityConnectionCapacity::class.java,
     KleinverbruikElectricityConsumptionProfile::class.java,
     HeatingType::class.java,
     PVOrientation::class.java,
@@ -51,6 +51,8 @@ fun schemaSql(db: Database): List<String> {
     enums.forEach {
         statements.add(createEnumTypeSql(it))
     }
+
+    statements.add(createKleinverbruikEnumTypeSql())
 
     transaction(db) {
         statements.addAll(gridConnectionSequence.createStatement())

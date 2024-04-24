@@ -1,6 +1,6 @@
 package com.zenmo.orm.companysurvey;
 
-import com.zenmo.orm.companysurvey.dto.Address;
+import com.zenmo.zummon.companysurvey.Address;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
