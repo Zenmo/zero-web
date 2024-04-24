@@ -16,7 +16,7 @@ class BlobStorage(
     azureAccountKey: String = System.getenv("AZURE_STORAGE_ACCOUNT_KEY"),
     private val containerName: String = System.getenv("AZURE_STORAGE_CONTAINER"),
 ) {
-    val blobServiceClient = BlobServiceClientBuilder()
+    private val blobServiceClient = BlobServiceClientBuilder()
         .connectionString("DefaultEndpointsProtocol=https;AccountName=$azureAccountName;AccountKey=$azureAccountKey")
         .buildClient()
 

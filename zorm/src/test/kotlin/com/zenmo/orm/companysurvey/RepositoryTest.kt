@@ -1,10 +1,10 @@
 package com.zenmo.orm.companysurvey
 
-import com.zenmo.orm.companysurvey.dto.*
 import com.zenmo.orm.companysurvey.table.CompanySurveyTable
 import com.zenmo.orm.createSchema
 import com.zenmo.orm.connectToPostgres
 import com.zenmo.orm.user.table.UserTable
+import com.zenmo.zummon.companysurvey.Survey
 import kotlinx.datetime.Instant
 import org.jetbrains.exposed.sql.Schema
 import org.jetbrains.exposed.sql.SchemaUtils

@@ -4,9 +4,16 @@ import {FunctionComponent} from "react";
 
 // to verify cross-compile
 export const Zummon: FunctionComponent = () => {
-    const Cake = com.zenmo.zummon.Cake
+    const surveyJson = JSON.stringify({
+        zenmoProject: "Hessie",
+        companyName: "Bakkerij Piet",
+        personName: "Piet",
+        email: "erik@evanv.nl",
+        dataSharingAgreed: true,
+        addresses: [],
+    })
+    const survey = com.zenmo.zummon.companysurvey.surveyFromJson(surveyJson);
+    console.log(survey);
 
-    const c = new Cake(12)
-
-    return c.toString()
+    return <div>asdf</div>
 }

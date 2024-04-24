@@ -53,7 +53,7 @@ class EnumArrayColumnType<T : Enum<T>>(
     private val enumClass: KClass<T>,
     private val size: Int? = null,
     private val databaseType: String = enumClass.simpleName!!,
-    private val stringToEnumMap: Map<String, T> = enumClass.java.enumConstants.map { it.name to it }.toMap(),
+    private val stringToEnumMap: Map<String, T> = enumClass.java.enumConstants.associateBy { it.name },
     private val stringToEnum: (String) -> T? = stringToEnumMap::get,
     private val enumToString: (T) -> String = {enum -> enum.name}
 ) : ColumnType() {
@@ -79,7 +79,7 @@ class EnumArrayColumnType<T : Enum<T>>(
         val stringList: List<String> = when (value) {
             is SQLArray -> (value.array as Array<String>).toList()
             is Array<*> -> (value as Array<String>).toList()
-            is Collection<*> -> (value as Array<String>).toList()
+            is Collection<*> -> (value as Collection<String>).toList()
             else -> error("Got unexpected array value of type: ${value::class.qualifiedName} ($value)")
         }
 

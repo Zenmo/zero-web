@@ -25,6 +25,7 @@ val ktor_version = "2.3.7"
 
 dependencies {
     implementation(project(":zorm"))
+    implementation(project(":zummon"))
     // not sure if/why we need to explicitly add Exposed
     implementation("org.jetbrains.exposed:exposed-core:0.48.0")
 

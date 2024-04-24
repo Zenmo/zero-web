@@ -1,13 +1,14 @@
-package com.zenmo.orm.companysurvey.dto
+package com.zenmo.zummon.companysurvey
 
-import com.zenmo.orm.UUIDSerializer
+import com.benasher44.uuid.Uuid
+import com.benasher44.uuid.uuid4
+import com.zenmo.zummon.UuidSerializer
 import kotlinx.serialization.Serializable
-import java.util.UUID
 
 @Serializable
 data class Address(
-    @Serializable(with = UUIDSerializer::class)
-    val id: UUID = UUID.randomUUID(),
+    @Serializable(with = UuidSerializer::class)
+    val id: Uuid = uuid4(),
 
     val street: String,
     val houseNumber: Int,

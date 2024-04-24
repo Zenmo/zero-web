@@ -4,15 +4,14 @@ import io.ktor.http.*
 import io.ktor.server.application.*
 import io.ktor.server.plugins.callloging.*
 import io.ktor.server.request.*
-import org.slf4j.event.*
 
 fun Application.configureMonitoring() {
     install(CallLogging)
     {
  //Uncomment to log more
-        format {
-            extendedFormat(it)
-        }
+//        format {
+//            extendedFormat(it)
+//        }
     }
 }
 

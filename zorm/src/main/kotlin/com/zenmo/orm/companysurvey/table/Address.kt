@@ -3,7 +3,7 @@ package com.zenmo.orm.companysurvey.table
 import org.jetbrains.exposed.sql.Table
 
 /**
- * [com.zenmo.companysurvey.dto.Address]
+ * [com.zenmo.zummon.companysurvey.Address]
  */
 object AddressTable: Table("address") {
     val id = uuid("id").autoGenerate()

@@ -4,7 +4,7 @@ import com.auth0.jwt.JWT
 import com.zenmo.orm.UUIDSerializer
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.json.Json
-import kotlinx.datetime.Instant;
+import kotlinx.datetime.Instant
 import kotlinx.serialization.KSerializer
 import kotlinx.serialization.descriptors.PrimitiveKind
 import kotlinx.serialization.descriptors.PrimitiveSerialDescriptor
@@ -34,7 +34,7 @@ data class AccessTokenPayload(
     val exp: Instant,
 )
 
-fun decodeAccesstoken(accessToken: String): AccessTokenPayload {
+fun decodeAccessToken(accessToken: String): AccessTokenPayload {
     val decodedJwt = JWT.decode(accessToken)
     val decodedPayload = Base64.getDecoder().decode(decodedJwt.payload)
 
@@ -53,7 +53,7 @@ data class UserSession(
     /**
      * Contains user info
      */
-    fun getDecodedAccessToken() = decodeAccesstoken(token)
+    fun getDecodedAccessToken() = decodeAccessToken(token)
 
     fun getUserId() = getDecodedAccessToken().sub
 }

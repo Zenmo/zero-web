@@ -1,8 +1,9 @@
 package com.zenmo.orm.companysurvey.table
 
-import com.zenmo.orm.companysurvey.dto.*
+import com.zenmo.orm.dbutil.KleinverbruikPGEnum
 import com.zenmo.orm.dbutil.PGEnum
 import com.zenmo.orm.dbutil.enumArray
+import com.zenmo.zummon.companysurvey.*
 import org.jetbrains.exposed.sql.Table
 import org.jetbrains.exposed.sql.Sequence
 import org.jetbrains.exposed.sql.nextIntVal
@@ -30,7 +31,7 @@ object GridConnectionTable: Table("grid_connection") {
     val surveyFeedback = varchar("survey_feedback", 1000)
 
     /**
-     * [com.zenmo.companysurvey.dto.Electricity]
+     * [com.zenmo.zummon.companysurvey.Electricity]
      */
     val hasElectricityConnection = bool("has_electricity_connection").nullable()
     val electricityEan = varchar("electricity_ean", 18)
@@ -40,8 +41,8 @@ object GridConnectionTable: Table("grid_connection") {
     val kleinverbruikElectricityConnectionCapacity = customEnumeration(
         "kleinverbuik_electricity_connection_capacity",
         KleinverbruikElectricityConnectionCapacity::class.simpleName,
-        fromDb = { KleinverbruikElectricityConnectionCapacity.valueOf(it as String) },
-        toDb = { PGEnum(KleinverbruikElectricityConnectionCapacity::class.simpleName!!, it) }).nullable()
+        fromDb = { kleinverbruikEnumFromDisplayName(it as String) },
+        toDb = { KleinverbruikPGEnum(it) }).nullable()
 
     val kleinverbuikElectricityConsumptionProfile = customEnumeration(
         "kleinverbuik_electricity_consumption_profile",
@@ -57,7 +58,7 @@ object GridConnectionTable: Table("grid_connection") {
     val expansionRequestReason = varchar("expansion_request_reason", 1000)
 
     /**
-     * [com.zenmo.companysurvey.dto.Supply]
+     * [com.zenmo.zummon.companysurvey.Supply]
      */
     val hasSupply = bool("has_supply").nullable()
     val pvInstalledKwp = uinteger("pv_installed_kwp").nullable()
@@ -84,7 +85,7 @@ object GridConnectionTable: Table("grid_connection") {
     val otherSupply = varchar("other_supply", 1000)
 
     /**
-     * [com.zenmo.companysurvey.dto.NaturalGas]
+     * [com.zenmo.zummon.companysurvey.NaturalGas]
      */
     val hasNaturalGasConnection = bool("has_natural_gas_connection").nullable()
     val naturalGasEan = varchar("natural_gas_ean", 18)
@@ -92,7 +93,7 @@ object GridConnectionTable: Table("grid_connection") {
     val percentageNaturalGasForHeating = uinteger("percentage_natural_gas_for_heating").nullable()
 
     /**
-     * [com.zenmo.companysurvey.dto.Heat]
+     * [com.zenmo.zummon.companysurvey.Heat]
      */
     val heatingTypes = enumArray("heating_types", HeatingType::class)
     val sumGasBoilerKw = float("combined_gas_boiler_kw").nullable()
@@ -103,7 +104,7 @@ object GridConnectionTable: Table("grid_connection") {
     val hasUnusedResidualHeat = bool("has_unused_residual_heat").nullable()
 
     /**
-     * [com.zenmo.companysurvey.dto.Storage]
+     * [com.zenmo.zummon.companysurvey.Storage]
      */
     val hasBattery = bool("has_battery").nullable()
     val batteryCapacityKwh = float("battery_capacity_kwh").nullable()
@@ -119,7 +120,7 @@ object GridConnectionTable: Table("grid_connection") {
     val thermalStorageKw = float("thermal_storage_kw").nullable()
 
     /**
-     * [com.zenmo.companysurvey.dto.Transport]
+     * [com.zenmo.zummon.companysurvey.Transport]
      */
     val hasVehicles = bool("has_vehicles").nullable()
 
@@ -128,7 +129,7 @@ object GridConnectionTable: Table("grid_connection") {
     val numCommuterAndVisitorChargePoints = uinteger("num_commuter_and_visitor_charge_points").nullable()
 
     /**
-     * [com.zenmo.companysurvey.dto.Trucks]
+     * [com.zenmo.zummon.companysurvey.Trucks]
      */
     val numTrucks = uinteger("num_trucks").nullable()
     val numElectricTrucks = uinteger("num_electric_trucks").nullable()
@@ -139,7 +140,7 @@ object GridConnectionTable: Table("grid_connection") {
     val numPlannedHydgrogenTrucks = uinteger("num_planned_hydrogen_trucks").nullable()
 
     /**
-     * [com.zenmo.companysurvey.dto.Vans]
+     * [com.zenmo.zummon.companysurvey.Vans]
      */
     val numVans = uinteger("num_vans").nullable()
     val numElectricVans = uinteger("num_electric_vans").nullable()
@@ -150,7 +151,7 @@ object GridConnectionTable: Table("grid_connection") {
     val numPlannedHydgrogenVans = uinteger("num_planned_hydrogen_vans").nullable()
 
     /**
-     * [com.zenmo.companysurvey.dto.Cars]
+     * [com.zenmo.zummon.companysurvey.Cars]
      */
     val numCars = uinteger("num_cars").nullable()
     val numElectricCars = uinteger("num_electric_cars").nullable()
@@ -161,7 +162,7 @@ object GridConnectionTable: Table("grid_connection") {
     val numPlannedHydgrogenCars = uinteger("num_planned_hydrogen_cars").nullable()
 
     /**
-     * [com.zenmo.companysurvey.dto.OtherVehicles]
+     * [com.zenmo.zummon.companysurvey.OtherVehicles]
      */
     val hasOtherVehicles = bool("has_other_vehicles").nullable()
     val otherVehiclesDescription = varchar("other_vehicles_description", 5000)
