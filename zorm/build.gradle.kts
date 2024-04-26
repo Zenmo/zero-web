@@ -48,8 +48,7 @@ publishing {
         create<MavenPublication>("maven") {
             groupId = "com.zenmo"
             artifactId = "libzorm"
-            // TODO: include java version
-            version = System.getenv("GITHUB_RUN_NUMBER") ?: "dev"
+            version = System.getenv("VERSION_TAG") ?: "dev"
 
             artifact(tasks["shadowJar"])
         }
