@@ -43,8 +43,8 @@ fun Application.module() {
     configureMonitoring()
     configureSerialization()
     configureAuthentication()
-    configureDatabases()
+    val db = configureDatabases()
     configureRouting()
     configureStatusPages()
-    configureUpload()
+    configureUpload(db)
 }
