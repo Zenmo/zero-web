@@ -1,7 +1,11 @@
-package com.zenmo.orm.companysurvey.dto
+package com.zenmo.zummon.companysurvey
 
 import kotlinx.serialization.Serializable
+import kotlin.js.ExperimentalJsExport
+import kotlin.js.JsExport
 
+@OptIn(ExperimentalJsExport::class)
+@JsExport
 @Serializable
 data class NaturalGas (
     val hasConnection: Boolean? = null,
@@ -14,4 +18,10 @@ data class NaturalGas (
     fun getHasConnection(): Boolean {
         return hasConnection ?: false
     }
+
+    /**
+     * For JavaScript
+     */
+    val hourlyValuesFileArray: Array<File>
+        get() = hourlyValuesFiles.toTypedArray()
 }

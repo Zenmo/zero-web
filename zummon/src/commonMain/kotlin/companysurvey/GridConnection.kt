@@ -1,13 +1,18 @@
-package com.zenmo.orm.companysurvey.dto
+package com.zenmo.zummon.companysurvey
 
-import com.zenmo.orm.UUIDSerializer
+import com.benasher44.uuid.Uuid
+import com.benasher44.uuid.uuid4
+import com.zenmo.zummon.UuidSerializer
 import kotlinx.serialization.Serializable
-import java.util.UUID
+import kotlin.js.ExperimentalJsExport
+import kotlin.js.JsExport
 
+@OptIn(ExperimentalJsExport::class)
+@JsExport
 @Serializable
 data class GridConnection(
-    @Serializable(with = UUIDSerializer::class)
-    val id: UUID = UUID.randomUUID(),
+    @Serializable(with = UuidSerializer::class)
+    val id: Uuid = uuid4(),
 
     // Is always set when object comes from the database.
     val sequence: Int? = null,

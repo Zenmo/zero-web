@@ -3,7 +3,7 @@
 
 services:
     migrate:
-        image: redgate/flyway:10.2.0
+        image: redgate/flyway:10.12.0
         volumes:
             - ./migrations:/flyway/sql
         command: migrate

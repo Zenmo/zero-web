@@ -16,7 +16,7 @@ class BlobStorage(
     azureAccountKey: String = System.getenv("AZURE_STORAGE_ACCOUNT_KEY"),
     private val containerName: String = System.getenv("AZURE_STORAGE_CONTAINER"),
 ) {
-    val blobServiceClient = BlobServiceClientBuilder()
+    private val blobServiceClient = BlobServiceClientBuilder()
         .connectionString("DefaultEndpointsProtocol=https;AccountName=$azureAccountName;AccountKey=$azureAccountKey")
         .buildClient()
 
@@ -68,6 +68,23 @@ class BlobStorage(
             originalName = fileName,
             sas = sasToken,
         )
+    }
+
+    fun getBlobClient(blobName: String) = blobServiceClient.getBlobContainerClient(containerName).getBlobClient(blobName)
+
+    fun generateDownloadUrl(blobName: String): String {
+        val blobClient = blobServiceClient.getBlobContainerClient(containerName).getBlobClient(blobName)
+
+        val permissions = BlobSasPermission().setReadPermission(true)
+
+        val expiryTime = OffsetDateTime.now().plusDays(1)
+
+        val sasSignatureValues = BlobServiceSasSignatureValues(expiryTime, permissions)
+            .setProtocol(SasProtocol.HTTPS_ONLY)
+
+        val sasToken = blobClient.generateSas(sasSignatureValues)
+
+        return "${blobClient.blobUrl}?$sasToken"
     }
 }
 

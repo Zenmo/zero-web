@@ -5,7 +5,7 @@ import org.jetbrains.exposed.sql.kotlin.datetime.CurrentTimestamp
 import org.jetbrains.exposed.sql.kotlin.datetime.timestamp
 
 /**
- * [com.zenmo.companysurvey.dto.Survey]
+ * [com.zenmo.zummon.companysurvey.Survey]
  */
 object CompanySurveyTable: Table("company_survey") {
     val id = uuid("id").autoGenerate()

@@ -1,6 +1,6 @@
 package com.zenmo.orm.companysurvey
 
-import com.zenmo.orm.companysurvey.dto.*
+import com.zenmo.zummon.companysurvey.*
 import java.util.*
 
 val mockSurvey = Survey(
@@ -45,7 +45,7 @@ val mockSurvey = Survey(
                             physicalCapacityKw = 300,
                         ),
                         kleinverbruik = CompanyKleinverbruik(
-                            connectionCapacity = KleinverbruikElectricityConnectionCapacity.`3x63A`,
+                            connectionCapacity = KleinverbruikElectricityConnectionCapacity._3x63A,
                             consumptionProfile = KleinverbruikElectricityConsumptionProfile.TWO,
                         ),
                         authorizationFile = File(

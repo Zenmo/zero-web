@@ -1,7 +1,18 @@
-package com.zenmo.orm.companysurvey.dto
-
+package com.zenmo.zummon.companysurvey
+import com.benasher44.uuid.Uuid
+import com.benasher44.uuid.uuidFrom
+import com.zenmo.zummon.companysurvey.KleinverbruikElectricityConnectionCapacity.valueOf
+import kotlinx.serialization.KSerializer
 import kotlinx.serialization.Serializable
+import kotlinx.serialization.descriptors.PrimitiveKind
+import kotlinx.serialization.descriptors.PrimitiveSerialDescriptor
+import kotlinx.serialization.encoding.Decoder
+import kotlinx.serialization.encoding.Encoder
+import kotlin.js.ExperimentalJsExport
+import kotlin.js.JsExport
 
+@OptIn(ExperimentalJsExport::class)
+@JsExport
 @Serializable
 data class Electricity (
     val hasConnection: Boolean? = null,
@@ -54,36 +65,42 @@ enum class KleinverbruikElectricityConnectionCapacity {
     // The total number of kleinverbruik postal code regions is 359.299.
     // This statistic includes residential connections.
 
-    //`1x6A`, // majority of connections in 89 postalcodes
-    //`1x10A`, // majority of connections in 36 postalcodes
-    //`1x20A`, // majority of connections in 188 postalcodes
-    `1x25A`, // majority of connections in 52.042 postalcodes
-    `1x35A`, // majority of connections in 170.736 postalcodes
-    `1x40A`, // majority of connections in 6.491 postalcodes
-    `1x50A`, // majority of connections in 2.226 postalcodes
-    //`1x63A`, // majority of connections in 1 postalcode
-    `3x25A`, // majority of connections in 125.261 postalcodes
-    `3x35A`, // majority of connections in 1.049 postalcodes
-    //`3x40A`, // majority of connections in 87 postalcodes
-    `3x50A`, // majority of connections in 180 postalcodes
-    `3x63A`, // majority of connections in 261 postalcodes
-    `3x80A`, // majority of connections in 613 postalcodes
+    //_1x6A, // majority of connections in 89 postalcodes
+    //_1x10A, // majority of connections in 36 postalcodes
+    //_1x20A, // majority of connections in 188 postalcodes
+    _1x25A, // majority of connections in 52.042 postalcodes
+    _1x35A, // majority of connections in 170.736 postalcodes
+    _1x40A, // majority of connections in 6.491 postalcodes
+    _1x50A, // majority of connections in 2.226 postalcodes
+    //_1x63A, // majority of connections in 1 postalcode
+    _3x25A, // majority of connections in 125.261 postalcodes
+    _3x35A, // majority of connections in 1.049 postalcodes
+    //_3x40A, // majority of connections in 87 postalcodes
+    _3x50A, // majority of connections in 180 postalcodes
+    _3x63A, // majority of connections in 261 postalcodes
+    _3x80A, // majority of connections in 613 postalcodes
     ;// Unknown in 39 postalcodes
 
     fun toKw(): Int {
         return when (this) {
-            `1x25A` -> 1 * 25
-            `1x35A` -> 1 * 35
-            `1x40A` -> 1 * 40
-            `1x50A` -> 1 * 50
-            `3x25A` -> 3 * 25
-            `3x35A` -> 3 * 35
-            `3x50A` -> 3 * 50
-            `3x63A` -> 3 * 63
-            `3x80A` -> 3 * 80
+            _1x25A -> 1 * 25
+            _1x35A -> 1 * 35
+            _1x40A -> 1 * 40
+            _1x50A -> 1 * 50
+            _3x25A -> 3 * 25
+            _3x35A -> 3 * 35
+            _3x50A -> 3 * 50
+            _3x63A -> 3 * 63
+            _3x80A -> 3 * 80
         }
     }
+
+    fun toDisplayName(): String =
+        this.name.substring(1)
 }
+
+fun kleinverbruikEnumFromDisplayName(displayName: String): KleinverbruikElectricityConnectionCapacity =
+    valueOf("_$displayName")
 
 // TODO: create profile names
 enum class KleinverbruikElectricityConsumptionProfile {
