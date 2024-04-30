@@ -69,6 +69,23 @@ class BlobStorage(
             sas = sasToken,
         )
     }
+
+    fun getBlobClient(blobName: String) = blobServiceClient.getBlobContainerClient(containerName).getBlobClient(blobName)
+
+    fun generateDownloadUrl(blobName: String): String {
+        val blobClient = blobServiceClient.getBlobContainerClient(containerName).getBlobClient(blobName)
+
+        val permissions = BlobSasPermission().setReadPermission(true)
+
+        val expiryTime = OffsetDateTime.now().plusDays(1)
+
+        val sasSignatureValues = BlobServiceSasSignatureValues(expiryTime, permissions)
+            .setProtocol(SasProtocol.HTTPS_ONLY)
+
+        val sasToken = blobClient.generateSas(sasSignatureValues)
+
+        return "${blobClient.blobUrl}?$sasToken"
+    }
 }
 
 fun randomString(length: UInt): String {
