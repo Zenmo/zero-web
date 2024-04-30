@@ -34,6 +34,19 @@ class SurveyRepository(
         )
     }
 
+    fun getSurveyById(surveyId: UUID, userId: UUID): Survey? {
+        val unnestProjects = UserTable.projects.function("unnest")
+
+        return getSurveys(
+            (CompanySurveyTable.id eq surveyId)
+                    and
+                    (CompanySurveyTable.project eq anyFrom(
+                        UserTable.select(unnestProjects)
+                            .where(UserTable.id eq userId)
+                    ))
+        ).firstOrNull()
+    }
+
     fun getSurveyByProject(project: String): List<Survey> {
         return getSurveys(CompanySurveyTable.project eq project)
     }
