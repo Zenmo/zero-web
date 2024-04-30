@@ -14,6 +14,7 @@ import io.ktor.server.response.*
 import io.ktor.server.routing.*
 import io.ktor.server.sessions.*
 import org.jetbrains.exposed.sql.Database
+import java.util.*
 
 fun Application.configureDatabases(): Database {
     val db: Database = connectToPostgres()
@@ -53,6 +54,27 @@ fun Application.configureDatabases(): Database {
             val surveys = repository.getSurveysByUser(userId)
 
             call.respond(HttpStatusCode.OK, surveys)
+        }
+
+        // fetch single
+        get("/company-survey/{surveyId}") {
+            val userSession = call.sessions.get<UserSession>()
+            if (userSession == null) {
+                call.respond(HttpStatusCode.Unauthorized)
+                return@get
+            }
+
+            val surveyId = UUID.fromString(call.parameters["surveyId"])
+            val userId = userSession.getUserId()
+
+            val repository = SurveyRepository(db)
+            val survey = repository.getSurveyById(surveyId, userId)
+            if (survey == null) {
+                call.respond(HttpStatusCode.NotFound)
+                return@get
+            }
+
+            call.respond(HttpStatusCode.OK, survey)
         }
     }
 

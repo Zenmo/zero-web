@@ -6,7 +6,9 @@ import {PrimeReactProvider} from "primereact/api";
 import { Button } from 'primereact/button';
 import {com} from "zero-zummon"
 
-import "primereact/resources/themes/lara-light-cyan/theme.css";
+import "primereact/resources/themes/lara-light-cyan/theme.css"
+import 'primeicons/primeicons.css'
+import {ButtonLink} from "./button-link";
 
 type Survey = com.zenmo.zummon.companysurvey.Survey
 type Address = com.zenmo.zummon.companysurvey.Address
@@ -46,9 +48,14 @@ export const Admin: FunctionComponent = () => {
                                 </div>
                             ))}
                         </>
-                    )} />
-                    <Column field="createdToString" body={survey => formatDatetime(survey.created.toString())} header="Opgestuurd op" sortable />
-                    {/*<Column body={() => <Button />}/>*/}
+                    )}/>
+                    <Column field="createdToString" body={survey => formatDatetime(survey.created.toString())} header="Opgestuurd op" sortable/>
+                    <Column body={(survey: Survey) => (
+                        <ButtonLink href={`${process.env.ZTOR_URL}/company-survey/${survey.id}`}>
+                            {"{} "}
+                            json
+                        </ButtonLink>
+                    )}/>
                 </DataTable>
             </div>
         </PrimeReactProvider>
