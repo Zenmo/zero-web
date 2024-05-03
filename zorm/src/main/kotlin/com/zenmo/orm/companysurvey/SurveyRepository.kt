@@ -2,16 +2,27 @@ package com.zenmo.orm.companysurvey
 
 import com.zenmo.orm.blob.BlobPurpose
 import com.zenmo.orm.companysurvey.table.*
+import com.zenmo.orm.companysurvey.table.GridConnectionTable.addressId
 import com.zenmo.orm.user.table.UserTable
 import com.zenmo.zummon.companysurvey.*
 import org.jetbrains.exposed.sql.*
 import org.jetbrains.exposed.sql.SqlExpressionBuilder.eq
+import org.jetbrains.exposed.sql.SqlExpressionBuilder.inList
 import org.jetbrains.exposed.sql.transactions.transaction
 import java.util.*
 
 class SurveyRepository(
         private val db: Database
 ) {
+    private fun userIsAllowedCondition(userId: UUID): Op<Boolean>{
+        val unnestProjects = UserTable.projects.function("unnest")
+
+        return CompanySurveyTable.project eq anyFrom(
+            UserTable.select(unnestProjects)
+                .where(UserTable.id eq userId)
+        )
+    }
+
     fun getHessenpoortSurveys(): List<Survey> {
         return getSurveyByProject("Hessenpoort")
     }
@@ -24,26 +35,62 @@ class SurveyRepository(
      * Get all the Surveys a (project) administrator has access to.
      */
     fun getSurveysByUser(userId: UUID): List<Survey> {
-        val unnestProjects = UserTable.projects.function("unnest")
-
         return getSurveys(
-            CompanySurveyTable.project eq anyFrom(
-                UserTable.select(unnestProjects)
-                    .where(UserTable.id eq userId)
-            )
+            userIsAllowedCondition(userId)
         )
     }
 
-    fun getSurveyById(surveyId: UUID, userId: UUID): Survey? {
-        val unnestProjects = UserTable.projects.function("unnest")
+    /**
+     * Delete a survey and all associated data.
+     * Returns blob names so the caller can delete them from blob storage.
+     */
+    fun deleteSurveyById(surveyId: UUID, userId: UUID): List<String> {
+        return transaction(db) {
+            val exists = CompanySurveyTable.selectAll().where {
+                (CompanySurveyTable.id eq surveyId) and userIsAllowedCondition(userId)
+            }.count() > 0
 
+            if (!exists) {
+                // User is not allowed to delete this survey.
+                // Or survey is already deleted.
+                return@transaction emptyList()
+            }
+
+            val blobNames: List<String> = FileTable.deleteReturning(listOf(FileTable.blobName)) {
+                FileTable.gridConnectionId eq anyFrom(
+                    GridConnectionTable.select(GridConnectionTable.id).where(
+                        addressId eq anyFrom(
+                            AddressTable.select(AddressTable.id)
+                                .where(AddressTable.surveyId eq surveyId)
+                        )
+                    )
+                )
+            }.map { it[FileTable.blobName] }
+
+            GridConnectionTable.deleteWhere {
+                addressId eq anyFrom(
+                    AddressTable.select(AddressTable.id)
+                        .where(AddressTable.surveyId eq surveyId)
+                )
+            }
+
+            AddressTable.deleteWhere {
+                AddressTable.surveyId eq surveyId
+            }
+
+            CompanySurveyTable.deleteWhere {
+                id eq surveyId
+            }
+
+            blobNames
+        }
+    }
+
+    fun getSurveyById(surveyId: UUID, userId: UUID): Survey? {
         return getSurveys(
             (CompanySurveyTable.id eq surveyId)
                     and
-                    (CompanySurveyTable.project eq anyFrom(
-                        UserTable.select(unnestProjects)
-                            .where(UserTable.id eq userId)
-                    ))
+                    userIsAllowedCondition(userId)
         ).firstOrNull()
     }
 

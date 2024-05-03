@@ -76,6 +76,22 @@ fun Application.configureDatabases(): Database {
 
             call.respond(HttpStatusCode.OK, survey)
         }
+
+        delete("/company-survey/{surveyId}") {
+            val userSession = call.sessions.get<UserSession>()
+            if (userSession == null) {
+                call.respond(HttpStatusCode.Unauthorized)
+                return@delete
+            }
+
+            val surveyId = UUID.fromString(call.parameters["surveyId"])
+            val userId = userSession.getUserId()
+
+            val repository = SurveyRepository(db)
+            repository.deleteSurveyById(surveyId, userId)
+
+            call.respond(HttpStatusCode.OK)
+        }
     }
 
     return db
