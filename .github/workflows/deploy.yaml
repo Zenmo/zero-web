@@ -144,7 +144,7 @@ jobs:
                         CORS_ALLOW_ORIGIN_PATTERN=${{ vars.CORS_ALLOW_ORIGIN_PATTERN }}
                         OAUTH_CLIENT_ID=${{ vars.OAUTH_CLIENT_ID }}
                         OAUTH_CLIENT_SECRET=${{ secrets.OAUTH_CLIENT_SECRET }}
-                        BASE_URL=https://${{ needs.environment-variables.outputs.ZTOR_CONTAINER_APP_NAME }}.bravesky-71f0cbc2.germanywestcentral.azurecontainerapps.io
+                        BASE_URL=https://${{ needs.environment-variables.outputs.ZTOR_CONTAINER_APP_NAME }}.zero.zenmo.com
                         --ingress external
                         --tags branch=${{ github.head_ref || github.ref_name }} 
                         --image ghcr.io/erikvv/ztor:${{ needs.variables.outputs.VERSION_TAG }}
@@ -190,7 +190,7 @@ jobs:
                 id: builddeploy
                 uses: Azure/static-web-apps-deploy@v1
                 env:
-                    ZTOR_URL: https://${{ needs.environment-variables.outputs.ZTOR_CONTAINER_APP_NAME }}.bravesky-71f0cbc2.germanywestcentral.azurecontainerapps.io
+                    ZTOR_URL: https://${{ needs.environment-variables.outputs.ZTOR_CONTAINER_APP_NAME }}.zero.zenmo.com
                 with:
                     azure_static_web_apps_api_token: ${{ secrets.AZURE_STATIC_WEB_APP_API_TOKEN }}
                     repo_token: ${{ secrets.GITHUB_TOKEN }} # Used for Github integrations (i.e. PR comments)
