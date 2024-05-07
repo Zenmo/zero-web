@@ -342,7 +342,7 @@ class SurveyRepository(
 
     fun save(survey: Survey): UUID {
         transaction(db) {
-            CompanySurveyTable.insert {
+            CompanySurveyTable.upsert {
                 it[id] = survey.id
                 it[created] = survey.created
                 it[project] = survey.zenmoProject
@@ -352,7 +352,7 @@ class SurveyRepository(
                 it[dataSharingAgreed] = survey.dataSharingAgreed
             }
 
-            AddressTable.batchInsert(survey.addresses) {
+            AddressTable.batchUpsert(survey.addresses) {
                 address ->
                 this[AddressTable.id] = address.id
                 this[AddressTable.surveyId] = survey.id
@@ -364,7 +364,7 @@ class SurveyRepository(
                 this[AddressTable.city] = address.city
             }
 
-            GridConnectionTable.batchInsert(survey.addresses.flatMap { address ->
+            GridConnectionTable.batchUpsert(survey.addresses.flatMap { address ->
                 address.gridConnections.map { gridConnection ->
                     Pair(
                         address.id,
@@ -480,7 +480,7 @@ class SurveyRepository(
             for (address in survey.addresses) {
                 for (gridConnection in address.gridConnections) {
                     for (electricityFile in gridConnection.electricity.quarterHourlyValuesFiles) {
-                        FileTable.insert {
+                        FileTable.upsert {
                             it[gridConnectionId] = gridConnection.id
                             it[purpose] = BlobPurpose.ELECTRICITY_VALUES
                             it[blobName] = electricityFile.blobName
@@ -492,7 +492,7 @@ class SurveyRepository(
 
                     val authorizationFile = gridConnection.electricity.authorizationFile
                     if (authorizationFile != null) {
-                        FileTable.insert {
+                        FileTable.upsert {
                             it[gridConnectionId] = gridConnection.id
                             it[purpose] = BlobPurpose.ELECTRICITY_AUTHORIZATION
                             it[blobName] = authorizationFile.blobName
@@ -503,7 +503,7 @@ class SurveyRepository(
                     }
 
                     for (gasFile in gridConnection.naturalGas.hourlyValuesFiles) {
-                        FileTable.insert {
+                        FileTable.upsert {
                             it[gridConnectionId] = gridConnection.id
                             it[purpose] = BlobPurpose.NATURAL_GAS_VALUES
                             it[blobName] = gasFile.blobName

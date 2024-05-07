@@ -14,11 +14,11 @@ import {Intro} from './intro'
 import {ProjectConfiguration} from './project'
 import {SurveyTabs} from './survey-tabs'
 
-export const Survey: FunctionComponent<{project: ProjectConfiguration}> = ({project}) => {
+export const Survey: FunctionComponent<{project: ProjectConfiguration, survey?: any}> = ({project, survey}) => {
     const [key, setKey] = useState(1)
 
     return (
-        <SurveyWithReset key={key} project={project} remount={() => setKey(key + 1)} />
+        <SurveyWithReset key={key} project={project} remount={() => setKey(key + 1)} survey={survey} />
     )
 }
 
@@ -26,9 +26,14 @@ export const emptyGridConnection = {
     supply: {}
 }
 
-const SurveyWithReset: FunctionComponent<{ project: ProjectConfiguration, remount: () => void }> = ({
+const SurveyWithReset: FunctionComponent<{
+    project: ProjectConfiguration,
+    remount: () => void,
+    survey?: object,
+}> = ({
     project,
     remount,
+    survey,
 }) => {
     let navigate = useNavigate()
 
@@ -42,20 +47,16 @@ const SurveyWithReset: FunctionComponent<{ project: ProjectConfiguration, remoun
     }
 
     let defaultValues = emptyFormData
+    let localStorageKey = `survey-${project.name}`
 
-    const localStorageKey = `survey-${project.name}`
-    const previousData = localStorage.getItem(localStorageKey)
-    if (previousData) {
+    if (survey) {
+        defaultValues = surveyToFormData(survey)
+    } else {
         try {
-            const previous = JSON.parse(previousData)
-
-            for (const tab of previous.tabs) {
-                // these fields were renamed and are now unknown in the back-end
-                delete tab.gridConnection?.transport?.numDailyCarCommuters
-                delete tab.gridConnection?.transport?.numCommuterChargePoints
+            const previous = loadFromLocalStorage(localStorageKey)
+            if (previous) {
+                defaultValues = previous
             }
-
-            defaultValues = previous
         } catch (e) {
             console.error("Deserialization of previous data failed, falling back to default values. Details: ", e)
         }
@@ -86,7 +87,7 @@ const SurveyWithReset: FunctionComponent<{ project: ProjectConfiguration, remoun
         return () => subscription.unsubscribe()
     }, [watch])
 
-    const [hasMultipleConnections, setMultipleConnections] = useState(previousData ? defaultValues.tabs.length > 1 : null)
+    const [hasMultipleConnections, setMultipleConnections] = useState(defaultValues === emptyFormData ? null : defaultValues.tabs.length > 1)
     const [isSuccess, setSuccess] = useState(false)
     const [submissionError, setSubmissionError] = useState("")
 
@@ -230,9 +231,53 @@ const SurveyWithReset: FunctionComponent<{ project: ProjectConfiguration, remoun
                     }
                 `}>
                     <button type="button" onClick={clear}>Leegmaken</button>
-                    <button type="submit">Verstuur</button>
+                    <button type="submit">Versturen</button>
                 </div>
             </form>
         </div>
     )
+}
+
+const surveyToFormData = (survey: any): any => {
+    const formData = {
+        ...survey,
+        tabs: survey.addresses.flatMap((address: any) => ([
+            ...address.gridConnections.map((gridConnection: any, i: number) => {
+                const tabData = {
+                    address: { ...address },
+                    gridConnection,
+                }
+
+                tabData.address.isSameAddress = i > 0
+
+                return tabData
+            })
+        ]))
+    }
+
+    delete formData.addresses
+
+    for (const tab of formData.tabs) {
+        delete tab.address.gridConnections
+    }
+
+    return formData
+}
+
+const loadFromLocalStorage = (localStorageKey: string): any => {
+    const previousData = localStorage.getItem(localStorageKey)
+
+    if (!previousData) {
+        return null
+    }
+
+    const previous = JSON.parse(previousData)
+
+    for (const tab of previous.tabs) {
+        // these fields were renamed and are now unknown in the back-end
+        delete tab.gridConnection?.transport?.numDailyCarCommuters
+        delete tab.gridConnection?.transport?.numCommuterChargePoints
+    }
+
+    return previous
 }

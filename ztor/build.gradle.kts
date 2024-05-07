@@ -12,9 +12,12 @@ version = "0.0.1"
 application {
     mainClass.set("com.zenmo.ztor.ApplicationKt")
 
-    // This argument is only applied when run through Gradle,
-    // not when building and running a Fat Jar.
-    applicationDefaultJvmArgs = listOf("-Dio.ktor.development=true")
+    // These arguments are only applied when running through Gradle (= in development),
+    // not when building and running a Fat Jar (= in production).
+    applicationDefaultJvmArgs = listOf(
+        "-Dio.ktor.development=true",
+        "-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=*:5005",
+    )
 }
 
 repositories {
