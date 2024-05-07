@@ -12,9 +12,9 @@ import reportWebVitals from './reportWebVitals'
 import {ZeroHeader} from "./components/zero-header";
 import App from "./App";
 import {LoginWidget} from "./user/login";
-import {Zummon} from "./Zummon";
 import {BedrijvenFormV1} from "./components/bedrijven-form-v1";
 import {Admin} from "./admin/admin";
+import {SurveyById, SurveyByIdRouteData} from "./components/company-survey-v2/survey-by-id";
 
 const router = createBrowserRouter([
     {
@@ -38,6 +38,24 @@ const router = createBrowserRouter([
         element: <Survey project={DE_WIEKEN} />,
     },
     {
+        path: "/bedrijven-uitvraag/:surveyId",
+        element: <SurveyById />,
+        loader: ({params: {surveyId}, request}): SurveyByIdRouteData => {
+            if (!surveyId) {
+                throw new Error("Survey ID is required")
+            }
+            const url = new URL(request.url);
+            const deeplink = url.searchParams.get("deeplink");
+            const secret = url.searchParams.get("secret");
+
+            return {
+                surveyId,
+                deeplink,
+                secret,
+            }
+        }
+    },
+    {
         path: "/bedankt",
         element: <ThankYou />,
     },
@@ -48,10 +66,6 @@ const router = createBrowserRouter([
     {
         path: "/login",
         element: <LoginWidget />
-    },
-    {
-        path: "/zummon-test",
-        element: <Zummon />
     }
 ]);
 

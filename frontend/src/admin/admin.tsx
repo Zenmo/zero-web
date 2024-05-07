@@ -3,13 +3,13 @@ import { DataTable } from 'primereact/datatable';
 import { Column } from 'primereact/column';
 import {useSurveys} from "./use-surveys";
 import {PrimeReactProvider} from "primereact/api";
-import { Button } from 'primereact/button';
 import {com} from "zero-zummon"
 
 import "primereact/resources/themes/lara-light-cyan/theme.css"
 import 'primeicons/primeicons.css'
-import {ButtonLink} from "./button-link";
 import {DeleteButton} from "./delete-button";
+import {EditButton} from "./edit-button";
+import {JsonButton} from "./json-button";
 
 type Survey = com.zenmo.zummon.companysurvey.Survey
 type Address = com.zenmo.zummon.companysurvey.Address
@@ -58,10 +58,9 @@ export const Admin: FunctionComponent = () => {
                                 margin: `${1/6}rem`
                             },
                         }}>
-                            <ButtonLink href={`${process.env.ZTOR_URL}/company-survey/${survey.id}`}>
-                                {"{}"}
-                            </ButtonLink>
+                            <JsonButton surveyId={survey.id}/>
                             <DeleteButton surveyId={survey.id} onDelete={removeSurvey}/>
+                            <EditButton surveyId={survey.id}/>
                         </div>
                     )}/>
                 </DataTable>
