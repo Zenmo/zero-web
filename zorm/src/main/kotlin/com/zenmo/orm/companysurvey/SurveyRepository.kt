@@ -86,7 +86,13 @@ class SurveyRepository(
         }
     }
 
-    fun getSurveyById(surveyId: UUID, userId: UUID): Survey? {
+    fun getSurveyById(surveyId: UUID): Survey? {
+        return getSurveys(
+            (CompanySurveyTable.id eq surveyId)
+        ).firstOrNull()
+    }
+
+    fun getSurveyByIdWithUserAccessCheck(surveyId: UUID, userId: UUID): Survey? {
         return getSurveys(
             (CompanySurveyTable.id eq surveyId)
                     and
@@ -341,8 +347,8 @@ class SurveyRepository(
     }
 
     fun save(survey: Survey): UUID {
-        transaction(db) {
-            CompanySurveyTable.upsert {
+        return transaction(db) {
+            val surveyId = CompanySurveyTable.upsertReturning {
                 it[id] = survey.id
                 it[created] = survey.created
                 it[project] = survey.zenmoProject
@@ -350,7 +356,9 @@ class SurveyRepository(
                 it[personName] = survey.personName
                 it[email] = survey.email
                 it[dataSharingAgreed] = survey.dataSharingAgreed
-            }
+            }.map {
+                it[CompanySurveyTable.id]
+            }.single()
 
             AddressTable.batchUpsert(survey.addresses) {
                 address ->
@@ -514,8 +522,8 @@ class SurveyRepository(
                     }
                 }
             }
-        }
 
-        return survey.id
+            surveyId
+        }
     }
 }

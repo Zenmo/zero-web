@@ -7,6 +7,7 @@ import com.zenmo.orm.companysurvey.table.FileTable
 import com.zenmo.orm.companysurvey.table.gridConnectionSequence
 import com.zenmo.orm.dbutil.createEnumTypeSql
 import com.zenmo.orm.dbutil.createKleinverbruikEnumTypeSql
+import com.zenmo.orm.deeplink.DeeplinkTable
 import com.zenmo.orm.energieprestatieonline.RawPandTable
 import com.zenmo.orm.user.table.UserTable
 import com.zenmo.zummon.companysurvey.*
@@ -28,6 +29,7 @@ val tables = arrayOf(
     FileTable,
     RawPandTable,
     UserTable,
+    DeeplinkTable,
 )
 
 fun createSchema(db: Database) {
@@ -35,8 +37,6 @@ fun createSchema(db: Database) {
         execInBatch(schemaSql(db))
     }
 }
-
-
 
 // this is a utility function for development only
 fun createMissingTablesAndColumns(db: Database) {

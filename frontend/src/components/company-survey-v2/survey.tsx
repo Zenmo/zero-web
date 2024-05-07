@@ -142,7 +142,11 @@ const SurveyWithReset: FunctionComponent<{
                 return
             }
 
-            navigate('/bedankt')
+            navigate('/bedankt', {
+                state: {
+                    deeplink: await response.json()
+                }
+            })
         } catch (e) {
             let message = "Er is iets misgegaan."
             // @ts-ignore
