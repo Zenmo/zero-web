@@ -15,11 +15,12 @@ import {LoginWidget} from "./user/login";
 import {BedrijvenFormV1} from "./components/bedrijven-form-v1";
 import {Admin} from "./admin/admin";
 import {SurveyById, SurveyByIdRouteData} from "./components/company-survey-v2/survey-by-id";
+import {Home} from "./components/home"
 
 const router = createBrowserRouter([
     {
         path: "/",
-        element: <ZeroHeader />,
+        element: <Home />,
     },
     {
         path: "/proof-of-concept",
