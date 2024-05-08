@@ -10,6 +10,7 @@ import 'primeicons/primeicons.css'
 import {DeleteButton} from "./delete-button";
 import {EditButton} from "./edit-button";
 import {JsonButton} from "./json-button";
+import {DeeplinkButton} from "./deeplink-button"
 
 type Survey = com.zenmo.zummon.companysurvey.Survey
 type Address = com.zenmo.zummon.companysurvey.Address
@@ -61,6 +62,7 @@ export const Admin: FunctionComponent = () => {
                             <JsonButton surveyId={survey.id}/>
                             <DeleteButton surveyId={survey.id} onDelete={removeSurvey}/>
                             <EditButton surveyId={survey.id}/>
+                            <DeeplinkButton surveyId={survey.id}/>
                         </div>
                     )}/>
                 </DataTable>
