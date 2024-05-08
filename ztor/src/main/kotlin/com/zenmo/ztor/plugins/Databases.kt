@@ -111,6 +111,28 @@ fun Application.configureDatabases(): Database {
 
             call.respond(HttpStatusCode.OK)
         }
+
+        // generate deeplink
+        post("/company-survey/{surveyId}/deeplink") {
+            val userSession = call.sessions.get<UserSession>()
+            if (userSession == null) {
+                call.respond(HttpStatusCode.Unauthorized)
+                return@post
+            }
+
+            val surveyId = UUID.fromString(call.parameters["surveyId"])
+
+            val survey = surveyRepository.getSurveyByIdWithUserAccessCheck(surveyId, userSession.getUserId())
+            if (survey == null) {
+                // User may not have access to this project
+                call.respond(HttpStatusCode.NotFound)
+                return@post
+            }
+
+            val deeplink = deeplinkService.generateDeeplink(surveyId)
+
+            call.respond(HttpStatusCode.Created, deeplink)
+        }
     }
 
     return db

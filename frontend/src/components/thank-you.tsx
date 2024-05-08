@@ -1,8 +1,14 @@
 import {useLocation, Location} from "react-router-dom"
+import {buildDeeplinkUrl} from "./company-survey-v2/deeplink"
 
 export const ThankYou = () => {
     let location = useLocation()
-    const deeplinkUrl = buildDeeplinkUrl(location)
+    const deeplink = location.state?.deeplink
+    let deeplinkUrl = null
+    if (deeplink) {
+        deeplinkUrl = buildDeeplinkUrl(deeplink)
+    }
+
 
     return (
         <div style={{
@@ -21,18 +27,4 @@ export const ThankYou = () => {
             )}
         </div>
     )
-}
-
-const buildDeeplinkUrl = (location: Location): string | null => {
-    const deeplink = location.state?.deeplink
-    if (!deeplink) {
-        return null
-    }
-
-    const url = new URL(window.location.origin)
-    url.pathname = '/bedrijven-uitvraag/' + deeplink.surveyId
-    url.searchParams.append('deeplink', deeplink.deeplinkId)
-    url.searchParams.append('secret', deeplink.secret)
-
-    return url.toString()
 }
