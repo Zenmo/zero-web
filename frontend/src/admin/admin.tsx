@@ -11,6 +11,7 @@ import {DeleteButton} from "./delete-button";
 import {EditButton} from "./edit-button";
 import {JsonButton} from "./json-button";
 import {DeeplinkButton} from "./deeplink-button"
+import {ZeroLayout} from "../components/zero-layout"
 
 type Survey = com.zenmo.zummon.companysurvey.Survey
 type Address = com.zenmo.zummon.companysurvey.Address
@@ -25,9 +26,9 @@ export const Admin: FunctionComponent = () => {
 
     return (
         <PrimeReactProvider>
-            <div style={{margin: '1rem'}}>
-                <h1>Uitvraag bedrijven</h1>
+            <ZeroLayout subtitle="Beheer uitvraag bedrijven">
                 <DataTable
+                    style={{margin: '1rem'}}
                     value={surveys}
                     loading={loading}
                     sortField="created"
@@ -66,7 +67,7 @@ export const Admin: FunctionComponent = () => {
                         </div>
                     )}/>
                 </DataTable>
-            </div>
+            </ZeroLayout>
         </PrimeReactProvider>
     )
 }
