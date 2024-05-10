@@ -48,7 +48,14 @@ class BlobStorage(
             .withZone(ZoneId.of("Europe/Amsterdam"))
             .format(Instant.now())
 
-        val blobName = "${dateStamp}_${project}_${company}_${blobPurpose.toNamePart()}_${randomString(3u)}_${fileName}"
+        val blobName = arrayOf(
+            dateStamp,
+            project,
+            removeSpecialChars(company),
+            blobPurpose.toNamePart(),
+            randomString(3u),
+            removeSpecialChars(fileName),
+        ).joinToString("_")
 
         val blobClient = blobServiceClient.getBlobContainerClient(containerName).getBlobClient(blobName)
         // We would like to (pre-)set some metadata but this is not (easily) possible.
@@ -95,4 +102,10 @@ fun randomString(length: UInt): String {
         .asSequence()
         .map(chars::get)
         .joinToString("")
+}
+
+// Azure blob store does not support special characters in blob names.
+fun removeSpecialChars(input: String): String {
+    val normalized = java.text.Normalizer.normalize(input, java.text.Normalizer.Form.NFKD)
+    return normalized.replace("[^\\p{ASCII}]".toRegex(), "")
 }
