@@ -12,9 +12,12 @@ version = "0.0.1"
 application {
     mainClass.set("com.zenmo.ztor.ApplicationKt")
 
-    // This argument is only applied when run through Gradle,
-    // not when building and running a Fat Jar.
-    applicationDefaultJvmArgs = listOf("-Dio.ktor.development=true")
+    // These arguments are only applied when running through Gradle (= in development),
+    // not when building and running a Fat Jar (= in production).
+    applicationDefaultJvmArgs = listOf(
+        "-Dio.ktor.development=true",
+        "-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=*:5005",
+    )
 }
 
 repositories {
@@ -53,7 +56,11 @@ dependencies {
     implementation("io.ktor:ktor-client-cio:$ktor_version")
     implementation("io.ktor:ktor-client-content-negotiation:$ktor_version")
 
+    // to hash deeplink secrets
+    implementation("at.favre.lib:bcrypt:0.10.2")
+
     // https://mvnrepository.com/artifact/com.auth0/java-jwt
+    // to decode Keycloak access tokens with user info.
     implementation("com.auth0:java-jwt:4.4.0")
 
     implementation("org.jetbrains.kotlinx:kotlinx-datetime:0.6.0-RC.2")

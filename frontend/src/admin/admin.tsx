@@ -3,12 +3,15 @@ import { DataTable } from 'primereact/datatable';
 import { Column } from 'primereact/column';
 import {useSurveys} from "./use-surveys";
 import {PrimeReactProvider} from "primereact/api";
-import { Button } from 'primereact/button';
 import {com} from "zero-zummon"
 
 import "primereact/resources/themes/lara-light-cyan/theme.css"
 import 'primeicons/primeicons.css'
-import {ButtonLink} from "./button-link";
+import {DeleteButton} from "./delete-button";
+import {EditButton} from "./edit-button";
+import {JsonButton} from "./json-button";
+import {DeeplinkButton} from "./deeplink-button"
+import {ZeroLayout} from "../components/zero-layout"
 
 type Survey = com.zenmo.zummon.companysurvey.Survey
 type Address = com.zenmo.zummon.companysurvey.Address
@@ -16,23 +19,23 @@ type Address = com.zenmo.zummon.companysurvey.Address
 const formatByteSize = com.zenmo.zummon.companysurvey.formatByteSize
 
 export const Admin: FunctionComponent = () => {
-    const {loading, surveys} = useSurveys()
-    if (surveys.length > 0) {
-        console.log(surveys[0].created)
-    }
+    const {loading, surveys, removeSurvey} = useSurveys()
+
+    const multipleProjects = surveys.map(survey => survey.zenmoProject)
+        .filter((value, index, self) => self.indexOf(value) === index).length > 1
 
     return (
         <PrimeReactProvider>
-            <div>
-                <h1>Uitvraag bedrijven</h1>
+            <ZeroLayout subtitle="Beheer uitvraag bedrijven">
                 <DataTable
+                    style={{margin: '1rem'}}
                     value={surveys}
                     loading={loading}
                     sortField="created"
                     sortOrder={-1}
                     filterDisplay="row"
                 >
-                    <Column field="zenmoProject" header="Project" sortable filter />
+                    {multipleProjects && <Column field="zenmoProject" header="Project" sortable filter />}
                     <Column field="companyName" header="Bedrijf" sortable filter />
                     <Column field="personName" header="Contactpersoon" sortable filter />
                     <Column field="email" header="E-mail" sortable filter />
@@ -51,13 +54,20 @@ export const Admin: FunctionComponent = () => {
                     )}/>
                     <Column field="createdToString" body={survey => formatDatetime(survey.created.toString())} header="Opgestuurd op" sortable/>
                     <Column body={(survey: Survey) => (
-                        <ButtonLink href={`${process.env.ZTOR_URL}/company-survey/${survey.id}`}>
-                            {"{} "}
-                            json
-                        </ButtonLink>
+                        <div css={{
+                            display: 'flex',
+                            '> *': {
+                                margin: `${1/6}rem`
+                            },
+                        }}>
+                            <JsonButton surveyId={survey.id}/>
+                            <DeleteButton surveyId={survey.id} onDelete={removeSurvey}/>
+                            <EditButton surveyId={survey.id}/>
+                            <DeeplinkButton surveyId={survey.id}/>
+                        </div>
                     )}/>
                 </DataTable>
-            </div>
+            </ZeroLayout>
         </PrimeReactProvider>
     )
 }

@@ -14,7 +14,7 @@ repositories {
     mavenCentral()
 }
 
-val exposed_version = "0.49.0"
+val exposed_version = "0.50.0"
 
 dependencies {
     implementation(project(":zummon"))

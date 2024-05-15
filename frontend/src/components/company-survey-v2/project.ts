@@ -20,3 +20,14 @@ export const DE_WIEKEN: ProjectConfiguration = {
     email: 'info@zenmo.com',
     authorizationPdf: '/machtiging-datadeling-de-wieken.pdf'
 }
+
+export const getProjectConfiguration = (projectName: ProjectName): ProjectConfiguration => {
+    switch (projectName) {
+        case 'Hessenpoort':
+            return HESSENPOORT
+        case 'De Wieken':
+            return DE_WIEKEN
+        default:
+            throw new Error(`Unknown project name: ${projectName}`)
+    }
+}

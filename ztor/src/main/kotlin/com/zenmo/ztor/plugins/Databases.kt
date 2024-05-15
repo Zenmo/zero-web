@@ -2,6 +2,8 @@ package com.zenmo.ztor.plugins
 
 import com.zenmo.orm.companysurvey.SurveyRepository
 import com.zenmo.orm.connectToPostgres
+import com.zenmo.orm.deeplink.DeeplinkRepository
+import com.zenmo.ztor.deeplink.DeeplinkService
 import com.zenmo.ztor.errorMessageToJson
 import com.zenmo.ztor.user.UserSession
 import com.zenmo.zummon.companysurvey.Survey
@@ -18,6 +20,8 @@ import java.util.*
 
 fun Application.configureDatabases(): Database {
     val db: Database = connectToPostgres()
+    val surveyRepository = SurveyRepository(db)
+    val deeplinkService = DeeplinkService(DeeplinkRepository(db))
 
     routing {
         // Create
@@ -34,12 +38,13 @@ fun Application.configureDatabases(): Database {
                 return@post
             }
 
-            val repository = SurveyRepository(db)
-            repository.save(survey)
+            val surveyId = surveyRepository.save(survey)
 
-            // TODO: return entity from database
-            call.respond(HttpStatusCode.Created, survey)
+            val deeplink = deeplinkService.generateDeeplink(surveyId)
+
+            call.respond(HttpStatusCode.Created, deeplink)
         }
+
         // fetch all
         get("/company-survey") {
             val userSession = call.sessions.get<UserSession>()
@@ -58,23 +63,75 @@ fun Application.configureDatabases(): Database {
 
         // fetch single
         get("/company-survey/{surveyId}") {
+            val surveyId = UUID.fromString(call.parameters["surveyId"])
+
+            val deeplink = call.request.queryParameters.get("deeplink")
+            val secret = call.request.queryParameters.get("secret")
+
+            if (deeplink != null && secret != null) {
+                val deeplinkId = UUID.fromString(deeplink)
+                deeplinkService.assertValidDeeplink(surveyId, deeplinkId, secret)
+                val survey = surveyRepository.getSurveyById(surveyId)
+                if (survey == null) {
+                    call.respond(HttpStatusCode.NotFound)
+                    return@get
+                }
+
+                call.respond(HttpStatusCode.OK, survey)
+            }
+
             val userSession = call.sessions.get<UserSession>()
             if (userSession == null) {
                 call.respond(HttpStatusCode.Unauthorized)
                 return@get
             }
 
-            val surveyId = UUID.fromString(call.parameters["surveyId"])
             val userId = userSession.getUserId()
 
-            val repository = SurveyRepository(db)
-            val survey = repository.getSurveyById(surveyId, userId)
+            val survey = surveyRepository.getSurveyByIdWithUserAccessCheck(surveyId, userId)
             if (survey == null) {
                 call.respond(HttpStatusCode.NotFound)
                 return@get
             }
 
             call.respond(HttpStatusCode.OK, survey)
+        }
+
+        delete("/company-survey/{surveyId}") {
+            val userSession = call.sessions.get<UserSession>()
+            if (userSession == null) {
+                call.respond(HttpStatusCode.Unauthorized)
+                return@delete
+            }
+
+            val surveyId = UUID.fromString(call.parameters["surveyId"])
+            val userId = userSession.getUserId()
+
+            surveyRepository.deleteSurveyById(surveyId, userId)
+
+            call.respond(HttpStatusCode.OK)
+        }
+
+        // generate deeplink
+        post("/company-survey/{surveyId}/deeplink") {
+            val userSession = call.sessions.get<UserSession>()
+            if (userSession == null) {
+                call.respond(HttpStatusCode.Unauthorized)
+                return@post
+            }
+
+            val surveyId = UUID.fromString(call.parameters["surveyId"])
+
+            val survey = surveyRepository.getSurveyByIdWithUserAccessCheck(surveyId, userSession.getUserId())
+            if (survey == null) {
+                // User may not have access to this project
+                call.respond(HttpStatusCode.NotFound)
+                return@post
+            }
+
+            val deeplink = deeplinkService.generateDeeplink(surveyId)
+
+            call.respond(HttpStatusCode.Created, deeplink)
         }
     }
 

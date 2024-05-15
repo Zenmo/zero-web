@@ -8,11 +8,13 @@ const surveysFromJson = com.zenmo.zummon.companysurvey.surveysFromJson
 type UseSurveyReturn = {
     loading: boolean,
     surveys: com.zenmo.zummon.companysurvey.Survey[],
+    removeSurvey: (surveyId: string) => void,
 }
 
 export const useSurveys = (): UseSurveyReturn => {
     const [loading, setLoading] = useState(true)
     const [surveys, setSurveys] = useState<Survey[]>([])
+
     useOnce(async () => {
         try {
             const response = await fetch(process.env.ZTOR_URL + '/company-survey', {
@@ -31,8 +33,13 @@ export const useSurveys = (): UseSurveyReturn => {
         }
     })
 
+    const removeSurvey = (surveyId: any) => {
+        setSurveys(surveys.filter(survey => survey.id.toString() !== surveyId.toString()))
+    }
+
     return {
         loading,
         surveys,
+        removeSurvey,
     }
 }

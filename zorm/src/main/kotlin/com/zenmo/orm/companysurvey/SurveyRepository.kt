@@ -2,16 +2,27 @@ package com.zenmo.orm.companysurvey
 
 import com.zenmo.orm.blob.BlobPurpose
 import com.zenmo.orm.companysurvey.table.*
+import com.zenmo.orm.companysurvey.table.GridConnectionTable.addressId
 import com.zenmo.orm.user.table.UserTable
 import com.zenmo.zummon.companysurvey.*
 import org.jetbrains.exposed.sql.*
 import org.jetbrains.exposed.sql.SqlExpressionBuilder.eq
+import org.jetbrains.exposed.sql.SqlExpressionBuilder.inList
 import org.jetbrains.exposed.sql.transactions.transaction
 import java.util.*
 
 class SurveyRepository(
         private val db: Database
 ) {
+    private fun userIsAllowedCondition(userId: UUID): Op<Boolean>{
+        val unnestProjects = UserTable.projects.function("unnest")
+
+        return CompanySurveyTable.project eq anyFrom(
+            UserTable.select(unnestProjects)
+                .where(UserTable.id eq userId)
+        )
+    }
+
     fun getHessenpoortSurveys(): List<Survey> {
         return getSurveyByProject("Hessenpoort")
     }
@@ -24,26 +35,68 @@ class SurveyRepository(
      * Get all the Surveys a (project) administrator has access to.
      */
     fun getSurveysByUser(userId: UUID): List<Survey> {
-        val unnestProjects = UserTable.projects.function("unnest")
-
         return getSurveys(
-            CompanySurveyTable.project eq anyFrom(
-                UserTable.select(unnestProjects)
-                    .where(UserTable.id eq userId)
-            )
+            userIsAllowedCondition(userId)
         )
     }
 
-    fun getSurveyById(surveyId: UUID, userId: UUID): Survey? {
-        val unnestProjects = UserTable.projects.function("unnest")
+    /**
+     * Delete a survey and all associated data.
+     * Returns blob names so the caller can delete them from blob storage.
+     */
+    fun deleteSurveyById(surveyId: UUID, userId: UUID): List<String> {
+        return transaction(db) {
+            val exists = CompanySurveyTable.selectAll().where {
+                (CompanySurveyTable.id eq surveyId) and userIsAllowedCondition(userId)
+            }.count() > 0
 
+            if (!exists) {
+                // User is not allowed to delete this survey.
+                // Or survey is already deleted.
+                return@transaction emptyList()
+            }
+
+            val blobNames: List<String> = FileTable.deleteReturning(listOf(FileTable.blobName)) {
+                FileTable.gridConnectionId eq anyFrom(
+                    GridConnectionTable.select(GridConnectionTable.id).where(
+                        addressId eq anyFrom(
+                            AddressTable.select(AddressTable.id)
+                                .where(AddressTable.surveyId eq surveyId)
+                        )
+                    )
+                )
+            }.map { it[FileTable.blobName] }
+
+            GridConnectionTable.deleteWhere {
+                addressId eq anyFrom(
+                    AddressTable.select(AddressTable.id)
+                        .where(AddressTable.surveyId eq surveyId)
+                )
+            }
+
+            AddressTable.deleteWhere {
+                AddressTable.surveyId eq surveyId
+            }
+
+            CompanySurveyTable.deleteWhere {
+                id eq surveyId
+            }
+
+            blobNames
+        }
+    }
+
+    fun getSurveyById(surveyId: UUID): Survey? {
+        return getSurveys(
+            (CompanySurveyTable.id eq surveyId)
+        ).firstOrNull()
+    }
+
+    fun getSurveyByIdWithUserAccessCheck(surveyId: UUID, userId: UUID): Survey? {
         return getSurveys(
             (CompanySurveyTable.id eq surveyId)
                     and
-                    (CompanySurveyTable.project eq anyFrom(
-                        UserTable.select(unnestProjects)
-                            .where(UserTable.id eq userId)
-                    ))
+                    userIsAllowedCondition(userId)
         ).firstOrNull()
     }
 
@@ -294,8 +347,8 @@ class SurveyRepository(
     }
 
     fun save(survey: Survey): UUID {
-        transaction(db) {
-            CompanySurveyTable.insert {
+        return transaction(db) {
+            val surveyId = CompanySurveyTable.upsertReturning {
                 it[id] = survey.id
                 it[created] = survey.created
                 it[project] = survey.zenmoProject
@@ -303,9 +356,11 @@ class SurveyRepository(
                 it[personName] = survey.personName
                 it[email] = survey.email
                 it[dataSharingAgreed] = survey.dataSharingAgreed
-            }
+            }.map {
+                it[CompanySurveyTable.id]
+            }.single()
 
-            AddressTable.batchInsert(survey.addresses) {
+            AddressTable.batchUpsert(survey.addresses) {
                 address ->
                 this[AddressTable.id] = address.id
                 this[AddressTable.surveyId] = survey.id
@@ -317,7 +372,7 @@ class SurveyRepository(
                 this[AddressTable.city] = address.city
             }
 
-            GridConnectionTable.batchInsert(survey.addresses.flatMap { address ->
+            GridConnectionTable.batchUpsert(survey.addresses.flatMap { address ->
                 address.gridConnections.map { gridConnection ->
                     Pair(
                         address.id,
@@ -433,7 +488,7 @@ class SurveyRepository(
             for (address in survey.addresses) {
                 for (gridConnection in address.gridConnections) {
                     for (electricityFile in gridConnection.electricity.quarterHourlyValuesFiles) {
-                        FileTable.insert {
+                        FileTable.upsert {
                             it[gridConnectionId] = gridConnection.id
                             it[purpose] = BlobPurpose.ELECTRICITY_VALUES
                             it[blobName] = electricityFile.blobName
@@ -445,7 +500,7 @@ class SurveyRepository(
 
                     val authorizationFile = gridConnection.electricity.authorizationFile
                     if (authorizationFile != null) {
-                        FileTable.insert {
+                        FileTable.upsert {
                             it[gridConnectionId] = gridConnection.id
                             it[purpose] = BlobPurpose.ELECTRICITY_AUTHORIZATION
                             it[blobName] = authorizationFile.blobName
@@ -456,7 +511,7 @@ class SurveyRepository(
                     }
 
                     for (gasFile in gridConnection.naturalGas.hourlyValuesFiles) {
-                        FileTable.insert {
+                        FileTable.upsert {
                             it[gridConnectionId] = gridConnection.id
                             it[purpose] = BlobPurpose.NATURAL_GAS_VALUES
                             it[blobName] = gasFile.blobName
@@ -467,8 +522,8 @@ class SurveyRepository(
                     }
                 }
             }
-        }
 
-        return survey.id
+            surveyId
+        }
     }
 }

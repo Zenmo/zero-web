@@ -56,7 +56,7 @@ class EnumArrayColumnType<T : Enum<T>>(
     private val stringToEnumMap: Map<String, T> = enumClass.java.enumConstants.associateBy { it.name },
     private val stringToEnum: (String) -> T? = stringToEnumMap::get,
     private val enumToString: (T) -> String = {enum -> enum.name}
-) : ColumnType() {
+) : ColumnType<List<T>>() {
     override fun sqlType(): String = "$databaseType ARRAY${size?.let { "[$it]" } ?: ""}"
 
     /**
@@ -66,11 +66,11 @@ class EnumArrayColumnType<T : Enum<T>>(
      *
      * I'm not sure if we've implemented it correctly.
      */
-    override fun notNullValueToDB(value: Any): Any {
+    override fun notNullValueToDB(value: List<T>): Any {
         return when (value) {
             is Enum<*> -> value
             is Collection<*> -> value.map { enumToString(it as T) }.toTypedArray()
-            is Array<*> -> value.map { enumToString(it as T) }.toTypedArray()
+//            is Array<*> -> value.map { enumToString(it as T) }.toTypedArray()
             else -> error("Got unexpected array value of type: ${value::class.qualifiedName} ($value)")
         }
     }

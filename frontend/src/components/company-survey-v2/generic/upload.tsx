@@ -63,8 +63,9 @@ export const Upload: FunctionComponent<{
                 headers: {
                     'Content-Type': file.type,
                     'x-ms-blob-type': 'BlockBlob',
-                    'x-ms-meta-originalName': file.name,
-                    'x-ms-meta-company': company,
+                    // Unfortunately blob storage rejects the upload in case of special characters
+                    // 'x-ms-meta-originalName': file.name,
+                    // 'x-ms-meta-company': company,
                     'x-ms-meta-project': project,
                 },
                 body: file,
