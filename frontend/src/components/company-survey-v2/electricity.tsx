@@ -1,11 +1,12 @@
 import {Radio} from 'antd'
-import {useState} from 'react'
+import {useState} from "react"
 import {UseFormReturn} from 'react-hook-form'
 import {BooleanInput} from './generic/boolean-input'
 import {FormRow} from './generic/form-row'
 import {LabelRow} from './generic/label-row'
 import {NumberRow} from './generic/number-row'
 import {KleinverbruikCapacityInput} from './kleinverbruik-capacity-input'
+import {EanRow} from "./ean-row"
 
 enum ConnectionType {
     GROOTVERBRUIK = "GROOTVERBRUIK",
@@ -34,7 +35,7 @@ export const Electricity = ({form, prefix}: {
                 WrappedInput={BooleanInput}/>
             {hasConnection &&
                 <>
-                    {/*<FormRow label="EAN" name={`${prefix}.ean`} form={form} />*/}
+                    <EanRow form={form} name={`${prefix}.ean`} />
                     <LabelRow label="Heeft u een groot- of kleinverbruik aansluiting?">
                         <Radio.Group onChange={e => setConnectionType(e.target.value)} value={connectionType}>
                             <Radio value={ConnectionType.GROOTVERBRUIK} css={{display: 'block'}}>Grootverbruik</Radio>
