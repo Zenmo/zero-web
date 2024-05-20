@@ -1,6 +1,6 @@
 import {WrappedInputProps} from './form-row'
 
-export const NumberInput = ({form, name, options}: WrappedInputProps) => {
+export const NumberInput = ({form, name, options }: WrappedInputProps) => {
     options = options || {}
     options.valueAsNumber = true
     if (!options.min) {
