@@ -5,6 +5,7 @@ import {LabelRow} from './generic/label-row'
 import {NumberRow} from './generic/number-row'
 import {Purpose, Upload} from './generic/upload'
 import {ProjectName} from './project'
+import {EanRow} from "./ean-row"
 
 export const NaturalGas =  ({form, prefix, project}: { form: UseFormReturn , prefix: string, project: ProjectName }) => {
     const {watch, register} = form
@@ -21,6 +22,7 @@ export const NaturalGas =  ({form, prefix, project}: { form: UseFormReturn , pre
                 WrappedInput={BooleanInput}/>
             {hasConnection && (
                 <>
+                    <EanRow form={form} name={`${prefix}.ean`} />
                     <NumberRow
                         label="Wat is min of meer het jaarlijkse verbruik?"
                         name={`${prefix}.annualDemandM3`}
