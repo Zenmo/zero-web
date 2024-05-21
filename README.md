@@ -15,18 +15,15 @@ Components
 
 ### [Frontend](frontend)
 
-Graphical user interface. The company survey form is here.
+Graphical user interface. The company survey forms are here ([try one here!](https://zero-test.zenmo.com/bedrijven-hessenpoort)) and its web interface for administrators ([screenshot](docs/admin-screenshot.jpg)). 
 
-### [Kleinverbruik](kleinverbruik)
+It is  hosted at [zero.zenmo.com](https://zero.zenmo.com).
 
-Stedin, Liander and Enexis publish usage data of natural gas and electricity anually.
-This is a small webservice which wraps this data so the frontend can request small parts of the data.
-
-(this is partly defunct and this approach will be discontinued in favor of a database import).
+This can also build a front-end library to include the survey in external websites.
 
 ### [Ztor](ztor)
 
-This is the base backend built on Ktor framework. 
+This is the REST backend built on Ktor framework. 
 Like AnyLogic it leans on the Java ecosystem.
 
 ### [Zummon](zummon)
@@ -38,6 +35,8 @@ Builds to both an NPM package and JVM artifact.
 
 Object-relational mapper for the core domain. This is to store surveys of companies in 
 modelled business parks.
+
+A library to access the domain entities from AnyLogic can be downloaded from [GitHub Packages](https://github.com/Zenmo/zero/packages/2104350)
 
 This contains:
 
@@ -73,3 +72,10 @@ The migrations are applied by Flyway.
 ### [EP Online](ep-online)
 
 This is a script to import the national dataset of energielabels to a PostgreSQL database.
+
+### [Kleinverbruik](kleinverbruik)
+
+Stedin, Liander and Enexis publish usage data of natural gas and electricity anually.
+This is a small webservice which wraps this data so the frontend can request small parts of the data.
+
+(this is partly defunct and this approach will be discontinued in favor of a database import).
