@@ -18,7 +18,7 @@ export const Trucks = ({form, prefix, project}: { form: UseFormReturn, prefix: s
             {numTrucks > 0 && (
                 <>
                     <NumberRow
-                        label="Hoeveel rijden uw trucks gemiddeld per dag (ongeveer)?"
+                        label="Hoeveel rijden uw trucks gemiddeld per jaars (ongeveer)?"
                         name={`${prefix}.annualTravelDistancePerTruckKm`}
                         form={form}
                         suffix="km" />                
