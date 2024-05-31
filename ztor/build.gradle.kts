@@ -24,7 +24,7 @@ repositories {
     mavenCentral()
 }
 
-val ktor_version = "2.3.7"
+val ktor_version = "2.3.11"
 
 dependencies {
     implementation(project(":zorm"))
