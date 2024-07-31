@@ -1,12 +1,8 @@
 import {useLoaderData} from "react-router-dom";
 import {useState} from "react";
-import {com} from "zero-zummon"
 import {useOnce} from "../../hooks/use-once";
-import {Survey} from "./survey";
+import {Survey as SurveyComponent} from "./survey";
 import {getProjectConfiguration} from "./project";
-
-type Survey = com.zenmo.zummon.companysurvey.Survey
-const surveyFromJson = com.zenmo.zummon.companysurvey.surveyFromJson
 
 export type SurveyByIdRouteData = {
     surveyId: string,
@@ -27,7 +23,7 @@ export const SurveyById = () => {
         return <div>Geen data</div>
     }
 
-    return <Survey survey={survey} project={getProjectConfiguration(survey.zenmoProject)}/>
+    return <SurveyComponent survey={survey} project={getProjectConfiguration(survey.zenmoProject)}/>
 }
 
 

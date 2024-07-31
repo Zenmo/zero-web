@@ -24,7 +24,7 @@ repositories {
     mavenCentral()
 }
 
-val ktor_version = "2.3.7"
+val ktor_version = "2.3.11"
 
 dependencies {
     implementation(project(":zorm"))
@@ -66,7 +66,7 @@ dependencies {
     implementation("org.jetbrains.kotlinx:kotlinx-datetime:0.6.0-RC.2")
 
     testImplementation("io.ktor:ktor-server-tests-jvm")
-    testImplementation("org.jetbrains.kotlin:kotlin-test-junit:1.9.20")
+    testImplementation("org.jetbrains.kotlin:kotlin-test-junit:2.0.20-Beta2")
 }
 
 tasks.withType<Test> {

@@ -3,7 +3,9 @@ package com.zenmo.orm.companysurvey
 import com.zenmo.zummon.companysurvey.*
 import java.util.*
 
-val mockSurvey = Survey(
+val mockSurvey = createMockSurvey()
+
+fun createMockSurvey() = Survey(
     companyName = "Zenmo",
     zenmoProject = "Project",
     personName = "John Doe",

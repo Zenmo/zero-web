@@ -379,7 +379,7 @@ class SurveyRepository(
                         gridConnection,
                     )
                 }
-            }) { pair: Pair<UUID, GridConnection> ->
+            }, onUpdateExclude = listOf(GridConnectionTable.sequence)) { pair: Pair<UUID, GridConnection> ->
                 val (addressId, gridConnection) = pair
 
                 this[GridConnectionTable.id] = gridConnection.id

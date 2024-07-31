@@ -35,7 +35,7 @@ services:
             POSTGRES_USER: postgres
 
     zorm-test:
-        image: gradle:8.3.0-jdk20
+        image: gradle:8.9.0-jdk21
         depends_on:
             - postgres
         working_dir: /home/gradle/zero
@@ -51,7 +51,7 @@ services:
             POSTGRES_USER: postgres
 
     ztor-test:
-        image: gradle:8.3.0-jdk20
+        image: gradle:8.9.0-jdk21
         depends_on:
             - postgres
         working_dir: /home/gradle/zero
@@ -69,7 +69,7 @@ services:
     ## Recompiles on source code changes.
     ## Do ensure that the two Gradle containers have independent Home directories and Project cache directories.
     ztor-build-once:
-        image: gradle:8.3.0-jdk20
+        image: gradle:8.9.0-jdk21
         working_dir: /home/gradle/ztor
         user: gradle
         volumes:
@@ -77,9 +77,9 @@ services:
             - gradle-build-once-cache:/home/gradle/.gradle
         command: gradle buildFatJar --no-daemon
 
-    ## compile with Java 11 for AnyLogic
+    ## compile with Java 17 for AnyLogic
     zorm-fatjar-11:
-        image: gradle:8.6.0-jdk11
+        image: gradle:8.9.0-jdk17
         working_dir: /home/gradle/zorm
         user: gradle
         volumes:
@@ -90,7 +90,7 @@ services:
     ## Recompiles on source code changes.
     ## Do ensure that the two Gradle containers have independent Home directories and Project cache directories.
     ztor-build:
-        image: gradle:8.3.0-jdk20
+        image: gradle:8.9.0-jdk21
         working_dir: /home/gradle/zero
         user: gradle
         volumes:
@@ -101,7 +101,7 @@ services:
     ## Runs Ktor web server and reloads classes if the compiled .class file changes.
     ## Do ensure that the two Gradle containers have independent Home directories and Project cache directories.
     ztor-run:
-        image: gradle:8.3.0-jdk20
+        image: gradle:8.9.0-jdk21
         ports:
             - 127.0.0.1:8082:8082
         working_dir: /home/gradle/zero
@@ -123,7 +123,7 @@ services:
             - postgres
 
     ztor-echo-schema-sql:
-        image: gradle:8.3.0-jdk20
+        image: gradle:8.9.0-jdk21
         ports:
             - 127.0.0.1:8082:8082
         working_dir: /home/gradle/zero
@@ -139,7 +139,7 @@ services:
             POSTGRES_USER: postgres
 
     frontend:
-        image: node:20.4.0
+        image: node:22
         working_dir: /app/frontend
         volumes:
             - .:/app

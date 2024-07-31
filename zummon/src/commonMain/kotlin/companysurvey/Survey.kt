@@ -19,7 +19,7 @@ import kotlin.js.JsExport
 data class Survey(
     @Serializable(with = UuidSerializer::class)
     val id: Uuid = uuid4(),
-    val created: Instant = Clock.System.now(),
+    val created: Instant = Clock.System.now().roundToMilliseconds(),
     val zenmoProject: String,
     val companyName: String,
     val personName: String,
@@ -63,4 +63,12 @@ fun surveyFromJson(json: String): Survey {
 @JsExport
 fun surveysFromJson(json: String): Array<Survey> {
     return kotlinx.serialization.json.Json.decodeFromString<Array<Survey>>(json)
+}
+
+/**
+ * Round to the precision that the database supports
+ * so that the outgoing and incoming values are the same and can be compared in tests.
+ */
+fun Instant.roundToMilliseconds(): Instant {
+    return Instant.fromEpochMilliseconds(this.toEpochMilliseconds())
 }

@@ -3,7 +3,7 @@ import { DataTable } from 'primereact/datatable';
 import { Column } from 'primereact/column';
 import {useSurveys} from "./use-surveys";
 import {PrimeReactProvider} from "primereact/api";
-import {com} from "zero-zummon"
+import {Survey, formatByteSize} from "zero-zummon"
 
 import "primereact/resources/themes/lara-light-cyan/theme.css"
 import 'primeicons/primeicons.css'
@@ -12,11 +12,6 @@ import {EditButton} from "./edit-button";
 import {JsonButton} from "./json-button";
 import {DeeplinkButton} from "./deeplink-button"
 import {ZeroLayout} from "../components/zero-layout"
-
-type Survey = com.zenmo.zummon.companysurvey.Survey
-type Address = com.zenmo.zummon.companysurvey.Address
-
-const formatByteSize = com.zenmo.zummon.companysurvey.formatByteSize
 
 export const Admin: FunctionComponent = () => {
     const {loading, surveys, removeSurvey} = useSurveys()

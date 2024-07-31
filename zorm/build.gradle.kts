@@ -31,7 +31,7 @@ dependencies {
 
     implementation("com.benasher44:uuid:0.8.4")
 
-    testImplementation("org.jetbrains.kotlin:kotlin-test-junit:1.9.20")
+    testImplementation("org.jetbrains.kotlin:kotlin-test-junit:2.0.20-Beta2")
 }
 
 tasks.withType<Test> {

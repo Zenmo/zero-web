@@ -63,6 +63,28 @@ jobs:
                     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
                 run: gradle zorm:publish
 
+    build-libzummon:
+        needs:
+            - variables
+        permissions:
+            contents: write
+            packages: write
+        runs-on: ubuntu-latest
+        steps:
+            -   uses: actions/checkout@v4
+            -   uses: actions/setup-java@v4
+                with:
+                    distribution: temurin
+                    java-version: 17
+            -   name: Setup Gradle
+                uses: gradle/actions/setup-gradle@v3
+            -   name: gradle zummon:publishJvmPublicationToGitHubPackagesRepository
+                env:
+                    VERSION_TAG: ${{ needs.variables.outputs.VERSION_TAG }}
+                    GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+                run: gradle zummon:publishJvmPublicationToGitHubPackagesRepository
+
+
     build-ztor:
         needs: variables
         runs-on: ubuntu-latest
@@ -170,11 +192,11 @@ jobs:
                     java-version: 21
             -   name: Setup Gradle
                 uses: gradle/actions/setup-gradle@v3
-            -   name: gradle zummon:jsBrowserDistribution
-                run: gradle zummon:jsBrowserDistribution
+            -   name: gradle zummon:jsBrowserProductionLibraryDistribution
+                run: gradle zummon:jsBrowserProductionLibraryDistribution
             -   uses: actions/setup-node@v3
                 with:
-                    node-version: 20
+                    node-version: 22
                     cache: 'npm'
                     cache-dependency-path: frontend/package-lock.json
             -   name: Npm install
