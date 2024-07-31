@@ -1,6 +1,16 @@
 <img src="https://zenmo.com/wp-content/uploads/elementor/thumbs/zenmo-logo-website-light-grey-square-o1piz2j6llwl7n0xd84ywkivuyf22xei68ewzwrvmc.png" height="30px"/> Zenmo Zero
 ==========
 
+Table of Contents
+-----------------
+
+- [About](#about)
+- [Components](#Components)
+- [Running locally](#running-locally)
+
+About
+-----
+
 Zenmo Zero is a tool to simulate local energy systems.
 
 This repository contains a web-based application to help bootstrap the Zenmo Zero simulation model with external data.
@@ -79,3 +89,14 @@ Stedin, Liander and Enexis publish usage data of natural gas and electricity anu
 This is a small webservice which wraps this data so the frontend can request small parts of the data.
 
 (this is partly defunct and this approach will be discontinued in favor of a database import).
+
+Running locally
+---
+
+Run the web application locally using Docker Compose:
+
+```bash
+docker compose up ztor-run frontend
+```
+
+Then navigate to [http://localhost:1234](http://localhost:1234).
