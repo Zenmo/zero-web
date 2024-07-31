@@ -19,10 +19,14 @@ kotlin {
     jvm {
     }
     js(IR) {
+        useEsModules()
         generateTypeScriptDefinitions()
-        binaries.executable()
+        binaries.library()
+        compilations["main"].packageJson {
+            // hack hack hack
+            types = "kotlin/zero-zummon.d.ts"
+        }
         browser {
-
         }
     }
     sourceSets {

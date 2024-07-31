@@ -1,6 +1,6 @@
 ## For production
 
-FROM gradle:8.3.0-jdk20 AS build
+FROM gradle:8.9.0-jdk21 AS build
 COPY --chown=gradle:gradle . /home/gradle/src
 WORKDIR /home/gradle/src
 RUN --mount=type=cache,target=/home/gradle/.gradle/caches gradle ztor:buildFatJar --no-daemon

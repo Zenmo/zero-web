@@ -2,6 +2,7 @@
 gradle
 .gradle
 build
+.kotlin
 
 # unsure if this should be ignored
 kotlin-js-store

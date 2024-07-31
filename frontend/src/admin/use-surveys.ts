@@ -1,13 +1,10 @@
 import {useState} from "react";
 import {useOnce} from "../hooks/use-once";
-import {com} from "zero-zummon"
-
-type Survey = com.zenmo.zummon.companysurvey.Survey
-const surveysFromJson = com.zenmo.zummon.companysurvey.surveysFromJson
+import {Survey, surveysFromJson} from "zero-zummon"
 
 type UseSurveyReturn = {
     loading: boolean,
-    surveys: com.zenmo.zummon.companysurvey.Survey[],
+    surveys: Survey[],
     removeSurvey: (surveyId: string) => void,
 }
 
