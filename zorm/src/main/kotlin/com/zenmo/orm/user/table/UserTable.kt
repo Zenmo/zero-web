@@ -5,7 +5,8 @@ import org.jetbrains.exposed.sql.VarCharColumnType
 
 object UserTable: Table("user") {
     /**
-     * ID from Keycloack
+     * ID from Keycloak.
+     * This can be a human user or a service account associated with OAuth client credentials.
      */
     val id = uuid("id")
 
@@ -14,4 +15,10 @@ object UserTable: Table("user") {
      * A future extension would be to specify finegrained privileges like readonly.
      */
     val projects = array<String>("projects", VarCharColumnType(50))
+
+    /**
+     * Set the users name here for convenience.
+     * This is mostly because there is no GUI yet and no logic to display the name from Keycloak.
+     */
+    val note = varchar("note", 255).default("")
 }

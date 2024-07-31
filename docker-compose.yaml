@@ -3,7 +3,7 @@
 
 services:
     migrate:
-        image: redgate/flyway:10.12.0
+        image: redgate/flyway:10.17.0
         volumes:
             - ./migrations:/flyway/sql
         command: migrate
@@ -119,7 +119,7 @@ services:
             BASE_URL: http://localhost:8082
             CORS_ALLOW_ORIGIN_PATTERN: 'http://localhost:1234'
         depends_on:
-            - ztor-build
+#            - ztor-build
             - postgres
 
     ztor-echo-schema-sql:
