@@ -1,6 +1,6 @@
 
 rootProject.name = "zero"
-include("zorm", "ztor", "zummon")
+include("zorm", "ztor", "zummon", "vallum")
 
 dependencyResolutionManagement {
     versionCatalogs {

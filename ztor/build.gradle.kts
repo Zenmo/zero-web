@@ -53,6 +53,7 @@ dependencies {
     // https://learn.microsoft.com/en-us/azure/container-apps/ingress-overview#http-headers
     implementation("io.ktor:ktor-server-forwarded-header:$ktor_version")
 
+    // to call into Keycloak
     implementation("io.ktor:ktor-client-core:$ktor_version")
     implementation("io.ktor:ktor-client-cio:$ktor_version")
     implementation("io.ktor:ktor-client-content-negotiation:$ktor_version")
