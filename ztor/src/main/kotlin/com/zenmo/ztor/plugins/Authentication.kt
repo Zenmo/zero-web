@@ -48,7 +48,7 @@ fun Application.configureAuthentication() {
             urlProvider = { System.getenv("BASE_URL") + "/callback" }
             providerLookup = {
                 OAuthServerSettings.OAuth2ServerSettings(
-                    name = "ory",
+                    name = "keycloak",
                     // https://keycloak.zenmo.com/realms/zenmo/.well-known/openid-configuration
                     authorizeUrl = "https://keycloak.zenmo.com/realms/zenmo/protocol/openid-connect/auth",
                     accessTokenUrl = "https://keycloak.zenmo.com/realms/zenmo/protocol/openid-connect/token",
