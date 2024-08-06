@@ -60,9 +60,9 @@ dependencies {
     // to hash deeplink secrets
     implementation("at.favre.lib:bcrypt:0.10.2")
 
-    // https://mvnrepository.com/artifact/com.auth0/java-jwt
-    // to decode Keycloak access tokens with user info.
-    implementation("com.auth0:java-jwt:4.4.0")
+    // to decode and validate Keycloak access tokens with user info.
+    implementation("com.nimbusds:nimbus-jose-jwt:9.39.2")
+    implementation("com.google.crypto.tink:tink:1.13.0")
 
     implementation("org.jetbrains.kotlinx:kotlinx-datetime:0.6.0")
 

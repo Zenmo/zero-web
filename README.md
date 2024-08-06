@@ -27,7 +27,7 @@ Components
 
 Graphical user interface. The company survey forms are here ([try one here!](https://zero-test.zenmo.com/bedrijven-hessenpoort)) and its web interface for administrators ([screenshot](docs/admin-screenshot.jpg)). 
 
-It is  hosted at [zero.zenmo.com](https://zero.zenmo.com).
+It is hosted at [zero.zenmo.com](https://zero.zenmo.com).
 
 This can also build a front-end library to include the survey in external websites.
 

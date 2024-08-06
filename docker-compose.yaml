@@ -118,9 +118,19 @@ services:
             POSTGRES_USER: postgres
             BASE_URL: http://localhost:8082
             CORS_ALLOW_ORIGIN_PATTERN: 'http://localhost:1234'
+            # Keycloak test realm JWK
+            ACCESS_TOKEN_JWK: |
+                {
+                    "kid": "n-X5BeXFe6pIXhDBsDu2mQ2VYc23RSZCFRU5Y6IuzC8",
+                    "kty": "OKP",
+                    "alg": "EdDSA",
+                    "use": "sig",
+                    "crv": "Ed25519",
+                    "x": "ILokSbk8EKH-Q1aWo_TguuDRccoSVfEbmGSbm5gcn5I"
+                }
         depends_on:
-#            - ztor-build
             - postgres
+
 
     ztor-echo-schema-sql:
         image: gradle:8.9.0-jdk21

@@ -14,7 +14,7 @@ export const useSurveys = (): UseSurveyReturn => {
 
     useOnce(async () => {
         try {
-            const response = await fetch(process.env.ZTOR_URL + '/company-survey', {
+            const response = await fetch(process.env.ZTOR_URL + '/company-surveys', {
                 credentials: 'include',
             })
             if (response.status === 401) {

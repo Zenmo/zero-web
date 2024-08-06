@@ -6,7 +6,7 @@ export const DeleteButton: FunctionComponent<{surveyId: any, onDelete?: (surveyI
     const [pending, setPending] = useState(false)
     const deleteSurvey = async () => {
         try {
-            await fetch(`${process.env.ZTOR_URL}/company-survey/${surveyId}`, {
+            await fetch(`${process.env.ZTOR_URL}/company-surveys/${surveyId}`, {
                 method: 'DELETE',
                 credentials: 'include',
             })

@@ -25,7 +25,7 @@ export const BedrijvenFormV1: FunctionComponent = () => {
 
         delete values.numberOfElectricityConnections
 
-        const url = process.env.ZTOR_URL + '/company-survey'
+        const url = process.env.ZTOR_URL + '/company-surveys'
         try {
             const response = await fetch(url, {
                 method: 'POST',

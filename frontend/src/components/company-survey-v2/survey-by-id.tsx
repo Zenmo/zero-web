@@ -34,7 +34,7 @@ const useSurvey = (routeData: SurveyByIdRouteData): { loading: boolean, survey: 
 
     useOnce(async () => {
         try {
-            const url = new URL(process.env.ZTOR_URL + '/company-survey/' + routeData.surveyId)
+            const url = new URL(process.env.ZTOR_URL + '/company-surveys/' + routeData.surveyId)
             if (routeData.deeplink && routeData.secret) {
                 url.searchParams.append('deeplink', routeData.deeplink)
                 url.searchParams.append('secret', routeData.secret)
