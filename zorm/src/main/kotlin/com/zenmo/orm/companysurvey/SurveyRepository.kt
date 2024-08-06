@@ -7,7 +7,6 @@ import com.zenmo.orm.user.table.UserTable
 import com.zenmo.zummon.companysurvey.*
 import org.jetbrains.exposed.sql.*
 import org.jetbrains.exposed.sql.SqlExpressionBuilder.eq
-import org.jetbrains.exposed.sql.SqlExpressionBuilder.inList
 import org.jetbrains.exposed.sql.transactions.transaction
 import java.util.*
 
@@ -23,12 +22,16 @@ class SurveyRepository(
         )
     }
 
+    private fun projectFilter(project: String): Op<Boolean> {
+        return CompanySurveyTable.project.lowerCase() eq project.lowercase()
+    }
+
     fun getHessenpoortSurveys(): List<Survey> {
-        return getSurveyByProject("Hessenpoort")
+        return getSurveysByProject("Hessenpoort")
     }
 
     fun getDeWiekenSurveys(): List<Survey> {
-        return getSurveyByProject("De Wieken")
+        return getSurveysByProject("De Wieken")
     }
 
     /**
@@ -100,8 +103,16 @@ class SurveyRepository(
         ).firstOrNull()
     }
 
-    fun getSurveyByProject(project: String): List<Survey> {
-        return getSurveys(CompanySurveyTable.project eq project)
+    fun getSurveysByProject(project: String): List<Survey> {
+        return getSurveys(projectFilter(project))
+    }
+
+    fun getSurveysByProjectWithUserAccessCheck(project: String, userId: UUID): List<Survey> {
+        return getSurveys(
+            (projectFilter(project))
+                    and
+                    userIsAllowedCondition(userId)
+        )
     }
 
     fun getSurveys(filter: Op<Boolean> = Op.TRUE): List<Survey> {

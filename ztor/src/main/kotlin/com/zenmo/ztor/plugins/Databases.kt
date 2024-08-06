@@ -55,6 +55,14 @@ fun Application.configureDatabases(): Database {
             }
 
             val repository = SurveyRepository(db)
+
+            val project = call.request.queryParameters.get("project")
+            if (project != null) {
+                val surveys = repository.getSurveysByProjectWithUserAccessCheck(project, userId)
+                call.respond(HttpStatusCode.OK, surveys)
+                return@get
+            }
+
             val surveys = repository.getSurveysByUser(userId)
 
             call.respond(HttpStatusCode.OK, surveys)

@@ -36,6 +36,11 @@ This can also build a front-end library to include the survey in external websit
 This is the REST backend built on Ktor framework. 
 Like AnyLogic it leans on the Java ecosystem.
 
+### Vallum
+
+Client for Ztor. This is a library to access the REST API from AnyLogic.
+Artifacts are published to [TODO](https://github.com/zenmo/)
+
 ### [Zummon](zummon)
 
 Contains code to share between the front-end and other components. 
