@@ -25,7 +25,7 @@ export const NaturalGas =  ({form, prefix, project}: { form: UseFormReturn , pre
                     <EanRow form={form} name={`${prefix}.ean`} />
                     <NumberRow
                         label="Wat is min of meer het jaarlijkse verbruik?"
-                        name={`${prefix}.annualDemandM3`}
+                        name={`${prefix}.annualDelivery_m3`}
                         form={form}
                         suffix="m3" />
                     <NumberRow

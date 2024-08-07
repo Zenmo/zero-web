@@ -252,8 +252,8 @@ class SurveyRepository(
             electricity = Electricity(
                 hasConnection = row[GridConnectionTable.hasElectricityConnection],
                 ean = row[GridConnectionTable.electricityEan],
-                annualElectricityDemandKwh = row[GridConnectionTable.annualElectricityDemandKwh]?.toInt(),
-                annualElectricityProductionKwh = row[GridConnectionTable.annualElectricityProductionKwh]?.toInt(),
+                annualElectricityDelivery_kWh = row[GridConnectionTable.annualElectricityDemandKwh]?.toInt(),
+                annualElectricityFeedIn_kWh = row[GridConnectionTable.annualElectricityProductionKwh]?.toInt(),
                 kleinverbruik = CompanyKleinverbruik(
                     connectionCapacity = row[GridConnectionTable.kleinverbruikElectricityConnectionCapacity]?.let {
                         KleinverbruikElectricityConnectionCapacity.valueOf(
@@ -267,8 +267,8 @@ class SurveyRepository(
                     },
                 ),
                 grootverbruik = CompanyGrootverbruik(
-                    contractedConnectionDemandCapacityKw = row[GridConnectionTable.grootverbruikContractedDemandCapacityKw]?.toInt(),
-                    contractedConnectionSupplyCapacityKw = row[GridConnectionTable.grootverbruikContractedSupplyCapacityKw]?.toInt(),
+                    contractedConnectionDeliveryCapacity_kW = row[GridConnectionTable.grootverbruikContractedDemandCapacityKw]?.toInt(),
+                    contractedConnectionFeedInCapacity_kW = row[GridConnectionTable.grootverbruikContractedSupplyCapacityKw]?.toInt(),
                     physicalCapacityKw = row[GridConnectionTable.grootverbruikPhysicalCapacityKw]?.toInt(),
                 ),
                 gridExpansion = GridExpansion(
@@ -293,7 +293,7 @@ class SurveyRepository(
             naturalGas = NaturalGas(
                 hasConnection = row[GridConnectionTable.hasNaturalGasConnection],
                 ean = row[GridConnectionTable.naturalGasEan],
-                annualDemandM3 = row[GridConnectionTable.naturalGasAnnualDemandM3]?.toInt(),
+                annualDelivery_m3 = row[GridConnectionTable.naturalGasAnnualDemandM3]?.toInt(),
                 percentageUsedForHeating = row[GridConnectionTable.percentageNaturalGasForHeating]?.toInt(),
             ),
             heat = Heat(
@@ -301,7 +301,7 @@ class SurveyRepository(
                 sumGasBoilerKw = row[GridConnectionTable.sumGasBoilerKw],
                 sumHeatPumpKw = row[GridConnectionTable.sumHeatPumpKw],
                 sumHybridHeatPumpElectricKw = row[GridConnectionTable.sumHybridHeatPumpElectricKw],
-                annualDistrictHeatingDemandGj = row[GridConnectionTable.annualDistrictHeatingDemandGj],
+                annualDistrictHeatingDelivery_GJ = row[GridConnectionTable.annualDistrictHeatingDemandGj],
                 localHeatExchangeDescription = row[GridConnectionTable.localHeatExchangeDescription],
                 hasUnusedResidualHeat = row[GridConnectionTable.hasUnusedResidualHeat],
             ),
@@ -444,12 +444,12 @@ class SurveyRepository(
                 // electricity
                 this[GridConnectionTable.hasElectricityConnection] = gridConnection.electricity.hasConnection
                 this[GridConnectionTable.electricityEan] = gridConnection.electricity.ean
-                this[GridConnectionTable.annualElectricityDemandKwh] = gridConnection.electricity.annualElectricityDemandKwh?.toUInt()
-                this[GridConnectionTable.annualElectricityProductionKwh] = gridConnection.electricity.annualElectricityProductionKwh?.toUInt()
+                this[GridConnectionTable.annualElectricityDemandKwh] = gridConnection.electricity.annualElectricityDelivery_kWh?.toUInt()
+                this[GridConnectionTable.annualElectricityProductionKwh] = gridConnection.electricity.annualElectricityFeedIn_kWh?.toUInt()
                 this[GridConnectionTable.kleinverbruikElectricityConnectionCapacity] = gridConnection.electricity.kleinverbruik?.connectionCapacity
                 this[GridConnectionTable.kleinverbuikElectricityConsumptionProfile] = gridConnection.electricity.kleinverbruik?.consumptionProfile
-                this[GridConnectionTable.grootverbruikContractedDemandCapacityKw] = gridConnection.electricity.grootverbruik?.contractedConnectionDemandCapacityKw?.toUInt()
-                this[GridConnectionTable.grootverbruikContractedSupplyCapacityKw] = gridConnection.electricity.grootverbruik?.contractedConnectionSupplyCapacityKw?.toUInt()
+                this[GridConnectionTable.grootverbruikContractedDemandCapacityKw] = gridConnection.electricity.grootverbruik?.contractedConnectionDeliveryCapacity_kW?.toUInt()
+                this[GridConnectionTable.grootverbruikContractedSupplyCapacityKw] = gridConnection.electricity.grootverbruik?.contractedConnectionFeedInCapacity_kW?.toUInt()
                 this[GridConnectionTable.grootverbruikPhysicalCapacityKw] = gridConnection.electricity.grootverbruik?.physicalCapacityKw?.toUInt()
                 this[GridConnectionTable.hasExpansionRequestAtGridOperator] = gridConnection.electricity.gridExpansion.hasRequestAtGridOperator
                 this[GridConnectionTable.expansionRequestKW] = gridConnection.electricity.gridExpansion.requestedKW?.toUInt()
@@ -471,7 +471,7 @@ class SurveyRepository(
                 // natural gas
                 this[GridConnectionTable.hasNaturalGasConnection] = gridConnection.naturalGas.hasConnection
                 this[GridConnectionTable.naturalGasEan] = gridConnection.naturalGas.ean
-                this[GridConnectionTable.naturalGasAnnualDemandM3] = gridConnection.naturalGas.annualDemandM3?.toUInt()
+                this[GridConnectionTable.naturalGasAnnualDemandM3] = gridConnection.naturalGas.annualDelivery_m3?.toUInt()
                 this[GridConnectionTable.percentageNaturalGasForHeating] = gridConnection.naturalGas.percentageUsedForHeating?.toUInt()
 
                 // heat
@@ -479,7 +479,7 @@ class SurveyRepository(
                 this[GridConnectionTable.sumGasBoilerKw] = gridConnection.heat.sumGasBoilerKw
                 this[GridConnectionTable.sumHeatPumpKw] = gridConnection.heat.sumHeatPumpKw
                 this[GridConnectionTable.sumHybridHeatPumpElectricKw] = gridConnection.heat.sumHybridHeatPumpElectricKw
-                this[GridConnectionTable.annualDistrictHeatingDemandGj] = gridConnection.heat.annualDistrictHeatingDemandGj
+                this[GridConnectionTable.annualDistrictHeatingDemandGj] = gridConnection.heat.annualDistrictHeatingDelivery_GJ
                 this[GridConnectionTable.localHeatExchangeDescription] = gridConnection.heat.localHeatExchangeDescription
                 this[GridConnectionTable.hasUnusedResidualHeat] = gridConnection.heat.hasUnusedResidualHeat
 
