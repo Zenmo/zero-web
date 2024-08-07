@@ -22,6 +22,8 @@ data class Electricity (
     val annualElectricityDelivery_kWh: Int? = null,
     val annualElectricityFeedIn_kWh: Int? = null,
 
+    // Better name "customerType"?
+    val kleinverbruikOrGrootverbruik: KleinverbruikOrGrootverbruik? = null,
     val kleinverbruik: CompanyKleinverbruik? = null,
     val grootverbruik: CompanyGrootverbruik? = null,
     val gridExpansion: GridExpansion = GridExpansion(),
@@ -70,6 +72,13 @@ data class CompanyGrootverbruik (
     @Deprecated("Renamed to contractedConnectionFeedInCapacity_kW", ReplaceWith("contractedConnectionFeedInCapacity_kW"))
     val contractedConnectionSupplyCapacityKw: Int?
         get() = contractedConnectionFeedInCapacity_kW
+}
+
+@OptIn(ExperimentalJsExport::class)
+@JsExport
+enum class KleinverbruikOrGrootverbruik {
+    KLEINVERBRUIK,
+    GROOTVERBRUIK,
 }
 
 enum class KleinverbruikElectricityConnectionCapacity {

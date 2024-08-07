@@ -96,7 +96,7 @@ services:
         volumes:
             - .:/home/gradle/zero
             - gradle-build-cache:/home/gradle/.gradle
-        command: gradle --continuous ztor:classes
+        command: gradle --continuous --project-cache-dir=/tmp/gradle ztor:classes
 
     ## Runs Ktor web server and reloads classes if the compiled .class file changes.
     ## Do ensure that the two Gradle containers have independent Home directories and Project cache directories.
@@ -109,7 +109,6 @@ services:
         volumes:
             - .:/home/gradle/zero
             - gradle-run-cache:/home/gradle/.gradle
-        restart: unless-stopped
         command: gradle --project-cache-dir=/tmp/gradle ztor:run
         env_file:
             - ./docker/ztor.env
