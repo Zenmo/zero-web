@@ -68,7 +68,7 @@ dependencies {
     implementation("org.jetbrains.kotlinx:kotlinx-datetime:0.6.0")
 
     testImplementation("io.ktor:ktor-server-tests-jvm")
-    testImplementation("org.jetbrains.kotlin:kotlin-test-junit:2.0.20-Beta2")
+    testImplementation("org.jetbrains.kotlin:kotlin-test-junit:2.0.20")
 }
 
 tasks.withType<Test> {

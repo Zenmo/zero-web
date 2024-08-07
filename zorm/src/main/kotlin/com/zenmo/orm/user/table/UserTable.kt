@@ -9,6 +9,7 @@ object UserTable: Table("user") {
      * This can be a human user or a service account associated with OAuth client credentials.
      */
     val id = uuid("id")
+    override val primaryKey = PrimaryKey(id)
 
     /**
      * Project the user has full access to.

@@ -20,7 +20,7 @@ dependencies {
     implementation(project(":zummon"))
     implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.6.0")
 
-    implementation("org.postgresql:postgresql:42.5.1")
+    implementation("org.postgresql:postgresql:42.7.4")
     implementation("org.jetbrains.exposed:exposed-core:$exposed_version")
     implementation("org.jetbrains.exposed:exposed-dao:$exposed_version")
     implementation("org.jetbrains.exposed:exposed-jdbc:$exposed_version")
@@ -31,7 +31,7 @@ dependencies {
 
     implementation("com.benasher44:uuid:0.8.4")
 
-    testImplementation("org.jetbrains.kotlin:kotlin-test-junit:2.0.20-Beta2")
+    testImplementation("org.jetbrains.kotlin:kotlin-test-junit:2.0.20")
 }
 
 tasks.withType<Test> {

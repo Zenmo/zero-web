@@ -1,10 +1,7 @@
 package com.zenmo.orm
 
 import com.zenmo.orm.blob.BlobPurpose
-import com.zenmo.orm.companysurvey.table.GridConnectionTable
-import com.zenmo.orm.companysurvey.table.CompanySurveyTable
-import com.zenmo.orm.companysurvey.table.FileTable
-import com.zenmo.orm.companysurvey.table.gridConnectionSequence
+import com.zenmo.orm.companysurvey.table.*
 import com.zenmo.orm.dbutil.createEnumTypeSql
 import com.zenmo.orm.dbutil.createKleinverbruikEnumTypeSql
 import com.zenmo.orm.deeplink.DeeplinkTable
@@ -21,12 +18,15 @@ val enums = listOf(
     PVOrientation::class.java,
     BlobPurpose::class.java,
     MissingPvReason::class.java,
+    TimeSeriesType::class.java,
+    TimeSeriesUnit::class.java,
 )
 
 val tables = arrayOf(
     CompanySurveyTable,
     GridConnectionTable,
     FileTable,
+    TimeSeriesTable,
     RawPandTable,
     UserTable,
     DeeplinkTable,
