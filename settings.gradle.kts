@@ -1,6 +1,6 @@
 
 rootProject.name = "zero"
-include("zorm", "ztor", "zummon", "vallum")
+include("zorm", "ztor", "zummon", "vallum", "excel-read-named")
 
 dependencyResolutionManagement {
     versionCatalogs {
