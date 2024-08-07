@@ -12,7 +12,7 @@ data class NaturalGas (
     val ean: String = "",
     val annualDemandM3: Int? = null,
     val hourlyValuesFiles: List<File> = emptyList(),
-    val hourlyUsage: List<HourlyGasUsage> = emptyList(),
+    val hourlyDelivery_m3: TimeSeries? = null,
     val percentageUsedForHeating: Int? = null,
 ) {
     fun getHasConnection(): Boolean {
