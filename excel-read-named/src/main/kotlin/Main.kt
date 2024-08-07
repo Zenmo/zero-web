@@ -448,36 +448,48 @@ fun getUsageTable(workbook: XSSFWorkbook, field: String): List<QuarterHourlyElec
     // workbook.getSheet(cellReference.sheetName).getRow(cellReference.row).getCell(cellReference.col.toInt())
     // return numericValue.numericCellValue
 
-    val numCols = ref.lastCell.col - ref.firstCell.col + 1
-    if (numCols != 2) {
-        throw IllegalArgumentException("Number of columns in arrayField should be 2!")
-    }
+    // Check if table is complete
+    val tableComplete =
+            workbook.getSheet(cellReference.sheetName)
+                    .getRow(cellReference.row - 6)
+                    .getCell(cellReference.col.toInt() + 1)
+                    .booleanCellValue
 
-    val numRows = ref.lastCell.row - ref.firstCell.row + 1
-    // println("numRows: $numRows")
-    // var tableArray = emptyArray<Double>()
     var usageList: MutableList<QuarterHourlyElectricityUsage> = mutableListOf()
-    // var tableArray = Array<Double>(numRows)
+    println("Table complete? $tableComplete")
+    if (tableComplete) {
 
-    for (i in 0 until numRows) {
-        val usage_kWh =
-                workbook.getSheet(cellReference.sheetName)
-                        .getRow(cellReference.row + i)
-                        .getCell(cellReference.col.toInt() + 1)
-                        .numericCellValue
-                        .toFloat()
-        // println("cell value: ${cell.numericCellValue}")
+        val numCols = ref.lastCell.col - ref.firstCell.col + 1
+        if (numCols != 2) {
+            throw IllegalArgumentException("Number of columns in arrayField should be 2!")
+        }
 
-        val timeStamp =
-                workbook.getSheet(ref.firstCell.sheetName)
-                        .getRow(ref.firstCell.row)
-                        .getCell(ref.firstCell.col.toInt())
-                        .dateCellValue
-                        .toInstant()
-        val kotlinTimeStamp = KotlinxInstant.fromEpochMilliseconds(timeStamp.toEpochMilli())
-        val currentUsage = QuarterHourlyElectricityUsage(kotlinTimeStamp, usage_kWh)
-        usageList.add(currentUsage)
-        // tableArray(i) = currentUsage
+        val numRows = ref.lastCell.row - ref.firstCell.row + 1
+        // println("numRows: $numRows")
+        // var tableArray = emptyArray<Double>()
+
+        // var tableArray = Array<Double>(numRows)
+
+        for (i in 0 until numRows) {
+            val usage_kWh =
+                    workbook.getSheet(cellReference.sheetName)
+                            .getRow(cellReference.row + i)
+                            .getCell(cellReference.col.toInt() + 1)
+                            .numericCellValue
+                            .toFloat()
+            // println("cell value: ${cell.numericCellValue}")
+
+            val timeStamp =
+                    workbook.getSheet(ref.firstCell.sheetName)
+                            .getRow(ref.firstCell.row)
+                            .getCell(ref.firstCell.col.toInt())
+                            .dateCellValue
+                            .toInstant()
+            val kotlinTimeStamp = KotlinxInstant.fromEpochMilliseconds(timeStamp.toEpochMilli())
+            val currentUsage = QuarterHourlyElectricityUsage(kotlinTimeStamp, usage_kWh)
+            usageList.add(currentUsage)
+            // tableArray(i) = currentUsage
+        }
     }
 
     return usageList
