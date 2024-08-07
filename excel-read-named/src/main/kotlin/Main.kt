@@ -57,10 +57,12 @@ fun getSurveyObject(filename: String): Survey {
                                                                                                     .toInt(),
                                                                                     // ean =
                                                                                     // "123456789012345678",
-                                                                                    quarterHourlyUsage =
-                                                                                            getUsageTable(
-                                                                                                    workbook,
-                                                                                                    "quarterHourlyElectricityDeliveryKwh"
+                                                                                    quarterHourlyDelivery_kWh =
+                                                                                            TimeSeries(
+                                                                                                    getUsageTable(
+                                                                                                            workbook,
+                                                                                                            "quarterHourlyElectricityDeliveryKwh"
+                                                                                                    )
                                                                                             ),
                                                                                     /*QuarterHourlyElectricityFeedin =
                                                                                     getUsageTable(
@@ -437,7 +439,7 @@ fun getStringField(workbook: XSSFWorkbook, field: String): String {
     return stringValue.stringCellValue
 }
 
-fun getUsageTable(workbook: XSSFWorkbook, field: String): List<QuarterHourlyElectricityUsage> {
+fun getUsageTable(workbook: XSSFWorkbook, field: String): List<TimeSeriesDataPoint> {
     val numericValueName = workbook.getName(field)
     val ref = AreaReference(numericValueName.refersToFormula, workbook.spreadsheetVersion)
     val cellReference = ref.firstCell
@@ -455,7 +457,7 @@ fun getUsageTable(workbook: XSSFWorkbook, field: String): List<QuarterHourlyElec
                     .getCell(cellReference.col.toInt() + 1)
                     .booleanCellValue
 
-    var usageList: MutableList<QuarterHourlyElectricityUsage> = mutableListOf()
+    var usageList: MutableList<TimeSeriesDataPoint> = mutableListOf()
     println("Table complete? $tableComplete")
     if (tableComplete) {
 
@@ -486,7 +488,7 @@ fun getUsageTable(workbook: XSSFWorkbook, field: String): List<QuarterHourlyElec
                             .dateCellValue
                             .toInstant()
             val kotlinTimeStamp = KotlinxInstant.fromEpochMilliseconds(timeStamp.toEpochMilli())
-            val currentUsage = QuarterHourlyElectricityUsage(kotlinTimeStamp, usage_kWh)
+            val currentUsage = TimeSeriesDataPoint(kotlinTimeStamp, usage_kWh)
             usageList.add(currentUsage)
             // tableArray(i) = currentUsage
         }

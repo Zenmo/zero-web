@@ -1,13 +1,6 @@
 package com.zenmo.zummon.companysurvey
-import com.benasher44.uuid.Uuid
-import com.benasher44.uuid.uuidFrom
 import com.zenmo.zummon.companysurvey.KleinverbruikElectricityConnectionCapacity.valueOf
-import kotlinx.serialization.KSerializer
 import kotlinx.serialization.Serializable
-import kotlinx.serialization.descriptors.PrimitiveKind
-import kotlinx.serialization.descriptors.PrimitiveSerialDescriptor
-import kotlinx.serialization.encoding.Decoder
-import kotlinx.serialization.encoding.Encoder
 import kotlin.js.ExperimentalJsExport
 import kotlin.js.JsExport
 
@@ -21,7 +14,9 @@ data class Electricity (
 
     val authorizationFile: File? = null,
     val quarterHourlyValuesFiles: List<File> = emptyList(),
-    val quarterHourlyUsage: List<QuarterHourlyElectricityUsage> = emptyList(),
+    val quarterHourlyDelivery_kWh: TimeSeries? = null,
+    val quarterHourlyFeedIn_kWh: TimeSeries? = null,
+    val quarterHourlyProduction_kWh: TimeSeries? = null,
 
     // If no kwartierwaarden, ask for annual values.
     val annualElectricityDemandKwh: Int? = null,
