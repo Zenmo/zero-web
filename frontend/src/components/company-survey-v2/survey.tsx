@@ -98,27 +98,8 @@ const SurveyWithReset: FunctionComponent<{
 
     const onSubmit = async (surveyData: any) => {
         console.log('submit', surveyData)
-        surveyData = cloneDeep(surveyData)
+        surveyData = prepareForSubmit(surveyData, project.name)
         setSubmissionError("")
-
-        surveyData.zenmoProject = project.name
-        surveyData.addresses = []
-
-        for (const tab of surveyData.tabs) {
-            const isSameAddress = tab.address.isSameAddress
-            delete tab.address.isSameAddress
-
-            if (isSameAddress) {
-                surveyData.addresses[surveyData.addresses.length - 1].gridConnections.push(tab.gridConnection)
-            } else {
-                surveyData.addresses.push({
-                    ...tab.address,
-                    gridConnections: [tab.gridConnection]
-                })
-            }
-        }
-
-        delete surveyData.tabs
 
         const url = process.env.ZTOR_URL + '/company-surveys'
         try {
@@ -284,4 +265,29 @@ const loadFromLocalStorage = (localStorageKey: string): any => {
     }
 
     return previous
+}
+
+const prepareForSubmit = (surveyData: any, projectName: string) => {
+    surveyData = cloneDeep(surveyData)
+
+    surveyData.zenmoProject = projectName
+    surveyData.addresses = []
+
+    for (const tab of surveyData.tabs) {
+        const isSameAddress = tab.address.isSameAddress
+        delete tab.address.isSameAddress
+
+        if (isSameAddress) {
+            surveyData.addresses[surveyData.addresses.length - 1].gridConnections.push(tab.gridConnection)
+        } else {
+            surveyData.addresses.push({
+                ...tab.address,
+                gridConnections: [tab.gridConnection]
+            })
+        }
+    }
+
+    delete surveyData.tabs
+
+    return surveyData
 }

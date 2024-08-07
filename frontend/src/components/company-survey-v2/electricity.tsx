@@ -7,19 +7,14 @@ import {LabelRow} from './generic/label-row'
 import {NumberRow} from './generic/number-row'
 import {KleinverbruikCapacityInput} from './kleinverbruik-capacity-input'
 import {EanRow} from "./ean-row"
-
-enum ConnectionType {
-    GROOTVERBRUIK = "GROOTVERBRUIK",
-    KLEINVERBRUIK = "KLEINVERBRUIK",
-}
+import {KleinverbruikGrootverbruikRadios, ConnectionType} from "./kleinverbruik-grootverbruik-radios"
 
 export const Electricity = ({form, prefix}: {
     form: UseFormReturn,
     prefix: string,
 }) => {
     const hasConnection = form.watch(`${prefix}.hasConnection`)
-
-    const [connectionType, setConnectionType] = useState<ConnectionType>()
+    const connectionType: ConnectionType|undefined = form.watch(`${prefix}.kleinverbruikOrGrootverbruik`)
 
     return (
         <>
@@ -37,10 +32,7 @@ export const Electricity = ({form, prefix}: {
                 <>
                     <EanRow form={form} name={`${prefix}.ean`} />
                     <LabelRow label="Heeft u een groot- of kleinverbruik aansluiting?">
-                        <Radio.Group onChange={e => setConnectionType(e.target.value)} value={connectionType}>
-                            <Radio value={ConnectionType.GROOTVERBRUIK} css={{display: 'block'}}>Grootverbruik</Radio>
-                            <Radio value={ConnectionType.KLEINVERBRUIK} css={{display: 'block'}}>Kleinverbruik</Radio>
-                        </Radio.Group>
+                        <KleinverbruikGrootverbruikRadios form={form} name={`${prefix}.kleinverbruikOrGrootverbruik`} />
                     </LabelRow>
                     {connectionType === ConnectionType.KLEINVERBRUIK && (
                         <>
