@@ -39,7 +39,7 @@ export const Heat = ({form, prefix}: { form: UseFormReturn, prefix: string }) =>
             {heatingTypes.includes(HeatingType.DISTRICT_HEATING) && (
                 <NumberRow
                     label="Wat is het jaarlijkse warmteverbruik van het warmtenet?"
-                    name={`${prefix}.annualDistrictHeatingDemandGj`}
+                    name={`${prefix}.annualDistrictHeatingDelivery_GJ`}
                     form={form}
                     suffix="GJ" />
             )}

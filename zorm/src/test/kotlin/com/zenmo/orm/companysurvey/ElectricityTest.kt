@@ -23,7 +23,7 @@ class ElectricityTest {
     fun testGrootverbruikConnectionCapacity() {
         val electricity = Electricity(
             grootverbruik = CompanyGrootverbruik(
-                contractedConnectionDemandCapacityKw = 400
+                contractedConnectionDeliveryCapacity_kW = 400
             )
         )
 
