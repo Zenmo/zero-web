@@ -36,10 +36,10 @@ This can also build a front-end library to include the survey in external websit
 This is the REST backend built on Ktor framework. 
 Like AnyLogic it leans on the Java ecosystem.
 
-### Vallum
+### [Vallum](vallum)
 
 Client for Ztor. This is a library to access the REST API from AnyLogic.
-Artifacts are published to [TODO](https://github.com/zenmo/)
+Artifacts are published to [GitHub packages](https://github.com/Zenmo/zero/packages/2239630)
 
 ### [Zummon](zummon)
 
@@ -94,6 +94,14 @@ Stedin, Liander and Enexis publish usage data of natural gas and electricity anu
 This is a small webservice which wraps this data so the frontend can request small parts of the data.
 
 (this is partly defunct and this approach will be discontinued in favor of a database import).
+
+### [Excel-read-named](excel-read-named-v5)
+
+Library to read the Excel format filled out by [Energieke Regio]
+(https://energiekeregio.nl) and Zenmo.
+
+v5 uses the latest version of Apache POI, v3 uses an older version 
+compatible with AnyLogic but it has issues with memory usage.
 
 Running locally
 ---

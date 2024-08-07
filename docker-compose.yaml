@@ -21,19 +21,6 @@ services:
         ports:
             - 127.0.0.1:80:80
 
-    ## Production version
-    ztor-production:
-        build:
-            context: .
-        user: 1000:1000
-        ports:
-            - 127.0.0.1:8082:8082
-        env_file:
-            - ./docker/ztor.env
-        environment:
-            POSTGRES_URL: jdbc:postgresql://postgres:5432/postgres
-            POSTGRES_USER: postgres
-
     zorm-test:
         image: gradle:8.9.0-jdk21
         depends_on:
@@ -50,21 +37,56 @@ services:
             POSTGRES_URL: jdbc:postgresql://postgres:5432/test
             POSTGRES_USER: postgres
 
-    ztor-test:
+    ## compile with Java 17 for AnyLogic
+    zorm-fatjar-11:
+        image: gradle:8.9.0-jdk17
+        working_dir: /home/gradle/zorm
+        user: gradle
+        volumes:
+            - ./zorm:/home/gradle/zorm
+            - gradle-build-once-cache:/home/gradle/.gradle
+        command: gradle buildFatJar --no-daemon
+
+    ## Production version
+    ztor-production:
+        build:
+            context: .
+        user: 1000:1000
+        ports:
+            - 127.0.0.1:8082:8082
+        env_file:
+            - ./docker/ztor.env
+        environment:
+            POSTGRES_URL: jdbc:postgresql://postgres:5432/postgres
+            POSTGRES_USER: postgres
+
+    ztor-gradle:
         image: gradle:8.9.0-jdk21
-        depends_on:
-            - postgres
         working_dir: /home/gradle/zero
         user: gradle
         volumes:
             - .:/home/gradle/zero
-            - gradle-test-cache:/home/gradle/.gradle
-        command: gradle ztor:test --no-daemon
+        entrypoint: gradle --project-cache-dir=/tmp/gradle
+
+    ztor-gradle-with-db:
+        extends:
+            service: ztor-gradle
+        depends_on:
+            - postgres
         env_file:
-            -   ./docker/ztor.env
+            - ./docker/ztor.env
+        environment:
+            POSTGRES_URL: jdbc:postgresql://postgres:5432/postgres
+            POSTGRES_USER: postgres
+
+    ztor-test:
+        extends:
+            service: ztor-gradle-with-db
+        volumes:
+            - gradle-test-cache:/home/gradle/.gradle
+        command: ztor:test --no-daemon
         environment:
             POSTGRES_URL: jdbc:postgresql://postgres:5432/test
-            POSTGRES_USER: postgres
 
     ## Recompiles on source code changes.
     ## Do ensure that the two Gradle containers have independent Home directories and Project cache directories.
@@ -74,16 +96,6 @@ services:
         user: gradle
         volumes:
             - ./ztor:/home/gradle/ztor
-            - gradle-build-once-cache:/home/gradle/.gradle
-        command: gradle buildFatJar --no-daemon
-
-    ## compile with Java 17 for AnyLogic
-    zorm-fatjar-11:
-        image: gradle:8.9.0-jdk17
-        working_dir: /home/gradle/zorm
-        user: gradle
-        volumes:
-            - ./zorm:/home/gradle/zorm
             - gradle-build-once-cache:/home/gradle/.gradle
         command: gradle buildFatJar --no-daemon
 
@@ -101,20 +113,12 @@ services:
     ## Runs Ktor web server and reloads classes if the compiled .class file changes.
     ## Do ensure that the two Gradle containers have independent Home directories and Project cache directories.
     ztor-run:
-        image: gradle:8.9.0-jdk21
-        ports:
-            - 127.0.0.1:8082:8082
-        working_dir: /home/gradle/zero
-        user: gradle
+        extends:
+            service: ztor-gradle-with-db
         volumes:
-            - .:/home/gradle/zero
             - gradle-run-cache:/home/gradle/.gradle
-        command: gradle --project-cache-dir=/tmp/gradle ztor:run
-        env_file:
-            - ./docker/ztor.env
+        command: ztor:run
         environment:
-            POSTGRES_URL: jdbc:postgresql://postgres:5432/postgres
-            POSTGRES_USER: postgres
             BASE_URL: http://localhost:8082
             CORS_ALLOW_ORIGIN_PATTERN: 'http://localhost:1234'
             # Keycloak test realm JWK
@@ -127,8 +131,21 @@ services:
                     "crv": "Ed25519",
                     "x": "ILokSbk8EKH-Q1aWo_TguuDRccoSVfEbmGSbm5gcn5I"
                 }
-        depends_on:
-            - postgres
+
+    ztor-echo-schema-sql:
+        extends:
+            service: ztor-gradle-with-db
+        volumes:
+            - gradle-cmd-cache:/home/gradle/.gradle
+        command: ztor:run --args=echo-schema-sql
+        environment:
+            # other database
+            POSTGRES_URL: jdbc:postgresql://postgres:5432/gen
+
+    ztor-create-schema:
+        extends:
+            service: ztor-echo-schema-sql
+        command: ztor:run --args=create-schema
 
     vallum-test:
         image: gradle:8.9.0-jdk21
@@ -158,22 +175,6 @@ services:
                     "crv": "Ed25519",
                     "x": "ILokSbk8EKH-Q1aWo_TguuDRccoSVfEbmGSbm5gcn5I"
                 }
-
-    ztor-echo-schema-sql:
-        image: gradle:8.9.0-jdk21
-        ports:
-            - 127.0.0.1:8082:8082
-        working_dir: /home/gradle/zero
-        user: gradle
-        volumes:
-            - .:/home/gradle/zero
-            - gradle-cmd-cache:/home/gradle/.gradle
-        command: gradle --project-cache-dir=/tmp/gradle -Dep-online-csv=poepie ztor:run --args=echo-schema-sql
-        env_file:
-           - ./docker/ztor.env
-        environment:
-            POSTGRES_URL: jdbc:postgresql://postgres:5432/gen
-            POSTGRES_USER: postgres
 
     frontend:
         image: node:22

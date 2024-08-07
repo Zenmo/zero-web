@@ -51,6 +51,14 @@ data class Survey(
                 return@flatMap result.toList()
             }
         }.toTypedArray()
+
+    /**
+     * Get the first grid connection.
+     * Throws if there is not exactly one grid connection.
+     */
+    public fun getSingleGridConnection(): GridConnection {
+        return addresses.firstAndOnly().gridConnections.firstAndOnly()
+    }
 }
 
 @OptIn(ExperimentalJsExport::class)
@@ -71,4 +79,11 @@ fun surveysFromJson(json: String): Array<Survey> {
  */
 fun Instant.roundToMilliseconds(): Instant {
     return Instant.fromEpochMilliseconds(this.toEpochMilliseconds())
+}
+
+private fun <T> List<T>.firstAndOnly(): T {
+    if (size != 1) {
+        throw IllegalArgumentException("Expected exactly one element, but got $size")
+    }
+    return this.first()
 }
