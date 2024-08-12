@@ -13,6 +13,8 @@ import {HasMultipleConnections} from './has-multiple-connections'
 import {Intro} from './intro'
 import {ProjectConfiguration} from './project'
 import {SurveyTabs} from './survey-tabs'
+import {surveyFromJson} from 'zero-zummon'
+import {useOnce} from "../../hooks/use-once"
 
 export const Survey: FunctionComponent<{project: ProjectConfiguration, survey?: any}> = ({project, survey}) => {
     const [key, setKey] = useState(1)
@@ -29,7 +31,7 @@ export const emptyGridConnection = {
 const SurveyWithReset: FunctionComponent<{
     project: ProjectConfiguration,
     remount: () => void,
-    survey?: object,
+    survey?: object, // Survey loaded by routing from the backend
 }> = ({
     project,
     remount,
@@ -49,19 +51,6 @@ const SurveyWithReset: FunctionComponent<{
     let defaultValues = emptyFormData
     let localStorageKey = `survey-${project.name}`
 
-    if (survey) {
-        defaultValues = surveyToFormData(survey)
-    } else {
-        try {
-            const previous = loadFromLocalStorage(localStorageKey)
-            if (previous) {
-                defaultValues = previous
-            }
-        } catch (e) {
-            console.error("Deserialization of previous data failed, falling back to default values. Details: ", e)
-        }
-    }
-
     // @ts-ignore
     const form: UseFormReturn = useForm({
         shouldUseNativeValidation: true,
@@ -72,6 +61,23 @@ const SurveyWithReset: FunctionComponent<{
         formState: { errors },
         watch
     } = form
+
+    useOnce(() => {
+        if (survey) {
+            const formDataFromProps = surveyToFormData(survey)
+            form.reset(formDataFromProps)
+        } else {
+            let previous = null
+            try {
+                previous = loadFromLocalStorage(localStorageKey)
+            } catch (e) {
+                console.error("Deserialization of previous data failed, falling back to default values. Details: ", e)
+            }
+            if (previous) {
+                form.reset(previous)
+            }
+        }
+    })
 
     const clear = () => {
         if(confirm("Formulier wissen?")) {
@@ -98,8 +104,9 @@ const SurveyWithReset: FunctionComponent<{
 
     const onSubmit = async (surveyData: any) => {
         console.log('submit', surveyData)
-        surveyData = prepareForSubmit(surveyData, project.name)
         setSubmissionError("")
+
+        surveyData = prepareForSubmit(surveyData, project.name)
 
         const url = process.env.ZTOR_URL + '/company-surveys'
         try {
@@ -249,24 +256,6 @@ const surveyToFormData = (survey: any): any => {
     return formData
 }
 
-const loadFromLocalStorage = (localStorageKey: string): any => {
-    const previousData = localStorage.getItem(localStorageKey)
-
-    if (!previousData) {
-        return null
-    }
-
-    const previous = JSON.parse(previousData)
-
-    for (const tab of previous.tabs) {
-        // these fields were renamed and are now unknown in the back-end
-        delete tab.gridConnection?.transport?.numDailyCarCommuters
-        delete tab.gridConnection?.transport?.numCommuterChargePoints
-    }
-
-    return previous
-}
-
 const prepareForSubmit = (surveyData: any, projectName: string) => {
     surveyData = cloneDeep(surveyData)
 
@@ -290,4 +279,38 @@ const prepareForSubmit = (surveyData: any, projectName: string) => {
     delete surveyData.tabs
 
     return surveyData
+}
+
+const loadFromLocalStorage = (localStorageKey: string): any => {
+    const previousData = localStorage.getItem(localStorageKey)
+
+    if (!previousData) {
+        return null
+    }
+
+    const previous = JSON.parse(previousData)
+
+    for (const tab of previous.tabs) {
+        // these fields were renamed and are now unknown in the back-end
+        delete tab.gridConnection?.transport?.numDailyCarCommuters
+        delete tab.gridConnection?.transport?.numCommuterChargePoints
+    }
+
+    try {
+        const prepared = prepareForSubmit(previous, 'Testproject')
+        const str = JSON.stringify(prepared)
+        const surveyObject = surveyFromJson(str)
+    } catch (e) {
+        // The goal is to prevent the user from getting stuck due to schema changes by Zenmo.
+        const shouldContinue = confirm(`Eerder ingevulde gegevens bevatten een fout of zijn niet compleet. 
+        Doorgaan met eerder ingevulde gegevens?
+        
+        Details: ${e}`)
+
+        if (!shouldContinue) {
+            return null
+        }
+    }
+
+    return previous
 }
