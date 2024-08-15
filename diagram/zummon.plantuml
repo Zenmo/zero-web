@@ -1,0 +1,53 @@
+@startuml
+class Survey {
+    +addressArray: Array<Address>
+    +addresses: List<Address>
+    +companyName: String
+    +created: Instant
+    +createdToString: String
+    +dataSharingAgreed: Boolean
+    +email: String
+    +filesArray: Array<File>
+    +id: UUID
+    +numGridConnections: Int
+    +personName: String
+    +zenmoProject: String
+    +component1(): UUID
+    +component2(): Instant
+    +component3(): String
+    +component4(): String
+    +component5(): String
+    +component6(): String
+    +component7(): Boolean
+    +component8(): List<Address>
+    +copy(id: UUID, created: Instant, zenmoProject: String, companyName: String, personName: String, email: String, dataSharingAgreed: Boolean, addresses: List): Survey
+    +equals(other: Any): Boolean
+    +hashCode(): Int
+    +toString(): String
+}
+
+class Address {
+    +city: String
+    +gridConnectionArray: Array<GridConnection>
+    +gridConnections: List<GridConnection>
+    +houseLetter: String
+    +houseNumber: Int
+    +houseNumberSuffix: String
+    +id: UUID
+    +postalCode: String
+    +street: String
+    +component1(): UUID
+    +component2(): String
+    +component3(): Int
+    +component4(): String
+    +component5(): String
+    +component6(): String
+    +component7(): String
+    +component8(): List<GridConnection>
+    +copy(id: UUID, street: String, houseNumber: Int, houseLetter: String, houseNumberSuffix: String, postalCode: String, city: String, gridConnections: List): Address
+    +equals(other: Any): Boolean
+    +hashCode(): Int
+    +toString(): String
+}
+
+@enduml
