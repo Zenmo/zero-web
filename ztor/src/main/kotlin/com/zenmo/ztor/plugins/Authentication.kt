@@ -3,6 +3,7 @@ package com.zenmo.ztor.plugins
 import com.zenmo.ztor.user.UserSession
 import com.zenmo.ztor.user.decodeAccessToken
 import io.ktor.client.*
+import io.ktor.client.*
 import io.ktor.client.engine.cio.*
 import io.ktor.serialization.kotlinx.json.*
 import io.ktor.server.application.*
@@ -48,7 +49,7 @@ fun Application.configureAuthentication() {
             urlProvider = { System.getenv("BASE_URL") + "/callback" }
             providerLookup = {
                 OAuthServerSettings.OAuth2ServerSettings(
-                    name = "ory",
+                    name = "keycloak",
                     // https://keycloak.zenmo.com/realms/zenmo/.well-known/openid-configuration
                     authorizeUrl = "https://keycloak.zenmo.com/realms/zenmo/protocol/openid-connect/auth",
                     accessTokenUrl = "https://keycloak.zenmo.com/realms/zenmo/protocol/openid-connect/token",

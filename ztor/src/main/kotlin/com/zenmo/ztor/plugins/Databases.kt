@@ -6,6 +6,7 @@ import com.zenmo.orm.deeplink.DeeplinkRepository
 import com.zenmo.ztor.deeplink.DeeplinkService
 import com.zenmo.ztor.errorMessageToJson
 import com.zenmo.ztor.user.UserSession
+import com.zenmo.ztor.user.getUserId
 import com.zenmo.zummon.companysurvey.Survey
 import io.ktor.http.*
 import io.ktor.serialization.*
@@ -25,7 +26,7 @@ fun Application.configureDatabases(): Database {
 
     routing {
         // Create
-        post("/company-survey") {
+        post("/company-surveys") {
             val survey: Survey?
             try {
                 survey = call.receive<Survey>()
@@ -46,23 +47,29 @@ fun Application.configureDatabases(): Database {
         }
 
         // fetch all
-        get("/company-survey") {
-            val userSession = call.sessions.get<UserSession>()
-            if (userSession == null) {
+        get("/company-surveys") {
+            val userId = call.getUserId()
+            if (userId == null) {
                 call.respond(HttpStatusCode.Unauthorized)
                 return@get
             }
 
-            val userId = userSession.getUserId()
-
             val repository = SurveyRepository(db)
+
+            val project = call.request.queryParameters.get("project")
+            if (project != null) {
+                val surveys = repository.getSurveysByProjectWithUserAccessCheck(project, userId)
+                call.respond(HttpStatusCode.OK, surveys)
+                return@get
+            }
+
             val surveys = repository.getSurveysByUser(userId)
 
             call.respond(HttpStatusCode.OK, surveys)
         }
 
         // fetch single
-        get("/company-survey/{surveyId}") {
+        get("/company-surveys/{surveyId}") {
             val surveyId = UUID.fromString(call.parameters["surveyId"])
 
             val deeplink = call.request.queryParameters.get("deeplink")
@@ -80,13 +87,11 @@ fun Application.configureDatabases(): Database {
                 call.respond(HttpStatusCode.OK, survey)
             }
 
-            val userSession = call.sessions.get<UserSession>()
-            if (userSession == null) {
+            val userId = call.getUserId()
+            if (userId == null) {
                 call.respond(HttpStatusCode.Unauthorized)
                 return@get
             }
-
-            val userId = userSession.getUserId()
 
             val survey = surveyRepository.getSurveyByIdWithUserAccessCheck(surveyId, userId)
             if (survey == null) {
@@ -97,15 +102,14 @@ fun Application.configureDatabases(): Database {
             call.respond(HttpStatusCode.OK, survey)
         }
 
-        delete("/company-survey/{surveyId}") {
-            val userSession = call.sessions.get<UserSession>()
-            if (userSession == null) {
+        delete("/company-surveys/{surveyId}") {
+            val userId = call.getUserId()
+            if (userId == null) {
                 call.respond(HttpStatusCode.Unauthorized)
                 return@delete
             }
 
             val surveyId = UUID.fromString(call.parameters["surveyId"])
-            val userId = userSession.getUserId()
 
             surveyRepository.deleteSurveyById(surveyId, userId)
 
@@ -113,16 +117,16 @@ fun Application.configureDatabases(): Database {
         }
 
         // generate deeplink
-        post("/company-survey/{surveyId}/deeplink") {
-            val userSession = call.sessions.get<UserSession>()
-            if (userSession == null) {
+        post("/company-surveys/{surveyId}/deeplink") {
+            val userId = call.getUserId()
+            if (userId == null) {
                 call.respond(HttpStatusCode.Unauthorized)
                 return@post
             }
 
             val surveyId = UUID.fromString(call.parameters["surveyId"])
 
-            val survey = surveyRepository.getSurveyByIdWithUserAccessCheck(surveyId, userSession.getUserId())
+            val survey = surveyRepository.getSurveyByIdWithUserAccessCheck(surveyId, userId)
             if (survey == null) {
                 // User may not have access to this project
                 call.respond(HttpStatusCode.NotFound)

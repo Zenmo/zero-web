@@ -1,13 +1,6 @@
 package com.zenmo.zummon.companysurvey
-import com.benasher44.uuid.Uuid
-import com.benasher44.uuid.uuidFrom
 import com.zenmo.zummon.companysurvey.KleinverbruikElectricityConnectionCapacity.valueOf
-import kotlinx.serialization.KSerializer
 import kotlinx.serialization.Serializable
-import kotlinx.serialization.descriptors.PrimitiveKind
-import kotlinx.serialization.descriptors.PrimitiveSerialDescriptor
-import kotlinx.serialization.encoding.Decoder
-import kotlinx.serialization.encoding.Encoder
 import kotlin.js.ExperimentalJsExport
 import kotlin.js.JsExport
 
@@ -21,22 +14,32 @@ data class Electricity (
 
     val authorizationFile: File? = null,
     val quarterHourlyValuesFiles: List<File> = emptyList(),
-    val quarterHourlyUsage: List<QuarterHourlyElectricityUsage> = emptyList(),
+    val quarterHourlyDelivery_kWh: TimeSeries? = null,
+    val quarterHourlyFeedIn_kWh: TimeSeries? = null,
+    val quarterHourlyProduction_kWh: TimeSeries? = null,
 
     // If no kwartierwaarden, ask for annual values.
-    val annualElectricityDemandKwh: Int? = null,
-    val annualElectricityProductionKwh: Int? = null,
+    val annualElectricityDelivery_kWh: Int? = null,
+    val annualElectricityFeedIn_kWh: Int? = null,
 
     val kleinverbruik: CompanyKleinverbruik? = null,
     val grootverbruik: CompanyGrootverbruik? = null,
     val gridExpansion: GridExpansion = GridExpansion(),
 ) {
+    @Deprecated("Renamed to annualElectricityDelivery_kWh", ReplaceWith("annualElectricityDelivery_kWh"))
+    val annualElectricityDemandKwh
+        get() = annualElectricityDelivery_kWh
+
+    @Deprecated("Renamed to annualElectricityFeedIn_kWh", ReplaceWith("annualElectricityFeedIn_kWh"))
+    val annualElectricityProductionKwh
+        get() = annualElectricityFeedIn_kWh
+
     fun getHasConnection(): Boolean {
         return hasConnection ?: false
     }
     
     fun getContractedConnectionCapacityKw(): Int? {
-        return kleinverbruik?.connectionCapacity?.toKw() ?: grootverbruik?.contractedConnectionDemandCapacityKw
+        return kleinverbruik?.connectionCapacity?.toKw() ?: grootverbruik?.contractedConnectionDeliveryCapacity_kW
     }
 }
 
@@ -56,10 +59,18 @@ data class CompanyKleinverbruik (
 
 @Serializable
 data class CompanyGrootverbruik (
-    val contractedConnectionDemandCapacityKw: Int? = null,
-    val contractedConnectionSupplyCapacityKw: Int? = null,
+    val contractedConnectionDeliveryCapacity_kW: Int? = null,
+    val contractedConnectionFeedInCapacity_kW: Int? = null,
     val physicalCapacityKw: Int? = null,
-)
+) {
+    @Deprecated("Renamed to contractedConnectionDeliveryCapacity_kW", ReplaceWith("contractedConnectionDeliveryCapacity_kW"))
+    val contractedConnectionDemandCapacityKw: Int?
+        get() = contractedConnectionDeliveryCapacity_kW
+
+    @Deprecated("Renamed to contractedConnectionFeedInCapacity_kW", ReplaceWith("contractedConnectionFeedInCapacity_kW"))
+    val contractedConnectionSupplyCapacityKw: Int?
+        get() = contractedConnectionFeedInCapacity_kW
+}
 
 enum class KleinverbruikElectricityConnectionCapacity {
     // The total number of kleinverbruik postal code regions is 359.299.

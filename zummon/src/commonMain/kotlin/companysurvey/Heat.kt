@@ -11,11 +11,15 @@ data class Heat (
     // Only the electricity component of hybrid setup
     val sumHybridHeatPumpElectricKw: Float? = null,
 
-    val annualDistrictHeatingDemandGj: Float? = null,
+    val annualDistrictHeatingDelivery_GJ: Float? = null,
 
     val localHeatExchangeDescription: String = "",
     val hasUnusedResidualHeat: Boolean? = null,
-)
+) {
+    @Deprecated("Renamed to annualDistrictHeatingDelivery_GJ", ReplaceWith("annualDistrictHeatingDelivery_GJ"))
+    val annualDistrictHeatingDemandGj
+        get() = annualDistrictHeatingDelivery_GJ
+}
 
 enum class HeatingType {
     GAS_BOILER,

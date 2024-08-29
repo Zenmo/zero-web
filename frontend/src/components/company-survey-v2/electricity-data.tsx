@@ -66,13 +66,13 @@ export const ElectricityData = ({form, prefix, project}: {
             {/*    <>*/}
             {/*        <NumberRow*/}
             {/*            label="Jaarverbruik"*/}
-            {/*            name={`${prefix}.annualElectricityDemandKwh`}*/}
+            {/*            name={`${prefix}.annualElectricityDelivery_kWh`}*/}
             {/*            form={form}*/}
             {/*            suffix="kWh" />*/}
             {/*        {hasSupply && (*/}
             {/*            <NumberRow*/}
             {/*                label="Jaaropwek"*/}
-            {/*                name={`${prefix}.annualElectricityProductionKwh`}*/}
+            {/*                name={`${prefix}.annualElectricityFeedIn_kWh`}*/}
             {/*                form={form}*/}
             {/*                suffix="kWh" />*/}
             {/*        )}*/}

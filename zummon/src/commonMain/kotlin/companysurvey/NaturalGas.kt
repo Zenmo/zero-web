@@ -10,9 +10,9 @@ import kotlin.js.JsExport
 data class NaturalGas (
     val hasConnection: Boolean? = null,
     val ean: String = "",
-    val annualDemandM3: Int? = null,
+    val annualDelivery_m3: Int? = null,
     val hourlyValuesFiles: List<File> = emptyList(),
-    val hourlyUsage: List<HourlyGasUsage> = emptyList(),
+    val hourlyDelivery_m3: TimeSeries? = null,
     val percentageUsedForHeating: Int? = null,
 ) {
     fun getHasConnection(): Boolean {
@@ -24,4 +24,8 @@ data class NaturalGas (
      */
     val hourlyValuesFileArray: Array<File>
         get() = hourlyValuesFiles.toTypedArray()
+
+    @Deprecated("Renamed to annualDelivery_m3", ReplaceWith("annualDelivery_m3"))
+    val annualDemandM3
+        get() = annualDelivery_m3
 }

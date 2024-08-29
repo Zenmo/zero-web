@@ -62,12 +62,12 @@ export const Electricity = ({form, prefix}: {
                         <>
                             <NumberRow
                                 label="Wat is uw gecontracteerd vermogen voor elektriciteitsafname?"
-                                name={`${prefix}.grootverbruik.contractedConnectionDemandCapacityKw`}
+                                name={`${prefix}.grootverbruik.contractedConnectionDeliveryCapacity_kW`}
                                 form={form}
                                 suffix="kW" />
                             <NumberRow
                                 label="Wat is uw gecontracteerd vermogen voor elektriciteitsteruglevering?"
-                                name={`${prefix}.grootverbruik.contractedConnectionSupplyCapacityKw`}
+                                name={`${prefix}.grootverbruik.contractedConnectionFeedInCapacity_kW`}
                                 form={form}
                                 suffix="kW" />
                             <NumberRow

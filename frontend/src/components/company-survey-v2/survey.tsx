@@ -120,7 +120,7 @@ const SurveyWithReset: FunctionComponent<{
 
         delete surveyData.tabs
 
-        const url = process.env.ZTOR_URL + '/company-survey'
+        const url = process.env.ZTOR_URL + '/company-surveys'
         try {
             const response = await fetch(url, {
                 method: 'POST',
