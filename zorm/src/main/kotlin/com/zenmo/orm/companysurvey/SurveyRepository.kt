@@ -531,6 +531,25 @@ class SurveyRepository(
                             it[contentType] = gasFile.contentType
                         }
                     }
+
+                    val timeSeriesList = listOf(
+                        gridConnection.electricity.quarterHourlyDelivery_kWh,
+                        gridConnection.electricity.quarterHourlyFeedIn_kWh,
+                        gridConnection.electricity.quarterHourlyProduction_kWh,
+                        gridConnection.naturalGas.hourlyDelivery_m3,
+                    ).filterNotNull()
+
+                    for (timeSeries in timeSeriesList) {
+                        TimeSeriesTable.upsert {
+                            it[id] = timeSeries.id
+                            it[gridConnectionId] = gridConnection.id
+                            it[type] = timeSeries.type
+                            it[start] = timeSeries.start
+                            it[timeStep] = timeSeries.timeStep
+                            it[unit] = timeSeries.unit
+                            it[values] = timeSeries.values.toList()
+                        }
+                    }
                 }
             }
 

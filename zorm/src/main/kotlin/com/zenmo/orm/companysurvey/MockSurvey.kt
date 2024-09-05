@@ -61,6 +61,11 @@ fun createMockSurvey() = Survey(
                             requestedKW = 200,
                             reason = "Mooaar power!",
                         ),
+                        quarterHourlyDelivery_kWh = TimeSeries(
+                            type = TimeSeriesType.ELECTRICITY_DELIVERY,
+                            start = kotlinx.datetime.Instant.parse("2022-01-01T00:00:00+01"),
+                            values = floatArrayOf(1.2f, 2.2f, 3.2f, 4.2f),
+                        )
                     ),
                     supply = Supply(
                         hasSupply = true,
