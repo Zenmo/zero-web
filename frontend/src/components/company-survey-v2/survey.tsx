@@ -49,6 +49,11 @@ const SurveyWithReset: FunctionComponent<{
     }
 
     let defaultValues = emptyFormData
+
+    const [hasMultipleConnections, setMultipleConnections] = useState(defaultValues === emptyFormData ? null : defaultValues.tabs.length > 1)
+    const [isSuccess, setSuccess] = useState(false)
+    const [submissionError, setSubmissionError] = useState("")
+
     let localStorageKey = `survey-${project.name}`
 
     // @ts-ignore
@@ -62,10 +67,17 @@ const SurveyWithReset: FunctionComponent<{
         watch
     } = form
 
+    const resetForm = (formData: any) => {
+        form.reset(formData)
+        setMultipleConnections(formData.tabs.length > 1)
+        setSuccess(false)
+        setSubmissionError("")
+    }
+
     useOnce(() => {
         if (survey) {
             const formDataFromProps = surveyToFormData(survey)
-            form.reset(formDataFromProps)
+            resetForm(formDataFromProps)
         } else {
             let previous = null
             try {
@@ -74,7 +86,7 @@ const SurveyWithReset: FunctionComponent<{
                 console.error("Deserialization of previous data failed, falling back to default values. Details: ", e)
             }
             if (previous) {
-                form.reset(previous)
+                resetForm(previous)
             }
         }
     })
@@ -92,10 +104,6 @@ const SurveyWithReset: FunctionComponent<{
         )
         return () => subscription.unsubscribe()
     }, [watch])
-
-    const [hasMultipleConnections, setMultipleConnections] = useState(defaultValues === emptyFormData ? null : defaultValues.tabs.length > 1)
-    const [isSuccess, setSuccess] = useState(false)
-    const [submissionError, setSubmissionError] = useState("")
 
     let errorMessage = submissionError
     if (Object.keys(errors).length > 0) {
