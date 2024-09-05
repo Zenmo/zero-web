@@ -3,6 +3,7 @@ package com.zenmo.orm.dbutil
 import org.jetbrains.exposed.sql.Column
 import org.jetbrains.exposed.sql.ColumnType
 import org.jetbrains.exposed.sql.Table
+import org.postgresql.util.PGInterval
 import kotlin.time.Duration
 import kotlin.time.Duration.Companion.minutes
 
@@ -13,9 +14,9 @@ import kotlin.time.Duration.Companion.minutes
 class IntervalColumnType : ColumnType<Duration>() {
     override fun sqlType(): String = "INTERVAL"
 
-    override fun notNullValueToDB(value: Duration): String {
-        val duration = value.inWholeMinutes
-        return "'$duration minutes'"
+    override fun notNullValueToDB(value: Duration): PGInterval {
+        val minutes = value.inWholeMinutes.toInt()
+        return PGInterval(0, 0, 0, 0, minutes, 0.0)
     }
 
     private val regex = "(?<mins>\\d+) mins".toRegex()
@@ -32,6 +33,13 @@ class IntervalColumnType : ColumnType<Duration>() {
 
         return result
     }
+
+    override fun nonNullValueAsDefaultString(value: Duration): String =
+        buildString {
+            append("'")
+            append(notNullValueToDB(value).toString())
+            append("'::interval")
+        }
 
 //    override fun readObject(rs: ResultSet, index: Int): Any? {
 //        // ResultSet.getLong returns 0 instead of null

@@ -3,6 +3,9 @@ package com.zenmo.orm.dbutil
 import com.zenmo.zummon.companysurvey.KleinverbruikElectricityConnectionCapacity
 import org.postgresql.util.PGobject
 
+/**
+ * Postgres can handle string enum values which start with a number but many other languages can't.
+ */
 class KleinverbruikPGEnum(enumValue: KleinverbruikElectricityConnectionCapacity?) : PGobject() {
     init {
         value = enumValue?.toDisplayName()
