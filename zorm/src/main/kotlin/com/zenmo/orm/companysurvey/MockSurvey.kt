@@ -41,6 +41,7 @@ fun createMockSurvey() = Survey(
                                 size = 1000,
                             ),
                         ),
+                        kleinverbruikOrGrootverbruik = KleinverbruikOrGrootverbruik.KLEINVERBRUIK,
                         grootverbruik = CompanyGrootverbruik(
                             contractedConnectionDeliveryCapacity_kW = 100,
                             contractedConnectionFeedInCapacity_kW = 200,

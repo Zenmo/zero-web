@@ -14,6 +14,7 @@ import org.jetbrains.exposed.sql.transactions.transaction
 
 val enums = listOf(
     KleinverbruikElectricityConsumptionProfile::class.java,
+    KleinverbruikOrGrootverbruik::class.java,
     HeatingType::class.java,
     PVOrientation::class.java,
     BlobPurpose::class.java,
