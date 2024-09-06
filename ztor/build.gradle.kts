@@ -1,5 +1,5 @@
 
-val ktor_version = "2.3.12"
+val ktor_version = "3.0.0-rc-1-eap-1082"
 
 plugins {
     kotlin("jvm")
@@ -24,6 +24,9 @@ application {
 
 repositories {
     mavenCentral()
+    // Running a pre-release version of Ktor because of a version conflict with serialization.
+    // HTTP4K seems better anyway.
+    maven("https://maven.pkg.jetbrains.space/public/p/ktor/eap/")
 }
 
 dependencies {

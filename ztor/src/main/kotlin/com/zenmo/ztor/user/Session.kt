@@ -1,5 +1,8 @@
 package com.zenmo.ztor.user
 
+import kotlinx.serialization.Serializable
+
+@Serializable
 data class UserSession(
     val state: String,
     val token: String,
