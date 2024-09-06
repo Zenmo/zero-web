@@ -18,7 +18,7 @@ val exposed_version = libs.versions.exposed.get()
 
 dependencies {
     implementation(project(":zummon"))
-    implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.6.0")
+    implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:${libs.versions.kotlinx.serialization.json.get()}")
 
     implementation("org.postgresql:postgresql:42.7.4")
     implementation("org.jetbrains.exposed:exposed-core:$exposed_version")

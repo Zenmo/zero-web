@@ -9,13 +9,13 @@ import {DE_WIEKEN, HESSENPOORT} from './components/company-survey-v2/project'
 import {Survey} from './components/company-survey-v2/survey'
 import {ThankYou} from './components/thank-you'
 import reportWebVitals from './reportWebVitals'
-import {ZeroHeader} from "./components/zero-header";
 import App from "./App";
 import {LoginWidget} from "./user/login";
 import {BedrijvenFormV1} from "./components/bedrijven-form-v1";
 import {Admin} from "./admin/admin";
 import {SurveyById, SurveyByIdRouteData} from "./components/company-survey-v2/survey-by-id";
 import {Home} from "./components/home"
+import {ExcelImport} from "./excel-import/excel-import"
 
 const router = createBrowserRouter([
     {
@@ -63,6 +63,10 @@ const router = createBrowserRouter([
     {
         path: "/admin",
         element: <Admin />,
+    },
+    {
+        path: "/admin/import-excel",
+        element: <ExcelImport />
     },
     {
         path: "/login",

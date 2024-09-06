@@ -22,7 +22,7 @@ services:
             - 127.0.0.1:80:80
 
     gradle-base:
-        image: gradle:8.9.0-jdk21
+        image: gradle:8.10.0-jdk21
         working_dir: /home/gradle/zero
         user: gradle
         volumes:
@@ -32,6 +32,8 @@ services:
     zorm-test:
         extends:
             service: gradle-base
+        depends_on:
+            - postgres
         volumes:
             - gradle-zorm-test-home:/home/gradle/.gradle
         command: zorm:test --no-daemon
@@ -53,6 +55,18 @@ services:
         environment:
             POSTGRES_URL: jdbc:postgresql://postgres:5432/postgres
             POSTGRES_USER: postgres
+            BASE_URL: http://localhost:8082
+            CORS_ALLOW_ORIGIN_PATTERN: 'http://localhost:1234'
+            # Keycloak test realm JWK
+            ACCESS_TOKEN_JWK: |
+                {
+                    "kid": "n-X5BeXFe6pIXhDBsDu2mQ2VYc23RSZCFRU5Y6IuzC8",
+                    "kty": "OKP",
+                    "alg": "EdDSA",
+                    "use": "sig",
+                    "crv": "Ed25519",
+                    "x": "ILokSbk8EKH-Q1aWo_TguuDRccoSVfEbmGSbm5gcn5I"
+                }
 
     ztor-gradle-with-db:
         extends:
@@ -90,7 +104,7 @@ services:
             service: gradle-base
         volumes:
             - gradle-build-cache:/home/gradle/.gradle
-        command: gradle --continuous --project-cache-dir=/tmp/gradle ztor:classes
+        command: ztor:classes
 
     ## Runs Ktor web server and reloads classes if the compiled .class file changes.
     ## Do ensure that the two Gradle containers have independent Home directories and Project cache directories.

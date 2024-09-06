@@ -47,4 +47,5 @@ fun Application.module() {
     configureRouting()
     configureStatusPages()
     configureUpload(db)
+    configureExcel()
 }

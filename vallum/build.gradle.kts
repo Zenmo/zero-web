@@ -17,14 +17,14 @@ val ktor_version = "2.3.12"
 
 dependencies {
     testImplementation(kotlin("test"))
-    testImplementation(project(":ztor"))
+//    testImplementation(project(":ztor"))
 
     implementation(project(":zummon"))
     implementation("io.ktor:ktor-client-core:$ktor_version")
     implementation("io.ktor:ktor-client-cio:$ktor_version")
     implementation("io.ktor:ktor-client-content-negotiation:$ktor_version")
     implementation("io.ktor:ktor-serialization-kotlinx-json-jvm:$ktor_version")
-    implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.6.0")
+    implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:${libs.versions.kotlinx.serialization.json.get()}")
 }
 
 tasks.withType<Test> {

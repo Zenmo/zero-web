@@ -1,5 +1,6 @@
 plugins {
     kotlin("jvm")
+    kotlin("plugin.serialization")
     id("com.github.johnrengelman.shadow") version "8.1.1"
 }
 
@@ -12,7 +13,7 @@ repositories {
 
 dependencies {
     implementation("org.apache.poi:poi-ooxml:5.3.0")
-    implementation("org.jetbrains.kotlinx:kotlinx-datetime:0.4.0")
+    implementation("org.jetbrains.kotlinx:kotlinx-datetime:0.6.0")
     implementation(project(":zummon"))
 
     testImplementation(kotlin("test"))
@@ -29,19 +30,25 @@ tasks {
         //relocate("org.openxmlformats.schemas.drawingml.x2006.main.ThemeDocument", "zenmo.org.openxmlformats.schemas.drawingml.x2006.main.ThemeDocument"
     }
 
-    jar {
-        manifest {
-            attributes["Main-Class"] = "com.zenmo.excelreadnamed.MainKt"
-        }
-        from(
-            configurations
-                .runtimeClasspath
-                .get()
-                .filter { it.name.endsWith("jar") }
-                .map { zipTree(it) }
-        ) {
-            exclude("META-INF/versions/9/module-info.class")
-            duplicatesStrategy = DuplicatesStrategy.EXCLUDE
-        }
-    }
+// This config breaks Ztor with error:
+// """
+// Your current kotlinx.serialization core version is 2.0.20,
+// while current Kotlin compiler plugin unknown requires at least 1.0-M1-SNAPSHOT.
+// Please update your kotlinx.serialization runtime dependency
+// """
+//    jar {
+//        manifest {
+//            attributes["Main-Class"] = "com.zenmo.excelreadnamed.MainKt"
+//        }
+//        from(
+//            configurations
+//                .runtimeClasspath
+//                .get()
+//                .filter { it.name.endsWith("jar") }
+//                .map { zipTree(it) }
+//        ) {
+//            exclude("META-INF/versions/9/module-info.class")
+//            duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+//        }
+//    }
 }
