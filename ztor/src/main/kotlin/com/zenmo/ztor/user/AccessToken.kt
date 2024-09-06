@@ -2,7 +2,6 @@ package com.zenmo.ztor.user
 
 import com.nimbusds.jose.Payload
 import com.nimbusds.jwt.SignedJWT
-import com.zenmo.orm.UUIDSerializer
 import kotlinx.datetime.Instant
 import kotlinx.serialization.KSerializer
 import kotlinx.serialization.Serializable
@@ -11,7 +10,7 @@ import kotlinx.serialization.descriptors.PrimitiveSerialDescriptor
 import kotlinx.serialization.encoding.Decoder
 import kotlinx.serialization.encoding.Encoder
 import kotlinx.serialization.json.Json
-import java.util.*
+import java.util.UUID
 
 object UnixTimeSerializer : KSerializer<Instant> {
     override val descriptor = PrimitiveSerialDescriptor("UnixTime", PrimitiveKind.STRING)
@@ -25,7 +24,7 @@ object UnixTimeSerializer : KSerializer<Instant> {
 
 @Serializable
 data class AccessTokenPayload(
-    @Serializable(with = UUIDSerializer::class)
+    @Serializable(with = JavaUUIDSerializer::class)
     val sub: UUID,
     val preferred_username: String? = null,
     val email: String? = null,

@@ -8,8 +8,8 @@ import kotlinx.serialization.descriptors.PrimitiveSerialDescriptor
 import kotlinx.serialization.encoding.Decoder
 import kotlinx.serialization.encoding.Encoder
 
-object UuidSerializer : KSerializer<Uuid> {
-    override val descriptor = PrimitiveSerialDescriptor("Uuid", PrimitiveKind.STRING)
+object BenasherUuidSerializer : KSerializer<Uuid> {
+    override val descriptor = PrimitiveSerialDescriptor("BenasherUuid", PrimitiveKind.STRING)
 
     override fun deserialize(decoder: Decoder): Uuid {
         return uuidFrom(decoder.decodeString())

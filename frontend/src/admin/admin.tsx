@@ -13,6 +13,8 @@ import {JsonButton} from "./json-button";
 import {DeeplinkButton} from "./deeplink-button"
 import {ZeroLayout} from "../components/zero-layout"
 
+import {ImportExcelButton} from "./import-excel-button"
+
 export const Admin: FunctionComponent = () => {
     const {loading, surveys, removeSurvey} = useSurveys()
 
@@ -22,46 +24,48 @@ export const Admin: FunctionComponent = () => {
     return (
         <PrimeReactProvider>
             <ZeroLayout subtitle="Beheer uitvraag bedrijven">
-                <DataTable
-                    style={{margin: '1rem'}}
-                    value={surveys}
-                    loading={loading}
-                    sortField="created"
-                    sortOrder={-1}
-                    filterDisplay="row"
-                >
-                    {multipleProjects && <Column field="zenmoProject" header="Project" sortable filter />}
-                    <Column field="companyName" header="Bedrijf" sortable filter />
-                    <Column field="personName" header="Contactpersoon" sortable filter />
-                    <Column field="email" header="E-mail" sortable filter />
-                    <Column header="Aansluitingen" sortable field="numGridConnections" />
-                    {/* TODO: bestanden */}
-                    <Column header="Bestanden" body={(survey: Survey ) => (
-                        <>
-                            {survey.filesArray.map(file => (
-                                <div key={file.blobName}>
-                                    <a href={downloadUrl(file.blobName)}>{file.originalName}</a>
-                                    &nbsp;
-                                    ({formatByteSize(file.size)})
-                                </div>
-                            ))}
-                        </>
-                    )}/>
-                    <Column field="createdToString" body={survey => formatDatetime(survey.created.toString())} header="Opgestuurd op" sortable/>
-                    <Column body={(survey: Survey) => (
-                        <div css={{
-                            display: 'flex',
-                            '> *': {
-                                margin: `${1/6}rem`
-                            },
-                        }}>
-                            <JsonButton surveyId={survey.id}/>
-                            <DeleteButton surveyId={survey.id} onDelete={removeSurvey}/>
-                            <EditButton surveyId={survey.id}/>
-                            <DeeplinkButton surveyId={survey.id}/>
-                        </div>
-                    )}/>
-                </DataTable>
+                <div css={{margin: '1rem'}}>
+                    <ImportExcelButton/>
+                    <DataTable
+                        value={surveys}
+                        loading={loading}
+                        sortField="created"
+                        sortOrder={-1}
+                        filterDisplay="row"
+                    >
+                        {multipleProjects && <Column field="zenmoProject" header="Project" sortable filter />}
+                        <Column field="companyName" header="Bedrijf" sortable filter />
+                        <Column field="personName" header="Contactpersoon" sortable filter />
+                        <Column field="email" header="E-mail" sortable filter />
+                        <Column header="Aansluitingen" sortable field="numGridConnections" />
+                        {/* TODO: bestanden */}
+                        <Column header="Bestanden" body={(survey: Survey ) => (
+                            <>
+                                {survey.filesArray.map(file => (
+                                    <div key={file.blobName}>
+                                        <a href={downloadUrl(file.blobName)}>{file.originalName}</a>
+                                        &nbsp;
+                                        ({formatByteSize(file.size)})
+                                    </div>
+                                ))}
+                            </>
+                        )}/>
+                        <Column field="createdToString" body={survey => formatDatetime(survey.created.toString())} header="Opgestuurd op" sortable/>
+                        <Column body={(survey: Survey) => (
+                            <div css={{
+                                display: 'flex',
+                                '> *': {
+                                    margin: `${1/6}rem`
+                                },
+                            }}>
+                                <JsonButton surveyId={survey.id}/>
+                                <DeleteButton surveyId={survey.id} onDelete={removeSurvey}/>
+                                <EditButton surveyId={survey.id}/>
+                                <DeeplinkButton surveyId={survey.id}/>
+                            </div>
+                        )}/>
+                    </DataTable>
+                </div>
             </ZeroLayout>
         </PrimeReactProvider>
     )

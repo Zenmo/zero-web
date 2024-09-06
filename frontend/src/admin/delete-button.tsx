@@ -5,7 +5,11 @@ import {noop} from "lodash";
 export const DeleteButton: FunctionComponent<{surveyId: any, onDelete?: (surveyId: any) => void}> = ({surveyId, onDelete = noop}) => {
     const [pending, setPending] = useState(false)
     const deleteSurvey = async () => {
+        setPending(true)
         try {
+            if (!confirm('Uitvraag verwijderen?')) {
+                return
+            }
             await fetch(`${process.env.ZTOR_URL}/company-surveys/${surveyId}`, {
                 method: 'DELETE',
                 credentials: 'include',

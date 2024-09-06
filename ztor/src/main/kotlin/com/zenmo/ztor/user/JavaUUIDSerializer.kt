@@ -1,4 +1,4 @@
-package com.zenmo.orm
+package com.zenmo.ztor.user
 
 import kotlinx.serialization.KSerializer
 import kotlinx.serialization.descriptors.PrimitiveKind
@@ -7,8 +7,8 @@ import kotlinx.serialization.encoding.Decoder
 import kotlinx.serialization.encoding.Encoder
 import java.util.UUID
 
-object UUIDSerializer : KSerializer<UUID> {
-    override val descriptor = PrimitiveSerialDescriptor("UUID", PrimitiveKind.STRING)
+object JavaUUIDSerializer : KSerializer<UUID> {
+    override val descriptor = PrimitiveSerialDescriptor("JavaUUID", PrimitiveKind.STRING)
 
     override fun deserialize(decoder: Decoder): UUID {
         return UUID.fromString(decoder.decodeString())

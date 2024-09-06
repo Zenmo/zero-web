@@ -3,12 +3,11 @@ package com.zenmo.zummon.companysurvey
 import com.benasher44.uuid.Uuid
 import com.benasher44.uuid.uuid4
 import kotlinx.serialization.Serializable
-import com.zenmo.zummon.UuidSerializer
+import com.zenmo.zummon.BenasherUuidSerializer
 import kotlinx.datetime.*
-import kotlinx.datetime.format.byUnicodePattern
-import kotlinx.datetime.format.char
 import kotlin.js.ExperimentalJsExport
 import kotlin.js.JsExport
+import kotlinx.serialization.json.Json
 
 /**
  * Root object
@@ -17,7 +16,7 @@ import kotlin.js.JsExport
 @JsExport
 @Serializable
 data class Survey(
-    @Serializable(with = UuidSerializer::class)
+    @Serializable(with = BenasherUuidSerializer::class)
     val id: Uuid = uuid4(),
     val created: Instant = Clock.System.now().roundToMilliseconds(),
     val zenmoProject: String,
@@ -59,6 +58,15 @@ data class Survey(
     public fun getSingleGridConnection(): GridConnection {
         return addresses.firstAndOnly().gridConnections.firstAndOnly()
     }
+
+    public fun toPrettyJson(): String {
+        val prettyJson = Json { // this returns the JsonBuilder
+            prettyPrint = true
+            // optional: specify indent
+            prettyPrintIndent = "    "
+        }
+        return prettyJson.encodeToString(Survey.serializer(), this)
+    }
 }
 
 @OptIn(ExperimentalJsExport::class)
@@ -87,3 +95,17 @@ private fun <T> List<T>.firstAndOnly(): T {
     }
     return this.first()
 }
+
+@JsExport
+@Serializable
+data class SurveyWithErrors(
+    val survey: Survey,
+    val errors: List<String>,
+) {
+    companion object {
+        fun fromJson(jsonString: String): SurveyWithErrors {
+            return kotlinx.serialization.json.Json.decodeFromString(SurveyWithErrors.serializer(), jsonString)
+        }
+    }
+}
+

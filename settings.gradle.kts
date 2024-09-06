@@ -13,6 +13,7 @@ dependencyResolutionManagement {
     versionCatalogs {
         create("libs") {
             version("exposed", "0.54.0")
+            version("kotlinx-serialization-json", "1.7.2")
         }
     }
 }

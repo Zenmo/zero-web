@@ -1,5 +1,5 @@
 
-val ktor_version = "3.0.0-rc-1-eap-1082"
+val ktor_version = "3.0.0-rc-1"
 
 plugins {
     kotlin("jvm")
@@ -32,6 +32,7 @@ repositories {
 dependencies {
     implementation(project(":zorm"))
     implementation(project(":zummon"))
+    implementation(project(":excel-read-named-v5"))
 
     // for file upload
     implementation(platform("com.azure:azure-sdk-bom:1.2.18"))
@@ -56,6 +57,10 @@ dependencies {
     // https://learn.microsoft.com/en-us/azure/container-apps/ingress-overview#http-headers
     implementation("io.ktor:ktor-server-forwarded-header:$ktor_version")
 
+    // I experience performance issues with Ktor's multipart handling.
+    implementation(platform("org.http4k:http4k-bom:5.30.0.0"))
+    implementation("org.http4k:http4k-multipart")
+
     // to call into Keycloak
     implementation("io.ktor:ktor-client-core:$ktor_version")
     implementation("io.ktor:ktor-client-cio:$ktor_version")
@@ -70,7 +75,7 @@ dependencies {
 
     implementation("org.jetbrains.kotlinx:kotlinx-datetime:0.6.0")
 
-    testImplementation("io.ktor:ktor-server-tests-jvm")
+    testImplementation("io.ktor:ktor-server-tests-jvm:3.0.0-rc-1-eap-1042")
     testImplementation("org.jetbrains.kotlin:kotlin-test-junit:2.0.20")
 }
 

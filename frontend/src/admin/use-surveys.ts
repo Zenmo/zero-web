@@ -18,7 +18,7 @@ export const useSurveys = (): UseSurveyReturn => {
                 credentials: 'include',
             })
             if (response.status === 401) {
-                window.location.href = process.env.ZTOR_URL + '/login?redirectUrl=' + encodeURIComponent(window.location.href)
+                redirectToLogin()
                 return
             }
 
@@ -39,4 +39,8 @@ export const useSurveys = (): UseSurveyReturn => {
         surveys,
         removeSurvey,
     }
+}
+
+export const redirectToLogin = () => {
+    window.location.href = process.env.ZTOR_URL + '/login?redirectUrl=' + encodeURIComponent(window.location.href)
 }

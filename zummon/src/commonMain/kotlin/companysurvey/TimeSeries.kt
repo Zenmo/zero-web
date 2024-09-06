@@ -4,14 +4,17 @@ import kotlinx.serialization.Serializable
 import kotlin.time.Duration.Companion.minutes
 import com.benasher44.uuid.Uuid
 import com.benasher44.uuid.uuid4
-import com.zenmo.zummon.UuidSerializer
+import com.zenmo.zummon.BenasherUuidSerializer
+import kotlin.js.JsExport
+
 
 /**
  * This contains values parsed from a CSV/excel or fetched from an API.
  */
+@JsExport
 @Serializable
 data class TimeSeries (
-    @Serializable(with = UuidSerializer::class)
+    @Serializable(with = BenasherUuidSerializer::class)
     val id: Uuid = uuid4(),
     val type: TimeSeriesType,
     // Measurement start time
@@ -56,11 +59,13 @@ data class TimeSeries (
     }
 }
 
+@JsExport
 enum class TimeSeriesUnit {
     KWH,
     M3,
 }
 
+@JsExport
 enum class TimeSeriesType {
     // Delivery from grid to end-user
     ELECTRICITY_DELIVERY,

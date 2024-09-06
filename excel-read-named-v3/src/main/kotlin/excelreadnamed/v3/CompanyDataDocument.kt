@@ -155,9 +155,8 @@ class CompanyDataDocument(
                                 mainConsumptionProcess = "Main consumption process",
                                 electrificationPlans = "Electrification plans",
                                 consumptionFlexibility = "Consumption flexibility",
-                                energyOrBuildingManagementSystemSupplier = "EnergyBrothers",*/
-                                surveyFeedback =
-                                "Survey feedback",
+                                energyOrBuildingManagementSystemSupplier = "EnergyBrothers",
+                                surveyFeedback = "Survey feedback", */
                                 transport =
                                 Transport(
                                     hasVehicles =
