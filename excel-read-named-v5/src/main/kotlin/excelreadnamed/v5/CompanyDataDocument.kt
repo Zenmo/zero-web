@@ -3,6 +3,7 @@ package com.zenmo.excelreadnamed.v5
 import com.zenmo.zummon.companysurvey.*
 import com.zenmo.zummon.companysurvey.TimeSeriesUnit
 import kotlinx.datetime.Instant
+import org.apache.poi.ss.usermodel.CellType
 import org.apache.poi.ss.util.AreaReference
 import org.apache.poi.ss.util.CellReference
 import org.apache.poi.xssf.usermodel.XSSFCell
@@ -10,12 +11,14 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook
 import java.util.*
 import kotlin.time.Duration.Companion.minutes
 
-class CompanyDataDocument(
-    private val workbook: XSSFWorkbook
+data class CompanyDataDocument(
+    private val workbook: XSSFWorkbook,
+    private val projectProvider: ProjectProvider = ProjectProvider.default,
 ) {
     val errors: MutableList<String> = mutableListOf()
 
-    constructor(inputStream: java.io.InputStream) : this(XSSFWorkbook(inputStream))
+    constructor(inputStream: java.io.InputStream, projectProvider: ProjectProvider = ProjectProvider.default)
+            : this(XSSFWorkbook(inputStream), projectProvider)
 
     companion object {
         fun fromFile(fileName: String): CompanyDataDocument {
@@ -34,11 +37,15 @@ class CompanyDataDocument(
 
     fun getSurveyObject(): Survey {
         var companyName = getStringField("companyName")
+        val project = projectProvider.getProjectByEnergiekeRegioId(
+            getIntegerField("projectId")
+        )
         val realSurvey =
             Survey(
                 companyName = companyName,
-                zenmoProject = "EnergiekeRegio_" + getStringField("projectId"),
+                zenmoProject = project.name ?: "Energieke Regio project ${project.energiekeRegioId}",
                 personName = "Contactpersoon",
+                project = project,
                 addresses =
                 listOf(
                     Address(
@@ -292,6 +299,11 @@ class CompanyDataDocument(
     private fun getNumericField(field: String): Double {
         val cell = getSingleCell(field)
         return cell.numericCellValue
+    }
+
+    fun getIntegerField(field: String): Int {
+        val cell = getSingleCell(field)
+        return cell.rawValue.toInt()
     }
 
     fun getStringField(field: String): String {

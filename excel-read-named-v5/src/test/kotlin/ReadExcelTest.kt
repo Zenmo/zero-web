@@ -24,5 +24,7 @@ class ReadExcelTest {
         assertEquals(1.7, deliveryTimeSeries.values.average(), 0.0001)
         assertEquals(TimeSeriesType.ELECTRICITY_DELIVERY, deliveryTimeSeries.type)
         assertEquals(TimeSeriesUnit.KWH, deliveryTimeSeries.unit)
+
+        assertEquals(42, survey.project?.energiekeRegioId)
     }
 }
