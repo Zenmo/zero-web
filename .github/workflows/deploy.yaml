@@ -63,28 +63,6 @@ jobs:
                     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
                 run: gradle vallum:publish
 
-    build-libzummon:
-        needs:
-            - variables
-        permissions:
-            contents: write
-            packages: write
-        runs-on: ubuntu-latest
-        steps:
-            -   uses: actions/checkout@v4
-            -   uses: actions/setup-java@v4
-                with:
-                    distribution: temurin
-                    java-version: 17
-            -   name: Setup Gradle
-                uses: gradle/actions/setup-gradle@v3
-            -   name: gradle zummon:publishJvmPublicationToGitHubPackagesRepository
-                env:
-                    VERSION_TAG: ${{ needs.variables.outputs.VERSION_TAG }}
-                    GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-                run: gradle zummon:publishJvmPublicationToGitHubPackagesRepository
-
-
     build-ztor:
         needs: variables
         runs-on: ubuntu-latest

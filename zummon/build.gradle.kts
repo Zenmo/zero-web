@@ -38,23 +38,3 @@ kotlin {
         }
     }
 }
-
-publishing {
-    publications {
-        create<MavenPublication>("maven") {
-            groupId = "com.zenmo"
-            artifactId = "libzummon"
-            version = System.getenv("VERSION_TAG") ?: "dev"
-        }
-        repositories {
-            maven {
-                name = "GitHubPackages"
-                url = URI("https://maven.pkg.github.com/zenmo/zero")
-                credentials {
-                    username = System.getenv("GITHUB_ACTOR")
-                    password = System.getenv("GITHUB_TOKEN")
-                }
-            }
-        }
-    }
-}
