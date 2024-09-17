@@ -5,12 +5,14 @@ import kotlin.time.Duration.Companion.minutes
 import com.benasher44.uuid.Uuid
 import com.benasher44.uuid.uuid4
 import com.zenmo.zummon.BenasherUuidSerializer
+import kotlin.js.ExperimentalJsExport
 import kotlin.js.JsExport
 
 
 /**
  * This contains values parsed from a CSV/excel or fetched from an API.
  */
+@OptIn(ExperimentalJsExport::class)
 @JsExport
 @Serializable
 data class TimeSeries (
@@ -59,12 +61,14 @@ data class TimeSeries (
     }
 }
 
+@OptIn(ExperimentalJsExport::class)
 @JsExport
 enum class TimeSeriesUnit {
     KWH,
     M3,
 }
 
+@OptIn(ExperimentalJsExport::class)
 @JsExport
 enum class TimeSeriesType {
     // Delivery from grid to end-user

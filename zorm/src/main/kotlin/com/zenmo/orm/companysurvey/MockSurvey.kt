@@ -5,9 +5,9 @@ import java.util.*
 
 val mockSurvey = createMockSurvey()
 
-fun createMockSurvey() = Survey(
+fun createMockSurvey(projectName: String = "Project") = Survey(
     companyName = "Zenmo",
-    zenmoProject = "Project",
+    zenmoProject = projectName,
     personName = "John Doe",
     email = "john@example.com",
     dataSharingAgreed = true,
