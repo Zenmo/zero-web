@@ -24,6 +24,9 @@ class ProjectRepository(
     fun getProjectByEnergiekeRegioId(energiekeRegioId: Int): Project =
         transaction(db) {
             ProjectTable.selectAll()
+                .where {
+                    ProjectTable.energiekeRegioId eq energiekeRegioId
+                }
                 .map {
                     Project(
                         it[ProjectTable.id].toKotlinUuid(),
@@ -32,6 +35,6 @@ class ProjectRepository(
                         it[ProjectTable.buurtCodes],
                     )
                 }
-                .first()
+                .single()
         }
 }

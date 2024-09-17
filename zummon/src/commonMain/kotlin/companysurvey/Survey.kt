@@ -25,8 +25,8 @@ data class Survey(
     val personName: String,
     val email: String = "",
     val dataSharingAgreed: Boolean = false,
-
     val addresses: List<Address>,
+    val project: Project? = null,
 ) {
     /**
      * For JavaScript

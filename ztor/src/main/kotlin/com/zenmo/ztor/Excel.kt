@@ -1,6 +1,8 @@
 package com.zenmo.ztor
 
 import com.zenmo.excelreadnamed.v5.CompanyDataDocument
+import com.zenmo.excelreadnamed.v5.ProjectProvider
+import com.zenmo.orm.companysurvey.ProjectRepository
 import com.zenmo.ztor.user.getUserId
 import com.zenmo.zummon.companysurvey.SurveyWithErrors
 import io.ktor.http.*
@@ -17,10 +19,13 @@ import kotlin.time.measureTimedValue
 import org.http4k.core.MultipartFormBody
 import org.http4k.core.Request
 import org.http4k.core.Uri
+import org.jetbrains.exposed.sql.Database
 
 
 @OptIn(InternalAPI::class)
-fun Application.configureExcel() {
+fun Application.configureExcel(db: Database) {
+    val projectRepository = ProjectRepository(db)
+
     routing {
         post("/excel-upload") {
             val userId = call.getUserId()
@@ -60,7 +65,7 @@ fun Application.configureExcel() {
 
             val (document, excelLoadDuration) = measureTimedValue {
                 try {
-                    CompanyDataDocument( filePart.content)
+                    CompanyDataDocument(filePart.content, projectRepository::getProjectByEnergiekeRegioId)
                     // Somehow IOException is not caught by the catch block
                 } catch (e: Exception) {
                     call.respond(HttpStatusCode.InternalServerError, "Invalid Excel file: ${e.message}")
@@ -73,7 +78,7 @@ fun Application.configureExcel() {
                 try {
                     document.getSurveyObject()
                 } catch (e: Exception) {
-                    call.respond(HttpStatusCode.InternalServerError, "Unable to get fields from Excel file: ${e.message}")
+                    call.respond(HttpStatusCode.InternalServerError, "Unable to get fields from Excel file: ${e.toString()}")
                     return@post
                 }
             }

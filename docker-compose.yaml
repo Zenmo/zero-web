@@ -172,12 +172,17 @@ services:
                     "x": "ILokSbk8EKH-Q1aWo_TguuDRccoSVfEbmGSbm5gcn5I"
                 }
 
-    frontend:
+    npm:
         image: node:22
         working_dir: /app/frontend
         volumes:
             - .:/app
-        command: npm run start
+        entrypoint: npm
+
+    frontend:
+        extends:
+            service: npm
+        command: run start
         environment:
             KLEINVERBRUIK_URL: http://127.0.0.1:80
             ZTOR_URL: http://localhost:8082

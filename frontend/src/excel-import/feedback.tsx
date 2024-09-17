@@ -18,8 +18,8 @@ export const Feedback: FunctionComponent<{ surveyWithErrors: SurveyWithErrors }>
             }}>
                 {mapOrElse(
                     surveyWithErrors.errors.asJsReadonlyArrayView(),
-                    error => <Message severity="warn" text={error} />,
-                    () => <Message severity="info" text="Alle checks OK" />,
+                    (error, i) => <Message severity="warn" text={error} key={i} />,
+                    () => <Message severity="info" text="Alle checks OK" key="ok" />,
                 )}
             </div>
             <div style={{
