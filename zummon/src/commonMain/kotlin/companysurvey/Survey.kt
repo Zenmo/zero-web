@@ -5,6 +5,7 @@ import com.benasher44.uuid.uuid4
 import kotlinx.serialization.Serializable
 import com.zenmo.zummon.BenasherUuidSerializer
 import kotlinx.datetime.*
+import kotlinx.serialization.ExperimentalSerializationApi
 import kotlin.js.ExperimentalJsExport
 import kotlin.js.JsExport
 import kotlinx.serialization.json.Json
@@ -59,6 +60,7 @@ data class Survey(
         return addresses.firstAndOnly().gridConnections.firstAndOnly()
     }
 
+    @OptIn(ExperimentalSerializationApi::class)
     public fun toPrettyJson(): String {
         val prettyJson = Json { // this returns the JsonBuilder
             prettyPrint = true
@@ -96,6 +98,7 @@ private fun <T> List<T>.firstAndOnly(): T {
     return this.first()
 }
 
+@OptIn(ExperimentalJsExport::class)
 @JsExport
 @Serializable
 data class SurveyWithErrors(

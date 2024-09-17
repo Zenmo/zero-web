@@ -12,12 +12,6 @@ object UserTable: Table("user") {
     override val primaryKey = PrimaryKey(id)
 
     /**
-     * Project the user has full access to.
-     * A future extension would be to specify finegrained privileges like readonly.
-     */
-    val projects = array<String>("projects", VarCharColumnType(50))
-
-    /**
      * Set the users name here for convenience.
      * This is mostly because there is no GUI yet and no logic to display the name from Keycloak.
      */

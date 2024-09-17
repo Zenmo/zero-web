@@ -3,6 +3,7 @@ package com.zenmo.orm.companysurvey
 import com.zenmo.orm.blob.BlobPurpose
 import com.zenmo.orm.companysurvey.table.*
 import com.zenmo.orm.companysurvey.table.GridConnectionTable.addressId
+import com.zenmo.orm.user.table.UserProjectTable
 import com.zenmo.orm.user.table.UserTable
 import com.zenmo.zummon.companysurvey.*
 import org.jetbrains.exposed.sql.*
@@ -14,16 +15,17 @@ class SurveyRepository(
         private val db: Database
 ) {
     private fun userIsAllowedCondition(userId: UUID): Op<Boolean>{
-        val unnestProjects = UserTable.projects.function("unnest")
-
-        return CompanySurveyTable.project eq anyFrom(
-            UserTable.select(unnestProjects)
-                .where(UserTable.id eq userId)
+        return CompanySurveyTable.projectId eq anyFrom(
+            UserProjectTable.select(UserProjectTable.projectId)
+                .where { UserProjectTable.userId eq userId }
         )
     }
 
     private fun projectFilter(project: String): Op<Boolean> {
-        return CompanySurveyTable.project.lowerCase() eq project.lowercase()
+        return CompanySurveyTable.projectId eq anyFrom (
+            ProjectTable.select(ProjectTable.id)
+                .where(ProjectTable.name.lowerCase() eq project.lowercase())
+        )
     }
 
     fun getHessenpoortSurveys(): List<Survey> {
@@ -117,7 +119,9 @@ class SurveyRepository(
 
     fun getSurveys(filter: Op<Boolean> = Op.TRUE): List<Survey> {
         return transaction(db) {
-            val surveysWithoutAddresses = CompanySurveyTable.selectAll()
+            val surveysWithoutAddresses = CompanySurveyTable
+                .join(ProjectTable, JoinType.INNER)
+                .selectAll()
                 .where {
                     filter
                 }
@@ -205,7 +209,7 @@ class SurveyRepository(
         return Survey(
             id = row[CompanySurveyTable.id],
             created = row[CompanySurveyTable.created],
-            zenmoProject = row[CompanySurveyTable.project],
+            zenmoProject = row[ProjectTable.name],
             companyName = row[CompanySurveyTable.companyName],
             personName = row[CompanySurveyTable.personName],
             email = row[CompanySurveyTable.email],
@@ -363,7 +367,8 @@ class SurveyRepository(
             val surveyId = CompanySurveyTable.upsertReturning {
                 it[id] = survey.id
                 it[created] = survey.created
-                it[project] = survey.zenmoProject
+                it[projectId] = ProjectTable.select(ProjectTable.id)
+                    .where { ProjectTable.name eq survey.zenmoProject }
                 it[companyName] = survey.companyName
                 it[personName] = survey.personName
                 it[email] = survey.email

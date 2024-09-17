@@ -3,6 +3,7 @@ package com.zenmo.orm.companysurvey
 import com.zenmo.orm.companysurvey.table.CompanySurveyTable
 import com.zenmo.orm.createSchema
 import com.zenmo.orm.connectToPostgres
+import com.zenmo.orm.user.saveUser
 import com.zenmo.orm.user.table.UserTable
 import com.zenmo.zummon.companysurvey.Survey
 import org.jetbrains.exposed.sql.Schema
@@ -37,10 +38,12 @@ class RepositoryTest {
     @Test
     fun testSaveMinimalSurvey() {
         val db = connectToPostgres()
+        val projectRepository = ProjectRepository(db)
+        projectRepository.saveNewProject("Project2")
         val repo = SurveyRepository(db)
         val survey = Survey(
             companyName = "Zenmo",
-            zenmoProject = "Project",
+            zenmoProject = "Project2",
             personName = "John Doe",
             email = "john@example.com",
             addresses = emptyList(),
@@ -54,8 +57,10 @@ class RepositoryTest {
     @Test
     fun testSaveWithGridConnections() {
         val db = connectToPostgres()
+        val projectName = "WessenHoort"
+        ProjectRepository(db).saveNewProject(projectName)
         val repo = SurveyRepository(db)
-        val survey = createMockSurvey()
+        val survey = createMockSurvey(projectName)
 
         repo.save(survey)
         val storedSurveys = repo.getSurveys(CompanySurveyTable.id eq survey.id)
@@ -78,25 +83,27 @@ class RepositoryTest {
     @Test
     fun testUserCantAccessSurveyInOtherProject() {
         val db = connectToPostgres()
+
+        val ownProjectName = "Middelkaap"
+        val projectId = ProjectRepository(db).saveNewProject(ownProjectName)
+
         val userId = UUID.randomUUID()
-        transaction(db) {
-            UserTable.insert {
-                it[id] = userId
-                it[projects] = listOf("Middelkaap")
-            }
-        }
+        saveUser(db, userId, listOf(projectId))
+
+        val otherProjectName = "Bovenkaap"
+        ProjectRepository(db).saveNewProject(otherProjectName)
 
         val repo = SurveyRepository(db)
         repo.save(Survey(
             companyName = "Zenmo",
-            zenmoProject = "Middelkaap",
+            zenmoProject = ownProjectName,
             personName = "John Doe",
             email = "john@example.com",
             addresses = emptyList(),
         ))
         repo.save(Survey(
             companyName = "Zenmo",
-            zenmoProject = "Bovenkaap",
+            zenmoProject = otherProjectName,
             personName = "John Doe",
             email = "john@example.com",
             addresses = emptyList(),
@@ -109,9 +116,13 @@ class RepositoryTest {
 
     @Test
     fun testSequenceIsSameAfterUpsert() {
-        val survey = createMockSurvey()
         val db = connectToPostgres()
+
+        val projectRepository = ProjectRepository(db)
+        projectRepository.saveNewProject("Project")
+
         val repo = SurveyRepository(db)
+        val survey = createMockSurvey("Project")
         repo.save(survey)
 
         val storedSurvey1 = repo.getSurveyById(survey.id)!!

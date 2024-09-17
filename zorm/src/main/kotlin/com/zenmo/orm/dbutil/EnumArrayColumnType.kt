@@ -9,6 +9,8 @@ import org.jetbrains.exposed.sql.Table
 import org.jetbrains.exposed.sql.statements.api.PreparedStatementApi
 import org.jetbrains.exposed.sql.statements.jdbc.JdbcPreparedStatementImpl
 import org.jetbrains.exposed.sql.stringLiteral
+import org.jetbrains.exposed.sql.vendors.H2Dialect
+import org.jetbrains.exposed.sql.vendors.currentDialect
 import java.io.Serializable
 import kotlin.Array
 import kotlin.reflect.KClass
@@ -47,6 +49,7 @@ private infix fun <T : Serializable> Expression<T>.eqAny(other: Expression<Array
  * Implementation of PostgreSQL enum arrays.
  *
  * TODO: this can probably be generalized to any array type.
+ * TODO: can maybe extend org.jetbrains.exposed.sql.ArrayColumnType
  * The serialization of the element would then be delegated to another [ColumnType].
  */
 class EnumArrayColumnType<T : Enum<T>>(
@@ -75,6 +78,10 @@ class EnumArrayColumnType<T : Enum<T>>(
         }
     }
 
+    override fun nonNullValueToString(value: List<T>): String {
+        return value.joinToString(",", "ARRAY[", "]::${databaseType}[]") { enumToString(it) }
+    }
+
     override fun valueFromDB(value: Any): List<T> {
         val stringList: List<String> = when (value) {
             is SQLArray -> (value.array as Array<String>).toList()
@@ -87,12 +94,12 @@ class EnumArrayColumnType<T : Enum<T>>(
     }
 
     override fun setParameter(stmt: PreparedStatementApi, index: Int, value: Any?) {
-        if (value == null) {
-            stmt.setNull(index, this)
-        } else {
-            val preparedStatement = stmt as? JdbcPreparedStatementImpl ?: error("Currently only JDBC is supported")
-            val array = preparedStatement.statement.connection.createArrayOf(databaseType, value as Array<*>)
-            stmt[index] = array
+        when (value) {
+            null -> stmt.setNull(index, this)
+            is Array<*> -> {
+                stmt.setArray(index, databaseType, value)
+            }
+            else -> throw Exception("Got unexpected array value of type: ${value::class.qualifiedName} ($value)")
         }
     }
 }
