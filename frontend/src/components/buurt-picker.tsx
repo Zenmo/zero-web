@@ -1,7 +1,8 @@
 import {useEffect, useState} from 'react'
 import {useOnce} from '../hooks/use-once'
-import {fetchGemeenteList, fetchBuurtList, fetchBuurt, Buurt} from '../services/wijken-buurten'
+import {fetchBuurtList, fetchBuurt, Buurt} from '../services/wijkenbuurten/buurten'
 import {Select} from 'antd'
+import {fetchGemeenteList} from "../services/wijkenbuurten/gemeenten"
 
 // First pick from a list of gemeenten,
 // then pick from a list of buurten in that gemeente.

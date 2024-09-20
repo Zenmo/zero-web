@@ -1,44 +1,20 @@
-import {BBox2d} from '@turf/helpers/dist/js/lib/geojson'
+import {BBox2d, Feature, FeatureCollection} from "@turf/helpers/dist/js/lib/geojson"
 import {MultiPolygon} from 'geojson'
 import {LatLng} from 'leaflet'
 import center from '@turf/center'
-import {geoJsonPositionToLeaflet} from './util'
+import {geoJsonPositionToLeaflet} from '../geometry'
+import {featureCollection} from "@turf/helpers"
 
-export async function fetchGemeenteList(): Promise<string[]> {
-    const params = new URLSearchParams({
-        request: 'GetFeature',
-        typeName: 'gemeenten',
-        service: 'WFS',
-        version: '2.0.0',
-        propertyName: 'gemeentenaam',
-        // We're using XML output here because it has the side-effect of not returning the geometry.
-        // This makes the response much smaller.
-        //outputFormat: 'json',
-        filter: `
-            <Filter>
-                <PropertyIsEqualTo>
-                    <PropertyName>water</PropertyName>
-                    <Literal>NEE</Literal>
-                </PropertyIsEqualTo>
-            </Filter>
-        `,
-    })
+export type BuurtFeatureCollection = FeatureCollection<MultiPolygon, BuurtProperties>
+export type Buurt = Feature<MultiPolygon, BuurtProperties>
 
-    const url = 'https://service.pdok.nl/cbs/wijkenbuurten/2022/wfs/v1_0?' + params.toString()
-    const response = await fetch(url)
-    if (response.status != 200) {
-        throw Error('Failure getting gemeente list')
-    }
-
-    const body = await response.text()
-    const document = new DOMParser().parseFromString(body, 'text/xml')
-    const elements = document.getElementsByTagName('wijkenbuurten:gemeentenaam')
-    const gemeenten: string[] = Array.prototype.map.call(elements, (element: Element) => {
-        return element.textContent
-    }) as string[]
-
-    return gemeenten.sort()
-}
+// export interface Buurt {
+//     type: 'Feature',
+//     id: string // e.g. buurten.c443da6a-ae59-4cc3-b0a1-3e426a8eaa2b
+//     properties: BuurtProperties,
+//     bbox: BBox2d,
+//     geometry: MultiPolygon,
+// }
 
 export async function fetchBuurtList(gemeente: string): Promise<string[]> {
     if (!gemeente) {
@@ -131,14 +107,6 @@ export interface BuurtProperties {
     jaar: number
 }
 
-export interface Buurt {
-    type: 'Feature',
-    id: string // e.g. buurten.c443da6a-ae59-4cc3-b0a1-3e426a8eaa2b
-    properties: BuurtProperties,
-    bbox: BBox2d,
-    geometry: MultiPolygon,
-}
-
 export function getBuurtCenter(buurt: Buurt): LatLng {
     const feature = center(buurt.geometry)
 
@@ -146,6 +114,63 @@ export function getBuurtCenter(buurt: Buurt): LatLng {
 }
 
 export async function fetchBuurt(gemeente: string, buurt: string): Promise<Buurt> {
+    const buurten = await fetchBuurten(`
+        <Filter>
+            <AND>
+                <PropertyIsEqualTo>
+                    <PropertyName>buurtnaam</PropertyName>
+                    <Literal>${buurt}</Literal>
+                </PropertyIsEqualTo>
+                <PropertyIsEqualTo>
+                    <PropertyName>gemeentenaam</PropertyName>
+                    <Literal>${gemeente}</Literal>
+                </PropertyIsEqualTo>
+                <PropertyIsEqualTo>
+                    <PropertyName>water</PropertyName>
+                    <Literal>NEE</Literal>
+                </PropertyIsEqualTo>
+            </AND>
+        </Filter>
+    `)
+
+    if (buurten.features.length != 1) {
+        throw Error('Expected exactly one buurt')
+    }
+
+    return buurten.features[0]
+}
+
+export async function fetchBuurtenByCodes(buurtCodes: readonly string[]): Promise<BuurtFeatureCollection> {
+    if (buurtCodes.length == 0) {
+        return featureCollection()
+    }
+
+    if (buurtCodes.length == 1) {
+        return await fetchBuurten(`
+            <Filter>
+                <PropertyIsEqualTo>
+                    <PropertyName>buurtcode</PropertyName>
+                    <Literal>${buurtCodes[0]}</Literal>
+                </PropertyIsEqualTo>
+            </Filter>
+    `)
+    }
+
+    return await fetchBuurten(`
+        <Filter>
+            <Or>
+                ${buurtCodes.map(code => `
+                    <PropertyIsEqualTo>
+                        <PropertyName>buurtcode</PropertyName>
+                        <Literal>${code}</Literal>
+                    </PropertyIsEqualTo>
+                `)}
+            </Or>
+        </Filter>
+    `)
+}
+
+export async function fetchBuurten(xmlFilter: string): Promise<BuurtFeatureCollection> {
     const params = new URLSearchParams({
         request: 'GetFeature',
         typeName: 'buurten',
@@ -153,37 +178,14 @@ export async function fetchBuurt(gemeente: string, buurt: string): Promise<Buurt
         version: '2.0.0',
         outputFormat: 'json',
         srsName: 'EPSG:4326', // output coordinate system
-        filter: `
-            <Filter>
-                <AND>
-                    <PropertyIsEqualTo>
-                        <PropertyName>buurtnaam</PropertyName>
-                        <Literal>${buurt}</Literal>
-                    </PropertyIsEqualTo>
-                    <PropertyIsEqualTo>
-                        <PropertyName>gemeentenaam</PropertyName>
-                        <Literal>${gemeente}</Literal>
-                    </PropertyIsEqualTo>
-                    <PropertyIsEqualTo>
-                        <PropertyName>water</PropertyName>
-                        <Literal>NEE</Literal>
-                    </PropertyIsEqualTo>
-                </AND>
-            </Filter>
-        `,
+        filter: xmlFilter,
     })
 
-    const url = 'https://service.pdok.nl/cbs/wijkenbuurten/2022/wfs/v1_0?' + params.toString()
+    const url = 'https://service.pdok.nl/cbs/wijkenbuurten/2023/wfs/v1_0?' + params.toString()
     const response = await fetch(url)
     if (response.status != 200) {
         throw Error('Failure getting buurt geometry')
     }
 
-    const body = await response.json()
-    const features = body.features
-    if (features.length != 1) {
-        throw Error('Expected exactly one buurt')
-    }
-
-    return features[0]
+    return await response.json()
 }
