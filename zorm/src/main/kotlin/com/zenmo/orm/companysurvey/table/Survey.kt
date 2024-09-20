@@ -1,15 +1,13 @@
 package com.zenmo.orm.companysurvey.table
 
-import org.jetbrains.exposed.sql.*
+import com.zenmo.orm.dbutil.ZenmoUUIDTable
 import org.jetbrains.exposed.sql.kotlin.datetime.CurrentTimestamp
 import org.jetbrains.exposed.sql.kotlin.datetime.timestamp
 
 /**
  * [com.zenmo.zummon.companysurvey.Survey]
  */
-object CompanySurveyTable: Table("company_survey") {
-    val id = uuid("id").autoGenerate()
-    override val primaryKey = PrimaryKey(id)
+object CompanySurveyTable: ZenmoUUIDTable("company_survey") {
     val created = timestamp("created_at").defaultExpression(CurrentTimestamp)
     // Can be fetched at https://energiekeregio.nl/api/v1/zenmo?details=15989
     val energiekeRegioId = uinteger("energieke_regio_id").nullable()

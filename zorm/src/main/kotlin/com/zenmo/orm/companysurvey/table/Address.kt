@@ -1,14 +1,11 @@
 package com.zenmo.orm.companysurvey.table
 
-import org.jetbrains.exposed.sql.Table
+import com.zenmo.orm.dbutil.ZenmoUUIDTable
 
 /**
  * [com.zenmo.zummon.companysurvey.Address]
  */
-object AddressTable: Table("address") {
-    val id = uuid("id").autoGenerate()
-    override val primaryKey = PrimaryKey(id)
-
+object AddressTable: ZenmoUUIDTable("address") {
     val surveyId = uuid("survey_id").references(CompanySurveyTable.id)
 
     val street = varchar("street", 50)
