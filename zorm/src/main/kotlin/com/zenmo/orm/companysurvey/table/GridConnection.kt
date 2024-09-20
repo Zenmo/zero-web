@@ -2,9 +2,9 @@ package com.zenmo.orm.companysurvey.table
 
 import com.zenmo.orm.dbutil.KleinverbruikPGEnum
 import com.zenmo.orm.dbutil.PGEnum
+import com.zenmo.orm.dbutil.ZenmoUUIDTable
 import com.zenmo.orm.dbutil.enumArray
 import com.zenmo.zummon.companysurvey.*
-import org.jetbrains.exposed.sql.Table
 import org.jetbrains.exposed.sql.Sequence
 import org.jetbrains.exposed.sql.nextIntVal
 
@@ -13,9 +13,7 @@ import org.jetbrains.exposed.sql.nextIntVal
  */
 val gridConnectionSequence = Sequence("grid_connection_sequence")
 
-object GridConnectionTable: Table("grid_connection") {
-    val id = uuid("id").autoGenerate()
-    override val primaryKey = PrimaryKey(id)
+object GridConnectionTable: ZenmoUUIDTable("grid_connection") {
     val addressId = uuid("address_id").references(AddressTable.id)
 
     val sequence = integer("sequence").defaultExpression(gridConnectionSequence.nextIntVal())

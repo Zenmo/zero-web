@@ -1,19 +1,16 @@
 package com.zenmo.orm.companysurvey.table
 
 import com.zenmo.orm.dbutil.PGEnum
+import com.zenmo.orm.dbutil.ZenmoUUIDTable
 import com.zenmo.orm.dbutil.interval
 import com.zenmo.zummon.companysurvey.TimeSeriesType
 import com.zenmo.zummon.companysurvey.TimeSeriesUnit
 import kotlinx.datetime.Instant
 import org.jetbrains.exposed.sql.ReferenceOption
-import org.jetbrains.exposed.sql.Table
 import org.jetbrains.exposed.sql.kotlin.datetime.timestamp
 import kotlin.time.Duration.Companion.minutes
 
-object TimeSeriesTable: Table("time_series") {
-    val id = uuid("id").autoGenerate()
-    override val primaryKey = PrimaryKey(id)
-
+object TimeSeriesTable: ZenmoUUIDTable("time_series") {
     // The grid connection this time series belongs to
     val gridConnectionId = uuid("grid_connection_id")
         .references(GridConnectionTable.id, onDelete = ReferenceOption.CASCADE)
