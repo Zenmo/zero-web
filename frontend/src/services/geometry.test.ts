@@ -1,7 +1,5 @@
-import {geometryCollection} from '@turf/helpers'
 import {GeometryCollection, Polygon} from 'geojson'
-import {filter, toIterable} from './iterable'
-import {geometryCollectionContains} from './util'
+import {geometryCollectionContains} from './geometry'
 
 describe(geometryCollectionContains.name, () => {
     const smallSquare: Polygon = {

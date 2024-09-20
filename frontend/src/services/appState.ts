@@ -20,11 +20,11 @@ import {
 } from './kleinverbruik/types'
 import {
     assertDefined,
+} from './util'
+import {
     geometryCollectionContains,
     geometryToBoundingBox,
-
-
-} from './util'
+} from "./geometry"
 
 export interface AppHook {
     setGeometry: SetGeometryFn

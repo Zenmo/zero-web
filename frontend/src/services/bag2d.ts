@@ -2,7 +2,6 @@ import {BBox2d} from '@turf/helpers/dist/js/lib/geojson'
 import {Polygon} from 'geojson'
 import {LatLngBounds} from 'leaflet'
 import proj4 from 'proj4'
-import unionBy from 'lodash/unionBy'
 
 interface ResponseBody {
     type: 'FeatureCollection',

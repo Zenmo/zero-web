@@ -5,6 +5,7 @@ import {PrimeReactProvider} from "primereact/api"
 import {ExcelUpload} from "./excel-upload"
 import {SurveyWithErrors} from "zero-zummon"
 import {Feedback} from "./feedback"
+import {PandenSelectLoader} from "./panden-select-loader"
 
 export const ExcelImport: FunctionComponent = () => {
     const [activeIndex, setActiveIndex] = useState(0);
@@ -17,26 +18,27 @@ export const ExcelImport: FunctionComponent = () => {
     return (
         <PrimeReactProvider>
             <ZeroLayout subtitle="Importeer Excel">
-                <div css={{margin: "1rem"}}>
-                    <Steps
-                        style={{
-                            marginBottom: "1rem",
-                        }}
-                        activeIndex={activeIndex}
-                        onSelect={(e) => setActiveIndex(e.index)}
-                        readOnly={false}
-                        model={[{
-                            label: "Uploaden",
-                        }, {
-                            label: "Feedback",
-                        }, {
-                            label: "Panden selecteren",
-                        }]
-                    }/>
-                    {activeIndex === 0 && <ExcelUpload setSurveyWithErrors={setSurveyWithErrors}/>}
-                    {activeIndex === 1 && surveyWithErrors && <Feedback surveyWithErrors={surveyWithErrors}/>}
-                    {activeIndex === 2 && <div>Panden selecteren</div>}
-                </div>
+                <Steps
+                    style={{
+                        margin: "1rem",
+                    }}
+                    activeIndex={activeIndex}
+                    onSelect={(e) => setActiveIndex(e.index)}
+                    readOnly={false}
+                    model={[{
+                        label: "Uploaden",
+                    }, {
+                        label: "Feedback",
+                    }, {
+                        label: "Panden selecteren",
+                    }, {
+                        label: "Opslaan",
+                    }]
+                }/>
+                {activeIndex === 0 && <ExcelUpload setSurveyWithErrors={setSurveyWithErrors}/>}
+                {activeIndex === 1 && surveyWithErrors && <Feedback navigateNext={() => setActiveIndex(2)} surveyWithErrors={surveyWithErrors}/>}
+                {activeIndex === 2 && <PandenSelectLoader project={surveyWithErrors?.survey.project}/>}
+                {activeIndex === 3 && <div>Opslaan</div>}
             </ZeroLayout>
         </PrimeReactProvider>
     )

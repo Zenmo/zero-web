@@ -6,7 +6,11 @@ export const ZeroLayout: FunctionComponent<PropsWithChildren & {
     children,
     subtitle,
 }) => (
-    <div>
+    <div style={{
+        minHeight: "100vh",
+        display: "flex",
+        flexDirection: "column",
+    }}>
         <h1 style={{
             paddingLeft: "1em",
         }}>
@@ -17,7 +21,12 @@ export const ZeroLayout: FunctionComponent<PropsWithChildren & {
             &nbsp;
             Zenmo Zero
         </h1>
-        {subtitle && <h3 style={{paddingLeft: "5rem"}}>{subtitle}</h3>}
+        {subtitle && <h3 style={{
+            padding: "0 1em 1em 5rem",
+            margin: 0,
+        }}>
+            {subtitle}
+        </h3>}
         {children}
     </div>
 )

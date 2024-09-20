@@ -8,8 +8,7 @@ import {MainMap} from './components/main-map'
 import {PandDataDisplay} from './components/pand-display'
 import {useApp} from './services/appState'
 import {assertDefined} from './services/util'
-import {Buurt} from './services/wijken-buurten'
-import {ZeroHeader} from "./components/zero-header";
+import {Buurt} from './services/wijkenbuurten/buurten'
 import {ZeroLayout} from "./components/zero-layout"
 
 function App() {
