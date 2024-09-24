@@ -60,6 +60,74 @@ data class Survey(
         return addresses.firstAndOnly().gridConnections.firstAndOnly()
     }
 
+    /**
+     * Adds a Pand ID when it's not present or removes it if it is.
+     * Only works for surveys with exactly one grid connection.
+     */
+    public fun togglePandId(pandId: PandID): Survey {
+        val address = addresses.firstAndOnly()
+        val gridConnection = address.gridConnections.firstAndOnly()
+        var pandIds = gridConnection.pandIds
+
+        if (pandIds.contains(pandId)) {
+            pandIds = gridConnection.pandIds - pandId
+        } else {
+            pandIds = gridConnection.pandIds + pandId
+        }
+
+        return this.copy(
+            addresses = listOf(
+                address.copy(
+                    gridConnections = listOf(
+                        gridConnection.copy(
+                            pandIds = gridConnection.pandIds + pandId
+                        )
+                    )
+                )
+            )
+        )
+    }
+
+    /**
+     * Add Pand ID to survey with exactly one grid connection.
+     */
+    public fun withPandId(pandId: PandID): Survey {
+        val address = addresses.firstAndOnly()
+        val gridConnection = address.gridConnections.firstAndOnly()
+
+        return this.copy(
+            addresses = listOf(
+                address.copy(
+                    gridConnections = listOf(
+                        gridConnection.copy(
+                            pandIds = gridConnection.pandIds + pandId
+                        )
+                    )
+                )
+            )
+        )
+    }
+
+    /**
+     * Remove Pand ID from survey with exactly one grid connection.
+     */
+    public fun withoutPandId(pandId: PandID): Survey {
+        val address = addresses.firstAndOnly()
+        val gridConnection = address.gridConnections.firstAndOnly()
+
+        return this.copy(
+            addresses = listOf(
+                address.copy(
+                    gridConnections = listOf(
+                        gridConnection.copy(
+                            pandIds = gridConnection.pandIds - pandId
+                        )
+                    )
+                )
+            )
+        )
+    }
+
     @OptIn(ExperimentalSerializationApi::class)
     public fun toPrettyJson(): String {
         val prettyJson = Json { // this returns the JsonBuilder
@@ -110,5 +178,11 @@ data class SurveyWithErrors(
             return kotlinx.serialization.json.Json.decodeFromString(SurveyWithErrors.serializer(), jsonString)
         }
     }
+
+    fun withSurvey(survey: Survey) = SurveyWithErrors(survey, errors)
+
+    fun withPandId(pandId: PandID) = SurveyWithErrors(survey.withPandId(pandId), errors)
+
+    fun withoutPandId(pandId: PandID) = SurveyWithErrors(survey.withoutPandId(pandId), errors)
 }
 

@@ -142,7 +142,7 @@ export async function fetchBuurt(gemeente: string, buurt: string): Promise<Buurt
 
 export async function fetchBuurtenByCodes(buurtCodes: readonly string[]): Promise<BuurtFeatureCollection> {
     if (buurtCodes.length == 0) {
-        return featureCollection()
+        return featureCollection([])
     }
 
     if (buurtCodes.length == 1) {

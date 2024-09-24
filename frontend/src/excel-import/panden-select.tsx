@@ -6,6 +6,9 @@ import {featureCollection} from "@turf/helpers"
 import {geoJsonPositionToLeaflet} from "../services/geometry"
 import center from "@turf/center"
 import {LeafletMouseEventHandlerFn} from "leaflet"
+import {PandID} from "zero-zummon"
+import {map, reduce} from "../services/iterable"
+import {assertDefined} from "../services/util"
 
 /**
  * Component which renders a map from data already loaded from the network.
@@ -14,15 +17,37 @@ export const PandenSelect: FunctionComponent<{
     buurten: BuurtFeatureCollection,
     panden: Map<BigInt, Bag2DPand>,
     otherCompaniesPandIds: string[],
-    thisCompanyPandIds: string[],
-    setThisCompanyPandIds: (pandIds: string[]) => void,
-}> = ({ buurten, panden, otherCompaniesPandIds, thisCompanyPandIds, setThisCompanyPandIds }) => {
+    thisCompanyPandIds: ReadonlySet<PandID>,
+    addThisCompanyPandId: (pandId: PandID) => void,
+    removeThisCompanyPandId: (pandId: PandID) => void,
+}> = ({ buurten, panden, otherCompaniesPandIds, thisCompanyPandIds, addThisCompanyPandId, removeThisCompanyPandId }) => {
 
     const buurtCenter = geoJsonPositionToLeaflet(center(buurten).geometry.coordinates)
 
-    const onClickPand: LeafletMouseEventHandlerFn = (event) => {
+    const addPand: LeafletMouseEventHandlerFn = (event) => {
+
         const pandFeature: Bag2DPand = event.propagatedFrom.feature
+        const pandId = new PandID(pandFeature.properties.identificatie)
+
+        addThisCompanyPandId(pandId)
     }
+
+    const removePand: LeafletMouseEventHandlerFn = (event) => {
+
+        const pandFeature: Bag2DPand = event.propagatedFrom.feature
+        const pandId = new PandID(pandFeature.properties.identificatie)
+
+        removeThisCompanyPandId(pandId)
+    }
+
+    const selectedPanden = featureCollection(
+        Array.from(
+            map(
+                thisCompanyPandIds,
+                pandId => assertDefined(panden.get(BigInt(pandId.value)))
+            )
+        )
+    )
 
     return (
         <MapContainer
@@ -43,7 +68,13 @@ export const PandenSelect: FunctionComponent<{
             <GeoJSON
                 data={featureCollection(Array.from(panden.values()))}
                 pathOptions={{color: 'blue'}}
-                eventHandlers={{click: console.log}}/>
+                eventHandlers={{click: addPand}}/>
+
+            <GeoJSON
+                key={reduce(thisCompanyPandIds, (acc, val) => acc + val.value, "")}
+                data={selectedPanden}
+                pathOptions={{color: 'red'}}
+                eventHandlers={{click: removePand}} />
         </MapContainer>
     )
 }
