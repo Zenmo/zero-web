@@ -23,6 +23,7 @@ data class GridConnection(
     val heat: Heat = Heat(),
     val storage: Storage = Storage(),
     val transport: Transport = Transport(),
+    val pandIds: Set<PandID> = emptySet(),
 
     // open questions
     val energyOrBuildingManagementSystemSupplier: String = "",
