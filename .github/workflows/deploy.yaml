@@ -151,8 +151,8 @@ jobs:
                         --registry-username erikvv
                         --registry-password ${{ secrets.ERIKVV_GHCR_PULL_PASSWORD }}
                         --registry-server ghcr.io
-                        --cpu 0.25
-                        --memory 0.5
+                        --cpu 1.5
+                        --memory 3
                         --min-replicas 0
 
     build-deploy-static-site:
