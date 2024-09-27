@@ -8,7 +8,7 @@ data class GetTelemetryResult(
      * Comes in batches of 1000
      */
     val telemetry: List<Telemetry>,
-    val continuationToken: String?,
+    val continuationToken: String? = null,
 )
 
 @Serializable
