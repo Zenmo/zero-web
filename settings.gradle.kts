@@ -7,6 +7,7 @@ include(
     "vallum",
     "excel-read-named-v3",
     "excel-read-named-v5",
+    "fudura-client"
 )
 
 dependencyResolutionManagement {

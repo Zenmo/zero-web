@@ -103,6 +103,10 @@ Library to read the Excel format filled out by [Energieke Regio]
 v5 uses the latest version of Apache POI, v3 uses an older version 
 compatible with AnyLogic but it has issues with memory usage.
 
+### [Fudura-client](fudura-client)
+
+Gets metering data from Fudura.
+
 Running locally
 ---
 
