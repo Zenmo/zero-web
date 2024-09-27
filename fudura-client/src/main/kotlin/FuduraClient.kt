@@ -70,6 +70,46 @@ class FuduraClient(
         checkStatusCode(request, response)
         return response.json()
     }
+
+    /**
+     * Continue with GetTelemetry calls until the entire profile is fetched.
+     */
+    fun getTelemetryRecursive(
+        meteringPointId: String,
+        channelId: String,
+        from: Instant? = null,
+        to: Instant? = null,
+        customerId: String = "*",
+        continutationToken: String? = null,
+        result: MutableList<Telemetry> = mutableListOf()
+    ): List<Telemetry> {
+        val nextPage = getTelemetry(
+            meteringPointId = meteringPointId,
+            channelId = channelId,
+            from = from,
+            to = to,
+            continutationToken = continutationToken,
+            customerId = customerId,
+        )
+
+        result.addAll(nextPage.telemetry)
+
+        return if (
+            nextPage.continuationToken == null
+        ) {
+            result
+        } else {
+            getTelemetryRecursive(
+                meteringPointId = meteringPointId,
+                channelId = channelId,
+                from = from,
+                to = to,
+                continutationToken = nextPage.continuationToken,
+                customerId = customerId,
+                result = result
+            )
+        }
+    }
 }
 
 private fun authenticationFilter(secretKey: String) = Filter { next -> {

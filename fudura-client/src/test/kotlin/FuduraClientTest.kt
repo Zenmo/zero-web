@@ -16,20 +16,33 @@ class FuduraClientTest {
         val channels = client.getChannels(meteringPointId)
         assertTrue(channels.channels.isNotEmpty())
 
-        val kwhChannels = channels.channels.map {
-            Pair(meteringPointId, client.getChannelMetadata(meteringPointId, it))
+        val kwhQuarterHourlyChannels = channels.channels.map {
+            client.getChannelMetadata(meteringPointId, it)
         }.filter {
-            it.second.unitOfMeasurement == UnitOfMeasurement.kWh
+            it.unitOfMeasurement == UnitOfMeasurement.kWh
+                    && it.interval != null
+                    && it.firstReadingTimestamp < "2024-06"
+                    && it.lastReadingTimestamp > "2024-07"
         }
 
-        val channel = kwhChannels.first()
+        val channelMetadata = kwhQuarterHourlyChannels.first()
 
-        val telemetry = client.getTelemetry(
-            channel.first,
-            channel.second.channelId,
-            from = Instant.parse("2023-01-01T00:00:00+01:00"),
-            to = Instant.parse(channel.second.lastReadingTimestamp),
+        val telemetryBatch = client.getTelemetry(
+            meteringPointId,
+            channelMetadata.channelId,
+            from = Instant.parse("2024-01-01T00:00:00+01:00"),
+            to = Instant.parse(channelMetadata.lastReadingTimestamp),
         )
-        assertTrue(telemetry.telemetry.size > 10)
+        assertTrue(telemetryBatch.telemetry.size > 10)
+        assertTrue(telemetryBatch.telemetry.size < 1001)
+
+        val fullTelemetry = client.getTelemetryRecursive(
+            meteringPointId,
+            channelMetadata.channelId,
+            from = Instant.parse("2024-08-01T00:00:00+01:00"),
+            to = Instant.parse(channelMetadata.lastReadingTimestamp),
+        )
+
+        assertTrue(fullTelemetry.size > 1001)
     }
 }
