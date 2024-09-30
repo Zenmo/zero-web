@@ -45,4 +45,11 @@ class FuduraClientTest {
 
         assertTrue(fullTelemetry.size > 1001)
     }
+
+    @Test
+    fun testGetDetailedMeteringPoints() {
+        val client = FuduraClient()
+        val meteringPoints = client.getDetailedMeteringPoints()
+        assertTrue(meteringPoints.meteringPoints.isNotEmpty())
+    }
 }
