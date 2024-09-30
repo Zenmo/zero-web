@@ -34,6 +34,22 @@ class FuduraClient(
         return response.json()
     }
 
+    fun getDetailedMeteringPoints(
+        continuationToken: String? = null,
+        customerId: String? = "*",
+        perCustomer: Boolean? = null,
+    ): GetDetailedMeteringPointsResult {
+        val request = Request(Method.GET, "/detailed-meteringpoints")
+            .letIfNotNull(continuationToken) { it.query("continuationToken", continuationToken) }
+            .letIfNotNull(customerId) { it.query("customerId", customerId) }
+            .letIfNotNull(perCustomer) { it.query("perCustomer", if (perCustomer!!) "true" else "false") }
+            .query("customerId", customerId)
+
+        val response = httpHandler(request)
+        checkStatusCode(request, response)
+        return response.json()
+    }
+
     fun getChannels(meteringPointId: String, customerId: String = "*"): GetChannelsResult {
         val request = Request(Method.GET, "/meteringpoints/$meteringPointId/channels")
             .query("customerId", customerId)
@@ -116,7 +132,7 @@ private fun authenticationFilter(secretKey: String) = Filter { next -> {
     next(it.header("Ocp-Apim-Subscription-Key", secretKey))
 }}
 
-private inline fun <T, R> R.letIfNotNull(variable: T, block: (R) -> R): R =
+private inline fun <T, R> R.letIfNotNull(variable: T?, block: (R) -> R): R =
     if (variable == null) {
         this
     } else {
