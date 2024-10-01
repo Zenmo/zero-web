@@ -28,6 +28,7 @@ enum class ChannelType {
 
 enum class ChannelDataType {
     Decimal,
+    Text,
 }
 
 enum class UnitOfMeasurement {
@@ -36,6 +37,7 @@ enum class UnitOfMeasurement {
     kVA,
     kVarh,
     kVAr,
+    m3,
     Onbekend,
 }
 
@@ -47,4 +49,5 @@ enum class Direction {
 
 enum class ProductType {
     Electricity,
+    Gas,
 }
