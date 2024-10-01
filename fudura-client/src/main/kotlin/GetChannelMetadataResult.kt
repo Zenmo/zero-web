@@ -10,7 +10,9 @@ data class GetChannelMetadataResult(
     val productType: ProductType,
     val description: String,
     val longDescription: String,
-    val interval: String? = null, // not present when channelType == ChannelType.Register
+    // "00:15:00" for quarter-hourly data.
+    // not present when channelType == ChannelType.Register.
+    val interval: String? = null,
     val direction: Direction,
     val unitOfMeasurement: UnitOfMeasurement,
     val firstReadingTimestamp: String,

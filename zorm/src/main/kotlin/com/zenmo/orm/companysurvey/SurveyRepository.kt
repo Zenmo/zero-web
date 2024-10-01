@@ -539,12 +539,12 @@ class SurveyRepository(
                         }
                     }
 
-                    val timeSeriesList = listOf(
+                    val timeSeriesList = listOfNotNull(
                         gridConnection.electricity.quarterHourlyDelivery_kWh,
                         gridConnection.electricity.quarterHourlyFeedIn_kWh,
                         gridConnection.electricity.quarterHourlyProduction_kWh,
                         gridConnection.naturalGas.hourlyDelivery_m3,
-                    ).filterNotNull()
+                    )
 
                     for (timeSeries in timeSeriesList) {
                         TimeSeriesTable.upsert {

@@ -392,7 +392,6 @@ data class CompanyDataDocument(
         // var tableArray = Array<Double>(numRows)
 
         for (i in 0 until numRows) {
-
             val cell =
                 workbook.getSheet(cellReference.sheetName)
                     .getRow(cellReference.row + i)
