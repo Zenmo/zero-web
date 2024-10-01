@@ -1,21 +1,30 @@
 package com.zenmo.excelreadnamed.v3
 
+import com.zenmo.excelreadnamed.v3.FieldNotPresentException
+import com.zenmo.excelreadnamed.v3.ProjectProvider
+import com.zenmo.excelreadnamed.v3.SoortProfiel
+import com.zenmo.excelreadnamed.v3.TimeSeriesMetadata
+import com.zenmo.excelreadnamed.v3.oneToTheRight
+import com.zenmo.excelreadnamed.v3.yearToFirstOfJanuary
 import com.zenmo.zummon.companysurvey.*
 import com.zenmo.zummon.companysurvey.TimeSeriesUnit
 import kotlinx.datetime.Instant
-import kotlinx.datetime.LocalDate
-import kotlinx.datetime.TimeZone
-import kotlinx.datetime.atStartOfDayIn
+import org.apache.poi.ss.usermodel.CellType
 import org.apache.poi.ss.util.AreaReference
 import org.apache.poi.ss.util.CellReference
+import org.apache.poi.xssf.usermodel.XSSFCell
 import org.apache.poi.xssf.usermodel.XSSFWorkbook
 import java.util.*
 import kotlin.time.Duration.Companion.minutes
 
-class CompanyDataDocument(
-    private val workbook: XSSFWorkbook
+data class CompanyDataDocument(
+    private val workbook: XSSFWorkbook,
+    private val projectProvider: ProjectProvider = ProjectProvider.default,
 ) {
-    constructor(inputStream: java.io.InputStream) : this(XSSFWorkbook(inputStream))
+    val errors: MutableList<String> = mutableListOf()
+
+    constructor(inputStream: java.io.InputStream, projectProvider: ProjectProvider = ProjectProvider.default)
+            : this(XSSFWorkbook(inputStream), projectProvider)
 
     companion object {
         fun fromFile(fileName: String): CompanyDataDocument {
@@ -34,19 +43,21 @@ class CompanyDataDocument(
 
     fun getSurveyObject(): Survey {
         var companyName = getStringField("companyName")
+        val project = projectProvider.getProjectByEnergiekeRegioId(
+            getIntegerField("projectId")
+        )
         val realSurvey =
             Survey(
                 companyName = companyName,
-                zenmoProject = getNumericField("projectId").toString(),
+                zenmoProject = project.name ?: "Energieke Regio project ${project.energiekeRegioId}",
                 personName = "Contactpersoon",
+                project = project,
                 addresses =
                 listOf(
                     Address(
                         id = UUID.randomUUID(),
                         street = getStringField("street"),
-                        houseNumber =
-                        getNumericField("houseNumberCombined")
-                            .toInt(),
+                        houseNumber = getHouseNumber(),
                         city = getStringField("city"),
                         gridConnections =
                         listOf(
@@ -68,7 +79,7 @@ class CompanyDataDocument(
                                     // ean =
                                     // "123456789012345678",
                                     quarterHourlyDelivery_kWh =
-                                    getElectricityDeliveryTimeSeries(),
+                                    getElectricityDeliveryTimeSeriesV2(),
                                     /*QuarterHourlyElectricityFeedin =
                                     getUsageTable(
                                             workbook,
@@ -156,7 +167,7 @@ class CompanyDataDocument(
                                 electrificationPlans = "Electrification plans",
                                 consumptionFlexibility = "Consumption flexibility",
                                 energyOrBuildingManagementSystemSupplier = "EnergyBrothers",
-                                surveyFeedback = "Survey feedback", */
+                                surveyFeedback = "Survey feedback",*/
                                 transport =
                                 Transport(
                                     hasVehicles =
@@ -259,33 +270,56 @@ class CompanyDataDocument(
         return realSurvey
     }
 
+    private fun getProject(): String =
+        "EnergiekeRegio_" + getStringField("projectId")
 
-    fun getNumericField(field: String): Double {
-
-        val numericValueName = workbook.getName(field)
-        if (numericValueName == null) {
-            return 0.0
-        } else {
-            val ref = AreaReference(numericValueName.refersToFormula, workbook.spreadsheetVersion)
-            val cellReference = ref.firstCell
-            val numericValue =
-                workbook.getSheet(cellReference.sheetName)
-                    .getRow(cellReference.row)
-                    .getCell(cellReference.col.toInt())
-            return numericValue.numericCellValue
+    private fun getHouseNumber(): Int {
+        // TODO support houseletters
+        val value = getStringField("houseNumberCombined")
+        val numberPart = "\\d+".toRegex().find(value)
+        if (numberPart == null) {
+            errors.add("Could not parse house number from $value")
+            return 0
         }
+        return numberPart.value.toInt()
+    }
+
+    private fun getSingleCell(field: String): XSSFCell {
+        val name = workbook.getName(field)
+        if (name == null) {
+            throw FieldNotPresentException(field)
+        }
+
+        val ref = AreaReference(name.refersToFormula, workbook.spreadsheetVersion)
+        check(ref.isSingleCell) { "Named range $field should be a single cell" }
+
+        return ref.firstCell.dereference()
+    }
+
+    private fun CellReference.dereference() =
+        workbook.getSheet(this.sheetName)
+            .getRow(this.row)
+            .getCell(this.col.toInt())
+
+
+    private fun getNumericField(field: String): Double {
+        val cell = getSingleCell(field)
+        return cell.numericCellValue
+    }
+
+    fun getIntegerField(field: String): Int {
+        val cell = getSingleCell(field)
+        return cell.rawValue.toInt()
     }
 
     fun getStringField(field: String): String {
+        val cell = getSingleCell(field)
 
-        val stringValueName = workbook.getName(field)
-        val areaRef = AreaReference(stringValueName.refersToFormula, workbook.spreadsheetVersion)
-        val cellReference = areaRef.firstCell
-        val stringValue =
-            workbook.getSheet(cellReference.sheetName)
-                .getRow(cellReference.row)
-                .getCell(cellReference.col.toInt())
-        return stringValue.stringCellValue
+        return try {
+            cell.stringCellValue
+        } catch (e: IllegalStateException) {
+            return cell.numericCellValue.toString()
+        }
     }
 
     fun getUsageTable(field: String): FloatArray {
@@ -326,12 +360,10 @@ class CompanyDataDocument(
                         .toFloat()
                 // println("cell value: ${cell.numericCellValue}")
 
-                val timeStamp =
-                    workbook.getSheet(ref.firstCell.sheetName)
-                        .getRow(ref.firstCell.row)
-                        .getCell(ref.firstCell.col.toInt())
-                        .dateCellValue
-                        .toInstant()
+                val timeStamp = ref.firstCell
+                    .dereference()
+                    .dateCellValue
+                    .toInstant()
                 val kotlinTimeStamp = Instant.fromEpochMilliseconds(timeStamp.toEpochMilli())
                 val currentUsage = TimeSeriesDataPoint(kotlinTimeStamp, usage_kWh)
                 result[i] = currentUsage.value
@@ -366,7 +398,6 @@ class CompanyDataDocument(
         // var tableArray = Array<Double>(numRows)
 
         for (i in 0 until numRows) {
-
             val cell =
                 workbook.getSheet(cellReference.sheetName)
                     .getRow(cellReference.row + i)
@@ -377,7 +408,7 @@ class CompanyDataDocument(
         return tableArray
     }
 
-    fun getElectricityDeliveryTimeSeries(): TimeSeries? {
+    fun getElectricityDeliveryTimeSeriesV1(): TimeSeries? {
         val firstCell = getFirstCellOfNamedRange("quarterHourlyElectricityDeliveryKwh")
         if (!isTimeSeriesTableComplete(firstCell)) {
             return null
@@ -396,9 +427,19 @@ class CompanyDataDocument(
         )
     }
 
-    fun yearToFirstOfJanuary(year: Int): Instant {
-        val firstOfJanuary = LocalDate(year, 1, 1)
-        return firstOfJanuary.atStartOfDayIn(TimeZone.of("CET"))
+    fun getElectricityDeliveryTimeSeriesV2(): TimeSeries? {
+        val metadata = getTimeSeriesMetaDataList().find { it.soortProfiel == SoortProfiel.levering }
+        if (metadata == null) {
+            return null
+        }
+
+        return TimeSeries(
+            type = TimeSeriesType.ELECTRICITY_DELIVERY,
+            start = yearToFirstOfJanuary(metadata.jaar),
+            timeStep = metadata.resolutieMinuten.minutes,
+            unit = metadata.eenheid,
+            values = getArrayField("profileData${metadata.index}")
+        )
     }
 
     fun isTimeSeriesTableComplete(firstCell: CellReference): Boolean {
@@ -427,5 +468,54 @@ class CompanyDataDocument(
         val numericValueName = workbook.getName(rangeName)
         val ref = AreaReference(numericValueName.refersToFormula, workbook.spreadsheetVersion)
         return ref.firstCell
+    }
+
+    fun getTimeSeriesMetaDataList(): List<TimeSeriesMetadata> =
+        (1..6)
+            .map { getTimeSeriesMataData(it) }
+            .filterNotNull()
+            .filter { it.profielCompleet }
+
+    fun getTimeSeriesMataData(i: Int): TimeSeriesMetadata? {
+        val name = workbook.getName("profileMetadata$i")
+        val ref = AreaReference(name.refersToFormula, workbook.spreadsheetVersion)
+
+        val lastCellInFirstColumn = CellReference(ref.lastCell.row, ref.firstCell.col)
+        val firstColumnRef = AreaReference(ref.firstCell, lastCellInFirstColumn, workbook.spreadsheetVersion)
+
+        val eenheidString = findCellRefWithStringValue(firstColumnRef, "eenheid").oneToTheRight().dereference().stringCellValue.uppercase()
+            .filter { it.isLetter() or it.isDigit() }
+
+        if (eenheidString == "") {
+            return null
+        }
+
+        val soortProfielString = findCellRefWithStringValue(firstColumnRef, "soort profiel").oneToTheRight().dereference().stringCellValue
+        if (soortProfielString == "") {
+            return null
+        }
+
+        return TimeSeriesMetadata(
+            index = i,
+            jaar = findCellRefWithStringValue(firstColumnRef, "jaar").oneToTheRight().dereference().numericCellValue.toInt(),
+            tijdzone = findCellRefWithStringValue(firstColumnRef, "tijdzone").oneToTheRight().dereference().stringCellValue,
+            resolutieMinuten = findCellRefWithStringValue(firstColumnRef, "resolutie in minuten").oneToTheRight().dereference().numericCellValue.toInt(),
+            eenheid = TimeSeriesUnit.valueOf(eenheidString),
+            soortProfiel = SoortProfiel.valueOf(soortProfielString),
+            profielCompleet = findCellRefWithStringValue(firstColumnRef, "Profiel compleet").oneToTheRight().dereference().booleanCellValue
+        )
+    }
+
+    fun findCellRefWithStringValue(area: AreaReference, target: String): CellReference {
+        val result = area.allReferencedCells.find { cell ->
+            val value = cell.dereference().stringCellValue
+            value.lowercase() == target.lowercase()
+        }
+
+        if (result == null) {
+            throw Exception("Could not find cell with value $target in area $area")
+        }
+
+        return result
     }
 }
