@@ -1,9 +1,12 @@
 package com.zenmo.ztor
 
+import com.zenmo.orm.companysurvey.SurveyRepository
+import com.zenmo.orm.companysurvey.TimeSeriesRepository
 import com.zenmo.orm.connectToPostgres
 import com.zenmo.orm.createSchema
 import com.zenmo.orm.echoSchemaSql
 import com.zenmo.ztor.plugins.*
+import com.zenmo.zummon.companysurvey.TimeSeries
 import io.ktor.server.application.*
 import io.ktor.server.engine.*
 import io.ktor.server.netty.*
@@ -22,6 +25,16 @@ fun main(args: Array<String>) {
         if (args[0] == "echo-schema-sql") {
             val db = connectToPostgres()
             echoSchemaSql(db)
+            return
+        }
+
+        if (args[0] == "fudura-import-hessenpoort") {
+            val db = connectToPostgres()
+            val import = FuduraImport(
+                SurveyRepository(db),
+                TimeSeriesRepository(db),
+            )
+            import.importHessenPoort()
             return
         }
 

@@ -27,6 +27,7 @@ services:
         user: gradle
         volumes:
             - .:/home/gradle/zero
+            - gradle-base-cache:/home/gradle/.gradle
         entrypoint: gradle --project-cache-dir=/tmp/gradle
 
     zorm-test:
@@ -68,6 +69,8 @@ services:
                     "x": "ILokSbk8EKH-Q1aWo_TguuDRccoSVfEbmGSbm5gcn5I"
                 }
 
+    # You can use this container to run one-off commands, for example:
+    # docker compose run --rm ztor-gradle-with-db ztor:run --args=fudura-import-hessenpoort
     ztor-gradle-with-db:
         extends:
             service: gradle-base
@@ -202,6 +205,7 @@ services:
 volumes:
     gradle-vallum-test-cache:
     gradle-vallum-test-stuff:
+    gradle-base-cache:
     gradle-build-cache:
     gradle-build-once-cache:
     gradle-zorm-test-home:

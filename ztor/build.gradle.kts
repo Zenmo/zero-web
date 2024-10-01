@@ -18,7 +18,10 @@ application {
     // not when building and running a Fat Jar (= in production).
     applicationDefaultJvmArgs = listOf(
         "-Dio.ktor.development=true",
+        // uncomment to let ztor application listen for debugger
         "-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=*:5005",
+        // uncomment to let ztor application connect to debugger on startup
+//        "-agentlib:jdwp=transport=dt_socket,server=n,address=172.27.0.1:5005,suspend=y"
     )
 }
 
@@ -32,6 +35,7 @@ repositories {
 dependencies {
     implementation(project(":zorm"))
     implementation(project(":zummon"))
+    implementation(project(":fudura-client"))
     implementation(project(":excel-read-named-v5"))
 
     // for file upload
@@ -74,6 +78,7 @@ dependencies {
     implementation("com.google.crypto.tink:tink:1.13.0")
 
     implementation("org.jetbrains.kotlinx:kotlinx-datetime:0.6.0")
+    implementation("com.benasher44:uuid:0.8.4")
 
     testImplementation("io.ktor:ktor-server-tests-jvm:3.0.0-rc-1-eap-1042")
     testImplementation("org.jetbrains.kotlin:kotlin-test-junit:2.0.20")

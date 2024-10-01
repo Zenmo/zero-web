@@ -37,6 +37,14 @@ data class Survey(
     public val numGridConnections: Int
         get() = addresses.sumOf { it.gridConnections.size }
 
+    public fun flattenedGridConnections(): Iterable<GridConnection> = Iterable {
+        iterator {
+            for (address in addresses) {
+                yieldAll(address.gridConnections)
+            }
+        }
+    }
+
     public val createdToString: String
         get() = created.toString()
 
