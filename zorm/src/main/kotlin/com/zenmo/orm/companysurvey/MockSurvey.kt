@@ -2,6 +2,7 @@ package com.zenmo.orm.companysurvey
 
 import com.zenmo.zummon.companysurvey.*
 import java.util.*
+import kotlin.time.Duration.Companion.hours
 
 val mockSurvey = createMockSurvey()
 
@@ -66,6 +67,16 @@ fun createMockSurvey(projectName: String = "Project") = Survey(
                             type = TimeSeriesType.ELECTRICITY_DELIVERY,
                             start = kotlinx.datetime.Instant.parse("2022-01-01T00:00:00+01"),
                             values = floatArrayOf(1.2f, 2.2f, 3.2f, 4.2f),
+                        ),
+                        quarterHourlyFeedIn_kWh = TimeSeries(
+                            type = TimeSeriesType.ELECTRICITY_FEED_IN,
+                            start = kotlinx.datetime.Instant.parse("2022-01-01T00:00:00+01"),
+                            values = floatArrayOf(1.2f, 2.2f, 3.2f, 4.2f),
+                        ),
+                        quarterHourlyProduction_kWh = TimeSeries(
+                            type = TimeSeriesType.ELECTRICITY_PRODUCTION,
+                            start = kotlinx.datetime.Instant.parse("2022-01-01T00:00:00+01"),
+                            values = floatArrayOf(1.2f, 2.2f, 3.2f, 4.2f),
                         )
                     ),
                     supply = Supply(
@@ -94,6 +105,12 @@ fun createMockSurvey(projectName: String = "Project") = Survey(
                             ),
                         ),
                         percentageUsedForHeating = 50,
+                        hourlyDelivery_m3 = TimeSeries(
+                            type = TimeSeriesType.GAS_DELIVERY,
+                            start = kotlinx.datetime.Instant.parse("2022-01-01T00:00:00+01"),
+                            timeStep = 2.hours,
+                            values = floatArrayOf(1.2f, 2.2f, 3.2f, 4.2f),
+                        )
                     ),
                     heat = Heat(
                         heatingTypes = listOf(HeatingType.GAS_BOILER, HeatingType.DISTRICT_HEATING),

@@ -5,7 +5,10 @@ import com.zenmo.orm.companysurvey.table.TimeSeriesTable
 import org.jetbrains.exposed.sql.*
 import com.zenmo.zummon.companysurvey.TimeSeries
 import org.jetbrains.exposed.sql.Database
+import org.jetbrains.exposed.sql.and
+import org.jetbrains.exposed.sql.selectAll
 import org.jetbrains.exposed.sql.transactions.transaction
+import org.jetbrains.exposed.sql.transactions.transactionScope
 import org.jetbrains.exposed.sql.upsert
 import java.util.UUID
 import org.jetbrains.exposed.sql.SqlExpressionBuilder.eq
@@ -47,5 +50,26 @@ class TimeSeriesRepository(
             it[unit] = timeSeries.unit
             it[values] = timeSeries.values.toList()
         }
+    }
+
+    fun getTimeSeriesByGridConnectionIds(
+        gridConnectionIds: List<UUID>,
+    ): Map<UUID, List<TimeSeries>> = transaction(db) {
+        TimeSeriesTable.selectAll()
+            .where {
+                (TimeSeriesTable.gridConnectionId inList gridConnectionIds)
+            }
+            .groupBy({
+                it[TimeSeriesTable.gridConnectionId]
+            }, {
+                TimeSeries(
+                    it[TimeSeriesTable.id],
+                    it[TimeSeriesTable.type],
+                    it[TimeSeriesTable.start],
+                    it[TimeSeriesTable.timeStep],
+                    it[TimeSeriesTable.unit],
+                    it[TimeSeriesTable.values].toFloatArray(),
+                )
+            })
     }
 }
