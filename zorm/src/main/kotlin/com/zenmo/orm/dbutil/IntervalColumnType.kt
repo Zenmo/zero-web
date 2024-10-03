@@ -5,6 +5,7 @@ import org.jetbrains.exposed.sql.ColumnType
 import org.jetbrains.exposed.sql.Table
 import org.postgresql.util.PGInterval
 import kotlin.time.Duration
+import kotlin.time.Duration.Companion.hours
 import kotlin.time.Duration.Companion.minutes
 
 /**
@@ -19,19 +20,19 @@ class IntervalColumnType : ColumnType<Duration>() {
         return PGInterval(0, 0, 0, 0, minutes, 0.0)
     }
 
-    private val regex = "(?<mins>\\d+) mins".toRegex()
+    private val regex = "^0 years 0 mons 0 days (?<hours>\\d+) hours (?<mins>\\d+) mins 0.0 secs$".toRegex()
 
     override fun valueFromDB(value: Any): Duration {
         if (value !is String) {
             return valueFromDB(value.toString())
         }
 
-        val result = regex.find(value)?.value?.toInt()?.minutes
-        if (result == null) {
-            throw Exception("Unrecognised postgres interval format: $value")
-        }
+        val match =  regex.find(value) ?: throw Exception("Unrecognised postgres interval format: $value")
 
-        return result
+        val hours = match.groupValues[1].toInt().hours
+        val minutes = match.groupValues[2].toInt().minutes
+
+        return hours + minutes
     }
 
     override fun nonNullValueAsDefaultString(value: Duration): String =

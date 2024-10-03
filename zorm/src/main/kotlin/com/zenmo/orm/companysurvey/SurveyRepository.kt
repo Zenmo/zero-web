@@ -4,16 +4,18 @@ import com.zenmo.orm.blob.BlobPurpose
 import com.zenmo.orm.companysurvey.table.*
 import com.zenmo.orm.companysurvey.table.GridConnectionTable.addressId
 import com.zenmo.orm.user.table.UserProjectTable
-import com.zenmo.orm.user.table.UserTable
 import com.zenmo.zummon.companysurvey.*
 import org.jetbrains.exposed.sql.*
 import org.jetbrains.exposed.sql.SqlExpressionBuilder.eq
 import org.jetbrains.exposed.sql.transactions.transaction
 import java.util.*
+import kotlin.time.Duration.Companion.minutes
 
 class SurveyRepository(
-        private val db: Database
+    private val db: Database,
 ) {
+    private val timeSeriesRepository: TimeSeriesRepository = TimeSeriesRepository(db)
+
     private fun userIsAllowedCondition(userId: UUID): Op<Boolean>{
         return CompanySurveyTable.projectId eq anyFrom(
             UserProjectTable.select(UserProjectTable.projectId)
@@ -30,10 +32,6 @@ class SurveyRepository(
 
     fun getHessenpoortSurveys(): List<Survey> {
         return getSurveysByProject("Hessenpoort")
-    }
-
-    fun getDeWiekenSurveys(): List<Survey> {
-        return getSurveysByProject("De Wieken")
     }
 
     /**
@@ -151,9 +149,13 @@ class SurveyRepository(
                     it.value.map { hydrateGridConnection(it) }
                 }
 
+            val gridConnectionIds = gridConnectionRows.map { it[GridConnectionTable.id] }
+
+            val timeSeriesPerGcId = timeSeriesRepository.getTimeSeriesByGridConnectionIds(gridConnectionIds)
+
             val filesPerPurpose: Map<Pair<BlobPurpose, UUID>, List<File>> = FileTable.selectAll()
                 .where {
-                    FileTable.gridConnectionId inList gridConnectionRows.map { it[GridConnectionTable.id] }
+                    FileTable.gridConnectionId inList gridConnectionIds
                 }
                 .toList()
                 .groupBy { Pair(it[FileTable.purpose], it[FileTable.gridConnectionId]) }
@@ -180,9 +182,21 @@ class SurveyRepository(
                             electricity = gridConnection.electricity.copy(
                                 quarterHourlyValuesFiles = electricityFiles,
                                 authorizationFile = authorizationFile,
+                                quarterHourlyFeedIn_kWh = timeSeriesPerGcId[gridConnection.id]?.find {
+                                    it.type == TimeSeriesType.ELECTRICITY_FEED_IN
+                                },
+                                quarterHourlyDelivery_kWh = timeSeriesPerGcId[gridConnection.id]?.find {
+                                    it.type == TimeSeriesType.ELECTRICITY_DELIVERY
+                                },
+                                quarterHourlyProduction_kWh = timeSeriesPerGcId[gridConnection.id]?.find {
+                                    it.type == TimeSeriesType.ELECTRICITY_PRODUCTION
+                                },
                             ),
                             naturalGas = gridConnection.naturalGas.copy(
                                 hourlyValuesFiles = gasFiles,
+                                hourlyDelivery_m3 = timeSeriesPerGcId[gridConnection.id]?.find {
+                                    it.type == TimeSeriesType.GAS_DELIVERY
+                                }
                             ),
                         )
                     }

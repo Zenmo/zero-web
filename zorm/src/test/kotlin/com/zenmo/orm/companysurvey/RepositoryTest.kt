@@ -15,6 +15,7 @@ import org.junit.BeforeClass
 import java.util.UUID
 import kotlin.test.Test
 import kotlin.test.assertEquals
+import kotlin.test.assertNotNull
 
 class RepositoryTest {
     companion object {
@@ -65,19 +66,12 @@ class RepositoryTest {
         repo.save(survey)
         val storedSurveys = repo.getSurveys(CompanySurveyTable.id eq survey.id)
         assertEquals(1, storedSurveys.size)
-        val storedSurvey = storedSurveys.first().copy(
-            addresses = survey.addresses.map {
-                it.copy(
-                    gridConnections = it.gridConnections.map {
-                        it.copy(
-                            sequence = null,
-                        )
-                    }
-                )
-            },
-        )
+        val storedSurvey = wipeSequence(storedSurveys.first())
 
         assertEquals(survey, storedSurvey)
+        val gasTimeStep = storedSurvey.addresses.single().gridConnections.single().naturalGas.hourlyDelivery_m3?.timeStep
+        assertNotNull(gasTimeStep)
+        assertEquals(2, gasTimeStep.inWholeHours)
     }
 
     @Test
@@ -136,4 +130,17 @@ class RepositoryTest {
             storedSurvey2.addresses.first().gridConnections.first().sequence,
         )
     }
+
+    private fun wipeSequence(survey: Survey)
+    = survey.copy(
+        addresses = survey.addresses.map {
+            it.copy(
+                gridConnections = it.gridConnections.map {
+                    it.copy(
+                        sequence = null,
+                    )
+                }
+            )
+        },
+    )
 }
