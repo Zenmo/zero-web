@@ -1,5 +1,6 @@
 package com.zenmo.fudura
 
+import kotlinx.datetime.Instant
 import kotlinx.serialization.Serializable
 
 @Serializable
@@ -15,9 +16,9 @@ data class GetChannelMetadataResult(
     val interval: String? = null,
     val direction: Direction,
     val unitOfMeasurement: UnitOfMeasurement,
-    val firstReadingTimestamp: String,
-    val lastReadingTimestamp: String,
-    val telemetryUpdatedTimestamp: String,
+    val firstReadingTimestamp: Instant,
+    val lastReadingTimestamp: Instant,
+    val telemetryUpdatedTimestamp: Instant,
     val lastChangeFeedCheckpoint: String,
 )
 

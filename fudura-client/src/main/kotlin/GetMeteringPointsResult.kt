@@ -1,5 +1,6 @@
 package com.zenmo.fudura
 
+import kotlinx.datetime.Instant
 import kotlinx.serialization.Serializable
 
 @Serializable
@@ -16,6 +17,6 @@ data class EanDetails(
 
 @Serializable
 data class AuthorizationPeriod(
-    val from: String,
-    val to: String,
+    val from: Instant,
+    val to: Instant,
 )
