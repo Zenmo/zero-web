@@ -1,7 +1,13 @@
 package com.zenmo.orm.companysurvey;
 
 import com.zenmo.zummon.companysurvey.Address;
+import com.zenmo.zummon.companysurvey.GridConnection;
+import com.zenmo.zummon.companysurvey.PandID;
+import org.jetbrains.annotations.NotNull;
 import org.junit.Test;
+
+import java.util.Set;
+
 import static org.junit.Assert.*;
 
 public class InteropTest {
@@ -11,5 +17,11 @@ public class InteropTest {
         Address address = mocksurvey.getAddresses().get(0);
         int houseNumber = address.getHouseNumber();
         assertEquals(35, houseNumber);
+
+        GridConnection gc = address.getGridConnections().get(0);
+        Set<PandID> pandIds = gc.getPandIds();
+        System.out.println(pandIds);
+
+        var isEmpty = gc.getElectricity().getQuarterHourlyFeedIn_kWh().getValues().length == 0;
     }
 }
