@@ -77,7 +77,8 @@ fun createMockSurvey(projectName: String = "Project") = Survey(
                             type = TimeSeriesType.ELECTRICITY_PRODUCTION,
                             start = kotlinx.datetime.Instant.parse("2022-01-01T00:00:00+01"),
                             values = floatArrayOf(1.2f, 2.2f, 3.2f, 4.2f),
-                        )
+                        ),
+                        annualElectricityProduction_kWh = 3000,
                     ),
                     supply = Supply(
                         hasSupply = true,

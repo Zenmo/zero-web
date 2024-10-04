@@ -21,6 +21,7 @@ data class Electricity (
     // If no kwartierwaarden, ask for annual values.
     val annualElectricityDelivery_kWh: Int? = null,
     val annualElectricityFeedIn_kWh: Int? = null,
+    val annualElectricityProduction_kWh: Int? = null,
 
     // Better name "customerType"?
     val kleinverbruikOrGrootverbruik: KleinverbruikOrGrootverbruik? = null,
@@ -31,10 +32,6 @@ data class Electricity (
     @Deprecated("Renamed to annualElectricityDelivery_kWh", ReplaceWith("annualElectricityDelivery_kWh"))
     val annualElectricityDemandKwh
         get() = annualElectricityDelivery_kWh
-
-    @Deprecated("Renamed to annualElectricityFeedIn_kWh", ReplaceWith("annualElectricityFeedIn_kWh"))
-    val annualElectricityProductionKwh
-        get() = annualElectricityFeedIn_kWh
 
     fun getHasConnection(): Boolean {
         return hasConnection ?: false

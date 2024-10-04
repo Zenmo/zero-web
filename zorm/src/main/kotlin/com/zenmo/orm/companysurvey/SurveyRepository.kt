@@ -272,6 +272,7 @@ class SurveyRepository(
                 ean = row[GridConnectionTable.electricityEan],
                 annualElectricityDelivery_kWh = row[GridConnectionTable.annualElectricityDelivery_kWh]?.toInt(),
                 annualElectricityFeedIn_kWh = row[GridConnectionTable.annualElectricityFeedIn_kWh]?.toInt(),
+                annualElectricityProduction_kWh = row[GridConnectionTable.annualElectricityProduction_kWh]?.toInt(),
                 kleinverbruikOrGrootverbruik = row[GridConnectionTable.kleinverbruikOrGrootverbruik],
                 kleinverbruik = CompanyKleinverbruik(
                     connectionCapacity = row[GridConnectionTable.kleinverbruikElectricityConnectionCapacity]?.let {
@@ -466,6 +467,7 @@ class SurveyRepository(
                 this[GridConnectionTable.electricityEan] = gridConnection.electricity.ean
                 this[GridConnectionTable.annualElectricityDelivery_kWh] = gridConnection.electricity.annualElectricityDelivery_kWh?.toUInt()
                 this[GridConnectionTable.annualElectricityFeedIn_kWh] = gridConnection.electricity.annualElectricityFeedIn_kWh?.toUInt()
+                this[GridConnectionTable.annualElectricityProduction_kWh] = gridConnection.electricity.annualElectricityProduction_kWh
                 this[GridConnectionTable.kleinverbruikOrGrootverbruik] = gridConnection.electricity.kleinverbruikOrGrootverbruik
                 this[GridConnectionTable.kleinverbruikElectricityConnectionCapacity] = gridConnection.electricity.kleinverbruik?.connectionCapacity
                 this[GridConnectionTable.kleinverbuikElectricityConsumptionProfile] = gridConnection.electricity.kleinverbruik?.consumptionProfile

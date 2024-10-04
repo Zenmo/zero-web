@@ -1,3 +1,4 @@
+
 package com.zenmo.orm.companysurvey.table
 
 import com.zenmo.orm.dbutil.KleinverbruikPGEnum
@@ -35,6 +36,7 @@ object GridConnectionTable: ZenmoUUIDTable("grid_connection") {
     val electricityEan = varchar("electricity_ean", 18)
     val annualElectricityDelivery_kWh = uinteger("annual_electricity_delivery_kwh").nullable()
     val annualElectricityFeedIn_kWh = uinteger("annual_electricity_feed_in_kwh").nullable()
+    val annualElectricityProduction_kWh = integer("annual_electricity_production_kwh").nullable().default(null)
 
     val kleinverbruikOrGrootverbruik = customEnumeration(
         "kleinverbruik_or_grootverbruik",

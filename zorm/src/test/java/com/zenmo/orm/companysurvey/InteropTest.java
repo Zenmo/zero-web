@@ -27,8 +27,8 @@ public class InteropTest {
 
         var isEmpty = timeSeries.getValues().length == 0;
 
-        Instant javaStart = timeSeries.getStart().toJavaInstant();
-        System.out.println(javaStart);
-        System.out.println(javaStart.isBefore(Instant.parse("2023-01-01T01:00:00+01:00")));
+//        Instant javaStart = timeSeries.getStart().toJavaInstant();
+//        System.out.println(javaStart);
+//        System.out.println(javaStart.isBefore(Instant.parse("2023-01-01T01:00:00+01:00")));
     }
 }
