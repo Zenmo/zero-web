@@ -6,6 +6,7 @@ import com.zenmo.zummon.companysurvey.PandID;
 import org.jetbrains.annotations.NotNull;
 import org.junit.Test;
 
+import java.time.Instant;
 import java.util.Set;
 
 import static org.junit.Assert.*;
@@ -22,6 +23,12 @@ public class InteropTest {
         Set<PandID> pandIds = gc.getPandIds();
         System.out.println(pandIds);
 
-        var isEmpty = gc.getElectricity().getQuarterHourlyFeedIn_kWh().getValues().length == 0;
+        var timeSeries = gc.getElectricity().getQuarterHourlyFeedIn_kWh();
+
+        var isEmpty = timeSeries.getValues().length == 0;
+
+        Instant javaStart = timeSeries.getStart().toJavaInstant();
+        System.out.println(javaStart);
+        System.out.println(javaStart.isBefore(Instant.parse("2023-01-01T01:00:00+01:00")));
     }
 }

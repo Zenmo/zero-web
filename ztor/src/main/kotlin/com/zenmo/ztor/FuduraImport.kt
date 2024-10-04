@@ -13,7 +13,9 @@ import com.zenmo.zummon.companysurvey.Survey
 import com.zenmo.zummon.companysurvey.TimeSeries
 import com.zenmo.zummon.companysurvey.TimeSeriesType
 import com.zenmo.zummon.companysurvey.TimeSeriesUnit
+import kotlinx.datetime.Clock
 import kotlinx.datetime.Instant
+import kotlin.time.Duration.Companion.days
 import kotlin.time.Duration.Companion.minutes
 
 class FuduraImport (
@@ -26,17 +28,13 @@ class FuduraImport (
         val relevantMeteringPoints = detailsMeteringPoints.meteringPoints.filter {
             isRelevantMeter(it.meteringPointId)
         }
+        val now: Instant = Clock.System.now() - 1.days
         val inRangeEanMeteringPoints = relevantMeteringPoints.filter {
             val period = it.authorizations.single().periods.single()
-            if (period.from > "2023-10-00") {
-                return@filter false
-            }
-
-            if (period.to < "2024-10-01") {
-                return@filter false
-            }
-
-            return@filter true
+            // We want to only retrieve meters of which there is at least one year of data.
+            // Preferably a full calendar year.
+            period.from < now.minus(366.days)
+                    && period.to > now
         }
 
         val surveys = surveyRepository.getHessenpoortSurveys()
@@ -80,12 +78,22 @@ class FuduraImport (
                     println("No relevant channels for ean ${meteringPoint.ean}, company ${customer.companyName}")
                 }
 
+                val authorizationStart = meteringPoint.authorizations.single().periods.single().from
+                val desiredStart = Instant.parse("2022-12-31T00:00:00+01:00")
+                val desiredEnd = Instant.parse("2024-01-02T00:00:00+01:00")
+
                 for (channel in channelMetadataCollection) {
+                    val channelStart = channel.firstReadingTimestamp
+
+                    // Try to import the whole of 2023, else import most recent values.
+                    val from = listOf(desiredStart, authorizationStart, channelStart).max()
+                    val to = if (from == desiredStart) desiredEnd else now
+
                     val telemetry = fuduraClient.getTelemetryRecursive(
-                        meteringPoint.meteringPointId,
-                        channel.channelId,
-                        Instant.parse("2023-10-01T00:14:59+01:00"),
-                        Instant.parse("2024-10-01T00:00:00+01:00"),
+                        meteringPointId = meteringPoint.meteringPointId,
+                        channelId = channel.channelId,
+                        from = from,
+                        to = to,
                     )
 
 //                    val numValues = 365 * 24 * 4
@@ -97,9 +105,14 @@ class FuduraImport (
 //                        throw Exception("Too many values")
 //                    }
 
-                    val timeSeries = createTimeSeries(channel, telemetry, meteringPoint.meteringPointId)
+                    val timeSeries = createTimeSeries(channel, telemetry.reversed(), meteringPoint.meteringPointId)
                     timeSeriesRepository.insertByEan(meteringPoint.ean, timeSeries)
-                    println("Saved timeSeries ${meteringPoint.meteringPointId}, company ${customer.companyName}")
+                    println("Saved timeSeries ${channel.channelId}")
+                    println("    metering point ${meteringPoint.meteringPointId}")
+                    println("    direction ${channel.direction}")
+                    println("    company ${customer.companyName}")
+                    println("    start ${timeSeries.start}")
+                    println("    end ${timeSeries.calculateEnd()}")
                 }
             }
         }
@@ -139,8 +152,7 @@ fun isChannelRelevant(channelMetadata: GetChannelMetadataResult, meteringPointId
     channelMetadata.unitOfMeasurement == UnitOfMeasurement.kWh
             && channelMetadata.productType == ProductType.Electricity
             && channelMetadata.interval == "00:15:00"
-            && channelMetadata.firstReadingTimestamp < "2023-10-01"
-            && channelMetadata.lastReadingTimestamp > "2024-10-00"
+            && channelMetadata.lastReadingTimestamp - channelMetadata.firstReadingTimestamp > 366.days
             && getTimeSeriesType(channelMetadata, meteringPointId) != null
 
 fun createTimeSeries(

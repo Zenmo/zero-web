@@ -9,6 +9,7 @@ import org.http4k.core.Response
 import org.http4k.core.then
 import org.http4k.format.KotlinxSerialization.json
 import kotlinx.datetime.Instant
+import org.http4k.asString
 import org.http4k.core.Uri
 import org.http4k.filter.ClientFilters
 
@@ -68,6 +69,9 @@ class FuduraClient(
         return response.json()
     }
 
+    /**
+     * Datapoints are returned in ascending order, new to old!!!
+     */
     fun getTelemetry(
         meteringPointId: String,
         channelId: String,
@@ -89,6 +93,7 @@ class FuduraClient(
 
     /**
      * Continue with GetTelemetry calls until the entire profile is fetched.
+     * Datapoints are returned in ascending order, new to old!!!
      */
     fun getTelemetryRecursive(
         meteringPointId: String,
@@ -141,6 +146,6 @@ private inline fun <T, R> R.letIfNotNull(variable: T?, block: (R) -> R): R =
 
 private fun checkStatusCode(request: Request, response: Response) {
     if (!response.status.successful) {
-        throw RuntimeException("Error ${response.status.code} from ${request.method} ${request.uri}")
+        throw RuntimeException("Error ${response.status.code} from ${request.method} ${request.uri}. body: ${response.body.payload.asString()}")
     }
 }
