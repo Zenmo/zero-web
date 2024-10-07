@@ -279,7 +279,6 @@ data class CompanyDataDocument(
             .getRow(this.row)
             .getCell(this.col.toInt())
 
-
     private fun getNumericField(field: String): Double {
         val cell = getSingleCell(field)
         return cell.numericCellValue
@@ -435,7 +434,7 @@ data class CompanyDataDocument(
         val values = getArrayField(fieldName)
 
         return TimeSeries(
-            type = TimeSeriesType.ELECTRICITY_DELIVERY,
+            type = type,
             start = start,
             timeStep = when (type) {
                 TimeSeriesType.GAS_DELIVERY -> 1.hours
