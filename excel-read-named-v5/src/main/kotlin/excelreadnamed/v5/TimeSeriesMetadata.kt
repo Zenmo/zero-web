@@ -1,5 +1,6 @@
 package com.zenmo.excelreadnamed.v5
 
+import com.zenmo.zummon.companysurvey.TimeSeriesType
 import com.zenmo.zummon.companysurvey.TimeSeriesUnit
 
 /**
@@ -17,8 +18,18 @@ data class TimeSeriesMetadata(
 )
 
 enum class SoortProfiel {
-    levering,
-    teruglevering,
-    zon,
-    gas,
+    levering {
+        override fun timeSeriesType() = TimeSeriesType.ELECTRICITY_DELIVERY
+    },
+    teruglevering {
+        override fun timeSeriesType() = TimeSeriesType.ELECTRICITY_FEED_IN
+    },
+    zon {
+        override fun timeSeriesType() = TimeSeriesType.ELECTRICITY_PRODUCTION
+    },
+    gas {
+        override fun timeSeriesType() = TimeSeriesType.GAS_DELIVERY
+    };
+
+    abstract fun timeSeriesType(): TimeSeriesType
 }

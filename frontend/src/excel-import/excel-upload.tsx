@@ -44,7 +44,7 @@ export const ExcelUpload: FunctionComponent<{
                     }
                 }}
             />
-            {errorMessage && <Message style={{marginTop: "1rem"}} severity="error" text={errorMessage} />}
+            {errorMessage && <Message style={{marginTop: "1rem", whiteSpace: "pre"}} severity="error" text={errorMessage} />}
         </div>
     )
 }

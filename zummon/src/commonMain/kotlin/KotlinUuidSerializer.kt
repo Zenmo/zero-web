@@ -17,7 +17,7 @@ import kotlin.uuid.Uuid
  */
 @OptIn(ExperimentalUuidApi::class)
 object KotlinUuidSerializer: KSerializer<Uuid> {
-    override val descriptor: SerialDescriptor = PrimitiveSerialDescriptor("kotlin.uuid.Uuid", PrimitiveKind.STRING)
+    override val descriptor: SerialDescriptor = PrimitiveSerialDescriptor("kotlin.uuid.Uuid-Zenmo", PrimitiveKind.STRING)
 
     override fun serialize(encoder: Encoder, value: Uuid) {
         encoder.encodeString(value.toString())
