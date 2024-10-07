@@ -1,5 +1,5 @@
 
-val ktor_version = "3.0.0-rc-1"
+val ktor_version = "3.0.0-rc-2"
 
 plugins {
     kotlin("jvm")

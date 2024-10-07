@@ -9,6 +9,7 @@ import org.apache.poi.ss.util.CellReference
 import org.apache.poi.xssf.usermodel.XSSFCell
 import org.apache.poi.xssf.usermodel.XSSFWorkbook
 import java.util.*
+import kotlin.time.Duration.Companion.hours
 import kotlin.time.Duration.Companion.minutes
 
 data class CompanyDataDocument(
@@ -73,12 +74,9 @@ data class CompanyDataDocument(
                                     // ean =
                                     // "123456789012345678",
                                     quarterHourlyDelivery_kWh =
-                                    getElectricityDeliveryTimeSeriesV2(),
-                                    /*QuarterHourlyElectricityFeedin =
-                                    getUsageTable(
-                                            workbook,
-                                            "quarterHourlyElectricityFeedinKwh"
-                                    ),*/
+                                    getElectricityDeliveryTimeSeries(),
+                                    quarterHourlyFeedIn_kWh = getElectricityFeedIn(),
+                                    quarterHourlyProduction_kWh = getElectricityProduction(),
                                     grootverbruik =
                                     CompanyGrootverbruik(
                                         contractedConnectionDeliveryCapacity_kW =
@@ -402,33 +400,76 @@ data class CompanyDataDocument(
         return tableArray
     }
 
-    fun getElectricityDeliveryTimeSeriesV1(): TimeSeries? {
-        val firstCell = getFirstCellOfNamedRange("quarterHourlyElectricityDeliveryKwh")
+    /**
+     * This does not take into account multiple production meters
+     */
+    fun getElectricityProduction(): TimeSeries? =
+        try {
+            getElectricityProductionV2()
+        } catch (e: FieldNotPresentException) {
+            getElectricityProductionV1()
+        }
+
+    fun getElectricityProductionV2(): TimeSeries? =
+        getTimeSeriesV2(SoortProfiel.zon)
+
+    fun getElectricityProductionV1(): TimeSeries? =
+        getTimeSeriesV1("quarterHourlyPvProductionKwh", TimeSeriesType.ELECTRICITY_PRODUCTION)
+
+    fun getElectricityFeedIn(): TimeSeries? =
+        try {
+            getElectricityFeedInV2()
+        } catch (e: FieldNotPresentException) {
+            getElectricityFeedInV1()
+        }
+
+    fun getElectricityFeedInV1(): TimeSeries? =
+        getTimeSeriesV1("quarterHourlyElectricityFeedInKwh", TimeSeriesType.ELECTRICITY_FEED_IN)
+
+    fun getElectricityFeedInV2(): TimeSeries? = getTimeSeriesV2(SoortProfiel.teruglevering)
+
+    fun getElectricityDeliveryTimeSeries(): TimeSeries? =
+        try {
+            getElectricityDeliveryTimeSeriesV2()
+        } catch (e: FieldNotPresentException) {
+            getElectricityDeliveryTimeSeriesV1()
+        }
+
+    fun getElectricityDeliveryTimeSeriesV1(): TimeSeries? =
+        getTimeSeriesV1("quarterHourlyElectricityDeliveryKwh", TimeSeriesType.ELECTRICITY_DELIVERY)
+
+    fun getTimeSeriesV1(fieldName: String, type: TimeSeriesType): TimeSeries? {
+        val firstCell = getFirstCellOfNamedRange(fieldName)
         if (!isTimeSeriesTableComplete(firstCell)) {
             return null
         }
 
         val year = getYearOfTimeSeries(firstCell)
         val start = yearToFirstOfJanuary(year)
-        val values = getArrayField("quarterHourlyElectricityDeliveryKwh")
+        val values = getArrayField(fieldName)
 
         return TimeSeries(
             type = TimeSeriesType.ELECTRICITY_DELIVERY,
             start = start,
-            timeStep = 15.minutes,
+            timeStep = when (type) {
+                TimeSeriesType.GAS_DELIVERY -> 1.hours
+                else -> 15.minutes
+            },
             unit = TimeSeriesUnit.KWH,
             values = values
         )
     }
 
-    fun getElectricityDeliveryTimeSeriesV2(): TimeSeries? {
-        val metadata = getTimeSeriesMetaDataList().find { it.soortProfiel == SoortProfiel.levering }
+    fun getElectricityDeliveryTimeSeriesV2(): TimeSeries? = getTimeSeriesV2(SoortProfiel.levering)
+
+    fun getTimeSeriesV2(soortProfiel: SoortProfiel): TimeSeries? {
+        val metadata = getTimeSeriesMetaDataList().find { it.soortProfiel == soortProfiel }
         if (metadata == null) {
             return null
         }
 
         return TimeSeries(
-            type = TimeSeriesType.ELECTRICITY_DELIVERY,
+            type = soortProfiel.timeSeriesType(),
             start = yearToFirstOfJanuary(metadata.jaar),
             timeStep = metadata.resolutieMinuten.minutes,
             unit = metadata.eenheid,
@@ -472,6 +513,10 @@ data class CompanyDataDocument(
 
     fun getTimeSeriesMataData(i: Int): TimeSeriesMetadata? {
         val name = workbook.getName("profileMetadata$i")
+        // older versions of the sheet don't have this field
+        if (name == null) {
+            throw FieldNotPresentException("profileMetadata$i")
+        }
         val ref = AreaReference(name.refersToFormula, workbook.spreadsheetVersion)
 
         val lastCellInFirstColumn = CellReference(ref.lastCell.row, ref.firstCell.col)

@@ -7,6 +7,7 @@ import com.zenmo.ztor.user.getUserId
 import com.zenmo.zummon.companysurvey.SurveyWithErrors
 import io.ktor.http.*
 import io.ktor.server.application.*
+import io.ktor.server.engine.applicationEnvironment
 import io.ktor.server.request.*
 import io.ktor.server.response.*
 import io.ktor.server.routing.*
@@ -78,7 +79,12 @@ fun Application.configureExcel(db: Database) {
                 try {
                     document.getSurveyObject()
                 } catch (e: Exception) {
-                    call.respond(HttpStatusCode.InternalServerError, "Unable to get fields from Excel file: ${e.toString()}")
+                    call.respond(HttpStatusCode.InternalServerError, buildString {
+                        appendLine("Unable to get fields from Excel file:")
+                        appendLine(e.toString())
+                        appendLine("Trace: ")
+                        appendLine(e.stackTraceToString())
+                    })
                     return@post
                 }
             }
