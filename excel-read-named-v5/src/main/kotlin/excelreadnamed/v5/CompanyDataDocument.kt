@@ -47,8 +47,7 @@ data class CompanyDataDocument(
                 zenmoProject = project.name ?: "Energieke Regio project ${project.energiekeRegioId}",
                 personName = "Contactpersoon",
                 project = project,
-                addresses =
-                listOf(
+                addresses = listOf(
                     Address(
                         id = UUID.randomUUID(),
                         street = getStringField("street"),
@@ -59,26 +58,15 @@ data class CompanyDataDocument(
                             GridConnection(
                                 electricity =
                                 Electricity(
-                                    hasConnection =
-                                    true,
-                                    annualElectricityDelivery_kWh =
-                                    getNumericField(
-                                        "annualElectricityDeliveryKwh"
-                                    )
-                                        .toInt(),
+                                    hasConnection = true,
+                                    annualElectricityDelivery_kWh = getNumericField("annualElectricityDeliveryKwh").toInt(),
                                     annualElectricityFeedIn_kWh =
-                                    getNumericField(
-                                        "annualElectricityFeedinKwh"
-                                    )
-                                        .toInt(),
-                                    // ean =
-                                    // "123456789012345678",
-                                    quarterHourlyDelivery_kWh =
-                                    getElectricityDeliveryTimeSeries(),
+                                    getNumericField("annualElectricityFeedinKwh").toInt(),
+                                    // ean = "123456789012345678",
+                                    quarterHourlyDelivery_kWh = getElectricityDeliveryTimeSeries(),
                                     quarterHourlyFeedIn_kWh = getElectricityFeedIn(),
                                     quarterHourlyProduction_kWh = getElectricityProduction(),
-                                    grootverbruik =
-                                    CompanyGrootverbruik(
+                                    grootverbruik = CompanyGrootverbruik(
                                         contractedConnectionDeliveryCapacity_kW =
                                         getNumericField(
                                             "contractedConnectionDeliveryCapacityKw"
@@ -92,10 +80,8 @@ data class CompanyDataDocument(
                                         // physicalCapacityKw = 300,
                                     ),
                                 ),
-                                supply =
-                                Supply(
-                                    hasSupply =
-                                    true,
+                                supply = Supply(
+                                    hasSupply = true,
                                     pvInstalledKwp =
                                     getNumericField(
                                         "pvInstalledKwp"

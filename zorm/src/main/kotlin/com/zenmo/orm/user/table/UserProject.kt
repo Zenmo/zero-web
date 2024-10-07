@@ -11,5 +11,7 @@ import org.jetbrains.exposed.sql.Table
 object UserProjectTable: Table("user_project") {
     val userId = reference("user_id", UserTable.id)
     val projectId = reference("project_id", ProjectTable.id)
+    override val primaryKey = PrimaryKey(userId, projectId)
+
     val scopes = enumArray("scopes", ProjectScope::class).default(emptyList())
 }
