@@ -152,6 +152,9 @@ services:
         extends:
             service: ztor-echo-schema-sql
         command: ztor:run --args=create-schema
+        environment:
+            # other database
+            POSTGRES_URL: jdbc:postgresql://postgres:5432/gen
 
     vallum-test:
         extends:
