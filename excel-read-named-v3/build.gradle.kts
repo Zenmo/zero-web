@@ -16,7 +16,7 @@ dependencies {
     //implementation("org.apache.poi:poi:5.2.5")
     //implementation("org.apache.poi:poi-ooxml:5.2.5")
     implementation("org.apache.poi:poi:3.17")
-    implementation("org.apache.poi:poi-ooxml:3.17")
+    implementation("org.apache.pio:poi-ooxml:3.17")
     implementation("org.jetbrains.kotlinx:kotlinx-datetime:0.6.0")
     implementation(project(":zummon"))
 }
