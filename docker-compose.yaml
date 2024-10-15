@@ -195,7 +195,6 @@ services:
             service: npm
         command: run start
         environment:
-            VITE_KLEINVERBRUIK_URL: http://127.0.0.1:80
             VITE_ZTOR_URL: http://localhost:8082
         ports:
             - 127.0.0.1:1234:3000
