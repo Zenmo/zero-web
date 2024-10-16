@@ -2,6 +2,8 @@ package com.zenmo.zummon.companysurvey
 import kotlin.js.ExperimentalJsExport
 import kotlin.js.JsExport
 
+@OptIn(ExperimentalJsExport::class)
+@JsExport
 fun interface Validator<T> {
     fun validate(item: T): List<ValidationResult>
 }
