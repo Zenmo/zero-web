@@ -5,7 +5,7 @@ export default defineConfig({
     plugins: [react({ jsxImportSource: '@emotion/react' })],
     // for dev
     server: {
-        port: 1234,
+        port: 3000,
     },
     build: {
         rollupOptions: {
