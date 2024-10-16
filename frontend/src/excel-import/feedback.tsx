@@ -1,5 +1,5 @@
 import {FunctionComponent} from "react"
-import {SurveyWithErrors, SurveyValidator, ValidationResult, Status, KtList} from "zero-zummon"
+import {SurveyWithErrors, surveyValidator, ValidationResult, Status, KtList} from "zero-zummon"
 import {Button} from "primereact/button"
 import {MessageDisplay} from "./message-display"
 import { Panel } from 'primereact/panel';
@@ -14,8 +14,7 @@ export const Feedback: FunctionComponent<{
     surveyWithErrors: SurveyWithErrors
     navigateNext: () => void
 }> = ({surveyWithErrors, navigateNext}) => {
-    const surveyValidator = new SurveyValidator()
-    const results = surveyValidator.validate(surveyWithErrors.survey)
+    const results = surveyValidator.get().validate(surveyWithErrors.survey)
 
     return (
         <>
