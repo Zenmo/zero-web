@@ -86,7 +86,7 @@ jobs:
                     cache-from: type=gha
                     cache-to: type=gha,mode=max
 
-    migrate:
+    migrate-azure:
         needs:
             - variables
         environment: ${{ needs.variables.outputs.GITHUB_ENVIRONMENT }}
@@ -108,9 +108,31 @@ jobs:
             -   name: migrate
                 run: flyway migrate
 
-    deploy-ztor:
+    migrate-swarm:
         needs:
-            - migrate
+            - variables
+        environment: ${{ needs.variables.outputs.GITHUB_SWARM_ENVIRONMENT }}
+        runs-on: ubuntu-latest
+        container:
+            image: redgate/flyway:10.2.0
+            env:
+                ## TODO: in case of pull request, copy and migrate test database
+                FLYWAY_URL: jdbc:postgresql://postgres.zenmo.com:5432/${{ vars.DB_NAME }}
+                FLYWAY_USER: ${{ vars.DB_NAME }}
+                FLYWAY_PASSWORD: ${{ secrets.DB_PASSWORD }}
+                FLYWAY_LOCATIONS: filesystem:./migrations
+                FLYWAY_BASELINE_ON_MIGRATE: true
+        steps:
+            -   name: Checkout
+                uses: actions/checkout@v4
+                with:
+                    sparse-checkout: migrations
+            -   name: migrate
+                run: flyway migrate
+
+    deploy-ztor-azure:
+        needs:
+            - migrate-azure
             - build-ztor
             - variables
             - environment-variables
