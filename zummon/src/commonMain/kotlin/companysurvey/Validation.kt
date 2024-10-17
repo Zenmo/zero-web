@@ -18,8 +18,8 @@ enum class Status {
 val validateContractedCapacity = Validator { survey: Survey ->
     val gridConnection = survey.getSingleGridConnection()
 
-    val contractedConnectionCapacity = gridConnection.electricity?.getContractedConnectionCapacityKw()
-    val physicalConnectionCapacity = gridConnection.electricity?.grootverbruik?.physicalCapacityKw
+    val contractedConnectionCapacity = gridConnection.electricity.getContractedConnectionCapacityKw()
+    val physicalConnectionCapacity = gridConnection.electricity.grootverbruik?.physicalCapacityKw
 
     return@Validator when {
         contractedConnectionCapacity == null -> ValidationResult(

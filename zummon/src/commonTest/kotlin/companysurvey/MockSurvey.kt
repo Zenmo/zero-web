@@ -187,7 +187,7 @@ fun wipeCapacity() = mockSurvey.copy(
         it.copy(
             gridConnections = it.gridConnections.map { gridConnection ->
                 gridConnection.copy(
-                    electricity = gridConnection.electricity?.copy(
+                    electricity = gridConnection.electricity.copy(
                         grootverbruik = gridConnection.electricity.grootverbruik?.copy(
                             physicalCapacityKw = null
                         )
