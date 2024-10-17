@@ -148,8 +148,8 @@ fun createMockSurvey(projectName: String = "Project") = Survey(
                             numCars = 2,
                             numElectricCars = 0,
                             numChargePoints = 0,
-                            powerPerChargePointKw = 0f,
-                            annualTravelDistancePerCarKm = 0,
+                            powerPerChargePointKw = 55f,
+                            annualTravelDistancePerCarKm = 5500,
                             numPlannedElectricCars = 0,
                             numPlannedHydrogenCars = 2,
                         ),
@@ -157,8 +157,8 @@ fun createMockSurvey(projectName: String = "Project") = Survey(
                             numTrucks = 5,
                             numElectricTrucks = 0,
                             numChargePoints = 0,
-                            powerPerChargePointKw = 0f,
-                            annualTravelDistancePerTruckKm = 0,
+                            powerPerChargePointKw = 70f,
+                            annualTravelDistancePerTruckKm = 15000,
                             numPlannedElectricTrucks = 0,
                             numPlannedHydrogenTrucks = 2,
                         ),
@@ -166,8 +166,8 @@ fun createMockSurvey(projectName: String = "Project") = Survey(
                             numVans = 2,
                             numElectricVans = 0,
                             numChargePoints = 0,
-                            powerPerChargePointKw = 0f,
-                            annualTravelDistancePerVanKm = 0,
+                            powerPerChargePointKw = 23f,
+                            annualTravelDistancePerVanKm = 23000,
                             numPlannedElectricVans = 0,
                             numPlannedHydrogenVans = 2,
                         ),
@@ -182,18 +182,42 @@ fun createMockSurvey(projectName: String = "Project") = Survey(
     )
 )
 
-fun wipeCapacity() = mockSurvey.copy(
-    addresses = mockSurvey.addresses.map {
+//fun wipeCapacity() = mockSurvey.copy(
+//    addresses = mockSurvey.addresses.map {
+//        it.copy(
+//            gridConnections = it.gridConnections.map { gridConnection ->
+//                gridConnection.copy(
+//                    electricity = gridConnection.electricity?.copy(
+//                        grootverbruik = gridConnection.electricity.grootverbruik?.copy(
+//                            physicalCapacityKw = null
+//                        )
+//                    )
+//                )
+//            }
+//        )
+//    },
+//)
+
+fun Survey.changeGridConnection(function: (gridConnection: GridConnection) -> GridConnection): Survey =
+    mockSurvey.copy(
+        addresses = mockSurvey.addresses.map {
+            it.copy(
+                gridConnections = it.gridConnections.map { gridConnection ->
+                    function(gridConnection)
+                }
+            )
+        },
+    )
+
+fun updateCapacity(capacity: CompanyGrootverbruik): Survey {
+    return mockSurvey.changeGridConnection {
         it.copy(
-            gridConnections = it.gridConnections.map { gridConnection ->
-                gridConnection.copy(
-                    electricity = gridConnection.electricity.copy(
-                        grootverbruik = gridConnection.electricity.grootverbruik?.copy(
-                            physicalCapacityKw = null
-                        )
-                    )
+            electricity = it.electricity.copy(
+                grootverbruik = it.electricity.grootverbruik?.copy(
+                    contractedConnectionDeliveryCapacity_kW = capacity.contractedConnectionDeliveryCapacity_kW,
+                    physicalCapacityKw = capacity.physicalCapacityKw
                 )
-            }
+            )
         )
-    },
-)
+    }
+}
