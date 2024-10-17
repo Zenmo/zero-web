@@ -33,6 +33,7 @@ module.exports = (context) => {
         ZTOR_PR_CONTAINER_APP_NAME:  `${containerAppBaseName}-${shortBranch}-${context.runNumber}`,
         VERSION_TAG: `${shortBranch}-${context.runNumber}-${shortCommit}`,
         GITHUB_ENVIRONMENT: getEnvironment(context),
+        GITHUB_SWARM_ENVIRONMENT: `swarm-${getEnvironment(context)}`,
     }
 }
 
