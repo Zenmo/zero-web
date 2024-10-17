@@ -18,8 +18,8 @@ enum class Status {
 val validateContractedCapacity = Validator { survey: Survey ->
     val gridConnection = survey.getSingleGridConnection()
 
-    val contractedConnectionCapacity = gridConnection.electricity.getContractedConnectionCapacityKw()
-    val physicalConnectionCapacity = gridConnection.electricity.getPhysicalConnectionCapacityKw()
+    val contractedConnectionCapacity = gridConnection.electricity?.getContractedConnectionCapacityKw()
+    val physicalConnectionCapacity = gridConnection.electricity?.grootverbruik?.physicalCapacityKw
 
     return@Validator when {
         contractedConnectionCapacity == null -> ValidationResult(
@@ -36,7 +36,8 @@ val validateContractedCapacity = Validator { survey: Survey ->
         )
         else -> ValidationResult(
             status = Status.INVALID,
-            message = "Contracted connection capacity ${gridConnection.electricity.getContractedConnectionCapacityKw()} kW is too large for physical connection ${gridConnection.electricity.getPhysicalConnectionCapacityKw()}"
+            message = "Contracted connection capacity ${contractedConnectionCapacity} kW " +
+                    "is too large for physical connection ${physicalConnectionCapacity}"
         )
     }
 }

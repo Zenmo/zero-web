@@ -17,7 +17,7 @@ data class GridConnection(
     // Is always set when object comes from the database.
     val sequence: Int? = null,
 
-    val electricity: Electricity = Electricity(),
+    val electricity: Electricity? = Electricity(),
     val supply: Supply = Supply(),
     val naturalGas: NaturalGas = NaturalGas(),
     val heat: Heat = Heat(),
