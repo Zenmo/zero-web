@@ -75,11 +75,11 @@ class ValidationTest {
         assertEquals(result.status, Status.VALID)
 
         // Test for vehicle travel distance
-        result = validateVehicleTravelDistance.validate(mockSurvey)
+        result = validateCarTravelDistance.validate(mockSurvey)
         assertEquals(result.status, Status.VALID)
 
         // Test for number of electric vehicles
-        result = validateTotalElectricVehicle.validate(mockSurvey)
+        result = validateTotalElectricCars.validate(mockSurvey)
         assertEquals(result.status, Status.VALID)
     }
 
@@ -115,17 +115,22 @@ class ValidationTest {
         // Test for power per charge point (should fail)
         result = validatePowerPerChargeCars.validate(invalidSurvey)
         assertEquals(result.status, Status.INVALID)
-        assertContains(result.message, "Cars Power per charge point is outside the valid range")
+        assertContains(result.message, "power per charge point is outside the valid range")
 
         // Test for total power of charge points (should fail, contracted capacity + battery is too low)
-        result = validatePowerPerChargeCars.validate(invalidSurvey)
+        result = validateTotalPowerChargePoints.validate(invalidSurvey)
         assertEquals(result.status, Status.INVALID)
-        assertContains(result.message, "Total power of charge points exceeds allowed capacity")
+        assertContains(result.message, "power of charge points exceeds allowed capacity")
 
         // Test for vehicle travel distance (should fail)
-        result = validateVehicleTravelDistance.validate(invalidSurvey)
+        result = validateCarTravelDistance.validate(invalidSurvey)
         assertEquals(result.status, Status.INVALID)
-        assertContains(result.message, "Vehicle travel distances are outside the valid range")
+        assertContains(result.message, "Car travel distances are outside the valid range")
+
+        // Test for number of electric vehicles
+        result = validateTotalElectricVans.validate(mockSurvey)
+        assertEquals(result.status, Status.INVALID)
+        assertContains(result.message, "Electric Vans exceeds Number of Vans")
     }
 
 }

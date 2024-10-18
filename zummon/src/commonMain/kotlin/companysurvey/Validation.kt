@@ -88,7 +88,7 @@ val validatePowerPerChargeCars = Validator { survey: Survey ->
 
     when {
         powerPerChargePointCars in 3.0..150.0 -> ValidationResult(Status.VALID, "Cars Power per charge point is valid")
-        else -> ValidationResult(Status.INVALID, "Cars Power per charge point is outside the valid range (3..150 kW)")
+        else -> ValidationResult(Status.INVALID, "Cars power per charge point is outside the valid range (3..150 kW)")
     }
 }
 
@@ -98,7 +98,7 @@ val validatePowerPerChargeTrucks = Validator { survey: Survey ->
 
     when {
         powerPerChargePointTrucks in 3.0..150.0 -> ValidationResult(Status.VALID, "Trucks Power per charge point is valid")
-        else -> ValidationResult(Status.INVALID, "Power per charge point is outside the valid range (3..150 kW)")
+        else -> ValidationResult(Status.INVALID, "Truck power per charge point is outside the valid range (3..150 kW)")
     }
 }
 
@@ -109,7 +109,7 @@ val validatePowerPerChargeVans = Validator { survey: Survey ->
 
     when {
         powerPerChargePointVans in 3.0..150.0 -> ValidationResult(Status.VALID, "Vans Power per charge point is valid")
-        else -> ValidationResult(Status.INVALID, "Power per charge point is outside the valid range (3..150 kW)")
+        else -> ValidationResult(Status.INVALID, "Vans power per charge point is outside the valid range (3..150 kW)")
     }
 }
 
@@ -131,29 +131,57 @@ val validateTotalPowerChargePoints = Validator { survey: Survey ->
 }
 
 // Validator for vehicle travel distance in range 5k..100k km
-val validateVehicleTravelDistance = Validator { survey: Survey ->
+val validateCarTravelDistance = Validator { survey: Survey ->
     val gridConnection = survey.getSingleGridConnection()
     val travelDistanceCars = gridConnection.transport.cars.annualTravelDistancePerCarKm
+
+    when {
+        travelDistanceCars in 5000..100000 -> ValidationResult(Status.VALID, "Car travel distances are valid")
+        else -> ValidationResult(Status.INVALID, "Car travel distances are outside the valid range (5k..100k km)")
+    }
+}
+val validateTruckTravelDistance = Validator { survey: Survey ->
+    val gridConnection = survey.getSingleGridConnection()
     val travelDistanceTrucks = gridConnection.transport.trucks.annualTravelDistancePerTruckKm
+
+    when {
+        travelDistanceTrucks in 5000..100000 -> ValidationResult(Status.VALID, "Truck travel distances are valid")
+        else -> ValidationResult(Status.INVALID, "Truck travel distances are outside the valid range (5k..100k km)")
+    }
+}
+val validateVanTravelDistance = Validator { survey: Survey ->
+    val gridConnection = survey.getSingleGridConnection()
     val travelDistanceVans = gridConnection.transport.vans.annualTravelDistancePerVanKm
 
     when {
-        travelDistanceCars in 5000..100000 -> ValidationResult(Status.VALID, "Car Vehicle travel distances are valid")
-        travelDistanceTrucks in 5000..100000 -> ValidationResult(Status.VALID, "Truck Vehicle travel distances are valid")
-        travelDistanceVans in 5000..100000 -> ValidationResult(Status.VALID, "Van Vehicle travel distances are valid")
-        else -> ValidationResult(Status.INVALID, "Vehicle travel distances are outside the valid range (5k..100k km)")
+        travelDistanceVans in 5000..100000 -> ValidationResult(Status.VALID, "Van travel distances are valid")
+        else -> ValidationResult(Status.INVALID, "Van travel distances are outside the valid range (5k..100k km)")
     }
 }
 
-// Validator for number of electric vehicles should be less than or equal to total number of vehicles
-val validateTotalElectricVehicle = Validator { survey: Survey ->
-    val gridConnection = survey.getSingleGridConnection()
 
+// Validator for number of electric vehicles should be less than or equal to total number of vehicles
+val validateTotalElectricCars = Validator { survey: Survey ->
+    val gridConnection = survey.getSingleGridConnection()
     when {
-        (gridConnection.transport.cars.numElectricCars ?: 0) > (gridConnection.transport.cars.numCars ?: 0) -> ValidationResult(Status.INVALID, "Electric Car Vehicle exceeds Number of Cars")
-        (gridConnection.transport.trucks.numElectricTrucks ?: 0) > (gridConnection.transport.trucks.numTrucks ?: 0) -> ValidationResult(Status.INVALID, "Electric Car Vehicle exceeds Number of Cars")
-        (gridConnection.transport.vans.numElectricVans ?: 0) > (gridConnection.transport.vans.numVans ?: 0) -> ValidationResult(Status.INVALID, "Electric Car Vehicle exceeds Number of Cars")
-        else -> ValidationResult(Status.VALID, "Number of Electric Vehicles are valid")
+        (gridConnection.transport.cars.numElectricCars ?: 0) > (gridConnection.transport.cars.numCars ?: 0) -> ValidationResult(Status.INVALID, "Electric Cars exceeds Number of Cars")
+        else -> ValidationResult(Status.VALID, "Number of Electric Cars are valid")
+    }
+}
+
+val validateTotalElectricTrucks = Validator { survey: Survey ->
+    val gridConnection = survey.getSingleGridConnection()
+    when {
+        (gridConnection.transport.trucks.numElectricTrucks ?: 0) > (gridConnection.transport.trucks.numTrucks ?: 0) -> ValidationResult(Status.INVALID, "Electric Trucks exceeds Number of Trucks")
+        else -> ValidationResult(Status.VALID, "Number of Electric Trucks are valid")
+    }
+}
+
+val validateTotalElectricVans = Validator { survey: Survey ->
+    val gridConnection = survey.getSingleGridConnection()
+    when {
+        (gridConnection.transport.vans.numElectricVans ?: 0) > (gridConnection.transport.vans.numVans ?: 0) -> ValidationResult(Status.INVALID, "Electric Vans exceeds Number of Vans")
+        else -> ValidationResult(Status.VALID, "Number of Electric Vans are valid")
     }
 }
 

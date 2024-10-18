@@ -164,7 +164,7 @@ fun createMockSurvey(projectName: String = "Project") = Survey(
                         ),
                         vans = Vans(
                             numVans = 2,
-                            numElectricVans = 0,
+                            numElectricVans = 3,
                             numChargePoints = 0,
                             powerPerChargePointKw = 23f,
                             annualTravelDistancePerVanKm = 23000,
