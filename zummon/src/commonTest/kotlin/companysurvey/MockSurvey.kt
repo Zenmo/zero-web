@@ -182,25 +182,45 @@ fun createMockSurvey(projectName: String = "Project") = Survey(
     )
 )
 
-//fun wipeCapacity() = mockSurvey.copy(
-//    addresses = mockSurvey.addresses.map {
-//        it.copy(
-//            gridConnections = it.gridConnections.map { gridConnection ->
-//                gridConnection.copy(
-//                    electricity = gridConnection.electricity?.copy(
-//                        grootverbruik = gridConnection.electricity.grootverbruik?.copy(
-//                            physicalCapacityKw = null
-//                        )
-//                    )
-//                )
-//            }
-//        )
-//    },
-//)
+fun createMockGridConnectionWithInvalidData() = GridConnection(
+    electricity = Electricity(
+        hasConnection = true,
+        annualElectricityDelivery_kWh = 500,
+        annualElectricityFeedIn_kWh = 2000,  // Invalid: Feed-in is higher than production
+        annualElectricityProduction_kWh = 1000,
+        ean = "999999999999999999",
+        kleinverbruikOrGrootverbruik = KleinverbruikOrGrootverbruik.KLEINVERBRUIK,
+        grootverbruik = CompanyGrootverbruik(
+            contractedConnectionDeliveryCapacity_kW = 300,  // Invalid: Exceeds physical capacity
+            contractedConnectionFeedInCapacity_kW = 250,   // Invalid: Exceeds physical capacity
+            physicalCapacityKw = 50   // Invalid: Less than 55.2 for grootverbruik
+        ),
+        kleinverbruik = CompanyKleinverbruik(
+            connectionCapacity = KleinverbruikElectricityConnectionCapacity._3x90A
+        ),
+
+        ),
+    storage = Storage(
+        batteryPowerKw = 0f,
+    ),
+    transport = Transport(
+        cars = Cars(
+            annualTravelDistancePerCarKm = 200000,  // Invalid: Greater than 100k km
+        ),
+        trucks = Trucks(
+            powerPerChargePointKw = 120f,  // Invalid: Greater than 150 kW
+            annualTravelDistancePerTruckKm = 100000,  // Valid
+        ),
+        vans = Vans(
+            powerPerChargePointKw = 200f,  // Invalid: Greater than 150 kW
+            annualTravelDistancePerVanKm = 50000,  // Valid
+        )
+    )
+)
 
 fun Survey.changeGridConnection(function: (gridConnection: GridConnection) -> GridConnection): Survey =
-    mockSurvey.copy(
-        addresses = mockSurvey.addresses.map {
+    copy(
+        addresses = addresses.map {
             it.copy(
                 gridConnections = it.gridConnections.map { gridConnection ->
                     function(gridConnection)
@@ -208,6 +228,7 @@ fun Survey.changeGridConnection(function: (gridConnection: GridConnection) -> Gr
             )
         },
     )
+
 
 fun updateCapacity(capacity: CompanyGrootverbruik): Survey {
     return mockSurvey.changeGridConnection {
@@ -219,5 +240,10 @@ fun updateCapacity(capacity: CompanyGrootverbruik): Survey {
                 )
             )
         )
+    }
+}
+fun updateMockSurveyWithInvalidData(): Survey {
+    return mockSurvey.changeGridConnection {
+        createMockGridConnectionWithInvalidData()
     }
 }

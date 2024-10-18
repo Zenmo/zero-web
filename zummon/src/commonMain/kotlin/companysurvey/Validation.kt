@@ -82,15 +82,32 @@ val validateKleinverbruikPhysicalCapacity = Validator { survey: Survey ->
 }
 
 // Validator for power per charge point in range 3..150 kW
-val validatePowerPerChargePoint = Validator { survey: Survey ->
+val validatePowerPerChargeCars = Validator { survey: Survey ->
     val gridConnection = survey.getSingleGridConnection()
     val powerPerChargePointCars = (gridConnection.transport.cars.powerPerChargePointKw ?: 0).toFloat()
-    val powerPerChargePointTrucks = (gridConnection.transport.trucks.powerPerChargePointKw ?: 0).toFloat()
-    val powerPerChargePointVans = (gridConnection.transport.vans.powerPerChargePointKw ?: 0).toFloat()
 
     when {
         powerPerChargePointCars in 3.0..150.0 -> ValidationResult(Status.VALID, "Cars Power per charge point is valid")
+        else -> ValidationResult(Status.INVALID, "Cars Power per charge point is outside the valid range (3..150 kW)")
+    }
+}
+
+val validatePowerPerChargeTrucks = Validator { survey: Survey ->
+    val gridConnection = survey.getSingleGridConnection()
+    val powerPerChargePointTrucks = (gridConnection.transport.trucks.powerPerChargePointKw ?: 0).toFloat()
+
+    when {
         powerPerChargePointTrucks in 3.0..150.0 -> ValidationResult(Status.VALID, "Trucks Power per charge point is valid")
+        else -> ValidationResult(Status.INVALID, "Power per charge point is outside the valid range (3..150 kW)")
+    }
+}
+
+
+val validatePowerPerChargeVans = Validator { survey: Survey ->
+    val gridConnection = survey.getSingleGridConnection()
+    val powerPerChargePointVans = (gridConnection.transport.vans.powerPerChargePointKw ?: 0).toFloat()
+
+    when {
         powerPerChargePointVans in 3.0..150.0 -> ValidationResult(Status.VALID, "Vans Power per charge point is valid")
         else -> ValidationResult(Status.INVALID, "Power per charge point is outside the valid range (3..150 kW)")
     }

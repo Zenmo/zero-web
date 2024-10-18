@@ -100,6 +100,7 @@ enum class KleinverbruikElectricityConnectionCapacity {
     _3x50A, // majority of connections in 180 postalcodes
     _3x63A, // majority of connections in 261 postalcodes
     _3x80A, // majority of connections in 613 postalcodes
+    _3x90A, // testing purpose
     ;// Unknown in 39 postalcodes
 
     fun toKw(): Int {
@@ -113,6 +114,7 @@ enum class KleinverbruikElectricityConnectionCapacity {
             _3x50A -> 3 * 50
             _3x63A -> 3 * 63
             _3x80A -> 3 * 80
+            _3x90A -> 3 * 90
         }
     }
 
