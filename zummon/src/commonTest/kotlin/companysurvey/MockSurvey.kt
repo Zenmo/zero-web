@@ -189,10 +189,10 @@ fun createMockGridConnectionWithInvalidData() = GridConnection(
         annualElectricityFeedIn_kWh = 2000,  // Invalid: Feed-in is higher than production
         annualElectricityProduction_kWh = 1000,
         ean = "999999999999999999",
-        kleinverbruikOrGrootverbruik = KleinverbruikOrGrootverbruik.KLEINVERBRUIK,
+        kleinverbruikOrGrootverbruik = KleinverbruikOrGrootverbruik.GROOTVERBRUIK,
         grootverbruik = CompanyGrootverbruik(
-            contractedConnectionDeliveryCapacity_kW = 300,  // Invalid: Exceeds physical capacity
-            contractedConnectionFeedInCapacity_kW = 250,   // Invalid: Exceeds physical capacity
+            contractedConnectionDeliveryCapacity_kW = 100,  // Invalid: Exceeds physical capacity
+            contractedConnectionFeedInCapacity_kW = 70,   // Invalid: Exceeds physical capacity
             physicalCapacityKw = 50   // Invalid: Less than 55.2 for grootverbruik
         ),
         kleinverbruik = CompanyKleinverbruik(

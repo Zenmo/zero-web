@@ -38,11 +38,28 @@ data class Electricity (
     }
     
     fun getContractedConnectionCapacityKw(): Int? {
-        return kleinverbruik?.connectionCapacity?.toKw() ?: grootverbruik?.contractedConnectionDeliveryCapacity_kW
+        when(kleinverbruikOrGrootverbruik) {
+            KleinverbruikOrGrootverbruik.GROOTVERBRUIK -> return grootverbruik?.contractedConnectionDeliveryCapacity_kW
+            KleinverbruikOrGrootverbruik.KLEINVERBRUIK -> return kleinverbruik?.connectionCapacity?.toKw()
+            else -> return null
+        }
+//        return kleinverbruik?.connectionCapacity?.toKw() ?: grootverbruik?.contractedConnectionDeliveryCapacity_kW
     }
 
     fun getPhysicalConnectionCapacityKw(): Int? {
-        return kleinverbruik?.connectionCapacity?.toKw() ?: grootverbruik?.physicalCapacityKw
+        when(kleinverbruikOrGrootverbruik) {
+            KleinverbruikOrGrootverbruik.GROOTVERBRUIK -> return grootverbruik?.physicalCapacityKw
+            else -> return null
+        }
+//        return kleinverbruik?.connectionCapacity?.toKw() ?: grootverbruik?.physicalCapacityKw
+    }
+
+    fun getContractedFeedInCapacityKw(): Int? {
+        when (kleinverbruikOrGrootverbruik) {
+            KleinverbruikOrGrootverbruik.GROOTVERBRUIK -> return grootverbruik?.contractedConnectionFeedInCapacity_kW
+            else -> return null
+        }
+//        return kleinverbruik?.connectionCapacity?.toKw() ?: grootverbruik?.contractedConnectionFeedInCapacity_kW
     }
 }
 
