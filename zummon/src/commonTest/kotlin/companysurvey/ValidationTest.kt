@@ -30,7 +30,7 @@ class ValidationTest {
         var mockSurveySample = updateCapacity(wipeGrootverbruik)
         results = validateContractedCapacity.validate(mockSurveySample)
         assertEquals(results.status, Status.MISSING_DATA)
-        assertContains(results.message, "No")
+        assertContains(results.message, "is not provided")
 
         val invalidGrootverbruik = CompanyGrootverbruik(
             contractedConnectionDeliveryCapacity_kW = 300,
@@ -114,8 +114,13 @@ class ValidationTest {
 
         // Test for power per charge point (should fail)
         result = validatePowerPerChargeCars.validate(invalidSurvey)
-//        assertEquals(result.status, Status.INVALID)
-//        assertContains(result.message, "power per charge point is outside the valid range")
+        assertEquals(result.status, Status.INVALID)
+        assertContains(result.message, "power per charge point is outside the valid range")
+
+        // Test for power per charge point (should fail)
+        result = validatePowerPerChargeTrucks.validate(invalidSurvey)
+        assertEquals(result.status, Status.NOT_APPLICABLE)
+        assertContains(result.message, "is not provided")
 
         // Test for total power of charge points (should fail, contracted capacity + battery is too low)
         result = validateTotalPowerChargePoints.validate(invalidSurvey)
@@ -125,7 +130,7 @@ class ValidationTest {
         // Test for vehicle travel distance (should fail)
         result = validateCarTravelDistance.validate(invalidSurvey)
         assertEquals(result.status, Status.INVALID)
-//        assertContains(result.message, "Car travel distances are outside the valid range")
+        assertContains(result.message, "travel distance are outside the valid range")
 
         // Test for number of electric vehicles
         result = validateTotalElectricVans.validate(mockSurvey)

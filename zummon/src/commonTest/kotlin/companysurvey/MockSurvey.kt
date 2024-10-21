@@ -43,9 +43,9 @@ fun createMockSurvey(projectName: String = "Project") = Survey(
                                 size = 1000,
                             ),
                         ),
-                        kleinverbruikOrGrootverbruik = KleinverbruikOrGrootverbruik.KLEINVERBRUIK,
+                        kleinverbruikOrGrootverbruik = KleinverbruikOrGrootverbruik.GROOTVERBRUIK,
                         grootverbruik = CompanyGrootverbruik(
-                            contractedConnectionDeliveryCapacity_kW = 100,
+                            contractedConnectionDeliveryCapacity_kW = 150,
                             contractedConnectionFeedInCapacity_kW = 200,
                             physicalCapacityKw = 300,
                         ),
@@ -205,10 +205,10 @@ fun createMockGridConnectionWithInvalidData() = GridConnection(
     ),
     transport = Transport(
         cars = Cars(
+            powerPerChargePointKw = 170f,  // Invalid: Greater than 150 kW
             annualTravelDistancePerCarKm = 200000,  // Invalid: Greater than 100k km
         ),
         trucks = Trucks(
-            powerPerChargePointKw = 120f,  // Invalid: Greater than 150 kW
             annualTravelDistancePerTruckKm = 100000,  // Valid
         ),
         vans = Vans(

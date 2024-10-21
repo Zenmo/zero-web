@@ -49,6 +49,7 @@ data class Electricity (
     fun getPhysicalConnectionCapacityKw(): Int? {
         when(kleinverbruikOrGrootverbruik) {
             KleinverbruikOrGrootverbruik.GROOTVERBRUIK -> return grootverbruik?.physicalCapacityKw
+            KleinverbruikOrGrootverbruik.KLEINVERBRUIK -> return kleinverbruik?.connectionCapacity?.toKw()
             else -> return null
         }
 //        return kleinverbruik?.connectionCapacity?.toKw() ?: grootverbruik?.physicalCapacityKw
@@ -57,6 +58,7 @@ data class Electricity (
     fun getContractedFeedInCapacityKw(): Int? {
         when (kleinverbruikOrGrootverbruik) {
             KleinverbruikOrGrootverbruik.GROOTVERBRUIK -> return grootverbruik?.contractedConnectionFeedInCapacity_kW
+            KleinverbruikOrGrootverbruik.KLEINVERBRUIK -> return kleinverbruik?.connectionCapacity?.toKw()
             else -> return null
         }
 //        return kleinverbruik?.connectionCapacity?.toKw() ?: grootverbruik?.contractedConnectionFeedInCapacity_kW
