@@ -196,7 +196,7 @@ fun createMockGridConnectionWithInvalidData() = GridConnection(
             physicalCapacityKw = 50   // Invalid: Less than 55.2 for grootverbruik
         ),
         kleinverbruik = CompanyKleinverbruik(
-            connectionCapacity = KleinverbruikElectricityConnectionCapacity._3x90A
+            connectionCapacity = null
         ),
 
         ),
@@ -229,7 +229,13 @@ fun Survey.changeGridConnection(function: (gridConnection: GridConnection) -> Gr
         },
     )
 
-
+fun updateElectricity(): Survey {
+    return mockSurvey.changeGridConnection {
+        it.copy(
+            electricity = it.electricity.copy(kleinverbruikOrGrootverbruik = null)
+        )
+    }
+}
 fun updateCapacity(capacity: CompanyGrootverbruik): Survey {
     return mockSurvey.changeGridConnection {
         it.copy(
@@ -242,6 +248,7 @@ fun updateCapacity(capacity: CompanyGrootverbruik): Survey {
         )
     }
 }
+
 fun updateMockSurveyWithInvalidData(): Survey {
     return mockSurvey.changeGridConnection {
         createMockGridConnectionWithInvalidData()

@@ -175,6 +175,10 @@ fun createMockSurvey(projectName: String = "Project") = Survey(
                             description = "Other vehicles description",
                         )
                     ),
+                    pandIds = setOf(
+                        PandID("1234567890123456"),
+                        PandID("6543210987654321"),
+                    )
                 )
             ),
         )

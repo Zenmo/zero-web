@@ -43,7 +43,7 @@ class SurveyValidator {
     }
 }
 
-// Validator if Grootverbruik includes Grootverbruik data
+// Validator if Kleinverbruik or Grootverbruik data
 val validateKleinverbruikOrGrootverbruik = Validator { survey: Survey ->
     val gridConnection = survey.getSingleGridConnection()
 
@@ -68,7 +68,7 @@ val validateGrootverbruikCapacities = Validator { survey: Survey ->
     if (gridConnection.electricity.kleinverbruikOrGrootverbruik == KleinverbruikOrGrootverbruik.GROOTVERBRUIK) {
         val grootverbruik = gridConnection.electricity.grootverbruik
         grootverbruik?.contractedConnectionDeliveryCapacity_kW ?: ValidationResult(Status.MISSING_DATA, "Connection delivery capacity is not provided for large consumption")
-        grootverbruik?.physicalCapacityKw ?: ValidationResult(Status.MISSING_DATA, "Physical CapacityKw is not provided for large consumption")
+        grootverbruik?.physicalCapacityKw ?: ValidationResult(Status.MISSING_DATA, "Physical Capacity Kw is not provided for large consumption")
         grootverbruik?.contractedConnectionFeedInCapacity_kW ?: ValidationResult(Status.MISSING_DATA, "Connection delivery capacity is not provided for large consumption")
     }
     ValidationResult(Status.NOT_APPLICABLE, "large consumption values has been reviewed")
@@ -83,8 +83,8 @@ val validateContractedCapacity = Validator { survey: Survey ->
     when {
         contractedCapacity == null -> ValidationResult(Status.MISSING_DATA, "Connection delivery capacity is not provided")
         physicalCapacity == null -> ValidationResult(Status.MISSING_DATA, "Physical capacity is not provided")
-        contractedCapacity <= physicalCapacity -> ValidationResult(Status.VALID, "Contracted delivery capacity is valid")
-        else -> ValidationResult(Status.INVALID, "Contracted delivery capacity exceeds physical capacity")
+        contractedCapacity <= physicalCapacity -> ValidationResult(Status.VALID, "Contracted delivery capacity is valid ${contractedCapacity}")
+        else -> ValidationResult(Status.INVALID, "Contracted delivery capacity ${contractedCapacity} kW exceeds physical capacity ${physicalCapacity} kW")
     }
 }
 
@@ -98,7 +98,7 @@ val validateContractedFeedInCapacity = Validator { survey: Survey ->
         feedInCapacity == null -> ValidationResult(Status.MISSING_DATA, "No feed-in capacity data")
         physicalCapacity == null -> ValidationResult(Status.MISSING_DATA, "No physical capacity data")
         feedInCapacity <= physicalCapacity -> ValidationResult(Status.VALID, "Feed-in capacity is valid")
-        else -> ValidationResult(Status.INVALID, "Feed-in capacity exceeds physical capacity")
+        else -> ValidationResult(Status.INVALID, "Feed-in capacity ${feedInCapacity} exceeds physical capacity ${physicalCapacity}")
     }
 }
 
@@ -112,26 +112,38 @@ val validatePvProduction = Validator { survey: Survey ->
         annualProduction == null -> ValidationResult(Status.MISSING_DATA, "No PV production data")
         feedIn == null -> ValidationResult(Status.MISSING_DATA, "No feed-in data")
         annualProduction >= feedIn -> ValidationResult(Status.VALID, "PV production is valid")
-        else -> ValidationResult(Status.INVALID, "Annual PV production is less than feed-in")
+        else -> ValidationResult(Status.INVALID, "Annual PV production ${annualProduction} is less than feed-in ${feedIn}")
     }
 }
 
 // Validator for grootverbruik physical connection > 3x80A (55.2 kW)
 val validateGrootverbruikPhysicalCapacity = Validator { survey: Survey ->
     val gridConnection = survey.getSingleGridConnection()
-    val connectionCapacity = gridConnection.electricity.getPhysicalConnectionCapacityKw()
 
     when (gridConnection.electricity.kleinverbruikOrGrootverbruik) {
         KleinverbruikOrGrootverbruik.GROOTVERBRUIK -> {
+            val connectionCapacity = gridConnection.electricity.getPhysicalConnectionCapacityKw()
+
             if (connectionCapacity == null) {
-                ValidationResult(Status.MISSING_DATA, "No physical capacity data for large consumption")
-            } else if (connectionCapacity >= KleinverbruikElectricityConnectionCapacity._3x80A.toKw()) {
-                ValidationResult(Status.VALID, "Large consumption physical capacity is valid")
+                ValidationResult(Status.MISSING_DATA, "No physical capacity data for Large Consumption")
+            } else if (connectionCapacity > KleinverbruikElectricityConnectionCapacity._3x80A.toKw()) {
+                ValidationResult(Status.VALID, "Large Consumption physical capacity is valid")
             } else {
-                ValidationResult(Status.INVALID, "Large consumption physical capacity is below 3x80A")
+                ValidationResult(Status.INVALID, "Large Consumption physical capacity ${connectionCapacity} is below 3x80A")
             }
         }
-        else -> ValidationResult(Status.NOT_APPLICABLE, "Large consumption validation)")
+        KleinverbruikOrGrootverbruik.KLEINVERBRUIK -> {
+            val connectionCapacity = gridConnection.electricity.getPhysicalConnectionCapacityKw()
+
+            if (connectionCapacity == null) {
+                ValidationResult(Status.MISSING_DATA, "No connection capacity data for Small consumption")
+            } else if (connectionCapacity <= KleinverbruikElectricityConnectionCapacity._3x80A.toKw()) {
+                ValidationResult(Status.VALID, "Small consumption connection capacity is valid")
+            } else {
+                ValidationResult(Status.INVALID, "Small consumption connection capacity ${connectionCapacity} is above 3x80A")
+            }
+        }
+        else -> ValidationResult(Status.MISSING_DATA, "Consumption type is not defined (Small/Large)")
     }
 
 }
@@ -139,13 +151,14 @@ val validateGrootverbruikPhysicalCapacity = Validator { survey: Survey ->
 // Validator for kleinverbruik physical connection <= 3x80A (55.2 kW)
 val validateKleinverbruikPhysicalCapacity = Validator { survey: Survey ->
     val gridConnection = survey.getSingleGridConnection()
-    val connectionCapacity = gridConnection.electricity.kleinverbruik?.connectionCapacity
-
-    when {
-        connectionCapacity == null -> ValidationResult(Status.MISSING_DATA, "No connection capacity for kleinverbruik")
-        connectionCapacity <= KleinverbruikElectricityConnectionCapacity._3x80A -> ValidationResult(Status.VALID, "Kleinverbruik physical capacity is valid")
-        else -> ValidationResult(Status.INVALID, "Kleinverbruik physical capacity exceeds 3x80A")
+    if (gridConnection.electricity.kleinverbruikOrGrootverbruik == KleinverbruikOrGrootverbruik.KLEINVERBRUIK) {
+        val connectionCapacity = gridConnection.electricity.kleinverbruik?.connectionCapacity
+        connectionCapacity ?: return@Validator ValidationResult(Status.INVALID, "Small connection capacity value ${connectionCapacity} is invalid")
+        if (connectionCapacity <= KleinverbruikElectricityConnectionCapacity._3x80A) {
+            return@Validator ValidationResult(Status.VALID, "Small consumption physical capacity is valid")
+        }
     }
+    ValidationResult(Status.NOT_APPLICABLE, "Small consumption validations are not applicable")
 }
 
 // Validator for power per charge point in range 3..150 kW
@@ -156,7 +169,7 @@ val validatePowerPerChargeCars = Validator { survey: Survey ->
     when {
         powerPerChargePointCars == null -> ValidationResult(Status.NOT_APPLICABLE, "Cars Power per charge point is not provided")
         powerPerChargePointCars in 3.0..150.0 -> ValidationResult(Status.VALID, "Cars Power per charge point is valid")
-        else -> ValidationResult(Status.INVALID, "Cars power per charge point is outside the valid range (3..150 kW)")
+        else -> ValidationResult(Status.INVALID, "Cars power per charge point ${powerPerChargePointCars} is outside the valid range (3..150 kW)")
     }
 }
 
@@ -167,7 +180,7 @@ val validatePowerPerChargeTrucks = Validator { survey: Survey ->
     when {
         powerPerChargePointTrucks == null -> ValidationResult(Status.NOT_APPLICABLE, "Trucks Power per charge point is not provided")
         powerPerChargePointTrucks in 3.0..150.0 -> ValidationResult(Status.VALID, "Trucks Power per charge point is valid")
-        else -> ValidationResult(Status.INVALID, "Trucks power per charge point is outside the valid range (3..150 kW)")
+        else -> ValidationResult(Status.INVALID, "Trucks power per charge point ${powerPerChargePointTrucks} is outside the valid range (3..150 kW)")
     }
 }
 
@@ -178,7 +191,7 @@ val validatePowerPerChargeVans = Validator { survey: Survey ->
     when {
         powerPerChargePointVans == null -> ValidationResult(Status.NOT_APPLICABLE, "Vans Power per charge point is not provided")
         powerPerChargePointVans in 3.0..150.0 -> ValidationResult(Status.VALID, "Vans Power per charge point is valid")
-        else -> ValidationResult(Status.INVALID, "Vans power per charge point is outside the valid range (3..150 kW)")
+        else -> ValidationResult(Status.INVALID, "Vans power per charge point ${powerPerChargePointVans} is outside the valid range (3..150 kW)")
     }
 }
 
@@ -195,7 +208,7 @@ val validateTotalPowerChargePoints = Validator { survey: Survey ->
 
     when {
         totalPowerChargePoints < (contractedCapacity + batteryPower) -> ValidationResult(Status.VALID, "Total power of charge points is valid")
-        else -> ValidationResult(Status.INVALID, "Total power of charge points exceeds allowed capacity")
+        else -> ValidationResult(Status.INVALID, "Total power of charge points ${totalPowerChargePoints} exceeds allowed capacity ${contractedCapacity + batteryPower}")
     }
 }
 
@@ -207,7 +220,7 @@ val validateCarTravelDistance = Validator { survey: Survey ->
     when {
         travelDistanceCars == null -> ValidationResult(Status.MISSING_DATA, "Cars travel distance is not provided")
         travelDistanceCars in 5000..100000 -> ValidationResult(Status.VALID, "Cars travel distances are valid")
-        else -> ValidationResult(Status.INVALID, "Cars travel distance are outside the valid range (5k..100k km)")
+        else -> ValidationResult(Status.INVALID, "Cars travel distance ${travelDistanceCars} are outside the valid range (5k..100k km)")
     }
 }
 val validateTruckTravelDistance = Validator { survey: Survey ->
@@ -217,7 +230,7 @@ val validateTruckTravelDistance = Validator { survey: Survey ->
     when {
         travelDistanceTrucks == null -> ValidationResult(Status.MISSING_DATA, "Trucks travel distance is not provided")
         travelDistanceTrucks in 5000..100000 -> ValidationResult(Status.VALID, "Trucks travel distances are valid")
-        else -> ValidationResult(Status.INVALID, "Trucks travel distances are outside the valid range (5k..100k km)")
+        else -> ValidationResult(Status.INVALID, "Trucks travel distance ${travelDistanceTrucks} are outside the valid range (5k..100k km)")
     }
 }
 val validateVanTravelDistance = Validator { survey: Survey ->
@@ -227,32 +240,34 @@ val validateVanTravelDistance = Validator { survey: Survey ->
     when {
         travelDistanceVans == null -> ValidationResult(Status.MISSING_DATA, "Vans travel distance is not provided")
         travelDistanceVans in 5000..100000 -> ValidationResult(Status.VALID, "Vans travel distances are valid")
-        else -> ValidationResult(Status.INVALID, "Vans travel distances are outside the valid range (5k..100k km)")
+        else -> ValidationResult(Status.INVALID, "Vans travel distances ${travelDistanceVans} are outside the valid range (5k..100k km)")
     }
 }
+
 
 // Validator for number of electric vehicles should be less than or equal to total number of vehicles
 val validateTotalElectricCars = Validator { survey: Survey ->
     val gridConnection = survey.getSingleGridConnection()
     when {
-        (gridConnection.transport.cars.numElectricCars ?: 0) > (gridConnection.transport.cars.numCars ?: 0) -> ValidationResult(Status.INVALID, "Number of electric cars exceeds the total number of cars")
-        else -> ValidationResult(Status.VALID, "Number of Electric Cars are valid")
+        (gridConnection.transport.cars.numElectricCars ?: 0) > (gridConnection.transport.cars.numCars ?: 0) -> ValidationResult(Status.INVALID, "Number of electric cars ${gridConnection.transport.cars.numElectricCars} exceeds the total number of cars ${gridConnection.transport.cars.numCars}")
+        else -> ValidationResult(Status.VALID, "Number of Electric Cars is lower than the total of Cars")
     }
 }
 
 val validateTotalElectricTrucks = Validator { survey: Survey ->
     val gridConnection = survey.getSingleGridConnection()
     when {
-        (gridConnection.transport.trucks.numElectricTrucks ?: 0) > (gridConnection.transport.trucks.numTrucks ?: 0) -> ValidationResult(Status.INVALID, "Number of electric trucks exceeds the total number of trucks")
-        else -> ValidationResult(Status.VALID, "Number of Electric Trucks are valid")
+        (gridConnection.transport.trucks.numElectricTrucks ?: 0) > (gridConnection.transport.trucks.numTrucks ?: 0) -> ValidationResult(Status.INVALID, "Number of electric trucks ${gridConnection.transport.trucks.numTrucks} exceeds the total number of trucks ${gridConnection.transport.trucks.numTrucks}")
+        else -> ValidationResult(Status.VALID, "Number of Electric Trucks is lower than the total of trucks")
     }
 }
+
 
 val validateTotalElectricVans = Validator { survey: Survey ->
     val gridConnection = survey.getSingleGridConnection()
     when {
-        (gridConnection.transport.vans.numElectricVans ?: 0) > (gridConnection.transport.vans.numVans ?: 0) -> ValidationResult(Status.INVALID, "Number of electric vans exceeds the total number of vans")
-        else -> ValidationResult(Status.VALID, "Number of Electric Vans are valid")
+        (gridConnection.transport.vans.numElectricVans ?: 0) > (gridConnection.transport.vans.numVans ?: 0) -> ValidationResult(Status.INVALID, "Number of electric vans ${gridConnection.transport.vans.numElectricVans} exceeds the total number of vans ${gridConnection.transport.vans.numVans}")
+        else -> ValidationResult(Status.VALID, "Number of Electric Vans is lower than the total of Vans")
     }
 }
 
