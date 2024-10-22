@@ -16,6 +16,33 @@ enum class Status {
     NOT_APPLICABLE,
 }
 
+
+class SurveyValidator {
+    // List of validators
+    private val validators: List<Validator> = listOf(
+        validateContractedCapacity,
+        validateContractedFeedInCapacity,
+        validatePvProduction,
+        validateGrootverbruikPhysicalCapacity,
+        validateKleinverbruikPhysicalCapacity,
+        validatePowerPerChargeCars,
+        validatePowerPerChargeTrucks,
+        validatePowerPerChargeVans,
+        validateTotalPowerChargePoints,
+        validateCarTravelDistance,
+        validateTruckTravelDistance,
+        validateVanTravelDistance,
+        validateTotalElectricCars,
+        validateTotalElectricTrucks,
+        validateTotalElectricVans
+    )
+
+    // Function to run all validators and collect results
+    fun validateSurvey(survey: Survey): List<ValidationResult> {
+        return validators.map { it.validate(survey) }
+    }
+}
+
 // Validator if Grootverbruik includes Grootverbruik data
 val validateKleinverbruikOrGrootverbruik = Validator { survey: Survey ->
     val gridConnection = survey.getSingleGridConnection()
@@ -92,31 +119,19 @@ val validatePvProduction = Validator { survey: Survey ->
 // Validator for grootverbruik physical connection > 3x80A (55.2 kW)
 val validateGrootverbruikPhysicalCapacity = Validator { survey: Survey ->
     val gridConnection = survey.getSingleGridConnection()
+    val connectionCapacity = gridConnection.electricity.getPhysicalConnectionCapacityKw()
 
     when (gridConnection.electricity.kleinverbruikOrGrootverbruik) {
         KleinverbruikOrGrootverbruik.GROOTVERBRUIK -> {
-            val connectionCapacity = gridConnection.electricity.getPhysicalConnectionCapacityKw()
-
             if (connectionCapacity == null) {
-                ValidationResult(Status.MISSING_DATA, "No physical capacity data for Grootverbruik")
+                ValidationResult(Status.MISSING_DATA, "No physical capacity data for large consumption")
             } else if (connectionCapacity >= KleinverbruikElectricityConnectionCapacity._3x80A.toKw()) {
-                ValidationResult(Status.VALID, "Grootverbruik physical capacity is valid")
+                ValidationResult(Status.VALID, "Large consumption physical capacity is valid")
             } else {
-                ValidationResult(Status.INVALID, "Grootverbruik physical capacity is below 3x80A")
+                ValidationResult(Status.INVALID, "Large consumption physical capacity is below 3x80A")
             }
         }
-        KleinverbruikOrGrootverbruik.KLEINVERBRUIK -> {
-            val connectionCapacity = gridConnection.electricity.getPhysicalConnectionCapacityKw()
-
-            if (connectionCapacity == null) {
-                ValidationResult(Status.MISSING_DATA, "No connection capacity data for kleinverbruik")
-            } else if (connectionCapacity <= KleinverbruikElectricityConnectionCapacity._3x80A.toKw()) {
-                ValidationResult(Status.VALID, "kleinverbruik connection capacity is valid")
-            } else {
-                ValidationResult(Status.INVALID, "kleinverbruik connection capacity is above 3x80A")
-            }
-        }
-        else -> ValidationResult(Status.MISSING_DATA, "Consumption type is not defined (kleinverbruik or Grootverbruik)")
+        else -> ValidationResult(Status.NOT_APPLICABLE, "Large consumption validation)")
     }
 
 }
@@ -216,7 +231,6 @@ val validateVanTravelDistance = Validator { survey: Survey ->
     }
 }
 
-
 // Validator for number of electric vehicles should be less than or equal to total number of vehicles
 val validateTotalElectricCars = Validator { survey: Survey ->
     val gridConnection = survey.getSingleGridConnection()
@@ -233,7 +247,6 @@ val validateTotalElectricTrucks = Validator { survey: Survey ->
         else -> ValidationResult(Status.VALID, "Number of Electric Trucks are valid")
     }
 }
-
 
 val validateTotalElectricVans = Validator { survey: Survey ->
     val gridConnection = survey.getSingleGridConnection()

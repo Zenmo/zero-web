@@ -138,5 +138,16 @@ class ValidationTest {
         assertContains(result.message, "exceeds the total")
     }
 
+    @Test
+    fun testAllValidations() {
+        val mockSurvey = createMockSurvey()
+        val surveyValidator = SurveyValidator()
+        val validationResults = surveyValidator.validateSurvey(mockSurvey)
+
+        assertEquals(15, validationResults.size)
+        // Check sample validation results
+        val sampleResult = validationResults.last()
+        assertEquals(Status.INVALID, sampleResult.status)
+    }
 }
 
