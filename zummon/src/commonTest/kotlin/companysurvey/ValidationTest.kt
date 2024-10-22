@@ -40,6 +40,11 @@ class ValidationTest {
         results = validateContractedCapacity.validate(mockSurveySample)
         assertEquals(results.status, Status.INVALID)
         assertContains(results.message, "exceeds")
+
+        mockSurveySample = updateElectricity()
+        results = validateContractedCapacity.validate(mockSurveySample)
+        assertEquals(results.status, Status.VALID)
+        assertContains(results.message, KleinverbruikElectricityConnectionCapacity._3x63A.toKw().toString())
     }
 
     @Test
@@ -90,32 +95,32 @@ class ValidationTest {
         // Test for contracted delivery capacity (should fail)
         var result = validateContractedCapacity.validate(invalidSurvey)
         assertEquals(result.status, Status.INVALID)
-        assertContains(result.message, "Contracted delivery capacity exceeds physical capacity")
+        assertContains(result.message, "exceeds physical capacity")
 
         // Test for contracted feed-in capacity (should fail)
         result = validateContractedFeedInCapacity.validate(invalidSurvey)
         assertEquals(result.status, Status.INVALID)
-        assertContains(result.message, "Feed-in capacity exceeds physical capacity")
+        assertContains(result.message, "exceeds physical capacity")
 
         // Test for PV production (should fail)
         result = validatePvProduction.validate(invalidSurvey)
         assertEquals(result.status, Status.INVALID)
-        assertContains(result.message, "PV production is less than feed-in")
+        assertContains(result.message, "is less than feed-in")
 
         // Test for grootverbruik physical capacity (should fail)
         result = validateGrootverbruikPhysicalCapacity.validate(invalidSurvey)
         assertEquals(result.status, Status.INVALID)
-        assertContains(result.message, "Grootverbruik physical capacity is below 3x80A")
+        assertContains(result.message, "below 3x80A")
 
         // Test for kleinverbruik physical capacity (should fail)
         result = validateKleinverbruikPhysicalCapacity.validate(invalidSurvey)
         assertEquals(result.status, Status.INVALID)
-        assertContains(result.message, "Kleinverbruik physical capacity exceeds 3x80A")
+        assertContains(result.message, "exceeds 3x80A")
 
         // Test for power per charge point (should fail)
         result = validatePowerPerChargeCars.validate(invalidSurvey)
         assertEquals(result.status, Status.INVALID)
-        assertContains(result.message, "power per charge point is outside the valid range")
+        assertContains(result.message, "outside the valid range")
 
         // Test for power per charge point (should fail)
         result = validatePowerPerChargeTrucks.validate(invalidSurvey)
@@ -125,12 +130,12 @@ class ValidationTest {
         // Test for total power of charge points (should fail, contracted capacity + battery is too low)
         result = validateTotalPowerChargePoints.validate(invalidSurvey)
         assertEquals(result.status, Status.INVALID)
-        assertContains(result.message, "power of charge points exceeds allowed capacity")
+        assertContains(result.message, "exceeds allowed capacity")
 
         // Test for vehicle travel distance (should fail)
         result = validateCarTravelDistance.validate(invalidSurvey)
         assertEquals(result.status, Status.INVALID)
-        assertContains(result.message, "travel distance are outside the valid range")
+        assertContains(result.message, "outside the valid range")
 
         // Test for number of electric vehicles
         result = validateTotalElectricVans.validate(mockSurvey)

@@ -37,31 +37,28 @@ data class Electricity (
         return hasConnection ?: false
     }
     
-    fun getContractedConnectionCapacityKw(): Int? {
+    fun getContractedConnectionCapacityKw(): Double? {
         when(kleinverbruikOrGrootverbruik) {
-            KleinverbruikOrGrootverbruik.GROOTVERBRUIK -> return grootverbruik?.contractedConnectionDeliveryCapacity_kW
+            KleinverbruikOrGrootverbruik.GROOTVERBRUIK -> return grootverbruik?.contractedConnectionDeliveryCapacity_kW?.toDouble()
             KleinverbruikOrGrootverbruik.KLEINVERBRUIK -> return kleinverbruik?.connectionCapacity?.toKw()
-            else -> return null
+            else -> return kleinverbruik?.connectionCapacity?.toKw() ?: grootverbruik?.contractedConnectionDeliveryCapacity_kW?.toDouble()
         }
-//        return kleinverbruik?.connectionCapacity?.toKw() ?: grootverbruik?.contractedConnectionDeliveryCapacity_kW
     }
 
-    fun getPhysicalConnectionCapacityKw(): Int? {
+    fun getPhysicalConnectionCapacityKw(): Double? {
         when(kleinverbruikOrGrootverbruik) {
-            KleinverbruikOrGrootverbruik.GROOTVERBRUIK -> return grootverbruik?.physicalCapacityKw
+            KleinverbruikOrGrootverbruik.GROOTVERBRUIK -> return grootverbruik?.physicalCapacityKw?.toDouble()
             KleinverbruikOrGrootverbruik.KLEINVERBRUIK -> return kleinverbruik?.connectionCapacity?.toKw()
-            else -> return null
+            else -> return kleinverbruik?.connectionCapacity?.toKw() ?: grootverbruik?.physicalCapacityKw?.toDouble()
         }
-//        return kleinverbruik?.connectionCapacity?.toKw() ?: grootverbruik?.physicalCapacityKw
     }
 
-    fun getContractedFeedInCapacityKw(): Int? {
+    fun getContractedFeedInCapacityKw(): Double? {
         when (kleinverbruikOrGrootverbruik) {
-            KleinverbruikOrGrootverbruik.GROOTVERBRUIK -> return grootverbruik?.contractedConnectionFeedInCapacity_kW
+            KleinverbruikOrGrootverbruik.GROOTVERBRUIK -> return grootverbruik?.contractedConnectionFeedInCapacity_kW?.toDouble()
             KleinverbruikOrGrootverbruik.KLEINVERBRUIK -> return kleinverbruik?.connectionCapacity?.toKw()
-            else -> return null
+            else -> return kleinverbruik?.connectionCapacity?.toKw() ?: grootverbruik?.contractedConnectionFeedInCapacity_kW?.toDouble()
         }
-//        return kleinverbruik?.connectionCapacity?.toKw() ?: grootverbruik?.contractedConnectionFeedInCapacity_kW
     }
 }
 
@@ -119,21 +116,19 @@ enum class KleinverbruikElectricityConnectionCapacity {
     _3x50A, // majority of connections in 180 postalcodes
     _3x63A, // majority of connections in 261 postalcodes
     _3x80A, // majority of connections in 613 postalcodes
-    _3x90A, // testing purpose
     ;// Unknown in 39 postalcodes
 
-    fun toKw(): Int {
+    fun toKw(): Double {
         return when (this) {
-            _1x25A -> 1 * 25
-            _1x35A -> 1 * 35
-            _1x40A -> 1 * 40
-            _1x50A -> 1 * 50
-            _3x25A -> 3 * 25
-            _3x35A -> 3 * 35
-            _3x50A -> 3 * 50
-            _3x63A -> 3 * 63
-            _3x80A -> 3 * 80
-            _3x90A -> 3 * 90
+            _1x25A -> (1 * 25 * 230 * 0.001)
+            _1x35A -> (1 * 35 * 230 * 0.001)
+            _1x40A -> (1 * 40 * 230 * 0.001)
+            _1x50A -> (1 * 50 * 230 * 0.001)
+            _3x25A -> (3 * 25 * 230 * 0.001)
+            _3x35A -> (3 * 35 * 230 * 0.001)
+            _3x50A -> (3 * 50 * 230 * 0.001)
+            _3x63A -> (3 * 63 * 230 * 0.001)
+            _3x80A -> (3 * 80 * 230 * 0.001)
         }
     }
 
