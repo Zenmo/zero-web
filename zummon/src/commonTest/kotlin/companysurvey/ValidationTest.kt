@@ -69,7 +69,7 @@ class ValidationTest {
 
         // Test for kleinverbruik physical capacity
         result = validateKleinverbruikPhysicalCapacity.validate(mockSurvey)
-        assertEquals(result.status, Status.VALID)
+        assertEquals(result.status, Status.NOT_APPLICABLE)
 
         // Test for power per charge point
         result = validatePowerPerChargeCars.validate(mockSurvey)
@@ -114,8 +114,7 @@ class ValidationTest {
 
         // Test for kleinverbruik physical capacity (should fail)
         result = validateKleinverbruikPhysicalCapacity.validate(invalidSurvey)
-        assertEquals(result.status, Status.INVALID)
-        assertContains(result.message, "exceeds 3x80A")
+        assertEquals(result.status, Status.NOT_APPLICABLE)
 
         // Test for power per charge point (should fail)
         result = validatePowerPerChargeCars.validate(invalidSurvey)

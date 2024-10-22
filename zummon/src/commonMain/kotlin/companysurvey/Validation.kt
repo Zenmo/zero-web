@@ -16,7 +16,6 @@ enum class Status {
     NOT_APPLICABLE,
 }
 
-
 class SurveyValidator {
     // List of validators
     private val validators: List<Validator> = listOf(
