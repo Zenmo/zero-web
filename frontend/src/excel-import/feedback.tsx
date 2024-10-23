@@ -1,5 +1,5 @@
 import {FunctionComponent, useState} from "react"
-import {SurveyWithErrors} from "zero-zummon"
+import {SurveyWithErrors, SurveyValidator} from "zero-zummon"
 import {Message} from "primereact/message"
 import {Button} from "primereact/button"
 import {mapOrElse} from "../services/util"
@@ -11,6 +11,8 @@ export const Feedback: FunctionComponent<{
     navigateNext: () => void
 }> = ({surveyWithErrors, navigateNext}) => {
     const [dataVisible, toggleDataVisible] = useToggle()
+    const surveyValidator = new SurveyValidator()
+    console.log("here")
 
     return (
         <>
@@ -21,8 +23,8 @@ export const Feedback: FunctionComponent<{
                 paddingBottom: "1rem",
             }}>
                 {mapOrElse(
-                    surveyWithErrors.errors.asJsReadonlyArrayView(),
-                    (error, i) => <Message severity="warn" text={error} key={i} />,
+                    surveyValidator.validate(surveyWithErrors.survey).asJsReadonlyArrayView(),
+                    (error, i) => <Message severity="warn" text={error.message} key={i} />,
                     () => <Message severity="info" text="Alle checks OK" key="ok" />,
                 )}
             </div>

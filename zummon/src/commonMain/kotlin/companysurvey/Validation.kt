@@ -1,14 +1,16 @@
 package com.zenmo.zummon.companysurvey
+import kotlin.js.ExperimentalJsExport
+import kotlin.js.JsExport
 
-fun interface Validator {
-    fun validate(survey: Survey): List<ValidationResult>
-}
-
+@OptIn(ExperimentalJsExport::class)
+@JsExport
 data class ValidationResult(
     val status: Status,
     val message: String,
 )
 
+@OptIn(ExperimentalJsExport::class)
+@JsExport
 enum class Status {
     VALID,
     INVALID,
@@ -16,6 +18,8 @@ enum class Status {
     NOT_APPLICABLE,
 }
 
+@OptIn(ExperimentalJsExport::class)
+@JsExport
 class SurveyValidator {
     fun validate(survey: Survey): List<ValidationResult> {
         val results = mutableListOf<ValidationResult>()
