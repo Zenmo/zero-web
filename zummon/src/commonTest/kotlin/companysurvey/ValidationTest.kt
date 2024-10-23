@@ -18,140 +18,165 @@ class ValidationTest {
     }
 
     @Test
-    fun validateContractedCapacity() {
-        var results = validateContractedCapacity.validate(mockSurvey)
-        assertEquals(results.status, Status.VALID)
-        assertContains(results.message, "valid")
+    fun testAllValidations() {
+        val mockSurvey = createMockSurvey()
+        val surveyValidator = SurveyValidator()
+        val validationResults = surveyValidator.validate(mockSurvey)
 
-        var wipeGrootverbruik = CompanyGrootverbruik(
+        assertEquals(15, validationResults.size)
+        // Check sample validation results
+        val sampleResult = validationResults.last()
+        assertEquals(Status.INVALID, sampleResult.status)
+
+        // validates all
+        // val electricityValidator = ElectricityValidator()
+        // val validationResults = electricityValidator.validate(mockElectric)
+    }
+
+    @Test
+    fun validateContractedCapacity() {
+        // Test for contracted delivery capacity
+        val electricityValidator = ElectricityValidator()
+        val mockElectric = mockSurvey.getSingleGridConnection().electricity
+        var result = electricityValidator.validateContractedCapacity(mockElectric)
+        assertEquals(result.status, Status.VALID)
+        assertContains(result.message, "valid")
+
+        val wipeGrootverbruik = CompanyGrootverbruik(
             contractedConnectionDeliveryCapacity_kW = null,
             physicalCapacityKw = null,
         )
         var mockSurveySample = updateCapacity(wipeGrootverbruik)
-        results = validateContractedCapacity.validate(mockSurveySample)
-        assertEquals(results.status, Status.MISSING_DATA)
-        assertContains(results.message, "is not provided")
+        var mockElectricitySample = mockSurvey.getSingleGridConnection().electricity
+        result = electricityValidator.validateContractedCapacity(mockElectricitySample)
+        assertEquals(result.status, Status.MISSING_DATA)
+        assertContains(result.message, "is not provided")
 
         val invalidGrootverbruik = CompanyGrootverbruik(
             contractedConnectionDeliveryCapacity_kW = 300,
             physicalCapacityKw = 100,
         )
         mockSurveySample = updateCapacity(invalidGrootverbruik)
-        results = validateContractedCapacity.validate(mockSurveySample)
-        assertEquals(results.status, Status.INVALID)
-        assertContains(results.message, "exceeds")
+        mockElectricitySample = mockSurveySample.getSingleGridConnection().electricity
+        result = electricityValidator.validateContractedCapacity(mockElectricitySample)
+        assertEquals(result.status, Status.INVALID)
+        assertContains(result.message, "exceeds")
 
         mockSurveySample = updateElectricity()
-        results = validateContractedCapacity.validate(mockSurveySample)
-        assertEquals(results.status, Status.VALID)
-        assertContains(results.message, KleinverbruikElectricityConnectionCapacity._3x63A.toKw().toString())
+        mockElectricitySample = mockSurveySample.getSingleGridConnection().electricity
+        result = electricityValidator.validateContractedCapacity(mockElectricitySample)
+        assertEquals(result.status, Status.VALID)
+        assertContains(result.message, KleinverbruikElectricityConnectionCapacity._3x63A.toKw().toString())
     }
 
     @Test
     fun validValidations() {
         val mockSurvey = createMockSurvey()
+        val gridConnectionValidator = GridConnectionValidator()
+        val electricityValidator = ElectricityValidator()
+        val transportValidator = TransportValidator()
+
+        val mockElectric = mockSurvey.getSingleGridConnection().electricity
+        val mockTransport = mockSurvey.getSingleGridConnection().transport
 
         // Test for contracted delivery capacity
-        var result = validateContractedCapacity.validate(mockSurvey)
+        var result = electricityValidator.validateContractedCapacity(mockElectric)
         assertEquals(result.status, Status.VALID)
 
         // Test for contracted feed-in capacity
-        result = validateContractedFeedInCapacity.validate(mockSurvey)
+        result = electricityValidator.validateContractedFeedInCapacity(mockElectric)
         assertEquals(result.status, Status.VALID)
 
         // Test for PV production
-        result = validatePvProduction.validate(mockSurvey)
+        result = electricityValidator.validatePvProductionFeedIn(mockElectric)
         assertEquals(result.status, Status.VALID)
 
         // Test for grootverbruik physical capacity
-        result = validateGrootverbruikPhysicalCapacity.validate(mockSurvey)
+        result = electricityValidator.validateGrootverbruikPhysicalCapacity(mockElectric)
         assertEquals(result.status, Status.VALID)
 
         // Test for kleinverbruik physical capacity
-        result = validateKleinverbruikPhysicalCapacity.validate(mockSurvey)
+        result = electricityValidator.validateKleinverbruik(mockElectric)
         assertEquals(result.status, Status.NOT_APPLICABLE)
 
         // Test for power per charge point
-        result = validatePowerPerChargeCars.validate(mockSurvey)
-        assertEquals(result.status, Status.VALID)
-
-        // Test for total power of charge points
-        result = validateTotalPowerChargePoints.validate(mockSurvey)
+        result = transportValidator.validatePowerPerChargeCars(mockTransport)
         assertEquals(result.status, Status.VALID)
 
         // Test for vehicle travel distance
-        result = validateCarTravelDistance.validate(mockSurvey)
+        result = transportValidator.validateTravelDistanceCar(mockTransport)
         assertEquals(result.status, Status.VALID)
 
         // Test for number of electric vehicles
-        result = validateTotalElectricCars.validate(mockSurvey)
+        result = transportValidator.validateTotalElectricCars(mockTransport)
         assertEquals(result.status, Status.VALID)
+
+        // Test for total power of charge points
+        val results = gridConnectionValidator.validateTotalPowerChargePoints(mockSurvey.getSingleGridConnection())
+        assertEquals(results.last().status, Status.VALID)
     }
 
     @Test
     fun testInvalidValidations() {
+        val gridConnectionValidator = GridConnectionValidator()
+        val electricityValidator = ElectricityValidator()
+        val transportValidator = TransportValidator()
+
         val invalidSurvey = updateMockSurveyWithInvalidData()
+        val mockElectric = invalidSurvey.getSingleGridConnection().electricity
+        val mockTransport = invalidSurvey.getSingleGridConnection().transport
 
         // Test for contracted delivery capacity (should fail)
-        var result = validateContractedCapacity.validate(invalidSurvey)
+        var result = electricityValidator.validateContractedCapacity(mockElectric)
         assertEquals(result.status, Status.INVALID)
         assertContains(result.message, "exceeds physical capacity")
 
         // Test for contracted feed-in capacity (should fail)
-        result = validateContractedFeedInCapacity.validate(invalidSurvey)
+        result = electricityValidator.validateContractedFeedInCapacity(mockElectric)
         assertEquals(result.status, Status.INVALID)
         assertContains(result.message, "exceeds physical capacity")
 
         // Test for PV production (should fail)
-        result = validatePvProduction.validate(invalidSurvey)
+        result = electricityValidator.validatePvProductionFeedIn(mockElectric)
         assertEquals(result.status, Status.INVALID)
         assertContains(result.message, "is less than feed-in")
 
         // Test for grootverbruik physical capacity (should fail)
-        result = validateGrootverbruikPhysicalCapacity.validate(invalidSurvey)
+        result = electricityValidator.validateGrootverbruikPhysicalCapacity(mockElectric)
         assertEquals(result.status, Status.INVALID)
         assertContains(result.message, "below 3x80A")
 
         // Test for kleinverbruik physical capacity (should fail)
-        result = validateKleinverbruikPhysicalCapacity.validate(invalidSurvey)
+        result = electricityValidator.validateKleinverbruik(mockElectric)
         assertEquals(result.status, Status.NOT_APPLICABLE)
 
         // Test for power per charge point (should fail)
-        result = validatePowerPerChargeCars.validate(invalidSurvey)
+        result = transportValidator.validatePowerPerChargeCars(mockTransport)
         assertEquals(result.status, Status.INVALID)
         assertContains(result.message, "outside the valid range")
 
         // Test for power per charge point (should fail)
-        result = validatePowerPerChargeTrucks.validate(invalidSurvey)
+        result = transportValidator.validatePowerPerChargeTrucks(mockTransport)
         assertEquals(result.status, Status.NOT_APPLICABLE)
         assertContains(result.message, "is not provided")
 
-        // Test for total power of charge points (should fail, contracted capacity + battery is too low)
-        result = validateTotalPowerChargePoints.validate(invalidSurvey)
-        assertEquals(result.status, Status.INVALID)
-        assertContains(result.message, "exceeds allowed capacity")
-
         // Test for vehicle travel distance (should fail)
-        result = validateCarTravelDistance.validate(invalidSurvey)
+        result = transportValidator.validateTravelDistanceCar(mockTransport)
         assertEquals(result.status, Status.INVALID)
         assertContains(result.message, "outside the valid range")
 
         // Test for number of electric vehicles
-        result = validateTotalElectricVans.validate(mockSurvey)
+        result = transportValidator.validateTotalElectricVans(mockTransport)
         assertEquals(result.status, Status.INVALID)
         assertContains(result.message, "exceeds the total")
+
+        // Test for total power of charge points (should fail, contracted capacity + battery is too low)
+        val results = gridConnectionValidator.validateTotalPowerChargePoints(mockSurvey.getSingleGridConnection())
+        assertEquals(results.last().status, Status.INVALID)
+        assertContains(results.last().message, "exceeds allowed capacity")
+
     }
 
-    @Test
-    fun testAllValidations() {
-        val mockSurvey = createMockSurvey()
-        val surveyValidator = SurveyValidator()
-        val validationResults = surveyValidator.validateSurvey(mockSurvey)
 
-        assertEquals(15, validationResults.size)
-        // Check sample validation results
-        val sampleResult = validationResults.last()
-        assertEquals(Status.INVALID, sampleResult.status)
-    }
 }
 
