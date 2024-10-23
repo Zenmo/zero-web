@@ -133,14 +133,14 @@ class ElectricityValidator {
 
     fun validateKleinverbruik(electricity: Electricity): ValidationResult {
         return if (electricity.kleinverbruikOrGrootverbruik == KleinverbruikOrGrootverbruik.KLEINVERBRUIK) {
-             if (kleinverbruik == null) {
+             if (electricity.kleinverbruik == null) {
                 ValidationResult(Status.INVALID, "Small consumption data is not provided")
-            } else if (kleinverbruik.connectionCapacity != null) {
+            } else if (electricity.kleinverbruik.connectionCapacity != null) {
                 // Validate that kleinverbruik connection capacity <= 3x80A
-                if (kleinverbruik.connectionCapacity > KleinverbruikElectricityConnectionCapacity._3x80A) {
+                if (electricity.kleinverbruik.connectionCapacity > KleinverbruikElectricityConnectionCapacity._3x80A) {
                     ValidationResult(
                         Status.INVALID,
-                        "Small consumption connection capacity  ${kleinverbruik.connectionCapacity} exceeds limit (3x80A)"
+                        "Small consumption connection capacity  ${electricity.kleinverbruik.connectionCapacity} exceeds limit (3x80A)"
                     )
                 } else {
                     ValidationResult(Status.VALID, "Small consumption connection capacity is within limits")
@@ -148,7 +148,7 @@ class ElectricityValidator {
             } else {
                 ValidationResult(
                     Status.INVALID,
-                    "Small consumption connection capacity ${kleinverbruik.connectionCapacity} is invalid"
+                    "Small consumption connection capacity ${electricity.kleinverbruik.connectionCapacity} is invalid"
                 )
             }
         } else {
@@ -219,7 +219,7 @@ class TransportValidator {
 
     // Validator for power per charge point in range 3..150 kW
     fun validatePowerPerChargeCars(transport: Transport): ValidationResult {
-        val powerPerChargePointCars = transport.cars.powePerChargePointKw
+        val powerPerChargePointCars = transport.cars.powerPerChargePointKw
 
         return when {
             powerPerChargePointCars == null -> ValidationResult(Status.NOT_APPLICABLE, "Cars Power per charge point is not provided")

@@ -47,7 +47,7 @@ class ValidationTest {
             physicalCapacityKw = null,
         )
         var mockSurveySample = updateCapacity(wipeGrootverbruik)
-        var mockElectricitySample = mockSurvey.getSingleGridConnection().electricity
+        var mockElectricitySample = mockSurveySample.getSingleGridConnection().electricity
         result = electricityValidator.validateContractedCapacity(mockElectricitySample)
         assertEquals(result.status, Status.MISSING_DATA)
         assertContains(result.message, "is not provided")
@@ -171,7 +171,7 @@ class ValidationTest {
         assertContains(result.message, "exceeds the total")
 
         // Test for total power of charge points (should fail, contracted capacity + battery is too low)
-        val results = gridConnectionValidator.validateTotalPowerChargePoints(mockSurvey.getSingleGridConnection())
+        val results = gridConnectionValidator.validateTotalPowerChargePoints(invalidSurvey.getSingleGridConnection())
         assertEquals(results.last().status, Status.INVALID)
         assertContains(results.last().message, "exceeds allowed capacity")
 

@@ -212,6 +212,8 @@ fun createMockGridConnectionWithInvalidData() = GridConnection(
             annualTravelDistancePerTruckKm = 100000,  // Valid
         ),
         vans = Vans(
+            numVans = 8,
+            numElectricVans = 10,
             powerPerChargePointKw = 200f,  // Invalid: Greater than 150 kW
             annualTravelDistancePerVanKm = 50000,  // Valid
         )
