@@ -28,8 +28,8 @@ val addressValidator = Validator<Address> { address: Address ->
     }
 }
 
-class GridConnectionValidator {
-    fun validate(gridConnection: GridConnection): List<ValidationResult> {
+class GridConnectionValidator : Validator<GridConnection> {
+    override fun validate(gridConnection: GridConnection): List<ValidationResult> {
         val results = mutableListOf<ValidationResult>()
 
         results.addAll(ElectricityValidator().validate(gridConnection.electricity))
@@ -57,8 +57,8 @@ class GridConnectionValidator {
     }
 }
 
-class ElectricityValidator {
-    fun validate(electricity: Electricity): List<ValidationResult> {
+class ElectricityValidator : Validator<Electricity> {
+    override fun validate(electricity: Electricity): List<ValidationResult> {
         val results = mutableListOf<ValidationResult>()
 
         results.addAll(validateKleinOrGroot(electricity))
