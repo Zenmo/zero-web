@@ -1,7 +1,7 @@
 package com.zenmo.zummon.companysurvey
 
-fun interface Validator {
-    fun validate(survey: Survey): List<ValidationResult>
+fun interface Validator<T> {
+    fun validate(item: T): List<ValidationResult>
 }
 
 data class ValidationResult(
@@ -16,28 +16,15 @@ enum class Status {
     NOT_APPLICABLE,
 }
 
-class SurveyValidator {
-    fun validate(survey: Survey): List<ValidationResult> {
-        val results = mutableListOf<ValidationResult>()
-
-        survey.addresses.forEach { address ->
-            results.addAll(AddressValidator().validate(address))
-        }
-
-        return results
+val surveyValidator = Validator<Survey> { survey: Survey ->
+    survey.addresses.flatMap {
+        addressValidator.validate(it)
     }
 }
 
-class AddressValidator {
-    fun validate(address: Address): List<ValidationResult> {
-        val results = mutableListOf<ValidationResult>()
-
-        address.gridConnections.forEach { gridConnection ->
-            val gridConnectionResults = GridConnectionValidator().validate(gridConnection)
-            results.addAll(gridConnectionResults)
-        }
-
-        return results
+val addressValidator = Validator<Address> { address: Address ->
+    address.gridConnections.flatMap {
+        GridConnectionValidator().validate(it)
     }
 }
 
@@ -76,7 +63,7 @@ class ElectricityValidator {
 
         results.addAll(validateKleinOrGroot(electricity))
         results.add(validateContractedCapacity(electricity))
-        results.add(validatePvProductionFeedIn(electricity))
+        results.add(validateAnnualProductionFeedIn(electricity))
         results.add(validateContractedFeedInCapacity(electricity))
 
         return results
@@ -132,26 +119,33 @@ class ElectricityValidator {
     }
 
     fun validateKleinverbruik(electricity: Electricity): ValidationResult {
+        // Check if kleinverbruikOrGrootverbruik is KLEINVERBRUIK
         return if (electricity.kleinverbruikOrGrootverbruik == KleinverbruikOrGrootverbruik.KLEINVERBRUIK) {
-             if (electricity.kleinverbruik == null) {
+            val kleinverbruik = electricity.kleinverbruik
+
+            // If kleinverbruik is null, return invalid
+            if (kleinverbruik == null) {
                 ValidationResult(Status.INVALID, "Small consumption data is not provided")
-            } else if (electricity.kleinverbruik.connectionCapacity != null) {
-                // Validate that kleinverbruik connection capacity <= 3x80A
-                if (electricity.kleinverbruik.connectionCapacity > KleinverbruikElectricityConnectionCapacity._3x80A) {
+            }
+            // If kleinverbruik.connectionCapacity is not null, perform the validation
+            else if (kleinverbruik.connectionCapacity != null) {
+                // Compare kleinverbruik connection capacity with 3x80A using enum comparison
+                if (kleinverbruik.connectionCapacity <= KleinverbruikElectricityConnectionCapacity._3x80A) {
+                    ValidationResult(Status.VALID, "Small consumption connection capacity is within limits")
+                } else {
                     ValidationResult(
                         Status.INVALID,
-                        "Small consumption connection capacity  ${electricity.kleinverbruik.connectionCapacity} exceeds limit (3x80A)"
+                        "Small consumption connection capacity ${kleinverbruik.connectionCapacity} exceeds limit (3x80A)"
                     )
-                } else {
-                    ValidationResult(Status.VALID, "Small consumption connection capacity is within limits")
                 }
-            } else {
-                ValidationResult(
-                    Status.INVALID,
-                    "Small consumption connection capacity ${electricity.kleinverbruik.connectionCapacity} is invalid"
-                )
             }
-        } else {
+            // If connection capacity is null, return invalid
+            else {
+                ValidationResult(Status.INVALID, "Small consumption connection capacity is invalid")
+            }
+        }
+        // If kleinverbruikOrGrootverbruik is not KLEINVERBRUIK, return not applicable
+        else {
             ValidationResult(Status.NOT_APPLICABLE, "Small consumption validations are not applicable")
         }
     }
@@ -182,20 +176,18 @@ class ElectricityValidator {
         }
     }
 
-    // Validator for PV production >= feed-in
-    fun validatePvProductionFeedIn(electricity: Electricity): ValidationResult {
+    // Annual pv production should be more than annual feed-in
+    fun validateAnnualProductionFeedIn(electricity: Electricity): ValidationResult {
         val annualProduction = electricity.annualElectricityProduction_kWh
         val feedIn = electricity.annualElectricityFeedIn_kWh
 
         return when {
             annualProduction == null -> ValidationResult(Status.MISSING_DATA, "No PV production data")
             feedIn == null -> ValidationResult(Status.MISSING_DATA, "No feed-in data")
-            annualProduction >= feedIn -> ValidationResult(Status.VALID, "PV production is valid")
+            annualProduction >= feedIn -> ValidationResult(Status.VALID, "Annual pv production ${annualProduction} is more than annual feed-in ${feedIn}")
             else -> ValidationResult(Status.INVALID, "Annual PV production ${annualProduction} is less than feed-in ${feedIn}")
         }
     }
-
-
 }
 
 class TransportValidator {
