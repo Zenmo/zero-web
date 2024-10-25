@@ -6,7 +6,7 @@ export type ProjectConfiguration = {
     authorizationPdf?: string,
 }
 
-export type ProjectName = 'Hessenpoort' | 'De Wieken'
+export type ProjectName = 'Hessenpoort' | 'De Wieken' | string
 
 export const HESSENPOORT: ProjectConfiguration = {
     name: 'Hessenpoort',
@@ -21,6 +21,12 @@ export const DE_WIEKEN: ProjectConfiguration = {
     authorizationPdf: '/machtiging-datadeling-de-wieken.pdf'
 }
 
+const GENERIC: ProjectConfiguration = {
+    name: 'Placeholder project',
+    email: 'info@zenmo.com',
+    authorizationPdf: '/placeholer-machtiging.pdf'
+}
+
 export const getProjectConfiguration = (projectName: ProjectName): ProjectConfiguration => {
     switch (projectName) {
         case 'Hessenpoort':
@@ -28,6 +34,9 @@ export const getProjectConfiguration = (projectName: ProjectName): ProjectConfig
         case 'De Wieken':
             return DE_WIEKEN
         default:
-            throw new Error(`Unknown project name: ${projectName}`)
+            return {
+                ...GENERIC,
+                name: projectName,
+            }
     }
 }
