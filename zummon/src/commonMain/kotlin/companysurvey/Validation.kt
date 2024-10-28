@@ -1,14 +1,20 @@
 package com.zenmo.zummon.companysurvey
+import kotlin.js.ExperimentalJsExport
+import kotlin.js.JsExport
 
 fun interface Validator<T> {
     fun validate(item: T): List<ValidationResult>
 }
 
+@OptIn(ExperimentalJsExport::class)
+@JsExport
 data class ValidationResult(
     val status: Status,
     val message: String,
 )
 
+@OptIn(ExperimentalJsExport::class)
+@JsExport
 enum class Status {
     VALID,
     INVALID,
@@ -16,6 +22,8 @@ enum class Status {
     NOT_APPLICABLE,
 }
 
+@OptIn(ExperimentalJsExport::class)
+@JsExport
 val surveyValidator = Validator<Survey> { survey: Survey ->
     survey.addresses.flatMap {
         addressValidator.validate(it)
@@ -188,6 +196,8 @@ class ElectricityValidator : Validator<Electricity> {
             else -> ValidationResult(Status.INVALID, "Annual PV production ${annualProduction} is less than feed-in ${feedIn}")
         }
     }
+
+
 }
 
 class TransportValidator {
