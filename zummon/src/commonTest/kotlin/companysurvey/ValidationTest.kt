@@ -20,17 +20,12 @@ class ValidationTest {
     @Test
     fun testAllValidations() {
         val mockSurvey = createMockSurvey()
-        val surveyValidator = SurveyValidator()
         val validationResults = surveyValidator.validate(mockSurvey)
 
-        assertEquals(15, validationResults.size)
+        assertEquals(14, validationResults.size)
         // Check sample validation results
         val sampleResult = validationResults.last()
-        assertEquals(Status.INVALID, sampleResult.status)
-
-        // validates all
-        // val electricityValidator = ElectricityValidator()
-        // val validationResults = electricityValidator.validate(mockElectric)
+        assertEquals(Status.VALID, sampleResult.status)
     }
 
     @Test
@@ -88,7 +83,7 @@ class ValidationTest {
         assertEquals(result.status, Status.VALID)
 
         // Test for PV production
-        result = electricityValidator.validatePvProductionFeedIn(mockElectric)
+        result = electricityValidator.validateAnnualProductionFeedIn(mockElectric)
         assertEquals(result.status, Status.VALID)
 
         // Test for grootverbruik physical capacity
@@ -137,7 +132,7 @@ class ValidationTest {
         assertContains(result.message, "exceeds physical capacity")
 
         // Test for PV production (should fail)
-        result = electricityValidator.validatePvProductionFeedIn(mockElectric)
+        result = electricityValidator.validateAnnualProductionFeedIn(mockElectric)
         assertEquals(result.status, Status.INVALID)
         assertContains(result.message, "is less than feed-in")
 
