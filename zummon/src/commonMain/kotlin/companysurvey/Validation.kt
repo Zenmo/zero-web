@@ -307,9 +307,24 @@ class TransportValidator {
     }
 }
 
+fun setLanguage(language: Language) {
+    currentLanguage = language
+}
+
+fun getLanguage(): Language {
+    return currentLanguage
+}
+
+enum class Language {
+    en,
+    nl
+}
+
 private
-val translations: Map<String, Map<String, Map<String, String>>> = mapOf(
-    "en" to mapOf(
+var currentLanguage: Language = Language.en // Set default language
+
+val translations: Map<Language, Map<String, Map<String, String>>> = mapOf(
+    Language.en to mapOf(
         "gridConnection" to mapOf(
             "totalPowerChargePointsValid" to "Total power of charge points is valid",
             "totalPowerChargePointsInvalid" to "Total power of charge points %d exceeds allowed capacity %d",
@@ -381,30 +396,85 @@ val translations: Map<String, Map<String, Map<String, String>>> = mapOf(
             "electricVansInvalid" to "Number of electric vans %d exceeds the total number of vans %d",
         ),
     ),
-    "nl" to mapOf(
+    Language.nl to mapOf(
+        "gridConnection" to mapOf(
+            "totalPowerChargePointsValid" to "Totale laadvermogen is geldig",
+            "totalPowerChargePointsInvalid" to "Totale laadvermogen %d overschrijdt de toegestane capaciteit %d",
+        ),
+        "electricity" to mapOf(
+            "kleinverbruikOrGrootverbruikNoDefined" to "Klein- of grootverbruikstype is niet gedefinieerd",
+            "connectionCapacityNotProvide" to "Aansluitcapaciteit is niet verstrekt",
+            "physicalCapacityNotProvide" to "Fysieke aansluitcapaciteit is niet verstrekt",
+            "contractedDeliveryCapacityValid" to "Gecontracteerde aansluitcapaciteit %d is geldig",
+            "contractedDeliveryCapacityExceeds" to "Gecontracteerde aansluitcapaciteit %d kW overschrijdt fysieke capaciteit %d kW",
+            "connectionFeedInCapacityNotProvide" to "Aansluitcapaciteit voor invoeding is niet verstrekt",
+            "feedInLowerPhysicalCapacity" to "Invoedingscapaciteit %d is lager dan de fysieke capaciteit %d kW",
+            "feedInExceedPhysicalCapacity" to "Invoedingscapaciteit %d overschrijdt fysieke capaciteit %d kW",
+
+            "annualElectricityProductionNotProvided" to "Jaarlijkse elektriciteitsproductie is niet verstrekt",
+            "annualElectricityFeedInNotProvided" to "Jaarlijkse invoeding van elektriciteit is niet verstrekt",
+            "annualProductionFeedInValid" to "Jaarlijkse PV-productie %d is geldig, het is meer dan de jaarlijkse invoeding %d",
+            "annualProductionFeedInInvalid" to "Jaarlijkse PV-productie %d is minder dan invoeding %d",
+        ),
+        "grootverbruik" to mapOf(
+            "notProvided" to "Data voor grootverbruik is niet verstrekt",
+            "connectionCapacityNotProvide" to "Aansluitcapaciteit voor grootverbruik is niet verstrekt",
+            "physicalCapacityNotProvide" to "Fysieke aansluitcapaciteit voor grootverbruik is niet verstrekt",
+            "connectionFeedInCapacityNotProvide" to "Invoedingscapaciteit voor grootverbruik is niet verstrekt",
+            "valid" to "Fysieke aansluitcapaciteit voor grootverbruik is binnen de limiet (3x80A)",
+            "invalid" to "Fysieke aansluitcapaciteit %d is lager dan de limiet (3x80A) voor grootverbruik",
+            "notApplicable" to "Validaties voor grootverbruik zijn niet van toepassing",
+        ),
         "kleinverbruik" to mapOf(
-            "invalid" to "Kleinverbruik-aansluitcapaciteit %d overschrijdt de limiet (3x80A)",
+            "notProvided" to "Data voor kleinverbruik is niet verstrekt",
             "valid" to "Kleinverbruik-aansluitcapaciteit is binnen de limiet",
-            "notProvided" to "Kleinverbruik-data is niet verstrekt",
-            "notApplicable" to "Kleinverbruik-controletests zijn niet van toepassing"
+            "exceedsLimit" to "Kleinverbruik-aansluitcapaciteit %d overschrijdt de limiet (3x80A)",
+            "invalid" to "Kleinverbruik-aansluitcapaciteit is ongeldig",
+            "notApplicable" to "Validaties voor kleinverbruik zijn niet van toepassing",
         ),
         "transport" to mapOf(
-            "carsValid" to "Auto's laadvermogen per laadpunt is geldig",
-            "carsInvalid" to "Auto's laadvermogen per laadpunt %f ligt buiten het toegestane bereik (3..150 kW)",
-            "carsNotProvided" to "Auto's laadvermogen per laadpunt is niet verstrekt",
+            "carsPowerNotProvided" to "Vermogen per laadpunt voor auto's is niet verstrekt",
+            "carsPowerValid" to "Vermogen per laadpunt voor auto's is geldig %d",
+            "carsPowerInvalid" to "Vermogen per laadpunt voor auto's %d ligt buiten het toegestane bereik (3..150 kW)",
+
+            "trucksPowerNotProvided" to "Vermogen per laadpunt voor vrachtwagens is niet verstrekt",
+            "trucksPowerValid" to "Vermogen per laadpunt voor vrachtwagens is geldig %d",
+            "trucksPowerInvalid" to "Vermogen per laadpunt voor vrachtwagens %d ligt buiten het toegestane bereik (3..150 kW)",
+
+            "vansPowerNotProvided" to "Vermogen per laadpunt voor bestelwagens is niet verstrekt",
+            "vansPowerValid" to "Vermogen per laadpunt voor bestelwagens is geldig %d",
+            "vansPowerInvalid" to "Vermogen per laadpunt voor bestelwagens %d ligt buiten het toegestane bereik (3..150 kW)",
+
+            "distanceCarsNotProvided" to "Afstand afgelegd door auto's is niet verstrekt",
+            "distanceCarsValid" to "Afstanden afgelegd door auto's zijn geldig",
+            "distanceCarsInvalid" to "Afstand afgelegd door auto's %d ligt buiten het toegestane bereik (5k..100k km)",
+
+            "distanceTrucksNotProvided" to "Afstand afgelegd door vrachtwagens is niet verstrekt",
+            "distanceTrucksValid" to "Afstanden afgelegd door vrachtwagens zijn geldig",
+            "distanceTrucksInvalid" to "Afstand afgelegd door vrachtwagens %d ligt buiten het toegestane bereik (5k..100k km)",
+
+            "distanceVansNotProvided" to "Afstand afgelegd door bestelwagens is niet verstrekt",
+            "distanceVansValid" to "Afstanden afgelegd door bestelwagens zijn geldig",
+            "distanceVansInvalid" to "Afstand afgelegd door bestelwagens %d ligt buiten het toegestane bereik (5k..100k km)",
+
+            "electricCarsValid" to "Aantal elektrische auto's is lager dan het totale aantal auto's",
+            "electricCarsInvalid" to "Aantal elektrische auto's %d overschrijdt het totale aantal auto's %d",
+
+            "electricTrucksValid" to "Aantal elektrische vrachtwagens is lager dan het totale aantal vrachtwagens",
+            "electricTrucksInvalid" to "Aantal elektrische vrachtwagens %d overschrijdt het totale aantal vrachtwagens %d",
+
+            "electricVansValid" to "Aantal elektrische bestelwagens is lager dan het totale aantal bestelwagens",
+            "electricVansInvalid" to "Aantal elektrische bestelwagens %d overschrijdt het totale aantal bestelwagens %d",
         ),
     )
 )
 
-var currentLanguage: String = "nl" // Set default language
-
-private
 // Translation function with fallback to English
 fun translate(key: String, vararg args: Any?): String {
     val (module, translationKey) = key.split(".").let { it[0] to it[1] }
 
-    val translation = translations[currentLanguage]?.get(module)?.get(translationKey)
-        ?: translations["en"]?.get(module)?.get(translationKey)
+    val translation = translations[getLanguage()]?.get(module)?.get(translationKey)
+        ?: translations[Language.en]?.get(module)?.get(translationKey)
         ?: key // Fallback to key itself if translation is missing
     return if (args.isEmpty()) {
         translation

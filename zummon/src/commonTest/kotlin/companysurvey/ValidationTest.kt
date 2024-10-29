@@ -29,6 +29,16 @@ class ValidationTest {
     }
 
     @Test
+    fun validateDutchTranslation() {
+        setLanguage(Language.nl)
+        val electricityValidator = ElectricityValidator()
+        val mockElectric = mockSurvey.getSingleGridConnection().electricity
+        var result = electricityValidator.validateContractedCapacity(mockElectric)
+        assertEquals(result.status, Status.VALID)
+        assertContains(result.message, "geldig")
+    }
+
+    @Test
     fun validateContractedCapacity() {
         // Test for contracted delivery capacity
         val electricityValidator = ElectricityValidator()
