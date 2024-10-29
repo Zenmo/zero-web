@@ -48,20 +48,20 @@ class GridConnectionValidator : Validator<GridConnection> {
     }
     // Validator for total charge point power < contracted capacity + battery power
     fun validateTotalPowerChargePoints(gridConnection: GridConnection): List<ValidationResult> {
-        val results = mutableListOf<ValidationResult>()
-
-        val totalPowerChargePoints = (gridConnection.transport.cars.powerPerChargePointKw ?: 0).toFloat() +
-                (gridConnection.transport.trucks.powerPerChargePointKw ?: 0).toFloat() +
-                (gridConnection.transport.vans.powerPerChargePointKw ?: 0).toFloat()
+        val totalPowerChargePoints = listOf(
+            gridConnection.transport.cars.powerPerChargePointKw,
+            gridConnection.transport.trucks.powerPerChargePointKw,
+            gridConnection.transport.vans.powerPerChargePointKw
+        ).map { (it ?: 0).toFloat() }.sum()
 
         val contractedCapacity = (gridConnection.electricity.getContractedConnectionCapacityKw() ?: 0.0).toFloat()
         val batteryPower = (gridConnection.storage.batteryPowerKw ?: 0.0).toFloat()
 
-        when {
-            totalPowerChargePoints < (contractedCapacity + batteryPower) -> results.add(ValidationResult(Status.VALID, "Total power of charge points is valid"))
-            else -> results.add(ValidationResult(Status.INVALID, "Total power of charge points ${totalPowerChargePoints} exceeds allowed capacity ${contractedCapacity + batteryPower}"))
+        return if (totalPowerChargePoints < (contractedCapacity + batteryPower)) {
+            listOf(ValidationResult(Status.VALID, translate("gridConnection.totalPowerChargePoints")))
+        } else {
+            listOf(ValidationResult(Status.INVALID, translate("gridConnection.totalPowerChargePointsInvalid", totalPowerChargePoints, contractedCapacity + batteryPower)))
         }
-        return results
     }
 }
 
@@ -82,7 +82,10 @@ class ElectricityValidator : Validator<Electricity> {
         val kleinOrGroot = electricity.kleinverbruikOrGrootverbruik
 
         if (kleinOrGroot == null) {
-            results.add(ValidationResult(Status.MISSING_DATA, "Small or large consumption type is not defined"))
+            results.add(ValidationResult(
+                Status.MISSING_DATA,
+                translate("electricity.kleinverbruikOrGrootverbruikNoDefined")
+            ))
         } else {
             // Validate grootverbruik data
             if (kleinOrGroot == KleinverbruikOrGrootverbruik.GROOTVERBRUIK) {
@@ -103,11 +106,11 @@ class ElectricityValidator : Validator<Electricity> {
         val results = mutableListOf<ValidationResult>()
 
         if (grootverbruik == null) {
-            results.add(ValidationResult(Status.INVALID, "Large consumption data is not provided"))
+            results.add(ValidationResult(Status.INVALID, translate("grootverbruik.notProvided")))
         } else {
-            grootverbruik.contractedConnectionDeliveryCapacity_kW ?: results.add(ValidationResult(Status.MISSING_DATA, "Connection delivery capacity is not provided for large consumption"))
-            grootverbruik.physicalCapacityKw ?: results.add(ValidationResult(Status.MISSING_DATA, "Physical Capacity Kw is not provided for large consumption"))
-            grootverbruik.contractedConnectionFeedInCapacity_kW ?: results.add(ValidationResult(Status.MISSING_DATA, "Connection delivery capacity is not provided for large consumption"))
+            grootverbruik.contractedConnectionDeliveryCapacity_kW ?: results.add(ValidationResult(Status.MISSING_DATA, translate("grootverbruik.connectionCapacityNotProvide")))
+            grootverbruik.physicalCapacityKw ?: results.add(ValidationResult(Status.MISSING_DATA, translate("grootverbruik.physicalCapacityNotProvide")))
+            grootverbruik.contractedConnectionFeedInCapacity_kW ?: results.add(ValidationResult(Status.MISSING_DATA, translate("grootverbruik.connectionFeedInCapacityNotProvide")))
         }
 
         return results
@@ -118,11 +121,11 @@ class ElectricityValidator : Validator<Electricity> {
         val connectionCapacity = electricity.getPhysicalConnectionCapacityKw()
 
         return if (connectionCapacity == null) {
-            ValidationResult(Status.MISSING_DATA, "No physical capacity data for Large Consumption")
+            ValidationResult(Status.MISSING_DATA, translate("grootverbruik.physicalCapacityNotProvide")) // Same validation in multiple places
         } else if (connectionCapacity > KleinverbruikElectricityConnectionCapacity._3x80A.toKw()) {
-            ValidationResult(Status.VALID, "Large Consumption physical capacity is valid")
+            ValidationResult(Status.VALID, translate("grootverbruik.valid"))
         } else {
-            ValidationResult(Status.INVALID, "Large Consumption physical capacity ${connectionCapacity} is below 3x80A")
+            ValidationResult(Status.INVALID, translate("grootverbruik.invalid", connectionCapacity))
         }
     }
 
@@ -133,28 +136,28 @@ class ElectricityValidator : Validator<Electricity> {
 
             // If kleinverbruik is null, return invalid
             if (kleinverbruik == null) {
-                ValidationResult(Status.INVALID, "Small consumption data is not provided")
+                ValidationResult(Status.MISSING_DATA, translate("kleinverbruik.notProvided"))
             }
             // If kleinverbruik.connectionCapacity is not null, perform the validation
             else if (kleinverbruik.connectionCapacity != null) {
                 // Compare kleinverbruik connection capacity with 3x80A using enum comparison
                 if (kleinverbruik.connectionCapacity <= KleinverbruikElectricityConnectionCapacity._3x80A) {
-                    ValidationResult(Status.VALID, "Small consumption connection capacity is within limits")
+                    ValidationResult(Status.VALID, translate("kleinverbruik.valid"))
                 } else {
                     ValidationResult(
                         Status.INVALID,
-                        "Small consumption connection capacity ${kleinverbruik.connectionCapacity} exceeds limit (3x80A)"
+                        translate("kleinverbruik.exceedsLimit", kleinverbruik.connectionCapacity)
                     )
                 }
             }
             // If connection capacity is null, return invalid
             else {
-                ValidationResult(Status.INVALID, "Small consumption connection capacity is invalid")
+                ValidationResult(Status.INVALID, translate("kleinverbruik.invalid"))
             }
         }
         // If kleinverbruikOrGrootverbruik is not KLEINVERBRUIK, return not applicable
         else {
-            ValidationResult(Status.NOT_APPLICABLE, "Small consumption validations are not applicable")
+            ValidationResult(Status.NOT_APPLICABLE, translate("kleinverbruik.notApplicable"))
         }
     }
 
@@ -164,10 +167,10 @@ class ElectricityValidator : Validator<Electricity> {
         val physicalCapacity = electricity.getPhysicalConnectionCapacityKw()
 
         return when {
-            contractedCapacity == null -> ValidationResult(Status.MISSING_DATA, "Connection delivery capacity is not provided")
-            physicalCapacity == null -> ValidationResult(Status.MISSING_DATA, "Physical capacity is not provided")
-            contractedCapacity <= physicalCapacity -> ValidationResult(Status.VALID, "Contracted delivery capacity is valid ${contractedCapacity}")
-            else -> ValidationResult(Status.INVALID, "Contracted delivery capacity ${contractedCapacity} kW exceeds physical capacity ${physicalCapacity} kW")
+            contractedCapacity == null -> ValidationResult(Status.MISSING_DATA, translate("electricity.connectionCapacityNotProvide"))
+            physicalCapacity == null -> ValidationResult(Status.MISSING_DATA, translate("electricity.physicalCapacityNotProvide"))
+            contractedCapacity <= physicalCapacity -> ValidationResult(Status.VALID, translate("electricity.contractedDeliveryCapacityValid", contractedCapacity))
+            else -> ValidationResult(Status.INVALID, translate("electricity.contractedDeliveryCapacityExceeds", contractedCapacity, physicalCapacity))
         }
     }
 
@@ -177,10 +180,10 @@ class ElectricityValidator : Validator<Electricity> {
         val physicalCapacity = electricity.getPhysicalConnectionCapacityKw()
 
         return when {
-            feedInCapacity == null -> ValidationResult(Status.MISSING_DATA, "No feed-in capacity data")
-            physicalCapacity == null -> ValidationResult(Status.MISSING_DATA, "No physical capacity data")
-            feedInCapacity <= physicalCapacity -> ValidationResult(Status.VALID, "Feed-in capacity is valid")
-            else -> ValidationResult(Status.INVALID, "Feed-in capacity ${feedInCapacity} exceeds physical capacity ${physicalCapacity}")
+            feedInCapacity == null -> ValidationResult(Status.MISSING_DATA, translate("electricity.connectionFeedInCapacityNotProvide"))
+            physicalCapacity == null -> ValidationResult(Status.MISSING_DATA, translate("electricity.physicalCapacityNotProvide"))
+            feedInCapacity <= physicalCapacity -> ValidationResult(Status.VALID, translate("electricity.feedInLowerPhysicalCapacity", feedInCapacity, physicalCapacity ))
+            else -> ValidationResult(Status.INVALID, translate("electricity.feedInExceedPhysicalCapacity", feedInCapacity, physicalCapacity ))
         }
     }
 
@@ -190,10 +193,10 @@ class ElectricityValidator : Validator<Electricity> {
         val feedIn = electricity.annualElectricityFeedIn_kWh
 
         return when {
-            annualProduction == null -> ValidationResult(Status.MISSING_DATA, "No PV production data")
-            feedIn == null -> ValidationResult(Status.MISSING_DATA, "No feed-in data")
-            annualProduction >= feedIn -> ValidationResult(Status.VALID, "Annual pv production ${annualProduction} is more than annual feed-in ${feedIn}")
-            else -> ValidationResult(Status.INVALID, "Annual PV production ${annualProduction} is less than feed-in ${feedIn}")
+            annualProduction == null -> ValidationResult(Status.MISSING_DATA, translate("electricity.annualElectricityProductionNotProvided"))
+            feedIn == null -> ValidationResult(Status.MISSING_DATA, translate("electricity.annualElectricityFeedInNotProvided"))
+            annualProduction >= feedIn -> ValidationResult(Status.VALID, translate("electricity.annualProductionFeedInValid", annualProduction, feedIn))
+            else -> ValidationResult(Status.INVALID, translate("electricity.annualProductionFeedInInvalid", annualProduction, feedIn))
         }
     }
 
@@ -224,9 +227,9 @@ class TransportValidator {
         val powerPerChargePointCars = transport.cars.powerPerChargePointKw
 
         return when {
-            powerPerChargePointCars == null -> ValidationResult(Status.NOT_APPLICABLE, "Cars Power per charge point is not provided")
-            powerPerChargePointCars in 3.0..150.0 -> ValidationResult(Status.VALID, "Cars Power per charge point is valid")
-            else -> ValidationResult(Status.INVALID, "Cars power per charge point ${powerPerChargePointCars} is outside the valid range (3..150 kW)")
+            powerPerChargePointCars == null -> ValidationResult(Status.NOT_APPLICABLE, translate("transport.carsPowerNotProvided"))
+            powerPerChargePointCars in 3.0..150.0 -> ValidationResult(Status.VALID, translate("transport.carsPowerValid", powerPerChargePointCars))
+            else -> ValidationResult(Status.INVALID, translate("transport.carsPowerInvalid", powerPerChargePointCars))
         }
     }
 
@@ -234,9 +237,9 @@ class TransportValidator {
         val powerPerChargePointTrucks = transport.trucks.powerPerChargePointKw
 
         return when {
-            powerPerChargePointTrucks == null -> ValidationResult(Status.NOT_APPLICABLE, "Trucks Power per charge point is not provided")
-            powerPerChargePointTrucks in 3.0..150.0 -> ValidationResult(Status.VALID, "Trucks Power per charge point is valid")
-            else -> ValidationResult(Status.INVALID, "Trucks power per charge point ${powerPerChargePointTrucks} is outside the valid range (3..150 kW)")
+            powerPerChargePointTrucks == null -> ValidationResult(Status.NOT_APPLICABLE, translate("transport.trucksPowerNotProvided"))
+            powerPerChargePointTrucks in 3.0..150.0 -> ValidationResult(Status.VALID, translate("transport.trucksPowerValid", powerPerChargePointTrucks))
+            else -> ValidationResult(Status.INVALID, translate("transport.trucksPowerInvalid", powerPerChargePointTrucks))
         }
     }
 
@@ -244,9 +247,9 @@ class TransportValidator {
         val powerPerChargePointVans = transport.vans.powerPerChargePointKw
 
         return when {
-            powerPerChargePointVans == null -> ValidationResult(Status.NOT_APPLICABLE, "Vans Power per charge point is not provided")
-            powerPerChargePointVans in 3.0..150.0 -> ValidationResult(Status.VALID, "Vans Power per charge point is valid")
-            else -> ValidationResult(Status.INVALID, "Vans power per charge point ${powerPerChargePointVans} is outside the valid range (3..150 kW)")
+            powerPerChargePointVans == null -> ValidationResult(Status.NOT_APPLICABLE, translate("transport.vansPowerNotProvided"))
+            powerPerChargePointVans in 3.0..150.0 -> ValidationResult(Status.VALID, translate("transport.vansPowerValid", powerPerChargePointVans))
+            else -> ValidationResult(Status.INVALID, translate("transport.vansPowerInvalid", powerPerChargePointVans))
         }
     }
 
@@ -255,9 +258,9 @@ class TransportValidator {
         val travelDistanceCars = transport.cars.annualTravelDistancePerCarKm
 
         return when {
-            travelDistanceCars == null -> ValidationResult(Status.MISSING_DATA, "Cars travel distance is not provided")
-            travelDistanceCars in 5000..100000 -> ValidationResult(Status.VALID, "Cars travel distances are valid")
-            else -> ValidationResult(Status.INVALID, "Cars travel distance ${travelDistanceCars} are outside the valid range (5k..100k km)")
+            travelDistanceCars == null -> ValidationResult(Status.MISSING_DATA, translate("transport.distanceCarsNotProvided"))
+            travelDistanceCars in 5000..100000 -> ValidationResult(Status.VALID, translate("transport.distanceCarsValid"))
+            else -> ValidationResult(Status.INVALID, translate("transport.distanceCarsInvalid", travelDistanceCars))
         }
     }
 
@@ -265,9 +268,9 @@ class TransportValidator {
         val travelDistanceTrucks = transport.trucks.annualTravelDistancePerTruckKm
 
         return when {
-            travelDistanceTrucks == null -> ValidationResult(Status.MISSING_DATA, "Trucks travel distance is not provided")
-            travelDistanceTrucks in 5000..100000 -> ValidationResult(Status.VALID, "Trucks travel distances are valid")
-            else -> ValidationResult(Status.INVALID, "Trucks travel distance ${travelDistanceTrucks} are outside the valid range (5k..100k km)")
+            travelDistanceTrucks == null -> ValidationResult(Status.MISSING_DATA, translate("transport.distanceTrucksNotProvided"))
+            travelDistanceTrucks in 5000..100000 -> ValidationResult(Status.VALID, translate("transport.distanceTrucksValid"))
+            else -> ValidationResult(Status.INVALID, translate("transport.distanceTrucksInvalid", travelDistanceTrucks))
         }
     }
 
@@ -275,31 +278,145 @@ class TransportValidator {
         val travelDistanceVans = transport.vans.annualTravelDistancePerVanKm
 
         return when {
-            travelDistanceVans == null -> ValidationResult(Status.MISSING_DATA, "Vans travel distance is not provided")
-            travelDistanceVans in 5000..100000 -> ValidationResult(Status.VALID, "Vans travel distances are valid")
-            else -> ValidationResult(Status.INVALID, "Vans travel distances ${travelDistanceVans} are outside the valid range (5k..100k km)")
+            travelDistanceVans == null -> ValidationResult(Status.MISSING_DATA, translate("transport.distanceVansNotProvided"))
+            travelDistanceVans in 5000..100000 -> ValidationResult(Status.VALID, translate("transport.distanceVansValid"))
+            else -> ValidationResult(Status.INVALID, translate("transport.distanceVansInvalid", travelDistanceVans))
         }
     }
 
     // Validator for number of electric vehicles should be less than or equal to total number of vehicles
     fun validateTotalElectricCars(transport: Transport): ValidationResult {
         return when {
-            (transport.cars.numElectricCars ?: 0) > (transport.cars.numCars ?: 0) -> ValidationResult(Status.INVALID, "Number of electric cars ${transport.cars.numElectricCars} exceeds the total number of cars ${transport.cars.numCars}")
-            else -> ValidationResult(Status.VALID, "Number of Electric Cars is lower than the total of Cars")
+            (transport.cars.numElectricCars ?: 0) > (transport.cars.numCars ?: 0) -> ValidationResult(Status.INVALID, translate("transport.electricCarsInvalid", transport.cars.numElectricCars, transport.cars.numCars))
+            else -> ValidationResult(Status.VALID, translate("transport.electricCarsValid"))
         }
     }
 
     fun validateTotalElectricTrucks(transport: Transport): ValidationResult {
         return when {
-            (transport.trucks.numElectricTrucks ?: 0) > (transport.trucks.numTrucks ?: 0) -> ValidationResult(Status.INVALID, "Number of electric trucks ${transport.trucks.numTrucks} exceeds the total number of trucks ${transport.trucks.numTrucks}")
-            else -> ValidationResult(Status.VALID, "Number of Electric Trucks is lower than the total of trucks")
+            (transport.trucks.numElectricTrucks ?: 0) > (transport.trucks.numTrucks ?: 0) -> ValidationResult(Status.INVALID, translate("transport.electricCTrucksInvalid", transport.trucks.numTrucks, transport.trucks.numTrucks))
+            else -> ValidationResult(Status.VALID, translate("transport.electricTrucksValid"))
         }
     }
 
     fun validateTotalElectricVans(transport: Transport): ValidationResult {
         return when {
-            ((transport.vans.numElectricVans ?: 0) > (transport.vans.numVans ?: 0)) -> ValidationResult(Status.INVALID, "Number of electric vans ${transport.vans.numElectricVans} exceeds the total number of vans ${transport.vans.numVans}")
-            else -> ValidationResult(Status.VALID, "Number of Electric Vans is lower than the total of Vans")
+            ((transport.vans.numElectricVans ?: 0) > (transport.vans.numVans ?: 0)) -> ValidationResult(Status.INVALID, translate("transport.electricVansInvalid", transport.vans.numElectricVans, transport.vans.numVans))
+            else -> ValidationResult(Status.VALID, translate("transport.electricVansValid"))
         }
     }
+}
+
+private
+val translations: Map<String, Map<String, Map<String, String>>> = mapOf(
+    "en" to mapOf(
+        "gridConnection" to mapOf(
+            "totalPowerChargePointsValid" to "Total power of charge points is valid",
+            "totalPowerChargePointsInvalid" to "Total power of charge points %d exceeds allowed capacity %d",
+        ),
+        "electricity" to mapOf(
+            "kleinverbruikOrGrootverbruikNoDefined" to "Small or large consumption type is not defined",
+            "connectionCapacityNotProvide" to "Connection delivery capacity is not provided",
+            "physicalCapacityNotProvide" to "Physical connection capacity is not provided",
+            "contractedDeliveryCapacityValid" to "Contracted delivery capacity is valid %d",
+            "contractedDeliveryCapacityExceeds" to "Contracted delivery capacity %d kW exceeds physical capacity %d kW",
+            "connectionFeedInCapacityNotProvide" to "Connection feed in capacity is not provided",
+            "feedInLowerPhysicalCapacity" to "Feed-in capacity %d is lower than the physical capacity %d kW",
+            "feedInExceedPhysicalCapacity" to "Feed-in capacity %d exceeds physical capacity %d kW",
+
+            "annualElectricityProductionNotProvided" to "Annual electricity production is not provided",
+            "annualElectricityFeedInNotProvided" to "Annual electricity Feed In is not provided",
+            "annualProductionFeedInValid" to "Annual pv production %d is valid, it is more than annual electricity feed-in %d",
+            "annualProductionFeedInInvalid" to "Annual PV production %d is less than feed-in %d",
+
+            ),
+        "grootverbruik" to mapOf(
+            "notProvided" to "Large consumption data is not provided",
+            "connectionCapacityNotProvide" to "Connection delivery capacity is not provided for large consumption",
+            "physicalCapacityNotProvide" to "Physical connection capacity is not provided for large consumption",
+            "connectionFeedInCapacityNotProvide" to "Connection feed in capacity is not provided for large consumption",
+            "valid" to "Physical connection capacity is within limits (3x80A) for large consumption ",
+            "invalid" to "Physical connection capacity %d is below (3x80A) for large consumption",
+            "notApplicable" to "Large consumption validations are not applicable",
+        ),
+        "kleinverbruik" to mapOf(
+            "notProvided" to "Small consumption data is not provided",
+            "valid" to "Small consumption connection capacity is within limits",
+            "exceedsLimit" to "Small consumption connection capacity %d exceeds limit (3x80A)",
+            "invalid" to "Small consumption connection capacity is invalid",
+            "notApplicable" to "Small consumption validations are not applicable",
+        ),
+        "transport" to mapOf(
+            "carsPowerNotProvided" to "Cars power per charge point is not provided",
+            "carsPowerValid" to "Cars power per charge point is valid %d",
+            "carsPowerInvalid" to "Cars power per charge point %d is outside the valid range (3..150 kW)",
+
+            "trucksPowerNotProvided" to "Trucks power per charge point is not provided",
+            "trucksPowerValid" to "Trucks power per charge point is valid %d",
+            "trucksPowerInvalid" to "Trucks power per charge point %d is outside the valid range (3..150 kW)",
+
+            "vansPowerNotProvided" to "Vans power per charge point is not provided",
+            "vansPowerValid" to "Vans power per charge point is valid %d",
+            "vansPowerInvalid" to "Vans power per charge point %d is outside the valid range (3..150 kW)",
+
+            "distanceCarsNotProvided" to "Cars travel distances is not provided",
+            "distanceCarsValid" to "Cars travel distances are valid",
+            "distanceCarsInvalid" to "Cars travel distance %d is outside the valid range (5k..100k km)",
+
+            "distanceTrucksNotProvided" to "Trucks travel distances is not provided",
+            "distanceTrucksValid" to "Trucks travel distances are valid",
+            "distanceTrucksInvalid" to "Trucks travel distance %d is outside the valid range (5k..100k km)",
+
+            "distanceVansNotProvided" to "Vans travel distances is not provided",
+            "distanceVansValid" to "Vans travel distances are valid",
+            "distanceVansInvalid" to "Vans travel distance %d is outside the valid range (5k..100k km)",
+
+            "electricCarsValid" to "Number of Electric Cars is lower than the total of Cars",
+            "electricCarsInvalid" to "Number of electric cars %d exceeds the total number of cars %d",
+
+            "electricTrucksValid" to "Number of Electric Trucks is lower than the total of Trucks",
+            "electricTrucksInvalid" to "Number of electric trucks %d exceeds the total number of trucks %d",
+
+            "electricVansValid" to "Number of Electric Vans is lower than the total of Vans",
+            "electricVansInvalid" to "Number of electric vans %d exceeds the total number of vans %d",
+        ),
+    ),
+    "nl" to mapOf(
+        "kleinverbruik" to mapOf(
+            "invalid" to "Kleinverbruik-aansluitcapaciteit %d overschrijdt de limiet (3x80A)",
+            "valid" to "Kleinverbruik-aansluitcapaciteit is binnen de limiet",
+            "notProvided" to "Kleinverbruik-data is niet verstrekt",
+            "notApplicable" to "Kleinverbruik-controletests zijn niet van toepassing"
+        ),
+        "transport" to mapOf(
+            "carsValid" to "Auto's laadvermogen per laadpunt is geldig",
+            "carsInvalid" to "Auto's laadvermogen per laadpunt %f ligt buiten het toegestane bereik (3..150 kW)",
+            "carsNotProvided" to "Auto's laadvermogen per laadpunt is niet verstrekt",
+        ),
+    )
+)
+
+var currentLanguage: String = "nl" // Set default language
+
+private
+// Translation function with fallback to English
+fun translate(key: String, vararg args: Any?): String {
+    val (module, translationKey) = key.split(".").let { it[0] to it[1] }
+
+    val translation = translations[currentLanguage]?.get(module)?.get(translationKey)
+        ?: translations["en"]?.get(module)?.get(translationKey)
+        ?: key // Fallback to key itself if translation is missing
+    return if (args.isEmpty()) {
+        translation
+    } else {
+        replacePlaceholders(translation, *args)
+    }
+}
+
+fun replacePlaceholders(template: String, vararg args: Any?): String {
+    var result = template
+    args.forEach { arg ->
+        result = result.replaceFirst("%d", arg.toString())
+    }
+    return result
 }

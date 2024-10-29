@@ -139,7 +139,7 @@ class ValidationTest {
         // Test for grootverbruik physical capacity (should fail)
         result = electricityValidator.validateGrootverbruikPhysicalCapacity(mockElectric)
         assertEquals(result.status, Status.INVALID)
-        assertContains(result.message, "below 3x80A")
+        assertContains(result.message, "below (3x80A)")
 
         // Test for kleinverbruik physical capacity (should fail)
         result = electricityValidator.validateKleinverbruik(mockElectric)
