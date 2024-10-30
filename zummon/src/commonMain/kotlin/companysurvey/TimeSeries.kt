@@ -48,9 +48,12 @@ data class TimeSeries (
         }
     }
 
-    fun hasFullYear(year: Int): Boolean =
-        this.start <=  Instant.parse("$year-01-01T00:00:00+01:00")
-                && this.calculateEnd() >= Instant.parse("${year+1}-01-01T00:00:00+01:00")
+    fun hasFullYear(year: Int? = null): Boolean {
+        var workingYear = year ?: this.start.toLocalDateTime(TimeZone.of("Europe/Amsterdam")).year
+        return this.start <=  Instant.parse("$workingYear-01-01T00:00:00+01:00")
+                && this.calculateEnd() >= Instant.parse("${workingYear+1}-01-01T00:00:00+01:00")
+    }
+
 
     /**
      * Get a full calendar year of data if it is present.
