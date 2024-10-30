@@ -67,17 +67,17 @@ fun createMockSurvey(projectName: String = "Project") = Survey(
                         quarterHourlyDelivery_kWh = TimeSeries(
                             type = TimeSeriesType.ELECTRICITY_DELIVERY,
                             start = Instant.parse("2022-01-01T00:00:00+01"),
-                            values = floatArrayOf(1.2f, 2.2f, 3.2f, 4.2f),
+                            values = listOf(1.2f, 2.2f, 3.2f, 4.2f),
                         ),
                         quarterHourlyFeedIn_kWh = TimeSeries(
                             type = TimeSeriesType.ELECTRICITY_FEED_IN,
                             start = Instant.parse("2022-01-01T00:00:00+01"),
-                            values = floatArrayOf(1.2f, 2.2f, 3.2f, 4.2f),
+                            values = listOf(1.2f, 2.2f, 3.2f, 4.2f),
                         ),
                         quarterHourlyProduction_kWh = TimeSeries(
                             type = TimeSeriesType.ELECTRICITY_PRODUCTION,
                             start = Instant.parse("2022-01-01T00:00:00+01"),
-                            values = floatArrayOf(1.2f, 2.2f, 3.2f, 4.2f),
+                            values = listOf(1.2f, 2.2f, 3.2f, 4.2f),
                         ),
                         annualElectricityProduction_kWh = 3000,
                     ),
@@ -111,7 +111,7 @@ fun createMockSurvey(projectName: String = "Project") = Survey(
                             type = TimeSeriesType.GAS_DELIVERY,
                             start = Instant.parse("2022-01-01T00:00:00+01"),
                             timeStep = 2.hours,
-                            values = floatArrayOf(1.2f, 2.2f, 3.2f, 4.2f),
+                            values = listOf(1.2f, 2.2f, 3.2f, 4.2f),
                         )
                     ),
                     heat = Heat(

@@ -217,13 +217,14 @@ class ElectricityValidator : Validator<Electricity> {
         }
     }
 
+    //annual feed-in should match total of quarter-hourly feed-in
     fun validateAnnualFeedInMatchesQuarterHourlyFeedIn(electricity: Electricity): ValidationResult {
         if (electricity.quarterHourlyFeedIn_kWh == null) {
             return ValidationResult(Status.MISSING_DATA, translate("electricity.quarterHourlyFeedInNotProvided"))
         }
 
         return if (electricity.quarterHourlyFeedIn_kWh.hasFullYear() == true) {
-            val totalQuarterHourlyFeedIn = electricity.quarterHourlyFeedIn_kWh.values.sum()
+            val totalQuarterHourlyFeedIn = electricity.quarterHourlyFeedIn_kWh.values.filterNotNull().sum()
             if (electricity.annualElectricityFeedIn_kWh?.toFloat() != totalQuarterHourlyFeedIn) {
                 ValidationResult(Status.INVALID, translate("electricity.annualFeedInMismatch", electricity.annualElectricityFeedIn_kWh, totalQuarterHourlyFeedIn))
             } else {
@@ -258,7 +259,12 @@ class StorageValidator : Validator<Storage> {
 
 class NaturalGasValidator : Validator<NaturalGas> {
     override fun validate(naturalGas: NaturalGas): List<ValidationResult> {
-        return listOf(validateAnnualElectricityProduction(naturalGas))
+        val results = mutableListOf<ValidationResult>()
+
+        results.add(validateAnnualElectricityProduction(naturalGas))
+        results.add(validateAnnualGasDelivery(naturalGas))
+
+        return results
     }
 
     //hasNaturalGasConnection true -> should have annual delivery
@@ -270,6 +276,60 @@ class NaturalGasValidator : Validator<NaturalGas> {
                 ValidationResult(Status.NOT_APPLICABLE, translate("naturalGas.withoutConnection"))
         }
     }
+
+    //annual gas delivery should match total of hourly delivery
+    fun validateAnnualGasDelivery(naturalGas: NaturalGas): ValidationResult {
+        return if (naturalGas.hourlyDelivery_m3?.values == null) {
+            ValidationResult(Status.MISSING_DATA, translate("naturalGas.hourlyDeliveryNotProvided"))
+        } else {
+            val totalHourlyDelivery = naturalGas.hourlyDelivery_m3.values.filterNotNull().sum()
+            if (naturalGas.annualDelivery_m3?.toFloat() == totalHourlyDelivery) {
+                ValidationResult(Status.VALID, translate("naturalGas.annualGasDeliveryValid", naturalGas.annualDelivery_m3))
+            } else {
+                ValidationResult(
+                    Status.INVALID,
+                    translate(
+                        "naturalGas.annualGasDeliveryMismatch",
+                        naturalGas.annualDelivery_m3,
+                        totalHourlyDelivery
+                    )
+                )
+            }
+        }
+    }
+
+    // quarter-hourly delivery data should not have "holes" longer than 4 days. Display duration of hole in message.
+    fun validateQuarterHourlyDeliveryData(electricity: Electricity): ValidationResult {
+        val quarterHourlyData = electricity.quarterHourlyDelivery_kWh?.values ?: return ValidationResult(
+            Status.MISSING_DATA,
+            translate("electricity.quarterHourlyDeliveryDataNotProvided")
+        )
+
+        var maxNullSequence = 0
+        var currentNullSequence = 0
+
+        for (value in quarterHourlyData) {
+            if (value == null) {
+                currentNullSequence++
+                if (currentNullSequence > maxNullSequence) {
+                    maxNullSequence = currentNullSequence
+                }
+            } else {
+                currentNullSequence = 0 // Reset counter when encountering a non-null value
+            }
+        }
+
+        return if (maxNullSequence > 384) { // 384 nulls is 4 days of missing data in quarter-hour intervals
+            ValidationResult(
+                Status.INVALID,
+                translate("electricity.quarterHourlyDeliveryDataHolesExceed", maxNullSequence / 4) // Display in hours
+            )
+        } else {
+            ValidationResult(Status.VALID, translate("electricity.quarterHourlyDeliveryDataValid"))
+        }
+    }
+
+
 }
 
 class TransportValidator {
@@ -415,6 +475,10 @@ val translations: Map<Language, Map<String, Map<String, String>>> = mapOf(
             "quarterHourlyFeedIn_kWh" to "Quarter hourly feed in is not provided",
             "withConnection" to "Electricity with connection",
             "withoutConnection" to "Electricity without connection",
+            "quarterHourlyDeliveryDataNotProvided" to "Quarter-hourly delivery data is not provided",
+            "quarterHourlyDeliveryDataHolesExceed" to "Quarter-hourly delivery data has a gap of %d hours, exceeding the allowed limit",
+            "quarterHourlyDeliveryDataValid" to "Quarter-hourly delivery data has no gaps exceeding the limit",
+
 
             // quarter
             "notEnoughValues" to "Not enough values for year: needed %d got %d",
@@ -446,6 +510,9 @@ val translations: Map<Language, Map<String, Map<String, String>>> = mapOf(
         "naturalGas" to mapOf(
             "annualDeliveryNotProvided" to "Natural gas annual delivery is not provided",
             "withoutConnection" to "Without Natural gas connection",
+            "hourlyDeliveryNotProvided" to "Hourly delivery data is not provided",
+            "annualGasDeliveryValid" to "Annual gas delivery matches total hourly delivery (%d m³)",
+            "annualGasDeliveryMismatch" to "Annual gas delivery %d m³ does not match total hourly delivery %d m³"
         ),
 
 
@@ -503,7 +570,11 @@ val translations: Map<Language, Map<String, Map<String, String>>> = mapOf(
             "annualElectricityFeedInNotProvided" to "Jaartotaal teruglevering van elektriciteit ontbreekt",
             "annualProductionFeedInValid" to "Jaartotaal PV-productie %d is geldig, het is meer dan de jaarlijkse teruglevering %d",
             "annualProductionFeedInInvalid" to "Jaartotaal PV-productie %d is minder dan teruglevering %d",
-        ),
+            "quarterHourlyDeliveryDataNotProvided" to "Kwartiergegevens voor levering zijn niet opgegeven",
+            "quarterHourlyDeliveryDataHolesExceed" to "Kwartiergegevens voor levering bevatten een gat van %d uur, boven de toegestane limiet",
+            "quarterHourlyDeliveryDataValid" to "Kwartiergegevens voor levering hebben geen gaten boven de limiet",
+
+            ),
         "grootverbruik" to mapOf(
             "notProvided" to "Data voor grootverbruik ontbreekt",
             "contractedCapacityNotProvided" to "Gecontracteerd vermogen voor grootverbruik ontbreekt",
@@ -519,6 +590,13 @@ val translations: Map<Language, Map<String, Map<String, String>>> = mapOf(
             "exceedsLimit" to "Kleinverbruik-aansluitcapaciteit %d overschrijdt de limiet (3x80A)",
             "invalid" to "Kleinverbruik-aansluitcapaciteit is ongeldig",
             "notApplicable" to "Validaties voor kleinverbruik zijn niet van toepassing",
+        ),
+        "naturalGas" to mapOf(
+            "annualDeliveryNotProvided" to "Jaarlijkse gaslevering is niet opgegeven",
+            "hourlyDeliveryNotProvided" to "Uurleveringsgegevens zijn niet opgegeven",
+            "annualGasDeliveryValid" to "Jaarlijkse gaslevering komt overeen met de totale uurlevering",
+            "annualGasDeliveryMismatch" to "Jaarlijkse gaslevering %d m³ komt niet overeen met de totale uurlevering %d m³",
+            "withoutConnection" to "Zonder aardgasaansluiting"
         ),
         "transport" to mapOf(
             "carsPowerNotProvided" to "Vermogen per laadpunt voor auto's ontbreekt",

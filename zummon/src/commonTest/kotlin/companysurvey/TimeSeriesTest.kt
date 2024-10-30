@@ -26,8 +26,7 @@ class TimeSeriesTest {
         val timeSeries = TimeSeries(
             type = TimeSeriesType.ELECTRICITY_DELIVERY,
             start = Instant.parse("2023-01-01T00:00:00Z"),
-            values = generateSequence { 0.0f }.take((2.5 * 4 * 24).toInt()).toList().toFloatArray()
-        )
+            values = generateSequence { 0.0f }.take((2.5 * 4 * 24).toInt()).toList())
 
         assertEquals(
             Instant.parse("2023-01-03T12:00:00Z"),
@@ -45,14 +44,14 @@ class TimeSeriesTest {
                 yield(100f)
                 yieldAll(generateSequence { 0.0f }.take((365 * 4 * 24) - 2))
                 yield(200f)
-            }.asSequence().toList().toFloatArray()
+            }.asSequence().toList()
         )
 
         assertTrue(timeSeries.hasNumberOfValuesForOneYear())
         val yearValues = timeSeries.getFullYearOrFudgeIt(2023)
         assertEquals(100f, yearValues.first())
         assertEquals(200f, yearValues.last())
-        assertEquals(300f, yearValues.sum(), 0.001f)
+        assertEquals(300f, yearValues.filterNotNull().sum(), 0.001f)
     }
 
     @Test
@@ -66,14 +65,14 @@ class TimeSeriesTest {
                 yieldAll(generateSequence { 0.0f }.take((365 * 4 * 24) - 2))
                 yield(300f) // dec 31st
                 yield(400f) // outside of year
-            }.asSequence().toList().toFloatArray()
+            }.asSequence().toList()
         )
 
         assertTrue(timeSeries.hasNumberOfValuesForOneYear())
         val yearValues = timeSeries.getFullYearOrFudgeIt(2023)
         assertEquals(200f, yearValues.first())
         assertEquals(300f, yearValues.last())
-        assertEquals(500f, yearValues.sum(), 0.001f)
+        assertEquals(500f, yearValues.filterNotNull().sum(), 0.001f)
     }
 
     @Test
@@ -81,7 +80,7 @@ class TimeSeriesTest {
         val timeSeries = TimeSeries(
             type = TimeSeriesType.ELECTRICITY_DELIVERY,
             start = Instant.parse("2023-01-01T00:00:00+01:00"),
-            values = generateSequence { 1f }.take(((365 * 4 * 24) -1)).toList().toFloatArray()
+            values = generateSequence { 1f }.take(((365 * 4 * 24) -1)).toList()
         )
 
         assertFalse(timeSeries.hasNumberOfValuesForOneYear())
@@ -102,13 +101,13 @@ class TimeSeriesTest {
                 yield(300f) // jan 1st
                 yieldAll(generateSequence { 0.0f }.take((181 * 4 * 24) - 2))
                 yield(400f)
-            }.asSequence().toList().toFloatArray()
+            }.asSequence().toList()
         )
 
         assertTrue(timeSeries.hasNumberOfValuesForOneYear())
         val yearValues = timeSeries.getFullYearOrFudgeIt(2023)
         assertEquals(timeSeries.numValuesNeededForFullYear(), yearValues.size)
-        assertEquals(1000f, yearValues.sum(), 0.1f)
+        assertEquals(1000f, yearValues.filterNotNull().sum(), 0.1f)
         assertEquals(300f, yearValues.first())
         assertEquals(200f, yearValues.last())
     }

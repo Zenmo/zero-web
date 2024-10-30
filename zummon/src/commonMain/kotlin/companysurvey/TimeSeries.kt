@@ -27,10 +27,10 @@ data class TimeSeries (
     val start: Instant,
     val timeStep: kotlin.time.Duration = 15.minutes,
     val unit: TimeSeriesUnit = TimeSeriesUnit.KWH,
-    val values: FloatArray = floatArrayOf(),
+    val values: List<Float?> = listOf(),
 ) {
     @Deprecated("Use .values", ReplaceWith("values"))
-    fun getFlatDataPoints(): FloatArray = values
+    fun getFlatDataPoints(): List<Float?> = values
 
     fun calculateEnd(): Instant = start + (timeStep * values.size)
 
@@ -60,7 +60,7 @@ data class TimeSeries (
      * If it isn't, put together a year by appending the last part of the previous year to the data of the most-recent year.
      * Always returns 365 days worth of values.
      */
-    fun getFullYearOrFudgeIt(year: Int): FloatArray {
+    fun getFullYearOrFudgeIt(year: Int): List<Float?> {
         assertHasNumberOfValuesForOneYear()
 
         val startOfYear = Instant.parse("$year-01-01T00:00:00+01:00")
@@ -73,7 +73,7 @@ data class TimeSeries (
             if (rangeEnd > values.size) {
                 return sliceMostRecentDataToAlignedYear()
             }
-            return values.sliceArray(IntRange(numValuesToSliceOffStart, rangeEnd - 1))
+            return values.slice(IntRange(numValuesToSliceOffStart, rangeEnd - 1))
         } else {
             return sliceMostRecentDataToAlignedYear()
         }
@@ -83,7 +83,7 @@ data class TimeSeries (
      * Put together a year of data by appending the last part of the previous year to the data of the most-recent year.
      * Always returns 365 days worth of values.
      */
-    fun sliceMostRecentDataToAlignedYear(): FloatArray {
+    fun sliceMostRecentDataToAlignedYear(): List<Float?> {
         assertHasNumberOfValuesForOneYear()
 
         val end = calculateEnd()
@@ -91,8 +91,8 @@ data class TimeSeries (
         val start = Instant.parse("$year-01-01T00:00:00+01:00")
         val numValuesInCurrentYear = ((end - start) / timeStep).toInt()
 
-        return values.sliceArray(IntRange(values.size - numValuesInCurrentYear, values.size - 1))
-            .plus(values.sliceArray(IntRange(values.size - numValuesNeededForFullYear(), values.size - numValuesInCurrentYear - 1)))
+        return values.slice(IntRange(values.size - numValuesInCurrentYear, values.size - 1))
+            .plus(values.slice(IntRange(values.size - numValuesNeededForFullYear(), values.size - numValuesInCurrentYear - 1)))
     }
 
     /**
@@ -109,7 +109,7 @@ data class TimeSeries (
         if (start != other.start) return false
         if (timeStep != other.timeStep) return false
         if (unit != other.unit) return false
-        if (!values.contentEquals(other.values)) return false
+        if (values != other.values) return false
 
         return true
     }
@@ -123,7 +123,7 @@ data class TimeSeries (
         result = 31 * result + start.hashCode()
         result = 31 * result + timeStep.hashCode()
         result = 31 * result + unit.hashCode()
-        result = 31 * result + values.contentHashCode()
+        result = 31 * result + values.hashCode()
         return result
     }
 }
