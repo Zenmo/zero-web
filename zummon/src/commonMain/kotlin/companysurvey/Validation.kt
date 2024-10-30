@@ -304,20 +304,7 @@ class NaturalGasValidator : Validator<NaturalGas> {
             Status.MISSING_DATA,
             translate("electricity.quarterHourlyDeliveryDataNotProvided")
         )
-
-        var maxNullSequence = 0
-        var currentNullSequence = 0
-
-        for (value in quarterHourlyData) {
-            if (value == null) {
-                currentNullSequence++
-                if (currentNullSequence > maxNullSequence) {
-                    maxNullSequence = currentNullSequence
-                }
-            } else {
-                currentNullSequence = 0 // Reset counter when encountering a non-null value
-            }
-        }
+        var maxNullSequence = electricity.quarterHourlyDelivery_kWh.lengthEmptyGapsData()
 
         return if (maxNullSequence > 384) { // 384 nulls is 4 days of missing data in quarter-hour intervals
             ValidationResult(
