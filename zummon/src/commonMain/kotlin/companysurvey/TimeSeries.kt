@@ -54,6 +54,24 @@ data class TimeSeries (
                 && this.calculateEnd() >= Instant.parse("${workingYear+1}-01-01T00:00:00+01:00")
     }
 
+    fun lengthEmptyGapsData(): Int {
+        var maxNullSequence = 0
+        var currentNullSequence = 0
+
+        for (value in values) {
+            if (value == null) {
+                currentNullSequence++
+                if (currentNullSequence > maxNullSequence) {
+                    maxNullSequence = currentNullSequence
+                }
+            } else {
+                currentNullSequence = 0 // Reset counter when encountering a non-null value
+            }
+        }
+
+        return maxNullSequence
+    }
+
 
     /**
      * Get a full calendar year of data if it is present.
