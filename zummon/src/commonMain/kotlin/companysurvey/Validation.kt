@@ -80,6 +80,8 @@ class ElectricityValidator : Validator<Electricity> {
         results.add(validateAnnualElectricityProduction(electricity))
 
         results.add(validateAnnualFeedInMatchesQuarterHourlyFeedIn(electricity))
+        results.add(validateQuarterHourlyDeliveryData(electricity))
+        results.add(validateQuarterHourlyProductionData(electricity))
 
         return results
     }
@@ -237,6 +239,44 @@ class ElectricityValidator : Validator<Electricity> {
             ))
         }
     }
+
+    // quarter-hourly delivery data should not have "holes" longer than 4 days. Display duration of hole in message.
+    fun validateQuarterHourlyDeliveryData(electricity: Electricity): ValidationResult {
+        electricity.quarterHourlyDelivery_kWh?.values ?: return ValidationResult(
+            Status.MISSING_DATA,
+            translate("electricity.quarterHourlyDeliveryDataNotProvided")
+        )
+
+        var maxNullSequence = electricity.quarterHourlyDelivery_kWh.lengthEmptyGapsData()
+
+        return if (maxNullSequence > 384) { // 384 nulls is 4 days of missing data in quarter-hour intervals
+            ValidationResult(
+                Status.INVALID,
+                translate("electricity.quarterHourlyDeliveryDataHolesExceed", maxNullSequence / 4) // Display in hours
+            )
+        } else {
+            ValidationResult(Status.VALID, translate("electricity.quarterHourlyDeliveryDataValid"))
+        }
+    }
+
+    //quarter-hourly production data should not have "holes" longer than 4 days. Display duration of hole in message.
+    fun validateQuarterHourlyProductionData(electricity: Electricity): ValidationResult {
+        electricity.quarterHourlyProduction_kWh?.values ?: return ValidationResult(
+            Status.MISSING_DATA,
+            translate("electricity.quarterHourlyProductionDataNotProvided")
+        )
+
+        var maxNullSequence = electricity.quarterHourlyProduction_kWh.lengthEmptyGapsData()
+
+        return if (maxNullSequence > 384) { // 384 nulls is 4 days of missing data in quarter-hour intervals
+            ValidationResult(
+                Status.INVALID,
+                translate("electricity.quarterHourlyProductionDataHolesExceed", maxNullSequence / 4) // Display in hours
+            )
+        } else {
+            ValidationResult(Status.VALID, translate("electricity.quarterHourlyProductionDataValid"))
+        }
+    }
 }
 
 class StorageValidator : Validator<Storage> {
@@ -295,24 +335,6 @@ class NaturalGasValidator : Validator<NaturalGas> {
                     )
                 )
             }
-        }
-    }
-
-    // quarter-hourly delivery data should not have "holes" longer than 4 days. Display duration of hole in message.
-    fun validateQuarterHourlyDeliveryData(electricity: Electricity): ValidationResult {
-        val quarterHourlyData = electricity.quarterHourlyDelivery_kWh?.values ?: return ValidationResult(
-            Status.MISSING_DATA,
-            translate("electricity.quarterHourlyDeliveryDataNotProvided")
-        )
-        var maxNullSequence = electricity.quarterHourlyDelivery_kWh.lengthEmptyGapsData()
-
-        return if (maxNullSequence > 384) { // 384 nulls is 4 days of missing data in quarter-hour intervals
-            ValidationResult(
-                Status.INVALID,
-                translate("electricity.quarterHourlyDeliveryDataHolesExceed", maxNullSequence / 4) // Display in hours
-            )
-        } else {
-            ValidationResult(Status.VALID, translate("electricity.quarterHourlyDeliveryDataValid"))
         }
     }
 
@@ -466,6 +488,10 @@ val translations: Map<Language, Map<String, Map<String, String>>> = mapOf(
             "quarterHourlyDeliveryDataHolesExceed" to "Quarter-hourly delivery data has a gap of %d hours, exceeding the allowed limit",
             "quarterHourlyDeliveryDataValid" to "Quarter-hourly delivery data has no gaps exceeding the limit",
 
+            "quarterHourlyProductionDataNotProvided" to "Quarter-hourly production data is not provided",
+            "quarterHourlyProductionDataHolesExceed" to "Quarter-hourly production data has a gap of %d hours, exceeding the allowed limit",
+            "quarterHourlyProductionDataValid" to "Quarter-hourly production data has no gaps exceeding the limit",
+
 
             // quarter
             "notEnoughValues" to "Not enough values for year: needed %d got %d",
@@ -501,7 +527,6 @@ val translations: Map<Language, Map<String, Map<String, String>>> = mapOf(
             "annualGasDeliveryValid" to "Annual gas delivery matches total hourly delivery (%d m³)",
             "annualGasDeliveryMismatch" to "Annual gas delivery %d m³ does not match total hourly delivery %d m³"
         ),
-
 
         "transport" to mapOf(
             "carsPowerNotProvided" to "Cars power per charge point is not provided",
@@ -561,6 +586,9 @@ val translations: Map<Language, Map<String, Map<String, String>>> = mapOf(
             "quarterHourlyDeliveryDataHolesExceed" to "Kwartiergegevens voor levering bevatten een gat van %d uur, boven de toegestane limiet",
             "quarterHourlyDeliveryDataValid" to "Kwartiergegevens voor levering hebben geen gaten boven de limiet",
 
+            "quarterHourlyProductionDataNotProvided" to "Kwartiergegevens van de productie zijn niet opgegeven",
+            "quarterHourlyProductionDataHolesExceed" to "Kwartiergegevens van de productie hebben een gat van %d uur, dat de toegestane limiet overschrijdt",
+            "quarterHourlyProductionDataValid" to "Kwartiergegevens van de productie hebben geen gaten die de limiet overschrijden"
             ),
         "grootverbruik" to mapOf(
             "notProvided" to "Data voor grootverbruik ontbreekt",
