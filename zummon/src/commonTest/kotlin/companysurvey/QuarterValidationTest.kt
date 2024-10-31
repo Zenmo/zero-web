@@ -65,6 +65,20 @@ class QuarterValidationTest {
     }
 
     @Test
+    fun `validateQuarterHourlyProductionData with invalid data having gaps exceeding 4 days`() {
+        val electricity = Electricity(
+            quarterHourlyProduction_kWh = TimeSeries(
+                type = TimeSeriesType.ELECTRICITY_PRODUCTION,
+                start = Instant.parse("2022-01-01T00:00:00Z"),
+                values = List(385) { null } + listOf(1.2f, 2.2f) // 385 nulls, exceeding limit
+            )
+        )
+        val result = electricityValidator.validateQuarterHourlyProductionData(electricity)
+        assertEquals(Status.INVALID, result.status)
+        assertEquals("Quarter-hourly production data has a gap of 96 hours, exceeding the allowed limit", result.message)
+    }
+
+    @Test
     fun `validateQuarterHourlyDeliveryData with exact gap limit`() {
         val electricity = Electricity(
             quarterHourlyDelivery_kWh = TimeSeries(
