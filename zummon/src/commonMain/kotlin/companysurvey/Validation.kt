@@ -47,6 +47,9 @@ class GridConnectionValidator : Validator<GridConnection> {
         results.addAll(NaturalGasValidator().validate(gridConnection.naturalGas))
         results.addAll(TransportValidator().validate(gridConnection.transport))
         results.addAll(validateTotalPowerChargePoints(gridConnection))
+        results.add(validateQuarterHourlyFeedIn(gridConnection))
+        results.add(quarterHourlyFeedInLowProductionBatteryPower(gridConnection))
+        results.add(validatePvInstalled(gridConnection))
 
         return results
     }
@@ -67,6 +70,38 @@ class GridConnectionValidator : Validator<GridConnection> {
             listOf(ValidationResult(Status.INVALID, translate("gridConnection.totalPowerChargePointsInvalid", totalPowerChargePoints, contractedCapacity + batteryPower)))
         }
     }
+
+    //quarter-hourly production should not be all zeroes if hasPv is true
+    fun validateQuarterHourlyFeedIn(gridConnection: GridConnection): ValidationResult {
+        return when {
+            gridConnection.supply.hasSupply == true && (gridConnection.electricity.quarterHourlyProduction_kWh?.values?.all { it == 0f } == true) ->
+                ValidationResult(Status.INVALID, translate("electricity.quarterHourlyProductionCannotBeAllZero"))
+            else ->
+                ValidationResult(Status.VALID, translate("electricity.quarterHourlyProductionValid"))
+        }
+    }
+
+    //every time step in quarter-hourly feed-in should be less than or equal to production + battery power
+    fun quarterHourlyFeedInLowProductionBatteryPower(gridConnection: GridConnection): ValidationResult {
+        val contractedCapacity = (gridConnection.electricity.getContractedConnectionCapacityKw() ?: 0.0).toFloat()
+        val batteryPower = (gridConnection.storage.batteryPowerKw ?: 0.0).toFloat()
+        val lower = gridConnection.electricity.quarterHourlyProduction_kWh?.values?.all { (it ?: 0.0).toFloat() <= (contractedCapacity + batteryPower) } == true
+        return if (lower) {
+            ValidationResult(Status.VALID, translate("gridConnection.quarterHourlyFeedInLowProductionBatteryPower"))
+        } else {
+            ValidationResult(Status.INVALID, translate("gridConnection.quarterHourlyFeedInHighProductionBatteryPower", contractedCapacity + batteryPower))
+        }
+    }
+
+    //quarter-hourly production should not be all zeroes if hasPv is true
+    fun validatePvInstalled(gridConnection: GridConnection): ValidationResult {
+        return when {
+            gridConnection.supply.hasSupply == true && ((gridConnection.supply.pvInstalledKwp ?: 0) < 5000) ->
+                ValidationResult(Status.INVALID, translate("gridConnection.pvInstalledLow"))
+            else ->
+                ValidationResult(Status.VALID, translate("gridConnection.pvInstalledHigh"))
+        }
+    }
 }
 
 class ElectricityValidator : Validator<Electricity> {
@@ -82,7 +117,7 @@ class ElectricityValidator : Validator<Electricity> {
         results.add(validateAnnualFeedInMatchesQuarterHourlyFeedIn(electricity))
         results.add(validateQuarterHourlyDeliveryData(electricity))
         results.add(validateQuarterHourlyProductionData(electricity))
-        results.add(validateQuarterHourlyFeedIn(electricity))
+        results.add(quarterHourlyDeliveryLowContractedCapacity(electricity))
         return results
     }
 
@@ -278,15 +313,18 @@ class ElectricityValidator : Validator<Electricity> {
         }
     }
 
-    //quarter-hourly production should not be all zeroes if hasPv is true
-    fun validateQuarterHourlyFeedIn(electricity: Electricity): ValidationResult {
-        return when {
-            electricity.hasConnection == true && (electricity.quarterHourlyProduction_kWh?.values?.all { it == 0f } == true) ->
-                ValidationResult(Status.MISSING_DATA, translate("electricity.quarterHourlyProductionCannotBeAllZero"))
-            else ->
-                ValidationResult(Status.NOT_APPLICABLE, translate("electricity.quarterHourlyProductionValid"))
+    //peak of delivery should be less than contracted capacity
+    fun quarterHourlyDeliveryLowContractedCapacity(electricity: Electricity): ValidationResult {
+        val contractedCapacity = (electricity.getContractedConnectionCapacityKw() ?: 0.0).toFloat()
+        val lower = electricity.quarterHourlyDelivery_kWh?.values?.all { (it ?: 0.0).toFloat() <= contractedCapacity } == true
+        return if (lower) {
+            ValidationResult(Status.VALID, translate("electricity.quarterHourlyDeliveryLowContractedCapacityKw", contractedCapacity))
+        } else {
+            ValidationResult(Status.INVALID, translate("electricity.quarterHourlyDeliveryHighContractedCapacityKw", contractedCapacity))
         }
     }
+
+
 }
 
 class StorageValidator : Validator<Storage> {
@@ -476,6 +514,10 @@ val translations: Map<Language, Map<String, Map<String, String>>> = mapOf(
         "gridConnection" to mapOf(
             "totalPowerChargePointsValid" to "Total power of charge points is valid",
             "totalPowerChargePointsInvalid" to "Total power of charge points %d exceeds allowed capacity %d",
+            "quarterHourlyFeedInLowProductionBatteryPower" to "Every time step in quarter-hourly feed-in is less than or equal to production + battery power",
+            "quarterHourlyFeedInHighProductionBatteryPower" to "Time step in quarter-hourly feed-in shouldn't be higher than or equal to production + battery power %d",
+            "pvInstalledLow" to "PV installed power stays lower than 5000kW",
+            "pvInstalledHigh" to "PV installed power should not be larger dan 5000kW",
         ),
         "electricity" to mapOf(
             "kleinverbruikOrGrootverbruikNoDefined" to "Small or large consumption type is not defined",
@@ -509,6 +551,9 @@ val translations: Map<Language, Map<String, Map<String, String>>> = mapOf(
             "notEnoughValues" to "Not enough values for year: needed %d got %d",
             "annualFeedInMismatch" to "Annual feed in (%d) mismatch the total quarter hourly feed in (%d)",
             "annualFeedInMismatch" to "Annual feed in (%d) matches the total quarter hourly feed in (%d)",
+
+            "quarterHourlyDeliveryLowContractedCapacityKw" to "Quarter-hourly stays lower than the Contracted CapacityKw (%d)",
+            "quarterHourlyDeliveryHighContractedCapacityKw" to "Quarter-hourly shouldn't go higher than the Contracted CapacityKw (%d)"
 
             ),
         "grootverbruik" to mapOf(
@@ -573,12 +618,19 @@ val translations: Map<Language, Map<String, Map<String, String>>> = mapOf(
 
             "electricVansValid" to "Number of Electric Vans is lower than the total of Vans",
             "electricVansInvalid" to "Number of electric vans %d exceeds the total number of vans %d",
+
+            "quarterHourlyDeliveryLowContractedCapacityKw" to "Kwartuur levering blijft lager dan de Contractuele CapaciteitKw (%d)",
+            "quarterHourlyDeliveryHighContractedCapacityKw" to "Kwartuur levering mag niet hoger zijn dan de Contractuele CapaciteitKw (%d)",
         ),
     ),
     Language.nl to mapOf(
         "gridConnection" to mapOf(
             "totalPowerChargePointsValid" to "Totale laadvermogen is geldig",
             "totalPowerChargePointsInvalid" to "Totale laadvermogen %d overschrijdt de toegestane capaciteit %d",
+            "quarterHourlyFeedInLowProductionBatteryPower" to "Elke tijdstap in kwartierelijkse teruglevering is kleiner dan of gelijk aan productie + batterijvermogen",
+            "quarterHourlyFeedInLowProductionBatteryPower" to "Tijdstap in kwartierelijkse teruglevering mag niet groter zijn dan of gelijk aan productie + batterijvermogen",
+            "pvInstalledLow" to "PV geïnstalleerd vermogen blijft lager dan 5000 kW",
+            "pvInstalledHigh" to "PV geïnstalleerd vermogen mag niet groter zijn dan 5000 kW",
         ),
         "electricity" to mapOf(
             "kleinverbruikOrGrootverbruikNoDefined" to "Klein- of grootverbruikstype is niet gedefinieerd",
