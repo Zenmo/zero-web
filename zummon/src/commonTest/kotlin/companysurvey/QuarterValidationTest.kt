@@ -13,7 +13,7 @@ class QuarterValidationTest {
     val electricityValidator = ElectricityValidator()
 
     @Test
-    fun `validateQuarterHourlyDelivery with no data provided`() {
+    fun validateQuarterHourlyDeliveryNoProvide() {
         val electricity = Electricity(
             quarterHourlyDelivery_kWh = null
         )
@@ -23,7 +23,7 @@ class QuarterValidationTest {
     }
 
     @Test
-    fun `validateQuarterHourlyDeliveryData with valid data and no holes`() {
+    fun validateQuarterHourlyDeliveryDataValidNoHoles() {
         val electricity = Electricity(
             quarterHourlyDelivery_kWh = TimeSeries(
                 type = TimeSeriesType.ELECTRICITY_DELIVERY,

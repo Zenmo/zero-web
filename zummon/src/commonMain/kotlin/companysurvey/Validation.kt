@@ -82,7 +82,7 @@ class ElectricityValidator : Validator<Electricity> {
         results.add(validateAnnualFeedInMatchesQuarterHourlyFeedIn(electricity))
         results.add(validateQuarterHourlyDeliveryData(electricity))
         results.add(validateQuarterHourlyProductionData(electricity))
-
+        results.add(validateQuarterHourlyFeedIn(electricity))
         return results
     }
 
@@ -275,6 +275,16 @@ class ElectricityValidator : Validator<Electricity> {
             )
         } else {
             ValidationResult(Status.VALID, translate("electricity.quarterHourlyProductionDataValid"))
+        }
+    }
+
+    //quarter-hourly production should not be all zeroes if hasPv is true
+    fun validateQuarterHourlyFeedIn(electricity: Electricity): ValidationResult {
+        return when {
+            electricity.hasConnection == true && (electricity.quarterHourlyProduction_kWh?.values?.all { it == 0f } == true) ->
+                ValidationResult(Status.MISSING_DATA, translate("electricity.quarterHourlyProductionCannotBeAllZero"))
+            else ->
+                ValidationResult(Status.NOT_APPLICABLE, translate("electricity.quarterHourlyProductionValid"))
         }
     }
 }
@@ -491,6 +501,8 @@ val translations: Map<Language, Map<String, Map<String, String>>> = mapOf(
             "quarterHourlyProductionDataNotProvided" to "Quarter-hourly production data is not provided",
             "quarterHourlyProductionDataHolesExceed" to "Quarter-hourly production data has a gap of %d hours, exceeding the allowed limit",
             "quarterHourlyProductionDataValid" to "Quarter-hourly production data has no gaps exceeding the limit",
+            "quarterHourlyProductionCannotBeAllZero" to "Quarter-hourly production data cannot be all zeroes when supply is present",
+            "quarterHourlyProductionValid" to "Quarter-hourly production data is valid",
 
 
             // quarter
@@ -588,8 +600,11 @@ val translations: Map<Language, Map<String, Map<String, String>>> = mapOf(
 
             "quarterHourlyProductionDataNotProvided" to "Kwartiergegevens van de productie zijn niet opgegeven",
             "quarterHourlyProductionDataHolesExceed" to "Kwartiergegevens van de productie hebben een gat van %d uur, dat de toegestane limiet overschrijdt",
-            "quarterHourlyProductionDataValid" to "Kwartiergegevens van de productie hebben geen gaten die de limiet overschrijden"
-            ),
+            "quarterHourlyProductionDataValid" to "Kwartiergegevens van de productie hebben geen gaten die de limiet overschrijden",
+
+            "quarterHourlyProductionCannotBeAllZero" to "Kwartierwaarden voor productie mogen niet allemaal nul zijn als er levering is",
+            "quarterHourlyProductionValid" to "Kwartierwaarden voor productie zijn geldig",
+        ),
         "grootverbruik" to mapOf(
             "notProvided" to "Data voor grootverbruik ontbreekt",
             "contractedCapacityNotProvided" to "Gecontracteerd vermogen voor grootverbruik ontbreekt",
