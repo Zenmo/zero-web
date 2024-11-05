@@ -33,7 +33,7 @@ class QuarterValidationTest {
     }
 
     @Test
-    fun `validateQuarterHourlyDeliveryData with valid data and small gaps within limit`() {
+    fun validateQuarterHourlyDeliveryDataSmallGaps() {
         val electricity = Electricity(
             quarterHourlyDelivery_kWh = TimeSeries(
                 type = TimeSeriesType.ELECTRICITY_DELIVERY,
@@ -47,7 +47,7 @@ class QuarterValidationTest {
     }
 
     @Test
-    fun `validateQuarterHourlyDeliveryData with invalid data having gaps exceeding 4 days`() {
+    fun validateQuarterHourlyDeliveryDataGapsExceed() {
         val electricity = Electricity(
             quarterHourlyDelivery_kWh = TimeSeries(
                 type = TimeSeriesType.ELECTRICITY_DELIVERY,
@@ -61,7 +61,7 @@ class QuarterValidationTest {
     }
 
     @Test
-    fun `validateQuarterHourlyProductionData with invalid data having gaps exceeding 4 days`() {
+    fun validateQuarterHourlyProductionDataInvalidGaps() {
         val electricity = Electricity(
             quarterHourlyProduction_kWh = TimeSeries(
                 type = TimeSeriesType.ELECTRICITY_PRODUCTION,
@@ -75,7 +75,7 @@ class QuarterValidationTest {
     }
 
     @Test
-    fun `validateQuarterHourlyDeliveryData with exact gap limit`() {
+    fun validateQuarterHourlyDeliveryDataExactLimit() {
         val electricity = Electricity(
             quarterHourlyDelivery_kWh = TimeSeries(
                 type = TimeSeriesType.ELECTRICITY_DELIVERY,
