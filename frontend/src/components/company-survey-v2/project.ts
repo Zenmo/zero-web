@@ -6,7 +6,9 @@ export type ProjectConfiguration = {
     authorizationPdf?: string,
 }
 
-export type ProjectName = 'Hessenpoort' | 'De Wieken' | string
+export type ProjectName = 'Hessenpoort' | 'De Wieken'
+
+export const castProjectName: (projectName: string) => ProjectName = projectName => projectName as ProjectName
 
 export const HESSENPOORT: ProjectConfiguration = {
     name: 'Hessenpoort',
@@ -22,21 +24,15 @@ export const DE_WIEKEN: ProjectConfiguration = {
 }
 
 const GENERIC: ProjectConfiguration = {
-    name: 'Placeholder project',
+    name: castProjectName('Placeholder project'),
     email: 'info@zenmo.com',
     authorizationPdf: '/placeholer-machtiging.pdf'
 }
 
-export const getProjectConfiguration = (projectName: ProjectName): ProjectConfiguration => {
-    switch (projectName) {
-        case 'Hessenpoort':
-            return HESSENPOORT
-        case 'De Wieken':
-            return DE_WIEKEN
-        default:
-            return {
-                ...GENERIC,
-                name: projectName,
-            }
-    }
+const configs: Record<ProjectName, ProjectConfiguration> = {
+    'Hessenpoort': HESSENPOORT,
+    'De Wieken': DE_WIEKEN,
 }
+
+export const getProjectConfiguration = (projectName: ProjectName): ProjectConfiguration =>
+    configs[projectName] || { ...GENERIC, name: projectName }
