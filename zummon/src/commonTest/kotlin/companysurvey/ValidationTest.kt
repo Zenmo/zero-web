@@ -18,9 +18,9 @@ class ValidationTest {
         val mockSurvey = createMockSurvey()
         val validationResults = surveyValidator.validate(mockSurvey)
 
-        assertEquals(19, validationResults.size)
+        assertEquals(25, validationResults.size)
         // Check sample validation results
-        val sampleResult = validationResults.last()
+        val sampleResult = validationResults.first()
         assertEquals(Status.VALID, sampleResult.status)
     }
 
@@ -119,6 +119,7 @@ class ValidationTest {
 
     @Test
     fun invalidValidations() {
+        setLanguage(Language.en)
         val gridConnectionValidator = GridConnectionValidator()
         val electricityValidator = ElectricityValidator()
         val transportValidator = TransportValidator()
@@ -129,6 +130,7 @@ class ValidationTest {
 
         // Test for contracted delivery capacity (should fail)
         var result = electricityValidator.validateContractedCapacity(mockElectric)
+
         assertEquals(result.status, Status.INVALID)
         assertContains(result.message, "exceeds physical capacity")
 
