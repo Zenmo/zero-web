@@ -24,7 +24,7 @@ class QuarterValidationTest {
             quarterHourlyDelivery_kWh = TimeSeries(
                 type = TimeSeriesType.ELECTRICITY_DELIVERY,
                 start = Instant.parse("2022-01-01T00:00:00Z"),
-                values = listOf(1.2f, 2.2f, 3.2f, 4.2f)
+                values = floatArrayOf(1.2f, 2.2f, 3.2f, 4.2f)
             )
         )
         val result = electricityValidator.validateQuarterHourlyDeliveryData(electricity)
@@ -38,7 +38,7 @@ class QuarterValidationTest {
             quarterHourlyDelivery_kWh = TimeSeries(
                 type = TimeSeriesType.ELECTRICITY_DELIVERY,
                 start = Instant.parse("2022-01-01T00:00:00Z"),
-                values = listOf(1.2f, null, null, 2.2f, null, 3.2f, 4.2f) // Only 2 nulls in a row
+                values = floatArrayOf(1.2f, 0.0f, 0.0f, 2.2f, 0.0f, 3.2f, 4.2f) // Only 2 nulls in a row
             )
         )
         val result = electricityValidator.validateQuarterHourlyDeliveryData(electricity)
@@ -52,7 +52,7 @@ class QuarterValidationTest {
             quarterHourlyDelivery_kWh = TimeSeries(
                 type = TimeSeriesType.ELECTRICITY_DELIVERY,
                 start = Instant.parse("2022-01-01T00:00:00Z"),
-                values = List(385) { null } + listOf(1.2f, 2.2f) // 385 nulls, exceeding limit
+                values = FloatArray(385) { 0.0f } + floatArrayOf(1.2f, 2.2f) // 385 nulls, exceeding limit
             )
         )
         val result = electricityValidator.validateQuarterHourlyDeliveryData(electricity)
@@ -66,7 +66,7 @@ class QuarterValidationTest {
             quarterHourlyProduction_kWh = TimeSeries(
                 type = TimeSeriesType.ELECTRICITY_PRODUCTION,
                 start = Instant.parse("2022-01-01T00:00:00Z"),
-                values = List(385) { null } + listOf(1.2f, 2.2f) // 385 nulls, exceeding limit
+                values = FloatArray(385) { 0.0f } + floatArrayOf(1.2f, 2.2f)// 385 nulls, exceeding limit
             )
         )
         val result = electricityValidator.validateQuarterHourlyProductionData(electricity)
@@ -80,7 +80,7 @@ class QuarterValidationTest {
             quarterHourlyDelivery_kWh = TimeSeries(
                 type = TimeSeriesType.ELECTRICITY_DELIVERY,
                 start = Instant.parse("2022-01-01T00:00:00Z"),
-                values = List(384) { null } + listOf(1.2f, 2.2f) // 384 nulls, at the limit
+                values = FloatArray(384) { 0.0f } + floatArrayOf(1.2f, 2.2f) // 384 nulls, at the limit
             )
         )
         val result = electricityValidator.validateQuarterHourlyDeliveryData(electricity)

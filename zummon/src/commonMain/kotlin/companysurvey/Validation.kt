@@ -261,7 +261,7 @@ class ElectricityValidator : Validator<Electricity> {
         }
 
         return if (electricity.quarterHourlyFeedIn_kWh.hasFullYear() == true) {
-            val totalQuarterHourlyFeedIn = electricity.quarterHourlyFeedIn_kWh.values.filterNotNull().sum()
+            val totalQuarterHourlyFeedIn = electricity.quarterHourlyFeedIn_kWh.values.sum()
             if (electricity.annualElectricityFeedIn_kWh?.toFloat() != totalQuarterHourlyFeedIn) {
                 ValidationResult(Status.INVALID, translate("electricity.annualFeedInMismatch", electricity.annualElectricityFeedIn_kWh, totalQuarterHourlyFeedIn))
             } else {
@@ -370,7 +370,7 @@ class NaturalGasValidator : Validator<NaturalGas> {
         return if (naturalGas.hourlyDelivery_m3?.values == null) {
             ValidationResult(Status.MISSING_DATA, translate("naturalGas.hourlyDeliveryNotProvided"))
         } else {
-            val totalHourlyDelivery = naturalGas.hourlyDelivery_m3.values.filterNotNull().sum()
+            val totalHourlyDelivery = naturalGas.hourlyDelivery_m3.values.sum()
             if (naturalGas.annualDelivery_m3?.toFloat() == totalHourlyDelivery) {
                 ValidationResult(Status.VALID, translate("naturalGas.annualGasDeliveryValid", naturalGas.annualDelivery_m3))
             } else {
