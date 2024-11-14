@@ -7,6 +7,7 @@ import kotlin.test.assertEquals
 
 class QuarterValidationTest {
     val electricityValidator = ElectricityValidator()
+    val gridConnectionValidator = GridConnectionValidator()
 
     @Test
     fun validateQuarterHourlyDeliveryNoProvide() {
@@ -86,5 +87,76 @@ class QuarterValidationTest {
         val result = electricityValidator.validateQuarterHourlyDeliveryData(electricity)
         assertEquals(Status.VALID, result.status)
         assertEquals("Quarter-hourly delivery data has no gaps exceeding the limit", result.message)
+    }
+
+    @Test
+    fun testQuarterHourlyFeedInLowProductionBatteryPower_ValidData() {
+        // Set up mock data with valid feed-in, production, and battery power
+        val gridConnection = GridConnection(
+            electricity = Electricity(
+                quarterHourlyFeedIn_kWh = TimeSeries(type= TimeSeriesType.ELECTRICITY_DELIVERY, start = Instant.parse("2024-01-01T00:00:00Z"), values = floatArrayOf(1.0f, 1.5f, 2.0f)),
+                quarterHourlyProduction_kWh = TimeSeries(type= TimeSeriesType.ELECTRICITY_DELIVERY, start = Instant.parse("2024-01-01T00:00:00Z"), values = floatArrayOf(1.0f, 1.5f, 2.0f))
+            ),
+            storage = Storage(batteryPowerKw = 0.5f)
+        )
+        
+        val result = gridConnectionValidator.quarterHourlyFeedInLowProductionBatteryPower(gridConnection)
+
+        // Assert the result is valid
+        assertEquals(Status.VALID, result.status)
+        assertEquals(translate("gridConnection.quarterHourlyFeedInLowProductionBatteryPower"), result.message)
+    }
+
+    @Test
+    fun testQuarterHourlyFeedInLowProductionBatteryPower_InvalidStartTime() {
+        // Set up mock data where start times are different
+        val gridConnection = GridConnection(
+            electricity = Electricity(
+                quarterHourlyFeedIn_kWh = TimeSeries(type= TimeSeriesType.ELECTRICITY_DELIVERY, start = Instant.parse("2024-01-01T00:00:00Z"), values = floatArrayOf(1.0f, 1.5f, 2.0f)),
+                quarterHourlyProduction_kWh = TimeSeries(type= TimeSeriesType.ELECTRICITY_DELIVERY, start = Instant.parse("2024-01-01T01:00:00Z"), values = floatArrayOf(1.0f, 1.5f, 2.0f))
+            ),
+            storage = Storage(batteryPowerKw = 0.5f)
+        )
+        
+        val result = gridConnectionValidator.quarterHourlyFeedInLowProductionBatteryPower(gridConnection)
+
+        // Assert the result is invalid and the message matches the expected translation
+        assertEquals(Status.INVALID, result.status)
+        assertEquals(translate("gridConnection.incompatibleStartTimeQuarterHourly"), result.message)
+    }
+
+    @Test
+    fun testQuarterHourlyFeedInLowProductionBatteryPower_InvalidLength() {
+        // Set up mock data with mismatched lengths of feed-in and production values
+        val gridConnection = GridConnection(
+            electricity = Electricity(
+                quarterHourlyFeedIn_kWh = TimeSeries(type= TimeSeriesType.ELECTRICITY_DELIVERY, start = Instant.parse("2024-01-01T00:00:00Z"), values = floatArrayOf(1.0f, 1.5f, 2.0f)),
+                quarterHourlyProduction_kWh = TimeSeries(type= TimeSeriesType.ELECTRICITY_DELIVERY, start = Instant.parse("2024-01-01T00:00:00Z"), values = floatArrayOf(1.0f, 1.5f))
+            ),
+            storage = Storage(batteryPowerKw = 0.5f)
+        )
+        val result = gridConnectionValidator.quarterHourlyFeedInLowProductionBatteryPower(gridConnection)
+
+        // Assert the result is invalid and the message matches the expected translation
+        assertEquals(Status.INVALID, result.status)
+        assertEquals(translate("gridConnection.incompatibleQuarterHourly"), result.message)
+    }
+
+    @Test
+    fun testQuarterHourlyFeedInLowProductionBatteryPower_HighFeedIn() {
+        // Set up mock data with a high feed-in value
+        val gridConnection = GridConnection(
+            electricity = Electricity(
+                quarterHourlyFeedIn_kWh = TimeSeries(type= TimeSeriesType.ELECTRICITY_DELIVERY, start = Instant.parse("2024-01-01T00:00:00Z"), values = floatArrayOf(2.5f, 3.0f, 3.5f)),
+                quarterHourlyProduction_kWh = TimeSeries(type= TimeSeriesType.ELECTRICITY_DELIVERY, start = Instant.parse("2024-01-01T00:00:00Z"), values = floatArrayOf(1.0f, 1.5f, 2.0f))
+            ),
+            storage = Storage(batteryPowerKw = 0.5f)
+        )
+
+        val result = gridConnectionValidator.quarterHourlyFeedInLowProductionBatteryPower(gridConnection)
+
+        // Assert the result is invalid and the message matches the expected translation
+        assertEquals(Status.INVALID, result.status)
+        assertEquals(translate("gridConnection.quarterHourlyFeedInHighProductionBatteryPower", 2.5f, 1.5f), result.message)
     }
 }
