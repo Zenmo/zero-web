@@ -18,7 +18,7 @@ class ValidationTest {
         val mockSurvey = createMockSurvey()
         val validationResults = surveyValidator.validate(mockSurvey)
 
-        assertEquals(25, validationResults.size)
+        assertEquals(26, validationResults.size)
         // Check sample validation results
         val sampleResult = validationResults.first()
         assertEquals(Status.VALID, sampleResult.status)

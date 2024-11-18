@@ -95,7 +95,7 @@ class QuarterValidationTest {
         val gridConnection = GridConnection(
             electricity = Electricity(
                 quarterHourlyFeedIn_kWh = TimeSeries(type= TimeSeriesType.ELECTRICITY_DELIVERY, start = Instant.parse("2024-01-01T00:00:00Z"), values = floatArrayOf(1.0f, 1.5f, 2.0f)),
-                quarterHourlyProduction_kWh = TimeSeries(type= TimeSeriesType.ELECTRICITY_DELIVERY, start = Instant.parse("2024-01-01T00:00:00Z"), values = floatArrayOf(1.0f, 1.5f, 2.0f))
+                quarterHourlyProduction_kWh = TimeSeries(type= TimeSeriesType.ELECTRICITY_DELIVERY, start = Instant.parse("2024-01-01T00:00:00Z"), values = floatArrayOf(9.0f, 7.5f, 6.0f))
             ),
             storage = Storage(batteryPowerKw = 0.5f)
         )

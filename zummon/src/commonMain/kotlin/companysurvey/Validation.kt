@@ -48,6 +48,7 @@ class GridConnectionValidator : Validator<GridConnection> {
         results.addAll(TransportValidator().validate(gridConnection.transport))
         results.addAll(validateTotalPowerChargePoints(gridConnection))
         results.add(validateQuarterHourlyFeedIn(gridConnection))
+        results.add(validateAnnualElectricityProduction(gridConnection))
         results.add(quarterHourlyFeedInLowProductionBatteryPower(gridConnection))
         results.add(validatePvInstalled(gridConnection))
 
@@ -77,6 +78,16 @@ class GridConnectionValidator : Validator<GridConnection> {
                 ValidationResult(Status.INVALID, translate("electricity.quarterHourlyProductionCannotBeAllZero"))
             else ->
                 ValidationResult(Status.VALID, translate("electricity.quarterHourlyProductionValid"))
+        }
+    }
+
+    //hasPV true -> should have annual production
+    fun validateAnnualElectricityProduction(gridConnection: GridConnection): ValidationResult {
+        return when {
+            gridConnection.supply.hasSupply == true && gridConnection.electricity.annualElectricityProduction_kWh == null ->
+                ValidationResult(Status.MISSING_DATA, translate("electricity.annualElectricityProductionNotProvided"))
+            else ->
+                ValidationResult(Status.NOT_APPLICABLE, translate("electricity.withoutConnection"))
         }
     }
 
@@ -134,7 +145,6 @@ class ElectricityValidator : Validator<Electricity> {
         results.add(validateContractedCapacity(electricity))
         results.add(validateAnnualProductionFeedIn(electricity))
         results.add(validateContractedFeedInCapacity(electricity))
-        results.add(validateAnnualElectricityProduction(electricity))
 
         results.add(validateAnnualFeedInMatchesQuarterHourlyFeedIn(electricity))
         results.add(validateQuarterHourlyDeliveryData(electricity))
@@ -254,15 +264,7 @@ class ElectricityValidator : Validator<Electricity> {
         }
     }
 
-    //hasPV true -> should have annual production
-    fun validateAnnualElectricityProduction(electricity: Electricity): ValidationResult {
-        return when {
-            electricity.hasConnection == true && electricity.annualElectricityProduction_kWh == null ->
-                ValidationResult(Status.MISSING_DATA, translate("electricity.annualElectricityProductionNotProvided"))
-            else ->
-                ValidationResult(Status.NOT_APPLICABLE, translate("electricity.withoutConnection"))
-        }
-    }
+
 
     // Annual pv production should be more than annual feed-in
     fun validateAnnualProductionFeedIn(electricity: Electricity): ValidationResult {
@@ -414,17 +416,17 @@ class NaturalGasValidator : Validator<NaturalGas> {
             ValidationResult(Status.MISSING_DATA, translate("naturalGas.hourlyDeliveryNotProvided"))
         } else {
             val totalHourlyDelivery = naturalGas.hourlyDelivery_m3.values.sum()
-            if (naturalGas.annualDelivery_m3?.toFloat() == totalHourlyDelivery) {
+
+            val isCloseEnough = naturalGas.annualDelivery_m3?.toFloat()?.let { annualDelivery ->
+                val difference = kotlin.math.abs(annualDelivery - totalHourlyDelivery)
+                difference <= 0.01f * annualDelivery // 1% tolerance
+            } ?: false
+
+
+            if (isCloseEnough) {
                 ValidationResult(Status.VALID, translate("naturalGas.annualGasDeliveryValid", naturalGas.annualDelivery_m3))
             } else {
-                ValidationResult(
-                    Status.INVALID,
-                    translate(
-                        "naturalGas.annualGasDeliveryMismatch",
-                        naturalGas.annualDelivery_m3,
-                        totalHourlyDelivery
-                    )
-                )
+                ValidationResult(Status.INVALID, translate("naturalGas.annualGasDeliveryMismatch", naturalGas.annualDelivery_m3, totalHourlyDelivery))
             }
         }
     }
