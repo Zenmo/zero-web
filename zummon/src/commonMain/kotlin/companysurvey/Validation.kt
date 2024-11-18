@@ -130,9 +130,9 @@ class GridConnectionValidator : Validator<GridConnection> {
     fun validatePvInstalled(gridConnection: GridConnection): ValidationResult {
         return when {
             gridConnection.supply.hasSupply == true && ((gridConnection.supply.pvInstalledKwp ?: 0) < 5000) ->
-                ValidationResult(Status.INVALID, translate("gridConnection.pvInstalledLow"))
-            else ->
                 ValidationResult(Status.VALID, translate("gridConnection.pvInstalledHigh"))
+            else ->
+                ValidationResult(Status.INVALID, translate("gridConnection.pvInstalledLow"))
         }
     }
 }
