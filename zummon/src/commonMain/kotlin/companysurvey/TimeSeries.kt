@@ -49,9 +49,15 @@ data class TimeSeries (
     }
 
     fun hasFullYear(year: Int? = null): Boolean {
-        var workingYear = year ?: this.start.toLocalDateTime(TimeZone.of("Europe/Amsterdam")).year
-        return this.start <=  Instant.parse("$workingYear-01-01T00:00:00+01:00")
-                && this.calculateEnd() >= Instant.parse("${workingYear+1}-01-01T00:00:00+01:00")
+        return try {
+            val workingYear = year ?: this.start.toLocalDateTime(TimeZone.of("UTC+01:00")).year
+            val startOfYear = Instant.parse("$workingYear-01-01T00:00:00+01:00")
+            val endOfYear = Instant.parse("${workingYear + 1}-01-01T00:00:00+01:00")
+            this.start <= startOfYear && this.calculateEnd() >= endOfYear
+        } catch (e: Exception) {
+            println("Time zone error: Falling back to UTC. ${this.start} Error: ${e.message}")
+            false
+        }
     }
 
     fun lengthEmptyGapsData(): Int {
@@ -105,7 +111,7 @@ data class TimeSeries (
         assertHasNumberOfValuesForOneYear()
 
         val end = calculateEnd()
-        val year = end.toLocalDateTime(TimeZone.of("Europe/Amsterdam")).year
+        val year = end.toLocalDateTime(TimeZone.of("UTC+01:00")).year
         val start = Instant.parse("$year-01-01T00:00:00+01:00")
         val numValuesInCurrentYear = ((end - start) / timeStep).toInt()
 
