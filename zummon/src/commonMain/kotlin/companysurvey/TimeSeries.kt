@@ -9,14 +9,12 @@ import com.zenmo.zummon.BenasherUuidSerializer
 import kotlinx.datetime.Instant
 import kotlinx.datetime.TimeZone
 import kotlinx.datetime.toLocalDateTime
-import kotlin.js.ExperimentalJsExport
 import kotlin.js.JsExport
 
 
 /**
  * This contains values parsed from a CSV/excel or fetched from an API.
  */
-@OptIn(ExperimentalJsExport::class)
 @JsExport
 @Serializable
 data class TimeSeries (
@@ -152,14 +150,12 @@ data class TimeSeries (
     }
 }
 
-@OptIn(ExperimentalJsExport::class)
 @JsExport
 enum class TimeSeriesUnit {
     KWH,
     M3,
 }
 
-@OptIn(ExperimentalJsExport::class)
 @JsExport
 enum class TimeSeriesType {
     // Delivery from grid to end-user

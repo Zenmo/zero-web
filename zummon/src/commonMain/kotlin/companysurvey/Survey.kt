@@ -6,14 +6,12 @@ import kotlinx.serialization.Serializable
 import com.zenmo.zummon.BenasherUuidSerializer
 import kotlinx.datetime.*
 import kotlinx.serialization.ExperimentalSerializationApi
-import kotlin.js.ExperimentalJsExport
 import kotlin.js.JsExport
 import kotlinx.serialization.json.Json
 
 /**
  * Root object
  */
-@OptIn(ExperimentalJsExport::class)
 @JsExport
 @Serializable
 data class Survey(
@@ -147,13 +145,11 @@ data class Survey(
     }
 }
 
-@OptIn(ExperimentalJsExport::class)
 @JsExport
 fun surveyFromJson(json: String): Survey {
     return kotlinx.serialization.json.Json.decodeFromString(Survey.serializer(), json)
 }
 
-@OptIn(ExperimentalJsExport::class)
 @JsExport
 fun surveysFromJson(json: String): Array<Survey> {
     return kotlinx.serialization.json.Json.decodeFromString<Array<Survey>>(json)
@@ -174,7 +170,6 @@ private fun <T> List<T>.firstAndOnly(): T {
     return this.first()
 }
 
-@OptIn(ExperimentalJsExport::class)
 @JsExport
 @Serializable
 data class SurveyWithErrors(
