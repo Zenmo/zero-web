@@ -4,12 +4,14 @@ import com.zenmo.orm.blob.BlobPurpose
 import com.zenmo.orm.companysurvey.table.*
 import com.zenmo.orm.companysurvey.table.GridConnectionTable.addressId
 import com.zenmo.orm.user.table.UserProjectTable
+import com.zenmo.orm.user.table.UserTable
 import com.zenmo.zummon.companysurvey.*
 import org.jetbrains.exposed.sql.*
 import org.jetbrains.exposed.sql.SqlExpressionBuilder.eq
 import org.jetbrains.exposed.sql.transactions.transaction
 import java.util.*
-import kotlin.time.Duration.Companion.minutes
+import kotlin.uuid.ExperimentalUuidApi
+import kotlin.uuid.toKotlinUuid
 
 class SurveyRepository(
     private val db: Database,
@@ -119,6 +121,7 @@ class SurveyRepository(
         return transaction(db) {
             val surveysWithoutAddresses = CompanySurveyTable
                 .join(ProjectTable, JoinType.INNER)
+                .join(UserTable, JoinType.LEFT, CompanySurveyTable.createdById, UserTable.id)
                 .selectAll()
                 .where {
                     filter
@@ -222,13 +225,24 @@ class SurveyRepository(
     protected fun hydrateSurvey(row: ResultRow): Survey {
         return Survey(
             id = row[CompanySurveyTable.id],
-            created = row[CompanySurveyTable.created],
+            createdAt = row[CompanySurveyTable.created],
+            createdBy = hydrateUser(row),
             zenmoProject = row[ProjectTable.name],
             companyName = row[CompanySurveyTable.companyName],
             personName = row[CompanySurveyTable.personName],
             email = row[CompanySurveyTable.email],
             dataSharingAgreed = row[CompanySurveyTable.dataSharingAgreed],
             addresses = emptyList(), // data from different table
+        )
+    }
+
+    @OptIn(ExperimentalUuidApi::class)
+    protected fun hydrateUser(row: ResultRow): com.zenmo.zummon.User? {
+        val userId = row[CompanySurveyTable.createdById] ?: return null
+
+        return com.zenmo.zummon.User(
+            row[UserTable.id].toKotlinUuid(),
+            row[UserTable.note],
         )
     }
 
@@ -378,11 +392,14 @@ class SurveyRepository(
         )
     }
 
-    fun save(survey: Survey): UUID {
+    fun save(survey: Survey, userId: UUID? = null, ): UUID {
         return transaction(db) {
-            val surveyId = CompanySurveyTable.upsertReturning {
+            val surveyId = CompanySurveyTable.upsertReturning(
+                onUpdateExclude = listOf(CompanySurveyTable.createdById),
+            ) {
                 it[id] = survey.id
-                it[created] = survey.created
+                it[createdById] = userId
+                it[created] = survey.createdAt
                 it[projectId] = ProjectTable.select(ProjectTable.id)
                     .where { ProjectTable.name eq survey.zenmoProject }
                 it[companyName] = survey.companyName

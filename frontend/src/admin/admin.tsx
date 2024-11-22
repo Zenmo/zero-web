@@ -53,7 +53,8 @@ export const Admin: FunctionComponent = () => {
                                 ))}
                             </>
                         )}/>
-                        <Column field="createdToString" body={survey => formatDatetime(survey.created.toString())} header="Opgestuurd op" sortable/>
+                        <Column field="createdAtToString" body={(survey: Survey ) => formatDatetime(survey.createdAt.toString())} header="Opgestuurd op" sortable/>
+                        <Column field="createdBy" body={(survey: Survey ) => survey.createdBy?.note} header="Aangemaakt door" sortable/>
                         <Column body={(survey: Survey) => (
                             <div css={{
                                 display: 'flex',

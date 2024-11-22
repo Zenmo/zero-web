@@ -4,6 +4,7 @@ import com.benasher44.uuid.Uuid
 import com.benasher44.uuid.uuid4
 import kotlinx.serialization.Serializable
 import com.zenmo.zummon.BenasherUuidSerializer
+import com.zenmo.zummon.User
 import kotlinx.datetime.*
 import kotlinx.serialization.ExperimentalSerializationApi
 import kotlin.js.JsExport
@@ -17,7 +18,7 @@ import kotlinx.serialization.json.Json
 data class Survey(
     @Serializable(with = BenasherUuidSerializer::class)
     val id: Uuid = uuid4(),
-    val created: Instant = Clock.System.now().roundToMilliseconds(),
+    val createdAt: Instant = Clock.System.now().roundToMilliseconds(),
     val zenmoProject: String,
     val companyName: String,
     val personName: String,
@@ -25,6 +26,7 @@ data class Survey(
     val dataSharingAgreed: Boolean = false,
     val addresses: List<Address>,
     val project: Project? = null,
+    val createdBy: User? = null,
 ) {
     /**
      * For JavaScript
@@ -43,8 +45,8 @@ data class Survey(
         }
     }
 
-    public val createdToString: String
-        get() = created.toString()
+    public val createdAtToString: String
+        get() = createdAt.toString()
 
     public val filesArray: Array<File>
         get() = addresses.flatMap {
