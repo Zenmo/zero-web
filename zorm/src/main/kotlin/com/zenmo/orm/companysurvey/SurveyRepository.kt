@@ -421,6 +421,22 @@ class SurveyRepository(
         return transaction(db) {
             val surveyId = CompanySurveyTable.upsertReturning(
                 onUpdateExclude = listOf(CompanySurveyTable.createdById),
+                // where clause is only applied on UPDATE
+                // TODO: this approach doesn't work for deeplinks
+                // need to factor it out to a service or run BCRYPT in postgres
+                where = {
+                    // default not allowed to edit
+                    val filters = mutableListOf<Op<Boolean>>(
+                        Op.FALSE
+                    )
+
+                    // unless admin
+                    if (userId != null) {
+                        filters.add(userIsAllowedCondition(userId))
+                    }
+
+                    filters.compoundOr()
+                }
             ) {
                 it[id] = survey.id
                 it[createdById] = userId

@@ -3,6 +3,7 @@ package com.zenmo.orm.companysurvey
 import com.zenmo.orm.companysurvey.table.CompanySurveyTable
 import com.zenmo.orm.createSchema
 import com.zenmo.orm.connectToPostgres
+import com.zenmo.orm.user.Unauthorized
 import com.zenmo.orm.user.saveUser
 import com.zenmo.zummon.companysurvey.Survey
 import org.jetbrains.exposed.sql.Schema
@@ -13,6 +14,7 @@ import org.junit.BeforeClass
 import java.util.UUID
 import kotlin.test.Test
 import kotlin.test.assertEquals
+import kotlin.test.assertFailsWith
 import kotlin.test.assertNotNull
 import kotlin.uuid.ExperimentalUuidApi
 import kotlin.uuid.toKotlinUuid
@@ -157,6 +159,20 @@ class RepositoryTest {
         assertNotNull(createdBy2)
         assertEquals("Jaap", createdBy2.note)
         assertEquals(jaapId.toKotlinUuid(), createdBy2.id)
+    }
+
+    @Test
+    fun testNotLoggedInUserCanCreateButNotEdit() {
+        val repo = SurveyRepository(connectToPostgres())
+
+        // create survey without user
+        val survey = createMockSurvey()
+        repo.save(survey)
+
+        // edit
+        assertFailsWith(Unauthorized::class) {
+            repo.save(survey)
+        }
     }
 
     private fun wipeSequence(survey: Survey)
