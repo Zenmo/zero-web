@@ -65,14 +65,14 @@ fun Application.configureDatabases(): Database {
 
             val repository = SurveyRepository(db)
 
-            val project = call.request.queryParameters.get("project")
-            if (project != null) {
-                val surveys = repository.getSurveysByProjectWithUserAccessCheck(project, userId)
-                call.respond(HttpStatusCode.OK, surveys)
-                return@get
-            }
+            val active = call.request.queryParameters["active"]?.toBoolean()
+            val project = call.request.queryParameters["project"]
 
-            val surveys = repository.getSurveysByUser(userId)
+            val surveys = repository.getSurveys(
+                userId = userId,
+                project = project,
+                active = active,
+            )
 
             call.respond(HttpStatusCode.OK, surveys)
         }
@@ -145,6 +145,21 @@ fun Application.configureDatabases(): Database {
             val deeplink = deeplinkService.generateDeeplink(surveyId)
 
             call.respond(HttpStatusCode.Created, deeplink)
+        }
+
+        // set active state
+        put("/company-surveys/{surveyId}/active") {
+            val userId = call.getUserId()
+            if (userId == null) {
+                call.respond(HttpStatusCode.Unauthorized)
+                return@put
+            }
+
+            val surveyId = UUID.fromString(call.parameters["surveyId"])
+            val active = call.receive<Boolean>()
+            surveyRepository.setActive(surveyId, userId, active)
+
+            call.respond(HttpStatusCode.OK)
         }
     }
 

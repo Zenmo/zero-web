@@ -1,0 +1,2 @@
+ALTER TABLE company_survey
+    ADD COLUMN active BOOLEAN NOT NULL DEFAULT TRUE;

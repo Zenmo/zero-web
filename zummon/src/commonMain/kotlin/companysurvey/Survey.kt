@@ -27,6 +27,8 @@ data class Survey(
     val addresses: List<Address>,
     val project: Project? = null,
     val createdBy: User? = null,
+    /** Whether this Survey should be included in the simulation */
+    val active: Boolean = true,
 ) {
     /**
      * For JavaScript
@@ -45,8 +47,17 @@ data class Survey(
         }
     }
 
+    /**
+     * For sorting in JavaScript primereact/datatable
+     */
     public val createdAtToString: String
         get() = createdAt.toString()
+
+    /**
+     * For sorting in JavaScript primereact/datatable
+     */
+    public val createdByToString: String
+        get() = createdBy?.note ?: ""
 
     public val filesArray: Array<File>
         get() = addresses.flatMap {
@@ -134,6 +145,10 @@ data class Survey(
                 )
             )
         )
+    }
+
+    public fun withActive(active: Boolean): Survey {
+        return this.copy(active = active)
     }
 
     @OptIn(ExperimentalSerializationApi::class)

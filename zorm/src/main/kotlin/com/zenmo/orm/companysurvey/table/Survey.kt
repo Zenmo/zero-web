@@ -10,6 +10,7 @@ import org.jetbrains.exposed.sql.kotlin.datetime.timestamp
  */
 object CompanySurveyTable: ZenmoUUIDTable("company_survey") {
     val created = timestamp("created_at").defaultExpression(CurrentTimestamp)
+    val active = bool("active").default(true)
     // Can be fetched at https://energiekeregio.nl/api/v1/zenmo?details=15989
     val energiekeRegioId = uinteger("energieke_regio_id").nullable()
     val projectId = uuid("project_id").references(ProjectTable.id)

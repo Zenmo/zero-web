@@ -91,6 +91,22 @@ class SurveyRepository(
         }
     }
 
+    fun setActive(surveyId: UUID, userId: UUID, active: Boolean) {
+        val nUpdated = transaction(db) {
+            CompanySurveyTable
+                .update ({
+                    (CompanySurveyTable.id eq surveyId)
+                        .and(userIsAllowedCondition(userId))
+                }) {
+                    it[CompanySurveyTable.active] = active
+                }
+        }
+
+        if (nUpdated == 0) {
+            throw Exception("Can't find survey $surveyId for user $userId")
+        }
+    }
+
     fun getSurveyById(surveyId: UUID): Survey? {
         return getSurveys(
             (CompanySurveyTable.id eq surveyId)
@@ -109,12 +125,20 @@ class SurveyRepository(
         return getSurveys(projectFilter(project))
     }
 
-    fun getSurveysByProjectWithUserAccessCheck(project: String, userId: UUID): List<Survey> {
-        return getSurveys(
-            (projectFilter(project))
-                    and
-                    userIsAllowedCondition(userId)
+    fun getSurveys(project: String? = null, userId: UUID, active: Boolean? = null): List<Survey> {
+        val filters = mutableListOf(
+            userIsAllowedCondition(userId)
         )
+
+        if (project != null) {
+            filters.add(projectFilter(project))
+        }
+
+        if (active != null) {
+            filters.add(CompanySurveyTable.active eq active)
+        }
+
+        return getSurveys(filters.compoundAnd())
     }
 
     fun getSurveys(filter: Op<Boolean> = Op.TRUE): List<Survey> {
@@ -233,6 +257,7 @@ class SurveyRepository(
             email = row[CompanySurveyTable.email],
             dataSharingAgreed = row[CompanySurveyTable.dataSharingAgreed],
             addresses = emptyList(), // data from different table
+            active = row[CompanySurveyTable.active],
         )
     }
 
@@ -406,6 +431,7 @@ class SurveyRepository(
                 it[personName] = survey.personName
                 it[email] = survey.email
                 it[dataSharingAgreed] = survey.dataSharingAgreed
+                it[active] = survey.active
             }.map {
                 it[CompanySurveyTable.id]
             }.single()
