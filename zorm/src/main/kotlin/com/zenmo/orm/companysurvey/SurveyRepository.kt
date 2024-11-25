@@ -91,6 +91,22 @@ class SurveyRepository(
         }
     }
 
+    fun setIncludeInSimulation(surveyId: UUID, userId: UUID, includeInSimulation: Boolean) {
+        val nUpdated = transaction(db) {
+            CompanySurveyTable
+                .update ({
+                    (CompanySurveyTable.id eq surveyId)
+                        .and(userIsAllowedCondition(userId))
+                }) {
+                    it[CompanySurveyTable.includeInSimulation] = includeInSimulation
+                }
+        }
+
+        if (nUpdated == 0) {
+            throw Exception("Can't find survey $surveyId for user $userId")
+        }
+    }
+
     fun getSurveyById(surveyId: UUID): Survey? {
         return getSurveys(
             (CompanySurveyTable.id eq surveyId)
@@ -109,12 +125,20 @@ class SurveyRepository(
         return getSurveys(projectFilter(project))
     }
 
-    fun getSurveysByProjectWithUserAccessCheck(project: String, userId: UUID): List<Survey> {
-        return getSurveys(
-            (projectFilter(project))
-                    and
-                    userIsAllowedCondition(userId)
+    fun getSurveys(project: String? = null, userId: UUID, includeInSimulation: Boolean? = null): List<Survey> {
+        val filters = mutableListOf(
+            userIsAllowedCondition(userId)
         )
+
+        if (project != null) {
+            filters.add(projectFilter(project))
+        }
+
+        if (includeInSimulation != null) {
+            filters.add(CompanySurveyTable.includeInSimulation eq includeInSimulation)
+        }
+
+        return getSurveys(filters.compoundAnd())
     }
 
     fun getSurveys(filter: Op<Boolean> = Op.TRUE): List<Survey> {
@@ -233,6 +257,7 @@ class SurveyRepository(
             email = row[CompanySurveyTable.email],
             dataSharingAgreed = row[CompanySurveyTable.dataSharingAgreed],
             addresses = emptyList(), // data from different table
+            includeInSimulation = row[CompanySurveyTable.includeInSimulation],
         )
     }
 
@@ -406,6 +431,7 @@ class SurveyRepository(
                 it[personName] = survey.personName
                 it[email] = survey.email
                 it[dataSharingAgreed] = survey.dataSharingAgreed
+                it[includeInSimulation] = survey.includeInSimulation
             }.map {
                 it[CompanySurveyTable.id]
             }.single()
