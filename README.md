@@ -128,12 +128,12 @@ docker compose up -d frontend
 ```
 
 The frontend should now be working. Validate this at 
-[http://localhost:1234](http://localhost:1234).
+[http://localhost:3000](http://localhost:3000).
 
 4\. Start database
 
 ```bash
-docker compose up postgres
+docker compose up -d postgres
 ```
 
 4\. Initialize database schema
