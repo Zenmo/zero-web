@@ -6,7 +6,6 @@ import com.zenmo.orm.connectToPostgres
 import com.zenmo.orm.deeplink.DeeplinkRepository
 import com.zenmo.ztor.deeplink.DeeplinkService
 import com.zenmo.ztor.errorMessageToJson
-import com.zenmo.ztor.user.UserSession
 import com.zenmo.ztor.user.getUserId
 import com.zenmo.zummon.companysurvey.Survey
 import io.ktor.http.*
@@ -16,7 +15,6 @@ import io.ktor.server.plugins.*
 import io.ktor.server.request.*
 import io.ktor.server.response.*
 import io.ktor.server.routing.*
-import io.ktor.server.sessions.*
 import org.jetbrains.exposed.sql.Database
 import java.util.*
 
@@ -50,7 +48,7 @@ fun Application.configureDatabases(): Database {
                 return@post
             }
 
-            val surveyId = surveyRepository.save(survey)
+            val surveyId = surveyRepository.save(survey, call.getUserId())
 
             val deeplink = deeplinkService.generateDeeplink(surveyId)
 
