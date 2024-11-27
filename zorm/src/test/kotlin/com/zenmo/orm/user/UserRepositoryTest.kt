@@ -35,8 +35,8 @@ class UserRepositoryTest {
         val userId = UUID.randomUUID()
         val note = "This is a test note"
         val repo = UserRepository(db)
-        repo.saveUser(db, userId, note = note)
-        val result = repo.getUserById(db, userId)
+        repo.saveUser(userId, note = note)
+        val result = repo.getUserById(userId)
         assertNotNull(result)
         assertEquals(userId, result?.id)
         assertEquals(note, result?.note)
@@ -49,8 +49,8 @@ class UserRepositoryTest {
         val db = connectToPostgres()
         val repo = UserRepository(db)
 
-        repo.saveUser(db, userId)
-        val result = repo.getUserById(db, userId)
+        repo.saveUser(userId)
+        val result = repo.getUserById(userId)
         assertNotNull(result)
         assertEquals(userId, result.id)
         assertEquals("", result.note)
@@ -65,7 +65,7 @@ class UserRepositoryTest {
         val projectId = ProjectRepository(db).saveNewProject(tmpProjectName)
         val repo = UserRepository(db)
 
-        repo.saveUser(db, userId, listOf(projectId))
+        repo.saveUser(userId, listOf(projectId))
         transaction(db) {
             val result = UserProjectTable.selectAll()
                 .where { UserProjectTable.userId eq userId and (UserProjectTable.projectId eq projectId) }.singleOrNull()
@@ -82,7 +82,7 @@ class UserRepositoryTest {
         val repo = UserRepository(db)
 
         transaction(db) {
-            repo.saveUser(db, userId)
+            repo.saveUser(userId)
         }
 
         transaction(db) {

@@ -9,7 +9,7 @@ import java.util.UUID
 class UserRepository(
     private val db: Database,
 ) {
-    fun getUserById(db: Database, id: UUID): User? {
+    fun getUserById(id: UUID): User? {
         return transaction(db) {
             UserTable
                 .selectAll()
@@ -22,7 +22,6 @@ class UserRepository(
     }
 
     fun saveUser(
-        db: Database,
         userId: UUID,
         projectIds: List<UUID> = emptyList(),
         note: String = "",

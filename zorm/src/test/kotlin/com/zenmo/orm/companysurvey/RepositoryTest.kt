@@ -83,7 +83,7 @@ class RepositoryTest {
         val userRepo = UserRepository(db)
 
         val userId = UUID.randomUUID()
-        userRepo.saveUser(db, userId, listOf(projectId))
+        userRepo.saveUser(userId, listOf(projectId))
 
         val otherProjectName = "Bovenkaap"
         ProjectRepository(db).saveNewProject(otherProjectName)
@@ -139,9 +139,9 @@ class RepositoryTest {
         val userRepo = UserRepository(db)
 
         val jaapId = UUID.fromString("bc0ea106-3bac-452e-ae39-5c1b29782001")
-        userRepo.saveUser(db = db, userId = jaapId, note = "Jaap")
+        userRepo.saveUser(userId = jaapId, note = "Jaap")
         val pietId = UUID.fromString("bc0ea106-3bac-452e-ae39-5c1b29782002")
-        userRepo.saveUser(db = db, userId = pietId, note = "Piet")
+        userRepo.saveUser(userId = pietId, note = "Piet")
 
         val repo = SurveyRepository(db)
         // create survey
