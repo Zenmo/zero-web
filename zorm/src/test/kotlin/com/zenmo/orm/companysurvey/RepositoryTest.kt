@@ -3,7 +3,7 @@ package com.zenmo.orm.companysurvey
 import com.zenmo.orm.companysurvey.table.CompanySurveyTable
 import com.zenmo.orm.createSchema
 import com.zenmo.orm.connectToPostgres
-import com.zenmo.orm.user.saveUser
+import com.zenmo.orm.user.UserRepository
 import com.zenmo.zummon.companysurvey.Survey
 import org.jetbrains.exposed.sql.Schema
 import org.jetbrains.exposed.sql.SchemaUtils
@@ -80,9 +80,10 @@ class RepositoryTest {
 
         val ownProjectName = "Middelkaap"
         val projectId = ProjectRepository(db).saveNewProject(ownProjectName)
+        val userRepo = UserRepository(db)
 
         val userId = UUID.randomUUID()
-        saveUser(db, userId, listOf(projectId))
+        userRepo.saveUser(db, userId, listOf(projectId))
 
         val otherProjectName = "Bovenkaap"
         ProjectRepository(db).saveNewProject(otherProjectName)
@@ -135,10 +136,12 @@ class RepositoryTest {
     @OptIn(ExperimentalUuidApi::class)
     fun testCreatorIsSetOnCreateButNotOnEdit() {
         val db = connectToPostgres()
+        val userRepo = UserRepository(db)
+
         val jaapId = UUID.fromString("bc0ea106-3bac-452e-ae39-5c1b29782001")
-        saveUser(db = db, userId = jaapId, note = "Jaap")
+        userRepo.saveUser(db = db, userId = jaapId, note = "Jaap")
         val pietId = UUID.fromString("bc0ea106-3bac-452e-ae39-5c1b29782002")
-        saveUser(db = db, userId = pietId, note = "Piet")
+        userRepo.saveUser(db = db, userId = pietId, note = "Piet")
 
         val repo = SurveyRepository(db)
         // create survey
