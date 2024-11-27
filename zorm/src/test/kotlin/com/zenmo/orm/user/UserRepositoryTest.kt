@@ -4,7 +4,9 @@ import com.zenmo.orm.companysurvey.ProjectRepository
 import com.zenmo.orm.connectToPostgres
 import com.zenmo.orm.createSchema
 import com.zenmo.orm.user.table.UserProjectTable
+import com.zenmo.orm.user.table.UserTable
 import org.jetbrains.exposed.sql.*
+import org.jetbrains.exposed.sql.SqlExpressionBuilder.eq
 import org.jetbrains.exposed.sql.transactions.transaction
 import org.junit.BeforeClass
 import java.util.UUID
@@ -89,5 +91,34 @@ class UserRepositoryTest {
             val results = UserProjectTable.selectAll().where { UserProjectTable.userId eq userId }.toList()
             assertTrue(results.isEmpty())
         }
+    }
+
+    @Test
+    fun `test getUsers returns all users when no filter is provided`() {
+        val db = connectToPostgres()
+        val repo = UserRepository(db)
+        transaction(db) {
+            for (i in 1..5) {
+                repo.saveUser(UUID.randomUUID(), note = "User $i note")
+            }
+        }
+        val users = repo.getUsers()
+        assertEquals(12, users.size)
+    }
+
+    @Test
+    fun `test getUsers filters users based on given filter`() {
+        val db = connectToPostgres()
+        val repo = UserRepository(db)
+        val userId = UUID.randomUUID()
+        transaction(db) {
+            repo.saveUser(userId, note = "Specific user note")
+            for (i in 1..4) {
+                repo.saveUser(UUID.randomUUID(), note = "User $i note")
+            }
+        }
+        val users = repo.getUsers((UserTable.note eq "Specific user note"))
+        assertEquals(1, users.size)
+        assertEquals(userId, users.first().id)
     }
 }
