@@ -4,16 +4,14 @@ import com.zenmo.orm.companysurvey.ProjectRepository
 import com.zenmo.orm.connectToPostgres
 import com.zenmo.orm.createSchema
 import com.zenmo.orm.user.table.UserProjectTable
+import com.zenmo.orm.companysurvey.table.ProjectTable
 import com.zenmo.orm.user.table.UserTable
 import org.jetbrains.exposed.sql.*
 import org.jetbrains.exposed.sql.SqlExpressionBuilder.eq
 import org.jetbrains.exposed.sql.transactions.transaction
 import org.junit.BeforeClass
 import java.util.UUID
-import kotlin.test.Test
-import kotlin.test.assertEquals
-import kotlin.test.assertTrue
-import kotlin.test.assertNotNull
+import kotlin.test.*
 import kotlin.uuid.ExperimentalUuidApi
 
 class UserRepositoryTest {
@@ -103,7 +101,7 @@ class UserRepositoryTest {
             }
         }
         val users = repo.getUsers()
-        assertEquals(12, users.size)
+        assertEquals(13, users.size)
     }
 
     @Test
@@ -120,6 +118,51 @@ class UserRepositoryTest {
         val users = repo.getUsers((UserTable.note eq "Specific user note"))
         assertEquals(1, users.size)
         assertEquals(userId, users.first().id)
+    }
+
+    @Test
+    fun `test getUsers loads projects`() {
+        val db = connectToPostgres()
+        val userRepository = UserRepository(db)
+        val userId = UUID.randomUUID()
+        val project1Id = UUID.randomUUID()
+        val project2Id = UUID.randomUUID()
+
+        // Insert projects
+        transaction(db) {
+            ProjectTable.insert {
+                it[id] = project1Id
+                it[name] = "Project 1"
+            }
+
+            ProjectTable.insert {
+                it[id] = project2Id
+                it[name] = "Project 2"
+            }
+        }
+
+        // Save user with projects
+        userRepository.saveUser(userId, listOf(project1Id, project2Id), "Test Note")
+
+        // Retrieve users
+        val users = userRepository.getUsers(( UserTable.id eq userId ))
+        val user = users.firstOrNull()
+
+        // Assertions
+        assertNotNull(user)
+        assertEquals(userId, user.id)
+        assertEquals("Test Note", user.note)
+        assertEquals(2, user.projects.size)
+
+        val projectIds = listOf(project1Id, project2Id)
+        user.projects.forEach { project ->
+            assertTrue(projectIds.contains(project.id))
+            when (project.id) {
+                project1Id -> assertEquals("Project 1", project.name)
+                project2Id -> assertEquals("Project 2", project.name)
+                else -> fail("Unexpected project ID ${project.id}")
+            }
+        }
     }
 
     @Test

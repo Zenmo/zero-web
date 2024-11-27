@@ -1,5 +1,6 @@
 package com.zenmo.zummon
 
+import com.zenmo.zummon.companysurvey.Project
 import kotlinx.serialization.Serializable
 import kotlin.js.JsExport
 import kotlin.uuid.Uuid
@@ -14,4 +15,5 @@ data class User(
     @Serializable(with = KotlinUuidSerializer::class)
     val id: Uuid,
     val note: String,
+    val projects: List<Project> = emptyList()
 )

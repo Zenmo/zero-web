@@ -2,6 +2,8 @@ package com.zenmo.orm.user
 
 import com.zenmo.orm.user.table.UserProjectTable
 import com.zenmo.orm.user.table.UserTable
+import com.zenmo.orm.companysurvey.table.ProjectTable
+import com.zenmo.zummon.companysurvey.Project
 import org.jetbrains.exposed.sql.*
 import org.jetbrains.exposed.sql.SqlExpressionBuilder.eq
 import org.jetbrains.exposed.sql.transactions.transaction
@@ -18,6 +20,8 @@ class UserRepository(
                     filter
                 }.mapNotNull {
                     hydrateUser(it)
+                }.map { user ->
+                    user.copy(projects = getUserProjects(user.id))
                 }
         }
     }
@@ -52,7 +56,7 @@ class UserRepository(
                 UserProjectTable.userId eq userId
             }
             UserTable.deleteWhere {
-                UserTable.id eq userId
+                id eq userId
             }
         }
     }
@@ -63,6 +67,24 @@ class UserRepository(
             note = row[UserTable.note],
             projects = emptyList(), // data from different table
         )
+    }
+
+    private fun getUserProjects(userId: UUID): List<Project> {
+        return transaction(db) {
+            UserProjectTable.innerJoin(ProjectTable)
+                .selectAll()
+                .where{
+                    UserProjectTable.userId eq userId
+                }
+                .map {
+                    Project(
+                        id = it[ProjectTable.id],
+                        name = it[ProjectTable.name],
+                        energiekeRegioId = it[ProjectTable.energiekeRegioId],
+                        buurtCodes = it[ProjectTable.buurtCodes]
+                    )
+                }
+        }
     }
 
 }
