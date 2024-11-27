@@ -1,13 +1,9 @@
 package com.zenmo.orm.user
 
-import com.zenmo.orm.companysurvey.table.AddressTable
-import com.zenmo.orm.companysurvey.table.CompanySurveyTable
-import com.zenmo.orm.companysurvey.table.ProjectTable
 import com.zenmo.orm.user.table.UserProjectTable
 import com.zenmo.orm.user.table.UserTable
 import org.jetbrains.exposed.sql.*
 import org.jetbrains.exposed.sql.SqlExpressionBuilder.eq
-import org.jetbrains.exposed.sql.SqlExpressionBuilder.inList
 import org.jetbrains.exposed.sql.transactions.transaction
 import java.util.UUID
 
@@ -20,7 +16,7 @@ class UserRepository(
                 .selectAll()
                 .where{
                     filter
-                }.map {
+                }.mapNotNull {
                     hydrateUser(it)
                 }
         }
@@ -38,7 +34,7 @@ class UserRepository(
         note: String = "",
     ) {
         transaction(db) {
-            UserTable.insert {
+            UserTable.upsert {
                 it[id] = userId
                 it[UserTable.note] = note
             }
@@ -46,6 +42,17 @@ class UserRepository(
             UserProjectTable.batchInsert(projectIds) {
                 this[UserProjectTable.projectId] = it
                 this[UserProjectTable.userId] = userId
+            }
+        }
+    }
+
+    fun deleteUserById(userId: UUID) {
+        transaction(db) {
+            UserProjectTable.deleteWhere {
+                UserProjectTable.userId eq userId
+            }
+            UserTable.deleteWhere {
+                UserTable.id eq userId
             }
         }
     }

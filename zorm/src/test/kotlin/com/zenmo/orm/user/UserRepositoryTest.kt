@@ -121,4 +121,59 @@ class UserRepositoryTest {
         assertEquals(1, users.size)
         assertEquals(userId, users.first().id)
     }
+
+    @Test
+    fun `test deleteUserById removes user correctly`() {
+        val db = connectToPostgres()
+        val repo = UserRepository(db)
+        val userId = UUID.randomUUID()
+        transaction(db) {
+            repo.saveUser(userId, note = "Delete Test User")
+        }
+
+        val userBeforeDelete = repo.getUserById(userId)
+        assertNotNull(userBeforeDelete)
+
+        repo.deleteUserById(userId)
+        val userAfterDelete = repo.getUserById(userId)
+        assertTrue(userAfterDelete == null)
+    }
+
+    @Test
+    fun `test deleteUserById removes user projects as well`() {
+        val db = connectToPostgres()
+        val repo = UserRepository(db)
+        val userId = UUID.randomUUID()
+        transaction(db) {
+            repo.saveUser(userId, note = "Delete Test User with Projects")
+        }
+        val projectIds = listOf(ProjectRepository(db).saveNewProject("Test Project"))
+
+        transaction(db) {
+            repo.saveUser(userId, projectIds)
+        }
+
+        val userProjectsBeforeDelete = transaction(db) {
+            UserProjectTable.selectAll().where { UserProjectTable.userId eq userId }.toList()
+        }
+        assertTrue(userProjectsBeforeDelete.isNotEmpty())
+
+        repo.deleteUserById(userId)
+
+        val userProjectsAfterDelete = transaction(db) {
+            UserProjectTable.selectAll().where { UserProjectTable.userId eq userId }.toList()
+        }
+        assertTrue(userProjectsAfterDelete.isEmpty())
+    }
+
+    @Test
+    fun `test deleteUserById does nothing if user does not exist`() {
+        val db = connectToPostgres()
+        val repo = UserRepository(db)
+        val nonExistentUserId = UUID.randomUUID()
+
+        repo.deleteUserById(nonExistentUserId)
+        // If no exceptions are thrown, the test passes as there's no user to delete
+        assertTrue(true)
+    }
 }
