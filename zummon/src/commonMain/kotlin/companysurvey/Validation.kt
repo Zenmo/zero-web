@@ -61,7 +61,7 @@ class GridConnectionValidator : Validator<GridConnection> {
         val batteryPower = (gridConnection.storage.batteryPowerKw ?: 0.0).toFloat()
 
         return if (totalPowerChargePoints < (contractedCapacity + batteryPower)) {
-            listOf(ValidationResult(Status.VALID, translate("gridConnection.totalPowerChargePoints")))
+            listOf(ValidationResult(Status.VALID, translate("gridConnection.totalPowerChargePointsValid")))
         } else {
             listOf(ValidationResult(Status.INVALID, translate("gridConnection.totalPowerChargePointsInvalid", totalPowerChargePoints, contractedCapacity + batteryPower)))
         }
@@ -289,7 +289,12 @@ class ElectricityValidator : Validator<Electricity> {
             } ?: false
 
             if (isCloseEnough) {
-                ValidationResult(Status.VALID, translate("electricity.annualFeedInValid", electricity.annualElectricityFeedIn_kWh, totalQuarterHourlyFeedIn))
+                ValidationResult(
+                    Status.VALID, message(
+                        nl = "Jaarwaarde teruglevering ${electricity.annualElectricityFeedIn_kWh} kWh komt overeen met het totaal van de kwartierwaarden ${totalQuarterHourlyFeedIn} kWh",
+                        en = "Annual feed-in of ${electricity.annualElectricityFeedIn_kWh} kWh matches total of quarter-hourly feed-in ${totalQuarterHourlyFeedIn} kWh",
+                    )
+                )
             } else {
                 ValidationResult(Status.INVALID, translate("electricity.annualFeedInMismatch", electricity.annualElectricityFeedIn_kWh, totalQuarterHourlyFeedIn))
             }
@@ -572,7 +577,12 @@ class TransportValidator {
     fun validateTotalElectricVans(transport: Transport): ValidationResult {
         return when {
             ((transport.vans.numElectricVans ?: 0) > (transport.vans.numVans ?: 0)) -> ValidationResult(Status.INVALID, translate("transport.electricVansInvalid", transport.vans.numElectricVans, transport.vans.numVans))
-            else -> ValidationResult(Status.VALID, translate("transport.electricVansValid"))
+            else -> ValidationResult(
+                Status.VALID, message(
+                    en = "Number of electric vans does not exceed the total number of Vans",
+                    nl = "Aantal elektrische bestelwagens valt binnen het totale aantal bestelwagens"
+                )
+            )
         }
     }
 }
@@ -701,11 +711,7 @@ val translations: Map<Language, Map<String, Map<String, String>>> = mapOf(
             "electricTrucksValid" to "Number of Electric Trucks is lower than the total of Trucks",
             "electricTrucksInvalid" to "Number of electric trucks %d exceeds the total number of trucks %d",
 
-            "electricVansValid" to "Number of Electric Vans is lower than the total of Vans",
             "electricVansInvalid" to "Number of electric vans %d exceeds the total number of vans %d",
-
-            "quarterHourlyDeliveryLowContractedCapacityKw" to "Kwartuur levering blijft lager dan de Contractuele CapaciteitKw (%d)",
-            "quarterHourlyDeliveryHighContractedCapacityKw" to "Kwartuur levering mag niet hoger zijn dan de Contractuele CapaciteitKw (%d)",
         ),
     ),
     Language.nl to mapOf(

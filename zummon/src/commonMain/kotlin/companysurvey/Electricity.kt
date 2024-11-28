@@ -34,7 +34,7 @@ data class Electricity (
     fun getHasConnection(): Boolean {
         return hasConnection ?: false
     }
-
+    
     /**
      * Contracted capacity for delivery of electricity from grid to company.
      */
@@ -54,14 +54,22 @@ data class Electricity (
         }
     }
 
+    fun getContractedDeliveryCapacityKw(): Double? {
+        return when (kleinverbruikOrGrootverbruik) {
+            KleinverbruikOrGrootverbruik.GROOTVERBRUIK -> grootverbruik?.contractedConnectionDeliveryCapacity_kW?.toDouble()
+            KleinverbruikOrGrootverbruik.KLEINVERBRUIK -> kleinverbruik?.connectionCapacity?.toKw()
+            else -> kleinverbruik?.connectionCapacity?.toKw() ?: grootverbruik?.contractedConnectionDeliveryCapacity_kW?.toDouble()
+        }
+    }
+
     /**
      * Contracted capacity for feed-in of electricity from company to grid.
      */
     fun getContractedFeedInCapacityKw(): Double? {
-        when (kleinverbruikOrGrootverbruik) {
-            KleinverbruikOrGrootverbruik.GROOTVERBRUIK -> return grootverbruik?.contractedConnectionFeedInCapacity_kW?.toDouble()
-            KleinverbruikOrGrootverbruik.KLEINVERBRUIK -> return kleinverbruik?.connectionCapacity?.toKw()
-            else -> return kleinverbruik?.connectionCapacity?.toKw() ?: grootverbruik?.contractedConnectionFeedInCapacity_kW?.toDouble()
+        return when (kleinverbruikOrGrootverbruik) {
+            KleinverbruikOrGrootverbruik.GROOTVERBRUIK -> grootverbruik?.contractedConnectionFeedInCapacity_kW?.toDouble()
+            KleinverbruikOrGrootverbruik.KLEINVERBRUIK -> kleinverbruik?.connectionCapacity?.toKw()
+            else -> kleinverbruik?.connectionCapacity?.toKw() ?: grootverbruik?.contractedConnectionFeedInCapacity_kW?.toDouble()
         }
     }
 }
