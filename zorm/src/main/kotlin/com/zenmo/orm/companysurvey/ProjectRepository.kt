@@ -1,7 +1,9 @@
 package com.zenmo.orm.companysurvey
 
 import com.zenmo.orm.companysurvey.table.ProjectTable
+import com.zenmo.orm.user.User
 import com.zenmo.orm.user.table.UserProjectTable
+import com.zenmo.orm.user.table.UserTable
 import com.zenmo.zummon.companysurvey.Project
 import org.jetbrains.exposed.sql.*
 import org.jetbrains.exposed.sql.SqlExpressionBuilder.eq
@@ -13,6 +15,29 @@ import kotlin.uuid.toKotlinUuid
 class ProjectRepository(
     val db: Database
 ) {
+    fun getProjects(filter: Op<Boolean> = Op.TRUE): List<Project> {
+        return transaction(db) {
+            ProjectTable
+                .selectAll()
+                .where{
+                    filter
+                }.mapNotNull {
+                    hydrateProject(it)
+                }
+        }
+    }
+
+    @OptIn(ExperimentalUuidApi::class)
+    fun getProjectsByUserId(userId: UUID): List<Project> =
+        transaction(db) {
+             getProjects(
+                ( ProjectTable .id eq anyFrom(
+                    UserProjectTable.select(UserProjectTable.projectId)
+                        .where { UserProjectTable.userId eq userId }
+                ))
+            )
+        }
+
     fun saveNewProject(name: String): UUID =
         transaction(db) {
            ProjectTable.insertReturning(listOf(ProjectTable.id)) {
@@ -38,23 +63,12 @@ class ProjectRepository(
                 .single()
         }
 
-    @OptIn(ExperimentalUuidApi::class)
-    fun getProjects(userId: UUID): List<Project> =
-        transaction(db) {
-            ProjectTable.selectAll()
-                .where {
-                    ProjectTable.id eq anyFrom(
-                        UserProjectTable.select(UserProjectTable.projectId)
-                            .where { UserProjectTable.userId eq userId }
-                    )
-                }
-                .map {
-                    Project(
-                        it[ProjectTable.id].toKotlinUuid(),
-                        it[ProjectTable.name],
-                        it[ProjectTable.energiekeRegioId],
-                        it[ProjectTable.buurtCodes],
-                    )
-                }
-        }
+    protected fun hydrateProject(row: ResultRow): Project {
+        return Project(
+            id = row[ProjectTable.id],
+            name = row[ProjectTable.name],
+            energiekeRegioId = row[ProjectTable.energiekeRegioId],
+            buurtCodes = row[ProjectTable.buurtCodes]
+        )
+    }
 }

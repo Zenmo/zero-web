@@ -97,6 +97,14 @@ services:
         environment:
             POSTGRES_URL: jdbc:postgresql://postgres:5432/test
 
+    ztor-test-create-schema:
+        extends:
+            service: ztor-echo-schema-sql
+        command: ztor:run --args=create-schema
+        environment:
+            # other database
+            POSTGRES_URL: jdbc:postgresql://postgres:5432/test
+
     ## Recompiles on source code changes.
     ## Do ensure that the two Gradle containers have independent Home directories and Project cache directories.
     ztor-build-once:

@@ -31,7 +31,7 @@ fun Application.configureDatabases(): Database {
                 return@get
             }
 
-            call.respond(HttpStatusCode.OK, ProjectRepository(db).getProjects(userId))
+            call.respond(HttpStatusCode.OK, ProjectRepository(db).getProjectsByUserId(userId))
         }
 
         // Create
