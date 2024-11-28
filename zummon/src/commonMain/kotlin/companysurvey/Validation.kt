@@ -533,6 +533,7 @@ class TransportValidator {
     }
 }
 
+@JsExport
 fun setLanguage(language: Language) {
     currentLanguage = language
 }
@@ -541,6 +542,7 @@ fun getLanguage(): Language {
     return currentLanguage
 }
 
+@JsExport
 enum class Language {
     en,
     nl
