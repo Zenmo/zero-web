@@ -3,11 +3,8 @@ package com.zenmo.orm.companysurvey
 import com.zenmo.orm.companysurvey.table.ProjectTable
 import com.zenmo.orm.user.table.UserProjectTable
 import com.zenmo.zummon.companysurvey.Project
-import org.jetbrains.exposed.sql.Database
+import org.jetbrains.exposed.sql.*
 import org.jetbrains.exposed.sql.SqlExpressionBuilder.eq
-import org.jetbrains.exposed.sql.anyFrom
-import org.jetbrains.exposed.sql.insertReturning
-import org.jetbrains.exposed.sql.selectAll
 import org.jetbrains.exposed.sql.transactions.transaction
 import java.util.UUID
 import kotlin.uuid.ExperimentalUuidApi
@@ -18,7 +15,7 @@ class ProjectRepository(
 ) {
     fun saveNewProject(name: String): UUID =
         transaction(db) {
-            ProjectTable.insertReturning(listOf(ProjectTable.id)) {
+           ProjectTable.insertReturning(listOf(ProjectTable.id)) {
                 it[ProjectTable.name] = name
             }.first()[ProjectTable.id]
         }
