@@ -768,6 +768,17 @@ val translations: Map<Language, Map<String, Map<String, String>>> = mapOf(
     )
 )
 
+/**
+ * Utility function to display a message in the currently active language.
+ * Intended to replace translation keys, because it's harder to miss a translation,
+ * and it leads to better locality between both translations and between the messages and the code.
+ */
+fun message(nl: String, en: String): String =
+    when (getLanguage()) {
+        Language.en -> en
+        Language.nl -> nl
+    }
+
 // Translation function with fallback to English
 fun translate(key: String, vararg args: Any?): String {
     val (module, translationKey) = key.split(".").let { it[0] to it[1] }
