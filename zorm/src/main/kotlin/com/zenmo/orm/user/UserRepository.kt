@@ -8,6 +8,8 @@ import org.jetbrains.exposed.sql.*
 import org.jetbrains.exposed.sql.SqlExpressionBuilder.eq
 import org.jetbrains.exposed.sql.transactions.transaction
 import java.util.UUID
+import kotlin.uuid.ExperimentalUuidApi
+import kotlin.uuid.toKotlinUuid
 
 class UserRepository(
     private val db: Database,
@@ -69,6 +71,7 @@ class UserRepository(
         )
     }
 
+    @OptIn(ExperimentalUuidApi::class)
     private fun getUserProjects(userId: UUID): List<Project> {
         return transaction(db) {
             UserProjectTable.innerJoin(ProjectTable)
@@ -78,7 +81,7 @@ class UserRepository(
                 }
                 .map {
                     Project(
-                        id = it[ProjectTable.id],
+                        id = it[ProjectTable.id].toKotlinUuid(),
                         name = it[ProjectTable.name],
                         energiekeRegioId = it[ProjectTable.energiekeRegioId],
                         buurtCodes = it[ProjectTable.buurtCodes]

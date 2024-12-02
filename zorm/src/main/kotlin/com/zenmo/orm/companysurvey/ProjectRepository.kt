@@ -32,7 +32,7 @@ class ProjectRepository(
                 }
                 .map {
                     Project(
-                        it[ProjectTable.id],
+                        it[ProjectTable.id].toKotlinUuid(),
                         it[ProjectTable.name],
                         it[ProjectTable.energiekeRegioId],
                         it[ProjectTable.buurtCodes],
@@ -53,7 +53,7 @@ class ProjectRepository(
                 }
                 .map {
                     Project(
-                        it[ProjectTable.id],
+                        it[ProjectTable.id].toKotlinUuid(),
                         it[ProjectTable.name],
                         it[ProjectTable.energiekeRegioId],
                         it[ProjectTable.buurtCodes],

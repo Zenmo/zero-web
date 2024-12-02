@@ -13,7 +13,7 @@ import kotlin.uuid.Uuid
 @JsExport
 data class User(
     @Serializable(with = KotlinUuidSerializer::class)
-    val id: Uuid,
+    val id: Uuid = Uuid.random(),
     val note: String,
     val projects: List<Project> = emptyList()
 )
