@@ -1,16 +1,13 @@
 package com.zenmo.orm.companysurvey
 
-import com.zenmo.orm.companysurvey.table.ProjectTable
-import com.zenmo.orm.user.User
+import com.zenmo.orm.companysurvey.table.*
 import com.zenmo.orm.user.table.UserProjectTable
-import com.zenmo.orm.user.table.UserTable
 import com.zenmo.zummon.companysurvey.Project
 import org.jetbrains.exposed.sql.*
 import org.jetbrains.exposed.sql.SqlExpressionBuilder.eq
 import org.jetbrains.exposed.sql.transactions.transaction
 import java.util.UUID
 import kotlin.uuid.ExperimentalUuidApi
-import kotlin.uuid.toKotlinUuid
 
 class ProjectRepository(
     val db: Database
@@ -38,6 +35,18 @@ class ProjectRepository(
             )
         }
 
+    fun save(project: Project): Project {
+        return transaction(db) {
+           ProjectTable.upsertReturning() {
+                it[name] = project.name
+                it[energiekeRegioId] = project.energiekeRegioId
+                it[buurtCodes] = project.buurtCodes
+            }.map {
+               hydrateProject(it)
+            }.first()
+        }
+    }
+
     fun saveNewProject(name: String): UUID =
         transaction(db) {
            ProjectTable.insertReturning(listOf(ProjectTable.id)) {
@@ -48,20 +57,10 @@ class ProjectRepository(
     @OptIn(ExperimentalUuidApi::class)
     fun getProjectByEnergiekeRegioId(energiekeRegioId: Int): Project =
         transaction(db) {
-            ProjectTable.selectAll()
-                .where {
-                    ProjectTable.energiekeRegioId eq energiekeRegioId
-                }
-                .map {
-                    Project(
-                        it[ProjectTable.id].toKotlinUuid(),
-                        it[ProjectTable.name],
-                        it[ProjectTable.energiekeRegioId],
-                        it[ProjectTable.buurtCodes],
-                    )
-                }
-                .single()
-        }
+            getProjects(
+                ProjectTable.energiekeRegioId eq energiekeRegioId
+            )
+        }.first()
 
     protected fun hydrateProject(row: ResultRow): Project {
         return Project(

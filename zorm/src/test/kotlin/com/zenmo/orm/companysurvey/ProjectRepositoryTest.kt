@@ -4,6 +4,7 @@ import com.zenmo.orm.companysurvey.table.ProjectTable
 import com.zenmo.orm.connectToPostgres
 import com.zenmo.orm.createSchema
 import com.zenmo.orm.user.UserRepository
+import com.zenmo.zummon.companysurvey.Project
 import org.jetbrains.exposed.sql.*
 import org.jetbrains.exposed.sql.transactions.transaction
 import org.junit.BeforeClass
@@ -28,19 +29,49 @@ class ProjectRepositoryTest {
     }
 
     @Test
+    fun testSaveProject() {
+        val db = connectToPostgres()
+        val repo = ProjectRepository(db)
+
+        val project = Project(
+            name = "Updated Project",
+            energiekeRegioId = 456,
+            buurtCodes = listOf("B001", "B002")
+        )
+
+        transaction(db) {
+            val savedProject = repo.save(project)
+
+            val result = ProjectTable.selectAll()
+                .where { ProjectTable.id eq savedProject.id }
+                .singleOrNull()
+
+            assertNotNull(result)
+            assertEquals(savedProject.name, result[ProjectTable.name])
+            assertEquals(savedProject.energiekeRegioId, result[ProjectTable.energiekeRegioId])
+            assertEquals(savedProject.buurtCodes, result[ProjectTable.buurtCodes])
+        }
+    }
+
+    @Test
     fun testGetAllProjects() {
         val db = connectToPostgres()
         val repo = ProjectRepository(db)
-        val projectName = "Test Project"
-        //val energiekeRegioId = 123
+        val projectName = "Testing Project"
+        val energiekeRegioId = 459
+
+        val project = Project(
+            name = projectName,
+            energiekeRegioId = energiekeRegioId,
+        )
+        val projectResult = repo.save(project)
 
         transaction(db) {
-            val projectId = repo.saveNewProject(projectName)
             val projects = repo.getProjects()
-            assertEquals(4, projects.size)
-            assertEquals(projectId, projects.last().id)
-            assertEquals(projectName, projects.last().name)
-//          assertEquals(energiekeRegioId, projects[0].energiekeRegioId)
+            assertEquals(6, projects.size)
+            assertEquals(projectResult.id, projects.last().id)
+            assertEquals(projectResult.name, projects.last().name)
+          assertEquals(energiekeRegioId, projects.last().energiekeRegioId)
         }
     }
 
@@ -61,21 +92,23 @@ class ProjectRepositoryTest {
         }
     }
 
-//    @Test
-//    fun testGetProjectByEnergiekeRegioId() {
-//        val db = connectToPostgres()
-//        val repo = ProjectRepository(db)
-//        val projectName = "Test Project"
-//        val energiekeRegioId = 123
-//
-//        transaction(db) {
-//            repo.saveNewProject(projectName)
-//            val project = repo.getProjectByEnergiekeRegioId(energiekeRegioId)
-//            assertNotNull(project)
-//            assertEquals(projectName, project.name)
-//            assertEquals(energiekeRegioId, project.energiekeRegioId)
-//        }
-//    }
+    @Test
+    fun testGetProjectByEnergiekeRegioId() {
+        val db = connectToPostgres()
+        val repo = ProjectRepository(db)
+        val project = Project(
+            name = "Test Project",
+            energiekeRegioId = 123,
+        )
+
+        transaction(db) {
+            repo.save(project)
+            val response = repo.getProjectByEnergiekeRegioId(123) // is it only one for one project?
+            assertNotNull(project)
+            assertEquals(project.name, response.name)
+            assertEquals(project.energiekeRegioId, response.energiekeRegioId)
+        }
+    }
 
     @Test
     fun testGetProjectsByUserId() {
