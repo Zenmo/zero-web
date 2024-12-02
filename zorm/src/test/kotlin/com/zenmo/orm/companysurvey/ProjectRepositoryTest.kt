@@ -38,10 +38,9 @@ class ProjectRepositoryTest {
             energiekeRegioId = 456,
             buurtCodes = listOf("B001", "B002")
         )
+        val savedProject = repo.save(project)
 
         transaction(db) {
-            val savedProject = repo.save(project)
-
             val result = ProjectTable.selectAll()
                 .where { ProjectTable.id eq savedProject.id }
                 .singleOrNull()
@@ -65,14 +64,11 @@ class ProjectRepositoryTest {
             energiekeRegioId = energiekeRegioId,
         )
         val projectResult = repo.save(project)
-
-        transaction(db) {
-            val projects = repo.getProjects()
-            assertEquals(6, projects.size)
-            assertEquals(projectResult.id, projects.last().id)
-            assertEquals(projectResult.name, projects.last().name)
-          assertEquals(energiekeRegioId, projects.last().energiekeRegioId)
-        }
+        val projects = repo.getProjects()
+        assertEquals(6, projects.size)
+        assertEquals(projectResult.id, projects.last().id)
+        assertEquals(projectResult.name, projects.last().name)
+        assertEquals(energiekeRegioId, projects.last().energiekeRegioId)
     }
 
     @Test
@@ -80,10 +76,7 @@ class ProjectRepositoryTest {
         val db = connectToPostgres()
         val repo = ProjectRepository(db)
         val projectName = "New Test Project"
-
-        transaction(db) {
-            repo.saveNewProject(projectName)
-        }
+        repo.saveNewProject(projectName)
 
         transaction(db) {
             val result = ProjectTable.selectAll().where{ ProjectTable.name eq projectName }.singleOrNull()
@@ -101,13 +94,11 @@ class ProjectRepositoryTest {
             energiekeRegioId = 123,
         )
 
-        transaction(db) {
-            repo.save(project)
-            val response = repo.getProjectByEnergiekeRegioId(123) // is it only one for one project?
-            assertNotNull(project)
-            assertEquals(project.name, response.name)
-            assertEquals(project.energiekeRegioId, response.energiekeRegioId)
-        }
+        repo.save(project)
+        val response = repo.getProjectByEnergiekeRegioId(123) // is it only one for one project?
+        assertNotNull(project)
+        assertEquals(project.name, response.name)
+        assertEquals(project.energiekeRegioId, response.energiekeRegioId)
     }
 
     @Test
@@ -120,16 +111,14 @@ class ProjectRepositoryTest {
         val projectName1 = "User's Project 1"
         val projectName2 = "User's Project 2"
 
-        transaction(db) {
-            val projectId1 = repo.saveNewProject(projectName1)
-            val projectId2 = repo.saveNewProject(projectName2)
-            userRepo.saveUser(userId, listOf(projectId1, projectId2))
+        val projectId1 = repo.saveNewProject(projectName1)
+        val projectId2 = repo.saveNewProject(projectName2)
+        userRepo.saveUser(userId, listOf(projectId1, projectId2))
 
-            val projects = repo.getProjectsByUserId(userId)
-            assertEquals(2, projects.size)
-            assertTrue(projects.any { it.name == projectName1 })
-            assertTrue(projects.any { it.name == projectName2 })
-        }
+        val projects = repo.getProjectsByUserId(userId)
+        assertEquals(2, projects.size)
+        assertTrue(projects.any { it.name == projectName1 })
+        assertTrue(projects.any { it.name == projectName2 })
     }
 
     @Test
