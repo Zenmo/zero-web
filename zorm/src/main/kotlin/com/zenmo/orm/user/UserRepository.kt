@@ -22,8 +22,26 @@ class UserRepository(
                     filter
                 }.mapNotNull {
                     hydrateUser(it)
-                }.map { user ->
-                    user.copy(projects = getUserProjects(user.id))
+                }
+        }
+    }
+
+    fun getUsersWithProjects(filter: Op<Boolean> = Op.TRUE): List<User> {
+        return transaction(db) {
+            (UserTable innerJoin UserProjectTable innerJoin ProjectTable)
+                .selectAll()
+                .where{
+                    filter
+                }
+                .map { row ->
+                    // Extract user and project details from the row
+                    val user = hydrateUser(row)
+                    val project = hydrateProject(row) // Assuming a function that hydrates a project
+                    user to project
+                }
+                .groupBy({ it.first }, { it.second }) // Group projects by user
+                .map { (user, projects) ->
+                    user.copy(projects = projects.distinct()) // Remove duplicates if needed
                 }
         }
     }
@@ -68,6 +86,17 @@ class UserRepository(
             id = row[UserTable.id],
             note = row[UserTable.note],
             projects = emptyList(), // data from different table
+        )
+    }
+
+    //Move to Project Repository
+    @OptIn(ExperimentalUuidApi::class)
+    protected fun hydrateProject(row: ResultRow): Project {
+        return Project(
+            id = row[ProjectTable.id].toKotlinUuid(),
+            name = row[ProjectTable.name],
+            energiekeRegioId = row[ProjectTable.energiekeRegioId],
+            buurtCodes = row[ProjectTable.buurtCodes],
         )
     }
 

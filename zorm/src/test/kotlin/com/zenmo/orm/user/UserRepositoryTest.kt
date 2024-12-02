@@ -116,7 +116,7 @@ class UserRepositoryTest {
 
     @OptIn(ExperimentalUuidApi::class)
     @Test
-    fun `test getUsers loads projects`() {
+    fun `test getUsersWithProjects loads projects`() {
         val db = connectToPostgres()
         val userRepository = UserRepository(db)
         val projectRepository = ProjectRepository(db)
@@ -129,7 +129,7 @@ class UserRepositoryTest {
         userRepository.saveUser(userId, listOf(project1Id, project2Id), "Test Note")
 
         // Retrieve users
-        val users = userRepository.getUsers(( UserTable.id eq userId ))
+        val users = userRepository.getUsersWithProjects(( UserTable.id eq userId ))
         val user = users.firstOrNull()
 
         // Assertions
