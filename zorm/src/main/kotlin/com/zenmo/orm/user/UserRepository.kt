@@ -1,5 +1,6 @@
 package com.zenmo.orm.user
 
+import com.zenmo.orm.companysurvey.table.CompanySurveyTable
 import com.zenmo.orm.user.table.UserProjectTable
 import com.zenmo.orm.user.table.UserTable
 import com.zenmo.orm.companysurvey.table.ProjectTable
@@ -28,20 +29,25 @@ class UserRepository(
 
     fun getUsersWithProjects(filter: Op<Boolean> = Op.TRUE): List<User> {
         return transaction(db) {
-            (UserTable leftJoin UserProjectTable innerJoin ProjectTable)
+            UserTable
+            .join(UserProjectTable, JoinType.LEFT, UserTable.id, UserProjectTable.userId)
+            .join(ProjectTable, JoinType.LEFT, UserProjectTable.projectId, ProjectTable.id)
                 .selectAll()
                 .where{
                     filter
                 }
-                .map { row ->
-                    // Extract user and project details from the row
+                .mapNotNull { row ->
                     val user = hydrateUser(row)
-                    val project = hydrateProject(row) // Assuming a function that hydrates a project
-                    user to project
+                    val project = if (!row[ProjectTable.name].isNullOrEmpty()) {
+                        hydrateProject(row)
+                    } else null
+
+                    // Safely return the user-project pair
+                    if (project != null) user to project else user to null
                 }
                 .groupBy({ it.first }, { it.second }) // Group projects by user
                 .map { (user, projects) ->
-                    user.copy(projects = projects.distinct()) // Remove duplicates if needed
+                    user.copy(projects = projects.filterNotNull().distinct())
                 }
         }
     }
@@ -100,3 +106,5 @@ class UserRepository(
         )
     }
 }
+
+
