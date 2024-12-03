@@ -5,7 +5,7 @@ import java.util.UUID
 
 data class User(
     // Keycloak id
-    val id: UUID = UUID.randomUUID(),
+    val id: UUID,
     val projects: List<Project> = emptyList(),
     val note: String,
 )

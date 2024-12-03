@@ -28,7 +28,7 @@ class UserRepository(
 
     fun getUsersWithProjects(filter: Op<Boolean> = Op.TRUE): List<User> {
         return transaction(db) {
-            (UserTable innerJoin UserProjectTable innerJoin ProjectTable)
+            (UserTable leftJoin UserProjectTable innerJoin ProjectTable)
                 .selectAll()
                 .where{
                     filter
@@ -99,24 +99,4 @@ class UserRepository(
             buurtCodes = row[ProjectTable.buurtCodes],
         )
     }
-
-    @OptIn(ExperimentalUuidApi::class)
-    private fun getUserProjects(userId: UUID): List<Project> {
-        return transaction(db) {
-            UserProjectTable.innerJoin(ProjectTable)
-                .selectAll()
-                .where{
-                    UserProjectTable.userId eq userId
-                }
-                .map {
-                    Project(
-                        id = it[ProjectTable.id].toKotlinUuid(),
-                        name = it[ProjectTable.name],
-                        energiekeRegioId = it[ProjectTable.energiekeRegioId],
-                        buurtCodes = it[ProjectTable.buurtCodes]
-                    )
-                }
-        }
-    }
-
 }
