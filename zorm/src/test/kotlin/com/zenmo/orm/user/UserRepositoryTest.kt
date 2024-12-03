@@ -97,7 +97,7 @@ class UserRepositoryTest {
             repo.saveUser(UUID.randomUUID(), note = "User $i note")
         }
         val users = repo.getUsers()
-        assertEquals(13, users.size)
+        assertEquals(14, users.size)
     }
 
     @Test
@@ -146,6 +146,28 @@ class UserRepositoryTest {
             }
         }
     }
+
+    @Test
+    fun `test getUsersWithProjects handles users without projects`() {
+        val db = connectToPostgres()
+        val userRepository = UserRepository(db)
+
+        val userId = UUID.randomUUID()
+
+        // Save user without projects
+        userRepository.saveUser(userId, note = "User without projects")
+
+        // Retrieve users
+        val users = userRepository.getUsersWithProjects(( UserTable.id eq userId ))
+        val user = users.firstOrNull()
+
+        // Assertions
+        assertNotNull(user)
+        assertEquals(userId, user.id)
+        assertEquals("User without projects", user.note)
+        assertTrue(user.projects.isEmpty())
+    }
+    
 
     @Test
     fun `test deleteUserById removes user correctly`() {
