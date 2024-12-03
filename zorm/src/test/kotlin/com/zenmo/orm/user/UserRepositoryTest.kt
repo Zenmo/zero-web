@@ -116,7 +116,7 @@ class UserRepositoryTest {
 
     @OptIn(ExperimentalUuidApi::class)
     @Test
-    fun `test getUsersWithProjects loads projects`() {
+    fun `test getUsersAndProjects loads projects`() {
         val db = connectToPostgres()
         val userRepository = UserRepository(db)
         val projectRepository = ProjectRepository(db)
@@ -129,7 +129,7 @@ class UserRepositoryTest {
         userRepository.saveUser(userId, listOf(project1Id, project2Id), "Test Note")
 
         // Retrieve users
-        val users = userRepository.getUsersWithProjects(( UserTable.id eq userId ))
+        val users = userRepository.getUsersAndProjects(( UserTable.id eq userId ))
         val user = users.firstOrNull()
 
         // Assertions
@@ -148,24 +148,23 @@ class UserRepositoryTest {
     }
 
     @Test
-    fun `test getUsersWithProjects handles users without projects`() {
+    fun `test getUsersAndProjects handles users without projects`() {
         val db = connectToPostgres()
         val userRepository = UserRepository(db)
 
         val userId = UUID.randomUUID()
-
         // Save user without projects
         userRepository.saveUser(userId, note = "User without projects")
 
         // Retrieve users
-        val users = userRepository.getUsersWithProjects(( UserTable.id eq userId ))
-        val user = users.firstOrNull()
+        val users = userRepository.getUsersAndProjects()
+        val user = users.find { it.id == userId }
 
         // Assertions
         assertNotNull(user)
-        assertEquals(userId, user.id)
-        assertEquals("User without projects", user.note)
-        assertTrue(user.projects.isEmpty())
+        assertEquals(userId, user?.id)
+        assertEquals("User without projects", user?.note)
+        assertTrue(user?.projects?.isEmpty() == true)
     }
     
 

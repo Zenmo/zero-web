@@ -27,7 +27,7 @@ class UserRepository(
         }
     }
 
-    fun getUsersWithProjects(filter: Op<Boolean> = Op.TRUE): List<User> {
+    fun getUsersAndProjects(filter: Op<Boolean> = Op.TRUE): List<User> {
         return transaction(db) {
             UserTable
             .join(UserProjectTable, JoinType.LEFT, UserTable.id, UserProjectTable.userId)
