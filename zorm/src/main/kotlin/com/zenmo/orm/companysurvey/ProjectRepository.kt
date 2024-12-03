@@ -24,6 +24,12 @@ class ProjectRepository(
         }
     }
 
+    fun getProjectById(id: UUID): Project? {
+        return getProjects(
+            (ProjectTable.id eq id)
+        ).firstOrNull()
+    }
+
     @OptIn(ExperimentalUuidApi::class)
     fun getProjectsByUserId(userId: UUID): List<Project> =
         transaction(db) {
@@ -35,9 +41,16 @@ class ProjectRepository(
             )
         }
 
+    fun deleteProject(projectId: UUID): Boolean {
+        return transaction(db) {
+            ProjectTable.deleteWhere { ProjectTable.id eq projectId } > 0
+        }
+    }
+
     fun save(project: Project): Project {
         return transaction(db) {
            ProjectTable.upsertReturning() {
+                it[id] = project.id
                 it[name] = project.name
                 it[energiekeRegioId] = project.energiekeRegioId
                 it[buurtCodes] = project.buurtCodes

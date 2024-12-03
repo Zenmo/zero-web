@@ -65,7 +65,7 @@ class ProjectRepositoryTest {
         )
         val projectResult = repo.save(project)
         val projects = repo.getProjects()
-        assertEquals(6, projects.size)
+        assertEquals(7, projects.size)
         assertEquals(projectResult.id, projects.last().id)
         assertEquals(projectResult.name, projects.last().name)
         assertEquals(energiekeRegioId, projects.last().energiekeRegioId)
@@ -139,5 +139,61 @@ class ProjectRepositoryTest {
         val projects = repo.getProjectsByUserId(userId)
         assertEquals(1, projects.size)
         assertEquals("Middelkaap", projects[0].name)
+    }
+
+    @Test
+    fun testDeleteProject() {
+        val db = connectToPostgres()
+        val repo = ProjectRepository(db)
+
+        val projectName = "Project to Delete"
+        val projectId = repo.saveNewProject(projectName)
+        val deleteResult = repo.deleteProject(projectId)
+
+        // Verify that the project is successfully deleted
+        assertTrue(deleteResult, "Project should be deleted successfully")
+
+        // Verify that the project does not exist in the database anymore
+        transaction(db) {
+            val result = ProjectTable.selectAll().where { ProjectTable.id eq projectId }.singleOrNull()
+            assertNull(result, "Deleted project should not be found in the database")
+        }
+
+        // Try to delete a non-existent project
+        val nonExistentProjectId = UUID.randomUUID()
+        val deleteNonExistentResult = repo.deleteProject(nonExistentProjectId)
+
+        // Verify that deletion of a non-existent project returns false
+        assertFalse(deleteNonExistentResult, "Deletion of non-existent project should return false")
+    }
+
+    @Test
+    fun testUpdateProject() {
+        val db = connectToPostgres()
+        val repo = ProjectRepository(db)
+
+        val originalProject = Project(
+            name = "Initial Project",
+            energiekeRegioId = 789,
+            buurtCodes = listOf("B003")
+        )
+        val savedProject = repo.save(originalProject)
+
+        // Update project details
+        val updatedProject = savedProject.copy(
+            name = "Updated Project Name",
+            energiekeRegioId = 111,
+            buurtCodes = listOf("B003", "B004")
+        )
+        var response = repo.save(updatedProject)
+        var retrievedProject = repo.getProjectById(savedProject.id)
+
+        assertNotNull(updatedProject)
+        assertEquals(originalProject.id, response.id)
+        assertEquals("Updated Project Name", response.name)
+        assertEquals("Updated Project Name", retrievedProject?.name)
+        assertEquals("Updated Project Name", updatedProject.name)
+        assertEquals(111, updatedProject.energiekeRegioId)
+        assertEquals(listOf("B003", "B004"), updatedProject.buurtCodes)
     }
 }
