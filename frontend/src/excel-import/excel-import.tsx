@@ -8,11 +8,17 @@ import {ExcelUpload} from "./excel-upload"
 import {Feedback} from "./feedback"
 import {PandenSelectLoader} from "./panden-select-loader"
 import {Save} from "./save"
+import {useOnce} from "../hooks/use-once"
+import {setValidationLanguage} from "../services/set-validation-language"
 
 export const ExcelImport: FunctionComponent = () => {
     const [activeIndex, setActiveIndex] = useState(0);
     const [surveyWithErrors, setSurveyWithErrorsState] = useState<SurveyWithErrors | undefined>(undefined)
     const [totalPadIds, setTotalPadIds] = useState(0);
+
+    useOnce(() => {
+        setValidationLanguage()
+    })
 
     return (
         <PrimeReactProvider>
