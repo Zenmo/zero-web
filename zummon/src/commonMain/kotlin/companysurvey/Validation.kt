@@ -339,25 +339,69 @@ class ElectricityValidator : Validator<Electricity> {
         }
     }
 
-    //peak of delivery should be less than contracted capacity
+    /**
+     * peak of delivery should be less than contracted capacity
+     */
     fun quarterHourlyDeliveryLowContractedCapacity(electricity: Electricity): ValidationResult {
-        val contractedCapacity = (electricity.getContractedConnectionCapacityKw() ?: 0.0).toFloat()
-        val pickDelivery = electricity.quarterHourlyDelivery_kWh?.values?.maxOrNull() ?: Float.MIN_VALUE
-        return if ( pickDelivery <= contractedCapacity) {
-            ValidationResult(Status.VALID, translate("electricity.quarterHourlyDeliveryLowContractedCapacityKw", contractedCapacity))
+        val contractedCapacity_kW = electricity.getContractedConnectionCapacityKw()
+        if (contractedCapacity_kW == null) {
+            return ValidationResult(Status.MISSING_DATA, message(
+                en = "Gecontracteerd vermogen levering ontbreek",
+                nl = "Contracted delivery capacity missing",
+            ))
+        }
+
+        if (electricity.quarterHourlyDelivery_kWh == null) {
+            return ValidationResult(Status.MISSING_DATA, message(
+                en = "Kwartierwaarden levering ontbreek",
+                nl = "Quarter-hourly delivery missing",
+            ))
+        }
+
+        val peakDelivery = electricity.quarterHourlyDelivery_kWh.getPeak()
+
+        return if ( peakDelivery.kW() <= contractedCapacity_kW) {
+            ValidationResult(Status.VALID, message(
+                en = "Piek van kwartierwaarden levering ${peakDelivery.kWh()} kWh valt binnen gecontracteerd vermogen levering ${contractedCapacity_kW} kW",
+                nl = "Peak of quarter-hourly delivery ${peakDelivery.kWh()} kWh does not exceed contracted capacity ${contractedCapacity_kW} kW",
+            ))
         } else {
-            ValidationResult(Status.INVALID, translate("electricity.quarterHourlyDeliveryHighContractedCapacityKw", contractedCapacity))
+            ValidationResult(Status.INVALID, message(
+                nl = "Piek van kwartierwaarden levering ${peakDelivery.kWh()} kWh mag niet hoger zijn dan gecontracteerd vermogen levering $contractedCapacity_kW kW",
+                en = "Peak of quarter-hourly delivery ${peakDelivery.kWh()} kWh should be below contracted capacity $contractedCapacity_kW Kw",
+            ))
         }
     }
 
     //peak of feed-in should be less than contracted capacity
     fun quarterFeedInLowContractedCapacity(electricity: Electricity): ValidationResult {
-        val contractedFeedInCapacity = (electricity.getContractedFeedInCapacityKw() ?: 0.0).toFloat()
-        val pickFeedIn = electricity.quarterHourlyFeedIn_kWh?.values?.maxOrNull() ?: Float.MIN_VALUE
-        return if (pickFeedIn < contractedFeedInCapacity) {
-            ValidationResult(Status.VALID, translate("electricity.quarterHourlyDeliveryLowContractedCapacityKw", contractedFeedInCapacity))
+        val contractedFeedInCapacity_kW = (electricity.getContractedFeedInCapacityKw() ?: 0.0).toFloat()
+        if (contractedFeedInCapacity_kW == null) {
+            return ValidationResult(Status.MISSING_DATA, message(
+                en = "Gecontracteerd vermogen teruglevering ontbreek",
+                nl = "Contracted feed-in capacity missing",
+            ))
+        }
+
+        if (electricity.quarterHourlyFeedIn_kWh == null) {
+            // Or not applicable if no solar panels
+            return ValidationResult(Status.MISSING_DATA, message(
+                en = "Kwartierwaarden teruglevering ontbreek",
+                nl = "Quarter-hourly feed-in missing",
+            ))
+        }
+
+        val peakFeedIn = electricity.quarterHourlyFeedIn_kWh.getPeak()
+        return if (peakFeedIn.kW() < contractedFeedInCapacity_kW) {
+            ValidationResult(Status.VALID, message(
+                en = "Piek van kwartierwaarden teruglevering ${peakFeedIn.kWh()} kWh valt binnen gecontracteerd vermogen levering $contractedFeedInCapacity_kW kW",
+                nl = "Peak of quarter-hourly feed-in ${peakFeedIn.kWh()} kWh does not exceed contracted capacity $contractedFeedInCapacity_kW kW",
+            ))
         } else {
-            ValidationResult(Status.INVALID, translate("electricity.quarterHourlyDeliveryHighContractedCapacityKw", contractedFeedInCapacity))
+            ValidationResult(Status.INVALID, message(
+                nl = "Piek van kwartierwaarden teruglevering ${peakFeedIn.kWh()} kWh mag niet hoger zijn dan gecontracteerd vermogen levering $contractedFeedInCapacity_kW kW",
+                en = "Peak of quarter-hourly feed-in ${peakFeedIn.kWh()} kWh delivery should be below contracted capacity $contractedFeedInCapacity_kW Kw",
+            ))
         }
     }
 
@@ -595,10 +639,6 @@ val translations: Map<Language, Map<String, Map<String, String>>> = mapOf(
             "notEnoughValues" to "Not enough values for year: needed %d got %d",
             "annualFeedInMismatch" to "Annual feed in (%d) mismatch the total quarter hourly feed in (%d)",
             "annualFeedInMismatch" to "Annual feed in (%d) matches the total quarter hourly feed in (%d)",
-
-            "quarterHourlyDeliveryLowContractedCapacityKw" to "Quarter-hourly stays lower than the Contracted CapacityKw (%d)",
-            "quarterHourlyDeliveryHighContractedCapacityKw" to "Quarter-hourly shouldn't go higher than the Contracted CapacityKw (%d)"
-
             ),
         "grootverbruik" to mapOf(
             "notProvided" to "Large consumption data is not provided",
