@@ -1,6 +1,5 @@
 package com.zenmo.orm.user
 
-import com.zenmo.orm.companysurvey.table.CompanySurveyTable
 import com.zenmo.orm.user.table.UserProjectTable
 import com.zenmo.orm.user.table.UserTable
 import com.zenmo.orm.companysurvey.table.ProjectTable
@@ -10,7 +9,6 @@ import org.jetbrains.exposed.sql.SqlExpressionBuilder.eq
 import org.jetbrains.exposed.sql.transactions.transaction
 import java.util.UUID
 import kotlin.uuid.ExperimentalUuidApi
-import kotlin.uuid.toKotlinUuid
 
 class UserRepository(
     private val db: Database,
@@ -99,7 +97,7 @@ class UserRepository(
     @OptIn(ExperimentalUuidApi::class)
     protected fun hydrateProject(row: ResultRow): Project {
         return Project(
-            id = row[ProjectTable.id].toKotlinUuid(),
+            id = row[ProjectTable.id],
             name = row[ProjectTable.name],
             energiekeRegioId = row[ProjectTable.energiekeRegioId],
             buurtCodes = row[ProjectTable.buurtCodes],
