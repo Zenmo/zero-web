@@ -37,7 +37,7 @@ class UserRepository(
                 .where{
                     filter
                 }
-                .mapNotNull { row ->
+                .map { row ->
                     val user = hydrateUser(row)
                     val project = if (!row[ProjectTable.name].isNullOrEmpty()) {
                         projectRepo.hydrateProject(row)
@@ -46,7 +46,7 @@ class UserRepository(
                     // Safely return the user-project pair
                     if (project != null) user to project else user to null
                 }
-                .groupBy({ it.first }, { it.second }) // Group projects by user
+                .groupBy({ it.first }, { it.second })
                 .map { (user, projects) ->
                     user.copy(projects = projects.filterNotNull().distinct())
                 }

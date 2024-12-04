@@ -95,7 +95,7 @@ class ProjectRepositoryTest {
         )
 
         repo.save(project)
-        val response = repo.getProjectByEnergiekeRegioId(123) // is it only one for one project?
+        val response = repo.getProjectByEnergiekeRegioId(123)
         assertNotNull(project)
         assertEquals(project.name, response.name)
         assertEquals(project.energiekeRegioId, response.energiekeRegioId)
