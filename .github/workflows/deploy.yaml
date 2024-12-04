@@ -11,6 +11,8 @@ on:
 
 jobs:
     variables:
+        needs:
+            -   test
         runs-on: ubuntu-latest
         outputs:
             VERSION_TAG: ${{ fromJson(steps.variables.outputs.result).VERSION_TAG }}
