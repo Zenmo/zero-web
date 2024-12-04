@@ -1,6 +1,6 @@
 package com.zenmo.orm.user
 
-import com.zenmo.orm.companysurvey.table.CompanySurveyTable
+import com.zenmo.orm.companysurvey.ProjectRepository
 import com.zenmo.orm.user.table.UserProjectTable
 import com.zenmo.orm.user.table.UserTable
 import com.zenmo.orm.companysurvey.table.ProjectTable
@@ -10,7 +10,6 @@ import org.jetbrains.exposed.sql.SqlExpressionBuilder.eq
 import org.jetbrains.exposed.sql.transactions.transaction
 import java.util.UUID
 import kotlin.uuid.ExperimentalUuidApi
-import kotlin.uuid.toKotlinUuid
 
 class UserRepository(
     private val db: Database,
@@ -29,6 +28,8 @@ class UserRepository(
 
     fun getUsersAndProjects(filter: Op<Boolean> = Op.TRUE): List<User> {
         return transaction(db) {
+            val projectRepo = ProjectRepository(db)
+
             UserTable
             .join(UserProjectTable, JoinType.LEFT, UserTable.id, UserProjectTable.userId)
             .join(ProjectTable, JoinType.LEFT, UserProjectTable.projectId, ProjectTable.id)
@@ -36,16 +37,16 @@ class UserRepository(
                 .where{
                     filter
                 }
-                .mapNotNull { row ->
+                .map { row ->
                     val user = hydrateUser(row)
                     val project = if (!row[ProjectTable.name].isNullOrEmpty()) {
-                        hydrateProject(row)
+                        projectRepo.hydrateProject(row)
                     } else null
 
                     // Safely return the user-project pair
                     if (project != null) user to project else user to null
                 }
-                .groupBy({ it.first }, { it.second }) // Group projects by user
+                .groupBy({ it.first }, { it.second })
                 .map { (user, projects) ->
                     user.copy(projects = projects.filterNotNull().distinct())
                 }
@@ -92,17 +93,6 @@ class UserRepository(
             id = row[UserTable.id],
             note = row[UserTable.note],
             projects = emptyList(), // data from different table
-        )
-    }
-
-    //Move to Project Repository
-    @OptIn(ExperimentalUuidApi::class)
-    protected fun hydrateProject(row: ResultRow): Project {
-        return Project(
-            id = row[ProjectTable.id].toKotlinUuid(),
-            name = row[ProjectTable.name],
-            energiekeRegioId = row[ProjectTable.energiekeRegioId],
-            buurtCodes = row[ProjectTable.buurtCodes],
         )
     }
 }
