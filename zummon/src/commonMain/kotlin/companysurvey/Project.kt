@@ -11,7 +11,7 @@ data class Project
 constructor(
 //    @Contextual
     @Serializable(with = KotlinUuidSerializer::class)
-    val id: Uuid? = null,
+    val id: Uuid = Uuid.random(),
     val name: String = "",
     // Project ID aka Energy Hub ID of Energieke Regio.
     val energiekeRegioId: Int?,
