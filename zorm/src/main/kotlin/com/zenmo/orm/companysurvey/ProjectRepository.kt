@@ -72,7 +72,7 @@ class ProjectRepository(
             )
         }.first()
 
-    protected fun hydrateProject(row: ResultRow): Project {
+    fun hydrateProject(row: ResultRow): Project {
         return Project(
             id = row[ProjectTable.id],
             name = row[ProjectTable.name],

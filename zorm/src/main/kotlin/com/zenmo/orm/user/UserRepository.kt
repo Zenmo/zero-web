@@ -1,5 +1,6 @@
 package com.zenmo.orm.user
 
+import com.zenmo.orm.companysurvey.ProjectRepository
 import com.zenmo.orm.user.table.UserProjectTable
 import com.zenmo.orm.user.table.UserTable
 import com.zenmo.orm.companysurvey.table.ProjectTable
@@ -27,6 +28,8 @@ class UserRepository(
 
     fun getUsersAndProjects(filter: Op<Boolean> = Op.TRUE): List<User> {
         return transaction(db) {
+            val projectRepo = ProjectRepository(db)
+
             UserTable
             .join(UserProjectTable, JoinType.LEFT, UserTable.id, UserProjectTable.userId)
             .join(ProjectTable, JoinType.LEFT, UserProjectTable.projectId, ProjectTable.id)
@@ -37,7 +40,7 @@ class UserRepository(
                 .mapNotNull { row ->
                     val user = hydrateUser(row)
                     val project = if (!row[ProjectTable.name].isNullOrEmpty()) {
-                        hydrateProject(row)
+                        projectRepo.hydrateProject(row)
                     } else null
 
                     // Safely return the user-project pair
@@ -90,17 +93,6 @@ class UserRepository(
             id = row[UserTable.id],
             note = row[UserTable.note],
             projects = emptyList(), // data from different table
-        )
-    }
-
-    //Move to Project Repository
-    @OptIn(ExperimentalUuidApi::class)
-    protected fun hydrateProject(row: ResultRow): Project {
-        return Project(
-            id = row[ProjectTable.id],
-            name = row[ProjectTable.name],
-            energiekeRegioId = row[ProjectTable.energiekeRegioId],
-            buurtCodes = row[ProjectTable.buurtCodes],
         )
     }
 }
