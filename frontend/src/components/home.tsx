@@ -1,25 +1,72 @@
-import {FunctionComponent} from "react"
-import {ZeroLayout} from "./zero-layout"
-import {Link} from "react-router-dom"
 
-export const Home: FunctionComponent = () => (
-    <ZeroLayout>
-        <div style={{margin: "0 auto", maxWidth: "40rem"}}>
-            <p>Welkom bij Zenmo Zero</p>
-            <p>Deze pagina is in aanbouw. Wat u kunt vinden op deze website:</p>
-            <ul>
-                <li><Link to="/bedrijven-hessenpoort">Uitvraag Hessenpoort invullen</Link></li>
-                <li><Link to="/bedrijven-de-wieken">Uitvraag De Wieken invullen</Link></li>
-                <li><Link to="/admin">Uitvragen beheren</Link></li>
-                <li><Link to="/proof-of-concept">Oud proof of concept "simuleer je buurt"</Link></li>
-            </ul>
-            <p>Links naar andere plekken:</p>
-            <ul>
-                <li><a href="https://zenmo.com">Zenmo hoofdpagina</a></li>
-                <li><a href="https://keycloak.zenmo.com/realms/zenmo/account/">Eigen gebruikersaccount beheren</a></li>
-                <li><a href="https://keycloak.zenmo.com/admin/zenmo/console/">Alle gebruikersaccounts beheren</a></li>
-                <li><a href="https://github.com/zenmo/zero">Broncode van deze website</a></li>
-            </ul>
+import React, {FunctionComponent, useState} from 'react';
+import { Sidebar } from 'primereact/sidebar';
+import { Button } from 'primereact/button';
+import { css } from '@emotion/react';
+
+import 'primereact/resources/themes/saga-blue/theme.css';  // Choose the theme you prefer
+import 'primereact/resources/primereact.min.css';
+import 'primeicons/primeicons.css';
+import {Admin} from "../admin/admin";
+import {Intro} from "./intro";
+
+const sidebarStyle = css({
+    width: '250px',
+    backgroundColor: '#f5f5f5',
+    borderRight: '1px solid #ddd',
+});
+
+const buttonStyle = css({
+    display: 'block',
+    marginBottom: '45px',
+    width: '100%',
+    textAlign: 'left',
+    padding: '0.5em 1em',
+    border: 'none',
+    borderBottom: '1px solid #ddd',
+    color: '#333',
+    background: '#f5f5f5',
+    transition: 'background-color 0.2s ease-in-out',
+    fontWeight: 'normal',
+    cursor: 'pointer',
+    '&:hover': {
+        backgroundColor: '#ebebeb',
+        color: '#007ad9',
+    },
+});
+
+export const Home: FunctionComponent = () => {
+
+    const [visible, setVisible] = useState(true);
+    const [activeComponent, setActiveComponent] = useState<string>('Dashboard');
+    
+    const renderContent = () => {
+        switch (activeComponent) {
+            case 'Users':
+                return <div>Users Content</div>;
+            case 'Projects':
+                return <div>Projects Content</div>;
+            case 'Surveys':
+                return <div><Admin ></Admin></div>
+            case 'About Us':
+                return <div><Intro /></div>;
+            default:
+                return <div>Dashboard Content</div>;
+        }
+    };
+
+    return (
+        <div className="app-layout">
+            <Sidebar visible={visible} position="left" onHide={() => setVisible(false)} css={sidebarStyle}>
+                <Button label="Users" icon="pi pi-fw pi-user" onClick={() => {setVisible(false); setActiveComponent('Users')}} css={buttonStyle}/>
+                <Button label="Projects" icon="pi pi-fw pi-briefcase" onClick={() => {setVisible(false); setActiveComponent('Projects')}} css={buttonStyle}/>
+                <Button label="Surveys" icon="pi pi-fw pi-file" onClick={() => {setVisible(false); setActiveComponent('Surveys')}} css={buttonStyle}/>
+                <Button label="About Us" icon="pi pi-fw pi-info-circle" onClick={() => {setVisible(false); setActiveComponent('About Us')}} css={buttonStyle}/>
+            </Sidebar>
+            <div className="main-content"  css={{ flexGrow: 1, padding: '1em' }}>
+                <Button icon="pi pi-bars" onClick={() => setVisible(true)} />
+                {renderContent()}
+            </div>
         </div>
-    </ZeroLayout>
-)
+    );
+};
