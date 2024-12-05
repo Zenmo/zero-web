@@ -15,11 +15,10 @@ jobs:
         runs-on: ubuntu-latest
         steps:
             -   uses: actions/checkout@v4
-            -   name: docker cache
-                uses: actions/cache@v4
+            -   name: Cache Docker images
+                uses: ScribeMD/docker-cache@0.5.0
                 with:
-                    path: /var/lib/docker
-                    key: var-lib-docker
+                    key: docker-cache
             -   run: >
                     docker compose 
                     --project-directory .
