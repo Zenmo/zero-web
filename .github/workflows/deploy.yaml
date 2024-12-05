@@ -2,17 +2,22 @@ name: Build and deploy all services
 
 on:
     workflow_dispatch:
-    push:
-        branches:
-            - main
-            - production
-    pull_request:
-        types: [ opened, synchronize, reopened ]
+    workflow_run:
+        workflows: ["Run automated tests"]
+        types:
+            - completed
+    ## uncomment to run deploy regardless of failing tests
+#    push:
+#        branches:
+#            - main
+#            - production
+#    pull_request:
+#        types: [ opened, synchronize, reopened ]
 
 jobs:
     variables:
-        needs:
-            -   test
+        ## comment to run deploy regardless of failing tests
+        if: ${{ github.event.workflow_run.conclusion == 'success' }}
         runs-on: ubuntu-latest
         outputs:
             VERSION_TAG: ${{ fromJson(steps.variables.outputs.result).VERSION_TAG }}
