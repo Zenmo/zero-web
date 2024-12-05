@@ -140,8 +140,8 @@ class UserRepositoryTest {
 
         user.projects.forEach { project ->
             when (project.id) {
-                project1Id.toKotlinUuid() -> assertEquals("Project 1", project.name)
-                project2Id.toKotlinUuid() -> assertEquals("Project 2", project.name)
+                project1Id -> assertEquals("Project 1", project.name)
+                project2Id -> assertEquals("Project 2", project.name)
                 else -> fail("Unexpected project ID ${project.id}")
             }
         }
