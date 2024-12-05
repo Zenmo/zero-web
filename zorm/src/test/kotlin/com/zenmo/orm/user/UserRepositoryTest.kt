@@ -1,57 +1,44 @@
 package com.zenmo.orm.user
 
+import com.zenmo.orm.cleanDb
 import com.zenmo.orm.companysurvey.ProjectRepository
 import com.zenmo.orm.connectToPostgres
-import com.zenmo.orm.createSchema
 import com.zenmo.orm.user.table.UserProjectTable
-import com.zenmo.orm.companysurvey.table.ProjectTable
 import com.zenmo.orm.user.table.UserTable
 import org.jetbrains.exposed.sql.*
 import org.jetbrains.exposed.sql.SqlExpressionBuilder.eq
 import org.jetbrains.exposed.sql.transactions.transaction
-import org.junit.BeforeClass
 import java.util.UUID
 import kotlin.test.*
 import kotlin.uuid.ExperimentalUuidApi
-import kotlin.uuid.toKotlinUuid
 
 class UserRepositoryTest {
-    companion object {
-        @JvmStatic
-        @BeforeClass
-        fun setupClass() {
-            val db = connectToPostgres()
-            val schema = Schema(db.connector().schema)
-            transaction(db) {
-                SchemaUtils.dropSchema(schema, cascade = true)
-                SchemaUtils.createSchema(schema)
-            }
-            createSchema(db)
-        }
+    val db: Database = connectToPostgres()
+    val userRepository = UserRepository(db)
+    val projectRepository = ProjectRepository(db)
+
+    @BeforeTest
+    fun cleanUp() {
+        cleanDb(db)
     }
 
     @Test
     fun `test saveUser inserts user with given id and note`() {
-        val db = connectToPostgres()
         val userId = UUID.randomUUID()
         val note = "This is a test note"
-        val repo = UserRepository(db)
-        repo.saveUser(userId, note = note)
-        val result = repo.getUserById(userId)
+        userRepository.saveUser(userId, note = note)
+        val result = userRepository.getUserById(userId)
         assertNotNull(result)
-        assertEquals(userId, result?.id)
-        assertEquals(note, result?.note)
+        assertEquals(userId, result.id)
+        assertEquals(note, result.note)
     }
 
     @Test
-    @OptIn(ExperimentalUuidApi::class)
     fun `test saveUser inserts user with empty note by default`() {
         val userId = UUID.randomUUID()
-        val db = connectToPostgres()
-        val repo = UserRepository(db)
-        repo.saveUser(userId)
+        userRepository.saveUser(userId)
 
-        val result = repo.getUserById(userId)
+        val result = userRepository.getUserById(userId)
         assertNotNull(result)
         assertEquals(userId, result.id)
         assertEquals("", result.note)
@@ -60,12 +47,10 @@ class UserRepositoryTest {
     @Test
     fun `test saveUser inserts projects for given user`() {
         val userId = UUID.randomUUID()
-        val db = connectToPostgres()
 
         val tmpProjectName = "testTMP"
-        val projectId = ProjectRepository(db).saveNewProject(tmpProjectName)
-        val repo = UserRepository(db)
-        repo.saveUser(userId, listOf(projectId))
+        val projectId = projectRepository.saveNewProject(tmpProjectName)
+        userRepository.saveUser(userId, listOf(projectId))
 
         transaction(db) {
             val result = UserProjectTable.selectAll()
@@ -79,9 +64,7 @@ class UserRepositoryTest {
     @Test
     fun `test saveUser inserts no projects if no projectIds are given`() {
         val userId = UUID.randomUUID()
-        val db = connectToPostgres()
-        val repo = UserRepository(db)
-        repo.saveUser(userId)
+        userRepository.saveUser(userId)
 
         transaction(db) {
             val results = UserProjectTable.selectAll().where { UserProjectTable.userId eq userId }.toList()
@@ -91,25 +74,21 @@ class UserRepositoryTest {
 
     @Test
     fun `test getUsers returns all users when no filter is provided`() {
-        val db = connectToPostgres()
-        val repo = UserRepository(db)
         for (i in 1..5) {
-            repo.saveUser(UUID.randomUUID(), note = "User $i note")
+            userRepository.saveUser(UUID.randomUUID(), note = "User $i note")
         }
-        val users = repo.getUsers()
-        assertEquals(14, users.size)
+        val users = userRepository.getUsers()
+        assertEquals(5, users.size)
     }
 
     @Test
     fun `test getUsers filters users based on given filter`() {
-        val db = connectToPostgres()
-        val repo = UserRepository(db)
         val userId = UUID.randomUUID()
-        repo.saveUser(userId, note = "Specific user note")
+        userRepository.saveUser(userId, note = "Specific user note")
         for (i in 1..4) {
-            repo.saveUser(UUID.randomUUID(), note = "User $i note")
+            userRepository.saveUser(UUID.randomUUID(), note = "User $i note")
         }
-        val users = repo.getUsers((UserTable.note eq "Specific user note"))
+        val users = userRepository.getUsers((UserTable.note eq "Specific user note"))
         assertEquals(1, users.size)
         assertEquals(userId, users.first().id)
     }
@@ -117,10 +96,6 @@ class UserRepositoryTest {
     @OptIn(ExperimentalUuidApi::class)
     @Test
     fun `test getUsersAndProjects loads projects`() {
-        val db = connectToPostgres()
-        val userRepository = UserRepository(db)
-        val projectRepository = ProjectRepository(db)
-
         val userId = UUID.randomUUID()
         val project1Id = projectRepository.saveNewProject("Project 1")
         val project2Id = projectRepository.saveNewProject("Project 2")
@@ -140,8 +115,8 @@ class UserRepositoryTest {
 
         user.projects.forEach { project ->
             when (project.id) {
-                project1Id.toKotlinUuid() -> assertEquals("Project 1", project.name)
-                project2Id.toKotlinUuid() -> assertEquals("Project 2", project.name)
+                project1Id -> assertEquals("Project 1", project.name)
+                project2Id -> assertEquals("Project 2", project.name)
                 else -> fail("Unexpected project ID ${project.id}")
             }
         }
@@ -149,9 +124,6 @@ class UserRepositoryTest {
 
     @Test
     fun `test getUsersAndProjects handles users without projects`() {
-        val db = connectToPostgres()
-        val userRepository = UserRepository(db)
-
         val userId = UUID.randomUUID()
         // Save user without projects
         userRepository.saveUser(userId, note = "User without projects")
@@ -170,34 +142,30 @@ class UserRepositoryTest {
 
     @Test
     fun `test deleteUserById removes user correctly`() {
-        val db = connectToPostgres()
-        val repo = UserRepository(db)
         val userId = UUID.randomUUID()
-        repo.saveUser(userId, note = "Delete Test User")
+        userRepository.saveUser(userId, note = "Delete Test User")
 
-        val userBeforeDelete = repo.getUserById(userId)
+        val userBeforeDelete = userRepository.getUserById(userId)
         assertNotNull(userBeforeDelete)
 
-        repo.deleteUserById(userId)
-        val userAfterDelete = repo.getUserById(userId)
+        userRepository.deleteUserById(userId)
+        val userAfterDelete = userRepository.getUserById(userId)
         assertTrue(userAfterDelete == null)
     }
 
     @Test
     fun `test deleteUserById removes user projects as well`() {
-        val db = connectToPostgres()
-        val repo = UserRepository(db)
         val userId = UUID.randomUUID()
-        repo.saveUser(userId, note = "Delete Test User with Projects")
-        val projectIds = listOf(ProjectRepository(db).saveNewProject("Test Project"))
-        repo.saveUser(userId, projectIds)
+        userRepository.saveUser(userId, note = "Delete Test User with Projects")
+        val projectIds = listOf(projectRepository.saveNewProject("Test Project"))
+        userRepository.saveUser(userId, projectIds)
 
         val userProjectsBeforeDelete = transaction(db) {
             UserProjectTable.selectAll().where { UserProjectTable.userId eq userId }.toList()
         }
         assertTrue(userProjectsBeforeDelete.isNotEmpty())
 
-        repo.deleteUserById(userId)
+        userRepository.deleteUserById(userId)
 
         val userProjectsAfterDelete = transaction(db) {
             UserProjectTable.selectAll().where { UserProjectTable.userId eq userId }.toList()
@@ -207,11 +175,9 @@ class UserRepositoryTest {
 
     @Test
     fun `test deleteUserById does nothing if user does not exist`() {
-        val db = connectToPostgres()
-        val repo = UserRepository(db)
         val nonExistentUserId = UUID.randomUUID()
 
-        repo.deleteUserById(nonExistentUserId)
+        userRepository.deleteUserById(nonExistentUserId)
         // If no exceptions are thrown, the test passes as there's no user to delete
         assertTrue(true)
     }
