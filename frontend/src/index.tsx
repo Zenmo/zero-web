@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom/client'
 import {
     createBrowserRouter,
     RouterProvider,
-} from "react-router-dom";
+} from "react-router";
 import './index.css'
 import {DE_WIEKEN, getProjectConfiguration, HESSENPOORT, ProjectName} from "./components/company-survey-v2/project"
 import {Survey, SurveyFromProject} from "./components/company-survey-v2/survey"

@@ -29,7 +29,7 @@ export const PandenSelectLoader: FunctionComponent<{
         return <p>Geen project gevonden</p>
     }
     const [result, error, pending] = usePromise(
-        async () => fetchBuurtenAndPanden(buurtcodes),
+        () => fetchBuurtenAndPanden(buurtcodes),
         buurtcodes,
     )
 

@@ -1,4 +1,4 @@
-import {useLocation, Location} from "react-router-dom"
+import {useLocation, Location} from "react-router"
 import {buildDeeplinkUrl} from "./company-survey-v2/deeplink"
 
 export const ThankYou = () => {

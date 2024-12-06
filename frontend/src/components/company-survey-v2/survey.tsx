@@ -3,7 +3,7 @@ import {Alert} from 'antd'
 import {cloneDeep} from 'lodash'
 import {FunctionComponent, useEffect, useState} from 'react'
 import {useForm, UseFormReturn} from 'react-hook-form'
-import {useLoaderData, useNavigate} from "react-router-dom"
+import {useLoaderData, useNavigate} from "react-router"
 import {Address} from './address'
 import {BasicData} from './basic-data'
 import {defineFlash} from './flash'

@@ -4,7 +4,7 @@ import {Project} from "zero-zummon"
 import {Menu} from "primereact/menu"
 import {Button} from "primereact/button"
 import {MenuItem} from "primereact/menuitem"
-import {useNavigate} from "react-router-dom"
+import {useNavigate} from "react-router"
 import {usePromise} from "../hooks/use-promise"
 import {assertDefined} from "../services/util"
 

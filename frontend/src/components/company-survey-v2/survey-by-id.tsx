@@ -1,4 +1,4 @@
-import {useLoaderData} from "react-router-dom";
+import {useLoaderData} from "react-router";
 import {useState} from "react";
 import {useOnce} from "../../hooks/use-once";
 import {Survey as SurveyComponent} from "./survey";
