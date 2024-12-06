@@ -72,6 +72,13 @@ class ProjectRepository(
             )
         }.first()
 
+    fun getBuurtCodesByProjectName(projectName: String): List<String> =
+        transaction(db) {
+            ProjectTable.select(ProjectTable.buurtCodes)
+                .where(ProjectTable.name eq projectName)
+                .single()[ProjectTable.buurtCodes]
+        }
+
     fun hydrateProject(row: ResultRow): Project {
         return Project(
             id = row[ProjectTable.id],
