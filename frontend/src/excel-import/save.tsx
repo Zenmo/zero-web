@@ -2,7 +2,7 @@ import {FunctionComponent, useState} from "react"
 import {Button} from "primereact/button"
 import {Survey} from "zero-zummon"
 import {Message} from "primereact/message"
-import {useNavigate} from "react-router-dom"
+import {useNavigate} from "react-router"
 
 export const Save: FunctionComponent<{survey: Survey}> = ({survey}) => {
     const [errorMessage, setErrorMessage] = useState("")

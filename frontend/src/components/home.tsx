@@ -1,6 +1,6 @@
 import {FunctionComponent} from "react"
 import {ZeroLayout} from "./zero-layout"
-import {Link} from "react-router-dom"
+import {Link} from "react-router"
 
 export const Home: FunctionComponent = () => (
     <ZeroLayout>
