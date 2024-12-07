@@ -15,7 +15,6 @@ import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertNotNull
 import kotlin.uuid.ExperimentalUuidApi
-import kotlin.uuid.toKotlinUuid
 
 class RepositoryTest {
     companion object {
@@ -151,7 +150,7 @@ class RepositoryTest {
         val createdBy = surveyLoadedAfterCreate?.createdBy
         assertNotNull(createdBy)
         assertEquals("Jaap", createdBy.note)
-        assertEquals(jaapId.toKotlinUuid(), createdBy.id)
+        assertEquals(jaapId, createdBy.id)
 
         // edit survey
         repo.save(surveyLoadedAfterCreate, pietId)
@@ -159,7 +158,7 @@ class RepositoryTest {
         val createdBy2 = surveyLoadedAfterEdit?.createdBy
         assertNotNull(createdBy2)
         assertEquals("Jaap", createdBy2.note)
-        assertEquals(jaapId.toKotlinUuid(), createdBy2.id)
+        assertEquals(jaapId, createdBy2.id)
     }
 
     private fun wipeSequence(survey: Survey)

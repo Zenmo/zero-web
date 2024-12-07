@@ -2,6 +2,8 @@ package com.zenmo.ztor.plugins
 
 import com.zenmo.orm.companysurvey.ProjectRepository
 import com.zenmo.orm.companysurvey.SurveyRepository
+import com.zenmo.orm.user.UserRepository
+
 import com.zenmo.orm.connectToPostgres
 import com.zenmo.orm.deeplink.DeeplinkRepository
 import com.zenmo.ztor.deeplink.DeeplinkService
@@ -24,6 +26,15 @@ fun Application.configureDatabases(): Database {
     val deeplinkService = DeeplinkService(DeeplinkRepository(db))
 
     routing {
+        get("/users") {
+            val userId = call.getUserId()
+            if (userId == null) { //Check if it's admin to return all the Users
+                call.respond(HttpStatusCode.Unauthorized)
+                return@get
+            }
+            call.respond(HttpStatusCode.OK, UserRepository(db).getUsers())
+        }
+
         get("/projects") {
             val userId = call.getUserId()
             if (userId == null) {

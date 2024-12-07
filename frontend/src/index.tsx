@@ -12,7 +12,7 @@ import reportWebVitals from './reportWebVitals'
 import App from "./App";
 import {LoginWidget} from "./user/login";
 import {BedrijvenFormV1} from "./components/bedrijven-form-v1";
-import {Admin} from "./admin/admin";
+import {Surveys} from "./admin/surveys";
 import {SurveyById, SurveyByIdRouteData} from "./components/company-survey-v2/survey-by-id";
 import {Home} from "./components/home"
 import {ExcelImport} from "./excel-import/excel-import"
@@ -67,7 +67,7 @@ const router = createBrowserRouter([
     },
     {
         path: "/admin",
-        element: <Admin />,
+        element: <Surveys />,
     },
     {
         path: "/admin/import-excel",

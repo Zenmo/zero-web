@@ -7,7 +7,9 @@ import { css } from '@emotion/react';
 import 'primereact/resources/themes/saga-blue/theme.css';  // Choose the theme you prefer
 import 'primereact/resources/primereact.min.css';
 import 'primeicons/primeicons.css';
-import {Admin} from "../admin/admin";
+import {Surveys} from "../admin/surveys";
+import {Users} from "../admin/users";
+import {Projects} from "../admin/projects";
 import {Intro} from "./intro";
 
 const sidebarStyle = css({
@@ -37,17 +39,17 @@ const buttonStyle = css({
 
 export const Home: FunctionComponent = () => {
 
-    const [visible, setVisible] = useState(true);
+    const [visible, setVisible] = useState(false);
     const [activeComponent, setActiveComponent] = useState<string>('Dashboard');
     
     const renderContent = () => {
         switch (activeComponent) {
             case 'Users':
-                return <div>Users Content</div>;
+                return <div><Users /></div>;
             case 'Projects':
-                return <div>Projects Content</div>;
+                return <div><Projects /></div>;
             case 'Surveys':
-                return <div><Admin ></Admin></div>
+                return <div><Surveys /></div>
             case 'About Us':
                 return <div><Intro /></div>;
             default:

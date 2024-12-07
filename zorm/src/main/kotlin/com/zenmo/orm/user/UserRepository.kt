@@ -1,10 +1,11 @@
 package com.zenmo.orm.user
 
+import com.zenmo.zummon.User
 import com.zenmo.orm.companysurvey.ProjectRepository
 import com.zenmo.orm.user.table.UserProjectTable
 import com.zenmo.orm.user.table.UserTable
 import com.zenmo.orm.companysurvey.table.ProjectTable
-import com.zenmo.zummon.companysurvey.Project
+
 import org.jetbrains.exposed.sql.*
 import org.jetbrains.exposed.sql.SqlExpressionBuilder.eq
 import org.jetbrains.exposed.sql.transactions.transaction
@@ -16,13 +17,14 @@ class UserRepository(
 ) {
     fun getUsers(filter: Op<Boolean> = Op.TRUE): List<User> {
         return transaction(db) {
-            UserTable
+            val result = UserTable
                 .selectAll()
                 .where{
                     filter
-                }.mapNotNull {
+                }.map {
                     hydrateUser(it)
                 }
+            result
         }
     }
 

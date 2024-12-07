@@ -10,8 +10,6 @@ import org.jetbrains.exposed.sql.*
 import org.jetbrains.exposed.sql.SqlExpressionBuilder.eq
 import org.jetbrains.exposed.sql.transactions.transaction
 import java.util.*
-import kotlin.uuid.ExperimentalUuidApi
-import kotlin.uuid.toKotlinUuid
 
 class SurveyRepository(
     private val db: Database,
@@ -261,12 +259,11 @@ class SurveyRepository(
         )
     }
 
-    @OptIn(ExperimentalUuidApi::class)
     protected fun hydrateUser(row: ResultRow): com.zenmo.zummon.User? {
         val userId = row[CompanySurveyTable.createdById] ?: return null
 
         return com.zenmo.zummon.User(
-            row[UserTable.id].toKotlinUuid(),
+            row[UserTable.id],
             row[UserTable.note],
         )
     }
