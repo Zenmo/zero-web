@@ -17,32 +17,30 @@ export const Projects: FunctionComponent = () => {
     const {loading, projects, changeProject, removeProject} = useProjects()
     return (
         <PrimeReactProvider>
-            <ZeroLayout subtitle="Projects">
-                <DataTable
-                    value={projects}
-                    loading={loading}
-                    sortField="created"
-                    sortOrder={-1}
-                    filterDisplay="row"
-                >
-                    <Column field="name" header="Name" sortable filter />
-                    <Column field="energiekeRegioId" header="Energie Regio Id" sortable filter />
+            <DataTable
+                value={projects}
+                loading={loading}
+                sortField="created"
+                sortOrder={-1}
+                filterDisplay="row"
+            >
+                <Column field="name" header="Name" sortable filter />
+                <Column field="energiekeRegioId" header="Energie Regio Id" sortable filter />
 
-                    <Column body={(project: Project) => (
-                        <div css={{
-                            display: 'flex',
-                            '> *': {
-                                margin: `${1/6}rem`
-                            },
-                        }}>
-                            <JsonButton surveyId={project.id}/>
-                            <DeleteButton surveyId={project.id} onDelete={removeProject}/>
-                            <EditButton surveyId={project.id}/>
-                            <DeeplinkButton surveyId={project.id}/>
-                        </div>
-                    )}/>
-                </DataTable>
-            </ZeroLayout>
+                <Column body={(project: Project) => (
+                    <div css={{
+                        display: 'flex',
+                        '> *': {
+                            margin: `${1/6}rem`
+                        },
+                    }}>
+                        <JsonButton surveyId={project.id}/>
+                        <DeleteButton surveyId={project.id} onDelete={removeProject}/>
+                        <EditButton surveyId={project.id}/>
+                        <DeeplinkButton surveyId={project.id}/>
+                    </div>
+                )}/>
+            </DataTable>
         </PrimeReactProvider>
     )
 }

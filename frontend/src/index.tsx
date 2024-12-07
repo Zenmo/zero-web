@@ -9,7 +9,7 @@ import {DE_WIEKEN, HESSENPOORT} from './components/company-survey-v2/project'
 import {Survey} from './components/company-survey-v2/survey'
 import {ThankYou} from './components/thank-you'
 import reportWebVitals from './reportWebVitals'
-import App from "./App";
+import App from "./Simulation";
 import {LoginWidget} from "./user/login";
 import {BedrijvenFormV1} from "./components/bedrijven-form-v1";
 import {Surveys} from "./admin/surveys";
@@ -24,7 +24,7 @@ const router = createBrowserRouter([
         element: <Home />,
     },
     {
-        path: "/proof-of-concept",
+        path: "/simulation",
         element: <App />,
     },
     {

@@ -11,7 +11,7 @@ export const Intro: FunctionComponent = () => {
                 <li><Link to="/bedrijven-hessenpoort">Uitvraag Hessenpoort invullen</Link></li>
                 <li><Link to="/bedrijven-de-wieken">Uitvraag De Wieken invullen</Link></li>
                 <li><Link to="/admin">Uitvragen beheren</Link></li>
-                <li><Link to="/proof-of-concept">Oud proof of concept "simuleer je buurt"</Link></li>
+                <li><Link to="/simulation">Oud proof of concept "simuleer je buurt"</Link></li>
             </ul>
             <p>Links naar andere plekken:</p>
             <ul>

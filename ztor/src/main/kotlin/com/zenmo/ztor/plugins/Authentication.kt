@@ -90,7 +90,7 @@ fun Application.configureAuthentication() {
                         }
                     }
                 }
-                call.respondRedirect("/home")
+                call.respondRedirect("/")
             }
         }
         get("/user-info") {
@@ -102,7 +102,7 @@ fun Application.configureAuthentication() {
                 call.respond(userSession.getDecodedAccessToken())
             }
         }
-        get("/home") {
+        get("/") {
             val userSession: UserSession? = call.sessions.get()
             if (userSession != null) {
                 val token = decodeAccessToken(userSession.token)

@@ -18,31 +18,29 @@ export const Users: FunctionComponent = () => {
 
     return (
         <PrimeReactProvider>
-            <ZeroLayout subtitle="Users">
-                <DataTable
-                    value={users}
-                    loading={loading}
-                    sortField="created"
-                    sortOrder={-1}
-                    filterDisplay="row"
-                >
-                    <Column field="note" header="Note" sortable filter />
+            <DataTable
+                value={users}
+                loading={loading}
+                sortField="created"
+                sortOrder={-1}
+                filterDisplay="row"
+            >
+                <Column field="note" header="Note" sortable filter />
 
-                    <Column body={(user: User) => (
-                        <div css={{
-                            display: 'flex',
-                            '> *': {
-                                margin: `${1/6}rem`
-                            },
-                        }}>
-                            <JsonButton surveyId={user.id}/>
-                            <DeleteButton surveyId={user.id} onDelete={removeUser}/>
-                            <EditButton surveyId={user.id}/>
-                            <DeeplinkButton surveyId={user.id}/>
-                        </div>
-                    )}/>
-                </DataTable>
-            </ZeroLayout>
+                <Column body={(user: User) => (
+                    <div css={{
+                        display: 'flex',
+                        '> *': {
+                            margin: `${1/6}rem`
+                        },
+                    }}>
+                        <JsonButton surveyId={user.id}/>
+                        <DeleteButton surveyId={user.id} onDelete={removeUser}/>
+                        <EditButton surveyId={user.id}/>
+                        <DeeplinkButton surveyId={user.id}/>
+                    </div>
+                )}/>
+            </DataTable>
         </PrimeReactProvider>
     )
 }

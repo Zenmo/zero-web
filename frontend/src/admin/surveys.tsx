@@ -24,59 +24,57 @@ export const Surveys: FunctionComponent = () => {
 
     return (
         <PrimeReactProvider>
-            <ZeroLayout subtitle="Beheer uitvraag bedrijven">
-                <div css={{margin: '1rem'}}>
-                    <AdminButtonRow/>
-                </div>
-                    <DataTable
-                        key={String(multipleProjects)}
-                        value={surveys}
-                        loading={loading}
-                        sortField="created"
-                        sortOrder={-1}
-                        filterDisplay="row"
-                    >
-                        {multipleProjects && <Column field="zenmoProject" header="Project" sortable filter />}
-                        <Column field="companyName" header="Bedrijf" sortable filter />
-                        <Column field="personName" header="Contactpersoon" sortable filter />
-                        <Column field="email" header="E-mail" sortable filter />
-                        <Column header="Aansluitingen" sortable field="numGridConnections" />
-                        {/* TODO: bestanden */}
-                        <Column header="Bestanden" body={(survey: Survey ) => (
-                            <>
-                                {survey.filesArray.map(file => (
-                                    <div key={file.blobName}>
-                                        <a href={downloadUrl(file.blobName)}>{file.originalName}</a>
-                                        &nbsp;
-                                        ({formatByteSize(file.size)})
-                                    </div>
-                                ))}
-                            </>
-                        )}/>
-
-                        <Column field="createdAtToString" body={(survey: Survey ) => formatDatetime(survey.createdAt.toString())} header="Opgestuurd op" sortable/>
-                        <Column field="createdByToString" header="Aangemaakt door" sortable filter />
-                        <Column field="includeInSimulation" header="Opnemen in simulatie" sortable
-                                body={(survey: Survey) => <SurveyIncludeInSimulationCheckbox
-                                    includeInSimulation={survey.includeInSimulation}
-                                    surveyId={survey.id}
-                                    setIncludeInSimulation={(includeInSimulation) => changeSurvey(survey.withIncludeInSimulation(includeInSimulation))}
-                                />}/>
-                        <Column body={(survey: Survey) => (
-                            <div css={{
-                                display: 'flex',
-                                '> *': {
-                                    margin: `${1/6}rem`
-                                },
-                            }}>
-                                <JsonButton surveyId={survey.id}/>
-                                <DeleteButton surveyId={survey.id} onDelete={removeSurvey}/>
-                                <EditButton surveyId={survey.id}/>
-                                <DeeplinkButton surveyId={survey.id}/>
+            <div css={{margin: '1rem'}}>
+                <AdminButtonRow/>
+            </div>
+            <DataTable
+                key={String(multipleProjects)}
+                value={surveys}
+                loading={loading}
+                sortField="created"
+                sortOrder={-1}
+                filterDisplay="row"
+            >
+                {multipleProjects && <Column field="zenmoProject" header="Project" sortable filter />}
+                <Column field="companyName" header="Bedrijf" sortable filter />
+                <Column field="personName" header="Contactpersoon" sortable filter />
+                <Column field="email" header="E-mail" sortable filter />
+                <Column header="Aansluitingen" sortable field="numGridConnections" />
+                {/* TODO: bestanden */}
+                <Column header="Bestanden" body={(survey: Survey ) => (
+                    <>
+                        {survey.filesArray.map(file => (
+                            <div key={file.blobName}>
+                                <a href={downloadUrl(file.blobName)}>{file.originalName}</a>
+                                &nbsp;
+                                ({formatByteSize(file.size)})
                             </div>
-                        )}/>
-                    </DataTable>
-            </ZeroLayout>
+                        ))}
+                    </>
+                )}/>
+
+                <Column field="createdAtToString" body={(survey: Survey ) => formatDatetime(survey.createdAt.toString())} header="Opgestuurd op" sortable/>
+                <Column field="createdByToString" header="Aangemaakt door" sortable filter />
+                <Column field="includeInSimulation" header="Opnemen in simulatie" sortable
+                        body={(survey: Survey) => <SurveyIncludeInSimulationCheckbox
+                            includeInSimulation={survey.includeInSimulation}
+                            surveyId={survey.id}
+                            setIncludeInSimulation={(includeInSimulation) => changeSurvey(survey.withIncludeInSimulation(includeInSimulation))}
+                        />}/>
+                <Column body={(survey: Survey) => (
+                    <div css={{
+                        display: 'flex',
+                        '> *': {
+                            margin: `${1/6}rem`
+                        },
+                    }}>
+                        <JsonButton surveyId={survey.id}/>
+                        <DeleteButton surveyId={survey.id} onDelete={removeSurvey}/>
+                        <EditButton surveyId={survey.id}/>
+                        <DeeplinkButton surveyId={survey.id}/>
+                    </div>
+                )}/>
+            </DataTable>
         </PrimeReactProvider>
     )
 }
