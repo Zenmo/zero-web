@@ -3,14 +3,14 @@ import {useOnce} from "../hooks/use-once";
 import {Project, projectsFromJson} from "zero-zummon"
 
 type UseProjectReturn = {
-    loading: boolean,
+    loadingProjects: boolean,
     projects: Project[],
     changeProject: (newProject: Project) => void,
     removeProject: (projectId: string) => void,
 }
 
 export const useProjects = (): UseProjectReturn => {
-    const [loading, setLoading] = useState(true)
+    const [loadingProjects, setLoading] = useState(true)
     const [projects, setProjects] = useState<Project[]>([])
 
     const changeProject = (newProject: Project) => {
@@ -40,7 +40,7 @@ export const useProjects = (): UseProjectReturn => {
     }
 
     return {
-        loading,
+        loadingProjects,
         projects,
         changeProject,
         removeProject,

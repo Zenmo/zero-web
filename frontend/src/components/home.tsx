@@ -9,6 +9,7 @@ import {Surveys} from "../admin/surveys";
 import {Users} from "../admin/users";
 import {Projects} from "../admin/projects";
 import {Intro} from "./intro";
+import {Dashboard} from "./dashboard";
 
 export const Home: FunctionComponent = () => {
     const [activeComponent, setActiveComponent] = useState<string>('Dashboard');
@@ -24,7 +25,7 @@ export const Home: FunctionComponent = () => {
             case 'About Us':
                 return <div><Intro /></div>;
             default:
-                return <div>Dashboard Content</div>;
+                return <div><Dashboard /></div>;
         }
     };
 

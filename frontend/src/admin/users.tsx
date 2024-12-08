@@ -11,7 +11,6 @@ import {DeleteButton} from "./delete-button";
 import {EditButton} from "./edit-button";
 import {JsonButton} from "./json-button";
 import {DeeplinkButton} from "./deeplink-button"
-import {ZeroLayout} from "../components/zero-layout"
 
 export const Users: FunctionComponent = () => {
     const {loading, users, changeUser, removeUser} = useUsers()

@@ -3,14 +3,14 @@ import {useOnce} from "../hooks/use-once";
 import {User, usersFromJson} from "zero-zummon"
 
 type UseUserReturn = {
-    loading: boolean,
+    loadingUsers: boolean,
     users: User[],
     changeUser: (newUser: User) => void,
     removeUser: (userId: string) => void,
 }
 
 export const useUsers = (): UseUserReturn => {
-    const [loading, setLoading] = useState(true)
+    const [loadingUsers, setLoading] = useState(true)
     const [users, setUsers] = useState<User[]>([])
 
     const changeUser = (newUser: User) => {
@@ -40,7 +40,7 @@ export const useUsers = (): UseUserReturn => {
     }
 
     return {
-        loading,
+        loadingUsers,
         users,
         changeUser,
         removeUser,

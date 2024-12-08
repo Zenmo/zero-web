@@ -3,6 +3,7 @@ package com.zenmo.orm.companysurvey
 import com.zenmo.orm.blob.BlobPurpose
 import com.zenmo.orm.companysurvey.table.*
 import com.zenmo.orm.companysurvey.table.GridConnectionTable.addressId
+import com.zenmo.orm.user.UserRepository
 import com.zenmo.orm.user.table.UserProjectTable
 import com.zenmo.orm.user.table.UserTable
 import com.zenmo.zummon.companysurvey.*
@@ -261,11 +262,9 @@ class SurveyRepository(
 
     protected fun hydrateUser(row: ResultRow): com.zenmo.zummon.User? {
         val userId = row[CompanySurveyTable.createdById] ?: return null
-
-        return com.zenmo.zummon.User(
-            row[UserTable.id],
-            row[UserTable.note],
-        )
+        row[CompanySurveyTable.createdById] ?: return null
+        val userRepo = UserRepository(db)
+        return userRepo.hydrateUser(row)
     }
 
     protected fun hydrateAddress(row: ResultRow): Address {

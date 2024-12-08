@@ -90,7 +90,7 @@ class UserRepository(
         }
     }
 
-    protected fun hydrateUser(row: ResultRow): User {
+    fun hydrateUser(row: ResultRow): User {
         return User(
             id = row[UserTable.id],
             note = row[UserTable.note],
