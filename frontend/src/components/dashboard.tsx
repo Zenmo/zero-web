@@ -5,17 +5,17 @@ import 'primeicons/primeicons.css'
 import {ToggleButton} from "primereact/togglebutton"
 
 import {useState} from "react";
-import {Users} from "../admin/users";
-import {Projects} from "../admin/projects";
-import {Surveys} from "../admin/surveys";
 import {DataTable} from "primereact/datatable";
 import {Column} from "primereact/column";
+import {InputText} from "primereact/inputtext";
+
 import {useUsers} from "../admin/use-users";
 import {useProjects} from "../admin/use-projects";
 import {useSurveys} from "../admin/use-surveys";
 
 export const Dashboard: FunctionComponent = () => {
     const {loadingUsers, users, changeUser, removeUser} = useUsers()
+
     const {loadingProjects, projects, changeProject, removeProject} = useProjects()
     const {loading, surveys, changeSurvey, removeSurvey} = useSurveys()
 
@@ -36,6 +36,23 @@ export const Dashboard: FunctionComponent = () => {
     const [showProjects, setShowProjects] = useState(true);
     const [showSurveys, setShowSurveys] = useState(true);
 
+    const onRowEditComplete = (e: any) => {
+        let _users = [...users];
+        let { newData, index } = e;
+
+        _users[index] = newData;
+
+        changeUser(_users[index]);
+    };
+
+    const textEditor = (options: any) => {
+        return <InputText type="text" value={options.value} onChange={(e) => options.editorCallback(e.target.value)} />;
+    };
+
+    const allowEdit = (rowData: any) => {
+        return rowData.note !== 'Note';
+    };
+
     return (
 
        <div>
@@ -51,9 +68,11 @@ export const Dashboard: FunctionComponent = () => {
                 {showUsers && (
                     <div style={{flex: 1, padding: '0.5em'}}>
                         <h3>Users</h3>
-                        <DataTable value={users} selectionMode="single" selection={selectedUser}
+
+                        <DataTable value={users} editMode="row" selectionMode="single" selection={selectedUser} onRowEditComplete={onRowEditComplete}
                                    onSelectionChange={(e) => handleUserSelect(e)} dataKey="id" tableStyle={{ minWidth: '20rem' }}>
-                            <Column field="note" header="Note"></Column>
+                            <Column field="note" header="Note" editor={(options) => textEditor(options)} style={{ width: '20%' }}></Column>
+                            <Column rowEditor={allowEdit} headerStyle={{ width: '10%', minWidth: '8rem' }} bodyStyle={{ textAlign: 'center' }}></Column>
                         </DataTable>
                     </div>
                 )}

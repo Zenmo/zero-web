@@ -1,4 +1,4 @@
-import {FunctionComponent} from "react";
+import React, {FunctionComponent} from "react";
 import { DataTable } from 'primereact/datatable';
 import { Column } from 'primereact/column';
 import {useSurveys} from "./use-surveys";
@@ -23,9 +23,19 @@ export const Surveys: FunctionComponent = () => {
 
     return (
         <PrimeReactProvider>
-            <div css={{margin: '1rem'}}>
-                <AdminButtonRow/>
+            <div css={{
+                display: 'flex',
+                justifyContent: 'space-between',
+                alignItems: 'center',
+                padding: '1em 1em',
+                boxShadow: '1px solid #ddd'
+            }}>
+                <h3>Surveys List</h3>
+                <div css={{margin: '1rem'}}>
+                    <AdminButtonRow/>
+                </div>
             </div>
+
             <DataTable
                 key={String(multipleProjects)}
                 value={surveys}
@@ -34,13 +44,13 @@ export const Surveys: FunctionComponent = () => {
                 sortOrder={-1}
                 filterDisplay="row"
             >
-                {multipleProjects && <Column field="zenmoProject" header="Project" sortable filter />}
-                <Column field="companyName" header="Bedrijf" sortable filter />
-                <Column field="personName" header="Contactpersoon" sortable filter />
-                <Column field="email" header="E-mail" sortable filter />
-                <Column header="Aansluitingen" sortable field="numGridConnections" />
+                {multipleProjects && <Column field="zenmoProject" header="Project" sortable filter/>}
+                <Column field="companyName" header="Bedrijf" sortable filter/>
+                <Column field="personName" header="Contactpersoon" sortable filter/>
+                <Column field="email" header="E-mail" sortable filter/>
+                <Column header="Aansluitingen" sortable field="numGridConnections"/>
                 {/* TODO: bestanden */}
-                <Column header="Bestanden" body={(survey: Survey ) => (
+                <Column header="Bestanden" body={(survey: Survey) => (
                     <>
                         {survey.filesArray.map(file => (
                             <div key={file.blobName}>
@@ -52,8 +62,9 @@ export const Surveys: FunctionComponent = () => {
                     </>
                 )}/>
 
-                <Column field="createdAtToString" body={(survey: Survey ) => formatDatetime(survey.createdAt.toString())} header="Opgestuurd op" sortable/>
-                <Column field="createdByToString" header="Aangemaakt door" sortable filter />
+                <Column field="createdAtToString" body={(survey: Survey) => formatDatetime(survey.createdAt.toString())}
+                        header="Opgestuurd op" sortable/>
+                <Column field="createdByToString" header="Aangemaakt door" sortable filter/>
                 <Column field="includeInSimulation" header="Opnemen in simulatie" sortable
                         body={(survey: Survey) => <SurveyIncludeInSimulationCheckbox
                             includeInSimulation={survey.includeInSimulation}
@@ -64,7 +75,7 @@ export const Surveys: FunctionComponent = () => {
                     <div css={{
                         display: 'flex',
                         '> *': {
-                            margin: `${1/6}rem`
+                            margin: `${1 / 6}rem`
                         },
                     }}>
                         <JsonButton surveyId={survey.id}/>
