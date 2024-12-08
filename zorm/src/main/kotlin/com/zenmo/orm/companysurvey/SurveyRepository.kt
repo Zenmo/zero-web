@@ -261,7 +261,6 @@ class SurveyRepository(
     }
 
     protected fun hydrateUser(row: ResultRow): com.zenmo.zummon.User? {
-        val userId = row[CompanySurveyTable.createdById] ?: return null
         row[CompanySurveyTable.createdById] ?: return null
         val userRepo = UserRepository(db)
         return userRepo.hydrateUser(row)

@@ -19,25 +19,17 @@ export const Dashboard: FunctionComponent = () => {
     const {loadingProjects, projects, changeProject, removeProject} = useProjects()
     const {loading, surveys, changeSurvey, removeSurvey} = useSurveys()
 
-    const [fixUsers, setUsers] = useState([{id: 1, name: 'User 1'}, {id: 2, name: 'User 2'}]);
-    const [fixProjects, setProjects] = useState([{id: 1, name: 'Project 1', userId: 1}, {id: 2, name: 'Project 2', userId: 2}]);
-    const [fixSurveys, setSurveys] = useState([{id: 1, name: 'Survey 1', projectId: 1}, {id: 2, name: 'Survey 2', projectId: 2}]);
-
-    const [selectedUserId, setSelectedUserId] = useState<number | null>(null);
-    const [selectedProjectId, setSelectedProjectId] = useState<number | null>(null);
-
     const [selectedUser, setSelectedUser] = useState(null);
     const [selectedProject, setSelectedProject] = useState(null);
     const [selectedSurvey, setSelectedSurvey] = useState(null);
 
-    const handleUserSelect = (userId: number) => {
-        setSelectedUserId(userId);
-        // setSelectedUser(userId);
-        setSelectedProjectId(null);
+    const handleUserSelect = (user: any ) => {
+        setSelectedUser(user.value);
+        setSelectedProject(null);
     };
 
-    const handleProjectSelect = (projectId: number) => {
-       setSelectedProjectId(projectId);
+    const handleProjectSelect = (project: any) => {
+        setSelectedProject(project.value);
     };
 
     const [showUsers, setShowUsers] = useState(true);
@@ -60,46 +52,27 @@ export const Dashboard: FunctionComponent = () => {
                     <div style={{flex: 1, padding: '0.5em'}}>
                         <h3>Users</h3>
                         <DataTable value={users} selectionMode="single" selection={selectedUser}
-                                   onSelectionChange={(e) => handleUserSelect(e.value.id.toString())} dataKey="id" tableStyle={{ minWidth: '20rem' }}>
+                                   onSelectionChange={(e) => handleUserSelect(e)} dataKey="id" tableStyle={{ minWidth: '20rem' }}>
                             <Column field="note" header="Note"></Column>
                         </DataTable>
-                        <ul>
-                            {fixUsers.map(user => (
-                                <li key={user.id} onClick={() => handleUserSelect(user.id)}>
-                                    {user.name}
-                                </li>
-                            ))}
-                        </ul>
                     </div>
                 )}
-                {showProjects && selectedUserId && (
+                {showProjects && selectedUser && (
                     <div style={{flex: 1, padding: '0.5em'}}>
                         <h3>Projects</h3>
                         <DataTable value={projects} selectionMode="single" selection={selectedProject}
-                                   onSelectionChange={(e) => handleProjectSelect(e.value.id.toString())} dataKey="id" tableStyle={{ minWidth: '20rem' }}>
+                                   onSelectionChange={(e) => handleProjectSelect(e)} dataKey="id" tableStyle={{ minWidth: '20rem' }}>
                             <Column field="name" header="Name"></Column>
                         </DataTable>
-                        <ul>
-                            {fixProjects.filter(project => project.userId === selectedUserId).map(project => (
-                                <li key={project.id} onClick={() => handleProjectSelect(project.id)}>
-                                    {project.name}
-                                </li>
-                            ))}
-                        </ul>
                     </div>
                 )}
-                {showSurveys && selectedProjectId && (
+                {showSurveys && selectedProject && (
                     <div style={{flex: 1, padding: '0.5em'}}>
                         <h3>Surveys</h3>
                         <DataTable value={surveys} selectionMode="single" selection={selectedSurvey}
                                    onSelectionChange={(e) => setSelectedSurvey(e.value.id.toString())} dataKey="id" tableStyle={{ minWidth: '20rem' }}>
                             <Column field="companyName" header="Company Name"></Column>
                         </DataTable>
-                        <ul>
-                            {fixSurveys.filter(survey => survey.projectId === selectedProjectId).map(survey => (
-                                <li key={survey.id}>{survey.name}</li>
-                            ))}
-                        </ul>
                     </div>
                 )}
             </div>
