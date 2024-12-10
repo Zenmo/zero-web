@@ -2,6 +2,7 @@ import React, {FunctionComponent, PropsWithChildren, useState} from "react"
 import {Button} from "primereact/button";
 import {Sidebar} from "primereact/sidebar";
 import {css} from "@emotion/react";
+import {To, useNavigate} from "react-router-dom";
 
 const sidebarStyle = css({
     width: '250px',
@@ -28,11 +29,14 @@ const buttonStyle = css({
     },
 });
 
-export const ZeroHeader: FunctionComponent<PropsWithChildren & {
-    setActiveComponent: (component: string) => void,
-}> = ({setActiveComponent}) => {
+export const ZeroHeader: FunctionComponent<PropsWithChildren & {}> = () => {
     const [visible, setVisible] = useState(false);
+    const navigate = useNavigate();
 
+    const loadContent = (navidateTo: To) => {
+        setVisible(false);
+        navigate(navidateTo)
+    }
     return (
         <div className="app-header">
             <div className="header" css={{
@@ -44,32 +48,22 @@ export const ZeroHeader: FunctionComponent<PropsWithChildren & {
                 boxShadow: '1px solid #ddd'
             }}>
                 <Button icon="pi pi-bars" onClick={() => setVisible(true)}/>
-                <div>
+                <a href="https://zenmo.com">
                     <img
                         alt="Zenmo logo"
                         src="https://zenmo.com/wp-content/uploads/elementor/thumbs/zenmo-logo-website-light-grey-square-o1piz2j6llwl7n0xd84ywkivuyf22xei68ewzwrvmc.png"
                         style={{height: "1.5em", verticalAlign: "sub"}}/>
                     &nbsp;
                     <b>Zenmo Zero</b>
-                </div>
+                </a>
             </div>
             <Sidebar visible={visible} position="left" onHide={() => setVisible(false)} css={sidebarStyle}>
-                <Button label="Users" icon="pi pi-fw pi-user" onClick={() => {
-                    setVisible(false);
-                    setActiveComponent('Users')
-                }} css={buttonStyle}/>
-                <Button label="Projects" icon="pi pi-fw pi-briefcase" onClick={() => {
-                    setVisible(false);
-                    setActiveComponent('Projects')
-                }} css={buttonStyle}/>
-                <Button label="Surveys" icon="pi pi-fw pi-file" onClick={() => {
-                    setVisible(false);
-                    setActiveComponent('Surveys')
-                }} css={buttonStyle}/>
-                <Button label="About Us" icon="pi pi-fw pi-info-circle" onClick={() => {
-                    setVisible(false);
-                    setActiveComponent('About Us')
-                }} css={buttonStyle}/>
+                <Button label="Dashboard" icon="pi pi-fw pi-user" onClick={(event) => loadContent(`/`)} css={buttonStyle}/>
+                <Button label="Users" icon="pi pi-fw pi-user" onClick={() => loadContent('/users')} css={buttonStyle}/>
+                <Button label="Projects" icon="pi pi-fw pi-briefcase" onClick={() => loadContent('/projects')} css={buttonStyle}/>
+                <Button label="Surveys" icon="pi pi-fw pi-file" onClick={() => loadContent('/surveys')} css={buttonStyle}/>
+                <Button label="Simulation" icon="pi pi-fw pi-file" onClick={() => loadContent('/simulation')} css={buttonStyle}/>
+                <Button label="About Us" icon="pi pi-fw pi-info-circle" onClick={() => loadContent('/intro')} css={buttonStyle}/>
             </Sidebar>
         </div>
     );
