@@ -2,22 +2,15 @@ name: Build and deploy all services
 
 on:
     workflow_dispatch:
-    workflow_run:
-        workflows: ["Run automated tests"]
-        types:
-            - completed
-    ## uncomment to run deploy regardless of failing tests
-#    push:
-#        branches:
-#            - main
-#            - production
-#    pull_request:
-#        types: [ opened, synchronize, reopened ]
+    push:
+        branches:
+            - main
+            - production
+    pull_request:
+        types: [ opened, synchronize, reopened ]
 
 jobs:
     variables:
-        ## comment to run deploy regardless of failing tests
-        if: ${{ github.event.workflow_run.conclusion == 'success' }}
         runs-on: ubuntu-latest
         outputs:
             VERSION_TAG: ${{ fromJson(steps.variables.outputs.result).VERSION_TAG }}
@@ -64,6 +57,7 @@ jobs:
         needs: variables
         runs-on: ubuntu-latest
         steps:
+            -   uses: actions/checkout@v4
             ## Buildx is needed for caching
             -   name: Set up Buildx
                 uses: docker/setup-buildx-action@v2
@@ -87,10 +81,11 @@ jobs:
         environment: ${{ needs.variables.outputs.GITHUB_ENVIRONMENT }}
         runs-on: ubuntu-latest
         steps:
+            -   uses: actions/checkout@v4
             ## Buildx is needed for caching
             -   name: Set up Buildx
                 uses: docker/setup-buildx-action@v2
-            -   name: Login to Azure Container Registry
+            -   name: Login to GitHub Container Registry
                 uses: docker/login-action@v3
                 with:
                     registry: ghcr.io
