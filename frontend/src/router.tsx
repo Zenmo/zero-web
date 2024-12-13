@@ -13,6 +13,8 @@ import {NewSurveyByProjectName} from "./components/company-survey-v2/new-survey-
 import {assertDefined} from "./services/util"
 import Simulation from "./simulation";
 import {App} from "./App";
+import {Users} from "./admin/users";
+import {Projects} from "./admin/projects";
 
 export const router = createBrowserRouter([
     {
@@ -20,6 +22,8 @@ export const router = createBrowserRouter([
         element: <App />,
         children: [
             {path: "", element: <Intro />},
+            {path: "/users", element: <Users />},
+            {path: "/projects", element: <Projects />},
             {path: "/surveys", element: <Surveys />},
             {path: "/simulation", element: <Simulation />},
         ],
