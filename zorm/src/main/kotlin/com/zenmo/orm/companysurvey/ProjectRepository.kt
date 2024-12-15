@@ -7,6 +7,9 @@ import org.jetbrains.exposed.sql.*
 import org.jetbrains.exposed.sql.SqlExpressionBuilder.eq
 import org.jetbrains.exposed.sql.transactions.transaction
 import java.util.UUID
+import kotlin.uuid.ExperimentalUuidApi
+import kotlin.uuid.Uuid
+import kotlin.uuid.toKotlinUuid
 
 class ProjectRepository(
     val db: Database
@@ -23,10 +26,10 @@ class ProjectRepository(
         }
     }
 
-    fun getProjectById(id: UUID): Project? {
+    fun getProjectById(id: UUID): Project {
         return getProjects(
             (ProjectTable.id eq id)
-        ).firstOrNull()
+        ).first()
     }
 
     fun getProjectsByUserId(userId: UUID): List<Project> =
@@ -45,10 +48,11 @@ class ProjectRepository(
         }
     }
 
+    @OptIn(ExperimentalUuidApi::class)
     fun save(project: Project): Project {
         return transaction(db) {
            ProjectTable.upsertReturning() {
-               it[id] = project.id
+               it[id] = UUID.fromString(project.id.toString())
                it[name] = project.name
                it[energiekeRegioId] = project.energiekeRegioId
                it[buurtCodes] = project.buurtCodes
@@ -79,9 +83,10 @@ class ProjectRepository(
                 .single()[ProjectTable.buurtCodes]
         }
 
+    @OptIn(ExperimentalUuidApi::class)
     fun hydrateProject(row: ResultRow): Project {
         return Project(
-            id = row[ProjectTable.id],
+            id = row[ProjectTable.id].toKotlinUuid(),
             name = row[ProjectTable.name],
             energiekeRegioId = row[ProjectTable.energiekeRegioId],
             buurtCodes = row[ProjectTable.buurtCodes]

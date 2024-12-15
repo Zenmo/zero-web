@@ -1,10 +1,9 @@
 package com.zenmo.zummon.companysurvey
 
-import com.benasher44.uuid.Uuid
-import com.benasher44.uuid.uuid4
 import com.zenmo.zummon.BenasherUuidSerializer
 import kotlinx.serialization.Serializable
 import kotlin.js.JsExport
+import kotlin.uuid.Uuid
 
 @Serializable
 @JsExport
@@ -12,9 +11,14 @@ data class Project
 constructor(
 //    @Contextual
     @Serializable(with = BenasherUuidSerializer::class)
-    val id: Uuid = uuid4(),
+    val id: Uuid,
     val name: String = "",
     // Project ID aka Energy Hub ID of Energieke Regio.
     val energiekeRegioId: Int?,
     val buurtCodes: List<String> = emptyList(),
 )
+
+@JsExport
+fun projectsFromJson(json: String): Array<Project> {
+    return kotlinx.serialization.json.Json.decodeFromString<Array<Project>>(json)
+}
