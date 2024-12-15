@@ -1,7 +1,7 @@
 import {Link} from "react-router-dom";
 
-export const EditButton = ({surveyId}: {surveyId: string}) => (
-    <Link className="p-button p-button-success" to={`/bedrijven-uitvraag/${surveyId}`} css={{
+export const EditButton = ({type, id}: {type: string, id: string}) => (
+    <Link className="p-button p-button-success" to={`/${type}/${id}`} css={{
         textDecoration: 'none',
         whiteSpace: 'nowrap',
     }}>
