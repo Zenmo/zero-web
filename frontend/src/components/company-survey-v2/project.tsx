@@ -1,4 +1,6 @@
 import {fetchBuurtcodesByProject} from "../../panden-select/fetch-buurtcodes"
+import {ztorFetch} from "../../services/ztor-fetch";
+import {Project} from "zero-zummon"
 
 export type FrontendProjectConfiguration = {
     name: ProjectName,
@@ -44,5 +46,14 @@ export async function getProjectConfiguration(projectName: ProjectName): Promise
     return {
         ...(configs[projectName] || { ...GENERIC, name: projectName }),
         buurtcodes,
+    }
+}
+
+export async function getProjectById(projectId: string): Promise<Project | null> {
+    try {
+        return await ztorFetch(`/projects/${projectId}`);
+    } catch (error) {
+        console.error(`An error occurred while fetching the project by ID: ${projectId}`, error);
+        return null;
     }
 }

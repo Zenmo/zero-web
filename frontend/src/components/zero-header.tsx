@@ -61,6 +61,7 @@ export const ZeroHeader: FunctionComponent<PropsWithChildren & {}> = () => {
             <Sidebar visible={visible} position="left" onHide={() => setVisible(false)} css={sidebarStyle}>
                 <Button label="Home" icon="pi pi-fw pi-user" onClick={(event) => loadContent(`/`)} css={buttonStyle}/>
                 <Button label="Surveys" icon="pi pi-fw pi-file" onClick={() => loadContent('/surveys')} css={buttonStyle}/>
+                <Button label="Projects" icon="pi pi-fw pi-file" onClick={() => loadContent('/projects')} css={buttonStyle}/>
                 <Button label="Simulation" icon="pi pi-fw pi-file" onClick={() => loadContent('/simulation')} css={buttonStyle}/>
             </Sidebar>
         </div>

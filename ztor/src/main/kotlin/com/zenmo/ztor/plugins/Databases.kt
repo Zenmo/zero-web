@@ -27,7 +27,7 @@ fun Application.configureDatabases(): Database {
     routing {
         get("/projects") {
             val userId = call.getUserId()
-            if (userId == null) {
+            if (userId == null) { // Check if it's admin to return all the projects
                 call.respond(HttpStatusCode.Unauthorized)
                 return@get
             }
