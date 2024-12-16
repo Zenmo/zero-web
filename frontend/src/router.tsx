@@ -7,6 +7,7 @@ import {LoginWidget} from "./user/login";
 import {BedrijvenFormV1} from "./components/bedrijven-form-v1";
 import {Surveys} from "./admin/surveys";
 import {Projects} from "./admin/projects";
+import {ProjectForm} from "./admin/project-form";
 import {fetchSurveyById, SurveyById, SurveyByIdLoaderData} from "./components/company-survey-v2/survey-by-id"
 import {Intro} from "./components/intro"
 import {ExcelImport} from "./excel-import/excel-import"
@@ -23,6 +24,8 @@ export const router = createBrowserRouter([
             {path: "", element: <Intro />},
             {path: "/surveys", element: <Surveys />},
             {path: "/projects", element: <Projects />},
+            {path: "/projects/new-project", element: <ProjectForm />},
+            {path: "/projects/:projectId", element: <ProjectForm />},
             {path: "/simulation", element: <Simulation />},
         ],
     },

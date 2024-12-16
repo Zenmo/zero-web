@@ -5,7 +5,6 @@ import org.jetbrains.exposed.sql.CustomFunction
 import org.jetbrains.exposed.sql.Table
 import org.jetbrains.exposed.sql.UUIDColumnType
 import java.util.UUID
-import kotlin.uuid.Uuid
 
 val postgresGenRandomUuid = CustomFunction("gen_random_uuid", UUIDColumnType())
 
