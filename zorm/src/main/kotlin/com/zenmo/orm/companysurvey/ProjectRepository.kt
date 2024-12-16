@@ -86,7 +86,7 @@ class ProjectRepository(
     @OptIn(ExperimentalUuidApi::class)
     fun hydrateProject(row: ResultRow): Project {
         return Project(
-            id = row[ProjectTable.id].toKotlinUuid(),
+            id = row[ProjectTable.id],
             name = row[ProjectTable.name],
             energiekeRegioId = row[ProjectTable.energiekeRegioId],
             buurtCodes = row[ProjectTable.buurtCodes]
