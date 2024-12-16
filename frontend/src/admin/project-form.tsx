@@ -10,17 +10,21 @@ export const ProjectForm: FunctionComponent = () => {
     const { projectId } = useParams<{ projectId: string }>();
     const [project, setProject] = useState<Project | null>(null);
     const [originalData, setOriginalData] = useState<Project | null>(null);
-    const [loading, setLoading] = useState(false);
-    const navigate = useNavigate();
-    const [isEditing, setIsEditing] = useState(false);
 
-    const handleEditToggle = () => {
-        if (isEditing) {
-            setProject((prevProject) => originalData as Project);
-        } else {
-            setOriginalData((prevData) => project as Project);
+    const [loading, setLoading] = useState(false);
+    const [isEditing, setIsEditing] = useState(false);
+    const navigate = useNavigate();
+
+    const handleCancel = () => {
+        if (originalData) {
+            setProject(originalData); // Revert to original data
         }
-        setIsEditing(!isEditing);
+        setIsEditing(false);
+    };
+
+    // Handle toggle edit mode
+    const handleEditToggle = () => {
+        setIsEditing(true);
     };
 
     const handleInputChange =(e: React.ChangeEvent<HTMLInputElement>) => {
@@ -43,6 +47,7 @@ export const ProjectForm: FunctionComponent = () => {
                     if (response.ok) {
                         const projectData = await response.json();
                         setProject(projectData);
+                        setOriginalData(projectData);
                     } else {
                         alert(`Error fetching project: ${response.statusText}`);
                     }
@@ -58,8 +63,6 @@ export const ProjectForm: FunctionComponent = () => {
 
     const handleSubmit = async (event: FormEvent) => {
         event.preventDefault();
-        setOriginalData(project); // Update original data on successful submit
-        setIsEditing(false);
         setLoading(true);
         try {
             const method = projectId ? "PUT" : "POST";
@@ -81,6 +84,8 @@ export const ProjectForm: FunctionComponent = () => {
             if (response.ok) {
                 const projectData = await response.json();
                 alert(`Project ${projectId ? "updated" : "created"} successfully!`);
+                setProject(projectData);
+                setOriginalData(projectData);
                 navigate(`/projects/${projectData.id}`);
             } else {
                 const errorData = await response.json();
@@ -89,6 +94,7 @@ export const ProjectForm: FunctionComponent = () => {
         } catch (error) {
             alert((error as Error).message);
         } finally {
+            setIsEditing(false);
             setLoading(false);
         }
     };
@@ -105,7 +111,7 @@ export const ProjectForm: FunctionComponent = () => {
                     <InputText
                         id="name"
                         name="name"
-                        defaultValue={project?.name || ""}
+                        defaultValue={project?.name}
                         onChange={handleInputChange}
                         disabled={!isEditing}
                     />
@@ -113,22 +119,21 @@ export const ProjectForm: FunctionComponent = () => {
                     <InputText
                         id="energiekeRegioId"
                         name="energiekeRegioId"
+                        type="number"
                         defaultValue={project?.energiekeRegioId || ""}
                         onChange={handleInputChange}
                         disabled={!isEditing}
                     />
 
                     <div style={{ display: "flex", justifyContent: "space-between", marginTop: "10px" }}>
-                        <Button
-                            label={isEditing ? "Cancel" : "Edit"}
-                            onClick={handleEditToggle}
-                            type="button" // Prevents form submission
-                        />
-                        <Button
-                            label={loading ? "Loading..." : "Submit"}
-                            type="submit"
-                            disabled={loading || !isEditing}
-                        />
+                        {isEditing ? (
+                            <>
+                                <Button label="Cancel" onClick={handleCancel} type="button" disabled={loading} />
+                                <Button label={loading ? "Saving..." : "Save"} type="submit" disabled={loading} />
+                            </>
+                        ) : (
+                            <Button label="Edit" onClick={handleEditToggle} type="button" disabled={loading} />
+                        )}
                     </div>
                 </form>
             </div>
