@@ -9,8 +9,24 @@ import { redirectToLogin } from "./use-projects";
 export const ProjectForm: FunctionComponent = () => {
     const { projectId } = useParams<{ projectId: string }>();
     const [project, setProject] = useState<Project | null>(null);
+    const [originalData, setOriginalData] = useState<Project | null>(null);
     const [loading, setLoading] = useState(false);
     const navigate = useNavigate();
+    const [isEditing, setIsEditing] = useState(false);
+
+    const handleEditToggle = () => {
+        if (isEditing) {
+            setProject((prevProject) => originalData as Project);
+        } else {
+            setOriginalData((prevData) => project as Project);
+        }
+        setIsEditing(!isEditing);
+    };
+
+    const handleInputChange =(e: React.ChangeEvent<HTMLInputElement>) => {
+        const { name, value } = e.target;
+        setProject((prev) => ({ ...prev, [name]: value } as Project));
+    };
 
     useEffect(() => {
         if (projectId) {
@@ -42,6 +58,8 @@ export const ProjectForm: FunctionComponent = () => {
 
     const handleSubmit = async (event: FormEvent) => {
         event.preventDefault();
+        setOriginalData(project); // Update original data on successful submit
+        setIsEditing(false);
         setLoading(true);
         try {
             const method = projectId ? "PUT" : "POST";
@@ -75,41 +93,43 @@ export const ProjectForm: FunctionComponent = () => {
         }
     };
 
-    const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        const { name, value } = e.target;
-        setProject((prev) => ({ ...prev, [name]: value } as Project));
-    };
-
-    const groupStyle: React.CSSProperties = {
-        display: "flex",
-        flexDirection: "column",
-        gap: "1rem",
-        maxWidth: "400px",
-        margin: "0 auto",
-    };
-
     return (
         <PrimeReactProvider>
-            <div style={groupStyle}>
+            <div style={{ padding: "20px", maxWidth: "500px", margin: "0 auto" }}>
                 <h3>{projectId ? "Edit Project" : "Add Project"}</h3>
-                <form onSubmit={handleSubmit} style={groupStyle}>
+                <form
+                    onSubmit={handleSubmit}
+                    style={{ display: "flex", flexDirection: "column", gap: "10px" }}
+                >
                     <label htmlFor="name">Name:</label>
                     <InputText
                         id="name"
                         name="name"
                         defaultValue={project?.name || ""}
-                        onChange={handleChange}
-                        disabled={loading}
+                        onChange={handleInputChange}
+                        disabled={!isEditing}
                     />
                     <label htmlFor="energiekeRegioId">Energieke Regio ID:</label>
                     <InputText
                         id="energiekeRegioId"
                         name="energiekeRegioId"
                         defaultValue={project?.energiekeRegioId || ""}
-                        onChange={handleChange}
-                        disabled={loading}
+                        onChange={handleInputChange}
+                        disabled={!isEditing}
                     />
-                    <Button label={loading ? "Loading..." : "Submit"} type="submit" disabled={loading} />
+
+                    <div style={{ display: "flex", justifyContent: "space-between", marginTop: "10px" }}>
+                        <Button
+                            label={isEditing ? "Cancel" : "Edit"}
+                            onClick={handleEditToggle}
+                            type="button" // Prevents form submission
+                        />
+                        <Button
+                            label={loading ? "Loading..." : "Submit"}
+                            type="submit"
+                            disabled={loading || !isEditing}
+                        />
+                    </div>
                 </form>
             </div>
         </PrimeReactProvider>

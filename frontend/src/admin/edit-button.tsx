@@ -5,6 +5,6 @@ export const EditButton = ({type, id}: {type: string, id: string}) => (
         textDecoration: 'none',
         whiteSpace: 'nowrap',
     }}>
-        <i className="pi pi-pencil"></i>
+        <i className="pi pi-eye"></i>
     </Link>
 )
