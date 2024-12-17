@@ -1,9 +1,9 @@
 import {FunctionComponent} from "react"
-import {ZeroLayout} from "./zero-layout"
+import {ZeroBody} from "./zero-body"
 import {Link} from "react-router-dom"
 
 export const Intro: FunctionComponent = () => (
-    <ZeroLayout>
+    <ZeroBody>
         <div style={{margin: "0 auto", maxWidth: "40rem"}}>
             <p>Welkom bij Zenmo Zero</p>
             <p>Deze pagina is in aanbouw. Wat u kunt vinden op deze website:</p>
@@ -21,5 +21,5 @@ export const Intro: FunctionComponent = () => (
                 <li><a href="https://github.com/zenmo/zero">Broncode van deze website</a></li>
             </ul>
         </div>
-    </ZeroLayout>
+    </ZeroBody>
 )

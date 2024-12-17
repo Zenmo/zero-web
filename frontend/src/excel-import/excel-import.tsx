@@ -1,6 +1,6 @@
 import {FunctionComponent, useState} from "react"
 import {SurveyWithErrors, PandID} from "zero-zummon"
-import {ZeroLayout} from "../components/zero-layout"
+import {ZeroBody} from "../components/zero-body"
 import {PrimeReactProvider} from "primereact/api"
 import {Steps} from "primereact/steps"
 import {Message} from "primereact/message";
@@ -22,7 +22,7 @@ export const ExcelImport: FunctionComponent = () => {
 
     return (
         <PrimeReactProvider>
-            <ZeroLayout subtitle="Importeer Excel">
+            <ZeroBody subtitle="Importeer Excel">
                 <Steps
                     style={{
                         margin: "1rem",
@@ -71,7 +71,7 @@ export const ExcelImport: FunctionComponent = () => {
                 {activeIndex === 3 && surveyWithErrors &&
                     <Message style={{margin: "1rem"}} severity="info" text="Alle checks OK"/>}
                 {activeIndex === 4 && surveyWithErrors && <Save survey={surveyWithErrors.survey} /> }
-            </ZeroLayout>
+            </ZeroBody>
         </PrimeReactProvider>
     )
 }

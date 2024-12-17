@@ -9,7 +9,7 @@ import {PandDataDisplay} from './components/pand-display'
 import {useApp} from './services/appState'
 import {assertDefined} from './services/util'
 import {Buurt} from './services/wijkenbuurten/buurten'
-import {ZeroLayout} from "./components/zero-layout"
+import {ZeroBody} from "./components/zero-body"
 
 function Simulation() {
     const appHook = useApp()
@@ -20,7 +20,7 @@ function Simulation() {
     const [buurt, setBuurt] = useState<Buurt | undefined>()
 
     return (
-        <ZeroLayout subtitle="Simuleer je buurt">
+        <ZeroBody subtitle="Simuleer je buurt">
             {/* Three-column layout*/}
             <div style={{display: "flex"}}>
                 <div style={{width: '20rem', padding: '1rem', paddingTop: '5rem'}}>
@@ -47,7 +47,7 @@ function Simulation() {
                         <PandDataDisplay pandData={assertDefined(getPandData(currentPandId))}/>}
                 </div>
             </div>
-        </ZeroLayout>
+        </ZeroBody>
     )
 }
 

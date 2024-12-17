@@ -1,10 +1,10 @@
 package com.zenmo.orm.user
 
+import com.zenmo.zummon.companysurvey.User
 import com.zenmo.orm.companysurvey.ProjectRepository
 import com.zenmo.orm.user.table.UserProjectTable
 import com.zenmo.orm.user.table.UserTable
 import com.zenmo.orm.companysurvey.table.ProjectTable
-import com.zenmo.zummon.companysurvey.Project
 import org.jetbrains.exposed.sql.*
 import org.jetbrains.exposed.sql.SqlExpressionBuilder.eq
 import org.jetbrains.exposed.sql.transactions.transaction
@@ -53,23 +53,39 @@ class UserRepository(
         }
     }
 
-    fun getUserById(id: UUID): User? {
-        return getUsers(
-            (UserTable.id eq id)
-        ).firstOrNull()
+    fun getUsersByProjectId(projectId: UUID): List<User> {
+        return transaction(db) {
+            UserTable
+                .join(UserProjectTable, JoinType.INNER, UserTable.id, UserProjectTable.userId)
+                .selectAll()
+                .where { UserProjectTable.projectId eq projectId }
+                .mapNotNull { row -> hydrateUser(row) }
+        }
     }
 
-    fun saveUser(
+    fun getUserById(id: UUID): User {
+        return getUsers(
+            (UserTable.id eq id)
+        ).first()
+    }
+
+    @OptIn(ExperimentalUuidApi::class)
+    fun save(user: User): User {
+        return transaction(db) {
+            UserTable.upsertReturning() {
+                it[id] = UUID.fromString(user.id.toString())
+                it[note] = user.note
+            }.map {
+                hydrateUser(it)
+            }.first()
+        }
+    }
+
+    fun saveProject(
         userId: UUID,
         projectIds: List<UUID> = emptyList(),
-        note: String = "",
     ) {
         transaction(db) {
-            UserTable.upsert {
-                it[id] = userId
-                it[UserTable.note] = note
-            }
-
             UserProjectTable.batchInsert(projectIds) {
                 this[UserProjectTable.projectId] = it
                 this[UserProjectTable.userId] = userId
@@ -88,6 +104,7 @@ class UserRepository(
         }
     }
 
+    @OptIn(ExperimentalUuidApi::class)
     protected fun hydrateUser(row: ResultRow): User {
         return User(
             id = row[UserTable.id],

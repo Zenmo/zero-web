@@ -1,7 +1,6 @@
 package com.zenmo.orm.user.table
 
 import org.jetbrains.exposed.sql.Table
-import org.jetbrains.exposed.sql.VarCharColumnType
 
 object UserTable: Table("user") {
     /**

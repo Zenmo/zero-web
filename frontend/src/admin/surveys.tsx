@@ -11,7 +11,7 @@ import {DeleteButton} from "./delete-button";
 import {EditButton} from "./edit-button";
 import {JsonButton} from "./json-button";
 import {DeeplinkButton} from "./deeplink-button"
-import {ZeroLayout} from "../components/zero-layout"
+import {ZeroBody} from "../components/zero-body"
 
 import {AdminButtonRow} from "./admin-button-row"
 import {SurveyIncludeInSimulationCheckbox} from "./survey-include-in-simulation-checkbox"
@@ -24,7 +24,7 @@ export const Surveys: FunctionComponent = () => {
 
     return (
         <PrimeReactProvider>
-            <ZeroLayout subtitle="Beheer uitvraag bedrijven">
+            <ZeroBody subtitle="Beheer uitvraag bedrijven">
                 <div css={{margin: '1rem'}}>
                     <AdminButtonRow/>
                 </div>
@@ -76,7 +76,7 @@ export const Surveys: FunctionComponent = () => {
                             </div>
                         )}/>
                     </DataTable>
-            </ZeroLayout>
+            </ZeroBody>
         </PrimeReactProvider>
     )
 }
