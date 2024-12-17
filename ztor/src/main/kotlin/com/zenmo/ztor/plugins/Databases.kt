@@ -26,6 +26,7 @@ fun Application.configureDatabases(): Database {
     val deeplinkService = DeeplinkService(DeeplinkRepository(db))
 
     routing {
+        // List projects for current user
         get("/projects") {
             val userId = call.getUserId()
             if (userId == null) { // Check if it's admin to return all the projects
@@ -34,6 +35,19 @@ fun Application.configureDatabases(): Database {
             }
 
             call.respond(HttpStatusCode.OK, projectRepository.getProjectsByUserId(userId))
+        }
+
+        // Get one project that belongs to the user
+        get("/projects/{projectId}") {
+            val projectId = UUID.fromString(call.parameters["projectId"])
+
+            val userId = call.getUserId()
+            if (userId == null) { // Check if the user have access to the project
+                call.respond(HttpStatusCode.Unauthorized)
+                return@get
+            }
+
+            call.respond(HttpStatusCode.OK, projectRepository.getProjectByUserId(userId, projectId))
         }
 
         // Create
@@ -55,21 +69,8 @@ fun Application.configureDatabases(): Database {
             call.respond(HttpStatusCode.Created, newProject)
         }
 
-        get("/projects/{projectId}") {
-            val projectId = UUID.fromString(call.parameters["projectId"])
-
-            val userId = call.getUserId()
-            if (userId == null) { // Check if the user have access to the project
-                call.respond(HttpStatusCode.Unauthorized)
-                return@get
-            }
-
-            call.respond(HttpStatusCode.OK, projectRepository.getProjectById(projectId))
-        }
-
-        // set active state
+        // Update
         put("/projects/{projectId}") {
-            val projectId = UUID.fromString(call.parameters["projectId"])
             val project: Project?
             try {
                 project = call.receive<Project>()
@@ -84,7 +85,7 @@ fun Application.configureDatabases(): Database {
 
             val newProject = projectRepository.save(project)
 
-            call.respond(HttpStatusCode.OK)
+            call.respond(HttpStatusCode.OK, newProject)
         }
 
         get("/projects/by-name/{projectName}/buurtcodes") {

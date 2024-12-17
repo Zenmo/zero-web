@@ -8,8 +8,6 @@ import org.jetbrains.exposed.sql.SqlExpressionBuilder.eq
 import org.jetbrains.exposed.sql.transactions.transaction
 import java.util.UUID
 import kotlin.uuid.ExperimentalUuidApi
-import kotlin.uuid.Uuid
-import kotlin.uuid.toKotlinUuid
 
 class ProjectRepository(
     val db: Database
@@ -29,6 +27,16 @@ class ProjectRepository(
     fun getProjectById(id: UUID): Project {
         return getProjects(
             (ProjectTable.id eq id)
+        ).first()
+    }
+
+    fun getProjectByUserId(userId: UUID, projectId: UUID): Project {
+        return getProjects(
+            (ProjectTable.id eq projectId) and
+                  (ProjectTable.id eq anyFrom(
+                    UserProjectTable.select(UserProjectTable.projectId)
+                        .where { UserProjectTable.userId eq userId }
+                    ))
         ).first()
     }
 
