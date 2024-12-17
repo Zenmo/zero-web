@@ -7,7 +7,7 @@ import { Project } from "zero-zummon"; // Assuming this is the project model
 import { redirectToLogin } from "./use-projects";
 
 export const ProjectForm: FunctionComponent = () => {
-    const { projectId } = useParams<{ projectId: string }>();
+    const {projectId} = useParams<{ projectId: string }>();
     const [project, setProject] = useState<Project | null>(null);
     const [originalData, setOriginalData] = useState<Project | null>(null);
 
@@ -57,6 +57,8 @@ export const ProjectForm: FunctionComponent = () => {
                 }
             };
             fetchProject();
+        } else {
+            setIsEditing(true);
         }
     }, [projectId]);
 
@@ -108,7 +110,7 @@ export const ProjectForm: FunctionComponent = () => {
                         id="name"
                         name="name"
                         value={project?.name}
-                        defaultValue={project?.name}
+                        defaultValue={project?.name || ""}
                         onChange={handleInputChange}
                         disabled={!isEditing}
                     />
@@ -116,7 +118,7 @@ export const ProjectForm: FunctionComponent = () => {
                     <InputText
                         id="energiekeRegioId"
                         name="energiekeRegioId"
-                        value={project?.energiekeRegioId?.toString()}
+                        value={project?.energiekeRegioId?.toString() || ""}
                         onChange={handleInputChange}
                         disabled={!isEditing}
                     />
