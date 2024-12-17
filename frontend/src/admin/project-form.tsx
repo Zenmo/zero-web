@@ -22,7 +22,6 @@ export const ProjectForm: FunctionComponent = () => {
         setIsEditing(false);
     };
 
-    // Handle toggle edit mode
     const handleEditToggle = () => {
         setIsEditing(true);
     };
@@ -82,11 +81,8 @@ export const ProjectForm: FunctionComponent = () => {
                 return;
             }
             if (response.ok) {
-                const projectData = await response.json();
                 alert(`Project ${projectId ? "updated" : "created"} successfully!`);
-                setProject(projectData);
-                setOriginalData(projectData);
-                navigate(`/projects/${projectData.id}`);
+                navigate(`/projects/${projectId}`);
             } else {
                 const errorData = await response.json();
                 alert(`Error: ${errorData.message}`);
@@ -111,6 +107,7 @@ export const ProjectForm: FunctionComponent = () => {
                     <InputText
                         id="name"
                         name="name"
+                        value={project?.name}
                         defaultValue={project?.name}
                         onChange={handleInputChange}
                         disabled={!isEditing}
@@ -119,8 +116,7 @@ export const ProjectForm: FunctionComponent = () => {
                     <InputText
                         id="energiekeRegioId"
                         name="energiekeRegioId"
-                        type="number"
-                        defaultValue={project?.energiekeRegioId || ""}
+                        value={project?.energiekeRegioId?.toString()}
                         onChange={handleInputChange}
                         disabled={!isEditing}
                     />
