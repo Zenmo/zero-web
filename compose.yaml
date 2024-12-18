@@ -119,7 +119,7 @@ services:
             POSTGRES_URL: jdbc:postgresql://postgres:5432/test
 
     ## Recompiles on source code changes.
-    ## Do ensure that the two Gradle containers have independent Intro directories and Project cache directories.
+    ## Do ensure that the two Gradle containers have independent Home directories and Project cache directories.
     ztor-build-once:
         extends:
             service: gradle-base
@@ -128,7 +128,7 @@ services:
         command: ztor:buildFatJar --no-daemon
 
     ## Recompiles on source code changes.
-    ## Do ensure that the two Gradle containers have independent Intro directories and Project cache directories.
+    ## Do ensure that the two Gradle containers have independent Home directories and Project cache directories.
     ztor-build:
         extends:
             service: gradle-base
@@ -137,7 +137,7 @@ services:
         command: ztor:classes
 
     ## Runs Ktor web server and reloads classes if the compiled .class file changes.
-    ## Do ensure that the two Gradle containers have independent Intro directories and Project cache directories.
+    ## Do ensure that the two Gradle containers have independent Home directories and Project cache directories.
     ztor-run:
         extends:
             service: ztor-gradle-with-db
