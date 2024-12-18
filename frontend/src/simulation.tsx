@@ -1,5 +1,5 @@
 import 'leaflet/dist/leaflet.css'
-import React, {createElement as h, useState} from 'react'
+import React, {createElement as h, FunctionComponent, useState} from 'react'
 import './App.css'
 import {AggregatedAreaData} from './components/aggregated-area-data'
 import {AnyLogic} from './components/any-logic'
@@ -11,7 +11,7 @@ import {assertDefined} from './services/util'
 import {Buurt} from './services/wijkenbuurten/buurten'
 import {ZeroLayout} from "./components/zero-layout"
 
-function Simulation() {
+export const Simulation: FunctionComponent<{}> = () => {
     const appHook = useApp()
     const {setGeometry, getPandData, bag2dPanden} = appHook
 
@@ -51,4 +51,3 @@ function Simulation() {
     )
 }
 
-export default Simulation

@@ -11,7 +11,7 @@ import {Intro} from "./components/intro"
 import {ExcelImport} from "./excel-import/excel-import"
 import {NewSurveyByProjectName} from "./components/company-survey-v2/new-survey-by-project-name"
 import {assertDefined} from "./services/util"
-import Simulation from "./simulation";
+import {Simulation} from "./simulation";
 import {App} from "./App";
 
 export const router = createBrowserRouter([
