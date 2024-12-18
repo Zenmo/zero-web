@@ -1,4 +1,4 @@
-import {FunctionComponent} from "react";
+import React, {FunctionComponent} from "react";
 import { DataTable } from 'primereact/datatable';
 import { Column } from 'primereact/column';
 import {useSurveys} from "./use-surveys";
@@ -16,7 +16,7 @@ import {ZeroLayout} from "../components/zero-layout"
 import {AdminButtonRow} from "./admin-button-row"
 import {SurveyIncludeInSimulationCheckbox} from "./survey-include-in-simulation-checkbox"
 
-export const Admin: FunctionComponent = () => {
+export const Surveys: FunctionComponent = () => {
     const {loading, surveys, changeSurvey, removeSurvey} = useSurveys()
 
     const multipleProjects = surveys.map(survey => survey.zenmoProject)
@@ -70,8 +70,8 @@ export const Admin: FunctionComponent = () => {
                                 },
                             }}>
                                 <JsonButton surveyId={survey.id}/>
-                                <DeleteButton surveyId={survey.id} onDelete={removeSurvey}/>
-                                <EditButton surveyId={survey.id}/>
+                                <DeleteButton type="company-surveys" id={survey.id} onDelete={removeSurvey}/>
+                                <EditButton type="company-surveys" id={survey.id}/>
                                 <DeeplinkButton surveyId={survey.id}/>
                             </div>
                         )}/>

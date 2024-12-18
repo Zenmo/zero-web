@@ -8,6 +8,7 @@ import com.zenmo.ztor.deeplink.DeeplinkService
 import com.zenmo.ztor.errorMessageToJson
 import com.zenmo.ztor.user.getUserId
 import com.zenmo.zummon.companysurvey.Survey
+import com.zenmo.zummon.companysurvey.Project
 import io.ktor.http.*
 import io.ktor.serialization.*
 import io.ktor.server.application.*
@@ -25,14 +26,66 @@ fun Application.configureDatabases(): Database {
     val deeplinkService = DeeplinkService(DeeplinkRepository(db))
 
     routing {
+        // List projects for current user
         get("/projects") {
             val userId = call.getUserId()
-            if (userId == null) {
+            if (userId == null) { // Check if it's admin to return all the projects
                 call.respond(HttpStatusCode.Unauthorized)
                 return@get
             }
 
             call.respond(HttpStatusCode.OK, projectRepository.getProjectsByUserId(userId))
+        }
+
+        // Get one project that belongs to the user
+        get("/projects/{projectId}") {
+            val projectId = UUID.fromString(call.parameters["projectId"])
+
+            val userId = call.getUserId()
+            if (userId == null) { // Check if the user have access to the project
+                call.respond(HttpStatusCode.Unauthorized)
+                return@get
+            }
+
+            call.respond(HttpStatusCode.OK, projectRepository.getProjectByUserId(userId, projectId))
+        }
+
+        // Create
+        post("/projects") {
+            val project: Project?
+            try {
+                project = call.receive<Project>()
+            } catch (e: BadRequestException) {
+                if (e.cause is JsonConvertException) {
+                    call.respond(HttpStatusCode.BadRequest, errorMessageToJson(e.cause?.message))
+                    return@post
+                }
+                call.respond(HttpStatusCode.BadRequest,  errorMessageToJson(e.message))
+                return@post
+            }
+
+            val newProject = projectRepository.save(project)
+
+            call.respond(HttpStatusCode.Created, newProject)
+        }
+
+        // Update
+        put("/projects/{projectId}") {
+            val project: Project?
+            try {
+                project = call.receive<Project>()
+            } catch (e: BadRequestException) {
+                if (e.cause is JsonConvertException) {
+                    call.respond(HttpStatusCode.BadRequest, errorMessageToJson(e.cause?.message))
+                    return@put
+                }
+                call.respond(HttpStatusCode.BadRequest,  errorMessageToJson(e.message))
+                return@put
+            }
+
+            val newProject = projectRepository.save(project)
+
+            call.respond(HttpStatusCode.OK, newProject)
         }
 
         get("/projects/by-name/{projectName}/buurtcodes") {
