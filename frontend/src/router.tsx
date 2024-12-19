@@ -5,7 +5,7 @@ import {SurveyFromProject} from "./components/company-survey-v2/survey"
 import {ThankYou} from './components/thank-you'
 import {LoginWidget} from "./user/login";
 import {BedrijvenFormV1} from "./components/bedrijven-form-v1";
-import {Admin} from "./admin/admin";
+import {Surveys} from "./admin/surveys";
 import {fetchSurveyById, SurveyById, SurveyByIdLoaderData} from "./components/company-survey-v2/survey-by-id"
 import {Intro} from "./components/intro"
 import {ExcelImport} from "./excel-import/excel-import"
@@ -20,6 +20,7 @@ export const router = createBrowserRouter([
         element: <App />,
         children: [
             {path: "", element: <Intro />},
+            {path: "/surveys", element: <Surveys />},
             {path: "/simulation", element: <Simulation />},
         ],
     },
@@ -79,7 +80,7 @@ export const router = createBrowserRouter([
     },
     {
         path: "/admin",
-        element: <Admin />,
+        element: <Surveys />,
     },
     {
         path: "/admin/import-excel",
