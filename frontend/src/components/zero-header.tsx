@@ -5,14 +5,14 @@ import {css} from "@emotion/react";
 import {To, useNavigate} from "react-router-dom";
 
 const sidebarStyle = css({
-    width: '250px',
+    width: '16rem',
     backgroundColor: '#f5f5f5',
     borderRight: '1px solid #ddd',
 });
 
 const buttonStyle = css({
     display: 'block',
-    marginBottom: '45px',
+    marginBottom: '3rem',
     width: '100%',
 
     textAlign: 'left',
@@ -58,10 +58,20 @@ export const ZeroHeader: FunctionComponent<PropsWithChildren & {}> = () => {
                     <b>Zenmo Zero</b>
                 </a>
             </div>
+
             <Sidebar visible={visible} position="left" onHide={() => setVisible(false)} css={sidebarStyle}>
-                <Button label="Home" icon="pi pi-fw pi-user" onClick={(event) => loadContent(`/`)} css={buttonStyle}/>
-                <Button label="Surveys" icon="pi pi-fw pi-file" onClick={() => loadContent('/surveys')} css={buttonStyle}/>
-                <Button label="Simulation" icon="pi pi-fw pi-file" onClick={() => loadContent('/simulation')} css={buttonStyle}/>
+                <a onClick={() => loadContent(`/`)} css={buttonStyle}>
+                    <i className="pi pi-fw pi-user" style={{marginRight: '0.5em'}}></i>
+                    Home
+                </a>
+                <a onClick={() => loadContent('/surveys')} css={buttonStyle}>
+                    <i className="pi pi-fw pi-file" style={{marginRight: '0.5em'}}></i>
+                    Surveys
+                </a>
+                <a onClick={() => loadContent('/simulation')} css={buttonStyle}>
+                    <i className="pi pi-fw pi-file" style={{marginRight: '0.5em'}}></i>
+                    Simulation
+                </a>
             </Sidebar>
         </div>
     );
