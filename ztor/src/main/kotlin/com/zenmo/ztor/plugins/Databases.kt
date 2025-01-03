@@ -4,6 +4,7 @@ import com.zenmo.orm.companysurvey.ProjectRepository
 import com.zenmo.orm.companysurvey.SurveyRepository
 import com.zenmo.orm.connectToPostgres
 import com.zenmo.orm.deeplink.DeeplinkRepository
+import com.zenmo.orm.user.UserRepository
 import com.zenmo.ztor.deeplink.DeeplinkService
 import com.zenmo.ztor.errorMessageToJson
 import com.zenmo.ztor.user.getUserId
@@ -21,6 +22,7 @@ import java.util.*
 
 fun Application.configureDatabases(): Database {
     val db: Database = connectToPostgres()
+    val userRepository = UserRepository(db)
     val surveyRepository = SurveyRepository(db)
     val projectRepository = ProjectRepository(db)
     val deeplinkService = DeeplinkService(DeeplinkRepository(db))
@@ -28,8 +30,11 @@ fun Application.configureDatabases(): Database {
     routing {
         // List projects for current user
         get("/projects") {
+            
             val userId = call.getUserId()
-            if (userId == null) { // Check if it's admin to return all the projects
+            println("User ID: $userId")
+
+            if (userId == null) {
                 call.respond(HttpStatusCode.Unauthorized)
                 return@get
             }
@@ -42,7 +47,8 @@ fun Application.configureDatabases(): Database {
             val projectId = UUID.fromString(call.parameters["projectId"])
 
             val userId = call.getUserId()
-            if (userId == null) { // Check if the user have access to the project
+            println("User ID: $userId")
+            if (userId == null) {
                 call.respond(HttpStatusCode.Unauthorized)
                 return@get
             }
@@ -64,7 +70,14 @@ fun Application.configureDatabases(): Database {
                 return@post
             }
 
-            val newProject = projectRepository.save(project)
+            val userId = call.getUserId()
+            println("User ID: $userId")
+            if (userId == null) {
+                call.respond(HttpStatusCode.Unauthorized)
+                return@post
+            }
+
+            val newProject = projectRepository.saveToUser(project, userId)
 
             call.respond(HttpStatusCode.Created, newProject)
         }
@@ -172,6 +185,7 @@ fun Application.configureDatabases(): Database {
 
         delete("/company-surveys/{surveyId}") {
             val userId = call.getUserId()
+            println("User ID: $userId")
             if (userId == null) {
                 call.respond(HttpStatusCode.Unauthorized)
                 return@delete
@@ -209,6 +223,7 @@ fun Application.configureDatabases(): Database {
         // set active state
         put("/company-surveys/{surveyId}/include-in-simulation") {
             val userId = call.getUserId()
+            println("User ID: $userId")
             if (userId == null) {
                 call.respond(HttpStatusCode.Unauthorized)
                 return@put

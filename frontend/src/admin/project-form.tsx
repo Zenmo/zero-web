@@ -3,7 +3,7 @@ import { useParams, useNavigate } from "react-router-dom";
 import { PrimeReactProvider } from "primereact/api";
 import { InputText } from "primereact/inputtext";
 import { Button } from "primereact/button";
-import { Project } from "zero-zummon"; // Assuming this is the project model
+import { Project } from "zero-zummon";
 import { redirectToLogin } from "./use-projects";
 
 export const ProjectForm: FunctionComponent = () => {
@@ -82,15 +82,13 @@ export const ProjectForm: FunctionComponent = () => {
                 redirectToLogin();
                 return;
             }
+
             if (response.ok) {
-                alert(`Project ${projectId ? "updated" : "created"} successfully!`);
-                navigate(`/projects/${projectId}`);
+                navigate(`/projects`);
             } else {
                 const errorData = await response.json();
                 alert(`Error: ${errorData.message}`);
             }
-        } catch (error) {
-            alert((error as Error).message);
         } finally {
             setIsEditing(false);
             setLoading(false);
@@ -109,8 +107,7 @@ export const ProjectForm: FunctionComponent = () => {
                     <InputText
                         id="name"
                         name="name"
-                        value={project?.name}
-                        defaultValue={project?.name || ""}
+                        value={project?.name || ""}
                         onChange={handleInputChange}
                         disabled={!isEditing}
                     />

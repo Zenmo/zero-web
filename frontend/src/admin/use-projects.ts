@@ -56,48 +56,6 @@ export const useProjects = (): UseProjectReturn => {
     }
 }
 
-export const useCreateProject = (): UseProjectData => {
-    const [loadingProject, setLoading] = useState(true)
-    const [project, setProject] = useState<Project>()
-    const navigate = useNavigate();
-
-    useOnce(async () => {
-        try {
-            const response = await fetch(import.meta.env.VITE_ZTOR_URL + '/projects', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                credentials: 'include',
-                body: JSON.stringify(project),
-            })
-            if (response.status === 401) {
-                redirectToLogin()
-                return
-            }
-
-            if (response.ok) {
-                const createdProject = await response.json();
-                alert(`Project created successfully with ID: ${createdProject.id}`);
-                setProject(createdProject)
-                navigate(`/projects/${createdProject.id}`);
-            } else {
-                const errorData = await response.json();
-                alert(`Error creating project: ${errorData.message}`);
-            }
-        } catch (error) {
-            alert((error as Error).message)
-        } finally {
-            setLoading(false)
-        }
-    })
-
-    return <UseProjectData>{
-        loadingProject,
-        project,
-    }
-}
-
 export const redirectToLogin = () => {
     window.location.href = import.meta.env.VITE_ZTOR_URL + '/login?redirectUrl=' + encodeURIComponent(window.location.href)
 }
