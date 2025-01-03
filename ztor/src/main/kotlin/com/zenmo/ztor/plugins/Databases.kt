@@ -30,10 +30,7 @@ fun Application.configureDatabases(): Database {
     routing {
         // List projects for current user
         get("/projects") {
-            
             val userId = call.getUserId()
-            println("User ID: $userId")
-
             if (userId == null) {
                 call.respond(HttpStatusCode.Unauthorized)
                 return@get
@@ -83,7 +80,7 @@ fun Application.configureDatabases(): Database {
         }
 
         // Update
-        put("/projects/{projectId}") {
+        put("/projects") {
             val project: Project?
             try {
                 project = call.receive<Project>()

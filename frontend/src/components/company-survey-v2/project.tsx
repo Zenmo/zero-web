@@ -48,12 +48,3 @@ export async function getProjectConfiguration(projectName: ProjectName): Promise
         buurtcodes,
     }
 }
-
-export async function getProjectById(projectId: string): Promise<Project | null> {
-    try {
-        return await ztorFetch(`/projects/${projectId}`);
-    } catch (error) {
-        console.error(`An error occurred while fetching the project by ID: ${projectId}`, error);
-        return null;
-    }
-}
