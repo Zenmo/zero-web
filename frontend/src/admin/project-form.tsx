@@ -67,9 +67,7 @@ export const ProjectForm: FunctionComponent = () => {
         setLoading(true);
         try {
             const method = projectId ? "PUT" : "POST";
-            const url = projectId
-                ? `${import.meta.env.VITE_ZTOR_URL}/projects/${projectId}`
-                : `${import.meta.env.VITE_ZTOR_URL}/projects`;
+            const url = `${import.meta.env.VITE_ZTOR_URL}/projects`
             const response = await fetch(url, {
                 method,
                 headers: {
