@@ -171,6 +171,10 @@ fun createMockSurvey(projectName: String = "Project") = Survey(
                             numPlannedElectricVans = 0,
                             numPlannedHydrogenVans = 2,
                         ),
+                        agriculture = Agriculture(
+                            numTractors = 3,
+                            annualDieselUsage_L = 4200.1,
+                        ),
                         otherVehicles = OtherVehicles(
                             hasOtherVehicles = true,
                             description = "Other vehicles description",
