@@ -110,7 +110,6 @@ class SurveyRepositoryTest {
     }
 
     @Test
-    @OptIn(ExperimentalUuidApi::class)
     fun testCreatorIsSetOnCreateButNotOnEdit() {
         val db = connectToPostgres()
 
