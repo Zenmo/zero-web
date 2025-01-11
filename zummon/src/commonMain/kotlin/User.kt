@@ -1,9 +1,12 @@
 package com.zenmo.zummon
 
+
+import com.benasher44.uuid.Uuid
+import com.benasher44.uuid.uuid4
+import com.zenmo.zummon.BenasherUuidSerializer
 import com.zenmo.zummon.companysurvey.Project
 import kotlinx.serialization.Serializable
 import kotlin.js.JsExport
-import kotlin.uuid.Uuid
 
 /**
  * This object is intended to be enriched with Keycloak data.
@@ -16,3 +19,13 @@ data class User(
     val note: String,
     val projects: List<Project> = emptyList()
 )
+
+@JsExport
+fun usersFromJson(json: String): Array<User> {
+    return kotlinx.serialization.json.Json.decodeFromString<Array<User>>(json)
+}
+
+@JsExport
+fun userFromJson(json: String): User {
+    return kotlinx.serialization.json.Json.decodeFromString<User>(json)
+}
