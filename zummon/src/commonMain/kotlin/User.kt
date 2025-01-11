@@ -1,6 +1,5 @@
 package com.zenmo.zummon
 
-
 import com.benasher44.uuid.Uuid
 import com.benasher44.uuid.uuid4
 import com.zenmo.zummon.BenasherUuidSerializer
@@ -19,7 +18,8 @@ constructor(
     @Serializable(with = BenasherUuidSerializer::class)
     val id: Uuid = uuid4(),
     val note: String,
-    val projects: List<Project> = emptyList()
+    val projects: List<Project> = emptyList(),
+    val isAdmin: Boolean = false
 )
 
 @JsExport

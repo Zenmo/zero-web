@@ -27,8 +27,10 @@ export const UserForm: FunctionComponent = () => {
     };
 
     const handleInputChange =(e: React.ChangeEvent<HTMLInputElement>) => {
-        const { name, value } = e.target;
-        setUser((prev) => ({ ...prev, [name]: value } as User));
+        const { name, value, type, checked } = e.target;
+        setUser((prev) => ({...prev,
+            [name]: type === "checkbox" ? checked : value,
+        } as User));
     };
 
     useEffect(() => {
@@ -109,6 +111,19 @@ export const UserForm: FunctionComponent = () => {
                         onChange={handleInputChange}
                         disabled={!isEditing}
                     />
+                    <div>
+                        <label htmlFor="isAdmin" style={{ display: "flex", alignItems: "center", gap: "8px" }}>
+                            <input
+                                type="checkbox"
+                                id="isAdmin"
+                                name="isAdmin"
+                                checked={user?.isAdmin || false}
+                                onChange={handleInputChange}
+                                disabled={!isEditing}
+                            />
+                            Admin
+                        </label>
+                    </div>
 
                     <div style={{ display: "flex", justifyContent: "space-between", marginTop: "10px" }}>
                         {isEditing ? (

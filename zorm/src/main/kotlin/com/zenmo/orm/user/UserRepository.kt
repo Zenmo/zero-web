@@ -68,6 +68,7 @@ class UserRepository(
             UserTable.upsertReturning() {
                 it[id] = user.id
                 it[UserTable.note] = user.note
+                it[UserTable.isAdmin] = user.isAdmin
             }.map {
                 hydrateUser(it)
             }.first()
@@ -103,10 +104,16 @@ class UserRepository(
         }
     }
 
+    fun isAdmin(userId: UUID): Boolean {
+        val user = getUserById(userId)
+        return user?.isAdmin ?: false
+    }
+    
     protected fun hydrateUser(row: ResultRow): User {
         return User(
             id = row[UserTable.id],
             note = row[UserTable.note],
+            isAdmin = row[UserTable.isAdmin],
             projects = emptyList(), // data from different table
         )
     }
