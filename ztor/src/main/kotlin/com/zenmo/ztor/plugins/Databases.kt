@@ -10,6 +10,8 @@ import com.zenmo.ztor.errorMessageToJson
 import com.zenmo.ztor.user.getUserId
 import com.zenmo.zummon.companysurvey.Survey
 import com.zenmo.zummon.companysurvey.Project
+import com.zenmo.zummon.User
+
 import io.ktor.http.*
 import io.ktor.serialization.*
 import io.ktor.server.application.*
@@ -28,6 +30,68 @@ fun Application.configureDatabases(): Database {
     val deeplinkService = DeeplinkService(DeeplinkRepository(db))
 
     routing {
+        // List users for current user
+        get("/users") {
+            call.respond(HttpStatusCode.OK, userRepository.getUsers())
+        }
+
+        // Get one user that belongs to the user
+        get("/users/{userId}") {
+            val userId = UUID.fromString(call.parameters["userId"])
+
+            val adminUserId = call.getUserId()
+            if (adminUserId == null) {
+                call.respond(HttpStatusCode.Unauthorized)
+                return@get
+            }
+
+            call.respond(HttpStatusCode.OK, userRepository.getUserById(userId))
+        }
+
+        // Create
+        post("/users") {
+            val user: User?
+            try {
+                user = call.receive<User>()
+            } catch (e: BadRequestException) {
+                if (e.cause is JsonConvertException) {
+                    call.respond(HttpStatusCode.BadRequest, errorMessageToJson(e.cause?.message))
+                    return@post
+                }
+                call.respond(HttpStatusCode.BadRequest,  errorMessageToJson(e.message))
+                return@post
+            }
+
+            val userId = call.getUserId()
+            if (userId == null) {
+                call.respond(HttpStatusCode.Unauthorized)
+                return@post
+            }
+
+            val newUser = userRepository.save(user)
+
+            call.respond(HttpStatusCode.Created, newUser)
+        }
+
+        // Update
+        put("/users") {
+            val user: User?
+            try {
+                user = call.receive<User>()
+            } catch (e: BadRequestException) {
+                if (e.cause is JsonConvertException) {
+                    call.respond(HttpStatusCode.BadRequest, errorMessageToJson(e.cause?.message))
+                    return@put
+                }
+                call.respond(HttpStatusCode.BadRequest,  errorMessageToJson(e.message))
+                return@put
+            }
+
+            val newUser = userRepository.save(user)
+
+            call.respond(HttpStatusCode.OK, newUser)
+        }
+
         // List projects for current user
         get("/projects") {
             val userId = call.getUserId()
@@ -68,7 +132,6 @@ fun Application.configureDatabases(): Database {
             }
 
             val userId = call.getUserId()
-            println("User ID: $userId")
             if (userId == null) {
                 call.respond(HttpStatusCode.Unauthorized)
                 return@post

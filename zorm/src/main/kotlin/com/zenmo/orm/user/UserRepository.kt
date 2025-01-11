@@ -1,5 +1,6 @@
 package com.zenmo.orm.user
 
+import com.zenmo.zummon.User
 import com.zenmo.orm.companysurvey.ProjectRepository
 import com.zenmo.orm.user.table.UserProjectTable
 import com.zenmo.orm.user.table.UserTable
@@ -53,10 +54,24 @@ class UserRepository(
         }
     }
 
-    fun getUserById(id: UUID): User? {
+    fun getUserById(id: UUID): User {
         return getUsers(
             (UserTable.id eq id)
-        ).firstOrNull()
+        ).first()
+    }
+
+    @OptIn(ExperimentalUuidApi::class)
+    fun save(
+        user: User,
+    ) {
+        transaction(db) {
+            UserTable.upsertReturning() {
+                it[id] = user.id
+                it[UserTable.note] = user.note
+            }.map {
+                hydrateUser(it)
+            }.first()
+        }
     }
 
     fun saveUser(
