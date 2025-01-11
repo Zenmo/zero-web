@@ -40,7 +40,19 @@ export const Users: FunctionComponent = () => {
                 filterDisplay="row"
             >
                 <Column field="note" header="Note" sortable filter/>
-
+                <Column
+                    field="isAdmin"
+                    header="Admin"
+                    body={(user: User) => (
+                        <div style={{ textAlign: 'center' }}>
+                            {user.isAdmin ? (
+                                <span style={{ color: 'green' }}>✔</span>
+                            ) : (
+                                <span style={{ color: 'red' }}>✘</span>
+                            )}
+                        </div>
+                    )}
+                />
                 <Column body={(user: User) => (
                     <div css={{
                         display: 'flex',

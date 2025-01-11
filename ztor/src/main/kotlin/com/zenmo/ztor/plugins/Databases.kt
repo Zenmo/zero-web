@@ -11,6 +11,7 @@ import com.zenmo.ztor.user.getUserId
 import com.zenmo.zummon.companysurvey.Survey
 import com.zenmo.zummon.companysurvey.Project
 import com.zenmo.zummon.User
+import com.zenmo.zummon.usersFromJson
 
 import io.ktor.http.*
 import io.ktor.serialization.*
@@ -32,7 +33,26 @@ fun Application.configureDatabases(): Database {
     routing {
         // List users for current user
         get("/users") {
-            call.respond(HttpStatusCode.OK, userRepository.getUsers())
+            val userId = call.getUserId()
+
+            println("userId " + userId)
+
+            // if (userId == null) {
+            //     call.respond(HttpStatusCode.Unauthorized)
+            //     return@get
+            // }
+        
+            // val isAdmin = userRepository.isAdmin(userId)
+            // println("isAdmin $isAdmin")
+        
+            // if (!isAdmin) {
+            //     call.respond(HttpStatusCode.Forbidden, "Access denied")
+            //     return@get
+            // }
+        
+            val users = userRepository.getUsers()
+            println("All users " + users)
+            call.respond(HttpStatusCode.OK, users)
         }
 
         // Get one user that belongs to the user
