@@ -1,3 +1,5 @@
+package com.zenmo.vallum;
+
 import com.zenmo.vallum.Vallum;
 import com.zenmo.zummon.companysurvey.Address;
 import com.zenmo.zummon.companysurvey.GridConnection;
@@ -14,12 +16,13 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 public class VallumTest {
     @Test
     public void test() {
-        var stopZtor = InitKt.initZtor();
+        var port = 8083;
+        var stopZtor = InitKt.initZtor(port);
 
         Vallum vallum = new Vallum(
                 System.getenv("CLIENT_ID"),
                 System.getenv("CLIENT_SECRET"),
-                "http://localhost:8082",
+                "http://localhost:" + port,
                 "https://keycloak.zenmo.com/realms/testrealm/protocol/openid-connect/token"
         );
 
@@ -61,4 +64,5 @@ public class VallumTest {
 
         stopZtor.stop();
     }
+
 }
