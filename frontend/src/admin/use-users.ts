@@ -1,18 +1,12 @@
 import {useState} from "react";
 import {useOnce} from "../hooks/use-once";
 import {User, usersFromJson } from "zero-zummon"
-import {useNavigate} from "react-router-dom";
 
 type UseUserReturn = {
     loadingUsers: boolean,
     users: User[],
     changeUser: (newUser: User) => void,
     removeUser: (userId: string) => void,
-}
-
-type UseUserData = {
-    loadingUser: boolean,
-    user: User,
 }
 
 export const useUsers = (): UseUserReturn => {
