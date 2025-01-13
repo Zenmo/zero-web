@@ -50,6 +50,27 @@ fun main(args: Array<String>) {
             .start(wait = true)
 }
 
+fun interface StopZtor {
+    fun stop(): Unit
+}
+
+fun startTestServer(): StopZtor {
+    val server = embeddedServer(Netty, port = 8082, host = "0.0.0.0", module = Application::vallumMinimal)
+        .start(wait = false)
+
+    return StopZtor { server.stop(1000, 1000) }
+}
+
+fun Application.vallumMinimal() {
+    configureHTTP()
+    configureMonitoring()
+    configureSerialization()
+    configureAuthentication()
+    val db = configureDatabases()
+    configureRouting()
+    configureStatusPages()
+}
+
 fun Application.module() {
     configureHTTP()
     configureMonitoring()
