@@ -35,23 +35,18 @@ fun Application.configureDatabases(): Database {
         get("/users") {
             val userId = call.getUserId()
 
-            println("userId " + userId)
-
-            // if (userId == null) {
-            //     call.respond(HttpStatusCode.Unauthorized)
-            //     return@get
-            // }
+            if (userId == null) {
+                call.respond(HttpStatusCode.Unauthorized)
+                return@get
+            }
+            val isAdmin = userRepository.isAdmin(userId)
         
-            // val isAdmin = userRepository.isAdmin(userId)
-            // println("isAdmin $isAdmin")
-        
-            // if (!isAdmin) {
-            //     call.respond(HttpStatusCode.Forbidden, "Access denied")
-            //     return@get
-            // }
+            if (!isAdmin) {
+                call.respond(HttpStatusCode.Forbidden, "Access denied")
+                return@get
+            }
         
             val users = userRepository.getUsers()
-            println("All users " + users)
             call.respond(HttpStatusCode.OK, users)
         }
 
@@ -128,7 +123,6 @@ fun Application.configureDatabases(): Database {
             val projectId = UUID.fromString(call.parameters["projectId"])
 
             val userId = call.getUserId()
-            println("User ID: $userId")
             if (userId == null) {
                 call.respond(HttpStatusCode.Unauthorized)
                 return@get
@@ -265,7 +259,6 @@ fun Application.configureDatabases(): Database {
 
         delete("/company-surveys/{surveyId}") {
             val userId = call.getUserId()
-            println("User ID: $userId")
             if (userId == null) {
                 call.respond(HttpStatusCode.Unauthorized)
                 return@delete
@@ -303,7 +296,6 @@ fun Application.configureDatabases(): Database {
         // set active state
         put("/company-surveys/{surveyId}/include-in-simulation") {
             val userId = call.getUserId()
-            println("User ID: $userId")
             if (userId == null) {
                 call.respond(HttpStatusCode.Unauthorized)
                 return@put
