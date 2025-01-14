@@ -41,6 +41,14 @@ tasks {
     }
 }
 
+kotlin {
+    sourceSets {
+        all {
+            languageSettings.optIn("kotlin.uuid.ExperimentalUuidApi")
+        }
+    }
+}
+
 publishing {
     publications {
         create<MavenPublication>("maven") {
