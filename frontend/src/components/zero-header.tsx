@@ -3,6 +3,7 @@ import {Button} from "primereact/button";
 import {Sidebar} from "primereact/sidebar";
 import {css} from "@emotion/react";
 import {To, useNavigate} from "react-router-dom";
+import {useUser} from "../user/use-user";
 
 const sidebarStyle = css({
     width: '16rem',
@@ -31,6 +32,8 @@ const buttonStyle = css({
 });
 
 export const ZeroHeader: FunctionComponent<PropsWithChildren & {}> = () => {
+    const { isLoading, isLoggedIn, username, isAdmin } = useUser()
+
     const [visible, setVisible] = useState(false);
     const navigate = useNavigate();
 
@@ -72,10 +75,12 @@ export const ZeroHeader: FunctionComponent<PropsWithChildren & {}> = () => {
                     <i className="pi pi-fw pi-file" style={{marginRight: '0.5em'}}></i>
                     Projects
                 </a>
-                {/* <a onClick={() => loadContent('/users')} css={buttonStyle}>
-                    <i className="pi pi-fw pi-file" style={{marginRight: '0.5em'}}></i>
-                    Users
-                </a> */}
+                {isAdmin && (
+                    <a onClick={() => loadContent('/users')} css={buttonStyle}>
+                        <i className="pi pi-fw pi-file" style={{ marginRight: '0.5em' }}></i>
+                        Users
+                    </a>
+                )} 
                 <a onClick={() => loadContent('/simulation')} css={buttonStyle}>
                     <i className="pi pi-fw pi-file" style={{marginRight: '0.5em'}}></i>
                     Simulation
