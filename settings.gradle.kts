@@ -6,7 +6,8 @@ include(
     "zummon",
     "vallum",
     "excel-read-named-v5",
-    "fudura-client"
+    "fudura-client",
+    "fudura-waspik"
 )
 
 dependencyResolutionManagement {

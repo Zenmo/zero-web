@@ -25,6 +25,7 @@ data class GetChannelMetadataResult(
 enum class ChannelType {
     Profiel,
     Register, // Used for maandmaximum, maandtotaal
+    Onbekend,
 }
 
 enum class ChannelDataType {
@@ -39,6 +40,7 @@ enum class UnitOfMeasurement {
     kVarh,
     kVAr,
     m3,
+    K, // iets met gas?
     Onbekend,
 }
 
