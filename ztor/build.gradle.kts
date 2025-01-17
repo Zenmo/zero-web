@@ -27,9 +27,6 @@ application {
 
 repositories {
     mavenCentral()
-    // Running a pre-release version of Ktor because of a version conflict with serialization.
-    // HTTP4K seems better anyway.
-    maven("https://maven.pkg.jetbrains.space/public/p/ktor/eap/")
 }
 
 dependencies {
