@@ -14,18 +14,24 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 public class VallumTest {
     @Test
     public void test() {
-        // TODO: start Ztor server here and populate entities so we can run more self-contained.
-        // Needs refactoring of Ztor to allow for this.
+        var stopZtor = InitKt.initZtor();
+
         Vallum vallum = new Vallum(
-                "test-client-ztor-api",
-                "iWdpSK2jP0Rw1v8I2b1SQmZ4mI6LwNRy",
-                "http://ztor-run:8082",
+                System.getenv("CLIENT_ID"),
+                System.getenv("CLIENT_SECRET"),
+                "http://localhost:8082",
                 "https://keycloak.zenmo.com/realms/testrealm/protocol/openid-connect/token"
         );
-        List<Survey> surveys = vallum.getSurveysByProject("hessenpoort");
-        assertEquals(28, surveys.size());
 
-        var firstSurvey = surveys.get(0);
+        List<Survey> waardkwartierSurveys = vallum.getSurveysByProject("Waardkwartier");
+        assertEquals(1, waardkwartierSurveys.size());
+
+        List<Survey> hessenwiekSurveys = vallum.getSurveysByProject("Hessenwiek");
+        // user does not have access to this project
+        assertEquals(0, hessenwiekSurveys.size());
+
+
+        var firstSurvey = waardkwartierSurveys.get(0);
         Address firstAddress = firstSurvey.getAddresses().get(0);
         int houseNumber = firstAddress.getHouseNumber();
         assertEquals(35, houseNumber);
@@ -38,10 +44,11 @@ public class VallumTest {
 
         assertTrue(timeSeries.getValues().length > 0);
 
-        for (var survey: surveys) {
+        // example usage
+        for (var survey: waardkwartierSurveys) {
             for (var address: survey.getAddresses()) {
                 for (var gridConnection: address.getGridConnections()) {
-                    var pandIds = gridConnection.getPandIds();
+                    var pandIds2 = gridConnection.getPandIds();
                     var installedPv_kWp = gridConnection.getSupply().getPvInstalledKwp();
                     // hydrate model with vars
                 }
@@ -51,5 +58,7 @@ public class VallumTest {
 //        Instant javaStart = timeSeries.getStart().toJavaInstant();
 //        System.out.println(javaStart);
 //        System.out.println(javaStart.isBefore(Instant.parse("2023-01-01T01:00:00+01:00")));
+
+        stopZtor.stop();
     }
 }

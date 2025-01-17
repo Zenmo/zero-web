@@ -13,11 +13,14 @@ repositories {
     mavenCentral()
 }
 
-val ktor_version = "2.3.12"
+val ktor_version = "3.0.3"
 
 dependencies {
     testImplementation(kotlin("test"))
-//    testImplementation(project(":ztor"))
+    // Ztor is started in the test.
+    testImplementation(project(":ztor"))
+    testImplementation(project(":zorm"))
+    testImplementation("org.jetbrains.exposed:exposed-core:${libs.versions.exposed.get()}")
 
     implementation(project(":zummon"))
     implementation("io.ktor:ktor-client-core:$ktor_version")

@@ -13,7 +13,7 @@ fun createMockSurvey(projectName: String = "Project") = Survey(
     personName = "John Doe",
     email = "john@example.com",
     dataSharingAgreed = true,
-    includeInSimulation = false,
+    includeInSimulation = true,
     addresses = listOf(
         Address(
             id = UUID.randomUUID(),
