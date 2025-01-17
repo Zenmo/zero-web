@@ -46,6 +46,8 @@ data class Survey(
         }
     }
 
+    fun gridConnectionIds(): List<Uuid> = flattenedGridConnections().map { it.id }
+
     /**
      * For sorting in JavaScript primereact/datatable
      */
