@@ -1,3 +1,5 @@
+package com.zenmo.vallum
+
 import com.zenmo.orm.companysurvey.ProjectRepository
 import com.zenmo.orm.companysurvey.SurveyRepository
 import com.zenmo.orm.companysurvey.createMockSurvey
@@ -12,7 +14,8 @@ import org.jetbrains.exposed.sql.SchemaUtils
 import org.jetbrains.exposed.sql.transactions.transaction
 import java.util.*
 
-fun initZtor(): StopZtor {
+@JvmOverloads
+fun initZtor(port: Int = 8082): StopZtor {
     val db = connectToPostgres()
     val schema = Schema(db.connector().schema)
     transaction(db) {
@@ -36,5 +39,7 @@ fun initZtor(): StopZtor {
     surveyRepository.save(createMockSurvey(projectName1))
     surveyRepository.save(createMockSurvey(projectName2))
 
-    return startTestServer()
+    return startTestServer(port)
 }
+
+

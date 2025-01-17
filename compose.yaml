@@ -181,7 +181,7 @@ services:
     vallum-test:
         extends:
             service: gradle-base
-        command: vallum:test
+        entrypoint: ./vallum/backward-compatibility-test.sh
         volumes:
             - gradle-vallum-test-cache:/home/gradle/.gradle
         depends_on:
