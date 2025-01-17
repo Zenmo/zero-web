@@ -1,3 +1,4 @@
+import com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar
 import java.net.URI
 
 plugins {
@@ -10,6 +11,7 @@ group = "com.zenmo"
 version = System.getenv("VERSION_TAG") ?: "dev"
 
 repositories {
+    maven("https://repo.osgeo.org/repository/release/")
     mavenCentral()
 }
 
@@ -28,6 +30,9 @@ dependencies {
     implementation("io.ktor:ktor-client-content-negotiation:$ktor_version")
     implementation("io.ktor:ktor-serialization-kotlinx-json-jvm:$ktor_version")
     implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:${libs.versions.kotlinx.serialization.json.get()}")
+
+    // BAG stuff
+    implementation("com.zenmo:bag:0.0.2")
 }
 
 tasks.withType<Test> {
@@ -47,7 +52,7 @@ publishing {
             artifactId = "vallum"
             version = System.getenv("VERSION_TAG") ?: "dev"
 
-            artifact(tasks["shadowJar"])
+            artifact(tasks["shadowJar"] as ShadowJar)
         }
     }
     repositories {
