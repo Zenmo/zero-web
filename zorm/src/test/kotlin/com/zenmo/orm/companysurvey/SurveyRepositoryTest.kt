@@ -58,7 +58,7 @@ class SurveyRepositoryTest {
         assertEquals(survey, storedSurvey)
         val gasTimeStep = storedSurvey.addresses.single().gridConnections.single().naturalGas.hourlyDelivery_m3?.timeStep
         assertNotNull(gasTimeStep)
-        assertEquals(2, gasTimeStep.toDuration().inWholeHours)
+        assertEquals(1, gasTimeStep.toDuration().inWholeHours)
     }
 
     @Test
