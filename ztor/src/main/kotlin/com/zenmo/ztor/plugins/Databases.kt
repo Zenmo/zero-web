@@ -23,6 +23,8 @@ import io.ktor.server.routing.*
 import org.jetbrains.exposed.sql.Database
 import java.util.*
 
+
+
 fun Application.configureDatabases(): Database {
     val db: Database = connectToPostgres()
     val userRepository = UserRepository(db)
@@ -30,41 +32,47 @@ fun Application.configureDatabases(): Database {
     val projectRepository = ProjectRepository(db)
     val deeplinkService = DeeplinkService(DeeplinkRepository(db))
 
+    suspend fun authenticateAndAuthorize(call: ApplicationCall, userRepository: UserRepository): Boolean {
+        val userId = call.getUserId()
+        if (userId == null) {
+            call.respond(HttpStatusCode.Unauthorized, "User not authenticated")
+            return false
+        }
+    
+        val isAdmin = userRepository.isAdmin(userId)
+        if (!isAdmin) {
+            call.respond(HttpStatusCode.Forbidden, "Access denied")
+            return false
+        }
+    
+        return true
+    }
+
     routing {
         // List users for current user
         get("/users") {
-            val userId = call.getUserId()
+            if (!authenticateAndAuthorize(call, userRepository)) return@get
 
-            if (userId == null) {
-                call.respond(HttpStatusCode.Unauthorized)
-                return@get
+            try {
+                val users = userRepository.getUsers()
+                call.respond(HttpStatusCode.OK, users)
+            } catch (e: Exception) {
+                call.respond(HttpStatusCode.InternalServerError, "Failed to fetch users: ${e.message}")
             }
-            val isAdmin = userRepository.isAdmin(userId)
-        
-            if (!isAdmin) {
-                call.respond(HttpStatusCode.Forbidden, "Access denied")
-                return@get
-            }
-        
-            val users = userRepository.getUsers()
-            call.respond(HttpStatusCode.OK, users)
         }
 
         // Get one user that belongs to the user
         get("/users/{userId}") {
+            if (!authenticateAndAuthorize(call, userRepository)) return@get
             val userId = UUID.fromString(call.parameters["userId"])
-
-            val adminUserId = call.getUserId()
-            if (adminUserId == null) {
-                call.respond(HttpStatusCode.Unauthorized)
-                return@get
-            }
-
-            call.respond(HttpStatusCode.OK, userRepository.getUserById(userId))
+            val user = userRepository.getUserById(userId)
+            call.respond(HttpStatusCode.OK, user)
         }
 
         // Create
         post("/users") {
+            if (!authenticateAndAuthorize(call, userRepository)) return@post
+
             val user: User?
             try {
                 user = call.receive<User>()
@@ -77,12 +85,6 @@ fun Application.configureDatabases(): Database {
                 return@post
             }
 
-            val userId = call.getUserId()
-            if (userId == null) {
-                call.respond(HttpStatusCode.Unauthorized)
-                return@post
-            }
-
             val newUser = userRepository.save(user)
 
             call.respond(HttpStatusCode.Created, newUser)
@@ -90,6 +92,8 @@ fun Application.configureDatabases(): Database {
 
         // Update
         put("/users") {
+            if (!authenticateAndAuthorize(call, userRepository)) return@put
+
             val user: User?
             try {
                 user = call.receive<User>()
@@ -101,10 +105,19 @@ fun Application.configureDatabases(): Database {
                 call.respond(HttpStatusCode.BadRequest,  errorMessageToJson(e.message))
                 return@put
             }
+            println(user)
 
             val newUser = userRepository.save(user)
+            println(newUser)
 
             call.respond(HttpStatusCode.OK, newUser)
+        }
+
+        delete("/users/{userId}") {
+            if (!authenticateAndAuthorize(call, userRepository)) return@delete
+            val userId = UUID.fromString(call.parameters["userId"])
+            userRepository.deleteUserById(userId)
+            call.respond(HttpStatusCode.OK)
         }
 
         // List projects for current user
@@ -308,6 +321,5 @@ fun Application.configureDatabases(): Database {
             call.respond(HttpStatusCode.OK)
         }
     }
-
     return db
 }
