@@ -232,7 +232,7 @@ services:
             - 127.0.0.1:2015:2015
 
     postgres:
-        image: postgres:17.2
+        image: postgres:13.9
         ports:
             - 127.0.0.1:5432:5432
         volumes:
@@ -242,7 +242,7 @@ services:
             - docker/local/postgres.env
 
     postgres-github-actions:
-        image: postgres:17.2
+        image: postgres:13.9
         environment:
             POSTGRES_PASSWORD: github-actions
 

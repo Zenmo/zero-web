@@ -19,35 +19,6 @@ export const useUser = (): UseUserReturn => {
         isAdmin: false,
     })
 
-    useEffect(() => {
-        if (userId) {
-            const fetchUser = async () => {
-                try {
-                    const response = await fetch(`${import.meta.env.VITE_ZTOR_URL}/users/${userId}`, {
-                        credentials: 'include',
-                    })
-                    if (response.ok) {
-                        const userData = await response.json();
-                        setState((prevState) => ({
-                            ...prevState,
-                            isLoading: false,
-                            isLoggedIn: true,
-                            isAdmin: userData.isAdmin || false,
-                        }));
-                    } else {
-                        alert(`Error fetching user: ${response.statusText}`);
-                    }
-                } catch (error) {
-                    alert((error as Error).message)
-                } finally {
-                    setState({isLoading: false})
-                }
-            };
-            fetchUser();
-        }
-    }, [userId]);
-
-
     useOnce(async () => {
         try {
             const response = await fetch(import.meta.env.VITE_ZTOR_URL + "/user-info", {
@@ -58,19 +29,20 @@ export const useUser = (): UseUserReturn => {
                 redirectToLogin()
                 return
             }
-            if (response.status === 500) {
-                return
+            if (!response.ok) {
+                throw new Error(`Failed to get user: ${response.statusText}`)
             }
 
             if (response.ok) {
                 const userInfo = await response.json();
-                setUserId(userInfo.sub);
+                setUserId(userInfo.decodedAccessToken.sub);
 
                 setState((prevState) => ({
                     ...prevState,
                     isLoading: false,
                     isLoggedIn: true,
-                    username: userInfo.preferred_username,
+                    username: userInfo.decodedAccessToken.preferred_username,
+                    isAdmin: userInfo.isAdmin
                 }));
             }
         } catch (e) {
