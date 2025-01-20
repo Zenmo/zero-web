@@ -32,7 +32,7 @@ fun Application.configureDatabases(): Database {
     val projectRepository = ProjectRepository(db)
     val deeplinkService = DeeplinkService(DeeplinkRepository(db))
 
-    fun authenticateAndAuthorize(call: ApplicationCall, userRepository: UserRepository): Boolean {
+    suspend fun authenticateAndAuthorize(call: ApplicationCall, userRepository: UserRepository): Boolean {
         val userId = call.getUserId()
         if (userId == null) {
             call.respond(HttpStatusCode.Unauthorized, "User not authenticated")
@@ -47,10 +47,10 @@ fun Application.configureDatabases(): Database {
     
         return true
     }
-    
+
     routing {
         // List users for current user
-        get("/users") {\
+        get("/users") {
             if (!authenticateAndAuthorize(call, userRepository)) return@get
 
             try {
@@ -64,14 +64,14 @@ fun Application.configureDatabases(): Database {
         // Get one user that belongs to the user
         get("/users/{userId}") {
             if (!authenticateAndAuthorize(call, userRepository)) return@get
-
+            val userId = UUID.fromString(call.parameters["userId"])
             val user = userRepository.getUserById(userId)
             call.respond(HttpStatusCode.OK, user)
         }
 
         // Create
         post("/users") {
-            if (!authenticateAndAuthorize(call, userRepository)) return@get
+            if (!authenticateAndAuthorize(call, userRepository)) return@post
 
             val user: User?
             try {
@@ -85,18 +85,6 @@ fun Application.configureDatabases(): Database {
                 return@post
             }
 
-            val userId = call.getUserId()
-            if (userId == null) {
-                call.respond(HttpStatusCode.Unauthorized)
-                return@post
-            }
-            val isAdmin = userRepository.isAdmin(userId)
-        
-            if (!isAdmin) {
-                call.respond(HttpStatusCode.Forbidden, "Access denied")
-                return@get
-            }
-
             val newUser = userRepository.save(user)
 
             call.respond(HttpStatusCode.Created, newUser)
@@ -104,7 +92,7 @@ fun Application.configureDatabases(): Database {
 
         // Update
         put("/users") {
-            if (!authenticateAndAuthorize(call, userRepository)) return@get
+            if (!authenticateAndAuthorize(call, userRepository)) return@put
 
             val user: User?
             try {
@@ -117,10 +105,19 @@ fun Application.configureDatabases(): Database {
                 call.respond(HttpStatusCode.BadRequest,  errorMessageToJson(e.message))
                 return@put
             }
+            println(user)
 
             val newUser = userRepository.save(user)
+            println(newUser)
 
             call.respond(HttpStatusCode.OK, newUser)
+        }
+
+        delete("/users/{userId}") {
+            if (!authenticateAndAuthorize(call, userRepository)) return@delete
+            val userId = UUID.fromString(call.parameters["userId"])
+            userRepository.deleteUserById(userId)
+            call.respond(HttpStatusCode.OK)
         }
 
         // List projects for current user

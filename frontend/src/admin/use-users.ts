@@ -26,8 +26,8 @@ export const useUsers = (): UseUserReturn => {
                 redirectToLogin()
                 return
             }
-            if (response.status === 500) {
-                return
+            if (!response.ok) {
+                throw new Error(`Could not load users: ${response.status} ${response.statusText}`)
             }
 
             setUsers(usersFromJson(await response.text()))

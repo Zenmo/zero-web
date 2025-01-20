@@ -13,8 +13,10 @@ import kotlin.js.JsExport
  */
 @Serializable
 @JsExport
-data class User(
-    val id: Uuid = Uuid.random(),
+data class User
+constructor(
+    @Serializable(with = BenasherUuidSerializer::class)
+    val id: Uuid = uuid4(),
     val note: String,
     val projects: List<Project> = emptyList(),
     val isAdmin: Boolean = false
