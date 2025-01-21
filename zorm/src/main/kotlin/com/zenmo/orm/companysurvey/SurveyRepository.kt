@@ -267,7 +267,7 @@ class SurveyRepository(
         val userId = row[CompanySurveyTable.createdById] ?: return null
 
         return com.zenmo.zummon.User(
-            row[UserTable.id],
+            row[UserTable.id].toKotlinUuid(),
             row[UserTable.note],
         )
     }

@@ -68,7 +68,7 @@ class UserRepository(
     ) {
         transaction(db) {
             UserTable.upsertReturning() {
-                it[id] = user.id
+                it[id] = user.id.toJavaUuid()
                 it[UserTable.note] = user.note
                 it[UserTable.isAdmin] = user.isAdmin
             }.map {
@@ -113,7 +113,7 @@ class UserRepository(
     
     protected fun hydrateUser(row: ResultRow): User {
         return User(
-            id = row[UserTable.id],
+            id = row[UserTable.id].toKotlinUuid(),
             note = row[UserTable.note],
             isAdmin = row[UserTable.isAdmin],
             projects = emptyList(), // data from different table
