@@ -84,8 +84,7 @@ export const ProjectForm: FunctionComponent = () => {
             if (response.ok) {
                 navigate(`/projects`);
             } else {
-                const errorData = await response.json();
-                alert(`Error: ${errorData.message}`);
+                alert(`Error fetching project: ${response.statusText}`);
             }
         } finally {
             setIsEditing(false);

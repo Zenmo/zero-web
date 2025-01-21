@@ -49,30 +49,39 @@ fun Application.configureDatabases(): Database {
     }
 
     routing {
-        // List users for current user
-        get("/users") {
-            if (!authenticateAndAuthorize(call, userRepository)) return@get
+        suspend fun RoutingContext.asAdmin(body: suspend () -> Unit) {
+            val userId = call.getUserId()
 
-            try {
+            if (userId == null) {
+                call.respond(HttpStatusCode.Unauthorized, "User not logged in")
+                return 
+            }
+
+            if (!userRepository.isAdmin(userId)) {
+                call.respond(HttpStatusCode.Forbidden, "User is not admin")
+                return 
+            }
+
+            body()
+         }
+
+        get("/users") {
+            asAdmin {
                 val users = userRepository.getUsers()
                 call.respond(HttpStatusCode.OK, users)
-            } catch (e: Exception) {
-                call.respond(HttpStatusCode.InternalServerError, "Failed to fetch users: ${e.message}")
             }
         }
 
-        // Get one user that belongs to the user
         get("/users/{userId}") {
-            if (!authenticateAndAuthorize(call, userRepository)) return@get
-            val userId = UUID.fromString(call.parameters["userId"])
-            val user = userRepository.getUserById(userId)
-            call.respond(HttpStatusCode.OK, user)
+            asAdmin {
+                val userId = UUID.fromString(call.parameters["userId"])
+                val user = userRepository.getUserById(userId)
+                call.respond(HttpStatusCode.OK, user)
+            }
         }
 
         // Create
         post("/users") {
-            if (!authenticateAndAuthorize(call, userRepository)) return@post
-
             val user: User?
             try {
                 user = call.receive<User>()
@@ -84,16 +93,14 @@ fun Application.configureDatabases(): Database {
                 call.respond(HttpStatusCode.BadRequest,  errorMessageToJson(e.message))
                 return@post
             }
-
-            val newUser = userRepository.save(user)
-
-            call.respond(HttpStatusCode.Created, newUser)
+            asAdmin {
+                val newUser = userRepository.save(user)
+                call.respond(HttpStatusCode.Created, newUser)
+            }
         }
 
         // Update
         put("/users") {
-            if (!authenticateAndAuthorize(call, userRepository)) return@put
-
             val user: User?
             try {
                 user = call.receive<User>()
@@ -105,22 +112,20 @@ fun Application.configureDatabases(): Database {
                 call.respond(HttpStatusCode.BadRequest,  errorMessageToJson(e.message))
                 return@put
             }
-            println(user)
-
-            val newUser = userRepository.save(user)
-            println(newUser)
-
-            call.respond(HttpStatusCode.OK, newUser)
+            asAdmin {
+                val newUser = userRepository.save(user)
+                call.respond(HttpStatusCode.OK, newUser)
+            }
         }
 
         delete("/users/{userId}") {
-            if (!authenticateAndAuthorize(call, userRepository)) return@delete
-            val userId = UUID.fromString(call.parameters["userId"])
-            userRepository.deleteUserById(userId)
-            call.respond(HttpStatusCode.OK)
+            asAdmin {
+                val userId = UUID.fromString(call.parameters["userId"])
+                userRepository.deleteUserById(userId)
+                call.respond(HttpStatusCode.OK)
+            }
         }
 
-        // List projects for current user
         get("/projects") {
             val userId = call.getUserId()
             if (userId == null) {
@@ -131,7 +136,6 @@ fun Application.configureDatabases(): Database {
             call.respond(HttpStatusCode.OK, projectRepository.getProjectsByUserId(userId))
         }
 
-        // Get one project that belongs to the user
         get("/projects/{projectId}") {
             val projectId = UUID.fromString(call.parameters["projectId"])
 

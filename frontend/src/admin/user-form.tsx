@@ -82,13 +82,11 @@ export const UserForm: FunctionComponent = () => {
                 redirectToLogin();
                 return;
             }
-
-            if (response.ok) {
-                navigate(`/users`);
-            } else {
-                const errorData = await response.json();
-                alert(`Error: ${errorData.message}`);
+            if (!response.ok) {
+                alert(`Error: ${response.statusText}`);
             }
+
+            navigate(`/users`);
         } finally {
             setIsEditing(false);
             setLoading(false);
@@ -103,6 +101,14 @@ export const UserForm: FunctionComponent = () => {
                     onSubmit={handleSubmit}
                     style={{ display: "flex", flexDirection: "column", gap: "10px" }}
                 >
+                    <label htmlFor="name">Keycloak ID:</label>
+                    <InputText
+                        id="id"
+                        name="id"
+                        value={user?.id || ""}
+                        onChange={handleInputChange}
+                        disabled={!isEditing}
+                    />
                     <label htmlFor="name">Note:</label>
                     <InputText
                         id="note"
