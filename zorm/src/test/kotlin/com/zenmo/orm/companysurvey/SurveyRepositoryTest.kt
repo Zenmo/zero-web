@@ -159,7 +159,7 @@ class SurveyRepositoryTest {
         val createdBy = surveyLoadedAfterCreate?.createdBy
         assertNotNull(createdBy)
         assertEquals("Jaap", createdBy.note)
-        assertEquals(jaapId.toKotlinUuid(), createdBy.id)
+        assertEquals(jaapId, createdBy.id)
 
         // edit survey
         surveyRepository.save(surveyLoadedAfterCreate, pietId)
@@ -167,7 +167,7 @@ class SurveyRepositoryTest {
         val createdBy2 = surveyLoadedAfterEdit?.createdBy
         assertNotNull(createdBy2)
         assertEquals("Jaap", createdBy2.note)
-        assertEquals(jaapId.toKotlinUuid(), createdBy2.id)
+        assertEquals(jaapId, createdBy2.id)
     }
 
     private fun wipeSequence(survey: Survey)
