@@ -113,7 +113,7 @@ class UserRepository(
     
     protected fun hydrateUser(row: ResultRow): User {
         return User(
-            id = row[UserTable.id].toKotlinUuid(),
+            id = row[UserTable.id],
             note = row[UserTable.note],
             isAdmin = row[UserTable.isAdmin],
             projects = emptyList(), // data from different table
