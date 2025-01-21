@@ -82,13 +82,11 @@ export const UserForm: FunctionComponent = () => {
                 redirectToLogin();
                 return;
             }
-
-            if (response.ok) {
-                navigate(`/users`);
-            } else {
-                const errorData = await response.json();
-                alert(`Error: ${errorData.message}`);
+            if (!response.ok) {
+                alert(`Error: ${response.statusText}`);
             }
+
+            navigate(`/users`);
         } finally {
             setIsEditing(false);
             setLoading(false);
