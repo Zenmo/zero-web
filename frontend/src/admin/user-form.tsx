@@ -5,6 +5,7 @@ import { InputText } from "primereact/inputtext";
 import { Button } from "primereact/button";
 import { User } from "zero-zummon";
 import { redirectToLogin } from "./use-users";
+import { UserProjectsList } from "./user-projects-list";
 
 export const UserForm: FunctionComponent = () => {
     const {userId} = useParams<{ userId: string }>();
@@ -142,6 +143,7 @@ export const UserForm: FunctionComponent = () => {
                         )}
                     </div>
                 </form>
+                <UserProjectsList userId={userId}/>
             </div>
         </PrimeReactProvider>
     );
