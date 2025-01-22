@@ -1,6 +1,5 @@
 import {useOnce} from "../hooks/use-once";
 import {useState} from "react";
-import { redirectToLogin } from "../admin/use-users";
 
 type UseUserReturn = {
     isLoading: boolean,
@@ -26,7 +25,7 @@ export const useUser = (): UseUserReturn => {
             if (!response.ok) {
                 throw new Error(`Failed to get user: ${response.statusText}`)
             }
-            
+
             if (response.status === 500) {
                 setState(prevState => ({
                     ...prevState,
