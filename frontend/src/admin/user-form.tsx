@@ -79,17 +79,25 @@ export const UserForm: FunctionComponent = () => {
                     "Content-Type": "application/json",
                 },
                 credentials: "include",
-                body: JSON.stringify(user),
+                body: JSON.stringify({
+                    ...user,
+                    projectIds: assignedProjects.map((project) => project.id), // Pass project IDs
+                }),
             });
+
             if (response.status === 401) {
-                redirectToLogin();
                 return;
             }
-            if (!response.ok) {
+
+            if (response.ok) {
+                const userData = await response.json();
+                setUser(userData);
+                setOriginalData(userData);
+                setUserProjects(assignedProjects);
+            } else {
                 alert(`Error: ${response.statusText}`);
             }
 
-            navigate(`/users`);
         } finally {
             setIsEditing(false);
             setLoading(false);
@@ -135,7 +143,7 @@ export const UserForm: FunctionComponent = () => {
                     </div>
 
                     <ProjectsDropdown
-                        selectedProjects={assignedProjects}
+                        selectedProjects={userProjects}
                         onChange={setAssignedProjects}
                         disabled={!isEditing}
                     />
