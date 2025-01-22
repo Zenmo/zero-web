@@ -3,13 +3,15 @@ import { useParams, useNavigate } from "react-router-dom";
 import { PrimeReactProvider } from "primereact/api";
 import { InputText } from "primereact/inputtext";
 import { Button } from "primereact/button";
-import { User } from "zero-zummon";
+import { User, Project } from "zero-zummon";
 import { redirectToLogin } from "./use-users";
+import { ProjectsDropdown } from "./projects-dropdown";
 
 export const UserForm: FunctionComponent = () => {
     const {userId} = useParams<{ userId: string }>();
     const [user, setUser] = useState<User | null>(null);
     const [originalData, setOriginalData] = useState<User | null>(null);
+    const [assignedProjects, setAssignedProjects] = useState<Project[]>([]);
 
     const [loading, setLoading] = useState(false);
     const [isEditing, setIsEditing] = useState(false);
@@ -130,6 +132,12 @@ export const UserForm: FunctionComponent = () => {
                             Admin
                         </label>
                     </div>
+
+                    <ProjectsDropdown
+                        selectedProjects={assignedProjects}
+                        onChange={setAssignedProjects}
+                        disabled={!isEditing}
+                    />
 
                     <div style={{ display: "flex", justifyContent: "space-between", marginTop: "10px" }}>
                         {isEditing ? (
