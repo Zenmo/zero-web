@@ -23,30 +23,12 @@ import io.ktor.server.routing.*
 import org.jetbrains.exposed.sql.Database
 import java.util.*
 
-
-
 fun Application.configureDatabases(): Database {
     val db: Database = connectToPostgres()
     val userRepository = UserRepository(db)
     val surveyRepository = SurveyRepository(db)
     val projectRepository = ProjectRepository(db)
     val deeplinkService = DeeplinkService(DeeplinkRepository(db))
-
-    suspend fun authenticateAndAuthorize(call: ApplicationCall, userRepository: UserRepository): Boolean {
-        val userId = call.getUserId()
-        if (userId == null) {
-            call.respond(HttpStatusCode.Unauthorized, "User not authenticated")
-            return false
-        }
-    
-        val isAdmin = userRepository.isAdmin(userId)
-        if (!isAdmin) {
-            call.respond(HttpStatusCode.Forbidden, "Access denied")
-            return false
-        }
-    
-        return true
-    }
 
     routing {
         suspend fun RoutingContext.asAdmin(body: suspend () -> Unit) {

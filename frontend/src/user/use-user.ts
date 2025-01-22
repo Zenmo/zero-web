@@ -1,6 +1,6 @@
 import {useOnce} from "../hooks/use-once";
-import {useState, useEffect} from "react";
-import {User, userFromJson } from "zero-zummon"
+import {useState} from "react";
+import { redirectToLogin } from "../admin/use-users";
 
 type UseUserReturn = {
     isLoading: boolean,
@@ -10,8 +10,6 @@ type UseUserReturn = {
 }
 
 export const useUser = (): UseUserReturn => {
-    const [userId, setUserId] = useState<null>()
-
     const [state, setState] = useState<UseUserReturn>({
         isLoading: true,
         isLoggedIn: undefined,
@@ -25,17 +23,19 @@ export const useUser = (): UseUserReturn => {
                 credentials: "include",
             })
 
-            if (response.status === 401) {
-                redirectToLogin()
-                return
-            }
             if (!response.ok) {
                 throw new Error(`Failed to get user: ${response.statusText}`)
+            }
+            
+            if (response.status === 500) {
+                setState(prevState => ({
+                    ...prevState,
+                    isAdmin: false,
+                }))
             }
 
             if (response.ok) {
                 const userInfo = await response.json();
-                setUserId(userInfo.decodedAccessToken.sub);
 
                 setState((prevState) => ({
                     ...prevState,
@@ -56,8 +56,4 @@ export const useUser = (): UseUserReturn => {
     })
 
     return state
-}
-
-export const redirectToLogin = () => {
-    window.location.href = import.meta.env.VITE_ZTOR_URL + '/login?redirectUrl=' + encodeURIComponent(window.location.href)
 }
