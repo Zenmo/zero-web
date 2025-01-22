@@ -6,6 +6,7 @@ import { Button } from "primereact/button";
 import { User, Project } from "zero-zummon";
 import { redirectToLogin } from "./use-users";
 import { ProjectsDropdown } from "./projects-dropdown";
+import { UserProjectsList } from "./user-projects-list";
 
 export const UserForm: FunctionComponent = () => {
     const {userId} = useParams<{ userId: string }>();
@@ -150,6 +151,7 @@ export const UserForm: FunctionComponent = () => {
                         )}
                     </div>
                 </form>
+                <UserProjectsList userId={userId}/>
             </div>
         </PrimeReactProvider>
     );
