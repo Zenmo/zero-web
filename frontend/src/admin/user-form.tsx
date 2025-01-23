@@ -1,9 +1,9 @@
 import React, { FormEvent, FunctionComponent, useEffect, useState } from "react";
-import { useParams, useNavigate } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { PrimeReactProvider } from "primereact/api";
 import { InputText } from "primereact/inputtext";
 import { Button } from "primereact/button";
-import { User, Project } from "zero-zummon";
+import { User, Project, projectsFromJson } from "zero-zummon";
 import { redirectToLogin } from "./use-users";
 import { ProjectsDropdown } from "./projects-dropdown";
 import { UserProjectsList } from "./user-projects-list";
@@ -13,10 +13,10 @@ export const UserForm: FunctionComponent = () => {
     const [user, setUser] = useState<User | null>(null);
     const [originalData, setOriginalData] = useState<User | null>(null);
     const [assignedProjects, setAssignedProjects] = useState<Project[]>([]);
+    const [userProjects, setUserProjects] = useState<Project[]>([]);
 
     const [loading, setLoading] = useState(false);
     const [isEditing, setIsEditing] = useState(false);
-    const navigate = useNavigate();
 
     const handleCancel = () => {
         if (originalData) {
@@ -61,6 +61,21 @@ export const UserForm: FunctionComponent = () => {
                     setLoading(false);
                 }
             };
+
+            const fetchProjects = async () => {
+                try {
+                    const response = await fetch(`${import.meta.env.VITE_ZTOR_URL}/users/${userId}/projects`, {
+                        credentials: "include",
+                    });
+                    if (!response.ok) return
+    
+                    setUserProjects(projectsFromJson(await response.text()))
+                } catch (error) {
+                    console.error("Error fetching projects:", error);
+                }
+            };
+    
+            fetchProjects();
             fetchUser();
         } else {
             setIsEditing(true);
@@ -97,7 +112,6 @@ export const UserForm: FunctionComponent = () => {
             } else {
                 alert(`Error: ${response.statusText}`);
             }
-
         } finally {
             setIsEditing(false);
             setLoading(false);
@@ -159,7 +173,7 @@ export const UserForm: FunctionComponent = () => {
                         )}
                     </div>
                 </form>
-                <UserProjectsList userId={userId}/>
+                <UserProjectsList projects={userProjects}/>
             </div>
         </PrimeReactProvider>
     );
