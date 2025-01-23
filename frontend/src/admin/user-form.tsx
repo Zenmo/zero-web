@@ -12,7 +12,7 @@ export const UserForm: FunctionComponent = () => {
     const {userId} = useParams<{ userId: string }>();
     const [user, setUser] = useState<User | null>(null);
     const [originalData, setOriginalData] = useState<User | null>(null);
-    const [assignedProjects, setAssignedProjects] = useState<Project[]>([]);
+    const [selectedProjects, setSelectedProjects] = useState<Project[]>([]);
     const [userProjects, setUserProjects] = useState<Project[]>([]);
 
     const [loading, setLoading] = useState(false);
@@ -70,6 +70,7 @@ export const UserForm: FunctionComponent = () => {
                     if (!response.ok) return
     
                     setUserProjects(projectsFromJson(await response.text()))
+                    setSelectedProjects(userProjects)
                 } catch (error) {
                     console.error("Error fetching projects:", error);
                 }
@@ -96,7 +97,7 @@ export const UserForm: FunctionComponent = () => {
                 credentials: "include",
                 body: JSON.stringify({
                     ...user,
-                    projectIds: assignedProjects.map((project) => project.id), // Pass project IDs
+                    projectIds: selectedProjects.map((project) => project.id), // Pass project IDs
                 }),
             });
 
@@ -108,7 +109,7 @@ export const UserForm: FunctionComponent = () => {
                 const userData = await response.json();
                 setUser(userData);
                 setOriginalData(userData);
-                setUserProjects(assignedProjects);
+                setUserProjects(selectedProjects);
             } else {
                 alert(`Error: ${response.statusText}`);
             }
@@ -157,8 +158,8 @@ export const UserForm: FunctionComponent = () => {
                     </div>
 
                     <ProjectsDropdown
-                        selectedProjects={userProjects}
-                        onChange={setAssignedProjects}
+                        selectedProjects={selectedProjects}
+                        onChange={setSelectedProjects}
                         disabled={!isEditing}
                     />
 

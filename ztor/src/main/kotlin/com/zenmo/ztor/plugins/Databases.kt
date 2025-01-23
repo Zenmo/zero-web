@@ -116,6 +116,16 @@ fun Application.configureDatabases(): Database {
             }
         }
 
+        get("/all-projects") {
+            val userId = call.getUserId()
+            if (userId == null) {
+                call.respond(HttpStatusCode.Unauthorized)
+                return@get
+            }
+
+            call.respond(HttpStatusCode.OK, projectRepository.getProjects())
+        }
+
         get("/projects") {
             val userId = call.getUserId()
             if (userId == null) {
