@@ -19,8 +19,10 @@ export const UserForm: FunctionComponent = () => {
     const [isEditing, setIsEditing] = useState(false);
 
     const handleCancel = () => {
-        if (originalData) {
-            setUser(originalData); // Revert to original data
+        if (originalData) { // Revert to original data
+            setUser(originalData);
+            setSelectedProjects(userProjects)
+
         }
         setIsEditing(false);
     };
@@ -68,9 +70,10 @@ export const UserForm: FunctionComponent = () => {
                         credentials: "include",
                     });
                     if (!response.ok) return
-    
-                    setUserProjects(projectsFromJson(await response.text()))
-                    setSelectedProjects(userProjects)
+
+                    const projectData = projectsFromJson(await response.text())
+                    setUserProjects(projectData)
+                    setSelectedProjects(projectData)
                 } catch (error) {
                     console.error("Error fetching projects:", error);
                 }
