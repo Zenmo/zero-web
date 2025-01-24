@@ -1,4 +1,4 @@
-import React, { FormEvent, FunctionComponent, useEffect, useState } from "react";
+import React, { FormEvent, FunctionComponent, useEffect, useState, useRef } from "react";
 import { useParams } from "react-router-dom";
 import { PrimeReactProvider } from "primereact/api";
 import { InputText } from "primereact/inputtext";
@@ -7,6 +7,8 @@ import { User, Project, projectsFromJson } from "zero-zummon";
 import { redirectToLogin } from "./use-users";
 import { ProjectsDropdown } from "./projects-dropdown";
 import { UserProjectsList } from "./user-projects-list";
+import { Messages } from 'primereact/messages';
+import { Toast } from "primereact/toast";
 
 export const UserForm: FunctionComponent = () => {
     const {userId} = useParams<{ userId: string }>();
@@ -14,6 +16,8 @@ export const UserForm: FunctionComponent = () => {
     const [originalData, setOriginalData] = useState<User | null>(null);
     const [selectedProjects, setSelectedProjects] = useState<Project[]>([]);
     const [userProjects, setUserProjects] = useState<Project[]>([]);
+    // const msgs = useRef(null);
+    const msgs = useRef<Toast>(null);
 
     const [loading, setLoading] = useState(false);
     const [isEditing, setIsEditing] = useState(false);
@@ -90,6 +94,14 @@ export const UserForm: FunctionComponent = () => {
         event.preventDefault();
         setLoading(true);
         try {
+            const sendUser = JSON.stringify({
+                ...user,
+                projects: selectedProjects.map((project) => ({
+                    id: project.id.toString(),
+                    name: project.name,
+                })),
+            })
+            console.log("sendUser " + sendUser)
             const method = userId ? "PUT" : "POST";
             const url = `${import.meta.env.VITE_ZTOR_URL}/users`
             const response = await fetch(url, {
@@ -98,10 +110,7 @@ export const UserForm: FunctionComponent = () => {
                     "Content-Type": "application/json",
                 },
                 credentials: "include",
-                body: JSON.stringify({
-                    ...user,
-                    projectIds: selectedProjects.map((project) => project.id), // Pass project IDs
-                }),
+                body: sendUser,
             });
 
             if (response.status === 401) {
@@ -109,12 +118,17 @@ export const UserForm: FunctionComponent = () => {
             }
 
             if (response.ok) {
-                const userData = await response.json();
-                setUser(userData);
-                setOriginalData(userData);
-                setUserProjects(selectedProjects);
+                msgs.current?.show([
+                    { sticky: true, severity: "success", summary: "Success", detail: "User saved successfully.", closable: true },
+                ]);
+                // const userData = await response.json();
+                // setUser(userData);
+                // setOriginalData(userData);
+                // setUserProjects(selectedProjects);
             } else {
-                alert(`Error: ${response.statusText}`);
+                msgs.current?.show([
+                    {sticky: true, severity: 'error', summary: 'Error', detail: `Error: ${response.statusText}`, closable: false},
+                ]);
             }
         } finally {
             setIsEditing(false);
@@ -124,6 +138,7 @@ export const UserForm: FunctionComponent = () => {
 
     return (
         <PrimeReactProvider>
+            <Toast ref={msgs} />
             <div style={{ padding: "20px", maxWidth: "500px", margin: "0 auto" }}>
                 <h3>{userId ? "Edit User" : "Add User"}</h3>
                 <form
@@ -165,6 +180,7 @@ export const UserForm: FunctionComponent = () => {
                         onChange={setSelectedProjects}
                         disabled={!isEditing}
                     />
+                    
 
                     <div style={{ display: "flex", justifyContent: "space-between", marginTop: "10px" }}>
                         {isEditing ? (
@@ -177,6 +193,7 @@ export const UserForm: FunctionComponent = () => {
                         )}
                     </div>
                 </form>
+                
                 <UserProjectsList projects={userProjects}/>
             </div>
         </PrimeReactProvider>

@@ -31,7 +31,7 @@ export const ProjectsDropdown: FunctionComponent<ProjectDropdownProps> = ({
         };
 
         fetchProjects();
-    });
+    }, []);
 
     return (
         <div>
