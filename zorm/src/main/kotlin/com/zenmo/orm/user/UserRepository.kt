@@ -28,6 +28,12 @@ class UserRepository(
                 }
         }
     }
+    
+    fun getUserAndProjects(userId: UUID): User {
+        return getUsersAndProjects(
+            (UserTable.id eq userId)
+        ).first()
+    }
 
     fun getUsersAndProjects(filter: Op<Boolean> = Op.TRUE): List<User> {
         return transaction(db) {

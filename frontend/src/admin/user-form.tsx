@@ -39,7 +39,7 @@ export const UserForm: FunctionComponent = () => {
             const fetchUser = async () => {
                 setLoading(true);
                 try {
-                    const response = await fetch(`${import.meta.env.VITE_ZTOR_URL}/users/${userId}`, {
+                    const response = await fetch(`${import.meta.env.VITE_ZTOR_URL}/users/${userId}/projects`, {
                         credentials: "include",
                     });
                     if (response.status === 401) {
@@ -50,6 +50,8 @@ export const UserForm: FunctionComponent = () => {
                         const userData = await response.json();
                         setUser(userData);
                         setOriginalData(userData);
+                        setUserProjects(userData.projects)
+
                     } else {
                         alert(`Error fetching user: ${response.statusText}`);
                     }
@@ -60,20 +62,6 @@ export const UserForm: FunctionComponent = () => {
                 }
             };
 
-            const fetchProjects = async () => {
-                try {
-                    const response = await fetch(`${import.meta.env.VITE_ZTOR_URL}/users/${userId}/projects`, {
-                        credentials: "include",
-                    });
-                    if (!response.ok) return
-    
-                    setUserProjects(projectsFromJson(await response.text()))
-                } catch (error) {
-                    console.error("Error fetching projects:", error);
-                }
-            };
-    
-            fetchProjects();
             fetchUser();
         } else {
             setIsEditing(true);
