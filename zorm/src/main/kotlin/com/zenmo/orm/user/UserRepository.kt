@@ -107,7 +107,12 @@ class UserRepository(
     }
 
     fun isAdmin(userId: UUID): Boolean {
-        val user = getUserById(userId)
+        val user = try {
+            getUserById(userId)
+        } catch (e: NoSuchElementException) {
+            null
+        }
+    
         return user?.isAdmin ?: false
     }
     
