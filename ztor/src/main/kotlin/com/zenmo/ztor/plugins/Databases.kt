@@ -49,7 +49,7 @@ fun Application.configureDatabases(): Database {
 
         get("/users") {
             asAdmin {
-                val users = userRepository.getUsers()
+                val users = userRepository.getUsersAndProjects()
                 call.respond(HttpStatusCode.OK, users)
             }
         }
