@@ -62,6 +62,14 @@ fun Application.configureDatabases(): Database {
             }
         }
 
+        get("/users/{userId}/projects") {
+            asAdmin {
+                val userId = UUID.fromString(call.parameters["userId"])
+                val user = userRepository.getUserAndProjects(userId)
+                call.respond(HttpStatusCode.OK, user)
+            }
+        }
+
         // Create
         post("/users") {
             val user: User?
