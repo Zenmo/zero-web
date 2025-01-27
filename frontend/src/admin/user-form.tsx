@@ -7,7 +7,6 @@ import { User, Project, projectsFromJson } from "zero-zummon";
 import { redirectToLogin } from "./use-users";
 import { ProjectsDropdown } from "./projects-dropdown";
 import { UserProjectsList } from "./user-projects-list";
-import { Messages } from 'primereact/messages';
 import { Toast } from "primereact/toast";
 
 export const UserForm: FunctionComponent = () => {
@@ -16,7 +15,6 @@ export const UserForm: FunctionComponent = () => {
     const [originalData, setOriginalData] = useState<User | null>(null);
     const [selectedProjects, setSelectedProjects] = useState<Project[]>([]);
     const [userProjects, setUserProjects] = useState<Project[]>([]);
-    // const msgs = useRef(null);
     const msgs = useRef<Toast>(null);
 
     const [loading, setLoading] = useState(false);
@@ -47,7 +45,7 @@ export const UserForm: FunctionComponent = () => {
             const fetchUser = async () => {
                 setLoading(true);
                 try {
-                    const response = await fetch(`${import.meta.env.VITE_ZTOR_URL}/users/${userId}`, {
+                    const response = await fetch(`${import.meta.env.VITE_ZTOR_URL}/users/${userId}/projects`, {
                         credentials: "include",
                     });
                     if (response.status === 401) {
@@ -58,6 +56,8 @@ export const UserForm: FunctionComponent = () => {
                         const userData = await response.json();
                         setUser(userData);
                         setOriginalData(userData);
+                        setUserProjects(userData.projects)
+
                     } else {
                         alert(`Error fetching user: ${response.statusText}`);
                     }
@@ -190,7 +190,6 @@ export const UserForm: FunctionComponent = () => {
                         )}
                     </div>
                 </form>
-                
                 <UserProjectsList projects={userProjects}/>
             </div>
         </PrimeReactProvider>
