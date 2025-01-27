@@ -40,6 +40,11 @@ export const UserForm: FunctionComponent = () => {
         } as User));
     };
 
+    const transformProjects = (projects: any[]): Project[] => {
+        const jsonString = JSON.stringify(projects);
+        return projectsFromJson(jsonString);
+    };
+
     useEffect(() => {
         if (userId) {
             const fetchUser = async () => {
@@ -57,6 +62,8 @@ export const UserForm: FunctionComponent = () => {
                         setUser(userData);
                         setOriginalData(userData);
                         setUserProjects(userData.projects)
+                        const formattedProjects = transformProjects(userData.projects)
+                        setSelectedProjects(formattedProjects)
 
                     } else {
                         alert(`Error fetching user: ${response.statusText}`);
@@ -67,23 +74,7 @@ export const UserForm: FunctionComponent = () => {
                     setLoading(false);
                 }
             };
-
-            const fetchProjects = async () => {
-                try {
-                    const response = await fetch(`${import.meta.env.VITE_ZTOR_URL}/users/${userId}/projects`, {
-                        credentials: "include",
-                    });
-                    if (!response.ok) return
-
-                    const projectData = projectsFromJson(await response.text())
-                    setUserProjects(projectData)
-                    setSelectedProjects(projectData)
-                } catch (error) {
-                    console.error("Error fetching projects:", error);
-                }
-            };
-    
-            fetchProjects();
+           
             fetchUser();
         } else {
             setIsEditing(true);
