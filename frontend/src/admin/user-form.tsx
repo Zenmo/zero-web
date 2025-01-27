@@ -121,10 +121,7 @@ export const UserForm: FunctionComponent = () => {
                 msgs.current?.show([
                     { sticky: true, severity: "success", summary: "Success", detail: "User saved successfully.", closable: true },
                 ]);
-                // const userData = await response.json();
-                // setUser(userData);
-                // setOriginalData(userData);
-                // setUserProjects(selectedProjects);
+                setUserProjects(selectedProjects);
             } else {
                 msgs.current?.show([
                     {sticky: true, severity: 'error', summary: 'Error', detail: `Error: ${response.statusText}`, closable: false},
