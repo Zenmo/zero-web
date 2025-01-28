@@ -22,7 +22,9 @@ export const ProjectsDropdown: FunctionComponent<ProjectDropdownProps> = ({
                 const response = await fetch(`${import.meta.env.VITE_ZTOR_URL}/all-projects`, {
                     credentials: "include",
                 });
-                if (!response.ok) return
+                if (!response.ok) {
+                    throw new Error(`Failed: ${response.statusText}`)
+                }
 
                 setProjects(projectsFromJson(await response.text()))
             } catch (error) {

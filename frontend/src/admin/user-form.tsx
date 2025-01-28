@@ -92,7 +92,6 @@ export const UserForm: FunctionComponent = () => {
                     name: project.name,
                 })),
             })
-            console.log("sendUser " + sendUser)
             const method = userId ? "PUT" : "POST";
             const url = `${import.meta.env.VITE_ZTOR_URL}/users`
             const response = await fetch(url, {
