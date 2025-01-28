@@ -64,7 +64,6 @@ export const UserForm: FunctionComponent = () => {
                         setUserProjects(userData.projects)
                         const formattedProjects = transformProjects(userData.projects)
                         setSelectedProjects(formattedProjects)
-
                     } else {
                         alert(`Error fetching user: ${response.statusText}`);
                     }
@@ -74,7 +73,6 @@ export const UserForm: FunctionComponent = () => {
                     setLoading(false);
                 }
             };
-           
             fetchUser();
         } else {
             setIsEditing(true);
@@ -106,7 +104,6 @@ export const UserForm: FunctionComponent = () => {
             if (response.status === 401) {
                 return;
             }
-
             if (response.ok) {
                 msgs.current?.show([
                     { sticky: true, severity: "success", summary: "Success", detail: "User saved successfully.", closable: true },
