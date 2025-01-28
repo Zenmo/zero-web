@@ -49,7 +49,7 @@ fun Application.configureDatabases(): Database {
 
         get("/users") {
             asAdmin {
-                val users = userRepository.getUsers()
+                val users = userRepository.getUsersAndProjects()
                 call.respond(HttpStatusCode.OK, users)
             }
         }
@@ -113,6 +113,12 @@ fun Application.configureDatabases(): Database {
                 val userId = UUID.fromString(call.parameters["userId"])
                 userRepository.deleteUserById(userId)
                 call.respond(HttpStatusCode.OK)
+            }
+        }
+
+        get("/all-projects") {
+            asAdmin {
+                call.respond(HttpStatusCode.OK, projectRepository.getProjects())
             }
         }
 
