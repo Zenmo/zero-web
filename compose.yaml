@@ -178,10 +178,37 @@ services:
             # other database
             POSTGRES_URL: jdbc:postgresql://postgres:5432/gen
 
-    vallum-test:
+    vallum-bc-test:
         extends:
             service: gradle-base
         entrypoint: ./vallum/backward-compatibility-test.sh
+        volumes:
+            - gradle-vallum-test-cache:/home/gradle/.gradle
+        depends_on:
+            - postgres
+        env_file:
+            - docker/local/ztor.env
+            - docker/local/vallum.env
+        environment:
+            POSTGRES_URL: jdbc:postgresql://postgres:5432/vallumtest
+            POSTGRES_USER: postgres
+            BASE_URL: http://localhost:8082
+            CORS_ALLOW_ORIGIN_PATTERN: 'http://localhost:\d{2,5}'
+            # Keycloak test realm JWK
+            ACCESS_TOKEN_JWK: |
+                {
+                    "kid": "n-X5BeXFe6pIXhDBsDu2mQ2VYc23RSZCFRU5Y6IuzC8",
+                    "kty": "OKP",
+                    "alg": "EdDSA",
+                    "use": "sig",
+                    "crv": "Ed25519",
+                    "x": "ILokSbk8EKH-Q1aWo_TguuDRccoSVfEbmGSbm5gcn5I"
+                }
+
+    vallum-test:
+        extends:
+            service: gradle-base
+        command: vallum:test --tests com.zenmo.vallum.VallumTest
         volumes:
             - gradle-vallum-test-cache:/home/gradle/.gradle
         depends_on:

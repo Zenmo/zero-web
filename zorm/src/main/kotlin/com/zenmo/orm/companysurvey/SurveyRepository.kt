@@ -34,6 +34,13 @@ class SurveyRepository(
         )
     }
 
+    private fun projectNamesFilter(projects: List<String>): Op<Boolean> {
+        return CompanySurveyTable.projectId eq anyFrom (
+            ProjectTable.select(ProjectTable.id)
+                .where(ProjectTable.name.lowerCase() inList projects.map { it.lowercase() })
+        )
+    }
+
     fun getHessenpoortSurveys(): List<Survey> {
         return getSurveysByProject("Hessenpoort")
     }
@@ -127,7 +134,7 @@ class SurveyRepository(
         return getSurveys(projectFilter(project))
     }
 
-    fun getSurveys(project: String? = null, userId: UUID, includeInSimulation: Boolean? = null): List<Survey> {
+    fun getSurveys(project: String? = null, userId: UUID, includeInSimulation: Boolean? = null, projectNames: List<String>? = null): List<Survey> {
         val filters = mutableListOf(
             userIsAllowedCondition(userId)
         )
@@ -138,6 +145,10 @@ class SurveyRepository(
 
         if (includeInSimulation != null) {
             filters.add(CompanySurveyTable.includeInSimulation eq includeInSimulation)
+        }
+
+        if (projectNames != null) {
+            filters.add(projectNamesFilter(projectNames))
         }
 
         return getSurveys(filters.compoundAnd())

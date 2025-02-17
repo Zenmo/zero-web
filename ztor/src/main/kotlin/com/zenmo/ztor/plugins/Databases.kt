@@ -226,11 +226,13 @@ fun Application.configureDatabases(): Database {
 
             val includeInSimulation = call.request.queryParameters["includeInSimulation"]?.toBoolean()
             val project = call.request.queryParameters["project"]
+            val projectNames = call.request.queryParameters["projectNames"]?.split(",")
 
             val surveys = repository.getSurveys(
                 userId = userId,
                 project = project,
                 includeInSimulation = includeInSimulation,
+                projectNames = projectNames,
             )
 
             call.respond(HttpStatusCode.OK, surveys)
