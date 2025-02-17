@@ -45,6 +45,17 @@ constructor(
         }.body<List<Survey>>()
     }
 
+    fun getEnabledSurveysByProjectNames(projectNames: Array<String>): List<Survey> = runBlocking {
+        val accessToken = getAccessToken(client)
+        client.get(baseUrl.trimEnd('/') + "/company-surveys") {
+            parameter("projectNames", projectNames.joinToString(","))
+            parameter("includeInSimulation", true)
+            headers {
+                append("Authorization", "Bearer $accessToken")
+            }
+        }.body<List<Survey>>()
+    }
+
     /**
      * Get all surveys the account has access to and are configured to include in the simulation
      */
