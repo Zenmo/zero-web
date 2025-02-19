@@ -11,10 +11,7 @@ import com.zenmo.zummon.companysurvey.toDuration
 import org.jetbrains.exposed.sql.Database
 import org.jetbrains.exposed.sql.SqlExpressionBuilder.eq
 import java.util.UUID
-import kotlin.test.BeforeTest
-import kotlin.test.Test
-import kotlin.test.assertEquals
-import kotlin.test.assertNotNull
+import kotlin.test.*
 import kotlin.uuid.ExperimentalUuidApi
 import kotlin.uuid.toKotlinUuid
 
@@ -92,7 +89,6 @@ class SurveyRepositoryTest {
         val storedSurveyWithFirstGc = surveyRepository.getSurveyById(survey.id)!!
         assertEquals(1, storedSurveyWithFirstGc.numGridConnections)
         assertEquals(storedSurvey.flattenedGridConnections().first().id, storedSurveyWithFirstGc.getSingleGridConnection().id)
-
     }
 
     @Test
@@ -168,6 +164,35 @@ class SurveyRepositoryTest {
         assertNotNull(createdBy2)
         assertEquals("Jaap", createdBy2.note)
         assertEquals(jaapId.toKotlinUuid(), createdBy2.id)
+    }
+
+    @Test
+    fun testEmptyTimeSeriesIsDeleted() {
+        val projectName = "WessenHoort"
+        projectRepository.saveNewProject(projectName)
+        val survey = createMockSurvey(projectName)
+
+        surveyRepository.save(survey)
+        val storedSurvey = surveyRepository.getSurveyById(survey.id)
+        assertNotNull(storedSurvey)
+        assertNotNull(storedSurvey.getSingleGridConnection().transport.agriculture.dieselUsageTimeSeries)
+
+        val gridConnection = storedSurvey.getSingleGridConnection()
+
+        val surveyWithNullDieselUsage = storedSurvey.replaceSingleGridConnection(
+            newGridConnection = gridConnection.copy(
+                transport = gridConnection.transport.copy(
+                    agriculture = gridConnection.transport.agriculture.copy(
+                        dieselUsageTimeSeries = null,
+                    )
+                )
+            )
+        )
+
+        surveyRepository.save(surveyWithNullDieselUsage)
+        val storedSurveyWithNullDieselUsage = surveyRepository.getSurveyById(survey.id)
+        assertNotNull(storedSurveyWithNullDieselUsage)
+        assertNull(storedSurveyWithNullDieselUsage.getSingleGridConnection().transport.agriculture.dieselUsageTimeSeries)
     }
 
     private fun wipeSequence(survey: Survey)

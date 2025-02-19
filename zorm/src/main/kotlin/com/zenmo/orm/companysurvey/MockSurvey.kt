@@ -175,11 +175,17 @@ fun createMockSurvey(projectName: String = "Project") = Survey(
                         agriculture = Agriculture(
                             numTractors = 3,
                             annualDieselUsage_L = 4200.1,
+                            dieselUsageTimeSeries =  TimeSeries(
+                                type = TimeSeriesType.AGRICULTURE_DIESEL_CONSUMPTION,
+                                start = kotlinx.datetime.Instant.parse("2021-01-01T00:00:00+01"),
+                                timeStep = DateTimeUnit.YEAR,
+                                values = floatArrayOf(800.0f, 900.0f),
+                            )
                         ),
                         otherVehicles = OtherVehicles(
                             hasOtherVehicles = true,
                             description = "Other vehicles description",
-                        )
+                        ),
                     ),
                     pandIds = setOf(
                         PandID("1234567890123456"),

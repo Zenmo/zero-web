@@ -1,5 +1,5 @@
 import {targetYear} from "./time-series-util"
-import {TimeSeriesTextareaAdapter} from "./time-series-textarea-adapter"
+import {TimeSeriesHookFormAdapter, TimeSeriesTextareaAdapter} from "./time-series-textarea-adapter"
 import {FunctionComponent} from "react"
 import {UseFormReturn} from "react-hook-form"
 import {TimeSeriesType} from "zero-zummon"
@@ -22,20 +22,20 @@ export const TimeSeriesElectricity: FunctionComponent<{form: UseFormReturn, pref
                 <li>Een langere periode mag.</li>
             </ul>
             <h3>Kwartierwaarden levering</h3>
-            <TimeSeriesTextareaAdapter
-                timeSeries={form.watch(`${prefix}.quarterHourlyDelivery_kWh`)}
-                timeSeriesType={TimeSeriesType.ELECTRICITY_DELIVERY}
-                setTimeSeries={timeSeries => form.setValue(`${prefix}.quarterHourlyDelivery_kWh`, timeSeries)} />
+            <TimeSeriesHookFormAdapter
+                form={form}
+                field={`${prefix}.quarterHourlyDelivery_kWh`}
+                timeSeriesType={TimeSeriesType.ELECTRICITY_DELIVERY} />
             <h3>Kwartierwaarden teruglevering</h3>
-            <TimeSeriesTextareaAdapter
-                timeSeries={form.watch(`${prefix}.quarterHourlyFeedIn_kWh`)}
-                timeSeriesType={TimeSeriesType.ELECTRICITY_FEED_IN}
-                setTimeSeries={timeSeries => form.setValue(`${prefix}.quarterHourlyFeedIn_kWh`, timeSeries)} />
+            <TimeSeriesHookFormAdapter
+                form={form}
+                field={`${prefix}.quarterHourlyFeedIn_kWh`}
+                timeSeriesType={TimeSeriesType.ELECTRICITY_FEED_IN} />
             <h3>Kwartierwaarden brutoproductiemeter</h3>
-            <TimeSeriesTextareaAdapter
-                timeSeries={form.watch(`${prefix}.quarterHourlyProduction_kWh`)}
-                timeSeriesType={TimeSeriesType.ELECTRICITY_PRODUCTION}
-                setTimeSeries={timeSeries => form.setValue(`${prefix}.quarterHourlyProduction_kWh`, timeSeries)} />
+            <TimeSeriesHookFormAdapter
+                form={form}
+                field={`${prefix}.quarterHourlyProduction_kWh`}
+                timeSeriesType={TimeSeriesType.ELECTRICITY_PRODUCTION} />
         </>
     )
 }

@@ -3,6 +3,7 @@ package com.zenmo.zummon.companysurvey
 import com.benasher44.uuid.Uuid
 import com.benasher44.uuid.uuid4
 import com.zenmo.zummon.BenasherUuidSerializer
+import com.zenmo.zummon.addNotNull
 import kotlinx.serialization.Serializable
 import kotlin.js.JsExport
 
@@ -32,4 +33,11 @@ data class GridConnection(
     val surveyFeedback: String = "",
 ) {
     fun clearId() = copy(id = uuid4())
+
+    fun allTimeSeries(): List<TimeSeries> {
+        val list = electricity.allTimeSeries().toMutableList()
+        list.addNotNull(naturalGas.hourlyDelivery_m3)
+        list.addNotNull(transport.agriculture.dieselUsageTimeSeries)
+        return list.toList()
+    }
 }

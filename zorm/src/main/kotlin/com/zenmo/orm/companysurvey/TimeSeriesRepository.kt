@@ -8,10 +8,8 @@ import org.jetbrains.exposed.sql.Database
 import org.jetbrains.exposed.sql.and
 import org.jetbrains.exposed.sql.selectAll
 import org.jetbrains.exposed.sql.transactions.transaction
-import org.jetbrains.exposed.sql.transactions.transactionScope
 import org.jetbrains.exposed.sql.upsert
 import java.util.UUID
-import org.jetbrains.exposed.sql.SqlExpressionBuilder.eq
 
 class TimeSeriesRepository(
     val db: Database

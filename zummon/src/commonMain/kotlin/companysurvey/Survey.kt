@@ -48,6 +48,10 @@ data class Survey(
 
     fun gridConnectionIds(): List<Uuid> = flattenedGridConnections().map { it.id }
 
+    fun timeSeriesIds(): List<Uuid> = flattenedGridConnections()
+        .flatMap { it.allTimeSeries() }
+        .map { it.id }
+
     /**
      * For sorting in JavaScript primereact/datatable
      */
@@ -79,6 +83,16 @@ data class Survey(
     public fun getSingleGridConnection(): GridConnection {
         return addresses.firstAndOnly().gridConnections.firstAndOnly()
     }
+
+    fun replaceSingleGridConnection(newGridConnection: GridConnection): Survey = copy(
+        addresses = listOf(
+            addresses.single().copy(
+                gridConnections = listOf(
+                    newGridConnection
+                )
+            )
+        )
+    )
 
     /**
      * Adds a Pand ID when it's not present or removes it if it is.

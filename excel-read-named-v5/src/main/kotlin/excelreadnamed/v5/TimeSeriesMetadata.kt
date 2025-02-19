@@ -17,19 +17,11 @@ data class TimeSeriesMetadata(
     val profielCompleet: Boolean,
 )
 
-enum class SoortProfiel {
-    levering {
-        override fun timeSeriesType() = TimeSeriesType.ELECTRICITY_DELIVERY
-    },
-    teruglevering {
-        override fun timeSeriesType() = TimeSeriesType.ELECTRICITY_FEED_IN
-    },
-    zon {
-        override fun timeSeriesType() = TimeSeriesType.ELECTRICITY_PRODUCTION
-    },
-    gas {
-        override fun timeSeriesType() = TimeSeriesType.GAS_DELIVERY
-    };
-
-    abstract fun timeSeriesType(): TimeSeriesType
+enum class SoortProfiel(
+    val timeSeriesType: TimeSeriesType
+) {
+    levering(TimeSeriesType.ELECTRICITY_DELIVERY),
+    teruglevering(TimeSeriesType.ELECTRICITY_FEED_IN),
+    zon(TimeSeriesType.ELECTRICITY_PRODUCTION),
+    gas(TimeSeriesType.GAS_DELIVERY);
 }

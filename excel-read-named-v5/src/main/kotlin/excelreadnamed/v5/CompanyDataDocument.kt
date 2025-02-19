@@ -483,7 +483,7 @@ data class CompanyDataDocument(
         }
 
         return TimeSeries(
-            type = soortProfiel.timeSeriesType(),
+            type = soortProfiel.timeSeriesType,
             start = yearToFirstOfJanuary(metadata.jaar),
             timeStep = DateTimeUnit.MINUTE * metadata.resolutieMinuten,
             unit = metadata.eenheid,

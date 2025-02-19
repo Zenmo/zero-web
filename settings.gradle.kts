@@ -12,7 +12,7 @@ include(
 dependencyResolutionManagement {
     versionCatalogs {
         create("libs") {
-            version("exposed", "0.57.0")
+            version("exposed", "0.59.0")
             version("kotlinx-serialization-json", "1.8.0")
             version("kotlinx-datetime", "0.6.1")
         }

@@ -222,21 +222,28 @@ class SurveyRepository(
                             electricity = gridConnection.electricity.copy(
                                 quarterHourlyValuesFiles = electricityFiles,
                                 authorizationFile = authorizationFile,
-                                quarterHourlyFeedIn_kWh = timeSeriesPerGcId[gridConnection.id]?.find {
+                                quarterHourlyFeedIn_kWh = timeSeriesPerGcId[gridConnection.id]?.singleOrNull {
                                     it.type == TimeSeriesType.ELECTRICITY_FEED_IN
                                 },
-                                quarterHourlyDelivery_kWh = timeSeriesPerGcId[gridConnection.id]?.find {
+                                quarterHourlyDelivery_kWh = timeSeriesPerGcId[gridConnection.id]?.singleOrNull {
                                     it.type == TimeSeriesType.ELECTRICITY_DELIVERY
                                 },
-                                quarterHourlyProduction_kWh = timeSeriesPerGcId[gridConnection.id]?.find {
+                                quarterHourlyProduction_kWh = timeSeriesPerGcId[gridConnection.id]?.singleOrNull {
                                     it.type == TimeSeriesType.ELECTRICITY_PRODUCTION
                                 },
                             ),
                             naturalGas = gridConnection.naturalGas.copy(
                                 hourlyValuesFiles = gasFiles,
-                                hourlyDelivery_m3 = timeSeriesPerGcId[gridConnection.id]?.find {
+                                hourlyDelivery_m3 = timeSeriesPerGcId[gridConnection.id]?.singleOrNull {
                                     it.type == TimeSeriesType.GAS_DELIVERY
                                 }
+                            ),
+                            transport = gridConnection.transport.copy(
+                                agriculture = gridConnection.transport.agriculture.copy(
+                                    dieselUsageTimeSeries = timeSeriesPerGcId[gridConnection.id]?.singleOrNull {
+                                        it.type == TimeSeriesType.AGRICULTURE_DIESEL_CONSUMPTION
+                                    }
+                                )
                             ),
                         )
                     }
@@ -452,8 +459,7 @@ class SurveyRepository(
                 it[CompanySurveyTable.id]
             }.single()
 
-            AddressTable.batchUpsert(survey.addresses) {
-                address ->
+            AddressTable.batchUpsert(survey.addresses) { address ->
                 this[AddressTable.id] = address.id
                 this[AddressTable.surveyId] = survey.id
                 this[AddressTable.street] = address.street
@@ -642,6 +648,7 @@ class SurveyRepository(
                         gridConnection.electricity.quarterHourlyFeedIn_kWh,
                         gridConnection.electricity.quarterHourlyProduction_kWh,
                         gridConnection.naturalGas.hourlyDelivery_m3,
+                        gridConnection.transport.agriculture.dieselUsageTimeSeries,
                     )
 
                     for (timeSeries in timeSeriesList) {
@@ -658,7 +665,19 @@ class SurveyRepository(
                 }
             }
 
+            purgeTimeSeries(survey.gridConnectionIds(), survey.timeSeriesIds())
+
             surveyId
+        }
+    }
+
+    /**
+     * Remove TimeSeries from the database who are associated with [gridConnectionIds] except those in [timeSeriesIds]
+     */
+    private fun purgeTimeSeries(gridConnectionIds: List<UUID>, timeSeriesIds: List<UUID>) {
+        TimeSeriesTable.deleteWhere {
+            (gridConnectionId inList gridConnectionIds)
+                .and(id notInList timeSeriesIds)
         }
     }
 }

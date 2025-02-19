@@ -35,6 +35,12 @@ data class Electricity (
         return hasConnection ?: false
     }
 
+    fun allTimeSeries() = listOfNotNull(
+        quarterHourlyDelivery_kWh,
+        quarterHourlyFeedIn_kWh,
+        quarterHourlyProduction_kWh,
+    )
+
     /**
      * Contracted capacity for delivery of electricity from grid to company.
      */

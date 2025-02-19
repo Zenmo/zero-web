@@ -38,8 +38,8 @@ data class TimeSeries (
      * but then we would lose the ability to process month-based time series.
      */
     @Serializable(with = BackwardCompatilbeDateTimeUnitSerializer::class)
-    val timeStep: DateTimeUnit = type.defaultStep(),
-    val unit: TimeSeriesUnit = type.defaultUnit(),
+    val timeStep: DateTimeUnit = type.defaultStep,
+    val unit: TimeSeriesUnit = type.defaultUnit,
     val values: FloatArray = floatArrayOf(),
 ) {
     @Deprecated("Use .values", ReplaceWith("values"))
@@ -233,35 +233,40 @@ data class TimeSeries (
 fun timeSeriesFromJson(json: String): TimeSeries = Json.decodeFromString(TimeSeries.serializer(), json)
 
 @JsExport
-enum class TimeSeriesUnit {
-    KWH,
-    M3,
+enum class TimeSeriesUnit(val label: String) {
+    KWH("kWh"),
+    M3("m3"),
+    LITER("liter"),
 }
 
 @JsExport
-enum class TimeSeriesType {
+enum class TimeSeriesType(
+    val defaultUnit: TimeSeriesUnit,
+    val defaultStep: DateTimeUnit,
+) {
     // Delivery from grid to end-user
-    ELECTRICITY_DELIVERY {
-        override fun defaultUnit() = TimeSeriesUnit.KWH
-        override fun defaultStep() = DateTimeUnit.MINUTE * 15
-    },
+    ELECTRICITY_DELIVERY(
+        defaultUnit = TimeSeriesUnit.KWH,
+        defaultStep = DateTimeUnit.MINUTE * 15,
+    ),
     // Feed-in of end-user back in to the rid
-    ELECTRICITY_FEED_IN {
-        override fun defaultUnit() = TimeSeriesUnit.KWH
-        override fun defaultStep() = DateTimeUnit.MINUTE * 15
-    },
+    ELECTRICITY_FEED_IN(
+        defaultUnit = TimeSeriesUnit.KWH,
+        defaultStep = DateTimeUnit.MINUTE * 15,
+    ),
     // Solar panel production
-    ELECTRICITY_PRODUCTION {
-        override fun defaultUnit() = TimeSeriesUnit.KWH
-        override fun defaultStep() = DateTimeUnit.MINUTE * 15
-    },
-    GAS_DELIVERY {
-        override fun defaultUnit() = TimeSeriesUnit.M3
-        override fun defaultStep() = DateTimeUnit.HOUR
-    };
-
-    abstract fun defaultUnit(): TimeSeriesUnit
-    abstract fun defaultStep(): DateTimeUnit
+    ELECTRICITY_PRODUCTION (
+        defaultUnit = TimeSeriesUnit.KWH,
+        defaultStep = DateTimeUnit.MINUTE * 15,
+    ),
+    GAS_DELIVERY (
+        defaultUnit = TimeSeriesUnit.M3,
+        defaultStep = DateTimeUnit.HOUR,
+    ),
+    AGRICULTURE_DIESEL_CONSUMPTION (
+        defaultUnit = TimeSeriesUnit.LITER,
+        defaultStep = DateTimeUnit.WEEK,
+    );
 }
 
 @JsExport
@@ -317,7 +322,9 @@ fun isoStringToDateTimeUnit(isoString: String): DateTimeUnit = when (isoString) 
     "PT15M" -> DateTimeUnit.MINUTE * 15
     "PT1H" -> DateTimeUnit.HOUR
     "P1D" -> DateTimeUnit.DAY
+    "P1W" -> DateTimeUnit.WEEK
     "P1M" -> DateTimeUnit.MONTH
+    "P1Y" -> DateTimeUnit.YEAR
     else -> throw Exception("Not implemented parsing iso string \"$isoString\"")
 }
 
@@ -326,7 +333,9 @@ fun dateTimeUnitToIsoString(dateTimeUnit: DateTimeUnit): String = when (dateTime
     DateTimeUnit.MINUTE * 15 -> "PT15M"
     DateTimeUnit.HOUR -> "PT1H"
     DateTimeUnit.DAY -> "P1D"
+    DateTimeUnit.WEEK -> "P1W"
     DateTimeUnit.MONTH -> "P1M"
+    DateTimeUnit.YEAR -> "P1Y"
     else -> throw Exception("Not implemented creating iso string from ${dateTimeUnit}")
 }
 

@@ -20,12 +20,19 @@ bijvoorbeeld:
 
 const kwhNumberFormatter = new Intl.NumberFormat("nl-NL", {maximumFractionDigits: 1})
 
-export const TimeSeriesTextarea: FunctionComponent<{timeSeries: TimeSeries, setTimeSeries: (t: TimeSeries) => void}> = ({timeSeries, setTimeSeries}) => {
+export const TimeSeriesTextarea: FunctionComponent<{
+    timeSeries: TimeSeries,
+    setTimeSeries: (t: TimeSeries) => void,
+    removeTimeSeries: () => void,
+    label?: string,
+}> = ({timeSeries, setTimeSeries, removeTimeSeries, label = "kwartierwaarden"}) => {
     const [internalTimeSeries, setInternalTimeSeries] = useState(timeSeries)
 
     const setTimeSeriesImpl = (timeSeries: TimeSeries) => {
         setInternalTimeSeries(timeSeries)
-        if (timeSeries.isValid()) {
+        if (timeSeries.isEmpty()) {
+            removeTimeSeries()
+        } else {
             setTimeSeries(timeSeries)
         }
     }
@@ -38,7 +45,7 @@ export const TimeSeriesTextarea: FunctionComponent<{timeSeries: TimeSeries, setT
 
     return (
         <>
-            <LabelRow label="Datum en tijd begin kwartierwaarden">
+            <LabelRow label={`Datum en tijd begin ${label}`}>
                 <InputText type="datetime-local" id="start" name="start" defaultValue={localStart.toString()}
                     onChange={e => {
                         const local = LocalDateTime.parse(e.target.value)
@@ -54,7 +61,7 @@ export const TimeSeriesTextarea: FunctionComponent<{timeSeries: TimeSeries, setT
             <LabelRow label="Meetinterval">
                 <IntervalDropdown timeStep={internalTimeSeries.timeStep} setTimeStep={timeStep => setTimeSeriesImpl(internalTimeSeries.withTimeStep(timeStep))} />
             </LabelRow>
-            <LabelRow label="Plak hier de waarden in kWh">
+            <LabelRow label={`Plak hier de waarden in ${timeSeries.unit.label}`}>
                 <InputTextarea
                     id="values"
                     name="values"
@@ -65,8 +72,8 @@ export const TimeSeriesTextarea: FunctionComponent<{timeSeries: TimeSeries, setT
                     placeholder={placeholder} />
             </LabelRow>
 
-            <p>Eind kwartierwaarden: {prettyPrint(end)}</p>
-            <p>Totaal: <span id="total">{kwhNumberFormatter.format(internalTimeSeries.sum())}</span> kWh</p>
+            <p>Eind {label}: {prettyPrint(end)}</p>
+            <p>Totaal: <span id="total">{kwhNumberFormatter.format(internalTimeSeries.sum())}</span> {timeSeries.unit.label}</p>
         </>
     )
 }
