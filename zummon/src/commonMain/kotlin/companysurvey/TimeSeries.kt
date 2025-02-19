@@ -317,7 +317,9 @@ fun isoStringToDateTimeUnit(isoString: String): DateTimeUnit = when (isoString) 
     "PT15M" -> DateTimeUnit.MINUTE * 15
     "PT1H" -> DateTimeUnit.HOUR
     "P1D" -> DateTimeUnit.DAY
+    "P1W" -> DateTimeUnit.WEEK
     "P1M" -> DateTimeUnit.MONTH
+    "P1Y" -> DateTimeUnit.YEAR
     else -> throw Exception("Not implemented parsing iso string \"$isoString\"")
 }
 
@@ -326,7 +328,9 @@ fun dateTimeUnitToIsoString(dateTimeUnit: DateTimeUnit): String = when (dateTime
     DateTimeUnit.MINUTE * 15 -> "PT15M"
     DateTimeUnit.HOUR -> "PT1H"
     DateTimeUnit.DAY -> "P1D"
+    DateTimeUnit.WEEK -> "P1W"
     DateTimeUnit.MONTH -> "P1M"
+    DateTimeUnit.YEAR -> "P1Y"
     else -> throw Exception("Not implemented creating iso string from ${dateTimeUnit}")
 }
 

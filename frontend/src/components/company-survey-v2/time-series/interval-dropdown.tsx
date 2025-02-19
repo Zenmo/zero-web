@@ -9,12 +9,24 @@ const options: SelectItemOptionsType = [
         label: "Kwartier",
     },
     {
+        value: "PT1H",
+        label: "Uur",
+    },
+    {
         value: "P1D",
         label: "Dag",
     },
     {
+        value: "P1W",
+        label: "Week",
+    },
+    {
         value: "P1M",
         label: "Maand",
+    },
+    {
+        value: "P1Y",
+        label: "Jaar",
     },
 ]
 
