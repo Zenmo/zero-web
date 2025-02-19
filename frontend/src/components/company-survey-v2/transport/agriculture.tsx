@@ -1,7 +1,7 @@
 import {FunctionComponent} from "react"
 import {UseFormReturn} from "react-hook-form"
 import {NumberRow} from "../generic/number-row"
-import {TimeSeriesTextareaAdapter} from "../time-series/time-series-textarea-adapter"
+import {TimeSeriesHookFormAdapter, TimeSeriesTextareaAdapter} from "../time-series/time-series-textarea-adapter"
 import {TimeSeriesType} from "zero-zummon"
 
 export const Agriculture: FunctionComponent<{
@@ -27,10 +27,10 @@ export const Agriculture: FunctionComponent<{
                         suffix="liter" />
                     <h4>Verbruiksprofiel diesel</h4>
                     <p>Vul in 52 waarden in van het dieselverbruik op weekbasis.</p>
-                    <TimeSeriesTextareaAdapter
-                        timeSeries={form.watch(`${prefix}.dieselUsageTimeSeries`)}
+                    <TimeSeriesHookFormAdapter
+                        form={form}
+                        field={`${prefix}.dieselUsageTimeSeries`}
                         timeSeriesType={TimeSeriesType.AGRICULTURE_DIESEL_CONSUMPTION}
-                        setTimeSeries={timeSeries => form.setValue(`${prefix}.dieselUsageTimeSeries`, timeSeries)}
                         label="dieselprofiel" />
                 </>
             )}
