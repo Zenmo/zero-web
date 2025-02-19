@@ -236,6 +236,7 @@ fun timeSeriesFromJson(json: String): TimeSeries = Json.decodeFromString(TimeSer
 enum class TimeSeriesUnit {
     KWH,
     M3,
+    LITER,
 }
 
 @JsExport
@@ -261,6 +262,10 @@ enum class TimeSeriesType(
     GAS_DELIVERY (
         defaultUnit = TimeSeriesUnit.M3,
         defaultStep = DateTimeUnit.HOUR,
+    ),
+    AGRICULTURE_DIESEL_CONSUMPTION (
+        defaultUnit = TimeSeriesUnit.LITER,
+        defaultStep = DateTimeUnit.WEEK,
     );
 }
 
