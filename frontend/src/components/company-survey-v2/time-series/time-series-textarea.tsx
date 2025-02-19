@@ -23,13 +23,16 @@ const kwhNumberFormatter = new Intl.NumberFormat("nl-NL", {maximumFractionDigits
 export const TimeSeriesTextarea: FunctionComponent<{
     timeSeries: TimeSeries,
     setTimeSeries: (t: TimeSeries) => void,
+    removeTimeSeries: () => void,
     label?: string,
-}> = ({timeSeries, setTimeSeries, label = "kwartierwaarden"}) => {
+}> = ({timeSeries, setTimeSeries, removeTimeSeries, label = "kwartierwaarden"}) => {
     const [internalTimeSeries, setInternalTimeSeries] = useState(timeSeries)
 
     const setTimeSeriesImpl = (timeSeries: TimeSeries) => {
         setInternalTimeSeries(timeSeries)
-        if (timeSeries.isValid()) {
+        if (timeSeries.isEmpty()) {
+            removeTimeSeries()
+        } else {
             setTimeSeries(timeSeries)
         }
     }

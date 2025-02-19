@@ -459,8 +459,7 @@ class SurveyRepository(
                 it[CompanySurveyTable.id]
             }.single()
 
-            AddressTable.batchUpsert(survey.addresses) {
-                address ->
+            AddressTable.batchUpsert(survey.addresses) { address ->
                 this[AddressTable.id] = address.id
                 this[AddressTable.surveyId] = survey.id
                 this[AddressTable.street] = address.street
@@ -666,7 +665,19 @@ class SurveyRepository(
                 }
             }
 
+            purgeTimeSeries(survey.gridConnectionIds(), survey.timeSeriesIds())
+
             surveyId
+        }
+    }
+
+    /**
+     * Remove TimeSeries from the database who are associated with [gridConnectionIds] except those in [timeSeriesIds]
+     */
+    private fun purgeTimeSeries(gridConnectionIds: List<UUID>, timeSeriesIds: List<UUID>) {
+        TimeSeriesTable.deleteWhere {
+            (gridConnectionId inList gridConnectionIds)
+                .and(id notInList timeSeriesIds)
         }
     }
 }
