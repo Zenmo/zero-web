@@ -38,8 +38,8 @@ data class TimeSeries (
      * but then we would lose the ability to process month-based time series.
      */
     @Serializable(with = BackwardCompatilbeDateTimeUnitSerializer::class)
-    val timeStep: DateTimeUnit = type.defaultStep(),
-    val unit: TimeSeriesUnit = type.defaultUnit(),
+    val timeStep: DateTimeUnit = type.defaultStep,
+    val unit: TimeSeriesUnit = type.defaultUnit,
     val values: FloatArray = floatArrayOf(),
 ) {
     @Deprecated("Use .values", ReplaceWith("values"))
@@ -239,29 +239,29 @@ enum class TimeSeriesUnit {
 }
 
 @JsExport
-enum class TimeSeriesType {
+enum class TimeSeriesType(
+    val defaultUnit: TimeSeriesUnit,
+    val defaultStep: DateTimeUnit,
+) {
     // Delivery from grid to end-user
-    ELECTRICITY_DELIVERY {
-        override fun defaultUnit() = TimeSeriesUnit.KWH
-        override fun defaultStep() = DateTimeUnit.MINUTE * 15
-    },
+    ELECTRICITY_DELIVERY(
+        defaultUnit = TimeSeriesUnit.KWH,
+        defaultStep = DateTimeUnit.MINUTE * 15,
+    ),
     // Feed-in of end-user back in to the rid
-    ELECTRICITY_FEED_IN {
-        override fun defaultUnit() = TimeSeriesUnit.KWH
-        override fun defaultStep() = DateTimeUnit.MINUTE * 15
-    },
+    ELECTRICITY_FEED_IN(
+        defaultUnit = TimeSeriesUnit.KWH,
+        defaultStep = DateTimeUnit.MINUTE * 15,
+    ),
     // Solar panel production
-    ELECTRICITY_PRODUCTION {
-        override fun defaultUnit() = TimeSeriesUnit.KWH
-        override fun defaultStep() = DateTimeUnit.MINUTE * 15
-    },
-    GAS_DELIVERY {
-        override fun defaultUnit() = TimeSeriesUnit.M3
-        override fun defaultStep() = DateTimeUnit.HOUR
-    };
-
-    abstract fun defaultUnit(): TimeSeriesUnit
-    abstract fun defaultStep(): DateTimeUnit
+    ELECTRICITY_PRODUCTION (
+        defaultUnit = TimeSeriesUnit.KWH,
+        defaultStep = DateTimeUnit.MINUTE * 15,
+    ),
+    GAS_DELIVERY (
+        defaultUnit = TimeSeriesUnit.M3,
+        defaultStep = DateTimeUnit.HOUR,
+    );
 }
 
 @JsExport
