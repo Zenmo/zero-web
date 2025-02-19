@@ -71,4 +71,5 @@ data class OtherVehicles (
 data class Agriculture (
     val numTractors: Int? = null,
     val annualDieselUsage_L: Double? = null,
+    val dieselUsageTimeSeries: TimeSeries? = null,
 )

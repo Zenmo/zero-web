@@ -1,8 +1,7 @@
-import java.net.URI
+import org.gradle.api.tasks.testing.logging.TestExceptionFormat
+import org.gradle.api.tasks.testing.logging.TestLogEvent
 
 plugins {
-    id("com.github.johnrengelman.shadow") version "8.1.1"
-    `maven-publish`
     kotlin("jvm")
     kotlin("plugin.serialization") // dont think we need this in the ORM
 }
@@ -31,14 +30,18 @@ dependencies {
 }
 
 tasks.withType<Test> {
-    this.testLogging {
-        this.showStandardStreams = true
-    }
-}
-
-tasks {
-    shadowJar {
-
+    testLogging {
+        events(
+            TestLogEvent.FAILED,
+            TestLogEvent.PASSED,
+            TestLogEvent.SKIPPED,
+            TestLogEvent.STANDARD_ERROR,
+            TestLogEvent.STANDARD_OUT,
+        )
+        exceptionFormat = TestExceptionFormat.FULL
+        showCauses = true
+        showExceptions = true
+        showStackTraces = true
     }
 }
 
@@ -46,28 +49,6 @@ kotlin {
     sourceSets {
         all {
             languageSettings.optIn("kotlin.uuid.ExperimentalUuidApi")
-        }
-    }
-}
-
-publishing {
-    publications {
-        create<MavenPublication>("maven") {
-            groupId = "com.zenmo"
-            artifactId = "libzorm"
-            version = System.getenv("VERSION_TAG") ?: "dev"
-
-            artifact(tasks["shadowJar"])
-        }
-    }
-    repositories {
-        maven {
-            name = "GitHubPackages"
-            url = URI("https://maven.pkg.github.com/zenmo/zero")
-            credentials {
-                username = System.getenv("GITHUB_ACTOR")
-                password = System.getenv("GITHUB_TOKEN")
-            }
         }
     }
 }
