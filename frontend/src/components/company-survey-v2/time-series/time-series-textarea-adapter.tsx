@@ -10,18 +10,22 @@ import {TimeSeriesTextarea} from "./time-series-textarea"
 export const TimeSeriesTextareaAdapter: FunctionComponent<{
     timeSeries?: any,
     timeSeriesType?: TimeSeriesType,
-    setTimeSeries?: (obj: any) => void
+    setTimeSeries?: (obj: any) => void,
+    label?: string,
 }> = ({
     timeSeries,
     timeSeriesType = TimeSeriesType.ELECTRICITY_DELIVERY,
     setTimeSeries = console.log,
+    label,
 }) => {
     const timeSeriesDomainObject = timeSeries ? timeSeriesFromJson(JSON.stringify(timeSeries)) : createEmptyTimeSeriesForYear(timeSeriesType, targetYear)
 
     return (
         <TimeSeriesTextarea
-            timeSeries={timeSeriesDomainObject} setTimeSeries={(timeSeries: TimeSeries) => {
-            setTimeSeries(JSON.parse(timeSeries.toJson()))
-        }} />
+            timeSeries={timeSeriesDomainObject}
+            setTimeSeries={(timeSeries: TimeSeries) => {
+                setTimeSeries(JSON.parse(timeSeries.toJson()))
+            }}
+            label={label} />
     )
 }

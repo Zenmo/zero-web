@@ -181,7 +181,7 @@ const SurveyWithReset: FunctionComponent<{
                     backgroundColor: '#fcc',
                     borderColor: 'red',
                 },
-                '& h1, & h2, & h3': {
+                '& h1, & h2, & h3, & h4': {
                     padding: '.2rem 1rem',
                     borderBottom: '1px solid #ccc',
                 },

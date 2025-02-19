@@ -233,10 +233,10 @@ data class TimeSeries (
 fun timeSeriesFromJson(json: String): TimeSeries = Json.decodeFromString(TimeSeries.serializer(), json)
 
 @JsExport
-enum class TimeSeriesUnit {
-    KWH,
-    M3,
-    LITER,
+enum class TimeSeriesUnit(val label: String) {
+    KWH("kWh"),
+    M3("m3"),
+    LITER("liter"),
 }
 
 @JsExport
