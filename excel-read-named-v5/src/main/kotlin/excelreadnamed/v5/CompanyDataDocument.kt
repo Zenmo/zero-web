@@ -43,6 +43,9 @@ data class CompanyDataDocument(
         val project = projectProvider.getProjectByEnergiekeRegioId(
             getIntegerField("projectId")
         )
+
+        val numChargePoints = getNumericField("numChargePoints").toInt()
+
         val realSurvey =
             Survey(
                 companyName = companyName,
@@ -168,19 +171,14 @@ data class CompanyDataDocument(
                                             "numElectricCars"
                                         )
                                             .toInt(),
-                                        numChargePoints =
-                                        getNumericField(
-                                            "numChargePoints"
-                                        )
-                                            .toInt(),
-                                        powerPerChargePointKw =
-                                        (getNumericField(
-                                            "chargePointsTotalPowerKw"
-                                        ) /
-                                                getNumericField(
-                                                    "numChargePoints"
-                                                ))
-                                            .toFloat(),
+                                        numChargePoints = numChargePoints,
+                                        powerPerChargePointKw = if (numChargePoints > 0) {
+                                            (getNumericField(
+                                                "chargePointsTotalPowerKw"
+                                            ) / numChargePoints).toFloat()
+                                        } else {
+                                            null
+                                        },
                                         annualTravelDistancePerCarKm =
                                         getNumericField(
                                             "annualTravelDistancePerCarKm"
