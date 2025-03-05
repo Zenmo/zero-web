@@ -1,5 +1,6 @@
 package com.zenmo.zummon.companysurvey
 
+import com.zenmo.zummon.jsonDecoder
 import kotlinx.serialization.Serializable
 import kotlin.js.JsExport
 
@@ -11,7 +12,7 @@ data class SurveyWithErrors(
 ) {
     companion object {
         fun fromJson(jsonString: String): SurveyWithErrors {
-            return kotlinx.serialization.json.Json.decodeFromString(SurveyWithErrors.serializer(), jsonString)
+            return jsonDecoder.decodeFromString(SurveyWithErrors.serializer(), jsonString)
         }
     }
 
