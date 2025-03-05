@@ -7,6 +7,7 @@ import kotlin.time.Duration.Companion.hours
 import com.benasher44.uuid.Uuid
 import com.benasher44.uuid.uuid4
 import com.zenmo.zummon.BenasherUuidSerializer
+import com.zenmo.zummon.jsonDecoder
 import kotlinx.datetime.*
 import kotlinx.serialization.KSerializer
 import kotlinx.serialization.descriptors.PrimitiveKind
@@ -230,7 +231,7 @@ data class TimeSeries (
 }
 
 @JsExport
-fun timeSeriesFromJson(json: String): TimeSeries = Json.decodeFromString(TimeSeries.serializer(), json)
+fun timeSeriesFromJson(json: String): TimeSeries = jsonDecoder.decodeFromString(TimeSeries.serializer(), json)
 
 @JsExport
 enum class TimeSeriesUnit(val label: String) {
