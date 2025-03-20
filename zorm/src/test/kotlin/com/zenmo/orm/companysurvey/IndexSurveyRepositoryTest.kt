@@ -5,10 +5,12 @@ import com.zenmo.orm.connectToPostgres
 import com.zenmo.orm.user.UserRepository
 import com.zenmo.zummon.User
 import com.zenmo.zummon.companysurvey.Project
+import java.util.*
 import kotlin.test.BeforeTest
 import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.uuid.toJavaUuid
+import kotlin.uuid.toKotlinUuid
 
 
 class IndexSurveyRepositoryTest {
@@ -17,25 +19,26 @@ class IndexSurveyRepositoryTest {
     val surveyRepository = SurveyRepository(db)
     val projectRepository = ProjectRepository(db)
     val userRepository = UserRepository(db)
-    val testUser = User(note = "Test User")
+    val userId = UUID.randomUUID()
 
     @BeforeTest
     fun cleanUp() {
         cleanDb(db)
-        userRepository.save(testUser)
     }
 
     @Test
     fun testAllSurveysIsEmpty() {
-        assertEquals(0, indexSurveyRepository.getAllSurveys(testUser.id).size)
+        assertEquals(0, indexSurveyRepository.getAllSurveys(userId.toKotlinUuid()).size)
     }
 
     @Test
     fun testTwoSurveys() {
-        projectRepository.save(Project(name = "Project",))
-        surveyRepository.save(createMockSurvey(), testUser.id.toJavaUuid())
-        surveyRepository.save(createMockSurvey(), testUser.id.toJavaUuid())
+        val projectName = "Project"
+        val projectId = projectRepository.saveNewProject(projectName)
+        userRepository.saveUser(userId, listOf(projectId))
+        surveyRepository.save(createMockSurvey(projectName),userId)
+        surveyRepository.save(createMockSurvey(projectName), userId)
 
-        assertEquals(2, indexSurveyRepository.getAllSurveys(testUser.id).size)
+        assertEquals(2, indexSurveyRepository.getAllSurveys(userId.toKotlinUuid()).size)
     }
 }
