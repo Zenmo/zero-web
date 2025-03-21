@@ -34,11 +34,14 @@ class IndexSurveyRepositoryTest {
     @Test
     fun testTwoSurveys() {
         val projectName = "Project"
+        val projectNameTwo = "Inaccessible Project"
         val projectId = projectRepository.saveNewProject(projectName)
-        userRepository.saveUser(userId, listOf(projectId))
+        projectRepository.saveNewProject(projectNameTwo)
+        userRepository.saveUser(userId, listOf(projectId,))
         surveyRepository.save(createMockSurvey(projectName),userId)
         surveyRepository.save(createMockSurvey(projectName), userId)
-
+        surveyRepository.save(createMockSurvey(projectNameTwo))
         assertEquals(2, indexSurveyRepository.getAllSurveys(userId.toKotlinUuid()).size)
     }
+
 }
