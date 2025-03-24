@@ -20,7 +20,7 @@ export const useSurveys = (): UseSurveyReturn => {
 
     useOnce(async () => {
         try {
-            const response = await fetch(import.meta.env.VITE_ZTOR_URL + '/company-surveys', {
+            const response = await fetch(import.meta.env.VITE_ZTOR_URL + '/index-surveys', {
                 credentials: 'include',
             })
             if (response.status === 401) {
