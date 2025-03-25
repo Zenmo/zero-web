@@ -1,5 +1,6 @@
 package com.zenmo.joshi
 
+import com.zenmo.zummon.jsonDecoder
 import kotlinx.datetime.Instant
 import kotlinx.serialization.Serializable
 import kotlin.js.JsExport
@@ -18,3 +19,9 @@ data class IndexSurvey(
     val creationDate: Instant,
     val includeInSimulation: Boolean
 )
+
+
+@JsExport
+fun indexSurveysFromJson(json: String): Array<IndexSurvey> {
+    return jsonDecoder.decodeFromString<Array<IndexSurvey>>(json)
+}
