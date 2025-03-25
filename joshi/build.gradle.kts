@@ -21,7 +21,7 @@ kotlin {
         binaries.library()
         compilations["main"].packageJson {
             // hack hack hack
-            types = "kotlin/joshi.d.ts"
+            types = "kotlin/zero-joshi.d.ts"
         }
         browser {
         }
@@ -36,6 +36,7 @@ kotlin {
                 implementation("org.jetbrains.kotlinx:kotlinx-serialization-core:${libs.versions.kotlinx.serialization.json.get()}")
                 implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:${libs.versions.kotlinx.serialization.json.get()}")
                 implementation("org.jetbrains.kotlinx:kotlinx-datetime:${libs.versions.kotlinx.datetime.get()}")
+                implementation(project(":zummon"))
             }
         }
         commonTest {

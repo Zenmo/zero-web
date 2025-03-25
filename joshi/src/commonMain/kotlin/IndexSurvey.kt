@@ -1,5 +1,6 @@
 package com.zenmo.joshi
 
+import com.zenmo.zummon.jsonDecoder
 import kotlinx.serialization.Serializable
 import kotlin.js.JsExport
 import kotlin.uuid.Uuid
@@ -14,3 +15,9 @@ data class IndexSurvey(
     val id: Uuid,
     val companyName: String,
 )
+
+
+@JsExport
+fun indexSurveysFromJson(json: String): Array<IndexSurvey> {
+    return jsonDecoder.decodeFromString<Array<IndexSurvey>>(json)
+}
