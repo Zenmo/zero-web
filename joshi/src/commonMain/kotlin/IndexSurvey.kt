@@ -1,6 +1,7 @@
 package com.zenmo.joshi
 
 import com.zenmo.zummon.jsonDecoder
+import kotlinx.datetime.Instant
 import kotlinx.serialization.Serializable
 import kotlin.js.JsExport
 import kotlin.uuid.Uuid
@@ -14,6 +15,9 @@ import kotlin.uuid.Uuid
 data class IndexSurvey(
     val id: Uuid,
     val companyName: String,
+    val projectName: String,
+    val creationDate: Instant,
+    val includeInSimulation: Boolean
 )
 
 
