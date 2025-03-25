@@ -17,7 +17,14 @@ import {AdminButtonRow} from "./admin-button-row"
 import {SurveyIncludeInSimulationCheckbox} from "./survey-include-in-simulation-checkbox"
 
 export const Surveys: FunctionComponent = () => {
-    const {loading, surveys, changeSurvey, removeSurvey} = useSurveys()
+    const {
+        loading,
+        surveys,
+        changeSurvey,
+        removeSurvey,
+        indexSurveys,
+        removeIndexSurvey
+        } = useSurveys()
 
     const multipleProjects = surveys.map(survey => survey.zenmoProject)
         .filter((value, index, self) => self.indexOf(value) === index).length > 1
@@ -76,6 +83,28 @@ export const Surveys: FunctionComponent = () => {
                             </div>
                         )}/>
                     </DataTable>
+
+                     <DataTable
+                        value={indexSurveys}
+                        loading={loading}
+                        sortField="created"
+                        sortOrder={-1}
+                        filterDisplay="row">
+                     <Column field="companyName" header="Bedrijf" sortable filter />
+                     <Column body={(survey: Survey) => (
+                                                 <div css={{
+                                                     display: 'flex',
+                                                     '> *': {
+                                                         margin: `${1/6}rem`
+                                                     },
+                                                 }}>
+                                                     <JsonButton surveyId={survey.id}/>
+                                                     <DeleteButton type="company-surveys" id={survey.id} onDelete={removeIndexSurvey}/>
+                                                     <EditButton type="bedrijven-uitvraag" id={survey.id}/>
+                                                     <DeeplinkButton surveyId={survey.id}/>
+                                                 </div>
+                                             )}/>
+                     </DataTable>
             </ZeroLayout>
         </PrimeReactProvider>
     )
