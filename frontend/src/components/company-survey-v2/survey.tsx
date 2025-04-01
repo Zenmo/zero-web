@@ -15,6 +15,7 @@ import {ProjectConfiguration} from './project'
 import {SurveyTabs} from './survey-tabs'
 import {surveyFromJson} from 'zero-zummon'
 import {useOnce} from "../../hooks/use-once"
+import {ZTOR_BASE_URL} from "../../services/ztor-fetch";
 
 export const SurveyFromProject: FunctionComponent<{}> = () => {
     const project = useLoaderData() as ProjectConfiguration
@@ -122,7 +123,7 @@ const SurveyWithReset: FunctionComponent<{
 
         surveyData = prepareForSubmit(surveyData, project.name)
 
-        const url = import.meta.env.VITE_ZTOR_URL + '/company-surveys'
+        const url = ZTOR_BASE_URL + '/company-surveys'
         try {
             const response = await fetch(url, {
                 method: 'POST',
@@ -164,19 +165,10 @@ const SurveyWithReset: FunctionComponent<{
 
     return (
         <div css={[{
-            width: '100%',
-            minHeight: '100vh',
-            backgroundColor: 'grey',
-            display: 'flex',
-            justifyContent: 'center',
-            alignItems: 'flex-start',
-        }, defineFlash]}>
+        }, defineFlash]}
+        className={'bg-gray-400 d-flex flex-center'}
+        >
             <form onSubmit={handleSubmit(onSubmit)} css={{
-                maxWidth: '50rem',
-                backgroundColor: 'white',
-                padding: '2rem',
-                marginTop: '2rem',
-                boxShadow: '0 0 .15rem .15em white',
                 '& input:invalid': {
                     backgroundColor: '#fcc',
                     borderColor: 'red',
@@ -188,7 +180,9 @@ const SurveyWithReset: FunctionComponent<{
                 'input[type="text"], input[type="email"], input[type="number"], textarea': {
                     padding: '.3rem',
                 }
-            }}>
+            }}
+                  className={'shadow-lg bg-white w-50 p-10 m-10'}
+            >
                 <Intro project={project}/>
                 {errorMessage && <Alert
                     message={errorMessage}

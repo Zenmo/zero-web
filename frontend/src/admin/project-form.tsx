@@ -135,7 +135,7 @@ export const ProjectForm: FunctionComponent = () => {
                                         positiveAction={handleCancel}
                                         positiveClassName='btn btn-sm bg-secondary border border-0'
                                         positiveSeverity={'secondary'}
-                                        negativeSeverity={undefined}
+                                        negativeSeverity={null}
                                         showNegative={true}
                                         negativeButtonType={'submit'}
                                         negativeText={loading ? "Saving..." : "Save"}

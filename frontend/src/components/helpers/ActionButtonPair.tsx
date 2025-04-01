@@ -18,8 +18,8 @@ type ButtonPairProps = {
     positiveButtonType?: 'button' | 'submit' | 'reset'
     negativeButtonType?: 'button' | 'submit' | 'reset'
     size?: 'small' | 'large' | undefined
-    positiveSeverity?: "secondary" | "success" | "info" | "warning" | "danger" | "help" | undefined
-    negativeSeverity?: "secondary" | "success" | "info" | "warning" | "danger" | "help" | undefined
+    positiveSeverity?: "secondary" | "success" | "info" | "warning" | "danger" | "help" | null
+    negativeSeverity?: "secondary" | "success" | "info" | "warning" | "danger" | "help" | null
 }
 
 export const ActionButtonPair = ({
@@ -46,19 +46,23 @@ export const ActionButtonPair = ({
 
     return (
         <div className={className}>
-            <Button className={`rounded rounded-3 ${positiveClassName}`} label={positiveText}
-                    icon={`pi pi-${positiveIcon}`}
+            <Button className={`rounded rounded-3 ${positiveClassName}`}
+                    label={positiveText ? positiveText : undefined}
+                    icon={positiveIcon ? `pi pi-${positiveIcon}` : undefined}
                     loading={positiveLoading}
                     onClick={positiveAction} size={size} disabled={positiveDisabled}
-                    severity={positiveSeverity} unstyled type={positiveButtonType}
+                    severity={positiveSeverity ? positiveSeverity : undefined}
+                    unstyled type={positiveButtonType}
             />
 
             {showNegative &&
-                <Button className={`rounded rounded-3 ${negativeClassName}`} label={negativeText}
-                        icon={`pi pi-${negativeIcon}`}
+                <Button className={`rounded rounded-3 ${negativeClassName}`}
+                        label={negativeText ? negativeText : undefined}
+                        icon={negativeIcon ? `pi pi-${negativeIcon}` : undefined}
                         loading={negativeLoading}
                         onClick={negativeAction} size={size} disabled={negativeDisabled}
-                        severity={negativeSeverity} type={negativeButtonType}
+                        severity={negativeSeverity ? negativeSeverity : undefined}
+                        type={negativeButtonType}
                 />
             }
 
