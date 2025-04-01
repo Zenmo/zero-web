@@ -1,13 +1,15 @@
-import React, { FormEvent, FunctionComponent, useEffect, useState, useRef } from "react";
-import { useParams } from "react-router-dom";
-import { PrimeReactProvider } from "primereact/api";
-import { InputText } from "primereact/inputtext";
-import { Button } from "primereact/button";
-import { User, Project, projectsFromJson } from "zero-zummon";
-import { redirectToLogin } from "./use-users";
-import { ProjectsDropdown } from "./projects-dropdown";
-import { UserProjectsList } from "./user-projects-list";
-import { Toast } from "primereact/toast";
+import React, {FormEvent, FunctionComponent, useEffect, useRef, useState} from "react";
+import {useParams} from "react-router-dom";
+import {PrimeReactProvider} from "primereact/api";
+import {InputText} from "primereact/inputtext";
+import {Button} from "primereact/button";
+import {Project, projectsFromJson, User} from "zero-zummon";
+import {redirectToLogin} from "./use-users";
+import {ProjectsDropdown} from "./projects-dropdown";
+import {UserProjectsList} from "./user-projects-list";
+import {Toast} from "primereact/toast";
+import {Content} from "../components/Content";
+import {ActionButtonPair} from "../components/helpers/ActionButtonPair";
 
 export const UserForm: FunctionComponent = () => {
     const {userId} = useParams<{ userId: string }>();
@@ -33,9 +35,10 @@ export const UserForm: FunctionComponent = () => {
         setIsEditing(true);
     };
 
-    const handleInputChange =(e: React.ChangeEvent<HTMLInputElement>) => {
-        const { name, value, type, checked } = e.target;
-        setUser((prev) => ({...prev,
+    const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const {name, value, type, checked} = e.target;
+        setUser((prev) => ({
+            ...prev,
             [name]: type === "checkbox" ? checked : value,
         } as User));
     };
@@ -106,12 +109,24 @@ export const UserForm: FunctionComponent = () => {
             }
             if (response.ok) {
                 msgs.current?.show([
-                    { sticky: true, severity: "success", summary: "Success", detail: "User saved successfully.", closable: true },
+                    {
+                        sticky: true,
+                        severity: "success",
+                        summary: "Success",
+                        detail: "User saved successfully.",
+                        closable: true
+                    },
                 ]);
                 setUserProjects(selectedProjects);
             } else {
                 msgs.current?.show([
-                    {sticky: true, severity: 'error', summary: 'Error', detail: `Error: ${response.statusText}`, closable: false},
+                    {
+                        sticky: true,
+                        severity: 'error',
+                        summary: 'Error',
+                        detail: `Error: ${response.statusText}`,
+                        closable: false
+                    },
                 ]);
             }
         } finally {
@@ -122,63 +137,102 @@ export const UserForm: FunctionComponent = () => {
 
     return (
         <PrimeReactProvider>
-            <Toast ref={msgs} />
-            <div style={{ padding: "20px", maxWidth: "500px", margin: "0 auto" }}>
-                <h3>{userId ? "Edit User" : "Add User"}</h3>
-                <form
-                    onSubmit={handleSubmit}
-                    style={{ display: "flex", flexDirection: "column", gap: "10px" }}
-                >
-                    <label htmlFor="name">Keycloak ID:</label>
-                    <InputText
-                        id="id"
-                        name="id"
-                        value={user?.id || ""}
-                        onChange={handleInputChange}
-                        disabled={!isEditing}
-                    />
-                    <label htmlFor="name">Note:</label>
-                    <InputText
-                        id="note"
-                        name="note"
-                        value={user?.note || ""}
-                        onChange={handleInputChange}
-                        disabled={!isEditing}
-                    />
-                    <div>
-                        <label htmlFor="isAdmin" style={{ display: "flex", alignItems: "center", gap: "8px" }}>
-                            <input
-                                type="checkbox"
-                                id="isAdmin"
-                                name="isAdmin"
-                                checked={user?.isAdmin || false}
-                                onChange={handleInputChange}
-                                disabled={!isEditing}
-                            />
-                            Admin
-                        </label>
-                    </div>
+            <Content>
+                <Toast ref={msgs}/>
+                <div className={'row g-10 mb-10'}>
+                    <div className={'col-5'}>
+                        <div className={'card card-custom border border-0 shadow-none rounded rounded-4'}>
+                            <div className={'card-header border border-0  py-3'}>
+                                <h3 className={'card-title fs-3 fw-bolder text-dark'}>
+                                    {userId ? "Edit User" : "Add User"}
+                                </h3>
+                            </div>
+                            <div className={'card-body'}>
+                                <form
+                                    onSubmit={handleSubmit}
+                                    className={'form d-flex flex-column gap-5'}
+                                >
+                                    <div className='fv-row mb-5'>
+                                        <label htmlFor="name" className={'form-label'}>Keycloak ID:</label>
+                                        <InputText
+                                            id="id"
+                                            name="id"
+                                            value={user?.id || ""}
+                                            onChange={handleInputChange}
+                                            disabled={!isEditing}
+                                            className={'form-control bg-transparent'}
+                                        />
+                                    </div>
+                                    <div className='fv-row mb-5'>
+                                        <label htmlFor="name" className={'form-label'}>Note:</label>
+                                        <InputText
+                                            id="note"
+                                            name="note"
+                                            value={user?.note || ""}
+                                            onChange={handleInputChange}
+                                            disabled={!isEditing}
+                                            className={'form-control bg-transparent'}
+                                        />
+                                    </div>
+                                    <div className={'row g-5 align-items-center'}>
+                                        <div className={'col-4'}>
+                                            <label htmlFor="isAdmin"
+                                                   className='form-check form-check-custom form-check-solid align-items-start'>
+                                                <input
+                                                    className='form-check-input me-3'
+                                                    type="checkbox"
+                                                    id="isAdmin"
+                                                    name="isAdmin"
+                                                    checked={user?.isAdmin || false}
+                                                    onChange={handleInputChange}
+                                                    disabled={!isEditing}
+                                                />
+                                                <span className={'form-label'}>Admin</span>
+                                            </label>
+                                        </div>
+                                        <div className={'col-8'}>
+                                            <ProjectsDropdown
+                                                selectedProjects={selectedProjects}
+                                                onChange={setSelectedProjects}
+                                                disabled={!isEditing}
+                                            />
+                                        </div>
+                                    </div>
 
-                    <ProjectsDropdown
-                        selectedProjects={selectedProjects}
-                        onChange={setSelectedProjects}
-                        disabled={!isEditing}
-                    />
-                    
 
-                    <div style={{ display: "flex", justifyContent: "space-between", marginTop: "10px" }}>
-                        {isEditing ? (
-                            <>
-                                <Button label="Cancel" onClick={handleCancel} type="button" disabled={loading} />
-                                <Button label={loading ? "Saving..." : "Save"} type="submit" disabled={loading} />
-                            </>
-                        ) : (
-                            <Button label="Edit" onClick={handleEditToggle} type="button" disabled={loading} />
-                        )}
+                                </form>
+                            </div>
+                            <div className={'card-footer py-3 border border-0 d-flex justify-content-end'}>
+                                {isEditing ? (
+                                    <>
+                                        <ActionButtonPair
+                                            positiveText={'Cancel'}
+                                            positiveIcon={undefined}
+                                            positiveAction={handleCancel}
+                                            positiveClassName='btn btn-sm bg-secondary border border-0'
+                                            positiveSeverity={'secondary'}
+                                            negativeSeverity={undefined}
+                                            showNegative={true}
+                                            negativeText={loading ? "Saving..." : "Save"}
+                                            negativeDisabled={loading}
+                                            positiveDisabled={loading}
+                                            negativeButtonType={'submit'}
+                                            className={'d-flex flex-row gap-5'}
+                                        />
+                                    </>
+                                ) : (
+                                    <Button label="Edit" onClick={handleEditToggle} type="button"
+                                            disabled={loading}
+                                            className="rounded rounded-3"/>
+                                )}
+                            </div>
+                        </div>
                     </div>
-                </form>
-                <UserProjectsList projects={userProjects}/>
-            </div>
+                    <div className={'col-7'}>
+                        <UserProjectsList projects={userProjects}/>
+                    </div>
+                </div>
+            </Content>
         </PrimeReactProvider>
     );
 };
