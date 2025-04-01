@@ -211,7 +211,7 @@ export const UserForm: FunctionComponent = () => {
                                             positiveAction={handleCancel}
                                             positiveClassName='btn btn-sm bg-secondary border border-0'
                                             positiveSeverity={'secondary'}
-                                            negativeSeverity={undefined}
+                                            negativeSeverity={null}
                                             showNegative={true}
                                             negativeText={loading ? "Saving..." : "Save"}
                                             negativeDisabled={loading}
