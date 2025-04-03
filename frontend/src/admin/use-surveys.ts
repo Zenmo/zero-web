@@ -1,7 +1,8 @@
 import {useState} from "react";
 import {useOnce} from "../hooks/use-once";
-import {Survey, surveysFromJson} from "zero-zummon"
-import { IndexSurvey,indexSurveysFromJson} from "joshi"
+import {Survey} from "zero-zummon"
+import {IndexSurvey, indexSurveysFromJson} from "joshi"
+import {ZTOR_BASE_URL} from "../services/ztor-fetch";
 
 type UseSurveyReturn = {
     loading: boolean,
@@ -9,6 +10,8 @@ type UseSurveyReturn = {
     // for syncing the state
     changeSurvey: (newSurvey: Survey) => void,
     removeSurvey: (surveyId: string) => void,
+    indexSurveys: IndexSurvey[],
+    removeIndexSurvey: (id: string) => void,
 }
 
 export const useSurveys = (): UseSurveyReturn => {
@@ -22,7 +25,7 @@ export const useSurveys = (): UseSurveyReturn => {
 
 useOnce(async () => {
         try {
-            const response = await fetch(import.meta.env.VITE_ZTOR_URL + '/index-surveys', {
+            const response = await fetch(ZTOR_BASE_URL + '/index-surveys', {
                 credentials: 'include',
             })
             if (response.status === 401) {

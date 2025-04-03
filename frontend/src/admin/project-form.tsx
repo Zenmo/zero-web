@@ -1,10 +1,12 @@
-import React, { FormEvent, FunctionComponent, useEffect, useState } from "react";
-import { useParams, useNavigate } from "react-router-dom";
-import { PrimeReactProvider } from "primereact/api";
-import { InputText } from "primereact/inputtext";
-import { Button } from "primereact/button";
-import { Project } from "zero-zummon";
-import { redirectToLogin } from "./use-projects";
+import React, {FormEvent, FunctionComponent, useEffect, useState} from "react";
+import {useNavigate, useParams} from "react-router-dom";
+import {PrimeReactProvider} from "primereact/api";
+import {InputText} from "primereact/inputtext";
+import {Button} from "primereact/button";
+import {Project} from "zero-zummon";
+import {redirectToLogin} from "./use-projects";
+import {Content} from "../components/Content";
+import {ActionButtonPair} from "../components/helpers/ActionButtonPair";
 
 export const ProjectForm: FunctionComponent = () => {
     const {projectId} = useParams<{ projectId: string }>();
@@ -26,9 +28,9 @@ export const ProjectForm: FunctionComponent = () => {
         setIsEditing(true);
     };
 
-    const handleInputChange =(e: React.ChangeEvent<HTMLInputElement>) => {
-        const { name, value } = e.target;
-        setProject((prev) => ({ ...prev, [name]: value } as Project));
+    const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const {name, value} = e.target;
+        setProject((prev) => ({...prev, [name]: value} as Project));
     };
 
     useEffect(() => {
@@ -94,41 +96,62 @@ export const ProjectForm: FunctionComponent = () => {
 
     return (
         <PrimeReactProvider>
-            <div style={{ padding: "20px", maxWidth: "500px", margin: "0 auto" }}>
-                <h3>{projectId ? "Edit Project" : "Add Project"}</h3>
-                <form
-                    onSubmit={handleSubmit}
-                    style={{ display: "flex", flexDirection: "column", gap: "10px" }}
-                >
-                    <label htmlFor="name">Name:</label>
-                    <InputText
-                        id="name"
-                        name="name"
-                        value={project?.name || ""}
-                        onChange={handleInputChange}
-                        disabled={!isEditing}
-                    />
-                    <label htmlFor="energiekeRegioId">Energieke Regio ID:</label>
-                    <InputText
-                        id="energiekeRegioId"
-                        name="energiekeRegioId"
-                        value={project?.energiekeRegioId?.toString() || ""}
-                        onChange={handleInputChange}
-                        disabled={!isEditing}
-                    />
+            <Content>
+                <div className={'d-flex flex-center flex-column'}>
+                    <h3>{projectId ? "Edit Project" : "Add Project"}</h3>
+                    <form
+                        onSubmit={handleSubmit}
+                        className={'form w-300px d-flex flex-column gap-5'}
+                    >
+                        <div className='fv-row'>
+                            <label htmlFor="name" className={'form-label'}>Name:</label>
+                            <InputText
+                                id="name"
+                                name="name"
+                                value={project?.name || ""}
+                                onChange={handleInputChange}
+                                disabled={!isEditing}
+                                className={'form-control bg-transparent'}
+                            />
+                        </div>
+                        <div className='fv-row'>
+                            <label htmlFor="energiekeRegioId" className={'form-label'}>Energieke Regio ID:</label>
+                            <InputText
+                                id="energiekeRegioId"
+                                name="energiekeRegioId"
+                                value={project?.energiekeRegioId?.toString() || ""}
+                                onChange={handleInputChange}
+                                disabled={!isEditing}
+                                className={'form-control bg-transparent'}
+                            />
+                        </div>
 
-                    <div style={{ display: "flex", justifyContent: "space-between", marginTop: "10px" }}>
-                        {isEditing ? (
-                            <>
-                                <Button label="Cancel" onClick={handleCancel} type="button" disabled={loading} />
-                                <Button label={loading ? "Saving..." : "Save"} type="submit" disabled={loading} />
-                            </>
-                        ) : (
-                            <Button label="Edit" onClick={handleEditToggle} type="button" disabled={loading} />
-                        )}
-                    </div>
-                </form>
-            </div>
+                        <div className={'d-flex justify-content-end mt-5 w-100'}>
+                            {isEditing ? (
+                                <>
+                                    <ActionButtonPair
+                                        positiveText={'Cancel'}
+                                        positiveIcon={undefined}
+                                        positiveAction={handleCancel}
+                                        positiveClassName='btn btn-sm bg-secondary border border-0'
+                                        positiveSeverity={'secondary'}
+                                        negativeSeverity={null}
+                                        showNegative={true}
+                                        negativeButtonType={'submit'}
+                                        negativeText={loading ? "Saving..." : "Save"}
+                                        negativeDisabled={loading}
+                                        positiveDisabled={loading}
+                                        className={'d-flex flex-row gap-5'}
+                                    />
+                                </>
+                            ) : (
+                                <Button label="Edit" onClick={handleEditToggle} type="button" disabled={loading}
+                                        className="rounded rounded-3"/>
+                            )}
+                        </div>
+                    </form>
+                </div>
+            </Content>
         </PrimeReactProvider>
     );
 };

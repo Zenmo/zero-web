@@ -37,7 +37,7 @@ export const ProjectsDropdown: FunctionComponent<ProjectDropdownProps> = ({
 
     return (
         <div>
-            <label htmlFor="projects">Update Projects: </label>
+            <label htmlFor="projects" className={'form-label me-2'}>Update Projects: </label>
             <MultiSelect
                 id="projects"
                 options={projects.map((project) => ({

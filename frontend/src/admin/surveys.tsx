@@ -1,20 +1,20 @@
-import React, {FunctionComponent} from "react";
-import { DataTable } from 'primereact/datatable';
-import { Column } from 'primereact/column';
+import React, {FunctionComponent, useState} from "react";
+import {DataTable} from 'primereact/datatable';
+import {Column} from 'primereact/column';
 import {useSurveys} from "./use-surveys";
 import {PrimeReactProvider} from "primereact/api";
-import {Survey, formatByteSize} from "zero-zummon"
-
+import {IndexSurvey} from "joshi"
 import "primereact/resources/themes/lara-light-cyan/theme.css"
 import 'primeicons/primeicons.css'
-import {DeleteButton} from "./delete-button";
-import {EditButton} from "./edit-button";
-import {JsonButton} from "./json-button";
-import {DeeplinkButton} from "./deeplink-button"
+import {deleteSurvey} from "./delete-button";
 import {ZeroLayout} from "../components/zero-layout"
 
 import {AdminButtonRow} from "./admin-button-row"
 import {SurveyIncludeInSimulationCheckbox} from "./survey-include-in-simulation-checkbox"
+import {ActionButtonPair} from "../components/helpers/ActionButtonPair";
+import {useNavigate} from "react-router-dom";
+import {Content} from "../components/Content";
+import {IndexSurveySelectAction} from "./index-survey-select-action";
 
 export const Surveys: FunctionComponent = () => {
     const {
@@ -24,98 +24,90 @@ export const Surveys: FunctionComponent = () => {
         removeSurvey,
         indexSurveys,
         removeIndexSurvey
-        } = useSurveys()
+    } = useSurveys()
+
+    const navigate = useNavigate()
+    const [pending, setPending] = useState(false);
 
     const multipleProjects = surveys.map(survey => survey.zenmoProject)
         .filter((value, index, self) => self.indexOf(value) === index).length > 1
 
     return (
         <PrimeReactProvider>
-            <ZeroLayout
-            subtitle="Beheer uitvraag bedrijven"
-            trailingContent={<AdminButtonRow/>}
-            >
+            <Content>
+                <ZeroLayout
+                    subtitle="Beheer uitvraag bedrijven"
+                    trailingContent={<AdminButtonRow/>}
+                >
+                    <div className={'card card-custom shadow-lg rounded rounded-4'}>
+                        <div className={'card-body p-0'}>
+                            <DataTable
+                                value={indexSurveys}
+                                loading={loading}
+                                showGridlines={true}
+                                paginator
+                                rows={10}
+                                className={'rounded rounded-4'}
+                            >
+                                <Column field="companyName" header="Bedrijf" sortable
+                                        filter filterPlaceholder="Search by company"
+                                />
+                                <Column field="projectName" header="Project" sortable
+                                        filter filterPlaceholder="Search by project"
+                                />
+                                <Column field="creationDate"
+                                        body={(survey: IndexSurvey) => formatDatetime(survey.creationDate.toString())}
+                                        header="Opgestuurd op" sortable/>
+                                <Column field="includeInSimulation" header="Opnemen in simulatie" sortable
+                                        align={'center'}
+                                        body={(survey: IndexSurvey) =>
+                                            <SurveyIncludeInSimulationCheckbox
+                                                includeInSimulation={survey.includeInSimulation}
+                                                surveyId={survey.id}
+                                                setIncludeInSimulation={(includeInSimulation) => {
+                                                   /* changeSurvey(survey.withIncludeInSimulation(includeInSimulation))*/
+                                                }}
+                                            />
+                                        }
+                                />
+                                <Column
+                                    header={"Acties"}
+                                    align={'right'}
+                                    body={(survey: IndexSurvey) => (
+                                        <div className={'d-flex flex-row gap-2 justify-content-end'}>
+                                            <IndexSurveySelectAction indexSurvey={survey}/>
 
-
-//                                 <DataTable
-//                                     key={String(multipleProjects)}
-//                                     value={surveys}
-//                                     loading={loading}
-//                                     sortField="created"
-//                                     sortOrder={-1}
-//                                     filterDisplay="row"
-//                                 >
-//                                     {multipleProjects && <Column field="zenmoProject" header="Project" sortable filter />}
-//                                     <Column field="companyName" header="Bedrijf" sortable filter />
-//                                     <Column field="personName" header="Contactpersoon" sortable filter />
-//                                     <Column field="email" header="E-mail" sortable filter />
-//                                     <Column header="Aansluitingen" sortable field="numGridConnections" />
-//                                     {/* TODO: bestanden */}
-//                                     <Column header="Bestanden" body={(survey: Survey ) => (
-//                                         <>
-//                                             {survey.filesArray.map(file => (
-//                                                 <div key={file.blobName}>
-//                                                     <a href={downloadUrl(file.blobName)}>{file.originalName}</a>
-//                                                     &nbsp;
-//                                                     ({formatByteSize(file.size)})
-//                                                 </div>
-//                                             ))}
-//                                         </>
-//                                     )}/>
-//
-//                                     <Column field="createdAtToString" body={(survey: Survey ) => formatDatetime(survey.createdAt.toString())} header="Opgestuurd op" sortable/>
-//                                     <Column field="createdByToString" header="Aangemaakt door" sortable filter />
-//                                     <Column field="includeInSimulation" header="Opnemen in simulatie" sortable
-//                                             body={(survey: Survey) => <SurveyIncludeInSimulationCheckbox
-//                                                 includeInSimulation={survey.includeInSimulation}
-//                                                 surveyId={survey.id}
-//                                                 setIncludeInSimulation={(includeInSimulation) => changeSurvey(survey.withIncludeInSimulation(includeInSimulation))}
-//                                             />}/>
-//                                     <Column body={(survey: Survey) => (
-//                                         <div css={{
-//                                             display: 'flex',
-//                                             '> *': {
-//                                                 margin: `${1/6}rem`
-//                                             },
-//                                         }}>
-//                                             <JsonButton surveyId={survey.id}/>
-//                                             <DeleteButton type="company-surveys" id={survey.id} onDelete={removeSurvey}/>
-//                                             <EditButton type="bedrijven-uitvraag" id={survey.id}/>
-//                                             <DeeplinkButton surveyId={survey.id}/>
-//                                         </div>
-//                                     )}/>
-//                                 </DataTable>
-
-
-                     <DataTable
-                        value={indexSurveys}
-                        loading={loading}
-                        filterDisplay="row">
-                     <Column field="companyName" header="Bedrijf" sortable filter />
-                     <Column field="projectName" header="Project" sortable filter />
-                      <Column field="creationDate" body={(survey: Survey ) => formatDatetime(survey.creationDate.toString())} header="Opgestuurd op" sortable/>
-                       <Column field="includeInSimulation" header="Opnemen in simulatie" sortable
-                                          body={(survey: Survey) => <SurveyIncludeInSimulationCheckbox
-                                          includeInSimulation={survey.includeInSimulation}
-                                          surveyId={survey.id}
-                                          setIncludeInSimulation={(includeInSimulation) => changeSurvey(survey.withIncludeInSimulation(includeInSimulation))}
-                                          />}
-                            />
-                     <Column body={(survey: Survey) => (
-                                                 <div css={{
-                                                     display: 'flex',
-                                                     '> *': {
-                                                         margin: `${1/6}rem`
-                                                     },
-                                                 }}>
-                                                     <JsonButton surveyId={survey.id}/>
-                                                     <DeleteButton type="company-surveys" id={survey.id} onDelete={removeIndexSurvey}/>
-                                                     <EditButton type="bedrijven-uitvraag" id={survey.id}/>
-                                                     <DeeplinkButton surveyId={survey.id}/>
-                                                 </div>
-                                             )}/>
-                     </DataTable>
-            </ZeroLayout>
+                                            <ActionButtonPair
+                                                positiveAction={() => {
+                                                    navigate(`/bedrijven-uitvraag/${survey.id}/`)
+                                                }}
+                                                negativeAction={() => {
+                                                    deleteSurvey(
+                                                        {
+                                                            id: survey.id,
+                                                            type: 'company-surveys',
+                                                            onDelete: removeIndexSurvey,
+                                                            setPending: setPending
+                                                        }
+                                                    ).then()
+                                                }}
+                                                positiveIcon='pencil'
+                                                negativeIcon='trash'
+                                                positiveClassName='btn btn-sm btn-icon bg-secondary border border-0'
+                                                negativeClassName='bg-danger'
+                                                showNegative={true}
+                                                className={'d-flex flex-row align-items-center gap-2'}
+                                                positiveSeverity={'secondary'}
+                                                negativeSeverity={'danger'}
+                                                negativeLoading={pending}
+                                            />
+                                        </div>
+                                    )}/>
+                            </DataTable>
+                        </div>
+                    </div>
+                </ZeroLayout>
+            </Content>
         </PrimeReactProvider>
     )
 }
