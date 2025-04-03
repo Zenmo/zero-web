@@ -1,4 +1,4 @@
-import React, {FunctionComponent, useRef, useState} from "react";
+import React, {FunctionComponent, useState} from "react";
 import {DataTable} from 'primereact/datatable';
 import {Column} from 'primereact/column';
 import {useSurveys} from "./use-surveys";
@@ -11,11 +11,10 @@ import {ZeroLayout} from "../components/zero-layout"
 
 import {AdminButtonRow} from "./admin-button-row"
 import {SurveyIncludeInSimulationCheckbox} from "./survey-include-in-simulation-checkbox"
-import {ZTOR_BASE_URL} from "../services/ztor-fetch";
-import {buildDeeplinkUrl} from "../components/company-survey-v2/deeplink";
 import {ActionButtonPair} from "../components/helpers/ActionButtonPair";
 import {useNavigate} from "react-router-dom";
 import {Content} from "../components/Content";
+import {IndexSurveySelectAction} from "./index-survey-select-action";
 
 export const Surveys: FunctionComponent = () => {
     const {
@@ -28,27 +27,7 @@ export const Surveys: FunctionComponent = () => {
     } = useSurveys()
 
     const navigate = useNavigate()
-    const dialogRef = useRef(null);
     const [pending, setPending] = useState(false);
-    const [deeplinkUrl, setDeeplinkUrl] = useState<string>('');
-
-    const generateDeeplink = async (surveyId: any, event: any) => {
-        try {
-            const response = await fetch(`${import.meta.env.VITE_ZTOR_URL}/company-surveys/${surveyId}/deeplink`, {
-                method: 'POST',
-                credentials: 'include',
-            });
-            if (!response.ok) {
-                throw new Error(`Failed to generate deeplink: ${response.statusText}`);
-            }
-            setDeeplinkUrl(buildDeeplinkUrl(await response.json()));
-            (dialogRef.current as any).toggle(event);
-        } catch (error) {
-            alert((error as Error).message);
-        } finally {
-            setPending(false);
-        }
-    };
 
     const multipleProjects = surveys.map(survey => survey.zenmoProject)
         .filter((value, index, self) => self.indexOf(value) === index).length > 1
@@ -86,7 +65,7 @@ export const Surveys: FunctionComponent = () => {
                                                 includeInSimulation={survey.includeInSimulation}
                                                 surveyId={survey.id}
                                                 setIncludeInSimulation={(includeInSimulation) => {
-                                                    /*changeSurvey(survey.withIncludeInSimulation(includeInSimulation))*/
+                                                   /* changeSurvey(survey.withIncludeInSimulation(includeInSimulation))*/
                                                 }}
                                             />
                                         }
@@ -96,26 +75,8 @@ export const Surveys: FunctionComponent = () => {
                                     align={'right'}
                                     body={(survey: IndexSurvey) => (
                                         <div className={'d-flex flex-row gap-2 justify-content-end'}>
-                                            <select
-                                                className={'form-select form-select-solid form-select-sm bg-secondary rounded border border-1 w-150px '}
-                                                onChange={(e) => {
-                                                    switch (e.currentTarget.value) {
-                                                        case 'json':
-                                                            window.open(downloadUrl(`${ZTOR_BASE_URL}/company-surveys/${survey.id}`), "_target");
-                                                            break
-                                                        case 'copy':
-                                                            generateDeeplink(survey.id, e).then();
-                                                            break
-                                                        default:
-                                                            break
-                                                    }
-                                                }}
-                                                value={''}
-                                            >
-                                                <option value={'none'}>More actions</option>
-                                                <option value={'json'}>JSON</option>
-                                                <option value={'copy'}>Share</option>
-                                            </select>
+                                            <IndexSurveySelectAction indexSurvey={survey}/>
+
                                             <ActionButtonPair
                                                 positiveAction={() => {
                                                     navigate(`/bedrijven-uitvraag/${survey.id}/`)
