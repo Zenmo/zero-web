@@ -65,7 +65,7 @@ export const Surveys: FunctionComponent = () => {
                                                 includeInSimulation={survey.includeInSimulation}
                                                 surveyId={survey.id}
                                                 setIncludeInSimulation={(includeInSimulation) => {
-                                                    /*changeSurvey(survey.withIncludeInSimulation(includeInSimulation))*/
+                                                   /* changeSurvey(survey.withIncludeInSimulation(includeInSimulation))*/
                                                 }}
                                             />
                                         }
