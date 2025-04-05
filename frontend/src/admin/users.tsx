@@ -1,23 +1,23 @@
-import React, {FunctionComponent, useState} from "react";
-import {DataTable} from 'primereact/datatable';
-import {Column} from 'primereact/column';
-import {useUsers} from "./use-users";
-import {PrimeReactProvider} from "primereact/api";
+import React, {FunctionComponent, useState} from "react"
+import {DataTable} from "primereact/datatable"
+import {Column} from "primereact/column"
+import {useUsers} from "./use-users"
+import {PrimeReactProvider} from "primereact/api"
 import {Project, User} from "zero-zummon"
 
 import "primereact/resources/themes/lara-light-cyan/theme.css"
-import 'primeicons/primeicons.css'
-import {deleteSurvey} from "./delete-button";
-import {Button} from "primereact/button";
+import "primeicons/primeicons.css"
+import {deleteSurvey} from "./delete-button"
+import {Button} from "primereact/button"
 import {useNavigate} from "react-router-dom"
-import {Content} from "../components/Content";
-import {ZeroLayout} from "../components/zero-layout";
-import {ActionButtonPair} from "../components/helpers/ActionButtonPair";
+import {Content} from "../components/Content"
+import {ZeroLayout} from "../components/zero-layout"
+import {ActionButtonPair} from "../components/helpers/ActionButtonPair"
 
 export const Users: FunctionComponent = () => {
     const {loadingUsers, users, changeUser, removeUser} = useUsers()
-    const navigate = useNavigate();
-    const [pending, setPending] = useState(false);
+    const navigate = useNavigate()
+    const [pending, setPending] = useState(false)
 
     return (
         <PrimeReactProvider>
@@ -28,13 +28,13 @@ export const Users: FunctionComponent = () => {
                         <Button
                             label="Nieuw"
                             icon="pi pi-pencil"
-                            onClick={(event) => navigate(`/users/new-user`)}
+                            onClick={() => navigate(`/users/new-user`)}
                             className="rounded rounded-3"
                         />
                     }
                 >
-                    <div className={'card card-custom shadow-lg rounded rounded-4'}>
-                        <div className={'card-body p-0'}>
+                    <div className={"card border border-0 shadow-lg rounded rounded-4"}>
+                        <div className={"card-body p-0"}>
 
                             <DataTable
                                 value={users}
@@ -44,18 +44,18 @@ export const Users: FunctionComponent = () => {
                                 showGridlines={true}
                                 paginator
                                 rows={10}
-                                className={'rounded rounded-4'}
+                                className={"rounded rounded-4"}
                             >
-                                <Column field="note" header="Note" sortable filter filterPlaceholder="Search by note"/>
+                                <Column field="note" header="Note" sortable filter filterPlaceholder="Search by note" />
                                 <Column
                                     field="isAdmin"
                                     header="Admin"
                                     body={(user: User) => (
-                                        <div style={{textAlign: 'center'}}>
+                                        <div style={{textAlign: "center"}}>
                                             {user.isAdmin ? (
-                                                <span style={{color: 'green'}}>✔</span>
+                                                <span style={{color: "green"}}>✔</span>
                                             ) : (
-                                                <span style={{color: 'red'}}>✘</span>
+                                                <span style={{color: "red"}}>✘</span>
                                             )}
                                         </div>
                                     )}
@@ -73,9 +73,9 @@ export const Users: FunctionComponent = () => {
                                 />
                                 <Column
                                     header={"Acties"}
-                                    align={'right'}
+                                    align={"right"}
                                     body={(user: User) => (
-                                        <div className={'d-flex flex-row gap-2 justify-content-end'}>
+                                        <div className={"d-flex flex-row gap-2 justify-content-end"}>
                                             <ActionButtonPair
                                                 positiveAction={() => {
                                                     navigate(`/users/${user.id}/`)
@@ -84,25 +84,24 @@ export const Users: FunctionComponent = () => {
                                                     deleteSurvey(
                                                         {
                                                             id: user.id,
-                                                            type: 'users',
+                                                            type: "users",
                                                             onDelete: removeUser,
-                                                            setPending: setPending
-                                                        }
+                                                            setPending: setPending,
+                                                        },
                                                     ).then()
                                                 }}
-                                                positiveIcon='pencil'
-                                                negativeIcon='trash'
-                                                positiveClassName='btn btn-sm btn-icon bg-secondary border border-0'
-                                                negativeClassName='bg-danger'
+                                                positiveIcon="pencil"
+                                                negativeIcon="trash"
+                                                positiveClassName="bg-secondary-subtle text-dark border border-0"
+                                                negativeClassName="bg-danger"
                                                 showNegative={true}
-                                                className={'d-flex flex-row align-items-center gap-2'}
-                                                negativeIconClassName={"fs-4 text-white"}
-                                                positiveSeverity={'secondary'}
-                                                negativeSeverity={'danger'}
+                                                className={"d-flex flex-row align-items-center gap-2"}
+                                                positiveSeverity={"secondary"}
+                                                negativeSeverity={"danger"}
                                                 negativeLoading={pending}
                                             />
                                         </div>
-                                    )}/>
+                                    )} />
                             </DataTable>
                         </div>
                     </div>

@@ -139,32 +139,32 @@ export const UserForm: FunctionComponent = () => {
         <PrimeReactProvider>
             <Content>
                 <Toast ref={msgs}/>
-                <div className={'row g-10 mb-10'}>
-                    <div className={'col-5'}>
-                        <div className={'card card-custom border border-0 shadow-none rounded rounded-4'}>
-                            <div className={'card-header border border-0  py-3'}>
-                                <h3 className={'card-title fs-3 fw-bolder text-dark'}>
+                <div className={"row g-10 mb-10"}>
+                    <div className={"col-5"}>
+                        <div className={"card border border-0 shadow-none"}>
+                            <div className={"card-header bg-transparent border border-0  py-3"}>
+                                <h3 className={"card-title fs-3 fw-bolder text-dark"}>
                                     {userId ? "Edit User" : "Add User"}
                                 </h3>
                             </div>
-                            <div className={'card-body'}>
+                            <div className={"card-body"}>
                                 <form
                                     onSubmit={handleSubmit}
-                                    className={'form d-flex flex-column gap-5'}
+                                    className={"form d-flex flex-column gap-3"}
                                 >
-                                    <div className='fv-row mb-5'>
-                                        <label htmlFor="name" className={'form-label'}>Keycloak ID:</label>
+                                    <div className="fv-row">
+                                        <label htmlFor="name" className={"form-label"}>Keycloak ID:</label>
                                         <InputText
                                             id="id"
                                             name="id"
                                             value={user?.id || ""}
                                             onChange={handleInputChange}
                                             disabled={!isEditing}
-                                            className={'form-control bg-transparent'}
+                                            className={"form-control bg-transparent"}
                                         />
                                     </div>
-                                    <div className='fv-row mb-5'>
-                                        <label htmlFor="name" className={'form-label'}>Note:</label>
+                                    <div className='fv-row'>
+                                        <label htmlFor="name" className={"form-label"}>Note:</label>
                                         <InputText
                                             id="note"
                                             name="note"
@@ -174,7 +174,7 @@ export const UserForm: FunctionComponent = () => {
                                             className={'form-control bg-transparent'}
                                         />
                                     </div>
-                                    <div className={'row g-5 align-items-center'}>
+                                    <div className={"d-flex flex-row g-3 align-items-center"}>
                                         <div className={'col-4'}>
                                             <label htmlFor="isAdmin"
                                                    className='form-check form-check-custom form-check-solid align-items-start'>
@@ -202,14 +202,15 @@ export const UserForm: FunctionComponent = () => {
 
                                 </form>
                             </div>
-                            <div className={'card-footer py-3 border border-0 d-flex justify-content-end'}>
+                            <div
+                                className={'card-footer bg-transparent py-3 border border-0 d-flex justify-content-end'}>
                                 {isEditing ? (
                                     <>
                                         <ActionButtonPair
                                             positiveText={'Cancel'}
                                             positiveIcon={undefined}
                                             positiveAction={handleCancel}
-                                            positiveClassName='btn btn-sm bg-secondary border border-0'
+                                            positiveClassName='bg-secondary-subtle text-dark border border-0'
                                             positiveSeverity={'secondary'}
                                             negativeSeverity={null}
                                             showNegative={true}
@@ -217,7 +218,7 @@ export const UserForm: FunctionComponent = () => {
                                             negativeDisabled={loading}
                                             positiveDisabled={loading}
                                             negativeButtonType={'submit'}
-                                            className={'d-flex flex-row gap-5'}
+                                            className={'d-flex flex-row gap-3'}
                                         />
                                     </>
                                 ) : (
