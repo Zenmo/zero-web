@@ -4,13 +4,8 @@ import './index.css'
 import reportWebVitals from './reportWebVitals'
 import { RouterProvider } from "react-router-dom";
 import { router } from "./router";
-import './_zenmo-zero/assets/sass/style.react.scss'
-import './_zenmo-zero/assets/fonticon/fonticon.css'
-import './_zenmo-zero/assets/keenicons/duotone/style.css'
-import './_zenmo-zero/assets/keenicons/outline/style.css'
-import './_zenmo-zero/assets/keenicons/solid/style.css'
-import './_zenmo-zero/assets/sass/style.scss'
-
+import './_zenmo-zero/assets/style.scss'
+import './_zenmo-zero/assets/style.react.scss'
 
 const root = ReactDOM.createRoot(
     document.getElementById('root') as HTMLElement,
