@@ -1,36 +1,30 @@
-import React, {FunctionComponent, useState} from "react";
-import {DataTable} from 'primereact/datatable';
-import {Column} from 'primereact/column';
-import {useSurveys} from "./use-surveys";
-import {PrimeReactProvider} from "primereact/api";
+import React, {FunctionComponent, useState} from "react"
+import {DataTable} from "primereact/datatable"
+import {Column} from "primereact/column"
+import {useSurveys} from "./use-surveys"
+import {PrimeReactProvider} from "primereact/api"
 import {IndexSurvey} from "joshi"
 import "primereact/resources/themes/lara-light-cyan/theme.css"
-import 'primeicons/primeicons.css'
-import {deleteSurvey} from "./delete-button";
+import "primeicons/primeicons.css"
+import {deleteSurvey} from "./delete-button"
 import {ZeroLayout} from "../components/zero-layout"
 
 import {AdminButtonRow} from "./admin-button-row"
 import {SurveyIncludeInSimulationCheckbox} from "./survey-include-in-simulation-checkbox"
-import {ActionButtonPair} from "../components/helpers/ActionButtonPair";
-import {useNavigate} from "react-router-dom";
-import {Content} from "../components/Content";
-import {IndexSurveySelectAction} from "./index-survey-select-action";
+import {ActionButtonPair} from "../components/helpers/ActionButtonPair"
+import {useNavigate} from "react-router-dom"
+import {Content} from "../components/Content"
+import {IndexSurveySelectAction} from "./index-survey-select-action"
 
 export const Surveys: FunctionComponent = () => {
     const {
         loading,
-        surveys,
-        changeSurvey,
-        removeSurvey,
         indexSurveys,
-        removeIndexSurvey
+        removeIndexSurvey,
     } = useSurveys()
 
     const navigate = useNavigate()
-    const [pending, setPending] = useState(false);
-
-    const multipleProjects = surveys.map(survey => survey.zenmoProject)
-        .filter((value, index, self) => self.indexOf(value) === index).length > 1
+    const [pending, setPending] = useState(false)
 
     return (
         <PrimeReactProvider>
@@ -39,15 +33,15 @@ export const Surveys: FunctionComponent = () => {
                     subtitle="Beheer uitvraag bedrijven"
                     trailingContent={<AdminButtonRow/>}
                 >
-                    <div className={'card card-custom shadow-lg rounded rounded-4'}>
-                        <div className={'card-body p-0'}>
+                    <div className={"card border border-0 shadow-lg rounded rounded-4"}>
+                        <div className={"card-body p-0"}>
                             <DataTable
                                 value={indexSurveys}
                                 loading={loading}
                                 showGridlines={true}
                                 paginator
                                 rows={10}
-                                className={'rounded rounded-4'}
+                                className={"rounded rounded-4"}
                             >
                                 <Column field="companyName" header="Bedrijf" sortable
                                         filter filterPlaceholder="Search by company"
@@ -59,22 +53,22 @@ export const Surveys: FunctionComponent = () => {
                                         body={(survey: IndexSurvey) => formatDatetime(survey.creationDate.toString())}
                                         header="Opgestuurd op" sortable/>
                                 <Column field="includeInSimulation" header="Opnemen in simulatie" sortable
-                                        align={'center'}
+                                        align={"center"}
                                         body={(survey: IndexSurvey) =>
                                             <SurveyIncludeInSimulationCheckbox
                                                 includeInSimulation={survey.includeInSimulation}
                                                 surveyId={survey.id}
                                                 setIncludeInSimulation={(includeInSimulation) => {
-                                                   /* changeSurvey(survey.withIncludeInSimulation(includeInSimulation))*/
+                                                    /* changeSurvey(survey.withIncludeInSimulation(includeInSimulation))*/
                                                 }}
                                             />
                                         }
                                 />
                                 <Column
                                     header={"Acties"}
-                                    align={'right'}
+                                    align={"right"}
                                     body={(survey: IndexSurvey) => (
-                                        <div className={'d-flex flex-row gap-2 justify-content-end'}>
+                                        <div className={"d-flex flex-row gap-2 justify-content-end"}>
                                             <IndexSurveySelectAction indexSurvey={survey}/>
 
                                             <ActionButtonPair
@@ -85,20 +79,20 @@ export const Surveys: FunctionComponent = () => {
                                                     deleteSurvey(
                                                         {
                                                             id: survey.id,
-                                                            type: 'company-surveys',
+                                                            type: "company-surveys",
                                                             onDelete: removeIndexSurvey,
-                                                            setPending: setPending
-                                                        }
+                                                            setPending: setPending,
+                                                        },
                                                     ).then()
                                                 }}
-                                                positiveIcon='pencil'
-                                                negativeIcon='trash'
-                                                positiveClassName='btn btn-sm btn-icon bg-secondary border border-0'
-                                                negativeClassName='bg-danger'
+                                                positiveIcon="pencil"
+                                                negativeIcon="trash"
+                                                positiveClassName="bg-secondary-subtle text-dark border border-0"
+                                                negativeClassName="bg-danger"
                                                 showNegative={true}
-                                                className={'d-flex flex-row align-items-center gap-2'}
-                                                positiveSeverity={'secondary'}
-                                                negativeSeverity={'danger'}
+                                                className={"d-flex flex-row align-items-center gap-2"}
+                                                positiveSeverity={"secondary"}
+                                                negativeSeverity={"danger"}
                                                 negativeLoading={pending}
                                             />
                                         </div>
