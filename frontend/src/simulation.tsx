@@ -24,8 +24,8 @@ export const Simulation: FunctionComponent<{}> = () => {
         <Content>
             <ZeroLayout subtitle="Simuleer je buurt">
                 {/* Three-column layout*/}
-                <div className={'d-flex flex-row '}>
-                    <div className={'col-3 pt-7 pe-5'}>
+                <div className={"d-flex flex-row gap-3"}>
+                    <div className={"col-3 pt-4"}>
                         {h(AggregatedAreaData, {appHook: appHook})}
                         <BuurtPicker onSelectBuurt={buurt => {
                             setBuurt(buurt)
@@ -33,13 +33,7 @@ export const Simulation: FunctionComponent<{}> = () => {
                         }}/>
                     </div>
                     <div
-                        style={{
-                            height: '100vh',
-                            flexGrow: 1,
-                            display: 'flex',
-                            flexDirection: 'column',
-                        }}
-                        className={'p-5'}>
+                        className={"d-flex flex-grow-1 vh-100"}>
                         <MainMap bag2dPanden={bag2dPanden}
                                  setGeometry={setGeometry}
                                  setCurrentPandId={setCurrentPandId}
@@ -47,7 +41,7 @@ export const Simulation: FunctionComponent<{}> = () => {
                         <AnyLogic appHook={appHook}/>
                     </div>
                     {currentPandId && getPandData(currentPandId) &&
-                        <div className={'col-4 p-3'}>
+                        <div className={"col-3"}>
                             <PandDataDisplay pandData={assertDefined(getPandData(currentPandId))}/>
                         </div>
                     }
