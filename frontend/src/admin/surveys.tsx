@@ -21,6 +21,7 @@ export const Surveys: FunctionComponent = () => {
         loading,
         indexSurveys,
         removeIndexSurvey,
+        changeSurvey
     } = useSurveys()
 
     const navigate = useNavigate()
@@ -59,7 +60,7 @@ export const Surveys: FunctionComponent = () => {
                                                 includeInSimulation={survey.includeInSimulation}
                                                 surveyId={survey.id}
                                                 setIncludeInSimulation={(includeInSimulation) => {
-                                                    /* changeSurvey(survey.withIncludeInSimulation(includeInSimulation))*/
+                                                     changeSurvey(survey.withIncludeInSimulation(includeInSimulation))
                                                 }}
                                             />
                                         }
