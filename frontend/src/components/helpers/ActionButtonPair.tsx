@@ -1,4 +1,4 @@
-import {Button} from "primereact/button";
+import {Button} from "primereact/button"
 
 type ButtonPairProps = {
     showNegative?: boolean
@@ -15,34 +15,34 @@ type ButtonPairProps = {
     positiveClassName?: string
     negativeClassName?: string
     className?: string
-    positiveButtonType?: 'button' | 'submit' | 'reset'
-    negativeButtonType?: 'button' | 'submit' | 'reset'
-    size?: 'small' | 'large' | undefined
+    positiveButtonType?: "button" | "submit" | "reset"
+    negativeButtonType?: "button" | "submit" | "reset"
+    size?: "small" | "large" | undefined
     positiveSeverity?: "secondary" | "success" | "info" | "warning" | "danger" | "help" | null
     negativeSeverity?: "secondary" | "success" | "info" | "warning" | "danger" | "help" | null
 }
 
 export const ActionButtonPair = ({
-                                     positiveText = undefined,
-                                     negativeText = undefined,
-                                     positiveAction,
-                                     negativeAction,
-                                     positiveIcon,
-                                     negativeIcon,
-                                     positiveDisabled,
-                                     negativeDisabled,
-                                     positiveLoading = false,
-                                     negativeLoading = false,
-                                     positiveClassName = '',
-                                     negativeClassName = '',
-                                     className = 'd-flex flex-row gap-3 align-items-center',
-                                     showNegative = true,
-                                     size = 'small',
-                                     positiveSeverity = 'secondary',
-                                     negativeSeverity = 'danger',
-                                     positiveButtonType = 'button',
-                                     negativeButtonType = 'button',
-                                 }: ButtonPairProps) => {
+    positiveText = undefined,
+    negativeText = undefined,
+    positiveAction,
+    negativeAction,
+    positiveIcon,
+    negativeIcon,
+    positiveDisabled,
+    negativeDisabled,
+    positiveLoading = false,
+    negativeLoading = false,
+    positiveClassName = "",
+    negativeClassName = "",
+    className = "d-flex flex-row gap-3 align-items-center",
+    showNegative = true,
+    size = "small",
+    positiveSeverity = "secondary",
+    negativeSeverity = "danger",
+    positiveButtonType = "button",
+    negativeButtonType = "button",
+}: ButtonPairProps) => {
 
     return (
         <div className={className}>
@@ -52,7 +52,7 @@ export const ActionButtonPair = ({
                     loading={positiveLoading}
                     onClick={positiveAction} size={size} disabled={positiveDisabled}
                     severity={positiveSeverity ? positiveSeverity : undefined}
-                    unstyled type={positiveButtonType}
+                    type={positiveButtonType}
             />
 
             {showNegative &&
@@ -68,5 +68,5 @@ export const ActionButtonPair = ({
 
         </div>
     )
-};
+}
 
