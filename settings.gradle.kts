@@ -3,6 +3,7 @@ rootProject.name = "zero"
 include(
     "zorm",
     "ztor",
+    "joshi",
     "zummon",
     "vallum",
     "excel-read-named-v5",

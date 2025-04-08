@@ -6,6 +6,7 @@ import com.zenmo.zummon.companysurvey.GridConnection;
 import com.zenmo.zummon.companysurvey.PandID;
 import com.zenmo.zummon.companysurvey.Survey;
 import org.junit.jupiter.api.Test;
+import kotlinx.datetime.DateTimeUnit;
 
 import java.util.List;
 import java.util.Set;
@@ -63,6 +64,14 @@ public class VallumTest {
 //        System.out.println(javaStart.isBefore(Instant.parse("2023-01-01T01:00:00+01:00")));
 
         stopZtor.stop();
+    }
+
+    @Test
+    public void testDateUnitComparison() {
+        var year = DateTimeUnit.Companion.getYEAR();
+        var twelveMonths = DateTimeUnit.Companion.getMONTH().times(12);
+
+        assertTrue(year.equals(twelveMonths));
     }
 
 }

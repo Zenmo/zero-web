@@ -407,7 +407,7 @@ data class CompanyDataDocument(
                     .getRow(cellReference.row + i)
                     .getCell(cellReference.col.toInt() + 1)
             // println("cell value: ${cell.numericCellValue}")
-            tableArray[i] = cell.numericCellValue.toFloat()
+            tableArray[i] = cell.getNumber().toFloat()
         }
         return tableArray
     }

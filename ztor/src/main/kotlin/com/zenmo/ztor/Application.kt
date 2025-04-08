@@ -56,6 +56,7 @@ fun Application.module() {
     configureSerialization()
     configureAuthentication()
     val db = configureDatabases()
+    configureSurveys(db)
     configureRouting()
     configureStatusPages()
     configureUpload(db)

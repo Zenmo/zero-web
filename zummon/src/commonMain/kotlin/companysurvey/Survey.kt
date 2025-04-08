@@ -5,6 +5,7 @@ import com.benasher44.uuid.uuid4
 import kotlinx.serialization.Serializable
 import com.zenmo.zummon.BenasherUuidSerializer
 import com.zenmo.zummon.User
+import com.zenmo.zummon.jsonDecoder
 import kotlinx.datetime.*
 import kotlinx.serialization.ExperimentalSerializationApi
 import kotlin.js.JsExport
@@ -191,12 +192,12 @@ data class Survey(
 
 @JsExport
 fun surveyFromJson(json: String): Survey {
-    return kotlinx.serialization.json.Json.decodeFromString(Survey.serializer(), json)
+    return jsonDecoder.decodeFromString(Survey.serializer(), json)
 }
 
 @JsExport
 fun surveysFromJson(json: String): Array<Survey> {
-    return kotlinx.serialization.json.Json.decodeFromString<Array<Survey>>(json)
+    return jsonDecoder.decodeFromString<Array<Survey>>(json)
 }
 
 /**

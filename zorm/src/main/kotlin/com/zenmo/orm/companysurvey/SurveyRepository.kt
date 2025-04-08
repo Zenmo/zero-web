@@ -15,17 +15,18 @@ import java.util.*
 import kotlin.uuid.ExperimentalUuidApi
 import kotlin.uuid.toKotlinUuid
 
+
+fun userIsAllowedCondition(userId: UUID): Op<Boolean>{
+    return CompanySurveyTable.projectId eq anyFrom(
+        UserProjectTable.select(UserProjectTable.projectId)
+            .where { UserProjectTable.userId eq userId }
+    )
+}
+
 class SurveyRepository(
     private val db: Database,
 ) {
     private val timeSeriesRepository: TimeSeriesRepository = TimeSeriesRepository(db)
-
-    private fun userIsAllowedCondition(userId: UUID): Op<Boolean>{
-        return CompanySurveyTable.projectId eq anyFrom(
-            UserProjectTable.select(UserProjectTable.projectId)
-                .where { UserProjectTable.userId eq userId }
-        )
-    }
 
     private fun projectFilter(project: String): Op<Boolean> {
         return CompanySurveyTable.projectId eq anyFrom (
