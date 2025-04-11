@@ -21,7 +21,7 @@ export const Surveys: FunctionComponent = () => {
         loading,
         indexSurveys,
         removeIndexSurvey,
-        changeSurvey
+        changeSurvey,
     } = useSurveys()
 
     const navigate = useNavigate()
@@ -32,7 +32,7 @@ export const Surveys: FunctionComponent = () => {
             <Content>
                 <ZeroLayout
                     subtitle="Beheer uitvraag bedrijven"
-                    trailingContent={<AdminButtonRow/>}
+                    trailingContent={<AdminButtonRow />}
                 >
                     <div className={"card border border-0 shadow-lg rounded rounded-4"}>
                         <div className={"card-body p-0"}>
@@ -52,7 +52,7 @@ export const Surveys: FunctionComponent = () => {
                                 />
                                 <Column field="creationDate"
                                         body={(survey: IndexSurvey) => formatDatetime(survey.creationDate.toString())}
-                                        header="Opgestuurd op" sortable/>
+                                        header="Opgestuurd op" sortable />
                                 <Column field="includeInSimulation" header="Opnemen in simulatie" sortable
                                         align={"center"}
                                         body={(survey: IndexSurvey) =>
@@ -60,7 +60,7 @@ export const Surveys: FunctionComponent = () => {
                                                 includeInSimulation={survey.includeInSimulation}
                                                 surveyId={survey.id}
                                                 setIncludeInSimulation={(includeInSimulation) => {
-                                                     changeSurvey(survey.withIncludeInSimulation(includeInSimulation))
+                                                    changeSurvey(survey.withIncludeInSimulation(includeInSimulation))
                                                 }}
                                             />
                                         }
@@ -70,7 +70,7 @@ export const Surveys: FunctionComponent = () => {
                                     align={"right"}
                                     body={(survey: IndexSurvey) => (
                                         <div className={"d-flex flex-row gap-2 justify-content-end"}>
-                                            <IndexSurveySelectAction indexSurvey={survey}/>
+                                            <IndexSurveySelectAction indexSurvey={survey} />
 
                                             <ActionButtonPair
                                                 positiveAction={() => {
@@ -81,7 +81,7 @@ export const Surveys: FunctionComponent = () => {
                                                         {
                                                             id: survey.id,
                                                             type: "company-surveys",
-                                                            onDelete: removeIndexSurvey,
+                                                            onDelete: (id) => removeIndexSurvey(id.toString()),
                                                             setPending: setPending,
                                                         },
                                                     ).then()
@@ -97,7 +97,7 @@ export const Surveys: FunctionComponent = () => {
                                                 negativeLoading={pending}
                                             />
                                         </div>
-                                    )}/>
+                                    )} />
                             </DataTable>
                         </div>
                     </div>

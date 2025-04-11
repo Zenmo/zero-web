@@ -1,7 +1,7 @@
-import {useState} from "react";
-import {useOnce} from "../hooks/use-once";
+import {useState} from "react"
+import {useOnce} from "../hooks/use-once"
 import {IndexSurvey, indexSurveysFromJson} from "joshi"
-import {ZTOR_BASE_URL} from "../services/ztor-fetch";
+import {ZTOR_BASE_URL} from "../services/ztor-fetch"
 
 type UseSurveyReturn = {
     loading: boolean,
@@ -21,8 +21,8 @@ export const useSurveys = (): UseSurveyReturn => {
 
     useOnce(async () => {
         try {
-            const response = await fetch(ZTOR_BASE_URL + '/index-surveys', {
-                credentials: 'include',
+            const response = await fetch(ZTOR_BASE_URL + "/index-surveys", {
+                credentials: "include",
             })
             if (response.status === 401) {
                 redirectToLogin()
@@ -45,10 +45,10 @@ export const useSurveys = (): UseSurveyReturn => {
         loading,
         changeSurvey,
         indexSurveys,
-        removeIndexSurvey
+        removeIndexSurvey,
     }
 }
 
 export const redirectToLogin = () => {
-    window.location.href = import.meta.env.VITE_ZTOR_URL + '/login?redirectUrl=' + encodeURIComponent(window.location.href)
+    window.location.href = import.meta.env.VITE_ZTOR_URL + "/login?redirectUrl=" + encodeURIComponent(window.location.href)
 }
