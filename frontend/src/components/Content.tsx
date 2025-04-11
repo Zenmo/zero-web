@@ -1,5 +1,5 @@
 import React from 'react'
-import {WithChildren} from "./react18MigrationHelpers";
+import {WithChildren} from "./core/WithChildren";
 
 
 const Content: React.FC<WithChildren> = ({children}) => {
