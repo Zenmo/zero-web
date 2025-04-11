@@ -1,29 +1,25 @@
 import {useState} from "react";
 import {useOnce} from "../hooks/use-once";
-import {Survey} from "zero-zummon"
 import {IndexSurvey, indexSurveysFromJson} from "joshi"
 import {ZTOR_BASE_URL} from "../services/ztor-fetch";
 
 type UseSurveyReturn = {
     loading: boolean,
-    surveys: Survey[],
     // for syncing the state
-    changeSurvey: (newSurvey: Survey) => void,
-    removeSurvey: (surveyId: string) => void,
+    changeSurvey: (newSurvey: IndexSurvey) => void,
     indexSurveys: IndexSurvey[],
     removeIndexSurvey: (id: string) => void,
 }
 
 export const useSurveys = (): UseSurveyReturn => {
     const [loading, setLoading] = useState(true)
-    const [surveys, setSurveys] = useState<Survey[]>([])
     const [indexSurveys, setIndexSurveys] = useState<IndexSurvey[]>([])
 
-    const changeSurvey = (newSurvey: Survey) => {
-        setSurveys(surveys.map(survey => survey.id.toString() === newSurvey.id.toString() ? newSurvey : survey))
+    const changeSurvey = (newSurvey: IndexSurvey) => {
+        setIndexSurveys(indexSurveys.map(survey => survey.id.toString() === newSurvey.id.toString() ? newSurvey : survey))
     }
 
-useOnce(async () => {
+    useOnce(async () => {
         try {
             const response = await fetch(ZTOR_BASE_URL + '/index-surveys', {
                 credentials: 'include',
@@ -40,9 +36,6 @@ useOnce(async () => {
         }
     })
 
-    const removeSurvey = (surveyId: any) => {
-        setSurveys(surveys.filter(survey => survey.id.toString() !== surveyId.toString()))
-    }
 
     const removeIndexSurvey = (id: string) => {
         setIndexSurveys(indexSurveys.filter(survey => survey.id.toString() !== id))
@@ -50,9 +43,7 @@ useOnce(async () => {
 
     return {
         loading,
-        surveys,
         changeSurvey,
-        removeSurvey,
         indexSurveys,
         removeIndexSurvey
     }
