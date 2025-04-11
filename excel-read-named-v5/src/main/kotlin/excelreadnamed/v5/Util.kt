@@ -5,6 +5,7 @@ import kotlinx.datetime.LocalDate
 import kotlinx.datetime.TimeZone
 import kotlinx.datetime.atStartOfDayIn
 import org.apache.poi.ss.util.CellReference
+import org.apache.poi.xssf.usermodel.XSSFCell
 
 fun CellReference.oneToTheRight(): CellReference =
     CellReference(
@@ -14,6 +15,14 @@ fun CellReference.oneToTheRight(): CellReference =
         this.isRowAbsolute,
         this.isColAbsolute,
     )
+
+fun XSSFCell.getNumber(): Double {
+    return try {
+        this.numericCellValue
+    } catch (e: RuntimeException) {
+        throw Exception("Can't read numer from cell ${this.reference}", e)
+    }
+}
 
 fun yearToFirstOfJanuary(year: Int): Instant {
     val firstOfJanuary = LocalDate(year, 1, 1)
