@@ -5,6 +5,7 @@ FROM gradle:8.10.0-jdk21 AS gradle
 COPY --chown=gradle:gradle . /home/gradle/src
 WORKDIR /home/gradle/src
 RUN --mount=type=cache,target=/home/gradle/.gradle/caches gradle zummon:jsBrowserProductionLibraryDistribution --no-daemon
+RUN --mount=type=cache,target=/home/gradle/.gradle/caches gradle joshi:jsBrowserProductionLibraryDistribution --no-daemon
 
 FROM node:22 AS node
 ARG VITE_ZTOR_URL
