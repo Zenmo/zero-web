@@ -1,20 +1,21 @@
-import {css} from '@emotion/react'
-import {Alert} from 'antd'
-import {cloneDeep} from 'lodash'
-import {FunctionComponent, useEffect, useState} from 'react'
-import {useForm, UseFormReturn} from 'react-hook-form'
+import {css} from "@emotion/react"
+import {Alert} from "antd"
+import {cloneDeep} from "lodash"
+import {FunctionComponent, useEffect, useState} from "react"
+import {useForm, UseFormReturn} from "react-hook-form"
 import {useLoaderData, useNavigate} from "react-router-dom"
-import {Address} from './address'
-import {BasicData} from './basic-data'
-import {defineFlash} from './flash'
-import {LabelRow} from './generic/label-row'
-import {GridConnection} from './grid-connection'
-import {HasMultipleConnections} from './has-multiple-connections'
-import {Intro} from './intro'
-import {ProjectConfiguration} from './project'
-import {SurveyTabs} from './survey-tabs'
-import {surveyFromJson} from 'zero-zummon'
+import {Address} from "./address"
+import {BasicData} from "./basic-data"
+import {defineFlash} from "./flash"
+import {LabelRow} from "./generic/label-row"
+import {GridConnection} from "./grid-connection"
+import {HasMultipleConnections} from "./has-multiple-connections"
+import {Intro} from "./intro"
+import {ProjectConfiguration} from "./project"
+import {SurveyTabs} from "./survey-tabs"
+import {surveyFromJson} from "zero-zummon"
 import {useOnce} from "../../hooks/use-once"
+import {ZTOR_BASE_URL} from "../../services/ztor-fetch"
 
 export const SurveyFromProject: FunctionComponent<{}> = () => {
     const project = useLoaderData() as ProjectConfiguration
@@ -22,7 +23,7 @@ export const SurveyFromProject: FunctionComponent<{}> = () => {
     return <Survey project={project} />
 }
 
-export const Survey: FunctionComponent<{project: ProjectConfiguration, survey?: any}> = ({project, survey}) => {
+export const Survey: FunctionComponent<{ project: ProjectConfiguration, survey?: any }> = ({project, survey}) => {
     const [key, setKey] = useState(1)
 
     return (
@@ -31,7 +32,7 @@ export const Survey: FunctionComponent<{project: ProjectConfiguration, survey?: 
 }
 
 export const emptyGridConnection = {
-    supply: {}
+    supply: {},
 }
 
 const SurveyWithReset: FunctionComponent<{
@@ -65,12 +66,12 @@ const SurveyWithReset: FunctionComponent<{
     // @ts-ignore
     const form: UseFormReturn = useForm({
         shouldUseNativeValidation: true,
-        defaultValues
+        defaultValues,
     })
     const {
         handleSubmit,
-        formState: { errors },
-        watch
+        formState: {errors},
+        watch,
     } = form
 
     const resetForm = (formData: any) => {
@@ -98,7 +99,7 @@ const SurveyWithReset: FunctionComponent<{
     })
 
     const clear = () => {
-        if(confirm("Formulier wissen?")) {
+        if (confirm("Formulier wissen?")) {
             localStorage.removeItem(localStorageKey)
             remount()
         }
@@ -106,7 +107,7 @@ const SurveyWithReset: FunctionComponent<{
 
     useEffect(() => {
         const subscription = watch((value, {name, type}) =>
-            localStorage.setItem(localStorageKey, JSON.stringify(value))
+            localStorage.setItem(localStorageKey, JSON.stringify(value)),
         )
         return () => subscription.unsubscribe()
     }, [watch])
@@ -117,21 +118,20 @@ const SurveyWithReset: FunctionComponent<{
     }
 
     const onSubmit = async (surveyData: any) => {
-        console.log('submit', surveyData)
         setSubmissionError("")
 
         surveyData = prepareForSubmit(surveyData, project.name)
 
-        const url = import.meta.env.VITE_ZTOR_URL + '/company-surveys'
+        const url = ZTOR_BASE_URL + "/company-surveys"
         try {
             const response = await fetch(url, {
-                method: 'POST',
+                method: "POST",
                 credentials: "include",
                 headers: {
-                    'Content-Type': 'application/json',
-                    'Accept': 'application/json',
+                    "Content-Type": "application/json",
+                    "Accept": "application/json",
                 },
-                body: JSON.stringify(surveyData)
+                body: JSON.stringify(surveyData),
             })
 
             if (response.status !== 201) {
@@ -146,15 +146,15 @@ const SurveyWithReset: FunctionComponent<{
             }
 
             localStorage.removeItem(localStorageKey)
-            navigate('/bedankt', {
+            navigate("/bedankt", {
                 state: {
-                    deeplink: await response.json()
-                }
+                    deeplink: await response.json(),
+                },
             })
         } catch (e) {
             let message = "Er is iets misgegaan."
             // @ts-ignore
-            if ('message' in e) {
+            if ("message" in e) {
                 message += " Details: " + e.message
             }
             setSubmissionError(message)
@@ -163,33 +163,25 @@ const SurveyWithReset: FunctionComponent<{
     }
 
     return (
-        <div css={[{
-            width: '100%',
-            minHeight: '100vh',
-            backgroundColor: 'grey',
-            display: 'flex',
-            justifyContent: 'center',
-            alignItems: 'flex-start',
-        }, defineFlash]}>
+        <div css={[{}, defineFlash]}
+             className={"bg-secondary-subtle d-flex flex-center justify-content-center"}
+        >
             <form onSubmit={handleSubmit(onSubmit)} css={{
-                maxWidth: '50rem',
-                backgroundColor: 'white',
-                padding: '2rem',
-                marginTop: '2rem',
-                boxShadow: '0 0 .15rem .15em white',
-                '& input:invalid': {
-                    backgroundColor: '#fcc',
-                    borderColor: 'red',
+                "& input:invalid": {
+                    backgroundColor: "#fcc",
+                    borderColor: "red",
                 },
-                '& h1, & h2, & h3, & h4': {
-                    padding: '.2rem 1rem',
-                    borderBottom: '1px solid #ccc',
+                "& h1, & h2, & h3, & h4": {
+                    padding: ".2rem 1rem",
+                    borderBottom: "1px solid #ccc",
                 },
-                'input[type="text"], input[type="email"], input[type="number"], textarea': {
-                    padding: '.3rem',
-                }
-            }}>
-                <Intro project={project}/>
+                "input[type=\"text\"], input[type=\"email\"], input[type=\"number\"], textarea": {
+                    padding: ".3rem",
+                },
+            }}
+                  className={"shadow-lg bg-white w-50 p-4 m-5 "}
+            >
+                <Intro project={project} />
                 {errorMessage && <Alert
                     message={errorMessage}
                     type="error"
@@ -223,9 +215,9 @@ const SurveyWithReset: FunctionComponent<{
                 <LabelRow
                     label="Mijn ingevulde gegevens mogen openlijk toegangelijk zijn t.b.v. de energietransitie en voor gesprekken met gemeenten, provincies en andere bedrijventerreinen">
                     <input
-                        css={{alignSelf: 'flex-start'}}
+                        css={{alignSelf: "flex-start"}}
                         type="checkbox"
-                        {...form.register('dataSharingAgreed')} />
+                        {...form.register("dataSharingAgreed")} />
                 </LabelRow>
 
                 <div css={css`
@@ -252,15 +244,15 @@ const surveyToFormData = (survey: any): any => {
         tabs: survey.addresses.flatMap((address: any) => ([
             ...address.gridConnections.map((gridConnection: any, i: number) => {
                 const tabData = {
-                    address: { ...address },
+                    address: {...address},
                     gridConnection,
                 }
 
                 tabData.address.isSameAddress = i > 0
 
                 return tabData
-            })
-        ]))
+            }),
+        ])),
     }
 
     delete formData.addresses
@@ -287,7 +279,7 @@ const prepareForSubmit = (surveyData: any, projectName: string) => {
         } else {
             surveyData.addresses.push({
                 ...tab.address,
-                gridConnections: [tab.gridConnection]
+                gridConnections: [tab.gridConnection],
             })
         }
     }
@@ -313,7 +305,7 @@ const loadFromLocalStorage = (localStorageKey: string): any => {
     }
 
     try {
-        const prepared = prepareForSubmit(previous, 'Testproject')
+        const prepared = prepareForSubmit(previous, "Testproject")
         const str = JSON.stringify(prepared)
         const surveyObject = surveyFromJson(str).clearIds()
         previous = surveyToFormData(JSON.parse(surveyObject.toPrettyJson()))

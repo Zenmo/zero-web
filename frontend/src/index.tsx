@@ -4,9 +4,11 @@ import './index.css'
 import reportWebVitals from './reportWebVitals'
 import { RouterProvider } from "react-router-dom";
 import { router } from "./router";
+import './_zenmo-zero/assets/style.scss'
+import './_zenmo-zero/assets/style.react.scss'
 
 const root = ReactDOM.createRoot(
-    document.getElementById('react-root') as HTMLElement,
+    document.getElementById('root') as HTMLElement,
 )
 root.render(
     <React.StrictMode>

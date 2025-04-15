@@ -1,7 +1,7 @@
-import React, { useEffect, FunctionComponent, useState } from "react";
+import React, {FunctionComponent, useEffect, useState} from "react";
 
-import { MultiSelect } from "primereact/multiselect";
-import { Project, projectsFromJson } from "zero-zummon";
+import {MultiSelect} from "primereact/multiselect";
+import {Project, projectsFromJson} from "zero-zummon";
 
 type ProjectDropdownProps = {
     selectedProjects: Project[];
@@ -10,10 +10,10 @@ type ProjectDropdownProps = {
 };
 
 export const ProjectsDropdown: FunctionComponent<ProjectDropdownProps> = ({
-    selectedProjects,
-    onChange,
-    disabled,
-}) => {
+                                                                              selectedProjects,
+                                                                              onChange,
+                                                                              disabled,
+                                                                          }) => {
     const [projects, setProjects] = useState<Project[]>([]);
 
     useEffect(() => {
@@ -36,8 +36,8 @@ export const ProjectsDropdown: FunctionComponent<ProjectDropdownProps> = ({
     }, []);
 
     return (
-        <div>
-            <label htmlFor="projects">Update Projects: </label>
+        <div className={"d-flex flex-row gap-2"}>
+            <label htmlFor="projects" className={"form-label me-2"}>Update Projects: </label>
             <MultiSelect
                 id="projects"
                 options={projects.map((project) => ({
