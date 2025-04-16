@@ -6,6 +6,7 @@ import {NumberRow} from './generic/number-row'
 import {Purpose, Upload} from './generic/upload'
 import {ProjectName} from './project'
 import {EanRow} from "./ean-row"
+import {TimeSeriesNaturalGas} from "./time-series/time-series-natural-gas"
 
 export const NaturalGas =  ({form, prefix, project}: { form: UseFormReturn , prefix: string, project: ProjectName }) => {
     const {watch, register} = form
@@ -23,6 +24,7 @@ export const NaturalGas =  ({form, prefix, project}: { form: UseFormReturn , pre
             {hasConnection && (
                 <>
                     <EanRow form={form} name={`${prefix}.ean`} />
+                    <TimeSeriesNaturalGas form={form} prefix={prefix} />
                     <NumberRow
                         label="Wat is min of meer het jaarlijkse verbruik?"
                         name={`${prefix}.annualDelivery_m3`}
