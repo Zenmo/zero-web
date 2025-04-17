@@ -1,5 +1,6 @@
 package com.zenmo.joshi
 
+import com.zenmo.zummon.companysurvey.Survey
 import com.zenmo.zummon.jsonDecoder
 import kotlinx.datetime.Instant
 import kotlinx.serialization.Serializable
@@ -18,7 +19,11 @@ data class IndexSurvey(
     val projectName: String,
     val creationDate: Instant,
     val includeInSimulation: Boolean
-)
+) {
+    public fun withIncludeInSimulation(includeInSimulation: Boolean): IndexSurvey {
+        return this.copy(includeInSimulation = includeInSimulation)
+    }
+}
 
 
 @JsExport

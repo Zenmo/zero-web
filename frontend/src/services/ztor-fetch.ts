@@ -1,11 +1,12 @@
 import {redirectToLogin} from "../admin/use-surveys"
 
+export const ZTOR_BASE_URL = import.meta.env.VITE_ZTOR_URL
 // default way to communicate with the backend
 export async function ztorFetch<T>(
     path: string,
     requestInit: RequestInit = {},
 ): Promise<T> {
-    const url = new URL(import.meta.env.VITE_ZTOR_URL + path)
+    const url = new URL(ZTOR_BASE_URL + path)
 
     requestInit.credentials = "include"
 

@@ -33,7 +33,9 @@ export const NewSurveyButton: FunctionComponent = () => {
                 icon="pi pi-pencil"
                 onClick={(event) => assertDefined(menu.current).toggle(event)}
                 aria-controls="popup_menu"
-                aria-haspopup/>
+                aria-haspopup
+                className={'rounded rounded-3'}
+            />
         </>
     )
 }
