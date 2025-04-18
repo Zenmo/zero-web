@@ -26,5 +26,7 @@ enum class HeatingType {
     ELECTRIC_HEATPUMP,
     HYBRID_HEATPUMP,
     DISTRICT_HEATING,
+    // Warmte-krachtkoppeling (WKK)
+    COMBINED_HEAT_AND_POWER,
     OTHER,
 }
