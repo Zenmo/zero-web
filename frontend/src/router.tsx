@@ -89,10 +89,6 @@ export const router = createBrowserRouter([
         element: <ThankYou />,
     },
     {
-        path: "/admin",
-        element: <Surveys />,
-    },
-    {
         path: "/admin/import-excel",
         element: <ExcelImport />
     },
