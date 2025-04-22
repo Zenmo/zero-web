@@ -1,7 +1,7 @@
 import {LinkProps} from "./_models"
 
 const pageLinksData: LinkProps[] = [
-    {to: "/admin", title: "Uitvragen beheren"},
+    {to: "/surveys", title: "Uitvragen beheren"},
     {to: "/proof-of-concept", title: "Oud proof of concept \"simuleer je buurt\""},
 ]
 
