@@ -9,6 +9,7 @@ data class GetChannelMetadataResult(
     val channelType: ChannelType,
     val channelDataType: ChannelDataType,
     val productType: ProductType,
+    // for cumulative gas values, this will contain the word "standen"
     val description: String,
     val longDescription: String,
     // "00:15:00" for quarter-hourly data.
@@ -40,14 +41,14 @@ enum class UnitOfMeasurement {
     kVarh,
     kVAr,
     m3,
-    K, // iets met gas?
+    K, // Hoogcalorisch gas?
     Onbekend,
 }
 
 enum class Direction {
     Consumption,
     Production,
-    Unknown,
+    Unknown, // is often Consumption - Production
 }
 
 enum class ProductType {

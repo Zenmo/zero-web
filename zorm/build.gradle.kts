@@ -11,6 +11,7 @@ group = "com.zenmo.orm"
 version = "dev"
 
 repositories {
+    maven("https://repo.osgeo.org/repository/release/")
     mavenCentral()
 }
 
