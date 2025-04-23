@@ -30,7 +30,7 @@ export const GridConnection = ({form, prefix, project}: { form: UseFormReturn, p
             <Heat form={form} prefix={`${prefix}.heat`} />
             <NaturalGas form={form} prefix={`${prefix}.naturalGas`} project={project.name} />
             <Storage form={form} prefix={`${prefix}.storage`} />
-            <Transport form={form} prefix={`${prefix}.transport`} project={project.name}/>
+            <Transport form={form} prefix={`${prefix}.transport`} project={project} />
             <OpenQuestions form={form} prefix={prefix} />
         </>
     )

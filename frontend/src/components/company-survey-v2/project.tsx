@@ -7,44 +7,52 @@ export type FrontendProjectConfiguration = {
     email: string,
     logo?: string,
     authorizationPdf?: string,
+    showTractors: boolean,
 }
 
 export type ProjectConfiguration = FrontendProjectConfiguration & {
     buurtcodes: readonly string[],
 }
 
-export type ProjectName = 'Hessenpoort' | 'De Wieken'
+export type ProjectName = 'Hessenpoort' | 'De Wieken' | "Energiepolder Hoeksche Waard LTO"
 
 export const castProjectName: (projectName: string) => ProjectName = projectName => projectName as ProjectName
 
-export const HESSENPOORT: FrontendProjectConfiguration = {
+export const HESSENPOORT = {
     name: 'Hessenpoort',
     email: 'info@ondernemersvereniginghessenpoort.nl',
     logo: '/logo-hessenpoort.png',
     authorizationPdf: '/spectral-machtiging.pdf',
-}
+} satisfies Partial<FrontendProjectConfiguration>
 
-export const DE_WIEKEN: FrontendProjectConfiguration = {
+export const DE_WIEKEN = {
     name: 'De Wieken',
     email: 'info@zenmo.com',
-    authorizationPdf: '/machtiging-datadeling-de-wieken.pdf'
-}
+    authorizationPdf: '/machtiging-datadeling-de-wieken.pdf',
+} satisfies Partial<FrontendProjectConfiguration>
 
 const GENERIC: FrontendProjectConfiguration = {
     name: castProjectName('Placeholder project'),
     email: 'info@zenmo.com',
-    authorizationPdf: '/placeholer-machtiging.pdf'
+    authorizationPdf: '/placeholer-machtiging.pdf',
+    showTractors: false,
 }
 
-const configs: Record<ProjectName, FrontendProjectConfiguration> = {
+const configs: Record<ProjectName, Partial<FrontendProjectConfiguration>> = {
     'Hessenpoort': HESSENPOORT,
     'De Wieken': DE_WIEKEN,
+    'Energiepolder Hoeksche Waard LTO': {
+        showTractors: true,
+    }
 }
 
 export async function getProjectConfiguration(projectName: ProjectName): Promise<ProjectConfiguration> {
     const buurtcodes = await fetchBuurtcodesByProject(projectName)
+
     return {
-        ...(configs[projectName] || { ...GENERIC, name: projectName }),
+        ...GENERIC,
+        name: projectName,
+        ...(configs[projectName] || {}),
         buurtcodes,
     }
 }

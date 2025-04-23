@@ -1,7 +1,7 @@
 import {UseFormReturn} from 'react-hook-form'
 import {BooleanInput} from '../generic/boolean-input'
 import {FormRow} from '../generic/form-row'
-import {ProjectName} from '../project'
+import {ProjectConfiguration, ProjectName} from "../project"
 import {Cars} from './cars'
 import {CommutersVisitors} from './commuters-visitors'
 import {Trucks} from './trucks'
@@ -12,7 +12,7 @@ import {Agriculture} from "./agriculture"
 export const Transport = ({form, prefix, project}: {
     form: UseFormReturn,
     prefix: string,
-    project: ProjectName
+    project: ProjectConfiguration,
 }) => {
     const {register, watch} = form
 
@@ -29,10 +29,10 @@ export const Transport = ({form, prefix, project}: {
                 form={form}/>
             {hasVehicles && (
                 <>
-                    <Trucks form={form} prefix={`${prefix}.trucks`} project={project}/>
-                    <Vans form={form} prefix={`${prefix}.vans`} project={project}/>
-                    <Cars form={form} prefix={`${prefix}.cars`} project={project}/>
-                    <Agriculture form={form} prefix={`${prefix}.agriculture`} />
+                    <Trucks form={form} prefix={`${prefix}.trucks`} project={project.name}/>
+                    <Vans form={form} prefix={`${prefix}.vans`} project={project.name}/>
+                    <Cars form={form} prefix={`${prefix}.cars`} project={project.name}/>
+                    {project.showTractors && <Agriculture form={form} prefix={`${prefix}.agriculture`} />}
                     <OtherVehicles form={form} prefix={`${prefix}.otherVehicles`} />
                 </>
             )}
