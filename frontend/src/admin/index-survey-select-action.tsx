@@ -62,7 +62,7 @@ const IndexSurveySelectAction = ({indexSurvey}: Props) => {
                 value=""
             >
                 <option value="">More actions</option>
-                <option value="json">JSON</option>
+                <option value="json">Survey Data (JSON)</option>
                 <option value="share">Share</option>
             </select>
 
