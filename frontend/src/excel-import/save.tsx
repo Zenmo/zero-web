@@ -33,7 +33,7 @@ export const Save: FunctionComponent<{survey: Survey}> = ({survey}) => {
                 return
             }
 
-            navigate('/admin')
+            navigate('/surveys')
         } catch (e) {
             let message = "Er is iets misgegaan."
             // @ts-ignore

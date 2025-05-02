@@ -74,4 +74,12 @@ public class VallumTest {
         assertTrue(year.equals(twelveMonths));
     }
 
+    @Test
+    public void testHourConversion() {
+        DateTimeUnit timeStep = DateTimeUnit.Companion.getMINUTE().times(15);
+
+        double hours = (double) ((DateTimeUnit.TimeBased) timeStep).getNanoseconds() / DateTimeUnit.Companion.getHOUR().getNanoseconds();
+
+        assertEquals(0.25, hours);
+    }
 }
