@@ -1,5 +1,5 @@
 
-rootProject.name = "zero"
+rootProject.name = "zeroweb"
 include(
     "zorm",
     "ztor",
