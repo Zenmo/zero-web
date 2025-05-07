@@ -21,7 +21,7 @@ kotlin {
         binaries.library()
         compilations["main"].packageJson {
             // hack hack hack
-            types = "kotlin/zero-joshi.d.ts"
+            types = "kotlin/zeroweb-joshi.d.ts"
         }
         browser {
         }
