@@ -91,13 +91,20 @@ jobs:
                     registry: ghcr.io
                     username: ${{ github.actor }}
                     password: ${{ secrets.GITHUB_TOKEN }}
+            -   name: Calculcate browser cache key
+                id: browser-cache-key
+                uses: mathiasvr/command-output@v2.0.0
+                with:
+                    run: git rev-parse HEAD:frontend | cut -c 1-4
             -   name: Build and push
                 uses: docker/build-push-action@v6
                 with:
                     push: true
                     file: ./docker/production/frontend/Dockerfile
                     tags: ghcr.io/zenmo/zero-frontend:${{ needs.variables.outputs.VERSION_TAG }}
-                    build-args: VITE_ZTOR_URL=https://${{ vars.ZTOR_HOSTNAME || needs.variables.outputs.ZTOR_HOSTNAME }}
+                    build-args: |
+                        VITE_ZTOR_URL=https://${{ vars.ZTOR_HOSTNAME || needs.variables.outputs.ZTOR_HOSTNAME }}
+                        BROWSER_CACHE_KEY=${{ steps.browser-cache-key.outputs.stdout }}
                     cache-from: type=gha
                     cache-to: type=gha,mode=max
 
