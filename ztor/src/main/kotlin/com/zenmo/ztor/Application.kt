@@ -6,10 +6,13 @@ import com.zenmo.orm.connectToPostgres
 import com.zenmo.orm.createSchema
 import com.zenmo.orm.echoSchemaSql
 import com.zenmo.ztor.plugins.*
+import com.zenmo.zummon.companysurvey.surveysFromJson
+import com.zenmo.zummon.companysurvey.surveysToJson
 import io.ktor.server.application.*
 import io.ktor.server.engine.*
 import io.ktor.server.netty.*
 import kotlin.system.exitProcess
+import kotlin.uuid.Uuid
 
 fun main(args: Array<String>) {
     if (args.count() == 1) {
@@ -41,7 +44,18 @@ fun main(args: Array<String>) {
         exitProcess(2) // 2 means argument error
     }
 
-    if (args.count() > 1) {
+    if (args.count() == 2) {
+        if (args[0] == "export-project-surveys") {
+            val projectName = args[1]
+            val db = connectToPostgres()
+            val surveyRepository = SurveyRepository(db)
+            val surveys = surveyRepository.getSurveysByProject(projectName)
+            println(surveysToJson(surveys))
+            return
+        }
+    }
+
+    if (args.count() > 2) {
         println("Too many arguments")
         exitProcess(2) // 2 means argument error
     }

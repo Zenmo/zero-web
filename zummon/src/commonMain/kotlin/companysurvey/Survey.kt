@@ -200,6 +200,16 @@ fun surveysFromJson(json: String): Array<Survey> {
     return jsonDecoder.decodeFromString<Array<Survey>>(json)
 }
 
+@OptIn(ExperimentalSerializationApi::class)
+fun surveysToJson(surveys: List<Survey>): String {
+    val prettyJson = Json { // this returns the JsonBuilder
+        prettyPrint = true
+        // optional: specify indent
+        prettyPrintIndent = "    "
+    }
+    return prettyJson.encodeToString(surveys)
+}
+
 /**
  * Round to the precision that the database supports
  * so that the outgoing and incoming values are the same and can be compared in tests.
