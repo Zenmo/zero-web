@@ -2,7 +2,7 @@ import {convert, Instant} from "@js-joda/core"
 import "@js-joda/timezone/dist/js-joda-timezone-2017-2027.esm.js"
 import {instantToEpochSeconds, toJsJodaInstant} from "zero-zummon"
 
-export const targetYear = 2023
+export const targetYear = 2024
 export const displayTimeZone = "Europe/Amsterdam"
 
 // This seems dubious because it mixes different versions of js-joda.

@@ -241,6 +241,7 @@ services:
         entrypoint: npm
         environment:
             VITE_ZTOR_URL: http://localhost:8082
+            BROWSER_CACHE_KEY: dev
 
     frontend:
         extends:

@@ -4,9 +4,10 @@ import {FormRow} from './generic/form-row'
 import {NumberRow} from './generic/number-row'
 import {TextAreaRow} from './generic/text-area-row'
 import {HeatingType, HeatingTypeCheckboxes} from './heating-type-checkboxes'
+import {TimeSeriesHeatPump} from "./time-series/time-series-heat-pump";
 
 export const Heat = ({form, prefix}: { form: UseFormReturn, prefix: string }) => {
-    const {watch, register} = form
+    const {watch} = form
 
     const heatingTypes: HeatingType[] = watch(`${prefix}.heatingTypes`, [])
 
@@ -41,7 +42,7 @@ export const Heat = ({form, prefix}: { form: UseFormReturn, prefix: string }) =>
                     label="Wat is het jaarlijkse warmteverbruik van het warmtenet?"
                     name={`${prefix}.annualDistrictHeatingDelivery_GJ`}
                     form={form}
-                    suffix="GJ" />
+                    suffix="GJ"/>
             )}
             <TextAreaRow
                 label="Wisselt u lokaal warmte uit (bijv. met naastgelegen bedrijven)? Zo ja, hoe?"
@@ -52,6 +53,9 @@ export const Heat = ({form, prefix}: { form: UseFormReturn, prefix: string }) =>
                 name={`${prefix}.hasUnusedResidualHeat`}
                 form={form}
                 WrappedInput={BooleanInput} />
+            {(heatingTypes.includes(HeatingType.ELECTRIC_HEATPUMP)
+                    || heatingTypes.includes(HeatingType.HYBRID_HEATPUMP))
+                && <TimeSeriesHeatPump form={form} prefix={prefix}/>}
         </>
     )
 }
