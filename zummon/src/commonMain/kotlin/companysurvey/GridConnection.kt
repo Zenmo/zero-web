@@ -36,6 +36,7 @@ data class GridConnection(
 
     fun allTimeSeries(): List<TimeSeries> {
         val list = electricity.allTimeSeries().toMutableList()
+        list.addAll(heat.allTimeSeries())
         list.addNotNull(naturalGas.hourlyDelivery_m3)
         list.addNotNull(transport.agriculture.dieselUsageTimeSeries)
         return list.toList()

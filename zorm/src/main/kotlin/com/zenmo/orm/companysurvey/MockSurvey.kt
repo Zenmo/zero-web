@@ -2,6 +2,7 @@ package com.zenmo.orm.companysurvey
 
 import com.zenmo.zummon.companysurvey.*
 import kotlinx.datetime.DateTimeUnit
+import org.jetbrains.exposed.sql.kotlin.datetime.Time
 import java.util.*
 import kotlin.time.Duration.Companion.hours
 
@@ -123,6 +124,16 @@ fun createMockSurvey(projectName: String = "Project") = Survey(
                         annualDistrictHeatingDelivery_GJ = 300f,
                         localHeatExchangeDescription = "Local heat exchange description",
                         hasUnusedResidualHeat = false,
+                        heatPumpElectricityConsumptionTimeSeries_kWh = TimeSeries(
+                            type = TimeSeriesType.HEAT_PUMP_ELECTRICITY_CONSUMPTION,
+                            start = kotlinx.datetime.Instant.parse("2022-01-01T00:00:00+01"),
+                            values = floatArrayOf(1.15f, 2.15f, 3.15f, 4.15f),
+                        ),
+                        heatPumpHeatProductionTimeSeries_kWh = TimeSeries(
+                            type = TimeSeriesType.HEAT_PUMP_HEAT_PRODUCTION,
+                            start = kotlinx.datetime.Instant.parse("2022-01-01T00:00:00+01"),
+                            values = floatArrayOf(2.4f, 4.4f, 6.4f, 8.4f),
+                        ),
                     ),
                     storage = Storage(
                         hasBattery = false,

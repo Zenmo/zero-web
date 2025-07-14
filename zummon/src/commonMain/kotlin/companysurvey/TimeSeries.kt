@@ -267,7 +267,15 @@ enum class TimeSeriesType(
     AGRICULTURE_DIESEL_CONSUMPTION (
         defaultUnit = TimeSeriesUnit.LITER,
         defaultStep = DateTimeUnit.WEEK,
-    );
+    ),
+    HEAT_PUMP_ELECTRICITY_CONSUMPTION (
+        defaultUnit = TimeSeriesUnit.KWH,
+        defaultStep = DateTimeUnit.MINUTE * 15,
+    ),
+    HEAT_PUMP_HEAT_PRODUCTION (
+        defaultUnit = TimeSeriesUnit.KWH,
+        defaultStep = DateTimeUnit.MINUTE * 15,
+    ),
 }
 
 @JsExport
