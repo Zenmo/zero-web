@@ -15,10 +15,18 @@ data class Heat (
 
     val localHeatExchangeDescription: String = "",
     val hasUnusedResidualHeat: Boolean? = null,
+
+    val heatPumpElectricityConsumptionTimeSeries_kWh: TimeSeries? = null,
+    val heatPumpHeatProductionTimeSeries_kWh: TimeSeries? = null,
 ) {
     @Deprecated("Renamed to annualDistrictHeatingDelivery_GJ", ReplaceWith("annualDistrictHeatingDelivery_GJ"))
     val annualDistrictHeatingDemandGj
         get() = annualDistrictHeatingDelivery_GJ
+
+    fun allTimeSeries() = listOfNotNull(
+        heatPumpElectricityConsumptionTimeSeries_kWh,
+        heatPumpHeatProductionTimeSeries_kWh,
+    )
 }
 
 enum class HeatingType {

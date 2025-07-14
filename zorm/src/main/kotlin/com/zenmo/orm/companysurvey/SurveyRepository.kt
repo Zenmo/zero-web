@@ -246,6 +246,14 @@ class SurveyRepository(
                                     }
                                 )
                             ),
+                            heat = gridConnection.heat.copy(
+                                heatPumpElectricityConsumptionTimeSeries_kWh = timeSeriesPerGcId[gridConnection.id]?.singleOrNull {
+                                    it.type == TimeSeriesType.HEAT_PUMP_ELECTRICITY_CONSUMPTION
+                                },
+                                heatPumpHeatProductionTimeSeries_kWh = timeSeriesPerGcId[gridConnection.id]?.singleOrNull {
+                                    it.type == TimeSeriesType.HEAT_PUMP_HEAT_PRODUCTION
+                                }
+                            ),
                         )
                     }
                 }
@@ -650,6 +658,8 @@ class SurveyRepository(
                         gridConnection.electricity.quarterHourlyProduction_kWh,
                         gridConnection.naturalGas.hourlyDelivery_m3,
                         gridConnection.transport.agriculture.dieselUsageTimeSeries,
+                        gridConnection.heat.heatPumpHeatProductionTimeSeries_kWh,
+                        gridConnection.heat.heatPumpElectricityConsumptionTimeSeries_kWh,
                     )
 
                     for (timeSeries in timeSeriesList) {
