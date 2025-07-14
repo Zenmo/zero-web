@@ -32,6 +32,7 @@ repositories {
 dependencies {
     implementation(project(":zorm"))
     implementation(project(":zummon"))
+    implementation(project(":joshi"))
     implementation(project(":fudura-client"))
     implementation(project(":excel-read-named-v5"))
 
