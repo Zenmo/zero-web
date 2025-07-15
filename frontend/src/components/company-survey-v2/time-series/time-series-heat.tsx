@@ -7,21 +7,27 @@ import {TimeSeriesType} from "zero-zummon"
 export const TimeSeriesHeatPump: FunctionComponent<{form: UseFormReturn, prefix: string}> = ({form, prefix}) => {
     return (
         <>
-            <h3>Kwartierwaarden warmte</h3>
-
-            <h4>Electriciteitsverbruik warmtepomp</h4>
+            <h4>Kwartierwaarden electriciteitsverbruik warmtepomp</h4>
 
             <TimeSeriesHookFormAdapter
                 form={form}
                 field={`${prefix}.heatPumpElectricityConsumptionTimeSeries_kWh`}
                 timeSeriesType={TimeSeriesType.HEAT_PUMP_ELECTRICITY_CONSUMPTION} />
+        </>
+    )
+}
 
-            <h4>Warmteproductie warmtepomp</h4>
+export const TimeSeriesHeatDelivery: FunctionComponent<{form: UseFormReturn, prefix: string}> = ({form, prefix}) => {
+    return (
+        <>
+            <h4>Kwartierwaarden warmteafname</h4>
+
+            <p>Afname van warmtenet of productie van warmtepomp</p>
 
             <TimeSeriesHookFormAdapter
                 form={form}
-                field={`${prefix}.heatPumpHeatProductionTimeSeries_kWh`}
-                timeSeriesType={TimeSeriesType.HEAT_PUMP_HEAT_PRODUCTION} />
+                field={`${prefix}.heatDeliveryTimeSeries_kWh`}
+                timeSeriesType={TimeSeriesType.HEAT_DELIVERY} />
         </>
     )
 }

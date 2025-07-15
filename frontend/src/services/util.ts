@@ -17,3 +17,11 @@ export const mapOrElse = <T,R>(
     return array.map(f)
 }
 
+export function includesAny<T>(array: Array<T>, ...values: Array<T>): boolean {
+    for (const value of values) {
+        if (array.includes(value)) {
+            return true
+        }
+    }
+    return false
+}

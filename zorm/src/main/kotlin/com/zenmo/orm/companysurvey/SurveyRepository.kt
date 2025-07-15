@@ -12,7 +12,6 @@ import org.jetbrains.exposed.sql.SqlExpressionBuilder.inList
 import org.jetbrains.exposed.sql.SqlExpressionBuilder.notInList
 import org.jetbrains.exposed.sql.transactions.transaction
 import java.util.*
-import kotlin.uuid.ExperimentalUuidApi
 import kotlin.uuid.toKotlinUuid
 
 
@@ -250,8 +249,8 @@ class SurveyRepository(
                                 heatPumpElectricityConsumptionTimeSeries_kWh = timeSeriesPerGcId[gridConnection.id]?.singleOrNull {
                                     it.type == TimeSeriesType.HEAT_PUMP_ELECTRICITY_CONSUMPTION
                                 },
-                                heatPumpHeatProductionTimeSeries_kWh = timeSeriesPerGcId[gridConnection.id]?.singleOrNull {
-                                    it.type == TimeSeriesType.HEAT_PUMP_HEAT_PRODUCTION
+                                heatDeliveryTimeSeries_kWh = timeSeriesPerGcId[gridConnection.id]?.singleOrNull {
+                                    it.type == TimeSeriesType.HEAT_DELIVERY
                                 }
                             ),
                         )
@@ -658,7 +657,7 @@ class SurveyRepository(
                         gridConnection.electricity.quarterHourlyProduction_kWh,
                         gridConnection.naturalGas.hourlyDelivery_m3,
                         gridConnection.transport.agriculture.dieselUsageTimeSeries,
-                        gridConnection.heat.heatPumpHeatProductionTimeSeries_kWh,
+                        gridConnection.heat.heatDeliveryTimeSeries_kWh,
                         gridConnection.heat.heatPumpElectricityConsumptionTimeSeries_kWh,
                     )
 

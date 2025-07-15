@@ -272,7 +272,13 @@ enum class TimeSeriesType(
         defaultUnit = TimeSeriesUnit.KWH,
         defaultStep = DateTimeUnit.MINUTE * 15,
     ),
-    HEAT_PUMP_HEAT_PRODUCTION (
+    /**
+     * Heat production of heat pump or delivery from district heating.
+     *
+     * In the case of a water-to-water heat pump we may want to add another time series
+     * to distinguish between the heat being delivered and the heat being produced.
+     */
+    HEAT_DELIVERY (
         defaultUnit = TimeSeriesUnit.KWH,
         defaultStep = DateTimeUnit.MINUTE * 15,
     ),
