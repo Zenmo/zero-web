@@ -105,17 +105,10 @@ data class CompanyDataDocument(
                                     otherSupply = "Other supply",
                                     missingPvReason = MissingPvReason.OTHER,*/
                                 ),
-                                naturalGas =
-                                NaturalGas(
-                                    ean =
-                                    "123456789012345678",
-                                    hasConnection =
-                                    true,
-                                    annualDelivery_m3 =
-                                    getNumericField(
-                                        "naturalGasAnnualDeliveryM3"
-                                    )
-                                        .toInt(),
+                                naturalGas = NaturalGas(
+                                    ean = "",
+                                    hasConnection = getNumericField("naturalGasAnnualDeliveryM3").toInt() > 0,
+                                    annualDelivery_m3 = getNumericField("naturalGasAnnualDeliveryM3").toInt(),
                                     /*hourlyValuesFiles = listOf(
                                         File(
                                             blobName = "qwerty-uurwaarden-2022.csv",
@@ -124,8 +117,7 @@ data class CompanyDataDocument(
                                             size = 1000,
                                         ),
                                     ),*/
-                                    percentageUsedForHeating =
-                                    100,
+                                    percentageUsedForHeating = 100,
                                 ),
                                 /*heat = Heat(
                                     heatingTypes = listOf(HeatingType.GAS_BOILER, HeatingType.DISTRICT_HEATING),
