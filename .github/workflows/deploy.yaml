@@ -154,6 +154,7 @@ jobs:
                     AZURE_STORAGE_ACCOUNT_NAME: zerostore
                     AZURE_STORAGE_ACCOUNT_KEY: ${{ secrets.AZURE_STORAGE_ACCOUNT_KEY }}
                     AZURE_STORAGE_CONTAINER: ${{ vars.AZURE_STORAGE_CONTAINER }}
+                    MINIO_ER_EXCEL_UPLOAD_BUCKET: ${{ vars.MINIO_ER_EXCEL_UPLOAD_BUCKET }}
                     CORS_ALLOW_ORIGIN_PATTERN: ${{ vars.CORS_ALLOW_ORIGIN_PATTERN }}
                     OAUTH_CLIENT_ID: ${{ vars.OAUTH_CLIENT_ID }}
                     OAUTH_CLIENT_SECRET: ${{ secrets.OAUTH_CLIENT_SECRET }}

@@ -1,26 +1,21 @@
 package com.zenmo.ztor
 
 import com.zenmo.excelreadnamed.v5.CompanyDataDocument
-import com.zenmo.excelreadnamed.v5.ProjectProvider
 import com.zenmo.orm.companysurvey.ProjectRepository
+import com.zenmo.ztor.minio.MinioExcelStorage
 import com.zenmo.ztor.user.getUserId
 import com.zenmo.zummon.companysurvey.SurveyWithErrors
 import io.ktor.http.*
 import io.ktor.server.application.*
-import io.ktor.server.engine.applicationEnvironment
 import io.ktor.server.request.*
 import io.ktor.server.response.*
 import io.ktor.server.routing.*
-import io.ktor.util.toMap
-import io.ktor.utils.io.InternalAPI
-import org.http4k.core.MemoryBody
-import org.http4k.core.MemoryRequest
-import org.http4k.core.Method
-import kotlin.time.measureTimedValue
-import org.http4k.core.MultipartFormBody
-import org.http4k.core.Request
-import org.http4k.core.Uri
+import io.ktor.util.*
+import io.ktor.utils.io.*
+import org.http4k.core.*
 import org.jetbrains.exposed.sql.Database
+import java.util.*
+import kotlin.time.measureTimedValue
 
 
 @OptIn(InternalAPI::class)
@@ -64,9 +59,19 @@ fun Application.configureExcel(db: Database) {
                 return@post
             }
 
+            val fileBytes = filePart.content.readAllBytes()
+
+            val objectName = MinioExcelStorage.saveExcel(
+                inputStream = fileBytes.inputStream(),
+                size = fileBytes.size.toLong(),
+                userId = userId,
+                fileName = filePart.filename,
+            )
+            log.info("Excel file saved to MinIO as $objectName")
+
             val (document, excelLoadDuration) = measureTimedValue {
                 try {
-                    CompanyDataDocument(filePart.content, projectRepository::getProjectByEnergiekeRegioId)
+                    CompanyDataDocument(fileBytes.inputStream(), projectRepository::getProjectByEnergiekeRegioId)
                     // Somehow IOException is not caught by the catch block
                 } catch (e: Exception) {
                     call.respond(HttpStatusCode.InternalServerError, "Invalid Excel file: ${e.message}")
@@ -107,3 +112,4 @@ suspend fun toHttp4kRequest(call: ApplicationCall): Request {
     val body = MemoryBody(call.receive<ByteArray>())
     return MemoryRequest(Method.POST, Uri.of(call.request.uri), headers, body)
 }
+
