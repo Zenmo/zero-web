@@ -78,6 +78,9 @@ dependencies {
     implementation("org.jetbrains.kotlinx:kotlinx-datetime:${libs.versions.kotlinx.datetime.get()}")
     implementation("com.benasher44:uuid:0.8.4")
 
+    // minio for excel uploads storage
+    implementation("io.minio:minio:8.5.17")
+
     testImplementation("io.ktor:ktor-server-test-host:$ktor_version")
     testImplementation("org.jetbrains.kotlin:kotlin-test-junit:2.0.20")
     testImplementation("org.jetbrains.kotlin:kotlin-test")
